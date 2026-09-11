@@ -18,6 +18,9 @@ import { useGame } from '../features/quiz/context';
 import { defaultConfig } from '../features/quiz/types';
 import { scoreSession } from '../features/results/scoring';
 import { DateStamp, LearnLink } from '../components/common';
+import { useReaction } from '../features/personality/useReaction';
+import { HostReaction } from '../features/personality/HostReaction';
+import { readBanterLevel } from '../features/personality/reactions';
 
 function DataFlowVisual() {
   return (
@@ -66,8 +69,18 @@ function DataFlowVisual() {
 }
 
 export function HomePage() {
-  const { bank, taxonomy, manifest, history, active, setConfig } = useGame();
+  const { bank, taxonomy, manifest, history, active, setConfig, preferences } =
+    useGame();
   const domainIcons = [ShieldCheck, GitBranch, Gauge];
+  const returning = useReaction(
+    `return:${history[0]?.id ?? 'new'}`,
+    'returning',
+    ['returning'],
+    {},
+    'context',
+    history.length > 0,
+  );
+  const direct = readBanterLevel(preferences) === 'none';
   return (
     <div className="home-page">
       <section className="hero">
@@ -79,13 +92,16 @@ export function HomePage() {
             </span>
           </h1>
           <p className="hero-subtitle">
-            DP-700 Exam Prep Without the Boring Parts
+            {direct
+              ? 'DP-700 study and practice'
+              : 'DP-700 Exam Prep Without the Boring Parts'}
           </p>
           <p className="hero-description">
-            Turn “I think I know this” into “I’ve got this.” Tackle practical
-            Fabric questions, understand the why, and find your next learning
-            move.
+            {direct
+              ? 'Practice Fabric questions, review technical explanations, and identify topics for further study.'
+              : 'Turn “I think I know this” into “I’ve got this.” Tackle practical Fabric questions, understand the why, and find your next learning move.'}
           </p>
+          <HostReaction reaction={returning} />
           <div className="actions hero-actions">
             <Link className="button primary large" to="/setup">
               Configure challenge <ArrowRight size={20} aria-hidden="true" />

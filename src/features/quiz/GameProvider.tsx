@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useReducer, type ReactNode } from 'react';
 import { content } from '../grounding/content';
-import type { Question } from '../grounding/schema';
+import { isPlayableQuestion, type Question } from '../grounding/schema';
 import { clearData, loadData, saveData } from '../../services/storage';
 import { selectQuestions } from './engine';
 import { configSchema, type QuizConfig } from './types';
@@ -35,18 +35,33 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const startSession = useCallback(
     (config: QuizConfig, overrideQuestions?: Question[]) => {
       const validConfig = configSchema.parse(config);
-      const selection = overrideQuestions
-        ? {
-            questions: overrideQuestions.slice(0, 50),
-            warnings: [],
-            eligibleCount: overrideQuestions.length,
-          }
-        : selectQuestions(
-            content.questions,
-            content.taxonomy,
-            validConfig,
-            state.saved.history,
+      const retryIds = overrideQuestions
+        ? new Set(overrideQuestions.map((question) => question.id))
+        : null;
+      const bank = retryIds
+        ? content.questions.filter(
+            (question) =>
+              retryIds.has(question.id) && isPlayableQuestion(question),
+          )
+        : content.questions;
+      const selection = selectQuestions(
+        bank,
+        content.taxonomy,
+        validConfig,
+        state.saved.history,
+        Math.random,
+        state.saved.recentQuestionIds,
+      );
+      if (retryIds) {
+        const availableIds = new Set(bank.map((question) => question.id));
+        const unavailable = [...retryIds].filter(
+          (id) => !availableIds.has(id),
+        ).length;
+        if (unavailable)
+          selection.warnings.push(
+            `${unavailable} missed question(s) are no longer verified and available in the current bank, and cannot be retried.`,
           );
+      }
       if (!selection.questions.length) {
         dispatch({
           type: 'notice',
@@ -67,7 +82,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       });
       return true;
     },
-    [state.saved.history],
+    [state.saved.history, state.saved.recentQuestionIds],
   );
   return (
     <GameContext.Provider
@@ -78,6 +93,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         config: state.saved.config,
         preferences: state.saved.preferences,
         history: state.saved.history,
+        recentQuestionIds: state.saved.recentQuestionIds,
         active: state.active,
         lastResult: state.lastResult,
         storageError: state.storageError,
@@ -96,6 +112,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
         abandonSession: () => dispatch({ type: 'abandon' }),
         clearLocalData: () =>
           dispatch({ type: 'clear', error: clearData(storage) }),
+        resetQuestionHistory: () =>
+          dispatch({ type: 'reset-question-history' }),
       }}
     >
       {children}

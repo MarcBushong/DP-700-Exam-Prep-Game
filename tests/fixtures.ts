@@ -1,4 +1,8 @@
-import type { Question, Taxonomy } from '../src/features/grounding/schema';
+import type {
+  GroundingManifest,
+  Question,
+  Taxonomy,
+} from '../src/features/grounding/schema';
 import {
   defaultConfig,
   type ActiveSession,
@@ -36,6 +40,25 @@ export const taxonomy: Taxonomy = {
   ],
 };
 
+export const manifest: GroundingManifest = {
+  schemaVersion: 1,
+  lastGroundedAt: date,
+  retrievalMethod: 'Microsoft Learn MCP',
+  sources: [
+    {
+      sourceId: 'fixture',
+      title: 'Fixture source',
+      url: 'https://learn.microsoft.com/en-us/fabric/security/security-overview',
+      retrievedAt: date,
+      lastReviewedAt: date,
+      applicableObjectiveDomains: ['manage', 'ingest', 'monitor'],
+      applicableSkills: ['security', 'batch', 'performance'],
+      featureStatus: 'GA',
+      shortSummary: 'Synthetic source metadata for deterministic tests only.',
+    },
+  ],
+};
+
 export function question(
   id = 'q1',
   overrides: Partial<Question> = {},
@@ -69,6 +92,15 @@ export function question(
     documentationTitles: ['Fixture source'],
     generatedAt: date,
     lastValidatedAt: date,
+    conceptId: `fixture-${id}`,
+    verificationStatus: 'verified',
+    verifiedAt: date,
+    verifiedAgainstSourceIds: ['fixture'],
+    verificationNotes: `Synthetic review for ${id}; fixture answer A matches the stated synthetic requirement, while B and C do not.`,
+    requiresManualReview: false,
+    sourceLastReviewedAt: date,
+    confidenceReason:
+      'Synthetic fixture assertions only; not a documentation claim.',
     featureStatus: 'GA',
     tags: ['fixture'],
     ...overrides,

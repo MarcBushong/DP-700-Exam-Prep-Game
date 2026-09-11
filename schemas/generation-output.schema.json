@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authorId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+    },
+    "candidates": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "question": {
+            "type": "string",
+            "minLength": 30
+          },
+          "questionType": {
+            "type": "string",
+            "enum": [
+              "single-select",
+              "multi-select",
+              "true-false",
+              "scenario",
+              "code"
+            ]
+          },
+          "answerChoices": {
+            "minItems": 2,
+            "maxItems": 6,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": ["id", "text"]
+            }
+          },
+          "correctAnswer": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "explanation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "deepExplanation": {
+            "type": "string",
+            "minLength": 1
+          },
+          "whyOtherAnswersAreWrong": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "objectiveDomain": {
+            "type": "string",
+            "minLength": 1
+          },
+          "skill": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subskill": {
+            "type": "string",
+            "minLength": 1
+          },
+          "difficulty": {
+            "type": "string",
+            "enum": ["beginner", "intermediate", "advanced", "expert"]
+          },
+          "complexity": {
+            "type": "string",
+            "enum": [
+              "concept-recall",
+              "technical-implementation",
+              "scenario-based",
+              "troubleshooting",
+              "architecture-design"
+            ]
+          },
+          "sourceIds": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "sourceUrls": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "documentationTitles": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "generatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "lastValidatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "featureStatus": {
+            "type": "string",
+            "enum": ["GA", "Preview"]
+          },
+          "tags": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "codeLanguage": {
+            "type": "string",
+            "enum": ["sql", "python", "kusto", "json", "powershell"]
+          },
+          "codeSnippet": {
+            "type": "string",
+            "minLength": 1
+          },
+          "conceptId": {
+            "default": "",
+            "type": "string"
+          },
+          "verificationStatus": {
+            "default": "manual-review-required",
+            "type": "string",
+            "enum": ["verified", "manual-review-required", "rejected", "stale"]
+          },
+          "verifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "verifiedAgainstSourceIds": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "verificationNotes": {
+            "default": "",
+            "type": "string"
+          },
+          "requiresManualReview": {
+            "default": true,
+            "type": "boolean"
+          },
+          "sourceLastReviewedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "confidenceReason": {
+            "default": "",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "question",
+          "questionType",
+          "answerChoices",
+          "correctAnswer",
+          "explanation",
+          "deepExplanation",
+          "whyOtherAnswersAreWrong",
+          "objectiveDomain",
+          "skill",
+          "subskill",
+          "difficulty",
+          "complexity",
+          "sourceIds",
+          "sourceUrls",
+          "documentationTitles",
+          "generatedAt",
+          "lastValidatedAt",
+          "featureStatus",
+          "tags"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "requestId",
+    "authorId",
+    "generatedAt",
+    "candidates"
+  ],
+  "additionalProperties": false,
+  "$comment": "Generated from Zod workflow schemas. Cross-field semantic refinements additionally run in TypeScript; JSON Schema alone is not sufficient."
+}

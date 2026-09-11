@@ -1,4 +1,12 @@
 import { z } from 'zod';
+import { duplicateFindings, normalizedChoice } from './quality';
+import type { ContentFinding } from './quality';
+
+export {
+  duplicateFindings,
+  nearDuplicates,
+  normalizedQuestion,
+} from './quality';
 
 export const difficulties = [
   'beginner',
@@ -29,6 +37,12 @@ export const answerModes = [
 ] as const;
 export const orders = ['random', 'study-guide', 'weakest', 'balanced'] as const;
 export const featureStatuses = ['GA', 'Preview', 'Not applicable'] as const;
+export const verificationStatuses = [
+  'verified',
+  'manual-review-required',
+  'rejected',
+  'stale',
+] as const;
 
 const text = z.string().trim().min(1);
 export const timestampSchema = z.iso.datetime();
@@ -41,10 +55,15 @@ export const learnUrlSchema = z.string().refine((value) => {
       !url.username &&
       !url.password &&
       !url.port &&
-      /^\/en-us\/(fabric|azure|kusto|sql|training|credentials)\//.test(
+      /^\/en-us\/(fabric|azure|kusto|sql|training|credentials|power-bi)\//.test(
         url.pathname,
       ) &&
       !url.pathname.includes('/search') &&
+      !/[%\\\s<>"`]/.test(value) &&
+      !url.pathname.includes('%') &&
+      !/(?:assessment|knowledge-check|practice-test|exam-sandbox)/i.test(
+        url.pathname,
+      ) &&
       !url.search
     );
   } catch {
@@ -133,6 +152,16 @@ export const questionSchema = z
       .enum(['sql', 'python', 'kusto', 'json', 'powershell'])
       .optional(),
     codeSnippet: text.optional(),
+    conceptId: z.string().trim().default(''),
+    verificationStatus: z
+      .enum(verificationStatuses)
+      .default('manual-review-required'),
+    verifiedAt: timestampSchema.optional(),
+    verifiedAgainstSourceIds: z.array(text).default([]),
+    verificationNotes: z.string().trim().default(''),
+    requiresManualReview: z.boolean().default(true),
+    sourceLastReviewedAt: timestampSchema.optional(),
+    confidenceReason: z.string().trim().default(''),
   })
   .superRefine((q, ctx) => {
     const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
@@ -140,7 +169,7 @@ export const questionSchema = z
     if (new Set(choices).size !== choices.length)
       fail('Answer choice IDs must be unique.');
     if (
-      new Set(q.answerChoices.map((choice) => choice.text.toLowerCase()))
+      new Set(q.answerChoices.map((choice) => normalizedChoice(choice.text)))
         .size !== choices.length
     )
       fail('Answer choices must be distinct.');
@@ -153,6 +182,18 @@ export const questionSchema = z
       fail('Only multi-select questions can have multiple correct choices.');
     if (q.questionType === 'multi-select' && q.correctAnswer.length < 2)
       fail('Multi-select requires at least two correct choices.');
+    if (q.questionType === 'multi-select') {
+      const declared = q.question
+        .match(/\b(?:choose|select)\s+(\d+|two|three|four|five)\b/i)?.[1]
+        ?.toLowerCase();
+      const count = declared
+        ? Number(declared) || { two: 2, three: 3, four: 4, five: 5 }[declared]
+        : undefined;
+      if (count && count !== q.correctAnswer.length)
+        fail(
+          'The stated multi-select answer count must match the correct answer count.',
+        );
+    }
     if (q.correctAnswer.length === choices.length)
       fail('Include at least one plausible distractor.');
     if (
@@ -182,6 +223,32 @@ export const questionSchema = z
       (q.questionType === 'code' && !q.codeSnippet)
     )
       fail('Code questions require a language and snippet together.');
+    if (Date.parse(q.lastValidatedAt) < Date.parse(q.generatedAt))
+      fail('Validation cannot predate generation.');
+    if (q.verificationStatus === 'verified') {
+      if (
+        !q.conceptId ||
+        !q.verifiedAt ||
+        !q.sourceLastReviewedAt ||
+        !q.verificationNotes ||
+        !q.confidenceReason ||
+        q.requiresManualReview
+      )
+        fail(
+          'Verified questions require complete review metadata and no manual review flag.',
+        );
+      if (!sameIds(q.sourceIds, q.verifiedAgainstSourceIds))
+        fail('Verified source IDs must exactly match all cited source IDs.');
+      if (
+        q.verifiedAt &&
+        (Date.parse(q.verifiedAt) < Date.parse(q.lastValidatedAt) ||
+          (q.sourceLastReviewedAt &&
+            Date.parse(q.verifiedAt) < Date.parse(q.sourceLastReviewedAt)))
+      )
+        fail(
+          'Verification cannot predate generation, validation, or source review.',
+        );
+    }
   });
 
 export type Question = z.infer<typeof questionSchema>;
@@ -189,47 +256,112 @@ export type Taxonomy = z.infer<typeof taxonomySchema>;
 export type Source = z.infer<typeof sourceSchema>;
 export type GroundingManifest = z.infer<typeof manifestSchema>;
 
-export function normalizedQuestion(text: string) {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, ' ')
-    .trim();
-}
-
-export function nearDuplicates(questions: Question[]) {
-  const pairs: [string, string][] = [];
-  const words = questions.map(
-    (q) =>
-      new Set(
-        normalizedQuestion(q.question)
-          .split(' ')
-          .filter((word) => word.length > 3),
-      ),
+function sameIds(left: string[], right: string[]) {
+  return (
+    left.length === right.length &&
+    new Set(right).size === right.length &&
+    left.every((id) => right.includes(id))
   );
-  for (let i = 0; i < questions.length; i++) {
-    for (let j = i + 1; j < questions.length; j++) {
-      const intersection = [...words[i]].filter((word) =>
-        words[j].has(word),
-      ).length;
-      const union = new Set([...words[i], ...words[j]]).size;
-      if (union && intersection / union >= 0.8)
-        pairs.push([questions[i].id, questions[j].id]);
-    }
-  }
-  return pairs;
 }
 
-export function validateContent(
+/** Fresh means consistent with the checked-in evidence, not permanently current. */
+export function isPlayableQuestion(question: Question): boolean {
+  return (
+    question.verificationStatus === 'verified' &&
+    question.requiresManualReview === false &&
+    Boolean(question.conceptId?.trim()) &&
+    Boolean(question.verificationNotes?.trim()) &&
+    Boolean(question.confidenceReason?.trim()) &&
+    Boolean(question.verifiedAt) &&
+    Boolean(question.sourceLastReviewedAt) &&
+    sameIds(question.sourceIds, question.verifiedAgainstSourceIds ?? []) &&
+    Date.parse(question.verifiedAt ?? '') >=
+      Date.parse(question.lastValidatedAt) &&
+    Date.parse(question.lastValidatedAt) >= Date.parse(question.generatedAt) &&
+    Date.parse(question.verifiedAt ?? '') >=
+      Date.parse(question.sourceLastReviewedAt ?? '') &&
+    Date.parse(question.verifiedAt ?? '') <= Date.now() &&
+    question.sourceIds.length > 0 &&
+    question.sourceIds.length === question.sourceUrls.length &&
+    question.sourceIds.length === question.documentationTitles.length
+  );
+}
+
+/** Diagnostic mode retains excluded candidates so reports cannot hide failures. */
+export function inspectContent(
   questionData: unknown,
   manifestData: unknown,
   taxonomyData: unknown,
 ) {
   const taxonomy = taxonomySchema.parse(taxonomyData);
-  const manifest = manifestSchema.parse(manifestData);
-  const questions = z.array(questionSchema).min(1).parse(questionData);
-  const fail = (message: string): never => {
-    throw new Error(message);
+  const findings: ContentFinding[] = [];
+  const envelope = manifestSchema
+    .omit({ sources: true })
+    .extend({
+      sources: z.array(z.unknown()).min(1),
+    })
+    .parse(manifestData);
+  const sources: Source[] = [];
+  for (const record of envelope.sources) {
+    const parsed = sourceSchema.safeParse(record);
+    if (parsed.success) sources.push(parsed.data);
+    else {
+      const id =
+        record &&
+        typeof record === 'object' &&
+        'sourceId' in record &&
+        typeof record.sourceId === 'string'
+          ? record.sourceId
+          : 'unknown source';
+      for (const issue of parsed.error.issues)
+        findings.push({
+          code: 'source-schema',
+          category: 'citation',
+          severity: 'error',
+          questionIds: [],
+          message: `${id}: ${issue.path.join('.')}: ${issue.message}`,
+        });
+    }
+  }
+  const manifest: GroundingManifest = { ...envelope, sources };
+  const allQuestions: Question[] = [];
+  const records = z.array(z.unknown()).min(1).parse(questionData);
+  const fail = (
+    message: string,
+    questionIds: string[] = [],
+    category: ContentFinding['category'] = 'schema',
+  ) => {
+    findings.push({
+      code: category,
+      category,
+      severity: 'error',
+      message,
+      questionIds,
+    });
   };
+  records.forEach((record, index) => {
+    const parsed = questionSchema.safeParse(record);
+    if (parsed.success) allQuestions.push(parsed.data);
+    else {
+      const id =
+        record &&
+        typeof record === 'object' &&
+        'id' in record &&
+        typeof record.id === 'string'
+          ? record.id
+          : `record-${index + 1}`;
+      for (const issue of parsed.error.issues) {
+        const path = issue.path.join('.');
+        fail(
+          `${id}: ${path ? `${path}: ` : ''}${issue.message}`,
+          [id],
+          /source|citation|documentation/i.test(`${path} ${issue.message}`)
+            ? 'citation'
+            : 'schema',
+        );
+      }
+    }
+  });
   const unique = (values: string[], name: string) => {
     if (new Set(values).size !== values.length) fail(`Duplicate ${name}.`);
   };
@@ -246,16 +378,25 @@ export function validateContent(
     'source ID',
   );
   unique(
-    questions.map((q) => q.id),
+    allQuestions.map((q) => q.id),
     'question ID',
   );
-  unique(
-    questions.map((q) => normalizedQuestion(q.question)),
-    'question text',
-  );
+  const now = Date.now();
+  if (
+    Date.parse(taxonomy.retrievedAt) > now ||
+    Date.parse(manifest.lastGroundedAt) > now
+  )
+    fail(
+      'Grounding and taxonomy retrieval timestamps cannot be in the future.',
+    );
   for (const source of manifest.sources) {
     if (Date.parse(source.lastReviewedAt) < Date.parse(source.retrievedAt))
       fail(`${source.sourceId}: review cannot predate retrieval.`);
+    if (
+      Date.parse(source.lastReviewedAt) > now ||
+      Date.parse(source.retrievedAt) > now
+    )
+      fail(`${source.sourceId}: source timestamps cannot be in the future.`);
     if (
       source.applicableObjectiveDomains.some(
         (id) => !taxonomy.domains.some((d) => d.id === id),
@@ -269,47 +410,135 @@ export function validateContent(
       fail(`${source.sourceId}: skill is outside its applicable domains.`);
   }
   const sourceMap = new Map(manifest.sources.map((s) => [s.sourceId, s]));
-  for (const question of questions) {
+  for (const question of allQuestions) {
+    const questionFail = (
+      message: string,
+      category: ContentFinding['category'] = 'citation',
+    ) => fail(`${question.id}: ${message}`, [question.id], category);
     const domain = taxonomy.domains.find(
       (d) => d.id === question.objectiveDomain,
     );
     const skill = domain?.skills.find((s) => s.id === question.skill);
     if (!domain || !skill?.subskills.includes(question.subskill))
-      fail(`${question.id}: unknown domain, skill, or subskill.`);
-    if (Date.parse(question.lastValidatedAt) < Date.parse(question.generatedAt))
-      fail(`${question.id}: validation cannot predate generation.`);
+      questionFail('unknown domain, skill, or subskill.', 'mapping');
+    if (
+      [
+        question.generatedAt,
+        question.lastValidatedAt,
+        question.verifiedAt,
+        question.sourceLastReviewedAt,
+      ].some((date) => date && Date.parse(date) > now)
+    )
+      questionFail(
+        'question timestamps cannot be in the future.',
+        'verification',
+      );
     if (
       !question.sourceUrls.some(
         (url) =>
           !url.includes('/credentials/') && !url.includes('/training/courses/'),
       )
     )
-      fail(
-        `${question.id}: cite direct supporting product or training-module documentation, not only exam overview pages.`,
+      questionFail(
+        'cite direct supporting product or training-module documentation, not only exam overview pages.',
       );
     question.sourceIds.forEach((id, i) => {
       const source = sourceMap.get(id);
-      if (!source) return fail(`${question.id}: unknown citation ${id}.`);
+      if (!source) return questionFail(`unknown citation ${id}.`);
       if (
         source.url !== question.sourceUrls[i] ||
         source.title !== question.documentationTitles[i]
       )
-        fail(`${question.id}: citation metadata does not match ${id}.`);
+        questionFail(`citation metadata does not match ${id}.`);
       if (
         !source.applicableObjectiveDomains.includes(question.objectiveDomain) ||
         !source.applicableSkills.includes(question.skill)
       )
-        fail(`${question.id}: citation is not aligned to its objective.`);
+        questionFail('citation is not aligned to its objective.');
       if (
         source.featureStatus === 'Preview' &&
         question.featureStatus !== 'Preview'
       )
-        fail(`${question.id}: preview feature must be labelled.`);
+        questionFail('preview feature must be labelled.');
     });
-  }
-  if (nearDuplicates(questions).length)
-    fail(
-      `Near-duplicate questions: ${JSON.stringify(nearDuplicates(questions))}`,
+    const sources = question.sourceIds.map((id) => sourceMap.get(id));
+    if (
+      !sources.some(
+        (source) => source && source.featureStatus !== 'Not applicable',
+      )
+    )
+      questionFail(
+        'at least one citation must support implementation, not context only.',
+      );
+    const latestReview = sources.reduce(
+      (latest, source) =>
+        Math.max(latest, Date.parse(source?.lastReviewedAt ?? '') || 0),
+      0,
     );
-  return { questions, manifest, taxonomy };
+    if (question.verificationStatus === 'verified' && latestReview) {
+      if (Date.parse(question.sourceLastReviewedAt ?? '') > latestReview)
+        questionFail(
+          'sourceLastReviewedAt must equal the latest cited source review.',
+          'verification',
+        );
+      if (
+        Date.parse(question.sourceLastReviewedAt ?? '') < latestReview ||
+        Date.parse(question.verifiedAt ?? '') < latestReview
+      ) {
+        question.verificationStatus = 'stale';
+        question.requiresManualReview = true;
+        findings.push({
+          code: 'source-updated',
+          category: 'verification',
+          severity: 'warning',
+          questionIds: [question.id],
+          message: `${question.id}: cited source review changed after the reviewed snapshot; independently re-review.`,
+        });
+      }
+    }
+  }
+  findings.push(...duplicateFindings(allQuestions));
+  const blocked = new Set(
+    findings
+      .filter((finding) => finding.severity !== 'warning')
+      .flatMap((finding) => finding.questionIds),
+  );
+  const globalError = findings.some(
+    (finding) => finding.severity === 'error' && !finding.questionIds.length,
+  );
+  const questions = allQuestions.filter(
+    (question) =>
+      !globalError && !blocked.has(question.id) && isPlayableQuestion(question),
+  );
+  return {
+    questions,
+    allQuestions,
+    manifest,
+    taxonomy,
+    findings,
+    totalRecords: records.length,
+    totalSourceRecords: envelope.sources.length,
+  };
+}
+
+export function validateContent(
+  questionData: unknown,
+  manifestData: unknown,
+  taxonomyData: unknown,
+) {
+  const content = inspectContent(questionData, manifestData, taxonomyData);
+  const verifiedIds = new Set(
+    content.allQuestions
+      .filter((q) => q.verificationStatus === 'verified')
+      .map((q) => q.id),
+  );
+  const failures = content.findings.filter(
+    (finding) =>
+      finding.severity === 'error' ||
+      (finding.severity === 'blocking' &&
+        finding.questionIds.some((id) => verifiedIds.has(id))),
+  );
+  if (failures.length)
+    throw new Error(failures.map((finding) => finding.message).join('\n'));
+  return content;
 }

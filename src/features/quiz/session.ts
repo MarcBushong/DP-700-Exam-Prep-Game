@@ -1,5 +1,10 @@
 import type { Question } from '../grounding/schema';
-import { addResult, freshData, type SavedData } from '../../services/storage';
+import {
+  addResult,
+  freshData,
+  rememberQuestion,
+  type SavedData,
+} from '../../services/storage';
 import {
   advanceSession,
   completeSession,
@@ -10,7 +15,7 @@ import {
   configSchema,
   preferencesSchema,
   type ActiveSession,
-  type Preferences,
+  type PreferencesInput,
   type QuizConfig,
   type SessionResult,
 } from './types';
@@ -26,7 +31,7 @@ export interface GameState {
 
 export type GameAction =
   | { type: 'config'; config: QuizConfig }
-  | { type: 'preferences'; preferences: Preferences }
+  | { type: 'preferences'; preferences: PreferencesInput }
   | {
       type: 'start';
       config: QuizConfig;
@@ -40,6 +45,7 @@ export type GameAction =
   | { type: 'submit'; selected: string[]; flagged: boolean; now: number }
   | { type: 'next' | 'finish' | 'expire'; now: number; flagged?: boolean }
   | { type: 'abandon' }
+  | { type: 'reset-question-history' }
   | { type: 'saved'; error: string | null }
   | { type: 'clear'; error: string | null };
 
@@ -65,13 +71,30 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       saved: { ...state.saved, config: configSchema.parse(action.config) },
       dirty: true,
     };
-  if (action.type === 'preferences')
+  if (action.type === 'preferences') {
+    const previous = state.saved.preferences;
+    const legacyToggle =
+      action.preferences.banterLevel === previous.banterLevel &&
+      action.preferences.reducedBanter !== previous.reducedBanter;
     return {
       ...state,
       saved: {
         ...state.saved,
-        preferences: preferencesSchema.parse(action.preferences),
+        preferences: preferencesSchema.parse({
+          ...action.preferences,
+          ...(legacyToggle ? { banterLevel: undefined } : {}),
+        }),
       },
+      dirty: true,
+    };
+  }
+  if (action.type === 'reset-question-history')
+    return {
+      ...state,
+      saved: { ...state.saved, recentQuestionIds: [] },
+      notices: [
+        'Recent question history reset. Saved scores and preferences are unchanged.',
+      ],
       dirty: true,
     };
   if (action.type === 'saved')
@@ -89,13 +112,17 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         };
   if (action.type === 'notice') return { ...state, notices: action.notices };
   if (action.type === 'abandon') return { ...state, active: null };
-  if (action.type === 'start')
+  if (action.type === 'start') {
+    if (!action.questions.length) return state;
     return {
       ...state,
       notices: action.notices,
       dirty: true,
       lastResult: null,
-      saved: { ...state.saved, config: action.config },
+      saved: rememberQuestion(
+        { ...state.saved, config: action.config },
+        action.questions[0].id,
+      ),
       active: {
         id: action.id,
         config: action.config,
@@ -105,8 +132,10 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         startedAt: new Date(action.now).toISOString(),
         questionStartedAt: action.now,
         groundedAt: action.groundedAt,
+        actualDifficulty: action.questions[0].difficulty,
       },
     };
+  }
   const active = state.active;
   if (!active) return state;
   const question = active.questions[active.currentIndex];
@@ -192,9 +221,18 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         ...state,
         notices: ['Submit or skip this question before continuing.'],
       };
-    return active.currentIndex === active.questions.length - 1
-      ? finish(state, active, action.now)
-      : { ...state, active: advanceSession(active, action.now) };
+    if (active.currentIndex === active.questions.length - 1)
+      return finish(state, active, action.now);
+    const next = advanceSession(active, action.now);
+    return {
+      ...state,
+      active: next,
+      saved: rememberQuestion(
+        state.saved,
+        next.questions[next.currentIndex].id,
+      ),
+      dirty: true,
+    };
   }
   return state;
 }

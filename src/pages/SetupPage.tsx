@@ -37,8 +37,16 @@ const toggle = (values: string[], value: string) =>
     : [...values, value];
 
 export function SetupPage() {
-  const { bank, taxonomy, config, setConfig, history, active, startSession } =
-    useGame();
+  const {
+    bank,
+    taxonomy,
+    config,
+    setConfig,
+    history,
+    active,
+    startSession,
+    recentQuestionIds,
+  } = useGame();
   const [customCount, setCustomCount] = useState(
     ![5, 10, 20, 30, 50].includes(config.questionCount),
   );
@@ -47,8 +55,16 @@ export function SetupPage() {
   const [replace, setReplace] = useState(false);
   const navigate = useNavigate();
   const selection = useMemo(
-    () => selectQuestions(bank, taxonomy, config, history),
-    [bank, taxonomy, config, history],
+    () =>
+      selectQuestions(
+        bank,
+        taxonomy,
+        config,
+        history,
+        Math.random,
+        recentQuestionIds,
+      ),
+    [bank, taxonomy, config, history, recentQuestionIds],
   );
   const update = <K extends keyof QuizConfig>(key: K, value: QuizConfig[K]) =>
     setConfig({ ...config, [key]: value });
@@ -73,7 +89,12 @@ export function SetupPage() {
       Number(timerInput) <= 7200);
   const canStart = selection.eligibleCount > 0 && countValid && timerValid;
   const begin = () => {
-    if (canStart && startSession(config)) navigate('/play');
+    if (canStart && startSession(config))
+      navigate('/play', {
+        state: {
+          practiceEvent: config.practiceMode === 'weak' ? 'weak' : 'start',
+        },
+      });
   };
   const submit = (event: FormEvent) => {
     event.preventDefault();
@@ -181,9 +202,12 @@ export function SetupPage() {
               </div>
             </div>
             <p className="field-help" id="adaptive-help">
-              Adaptive rearranges the remaining selected questions to match
-              recent performance within the same next domain. It doesn’t
-              generate new questions or guarantee difficulty coverage.
+              Adaptive starts near Intermediate unless saved performance
+              provides enough evidence. Three consecutive correct or incorrect
+              answers at the same difficulty move the target one level up or
+              down. It selects the closest remaining difficulty within the next
+              domain; it doesn’t generate questions or guarantee difficulty
+              coverage.
             </p>
             <div className="field-grid">
               <div className="field">

@@ -7,6 +7,7 @@ import type {
 import type {
   ActiveSession,
   Preferences,
+  PreferencesInput,
   QuizConfig,
   SessionResult,
 } from './types';
@@ -18,12 +19,13 @@ export interface GameContextValue {
   config: QuizConfig;
   preferences: Preferences;
   history: SessionResult[];
+  recentQuestionIds: string[];
   active: ActiveSession | null;
   lastResult: SessionResult | null;
   storageError: string | null;
   notices: string[];
   setConfig: (config: QuizConfig) => void;
-  setPreferences: (preferences: Preferences) => void;
+  setPreferences: (preferences: PreferencesInput) => void;
   startSession: (config: QuizConfig, overrideQuestions?: Question[]) => boolean;
   submitAnswer: (selected: string[], flagged: boolean) => void;
   nextQuestion: () => void;
@@ -31,6 +33,7 @@ export interface GameContextValue {
   finishSession: (flagged?: boolean) => void;
   abandonSession: () => void;
   clearLocalData: () => void;
+  resetQuestionHistory: () => void;
 }
 
 export const GameContext = createContext<GameContextValue | null>(null);

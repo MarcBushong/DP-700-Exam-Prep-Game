@@ -4,17 +4,9 @@ import { labels } from '../features/quiz/types';
 import { isCorrect } from '../features/quiz/engine';
 import type { Question } from '../features/grounding/schema';
 import { DateStamp, LearnLink, Modal } from './common';
-
-const correctReactions = [
-  'Correct. The pipeline has declined to fail dramatically.',
-  'A clean result. Somewhere, a Delta table just relaxed.',
-  'That Spark session can keep its day job.',
-];
-const missedReactions = [
-  'Plot twist: the documentation has a different plan.',
-  'That answer needs one more transformation.',
-  'A tiny detour. No production data was harmed.',
-];
+import { HostReaction } from '../features/personality/HostReaction';
+import { useReaction } from '../features/personality/useReaction';
+import type { Reaction } from '../features/personality/reactions';
 
 export function QuestionMetadata({ question }: { question: Question }) {
   const { taxonomy } = useGame();
@@ -64,19 +56,14 @@ export function QuestionExplanation({
   question,
   selected,
   revealAnswer,
-  banter = false,
+  reaction = null,
 }: {
   question: Question;
   selected: string[];
   revealAnswer: boolean;
-  banter?: boolean;
+  reaction?: Reaction | null;
 }) {
   const correct = isCorrect(question, selected);
-  const reactionIndex =
-    [...question.id].reduce(
-      (sum, character) => sum + character.charCodeAt(0),
-      0,
-    ) % correctReactions.length;
   return (
     <section
       className={`question-feedback ${revealAnswer ? (correct ? 'feedback-correct' : 'feedback-missed') : ''}`}
@@ -92,23 +79,12 @@ export function QuestionExplanation({
             )}
             <h2>
               {correct
-                ? banter
-                  ? 'Correct. Nicely done!'
-                  : 'Correct.'
+                ? 'Correct.'
                 : !selected.length
-                  ? banter
-                    ? 'Unanswered. Let’s unpack it.'
-                    : 'Unanswered.'
-                  : banter
-                    ? 'Not quite. Here’s the why.'
-                    : 'Incorrect.'}
+                  ? 'Unanswered.'
+                  : 'Incorrect.'}
             </h2>
           </div>
-          {banter && (
-            <p className="banter">
-              {(correct ? correctReactions : missedReactions)[reactionIndex]}
-            </p>
-          )}
           <p>
             <strong>
               Correct answer{question.correctAnswer.length > 1 ? 's' : ''}:
@@ -126,6 +102,7 @@ export function QuestionExplanation({
         </div>
       )}
       <p>{question.explanation}</p>
+      {revealAnswer && <HostReaction reaction={reaction} />}
       <details className="deep-explanation">
         <summary>Go a level deeper</summary>
         <p>{question.deepExplanation}</p>
@@ -155,18 +132,31 @@ export function QuestionExplanation({
 export function QuestionSources({
   question,
   groundedAt,
+  reactionScope,
   onClose,
 }: {
   question: Question;
   groundedAt?: string;
+  reactionScope?: string;
   onClose: () => void;
 }) {
-  const { manifest, taxonomy } = useGame();
+  const { manifest, taxonomy, active } = useGame();
   const isCurrent = !groundedAt || groundedAt === manifest.lastGroundedAt;
   const domain = taxonomy.domains.find(
     (item) => item.id === question.objectiveDomain,
   );
   const skill = domain?.skills.find((item) => item.id === question.skill);
+  const reaction = useReaction(
+    reactionScope ?? active?.id ?? 'sources',
+    `documentation:${question.id}`,
+    ['documentation'],
+    {
+      domainId: domain?.id,
+      domain: domain?.title,
+      skill: skill?.title,
+      difficulty: question.difficulty,
+    },
+  );
   return (
     <Modal
       title="The sources behind this question"
@@ -192,8 +182,8 @@ export function QuestionSources({
           Historical question snapshot, grounded{' '}
           <DateStamp value={groundedAt ?? question.lastValidatedAt} precise />.
           Current source-manifest summaries may differ, so this view uses the
-          titles and URLs saved with your question. Retrieval and source review
-          dates were not stored in that snapshot.
+          titles and URLs saved with your question. Per-source retrieval and
+          review records are not stored with question snapshots.
         </p>
       )}
       <ol className="source-list">
@@ -214,6 +204,9 @@ export function QuestionSources({
                 </LearnLink>
               </h3>
               <p className="source-url">{url}</p>
+              <p className="small muted">
+                Source ID: {question.sourceIds[index]}
+              </p>
               {source ? (
                 <>
                   <p>{source.shortSummary}</p>
@@ -252,6 +245,14 @@ export function QuestionSources({
         <DateStamp value={question.lastValidatedAt} precise />. Documentation
         and preview behavior can change.
       </p>
+      {question.verifiedAt && (
+        <p className="small muted">
+          Independent answer review recorded{' '}
+          <DateStamp value={question.verifiedAt} precise />. This records the
+          saved review, not a guarantee that documentation has not changed.
+        </p>
+      )}
+      <HostReaction reaction={reaction} />
     </Modal>
   );
 }

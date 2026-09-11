@@ -17,11 +17,40 @@ import {
   LearnLink,
   PageHeading,
 } from '../components/common';
+import { banterLevels } from '../features/personality/catalog';
+import { readBanterLevel } from '../features/personality/reactions';
+
+const banterOptions = {
+  full: {
+    label: 'Full Banter',
+    description: 'Answer reactions, summaries, and extra contextual moments.',
+  },
+  balanced: {
+    label: 'Balanced',
+    description: 'Short reactions after answers and in the session summary.',
+  },
+  reduced: {
+    label: 'Reduced Banter',
+    description: 'Occasional mild encouragement, plus a short summary.',
+  },
+  none: {
+    label: 'No Banter',
+    description: 'Direct technical feedback only. No host reactions.',
+  },
+};
 
 export function SettingsPage() {
-  const { preferences, setPreferences, history, active, clearLocalData } =
-    useGame();
+  const {
+    preferences,
+    setPreferences,
+    history,
+    active,
+    clearLocalData,
+    recentQuestionIds,
+    resetQuestionHistory,
+  } = useGame();
   const [clearOpen, setClearOpen] = useState(false);
+  const [resetOpen, setResetOpen] = useState(false);
   return (
     <div className="information-page">
       <PageHeading
@@ -66,25 +95,32 @@ export function SettingsPage() {
             ))}
           </div>
         </fieldset>
-        <label className="preference-option">
-          <span>
-            <strong>Reduce playful banter</strong>
-            <small>
-              Keep answer feedback direct. Technical explanations stay the same.
-            </small>
-          </span>
-          <input
-            type="checkbox"
-            role="switch"
-            checked={preferences.reducedBanter}
-            onChange={(event) =>
-              setPreferences({
-                ...preferences,
-                reducedBanter: event.target.checked,
-              })
-            }
-          />
-        </label>
+        <fieldset className="banter-settings">
+          <legend>Game host personality</legend>
+          <p className="small muted">
+            Applies everywhere. Technical explanations and scoring never change.
+          </p>
+          {banterLevels.map((level) => (
+            <label className="preference-option" key={level}>
+              <span>
+                <strong>{banterOptions[level].label}</strong>
+                <small>{banterOptions[level].description}</small>
+              </span>
+              <input
+                type="radio"
+                name="banter-level"
+                checked={readBanterLevel(preferences) === level}
+                onChange={() =>
+                  setPreferences({
+                    ...preferences,
+                    banterLevel: level,
+                    reducedBanter: level === 'reduced' || level === 'none',
+                  })
+                }
+              />
+            </label>
+          ))}
+        </fieldset>
         <label className="preference-option">
           <span>
             <strong>Reduce motion</strong>
@@ -119,6 +155,22 @@ export function SettingsPage() {
           </strong>
           .
         </p>
+        <div className="question-history-settings">
+          <h3>Recently shown questions</h3>
+          <p>
+            {recentQuestionIds.length} recent question IDs help future sessions
+            prefer unseen questions. Reset this list independently; saved
+            scores, weak-area evidence, theme, and the active challenge stay
+            unchanged.
+          </p>
+          <button
+            className="button secondary"
+            disabled={!recentQuestionIds.length}
+            onClick={() => setResetOpen(true)}
+          >
+            Reset question history
+          </button>
+        </div>
         <p className="notice">
           <strong>Reloading resets an in-progress quiz.</strong> Active
           questions live in memory only. Completed history and settings survive
@@ -157,6 +209,20 @@ export function SettingsPage() {
             be discarded. Other applications’ data is not touched.
           </p>
           <p>Download any results you want to keep before continuing.</p>
+        </ConfirmDialog>
+      )}
+      {resetOpen && (
+        <ConfirmDialog
+          title="Reset recently shown questions?"
+          confirmLabel="Reset question history"
+          onClose={() => setResetOpen(false)}
+          onConfirm={resetQuestionHistory}
+        >
+          <p>
+            Clear only the recent-question list used for unseen-question
+            preference. Completed results, weak-area practice evidence,
+            preferences, and your current challenge are preserved.
+          </p>
         </ConfirmDialog>
       )}
     </div>

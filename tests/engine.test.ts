@@ -242,23 +242,28 @@ describe('timing and adaptive transitions', () => {
     session.questionStartedAt += 30000;
     expect(remainingSeconds(session, start + 31000)).toBe(29);
   });
-  it('raises/lowers difficulty based on actual responses, within the selected domain', () => {
+  it('holds difficulty after one answer and stays within the selected domain', () => {
     const questions = [
       question('first'),
       question('easy', { difficulty: 'beginner' }),
       question('hard', { difficulty: 'advanced' }),
       question('other', { objectiveDomain: 'ingest', difficulty: 'expert' }),
+      question('same'),
     ];
     const session = active(questions);
     session.responses = [makeResponse(questions[0], ['a'], false, 0, 100)];
-    expect(adaptiveDifficulty(questions, session.responses)).toBe('advanced');
+    expect(adaptiveDifficulty(questions, session.responses)).toBe(
+      'intermediate',
+    );
     const advanced = advanceSession(session, 200);
-    expect(advanced.questions[1].id).toBe('hard');
+    expect(advanced.questions[1].id).toBe('same');
     expect(advanced.questions[3].id).toBe('other');
     expect(advanced.questionStartedAt).toBe(200);
-    expect(new Set(advanced.questions.map((q) => q.id)).size).toBe(4);
+    expect(new Set(advanced.questions.map((q) => q.id)).size).toBe(5);
     session.responses = [makeResponse(questions[0], ['b'], false, 0, 100)];
-    expect(adaptiveDifficulty(questions, session.responses)).toBe('beginner');
+    expect(adaptiveDifficulty(questions, session.responses)).toBe(
+      'intermediate',
+    );
     expect(adaptiveDifficulty(questions, [])).toBe('intermediate');
   });
   it('keeps snapshot questions and leaves unvisited questions unanswered', () => {

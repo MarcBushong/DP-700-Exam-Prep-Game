@@ -39,15 +39,31 @@ export const defaultConfig: QuizConfig = {
   practiceMode: 'all',
 };
 
-export const preferencesSchema = z.object({
-  theme: z.enum(['dark', 'light', 'system']),
-  reducedBanter: z.boolean(),
-  reducedMotion: z.boolean(),
-});
+export const banterLevels = ['full', 'balanced', 'reduced', 'none'] as const;
+export type BanterLevel = (typeof banterLevels)[number];
+export const preferencesSchema = z
+  .object({
+    theme: z.enum(['dark', 'light', 'system']),
+    reducedBanter: z.boolean(),
+    banterLevel: z.enum(banterLevels).optional(),
+    reducedMotion: z.boolean(),
+  })
+  .transform((preferences) => {
+    const banterLevel =
+      preferences.banterLevel ??
+      (preferences.reducedBanter ? 'reduced' : 'balanced');
+    return {
+      ...preferences,
+      banterLevel,
+      reducedBanter: banterLevel === 'reduced' || banterLevel === 'none',
+    };
+  });
 export type Preferences = z.infer<typeof preferencesSchema>;
+export type PreferencesInput = z.input<typeof preferencesSchema>;
 export const defaultPreferences: Preferences = {
   theme: 'dark',
   reducedBanter: false,
+  banterLevel: 'balanced',
   reducedMotion: false,
 };
 
@@ -117,6 +133,7 @@ export interface ActiveSession {
   groundedAt: string;
   currentIndex: number;
   questionStartedAt: number;
+  actualDifficulty?: (typeof difficulties)[number];
 }
 
 export const labels: Record<string, string> = {

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   ArrowRight,
   BookOpen,
@@ -27,6 +27,10 @@ import {
   QuestionSources,
 } from '../components/QuestionContent';
 import { ConfirmDialog, EmptyState, LearnLink } from '../components/common';
+import { useReaction } from '../features/personality/useReaction';
+import { answerCategories } from '../features/personality/reactions';
+import { HostReaction } from '../features/personality/HostReaction';
+import { DocumentationReactions } from '../features/personality/DocumentationReactions';
 
 function clock(seconds: number) {
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
@@ -68,7 +72,7 @@ export function PlayPage() {
 function PlayingQuestion({ active }: { active: ActiveSession }) {
   const {
     taxonomy,
-    preferences,
+    history,
     submitAnswer,
     nextQuestion,
     finishSession,
@@ -89,6 +93,7 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
   const legend = useRef<HTMLLegendElement>(null);
   const feedback = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const submitted = Boolean(response);
   const visibility = feedbackVisibility(active.config.answerMode, submitted);
   const now = useNow(!submitted || active.config.timerMode === 'session');
@@ -110,11 +115,13 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
     .find((item) => item.id === question.skill);
   let currentStreak = 0;
   let bestStreak = 0;
+  let previousStreak = 0;
   if (scoringAllowed) {
     for (const item of active.responses) {
       const answered = active.questions.find(
         (candidate) => candidate.id === item.questionId,
       );
+      if (item.questionId === question.id) previousStreak = currentStreak;
       currentStreak =
         answered && isCorrect(answered, item.selectedAnswer)
           ? currentStreak + 1
@@ -122,6 +129,78 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
       bestStreak = Math.max(bestStreak, currentStreak);
     }
   }
+  const domain = taxonomy.domains.find(
+    (item) => item.id === question.objectiveDomain,
+  );
+  const reactionContext = {
+    domainId: question.objectiveDomain,
+    domain: domain?.title,
+    skill: skill?.title,
+    difficulty: question.difficulty,
+    streak: currentStreak,
+    answerNumber: active.currentIndex + 1,
+  };
+  const earlier = history
+    .flatMap((result) =>
+      result.questions.map((candidate) => ({
+        question: candidate,
+        response: result.responses.find(
+          (item) => item.questionId === candidate.id,
+        ),
+      })),
+    )
+    .find(
+      (item) =>
+        Boolean(item.response?.selectedAnswer.length) &&
+        (item.question.id === question.id ||
+          (question.conceptId &&
+            item.question.conceptId === question.conceptId)),
+    );
+  const previousResponse = active.responses
+    .filter((item) => item.questionId !== question.id)
+    .at(-1);
+  const previousQuestion = active.questions.find(
+    (item) => item.id === previousResponse?.questionId,
+  );
+  const reaction = useReaction(
+    active.id,
+    `answer:${question.id}`,
+    answerCategories({
+      correct: isCorrect(question, visibleSelected),
+      selected: visibleSelected,
+      correctAnswer: question.correctAnswer,
+      timedOut: response?.timedOut ?? false,
+      difficulty: question.difficulty,
+      streak: currentStreak,
+      previousStreak,
+      previousCorrect: earlier
+        ? isCorrect(earlier.question, earlier.response?.selectedAnswer ?? [])
+        : undefined,
+      recovered: Boolean(
+        previousQuestion &&
+        previousResponse &&
+        !isCorrect(previousQuestion, previousResponse.selectedAnswer),
+      ),
+    }),
+    reactionContext,
+    'answer',
+    submitted && visibility.answer,
+  );
+  const startEvent =
+    location.state?.practiceEvent === 'retry'
+      ? 'retry'
+      : location.state?.practiceEvent === 'weak' ||
+          active.config.practiceMode === 'weak'
+        ? 'weak-practice'
+        : 'start';
+  const startReaction = useReaction(
+    active.id,
+    'session-start',
+    [startEvent],
+    {},
+    'context',
+    active.currentIndex === 0 && !submitted,
+  );
   useEffect(() => {
     legend.current?.focus({ preventScroll: true });
   }, []);
@@ -182,6 +261,9 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
           </span>
           <span>{active.responses.length} submitted</span>
         </div>
+        {active.currentIndex === 0 && !submitted && (
+          <HostReaction reaction={startReaction} />
+        )}
         <progress
           max={active.questions.length}
           value={active.responses.length}
@@ -214,7 +296,7 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
                 <CodeSnippet question={question} />
                 <p className="selection-help" id={`answer-help-${question.id}`}>
                   {question.questionType === 'multi-select'
-                    ? 'Select all correct answers. Exact match required; no partial credit.'
+                    ? `Choose ${question.correctAnswer.length} answers. Exact match required; no partial credit.`
                     : 'Select one answer.'}
                 </p>
                 <div className="answer-options">
@@ -300,22 +382,42 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
             </form>
           </section>
           {submitted && (
-            <div ref={feedback} tabIndex={-1} className="feedback-wrap">
-              <p className="submission-status" role="status">
+            <div
+              ref={feedback}
+              tabIndex={-1}
+              className="feedback-wrap"
+              aria-describedby={`feedback-status-${question.id}`}
+            >
+              <p
+                className="submission-status"
+                role="status"
+                aria-label="Answer feedback"
+                id={`feedback-status-${question.id}`}
+              >
                 {response?.timedOut
                   ? 'Time’s up. This question was recorded as unanswered.'
                   : !response?.selectedAnswer.length
                     ? 'Question skipped.'
-                    : 'Answer recorded.'}
+                    : visibility.answer
+                      ? isCorrect(question, visibleSelected)
+                        ? 'Correct.'
+                        : 'Incorrect.'
+                      : 'Answer recorded.'}
                 {!visibility.answer &&
                   ' Correctness and answers will be revealed at completion.'}
+                {visibility.explanation && (
+                  <span className="sr-only">
+                    {' '}
+                    Explanation: {question.explanation}
+                  </span>
+                )}
               </p>
               {visibility.explanation && (
                 <QuestionExplanation
                   question={question}
                   selected={visibleSelected}
                   revealAnswer={visibility.answer}
-                  banter={visibility.answer && !preferences.reducedBanter}
+                  reaction={reaction}
                 />
               )}
               <div className="next-action">
@@ -372,15 +474,17 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
                 View sources <BookOpen size={17} aria-hidden="true" />
               </button>
               {visibility.answer && (
-                <ul className="compact-source-links">
-                  {question.sourceUrls.map((url, index) => (
-                    <li key={url}>
-                      <LearnLink href={url}>
-                        {question.documentationTitles[index]}
-                      </LearnLink>
-                    </li>
-                  ))}
-                </ul>
+                <DocumentationReactions scope={active.id}>
+                  <ul className="compact-source-links">
+                    {question.sourceUrls.map((url, index) => (
+                      <li key={url}>
+                        <LearnLink href={url}>
+                          {question.documentationTitles[index]}
+                        </LearnLink>
+                      </li>
+                    ))}
+                  </ul>
+                </DocumentationReactions>
               )}
             </section>
           ) : (
