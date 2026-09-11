@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const basePath = '/DP-700-Exam-Prep-Game/';
+const basePath = '/The-Certification-Dungeon/';
 const baseURL = `http://127.0.0.1:4175${basePath}`;
 
 export default defineConfig({
