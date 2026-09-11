@@ -12,7 +12,7 @@ Certification. Not an official exam, practice assessment, or source of real exam
 
 ## Launch in your browser
 
-**[Enter The Certification Dungeon](https://marcbushong.github.io/DP-700-Exam-Prep-Game/)**
+**[Enter The Certification Dungeon](https://marcbushong.github.io/The-Certification-Dungeon/)**
 
 The app is live on GitHub Pages. This repository is public, so a GitHub Pro
 upgrade is not required to host it. The app and its bundled question bank are public.
@@ -228,7 +228,7 @@ npm run test:e2e
 
 On Linux CI, use `npx playwright install --with-deps chromium`.
 Browser tests build the production app and start their own loopback-only Vite
-preview instance at `/DP-700-Exam-Prep-Game/`, matching the GitHub Pages project
+preview instance at `/The-Certification-Dungeon/`, matching the GitHub Pages project
 path. They cover launch, navigation, refresh, quizzes, exports, local storage,
 and accessibility. Chromium is a test dependency, not a requirement for end users;
 use a modern browser to study.
@@ -268,7 +268,7 @@ and study storage remain browser-side.
 The workflow uses GitHub's deployment token, not a personal access token.
 
 Routes can be bookmarked, for example
-[challenge setup](https://marcbushong.github.io/DP-700-Exam-Prep-Game/#/setup).
+[challenge setup](https://marcbushong.github.io/The-Certification-Dungeon/#/setup).
 Saved results are available only in the browser profile that created them.
 Local development and the hosted site use separate browser storage; local results
 do not automatically move to the hosted app. Reloading an unfinished quiz still
@@ -592,7 +592,7 @@ certification.
 | Source check fails offline         | Retry when online; do not claim a fresh source review                                       |
 | Invalid bank blocks startup/build  | Correct the reported schema, duplicate, taxonomy, or citation error                         |
 | GitHub Pages launch link gives 404 | Enable Pages with GitHub Actions, set `PAGES_ENABLED=true`, and run Quality gates on `main` |
-| Direct hosted route gives 404      | Use the app's hash link, such as `/DP-700-Exam-Prep-Game/#/setup`                           |
+| Direct hosted route gives 404      | Use the app's hash link, such as `/The-Certification-Dungeon/#/setup`                       |
 | Unfinished session disappeared     | Reload resets in-memory play; only completed results persist                                |
 
 ## Contributing, license, and limitations
