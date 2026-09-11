@@ -139,6 +139,7 @@ describe('accessible challenge interface', () => {
     expect(skip).toHaveFocus();
     await user.keyboard('{Enter}');
     expect(skip).toHaveAttribute('href', '#main-content');
+    expect(screen.getByRole('main')).toHaveFocus();
   });
 
   it('focuses the main content after a subsequent SPA route transition', async () => {

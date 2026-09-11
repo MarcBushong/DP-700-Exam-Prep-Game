@@ -2,7 +2,7 @@
 
 **DP-700 Exam Prep Without the Boring Parts**
 
-A local, documentation-grounded trivia app for practicing data engineering with
+A browser-based, documentation-grounded trivia app for practicing data engineering with
 Microsoft Fabric. Configure a challenge, work through original questions, learn
 why each alternative does or does not fit, and turn actual missed topics into a
 focused study plan.
@@ -10,7 +10,22 @@ focused study plan.
 **Unofficial study aid. Not affiliated with or endorsed by Microsoft
 Certification. This is not an official practice exam.**
 
-## Quick start
+## Launch in your browser
+
+**[Launch Fabric Data Engineer Challenge](https://marcbushong.github.io/DP-700-Exam-Prep-Game/)**
+
+**Hosting setup pending:** this link will work after the repository owner upgrades
+to GitHub Pro and completes the [GitHub Pages setup](#github-pages-deployment).
+GitHub Free does not support Pages for this private repository. The repository
+will stay private; the published app and its bundled question bank will be public.
+
+Once published, open the link in a modern desktop or mobile browser with JavaScript
+enabled. The entire app runs in your browser: challenge setup, quizzes, scoring,
+review, settings, and result downloads. No installation, Node.js, account, API key,
+or Azure subscription is needed to play. Study progress stays in your browser's
+local storage, not on GitHub. Loading the app requires internet access.
+
+## Run locally or develop
 
 Install **Node.js 22 LTS (22.12 or newer)** and npm, then run from this repository:
 
@@ -19,7 +34,7 @@ npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite (normally `http://127.0.0.1:5173`).
+Open the local URL printed by Vite (normally [http://127.0.0.1:5173](http://127.0.0.1:5173)).
 No account, API key, database, Azure subscription, Docker, or environment
 variables are required. Initial dependency installation needs internet access.
 The quiz itself uses bundled content and does not call an AI service.
@@ -118,8 +133,11 @@ npm run test:e2e
 ```
 
 On Linux CI, use `npx playwright install --with-deps chromium`.
-Browser tests start their own loopback-only Vite instance. Chromium is a test
-dependency, not a requirement for end users; use a modern browser to study.
+Browser tests build the production app and start their own loopback-only Vite
+preview instance at `/DP-700-Exam-Prep-Game/`, matching the GitHub Pages project
+path. They cover launch, navigation, refresh, quizzes, exports, local storage,
+and accessibility. Chromium is a test dependency, not a requirement for end users;
+use a modern browser to study.
 
 Production build:
 
@@ -129,9 +147,36 @@ npm run preview
 ```
 
 Vite's preview server is for local inspection, not an internet-facing production
-server. To distribute the static build, serve `dist/` using a static host with
-SPA history fallback to `index.html`. Do not open `index.html` with `file://`.
-Docker is intentionally not included.
+server. To distribute the static build, serve `dist/` using any static HTTPS host.
+Relative asset URLs and hash navigation (such as `/#/setup`) support both a domain
+root and a project subdirectory without server-side SPA rewrites. Do not open
+`index.html` with `file://`. Docker is intentionally not included.
+
+## GitHub Pages deployment
+
+Deployment is prepared in [the Quality gates workflow](.github/workflows/ci.yml)
+but remains disabled until `PAGES_ENABLED` is set to `true`. Quality checks still
+run without a paid plan, and no repository visibility change is required.
+
+1. Upgrade the repository owner's account to GitHub Pro (or another plan supporting Pages for private repositories).
+2. Merge these changes into `main`.
+3. In repository **Settings > Pages > Build and deployment**, select **GitHub Actions** as the source.
+4. In **Settings > Secrets and variables > Actions > Variables**, add a repository variable named `PAGES_ENABLED` with the value `true`. This is a deployment switch, not a secret or browser setting.
+5. Open **Actions > Quality gates > Run workflow**, select `main`, and run it.
+6. After **Deploy browser app** succeeds, open the launch link above.
+
+Subsequent pushes to `main` publish automatically after the quality gates pass.
+Pull requests and manual runs on other branches never deploy. Only the built
+`dist/` files are uploaded; the source repository stays private. GitHub hosts the
+static files, while all quiz execution and study storage remain browser-side.
+The workflow uses GitHub's deployment token, not a personal access token.
+
+Routes can be bookmarked, for example
+[challenge setup](https://marcbushong.github.io/DP-700-Exam-Prep-Game/#/setup).
+Saved results are available only in the browser profile that created them.
+Local development and the hosted site use separate browser storage; local results
+do not automatically move to the hosted app. Reloading an unfinished quiz still
+discards that in-memory session.
 
 ## Microsoft Learn MCP configuration
 
@@ -310,20 +355,21 @@ certification.
 
 ## Troubleshooting
 
-| Symptom                           | Action                                                                   |
-| --------------------------------- | ------------------------------------------------------------------------ |
-| Node/Vite syntax or engine error  | Use Node 22.12+; Node 22 LTS is recommended                              |
-| `npm` is not found                | Install Node and reopen the terminal                                     |
-| Port is in use                    | Use Vite's printed alternative port, or `npm run dev -- --port 5174`     |
-| Few or zero matching questions    | Broaden skill, format, difficulty, or domain filters                     |
-| Saved data warning                | Export results, check browser storage permissions, then clear app data   |
-| Missing Playwright executable     | Run `npx playwright install chromium`                                    |
-| MCP returns 405 in browser        | Use Copilot MCP tools or the included SDK CLI, not browser navigation    |
-| MCP tool/schema changed           | Discover tools and review the client; do not fabricate successful output |
-| Source check fails offline        | Retry when online; do not claim a fresh source review                    |
-| Invalid bank blocks startup/build | Correct the reported schema, duplicate, taxonomy, or citation error      |
-| Direct hosted route gives 404     | Configure the static server's SPA fallback to `index.html`               |
-| Unfinished session disappeared    | Reload resets in-memory play; only completed results persist             |
+| Symptom                            | Action                                                                         |
+| ---------------------------------- | ------------------------------------------------------------------------------ |
+| Node/Vite syntax or engine error   | Use Node 22.12+; Node 22 LTS is recommended                                    |
+| `npm` is not found                 | Install Node and reopen the terminal                                           |
+| Port is in use                     | Use Vite's printed alternative port, or `npm run dev -- --port 5174`           |
+| Few or zero matching questions     | Broaden skill, format, difficulty, or domain filters                           |
+| Saved data warning                 | Export results, check browser storage permissions, then clear app data         |
+| Missing Playwright executable      | Run `npx playwright install chromium`                                          |
+| MCP returns 405 in browser         | Use Copilot MCP tools or the included SDK CLI, not browser navigation          |
+| MCP tool/schema changed            | Discover tools and review the client; do not fabricate successful output       |
+| Source check fails offline         | Retry when online; do not claim a fresh source review                          |
+| Invalid bank blocks startup/build  | Correct the reported schema, duplicate, taxonomy, or citation error            |
+| GitHub Pages launch link gives 404 | Complete the GitHub Pro/Pages setup above and wait for a successful deployment |
+| Direct hosted route gives 404      | Use the app's hash link, such as `/DP-700-Exam-Prep-Game/#/setup`              |
+| Unfinished session disappeared     | Reload resets in-memory play; only completed results persist                   |
 
 ## Contributing, license, and limitations
 

@@ -103,7 +103,15 @@ export function Shell() {
         : 'dark';
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main-content">
+      <a
+        className="skip-link"
+        href="#main-content"
+        onClick={(event) => {
+          // Keep the hash route intact when skipping to the main landmark.
+          event.preventDefault();
+          main.current?.focus();
+        }}
+      >
         Skip to main content
       </a>
       <aside className="sidebar">
