@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const basePath = '/DP-700-Exam-Prep-Game/';
+const baseURL = `http://127.0.0.1:4175${basePath}`;
+
 export default defineConfig({
   testDir: './tests/e2e',
   fullyParallel: true,
@@ -8,7 +11,7 @@ export default defineConfig({
   workers: process.env.CI ? 2 : 2,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: 'http://127.0.0.1:4175',
+    baseURL,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
@@ -17,9 +20,9 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: 'npm run dev -- --port 4175 --strictPort',
-    url: 'http://127.0.0.1:4175',
+    command: `npm run build && npm run preview -- --port 4175 --strictPort --base ${basePath}`,
+    url: baseURL,
     reuseExistingServer: false,
-    timeout: 60000,
+    timeout: 120000,
   },
 });

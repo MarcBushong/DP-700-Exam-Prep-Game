@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { GameProvider } from './features/quiz/GameProvider';
 import { Shell } from './components/Shell';
 import { HomePage } from './pages/HomePage';
@@ -31,9 +31,9 @@ export function AppRoutes() {
 export default function App() {
   return (
     <GameProvider>
-      <BrowserRouter>
+      <HashRouter>
         <AppRoutes />
-      </BrowserRouter>
+      </HashRouter>
     </GameProvider>
   );
 }

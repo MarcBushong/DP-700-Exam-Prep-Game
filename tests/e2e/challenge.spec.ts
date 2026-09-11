@@ -58,7 +58,7 @@ async function configuredStart(
     ({ key, value }) => localStorage.setItem(key, JSON.stringify(value)),
     { key: STORAGE_KEY, value: data },
   );
-  await page.goto('/setup');
+  await page.goto('#/setup');
   await page
     .getByRole('button', { name: 'Begin challenge', exact: true })
     .click();
@@ -68,7 +68,7 @@ async function configuredStart(
 test('configure, answer, inspect documentation, export, review and retry missed questions', async ({
   page,
 }) => {
-  await page.goto('/setup');
+  await page.goto('#/setup');
   await page.getByRole('radio', { name: '5', exact: true }).check();
   await page
     .getByLabel('Question format', { exact: true })
@@ -137,6 +137,15 @@ test('configure, answer, inspect documentation, export, review and retry missed 
     percentage: 80,
   });
   expect(snapshot.responses.filter((r) => r.flagged)).toHaveLength(1);
+  const resultsURL = page.url();
+  await page.reload();
+  await expect(page).toHaveURL(resultsURL);
+  await expect(
+    page.getByRole('link', {
+      name: /review all|review every|question review/i,
+    }),
+  ).toBeVisible();
+  expect((await saved(page)).history[0].id).toBe(snapshot.id);
   expect(
     (
       await new AxeBuilder({ page })
@@ -156,6 +165,9 @@ test('configure, answer, inspect documentation, export, review and retry missed 
     .getByRole('link', { name: /review all|review every|question review/i })
     .click();
   await page.waitForURL(/\/review\//);
+  const reviewURL = page.url();
+  await page.reload();
+  await expect(page).toHaveURL(reviewURL);
   for (const question of snapshot.questions)
     await expect(
       page.getByText(question.question, { exact: true }),
@@ -167,7 +179,7 @@ test('configure, answer, inspect documentation, export, review and retry missed 
         .analyze()
     ).violations,
   ).toEqual([]);
-  await page.goto(`/results/${snapshot.id}`);
+  await page.goto(`#/results/${snapshot.id}`);
   await page.getByRole('button', { name: /^Retry missed/ }).click();
   const retried = await currentQuestion(page);
   expect(retried.id).toBe(snapshot.questions[1].id);
@@ -297,7 +309,7 @@ test('per-question timeout locks unanswered and next question receives a new clo
 });
 
 test('persists setup choices and theme across reload', async ({ page }) => {
-  await page.goto('/setup');
+  await page.goto('#/setup');
   await page.getByLabel('Difficulty', { exact: true }).selectOption('advanced');
   await page.getByRole('radio', { name: '20', exact: true }).check();
   await page.reload();
@@ -307,7 +319,7 @@ test('persists setup choices and theme across reload', async ({ page }) => {
   await expect(
     page.getByRole('radio', { name: '20', exact: true }),
   ).toBeChecked();
-  await page.goto('/settings');
+  await page.goto('#/settings');
   await page.getByRole('radio', { name: /light/i }).check();
   await page.reload();
   expect((await saved(page)).preferences.theme).toBe('light');

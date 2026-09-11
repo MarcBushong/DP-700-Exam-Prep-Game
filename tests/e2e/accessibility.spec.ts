@@ -10,9 +10,16 @@ for (const route of ['/', '/setup', '/settings', '/about']) {
       if (new URL(request.url()).origin !== new URL(baseURL!).origin)
         remoteRequests.push(request.url());
     });
-    await page.goto(route);
+    const response = await page.goto(route === '/' ? './' : `#${route}`);
+    expect(response?.status()).toBe(200);
     await expect(page.getByRole('main')).toBeVisible();
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    const heading = await page.getByRole('heading', { level: 1 }).innerText();
+    const url = page.url();
+    await page.reload();
+    await expect(page).toHaveURL(url);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(heading);
+    expect(new URL(page.url()).pathname).toBe(new URL(baseURL!).pathname);
     const accessibility = await new AxeBuilder({ page })
       .withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
       .analyze();
@@ -27,19 +34,26 @@ for (const route of ['/', '/setup', '/settings', '/about']) {
   });
 }
 
-test('keyboard skip navigation and forced-color/reduced-motion display', async ({
-  page,
-}) => {
-  await page.emulateMedia({ reducedMotion: 'reduce', forcedColors: 'active' });
-  await page.goto('/');
-  await expect(page.getByRole('main')).toBeVisible();
-  await page.keyboard.press('Tab');
-  const skip = page.getByRole('link', { name: /skip/i });
-  await expect(skip).toBeFocused();
-  await page.keyboard.press('Enter');
-  await expect(page.getByRole('main')).toBeFocused();
-  expect(
-    (await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze())
-      .violations,
-  ).toEqual([]);
-});
+for (const route of ['/', '/setup', '/settings', '/about']) {
+  test(`keyboard skip preserves ${route} with forced colors and reduced motion`, async ({
+    page,
+  }) => {
+    await page.emulateMedia({
+      reducedMotion: 'reduce',
+      forcedColors: 'active',
+    });
+    await page.goto(`#${route}`);
+    await expect(page.getByRole('main')).toBeVisible();
+    const url = page.url();
+    await page.keyboard.press('Tab');
+    const skip = page.getByRole('link', { name: /skip/i });
+    await expect(skip).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page.getByRole('main')).toBeFocused();
+    await expect(page).toHaveURL(url);
+    expect(
+      (await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze())
+        .violations,
+    ).toEqual([]);
+  });
+}
