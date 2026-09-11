@@ -15,6 +15,23 @@
 - Refresh the grounding and objective manifests when documentation changes.
   Never invent MCP responses, citations, or validation dates.
 - Run question, source, and coverage validation after content changes.
+- Follow `docs/question-bank-maintenance.md` and the generation/verification
+  prompts. Generation scaffolding is not an AI model or proof of review.
+- Authoring and verification are separate passes/contexts. Re-evaluate every
+  option against actual evidence; never batch-stamp candidates verified.
+- Assign stable fact-level `conceptId` values. Resolve blocking duplicates,
+  inspect quality warnings, and preserve honest review notes and dates.
+- Only complete, verified, nonstale records enter gameplay. Keep pending,
+  rejected, and stale candidates reportable, but exclude them from available
+  coverage. Legacy metadata defaults to manual review, not verification.
+- Source reviews newer than question snapshots require independent re-review.
+  Freshness is relative to checked-in evidence, never "always up to date."
+- Use `questions:verify -- --reviews ...` for machine-readable independent
+  attestations; hashes bind exact content, not semantic correctness.
+- Commit independently authored attestations for every candidate/status in
+  `src/data/verification-reviews.json`. Default verification and the build
+  require this ledger; never generate or rubber-stamp attestations to bypass
+  failures. Custom `--questions` without `--reviews` is metadata-only authoring.
 - MCP retrieves documentation; it is not a question-generation model. The app
   uses a versioned, build-time-grounded bank, not runtime AI.
 - Keep all study data local. No telemetry, browser API keys, unsafe HTML, or

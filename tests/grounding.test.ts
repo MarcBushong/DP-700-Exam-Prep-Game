@@ -13,12 +13,25 @@ import {
 } from '../src/features/grounding/schema';
 import { checkOnlineSource, safeSourceUrl } from '../scripts/validate-sources';
 import { buildReport } from '../scripts/content-report';
+import {
+  question,
+  manifest as fixtureManifest,
+  taxonomy as fixtureTaxonomy,
+} from './fixtures';
 
-function bank() {
+function productionBank() {
   return validateContent(
     structuredClone(questionsJson),
     structuredClone(manifestJson),
     structuredClone(objectivesJson),
+  );
+}
+
+function bank() {
+  return validateContent(
+    [question()],
+    structuredClone(fixtureManifest),
+    structuredClone(fixtureTaxonomy),
   );
 }
 
@@ -32,9 +45,9 @@ function invalidQuestion(change: (q: Question) => void, message?: RegExp) {
 
 describe('grounded original content bank', () => {
   it('validates the actual production JSON without discarding unknown question fields', () => {
-    const { questions, manifest, taxonomy } = bank();
-    expect(questions).toEqual(questionsJson);
-    expect(questions).toHaveLength(36);
+    const { questions, allQuestions, manifest, taxonomy } = productionBank();
+    expect(allQuestions).toEqual(questionsJson);
+    expect(questions.length).toBeGreaterThanOrEqual(150);
     expect(manifest.sources.length).toBeGreaterThan(20);
     expect(taxonomy.studyGuideEffectiveDate).toBe('July 21, 2026');
     expect(
@@ -43,11 +56,11 @@ describe('grounded original content bank', () => {
   });
 
   it('samples every domain and skill and balances editorial difficulty', () => {
-    const { questions, taxonomy } = bank();
+    const { questions, taxonomy } = productionBank();
     for (const domain of taxonomy.domains) {
       expect(
-        questions.filter((q) => q.objectiveDomain === domain.id),
-      ).toHaveLength(12);
+        questions.filter((q) => q.objectiveDomain === domain.id).length,
+      ).toBeGreaterThanOrEqual(12);
       for (const skill of domain.skills) {
         expect(
           questions.filter((q) => q.skill === skill.id).length,
@@ -55,9 +68,13 @@ describe('grounded original content bank', () => {
       }
     }
     for (const difficulty of difficulties)
-      expect(questions.filter((q) => q.difficulty === difficulty)).toHaveLength(
-        9,
-      );
+      expect(
+        questions.filter((q) => q.difficulty === difficulty).length,
+      ).toBeGreaterThanOrEqual(9);
+    expect(
+      questions.filter((q) => ['advanced', 'expert'].includes(q.difficulty))
+        .length / questions.length,
+    ).toBeGreaterThanOrEqual(0.4);
     for (const complexity of complexities)
       expect(questions.some((q) => q.complexity === complexity)).toBe(true);
     for (const format of formats)
@@ -72,7 +89,7 @@ describe('grounded original content bank', () => {
   });
 
   it('grounds every question beyond the exam overview and explains only its distractors', () => {
-    const { questions, manifest } = bank();
+    const { questions, manifest } = productionBank();
     for (const q of questions) {
       const sources = q.sourceIds.map((id) =>
         manifest.sources.find((source) => source.sourceId === id)!,
@@ -104,15 +121,17 @@ describe('grounded original content bank', () => {
     }
   });
 
-  it('reports real coverage gaps and freshness without claiming full subskill coverage', async () => {
+  it('reports playable coverage and freshness without claiming semantic verification', async () => {
     const report = await buildReport();
     expect(report).toContain('54 subskills');
     expect(report).toContain('## Uncovered subskills');
-    expect(report).toContain('Configure Apache Airflow workspace settings');
     expect(report).toContain('Last grounded through Microsoft Learn MCP');
-    expect(report).toContain('near-duplicate pairs: 0');
+    expect(report).toContain('Playable verified questions');
+    expect(report).toContain('not answer semantics');
   });
+});
 
+describe('question and citation contract', () => {
   it('rejects an empty or malformed bank', () => {
     expect(() => validateContent([], manifestJson, objectivesJson)).toThrow();
     expect(() =>
@@ -143,6 +162,7 @@ describe('grounded original content bank', () => {
     });
     invalidQuestion((q) => {
       q.sourceIds[0] = 'not-a-source';
+      q.verifiedAgainstSourceIds = [...q.sourceIds];
     }, /unknown citation/i);
   });
 
@@ -172,7 +192,8 @@ describe('grounded original content bank', () => {
 
   it('rejects citing only the top-level study guide', () => {
     const { questions, manifest, taxonomy } = bank();
-    const source = manifest.sources.find((s) => s.sourceId === 'study-guide')!;
+    const source = manifest.sources[0];
+    source.url = taxonomy.studyGuideUrl;
     questions[0].sourceIds = [source.sourceId];
     questions[0].sourceUrls = [source.url];
     questions[0].documentationTitles = [source.title];
@@ -219,6 +240,7 @@ describe('grounded original content bank', () => {
 
   it('rejects duplicate IDs and normalized duplicate question text', () => {
     const { questions, manifest, taxonomy } = bank();
+    questions.push(structuredClone(questions[0]));
     questions[1].id = questions[0].id;
     expect(() => validateContent(questions, manifest, taxonomy)).toThrow(
       /Duplicate question ID/i,
@@ -226,7 +248,7 @@ describe('grounded original content bank', () => {
     questions[1].id = 'distinct-id';
     questions[1].question = `${questions[0].question.toUpperCase()} !!!`;
     expect(() => validateContent(questions, manifest, taxonomy)).toThrow(
-      /Duplicate question text/i,
+      /Duplicate/i,
     );
   });
 
@@ -269,6 +291,29 @@ describe('safe source validation', () => {
     );
 
   it.each([
+    'https://learn.microsoft.com/en-us/power-bi/connect-data/refresh-data',
+    'https://learn.microsoft.com/en-us/power-bi/connect-data/incremental-refresh-overview',
+    'https://learn.microsoft.com/en-us/power-bi/connect-data/refresh-data#data-refresh',
+  ])('accepts direct official Power BI documentation %s', (candidate) => {
+    expect(learnUrlSchema.safeParse(candidate).success).toBe(true);
+    expect(safeSourceUrl(candidate).href).toBe(candidate);
+  });
+
+  it.each([
+    'http://learn.microsoft.com/en-us/power-bi/connect-data/refresh-data',
+    'https://learn.microsoft.com.evil.example/en-us/power-bi/connect-data/refresh-data',
+    'https://example.com/en-us/power-bi/connect-data/refresh-data',
+    'https://learn.microsoft.com:444/en-us/power-bi/connect-data/refresh-data',
+    'https://learn.microsoft.com/en-us/power-bi/connect-data/refresh-data?view=example',
+    'https://learn.microsoft.com/en-us/power-bi/knowledge-check',
+    'https://learn.microsoft.com/en-us/power-bi/%72efresh-data',
+    'https://learn.microsoft.com/en-us/power-bi-examples/connect-data/refresh-data',
+  ])('retains the source guards for Power BI URLs %s', (candidate) => {
+    expect(learnUrlSchema.safeParse(candidate).success).toBe(false);
+    expect(() => safeSourceUrl(candidate)).toThrow();
+  });
+
+  it.each([
     'http://learn.microsoft.com/en-us/fabric/example',
     'https://example.com/en-us/fabric/example',
     'https://learn.microsoft.com.evil.example/en-us/fabric/example',
@@ -277,6 +322,9 @@ describe('safe source validation', () => {
     'https://learn.microsoft.com/en-us/search?terms=fabric',
     'https://learn.microsoft.com/en-us/fabric/example?redirect=https://example.com',
     'https://learn.microsoft.com/api/mcp',
+    ' https://learn.microsoft.com/en-us/fabric/example',
+    'https://learn.microsoft.com/en-us/fabric/<example>',
+    'https://learn.microsoft.com/en-us/fabric/example path',
     'file:///C:/documents/example.html',
   ])('rejects unsafe or nondocument source URL %s', (candidate) => {
     expect(learnUrlSchema.safeParse(candidate).success).toBe(false);

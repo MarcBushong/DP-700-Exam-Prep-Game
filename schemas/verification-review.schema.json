@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "requestId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "questionId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "authorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reviewerId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "questionFingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "reviewedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": ["verified", "manual-review-required", "rejected", "stale"]
+          },
+          "sourceReviews": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "url": {
+                  "type": "string"
+                },
+                "evidencePath": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "retrievedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "lastReviewedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                },
+                "supportingSummary": {
+                  "type": "string",
+                  "minLength": 20
+                }
+              },
+              "required": [
+                "sourceId",
+                "url",
+                "evidencePath",
+                "retrievedAt",
+                "lastReviewedAt",
+                "supportingSummary"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "choiceReviews": {
+            "minItems": 2,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "choiceId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "assessment": {
+                  "type": "string",
+                  "enum": ["supported", "contradicted", "ambiguous"]
+                },
+                "rationale": {
+                  "type": "string",
+                  "minLength": 20
+                },
+                "sourceIds": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": ["choiceId", "assessment", "rationale", "sourceIds"],
+              "additionalProperties": false
+            }
+          },
+          "checks": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "enum": [
+                "answerDefensible",
+                "correctOptionsSupported",
+                "distractorsIncorrect",
+                "explanationsSupported",
+                "directSources",
+                "featureStatus",
+                "currentTerminology",
+                "prerequisitesComplete",
+                "codeReviewed",
+                "originalContent",
+                "duplicatesReviewed",
+                "qualityReviewed"
+              ]
+            },
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "required": [
+              "answerDefensible",
+              "correctOptionsSupported",
+              "distractorsIncorrect",
+              "explanationsSupported",
+              "directSources",
+              "featureStatus",
+              "currentTerminology",
+              "prerequisitesComplete",
+              "codeReviewed",
+              "originalContent",
+              "duplicatesReviewed",
+              "qualityReviewed"
+            ]
+          },
+          "verificationNotes": {
+            "type": "string",
+            "minLength": 40
+          },
+          "confidenceReason": {
+            "type": "string",
+            "minLength": 20
+          }
+        },
+        "required": [
+          "questionId",
+          "authorId",
+          "reviewerId",
+          "questionFingerprint",
+          "reviewedAt",
+          "verdict",
+          "sourceReviews",
+          "choiceReviews",
+          "checks",
+          "verificationNotes",
+          "confidenceReason"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["schemaVersion", "requestId", "reviews"],
+  "additionalProperties": false,
+  "$comment": "Generated from Zod workflow schemas. Cross-field semantic refinements additionally run in TypeScript; JSON Schema alone is not sufficient."
+}

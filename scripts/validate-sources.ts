@@ -4,12 +4,18 @@ import { learnUrlSchema } from '../src/features/grounding/schema';
 import { isMain, loadContent } from './validate-questions';
 
 export function safeSourceUrl(value: string, allowCanonicalView = false): URL {
+  if (/[%\\\s<>"`]/.test(value))
+    throw new Error(
+      'Source URLs must not contain encoded paths, whitespace, or unsafe delimiters.',
+    );
   const url = new URL(value);
   const structuralUrl = new URL(url);
   if (
     allowCanonicalView &&
-    url.pathname.startsWith('/en-us/kusto/') &&
-    url.search === '?view=microsoft-fabric'
+    ((url.pathname.startsWith('/en-us/kusto/') &&
+      url.search === '?view=microsoft-fabric') ||
+      (url.pathname.startsWith('/en-us/sql/t-sql/') &&
+        url.search === '?view=sql-server-ver17'))
   ) {
     structuralUrl.search = '';
   }

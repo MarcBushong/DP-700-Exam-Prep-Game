@@ -14,6 +14,7 @@ import {
   Trophy,
 } from 'lucide-react';
 import { useGame } from '../features/quiz/context';
+import { isPlayableQuestion } from '../features/grounding/schema';
 import { eligibleQuestions, feedbackVisibility } from '../features/quiz/engine';
 import {
   defaultConfig,
@@ -40,6 +41,29 @@ import {
   LearnLink,
   PageHeading,
 } from '../components/common';
+import { useReaction } from '../features/personality/useReaction';
+import {
+  domainCategory,
+  scoreCategory,
+} from '../features/personality/reactions';
+import { HostReaction } from '../features/personality/HostReaction';
+import { DocumentationReactions } from '../features/personality/DocumentationReactions';
+
+function DomainReaction({
+  resultId,
+  row,
+}: {
+  resultId: string;
+  row: CategoryScore;
+}) {
+  const reaction = useReaction(
+    resultId,
+    `domain:${row.id}`,
+    [domainCategory(row.percentage)],
+    { domainId: row.id, domain: row.label },
+  );
+  return <HostReaction reaction={reaction} />;
+}
 
 function useResult() {
   const { id } = useParams();
@@ -128,13 +152,38 @@ export function ResultsPage() {
 }
 
 function ResultContent({ result }: { result: SessionResult }) {
-  const { taxonomy, bank, history, active, startSession, preferences } =
-    useGame();
+  const { taxonomy, bank, history, active, startSession } = useGame();
   const [pending, setPending] = useState<'weak' | 'retry' | null>(null);
   const [downloadMessage, setDownloadMessage] = useState('');
   const navigate = useNavigate();
   const score = scoreSession(result, taxonomy);
+  const summaryReaction = useReaction(
+    result.id,
+    'summary',
+    ['session-complete'],
+    {},
+    'summary',
+  );
+  const scoreReaction = useReaction(result.id, 'score', [
+    scoreCategory(score.percentage),
+  ]);
+  const timedOut = result.responses.some((response) => response.timedOut);
+  const timeoutReaction = useReaction(
+    result.id,
+    'timeout-summary',
+    ['time-expired'],
+    {},
+    'context',
+    timedOut,
+  );
   const missed = missedQuestions(result);
+  const retryable = missed.flatMap((question) => {
+    const current = bank.find(
+      (candidate) =>
+        candidate.id === question.id && isPlayableQuestion(candidate),
+    );
+    return current ? [current] : [];
+  });
   const skills = [...new Set(missed.map((question) => question.skill))];
   const weakConfig = { ...defaultConfig, skills, order: 'weakest' as const };
   const weakCount = skills.length
@@ -143,15 +192,18 @@ function ResultContent({ result }: { result: SessionResult }) {
   const practice = (kind: 'weak' | 'retry') => {
     if (kind === 'retry') {
       if (
-        missed.length &&
-        startSession({ ...defaultConfig, questionCount: missed.length }, missed)
+        retryable.length &&
+        startSession(
+          { ...defaultConfig, questionCount: retryable.length },
+          retryable,
+        )
       )
-        navigate('/play');
+        navigate('/play', { state: { practiceEvent: 'retry' } });
     } else if (
       weakCount &&
       startSession({ ...weakConfig, questionCount: Math.min(10, weakCount) })
     )
-      navigate('/play');
+      navigate('/play', { state: { practiceEvent: 'weak' } });
   };
   const start = (kind: 'weak' | 'retry') => {
     if (active) setPending(kind);
@@ -182,11 +234,7 @@ function ResultContent({ result }: { result: SessionResult }) {
     <div className="results-page">
       <PageHeading
         title="Challenge complete."
-        description={
-          preferences.reducedBanter
-            ? 'Your score, topic coverage, and next learning steps.'
-            : 'You showed up. You made connections. Now let’s see what’s next.'
-        }
+        description="Your score, topic coverage, and next learning steps."
       >
         <Link className="button secondary" to="/setup">
           New challenge <ArrowRight size={17} aria-hidden="true" />
@@ -232,6 +280,9 @@ function ResultContent({ result }: { result: SessionResult }) {
           </div>
         </div>
       </section>
+      <HostReaction reaction={summaryReaction} />
+      <HostReaction reaction={scoreReaction} />
+      <HostReaction reaction={timeoutReaction} />
       <dl className="result-stats">
         <div>
           <dt>
@@ -280,11 +331,11 @@ function ResultContent({ result }: { result: SessionResult }) {
           </Link>
           <button
             className="button secondary"
-            disabled={!missed.length}
+            disabled={!retryable.length}
             onClick={() => start('retry')}
           >
             <RotateCcw size={17} aria-hidden="true" /> Retry missed (
-            {missed.length})
+            {retryable.length})
           </button>
           <button
             className="button secondary"
@@ -294,10 +345,17 @@ function ResultContent({ result }: { result: SessionResult }) {
             <Target size={17} aria-hidden="true" /> Practice weak areas
           </button>
         </div>
+        {missed.length > retryable.length && (
+          <p className="small muted">
+            {missed.length - retryable.length} saved question(s) are not
+            currently verified for play. Their historical answers and citations
+            remain available in review.
+          </p>
+        )}
         {missed.length > 0 && !weakCount && (
           <p className="small muted">
             No questions in the current bank match this result’s missed skills.
-            You can still retry the saved questions.
+            Historical answers remain available in review.
           </p>
         )}
         {weakCount > 0 && (
@@ -346,6 +404,7 @@ function ResultContent({ result }: { result: SessionResult }) {
                         ? 'Small sample · insufficient to estimate mastery'
                         : 'Sampled performance · not a mastery guarantee'}
                     </p>
+                    <DomainReaction resultId={result.id} row={sampled} />
                   </>
                 ) : (
                   <>
@@ -426,35 +485,37 @@ function ResultContent({ result }: { result: SessionResult }) {
             Recommended from your actual missed or unanswered topics.
           </p>
           {score.recommendations.length ? (
-            <ol>
-              {score.recommendations.map((recommendation) => {
-                const docs = new Map(
-                  recommendation.questions.flatMap((question) =>
-                    question.sourceUrls.map(
-                      (url, index) =>
-                        [url, question.documentationTitles[index]] as const,
+            <DocumentationReactions scope={result.id}>
+              <ol>
+                {score.recommendations.map((recommendation) => {
+                  const docs = new Map(
+                    recommendation.questions.flatMap((question) =>
+                      question.sourceUrls.map(
+                        (url, index) =>
+                          [url, question.documentationTitles[index]] as const,
+                      ),
                     ),
-                  ),
-                );
-                return (
-                  <li key={recommendation.id}>
-                    <h3>{recommendation.label}</h3>
-                    <p>
-                      {recommendation.total - recommendation.correct} missed of{' '}
-                      {recommendation.total} sampled
-                      {recommendation.insufficient ? ' · small sample' : ''}
-                    </p>
-                    <ul>
-                      {[...docs].map(([url, title]) => (
-                        <li key={url}>
-                          <LearnLink href={url}>{title}</LearnLink>
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                );
-              })}
-            </ol>
+                  );
+                  return (
+                    <li key={recommendation.id}>
+                      <h3>{recommendation.label}</h3>
+                      <p>
+                        {recommendation.total - recommendation.correct} missed
+                        of {recommendation.total} sampled
+                        {recommendation.insufficient ? ' · small sample' : ''}
+                      </p>
+                      <ul>
+                        {[...docs].map(([url, title]) => (
+                          <li key={url}>
+                            <LearnLink href={url}>{title}</LearnLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  );
+                })}
+              </ol>
+            </DocumentationReactions>
           ) : (
             <p>
               You have no missed-topic recommendations for this session.{' '}
@@ -582,78 +643,82 @@ function ReviewContent({ result }: { result: SessionResult }) {
           </button>
         </EmptyState>
       )}
-      <div className="review-list">
-        {rows.map(({ question, response, correct, answered }) => (
-          <article className="panel review-question" key={question.id}>
-            <header className="review-question-header">
-              <h2>
-                Question{' '}
-                {result.questions.findIndex((item) => item.id === question.id) +
-                  1}
-              </h2>
-              <span
-                className={`status-badge ${correct ? 'status-correct' : answered ? 'status-incorrect' : ''}`}
-              >
-                {correct ? 'Correct' : answered ? 'Incorrect' : 'Unanswered'}
-              </span>
-              <FlagLabel flagged={Boolean(response?.flagged)} />
-              <span className="small muted">
-                {response
-                  ? `${(response.timeMs / 1000).toFixed(1)}s response${response.timedOut ? ' · timed out' : ''}`
-                  : 'Not submitted'}
-              </span>
-            </header>
-            <QuestionMetadata question={question} />
-            <h3 className="review-question-title">{question.question}</h3>
-            <CodeSnippet question={question} />
-            <div className="review-answer">
-              <strong>
-                Your answer
-                {(response?.selectedAnswer.length ?? 0) > 1 ? 's' : ''}
-              </strong>
-              <p>
-                {question.answerChoices
-                  .filter((choice) =>
-                    response?.selectedAnswer.includes(choice.id),
-                  )
-                  .map((choice) => choice.text)
-                  .join(' · ') || 'Unanswered'}
-              </p>
-            </div>
-            {visibility.explanation && (
-              <QuestionExplanation
-                question={question}
-                selected={response?.selectedAnswer ?? []}
-                revealAnswer={visibility.answer}
-              />
-            )}
-            {visibility.sources && (
-              <div className="review-sources">
-                <button
-                  className="button secondary"
-                  onClick={() => setSourceQuestion(question.id)}
+      <DocumentationReactions scope={result.id}>
+        <div className="review-list">
+          {rows.map(({ question, response, correct, answered }) => (
+            <article className="panel review-question" key={question.id}>
+              <header className="review-question-header">
+                <h2>
+                  Question{' '}
+                  {result.questions.findIndex(
+                    (item) => item.id === question.id,
+                  ) + 1}
+                </h2>
+                <span
+                  className={`status-badge ${correct ? 'status-correct' : answered ? 'status-incorrect' : ''}`}
                 >
-                  <BookOpen size={17} aria-hidden="true" /> View sources &
-                  objective alignment
-                </button>
-                <ul>
-                  {question.sourceUrls.map((url, index) => (
-                    <li key={url}>
-                      <LearnLink href={url}>
-                        {question.documentationTitles[index]}
-                      </LearnLink>
-                    </li>
-                  ))}
-                </ul>
+                  {correct ? 'Correct' : answered ? 'Incorrect' : 'Unanswered'}
+                </span>
+                <FlagLabel flagged={Boolean(response?.flagged)} />
+                <span className="small muted">
+                  {response
+                    ? `${(response.timeMs / 1000).toFixed(1)}s response${response.timedOut ? ' · timed out' : ''}`
+                    : 'Not submitted'}
+                </span>
+              </header>
+              <QuestionMetadata question={question} />
+              <h3 className="review-question-title">{question.question}</h3>
+              <CodeSnippet question={question} />
+              <div className="review-answer">
+                <strong>
+                  Your answer
+                  {(response?.selectedAnswer.length ?? 0) > 1 ? 's' : ''}
+                </strong>
+                <p>
+                  {question.answerChoices
+                    .filter((choice) =>
+                      response?.selectedAnswer.includes(choice.id),
+                    )
+                    .map((choice) => choice.text)
+                    .join(' · ') || 'Unanswered'}
+                </p>
               </div>
-            )}
-          </article>
-        ))}
-      </div>
+              {visibility.explanation && (
+                <QuestionExplanation
+                  question={question}
+                  selected={response?.selectedAnswer ?? []}
+                  revealAnswer={visibility.answer}
+                />
+              )}
+              {visibility.sources && (
+                <div className="review-sources">
+                  <button
+                    className="button secondary"
+                    onClick={() => setSourceQuestion(question.id)}
+                  >
+                    <BookOpen size={17} aria-hidden="true" /> View sources &
+                    objective alignment
+                  </button>
+                  <ul>
+                    {question.sourceUrls.map((url, index) => (
+                      <li key={url}>
+                        <LearnLink href={url}>
+                          {question.documentationTitles[index]}
+                        </LearnLink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      </DocumentationReactions>
       {shownSource && visibility.sources && (
         <QuestionSources
           question={shownSource}
           groundedAt={result.groundedAt}
+          reactionScope={result.id}
           onClose={() => setSourceQuestion(null)}
         />
       )}

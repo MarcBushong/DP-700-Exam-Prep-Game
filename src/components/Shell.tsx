@@ -23,6 +23,7 @@ import { useGame } from '../features/quiz/context';
 import { useAppearance } from '../hooks/useAppearance';
 import { useSessionTimer } from '../hooks/useSessionTimer';
 import type { QuestionFlagContext } from '../hooks/useQuestionFlag';
+import { PersonalityProvider } from '../features/personality/PersonalityProvider';
 
 export function Shell() {
   const {
@@ -213,7 +214,7 @@ export function Shell() {
             </div>
           )}
           {notices.length > 0 && (
-            <div className="notice" role="status">
+            <div className="notice" role="status" aria-label="Study notices">
               {notices.map((notice) => (
                 <p key={notice}>{notice}</p>
               ))}
@@ -232,7 +233,9 @@ export function Shell() {
               </Link>
             </div>
           )}
-          <Outlet context={flagContext} />
+          <PersonalityProvider>
+            <Outlet context={flagContext} />
+          </PersonalityProvider>
         </main>
         <footer className="site-footer">
           <span>Original questions. Real learning.</span>

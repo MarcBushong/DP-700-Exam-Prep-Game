@@ -11,24 +11,44 @@ import {
 } from '../features/quiz/types';
 
 export const STORAGE_KEY = 'fabric-challenge:v1';
+export const RECENT_QUESTION_LIMIT = 200;
 export const savedDataSchema = z.object({
   version: z.literal(1),
   config: configSchema,
   preferences: preferencesSchema,
   history: z.array(sessionResultSchema).max(30),
+  recentQuestionIds: z
+    .array(z.string().trim().min(1))
+    .default([])
+    .transform((ids) => [...new Set(ids)].slice(0, RECENT_QUESTION_LIMIT)),
 });
 export interface SavedData {
   version: 1;
   config: QuizConfig;
   preferences: Preferences;
   history: SessionResult[];
+  recentQuestionIds: string[];
 }
 export const freshData = (): SavedData => ({
   version: 1,
   config: { ...defaultConfig },
   preferences: { ...defaultPreferences },
   history: [],
+  recentQuestionIds: [],
 });
+
+export function rememberQuestion(
+  data: SavedData,
+  questionId: string,
+): SavedData {
+  return {
+    ...data,
+    recentQuestionIds: [
+      questionId,
+      ...data.recentQuestionIds.filter((id) => id !== questionId),
+    ].slice(0, RECENT_QUESTION_LIMIT),
+  };
+}
 
 export function loadData(storage: Pick<Storage, 'getItem'>): {
   data: SavedData;

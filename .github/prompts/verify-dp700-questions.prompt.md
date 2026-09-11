@@ -1,0 +1,17 @@
+---
+description: Independently review completed DP-700 candidates against actual Microsoft Learn MCP evidence
+---
+
+Act in a **separate reviewer context** from the author. Read `docs/question-bank-maintenance.md`, the selected request/output, candidate manifest, generated diagnostics, and the review schema. Do not trust a proposed answer, confidence number, author's explanation, or related URL as proof.
+
+1. Re-evaluate each **completed** question against actual Microsoft Learn MCP documentation. Read every cited implementation page and retrieve missing support through MCP. Confirm current study-guide mapping. Do not use assessments or question banks.
+2. Determine the answer independently before accepting the proposed key. Require one defensible answer unless explicitly multi-select. For each option, write a question-specific rationale with supporting source IDs: `supported`, `contradicted` in the stated scenario, or `ambiguous`. Recheck all distractors and both explanations.
+3. Inspect feature availability and Preview labels, runtime/environment scope, prerequisites, limits, terminology, and code operators/literals. Do not infer Fabric behavior from Databricks-only features. Code is documentation-reviewed, not tenant-executed unless actually tested with authorization.
+4. Review duplicate/concept groups and quality warnings: renamed scenarios, same fact/code, answer length/position cues, implausible distractors, pronouns, grammar, absolutes, repeated openings, and omitted constraints. Deterministic warnings neither prove nor disprove semantic quality.
+5. Obtain fingerprints with `npm run questions:verify -- --questions <candidates.json> --manifest <manifest.json> --taxonomy <objectives.json>`. Bind each review to the exact candidate. Fingerprints exclude verification metadata, but include substantive content, answer mapping, concept ID, citations, and generation/validation dates.
+6. Write `reviews.json` using `schemas/verification-review.schema.json`: distinct author/reviewer identifiers, actual review timestamp, source evidence paths and real retrieval/review timestamps, every option rationale, every review check, verdict, specific verification notes, and a qualitative confidence reason. Different identifiers alone do **not** prove independence; do not fabricate identities or approvals.
+7. Only after genuine review may the maintainer manually copy the verdict, actual `verifiedAt`, exact cited `verifiedAgainstSourceIds`, notes/reason, `requiresManualReview: false`, and latest cited `sourceLastReviewedAt` into a verified candidate. Rejected/ambiguous/unsupported candidates remain nonplayable. Source updates invalidate the old review and require a new one.
+8. Run `questions:verify -- --reviews <reviews.json>` with the same candidate/manifest/taxonomy paths, then validation, source availability, duplicates, coverage, and reports. These commands **never** write verified status. A failed attestation requires correction or re-review, not bypassing validation.
+9. Hand every candidate's genuine attestation, including pending/rejected/stale verdicts, to the maintainer for the committed `src/data/verification-reviews.json` ledger. Default verification and the build require one matching review per candidate. No fabricated blanket approvals.
+
+Return counts by all four statuses, source/date evidence, resolved findings, and remaining review gaps. Never say an automated validator proved semantic correctness.

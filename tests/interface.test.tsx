@@ -17,7 +17,6 @@ import {
   vi,
 } from 'vitest';
 import { AppRoutes } from '../src/App';
-import { content } from '../src/features/grounding/content';
 import {
   GameContext,
   type GameContextValue,
@@ -28,6 +27,36 @@ import {
   type ActiveSession,
 } from '../src/features/quiz/types';
 import { makeResponse, selectQuestions } from '../src/features/quiz/engine';
+import {
+  result as makeResult,
+  question as makeQuestion,
+  taxonomy,
+  manifest,
+} from './fixtures';
+
+// UI contracts use synthetic fixtures; real shuffled-bank journeys run in Playwright.
+const content = {
+  taxonomy,
+  manifest,
+  questions: [
+    makeQuestion('ui-single'),
+    makeQuestion('ui-multi', {
+      questionType: 'multi-select',
+      correctAnswer: ['a', 'c'],
+      objectiveDomain: 'ingest',
+      skill: 'batch',
+      subskill: 'Loading',
+      difficulty: 'advanced',
+    }),
+    makeQuestion('ui-expert', {
+      objectiveDomain: 'monitor',
+      skill: 'performance',
+      subskill: 'Tuning',
+      difficulty: 'expert',
+    }),
+    makeQuestion('ui-second'),
+  ],
+};
 
 beforeAll(() => {
   Object.defineProperty(HTMLDialogElement.prototype, 'showModal', {
@@ -76,6 +105,7 @@ function game(overrides: Partial<GameContextValue> = {}): GameContextValue {
     active: null,
     lastResult: null,
     history: [],
+    recentQuestionIds: [],
     storageError: null,
     notices: [],
     setConfig: vi.fn(),
@@ -87,6 +117,7 @@ function game(overrides: Partial<GameContextValue> = {}): GameContextValue {
     finishSession: vi.fn(),
     abandonSession: vi.fn(),
     clearLocalData: vi.fn(),
+    resetQuestionHistory: vi.fn(),
     ...overrides,
   };
 }
@@ -251,6 +282,11 @@ describe('accessible challenge interface', () => {
       throw new Error('The bank must include a multi-select question.');
     const value = game({ active: session({ questions: [question] }) });
     mount(value, '/play');
+    expect(
+      screen.getByText(
+        `Choose ${question.correctAnswer.length} answers. Exact match required; no partial credit.`,
+      ),
+    ).toBeVisible();
     const first = screen.getByRole('checkbox', {
       name: question.answerChoices[0].text,
     });
@@ -282,7 +318,14 @@ describe('accessible challenge interface', () => {
           ),
         ],
       });
-      mount(game({ active }), '/play');
+      const { container } = mount(
+        game({
+          active,
+          preferences: { ...defaultPreferences, banterLevel: 'full' },
+        }),
+        '/play',
+      );
+      expect(container.querySelectorAll('[data-reaction-id]')).toHaveLength(0);
       expect(screen.queryByText(question.explanation)).not.toBeInTheDocument();
       expect(screen.queryByText(/Correct answer:/)).not.toBeInTheDocument();
       expect(
@@ -341,7 +384,14 @@ describe('accessible challenge interface', () => {
         ),
       ],
     });
-    mount(game({ active }), '/play');
+    const { container } = mount(
+      game({
+        active,
+        preferences: { ...defaultPreferences, banterLevel: 'full' },
+      }),
+      '/play',
+    );
+    expect(container.querySelectorAll('[data-reaction-id]')).toHaveLength(0);
     expect(screen.getByText(question.explanation)).toBeInTheDocument();
     expect(screen.getByText(question.deepExplanation)).toBeInTheDocument();
     expect(
@@ -499,6 +549,170 @@ describe('accessible challenge interface', () => {
     expect(value.clearLocalData).toHaveBeenCalledOnce();
   });
 
+  it.each(['full', 'balanced', 'reduced', 'none'] as const)(
+    'saves the %s banter setting without changing other preferences',
+    async (banterLevel) => {
+      const user = userEvent.setup();
+      const value = game({
+        preferences: {
+          ...defaultPreferences,
+          theme: 'light',
+          reducedMotion: true,
+          banterLevel: banterLevel === 'none' ? 'full' : 'none',
+        },
+      });
+      mount(value, '/settings');
+      const names = {
+        full: 'Full Banter',
+        balanced: 'Balanced',
+        reduced: 'Reduced Banter',
+        none: 'No Banter',
+      };
+      await user.click(
+        screen.getByRole('radio', {
+          name: new RegExp(`^${names[banterLevel]}`),
+        }),
+      );
+      expect(value.setPreferences).toHaveBeenCalledWith({
+        ...value.preferences,
+        banterLevel,
+        reducedBanter: banterLevel === 'reduced' || banterLevel === 'none',
+      });
+    },
+  );
+
+  it('resets only recent question history after explicit confirmation', async () => {
+    const user = userEvent.setup();
+    const value = game({
+      recentQuestionIds: ['seen-1'],
+      history: [makeResult([content.questions[0]])],
+    });
+    const { rerender } = mount(value, '/settings');
+    await user.click(
+      screen.getByRole('button', { name: 'Reset question history' }),
+    );
+    expect(value.resetQuestionHistory).not.toHaveBeenCalled();
+    const dialog = screen.getByRole('dialog', {
+      name: 'Reset recently shown questions?',
+    });
+    await user.click(
+      within(dialog).getByRole('button', { name: 'Reset question history' }),
+    );
+    expect(value.resetQuestionHistory).toHaveBeenCalledOnce();
+    expect(value.clearLocalData).not.toHaveBeenCalled();
+    expect(value.setPreferences).not.toHaveBeenCalled();
+    rerender(
+      <GameContext.Provider
+        value={{
+          ...value,
+          recentQuestionIds: [],
+          notices: [
+            'Recent question history reset. Saved scores and preferences are unchanged.',
+          ],
+        }}
+      >
+        <MemoryRouter initialEntries={['/settings']}>
+          <AppRoutes />
+        </MemoryRouter>
+      </GameContext.Provider>,
+    );
+    expect(screen.getAllByRole('status')).toHaveLength(1);
+    expect(
+      screen.getByRole('status', { name: 'Study notices' }),
+    ).toHaveTextContent('Saved scores and preferences are unchanged.');
+  });
+
+  it('announces the answer result and explanation ahead of non-live humor', () => {
+    const question = content.questions[0];
+    const active = session({
+      responses: [
+        makeResponse(
+          question,
+          question.correctAnswer,
+          false,
+          Date.now(),
+          Date.now(),
+        ),
+      ],
+    });
+    const { container } = mount(game({ active }), '/play');
+    const status = screen.getByRole('status');
+    expect(status).toHaveTextContent(
+      `Correct. Explanation: ${question.explanation}`,
+    );
+    expect(container.querySelector('.feedback-wrap')).toHaveFocus();
+    const reaction = container.querySelector<HTMLElement>('[data-reaction-id]');
+    expect(reaction).not.toBeNull();
+    expect(reaction).toHaveAttribute('aria-live', 'off');
+    expect(status).not.toContainElement(reaction);
+    expect(status).not.toHaveTextContent(
+      reaction?.textContent ?? 'missing reaction',
+    );
+  });
+
+  it.each(['none', 'reduced', 'balanced', 'full'] as const)(
+    'applies %s consistently to answer, source, result, and returning surfaces',
+    async (banterLevel) => {
+      const user = userEvent.setup();
+      const question = content.questions[0];
+      const result = makeResult([question], [question.id]);
+      const active = session({
+        responses: [
+          makeResponse(
+            question,
+            question.correctAnswer,
+            false,
+            Date.now(),
+            Date.now(),
+          ),
+        ],
+      });
+      const value = game({
+        active,
+        history: [result],
+        preferences: { ...defaultPreferences, banterLevel },
+      });
+      const { container } = mount(value, '/play');
+      expect(
+        container.querySelectorAll('.question-feedback [data-reaction-id]'),
+      ).toHaveLength(
+        banterLevel === 'full' || banterLevel === 'balanced' ? 1 : 0,
+      );
+      expect(screen.getByRole('heading', { name: 'Correct.' })).toBeVisible();
+      await user.click(screen.getByRole('button', { name: 'View sources' }));
+      const dialog = screen.getByRole('dialog');
+      expect(dialog.querySelectorAll('[data-reaction-id]')).toHaveLength(
+        banterLevel === 'full' ? 1 : 0,
+      );
+      await user.click(within(dialog).getByRole('button', { name: /^Close/ }));
+      await user.click(
+        within(
+          screen.getByRole('navigation', { name: 'Primary navigation' }),
+        ).getByRole('link', { name: 'Overview' }),
+      );
+      expect(
+        container.querySelectorAll('[data-reaction-category="returning"]'),
+      ).toHaveLength(banterLevel === 'full' ? 1 : 0);
+      await user.click(
+        screen.getByRole('link', { name: /^1-question challenge/ }),
+      );
+      expect(
+        container.querySelectorAll(
+          '[data-reaction-category="session-complete"]',
+        ),
+      ).toHaveLength(banterLevel === 'none' ? 0 : 1);
+      expect(
+        container.querySelectorAll('[data-reaction-category^="domain-"]'),
+      ).toHaveLength(banterLevel === 'full' ? 1 : 0);
+      expect(
+        container.querySelectorAll('[data-reaction-category^="score-"]'),
+      ).toHaveLength(banterLevel === 'full' ? 1 : 0);
+      if (banterLevel === 'none')
+        expect(container.querySelectorAll('[data-reaction-id]')).toHaveLength(
+          0,
+        );
+    },
+  );
   it('provides a recoverable direct link for missing historical results', () => {
     mount(game(), '/results/not-in-this-browser');
     expect(
@@ -510,5 +724,61 @@ describe('accessible challenge interface', () => {
     expect(
       screen.getByRole('link', { name: 'View saved sessions' }),
     ).toHaveAttribute('href', '/');
+  });
+
+  it.each(['start', 'retry', 'weak'] as const)(
+    'wires a contextual %s session introduction only once',
+    (practiceEvent) => {
+      const value = game({
+        active: session(),
+        preferences: { ...defaultPreferences, banterLevel: 'full' },
+      });
+      const { container, rerender } = render(
+        <GameContext.Provider value={value}>
+          <MemoryRouter
+            initialEntries={[{ pathname: '/play', state: { practiceEvent } }]}
+          >
+            <AppRoutes />
+          </MemoryRouter>
+        </GameContext.Provider>,
+      );
+      const category =
+        practiceEvent === 'weak' ? 'weak-practice' : practiceEvent;
+      const original = container.querySelector(
+        `[data-reaction-category="${category}"]`,
+      );
+      expect(original).not.toBeNull();
+      const id = original?.getAttribute('data-reaction-id');
+      rerender(
+        <GameContext.Provider value={{ ...value }}>
+          <MemoryRouter
+            initialEntries={[{ pathname: '/play', state: { practiceEvent } }]}
+          >
+            <AppRoutes />
+          </MemoryRouter>
+        </GameContext.Provider>,
+      );
+      expect(
+        container.querySelector(`[data-reaction-category="${category}"]`),
+      ).toHaveAttribute('data-reaction-id', id);
+    },
+  );
+
+  it('keeps historical answers readable but cannot retry an unverified saved snapshot', async () => {
+    const user = userEvent.setup();
+    const historical = {
+      ...content.questions[0],
+      verificationStatus: 'stale' as const,
+    };
+    const result = makeResult([historical]);
+    const value = game({ bank: [], history: [result] });
+    mount(value, `/results/${result.id}`);
+    expect(
+      screen.getByRole('button', { name: /^Retry missed/ }),
+    ).toBeDisabled();
+    await user.click(screen.getByRole('link', { name: 'Review all answers' }));
+    expect(screen.getByText(historical.question)).toBeVisible();
+    expect(screen.getByText(historical.explanation)).toBeVisible();
+    expect(value.startSession).not.toHaveBeenCalled();
   });
 });

@@ -73,6 +73,7 @@ describe('local persistence', () => {
   it('round-trips settings and historical question snapshots', () => {
     const data = addResult(freshData(), result());
     data.preferences.reducedBanter = true;
+    data.preferences.banterLevel = 'reduced';
     data.config.timerMode = 'session';
     expect(saveData(localStorage, data)).toBeNull();
     expect(loadData(localStorage)).toEqual({ data, error: null });
