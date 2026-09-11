@@ -1,0 +1,1648 @@
+[
+  {
+    "id": "fabric-001",
+    "question": "A developer repeatedly opens compatible Fabric notebooks and wants to attach them to an existing Spark session rather than start a separate session for each notebook. Which workspace setting supports this?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Enable high concurrency for notebooks in Spark settings."
+      },
+      {
+        "id": "b",
+        "text": "Start a new standard Spark session for every notebook."
+      },
+      {
+        "id": "c",
+        "text": "Keep separate standard sessions idle for a longer period."
+      },
+      {
+        "id": "d",
+        "text": "Match notebook display names while leaving session-sharing disabled."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "High concurrency lets compatible notebooks attach to an existing shared Spark session.",
+    "deepExplanation": "The workspace's Spark settings include the high-concurrency setting for notebooks. Session reuse can reduce repeated startup overhead. Compatibility still matters: sharing is within one user boundary and requires matching workspace, default lakehouse, compute configuration, and library packages.",
+    "whyOtherAnswersAreWrong": {
+      "b": "A new standard session per notebook is the separate-session behavior the developer wants to avoid.",
+      "c": "Keeping separate sessions alive longer does not attach compatible notebooks to one shared session.",
+      "d": "Display names are not the enabling setting or a documented compatibility condition for sharing."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "configure-microsoft-fabric-workspace-settings",
+    "subskill": "Configure Spark workspace settings",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-high-concurrency"],
+    "featureStatus": "GA",
+    "tags": ["spark", "workspace", "high-concurrency"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/configure-high-concurrency-session-notebooks"
+    ],
+    "documentationTitles": [
+      "Configure high concurrency mode for Fabric notebooks"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-002",
+    "question": "High concurrency is enabled. Two interactive notebooks have matching Spark compute settings and installed library packages. Which TWO additional requirements must be met for them to share a high-concurrency session?",
+    "questionType": "multi-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "They must have identical notebook display names."
+      },
+      {
+        "id": "b",
+        "text": "They must run as the same user in the same workspace."
+      },
+      {
+        "id": "c",
+        "text": "They must share the same default lakehouse, or both have no default lakehouse."
+      },
+      {
+        "id": "d",
+        "text": "They must run under different user identities to isolate Spark variables."
+      }
+    ],
+    "correctAnswer": ["b", "c"],
+    "explanation": "Session sharing is constrained by user/workspace boundaries and default-lakehouse compatibility.",
+    "deepExplanation": "Enabling the workspace feature does not pool every notebook indiscriminately. Fabric checks identity and execution configuration. The documentation explicitly permits sharing between notebooks that both lack a default lakehouse; matching display names are not a session-sharing requirement.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Display names are not among the documented session-sharing conditions.",
+      "d": "Sharing is always within a single-user boundary, so different user identities prevent the proposed reuse."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "configure-microsoft-fabric-workspace-settings",
+    "subskill": "Configure Spark workspace settings",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-high-concurrency"],
+    "featureStatus": "GA",
+    "tags": ["spark", "session-compatibility", "identity"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/configure-high-concurrency-session-notebooks"
+    ],
+    "documentationTitles": [
+      "Configure high concurrency mode for Fabric notebooks"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-003",
+    "question": "A supported Fabric item is synchronized with a Git branch. Commit to Git writes its item definition to the repository, while Update from Git applies repository definition changes to the workspace.",
+    "questionType": "true-false",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "True"
+      },
+      {
+        "id": "b",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "These operations synchronize supported item definitions in opposite directions.",
+    "deepExplanation": "Commit to Git generates and persists definition files from workspace items. Update from Git reads the connected branch and applies its definitions to workspace items. This is source control for definitions; it should not be mistaken for a complete operational-data backup strategy.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The statement correctly describes the documented direction of each synchronization operation."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "implement-lifecycle-management-in-fabric",
+    "subskill": "Configure version control",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-cicd"],
+    "featureStatus": "GA",
+    "tags": ["git", "item-definitions", "lifecycle"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/fundamentals/understand-best-practices-fabric-cicd"
+    ],
+    "documentationTitles": ["Fabric CI/CD concepts and best practices"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-004",
+    "question": "A team needs reviewed feature changes and staged release of supported Fabric items. Development, test, and production workspaces are in the same tenant. Engineers must not edit production to develop features. Which design combines source control and promotion appropriately?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use deployment stages alone as a replacement for Git branches and pull-request review."
+      },
+      {
+        "id": "b",
+        "text": "Connect all engineers to the production workspace and review changes after deployment."
+      },
+      {
+        "id": "c",
+        "text": "Keep isolated feature workspaces permanently disconnected from a shared integration branch."
+      },
+      {
+        "id": "d",
+        "text": "Develop in feature workspaces and branches, merge reviewed pull requests, update development from Git, then promote through deployment stages."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Git-based development and deployment-pipeline promotion solve complementary parts of the lifecycle.",
+    "deepExplanation": "Feature workspaces isolate changes before integration. A reviewed merge establishes the shared version, Update from Git synchronizes the development workspace, and deployment stages promote supported items across environment workspaces. Deployment pipelines provide continuous deployment rather than replacing the development/review process. Item support and environment-specific configuration still need validation.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Deployment pipelines do not replace Git version history, feature isolation, or pull-request approval.",
+      "b": "Developing directly in production violates the isolation requirement and exposes unreviewed changes.",
+      "c": "Permanently disconnected workspaces provide no shared reviewed definition to promote."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "implement-lifecycle-management-in-fabric",
+    "subskill": "Create and configure deployment pipelines",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["content-cicd"],
+    "featureStatus": "GA",
+    "tags": ["cicd", "deployment-pipelines", "pull-requests"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/fundamentals/understand-best-practices-fabric-cicd"
+    ],
+    "documentationTitles": ["Fabric CI/CD concepts and best practices"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-005",
+    "question": "An external analyst needs to connect to one Fabric warehouse and query only an approved reporting view. They do not collaborate on other workspace items. Which access approach best follows least privilege?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Assign workspace Contributor so every SQL permission is inherited."
+      },
+      {
+        "id": "b",
+        "text": "Grant the warehouse item Read permission and the necessary granular SQL permission on the approved view."
+      },
+      {
+        "id": "c",
+        "text": "Assign workspace Admin and use a masked column to restrict all other objects."
+      },
+      {
+        "id": "d",
+        "text": "Grant only a SQL permission and omit Fabric item connectivity permission."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Item-level connectivity plus granular SQL access avoids broad workspace privileges.",
+    "deepExplanation": "Fabric Read is the minimum item permission for warehouse connectivity. SQL permissions then control which objects the analyst can query. Workspace roles apply to all workspace items and are unnecessary for someone who needs only a single warehouse and selected SQL objects.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Contributor is a broad collaboration role, not a least-privilege grant for one reporting view.",
+      "c": "Admin grants extensive privileges; masking is not an object-access boundary.",
+      "d": "Warehouse connectivity also depends on Fabric Read permission, so a SQL grant alone is insufficient."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "configure-security-and-governance",
+    "subskill": "Implement item-level access controls",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["content-security"],
+    "featureStatus": "GA",
+    "tags": ["security", "least-privilege", "warehouse"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-warehouse/security"
+    ],
+    "documentationTitles": ["Secure your Fabric Data Warehouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-006",
+    "question": "Sales analysts may query a warehouse table but must see only their authorized territory's rows and must not access the confidential commission column. Which TWO granular security controls directly address these requirements?",
+    "questionType": "multi-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Row-level security for territory-specific records."
+      },
+      {
+        "id": "b",
+        "text": "Column-level security for the commission column."
+      },
+      {
+        "id": "c",
+        "text": "Workspace Contributor membership for every analyst."
+      },
+      {
+        "id": "d",
+        "text": "An ORDER BY clause that places unauthorized rows last."
+      }
+    ],
+    "correctAnswer": ["a", "b"],
+    "explanation": "Row-level and column-level security enforce different dimensions of granular data access.",
+    "deepExplanation": "RLS restricts the records available to a user through security predicates. CLS restricts access to specific fields. Combining them matches the two independent requirements; presentation choices and broad workspace privileges do not substitute for either boundary.",
+    "whyOtherAnswersAreWrong": {
+      "c": "Contributor grants broad workspace capabilities rather than restricting a table by territory and column.",
+      "d": "Sorting changes result order, not authorization; unauthorized data would remain accessible."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "configure-security-and-governance",
+    "subskill": "Implement row-level, column-level, object-level, and folder/file-level access controls",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-security"],
+    "featureStatus": "GA",
+    "tags": ["rls", "cls", "governance"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-warehouse/security"
+    ],
+    "documentationTitles": ["Secure your Fabric Data Warehouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-007",
+    "question": "Applying dynamic data masking to an email column permanently replaces the stored email values, so even appropriately privileged warehouse users cannot retrieve the original values.",
+    "questionType": "true-false",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "True"
+      },
+      {
+        "id": "b",
+        "text": "False"
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Dynamic data masking changes query-result exposure, not the stored values.",
+    "deepExplanation": "Masks are applied to result sets for users who lack the relevant privilege. The underlying data remains unchanged. Users with appropriate UNMASK or CONTROL permissions can see unmasked values, so masking is not irreversible anonymization.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The data is not overwritten, and privileged access to unmasked values remains possible."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "configure-security-and-governance",
+    "subskill": "Implement dynamic data masking",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-masking"],
+    "featureStatus": "GA",
+    "tags": ["dynamic-data-masking", "warehouse", "privacy"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-warehouse/dynamic-data-masking"
+    ],
+    "documentationTitles": ["Dynamic data masking in Fabric Data Warehouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-008",
+    "question": "A security review finds that analysts can issue arbitrary SQL against a warehouse table whose sensitive amounts are masked. Policy requires preventing access to the underlying sensitive information, not merely hiding displayed digits. Which remediation addresses the documented limitation?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use a different mask format but leave unrestricted query access unchanged."
+      },
+      {
+        "id": "b",
+        "text": "Give analysts UNMASK so the masking engine can validate their filters."
+      },
+      {
+        "id": "c",
+        "text": "Restrict access with appropriate granular SQL permissions and row/column security; retain masking only as an additional exposure-reduction measure."
+      },
+      {
+        "id": "d",
+        "text": "Assume a masked result makes inference through arbitrary queries impossible."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Masking alone is not a security boundary against users who can query and infer sensitive values.",
+    "deepExplanation": "The documentation warns that users with query access can infer masked data. The policy therefore needs authorization controls that limit accessible objects, rows, or columns. Masking remains useful for reducing accidental exposure in permitted result sets, but changing its visual pattern does not repair excessive access.",
+    "whyOtherAnswersAreWrong": {
+      "a": "A new visual mask does not remove the underlying query-access and inference limitation.",
+      "b": "UNMASK permits direct visibility of sensitive values and moves in the opposite direction.",
+      "d": "Microsoft explicitly cautions against treating masking alone as protection from inference."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "configure-security-and-governance",
+    "subskill": "Implement dynamic data masking",
+    "difficulty": "expert",
+    "complexity": "troubleshooting",
+    "sourceIds": ["content-masking", "content-security"],
+    "featureStatus": "GA",
+    "tags": ["security-review", "masking-limits", "least-privilege"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-warehouse/dynamic-data-masking",
+      "https://learn.microsoft.com/en-us/fabric/data-warehouse/security"
+    ],
+    "documentationTitles": [
+      "Dynamic data masking in Fabric Data Warehouse",
+      "Secure your Fabric Data Warehouse"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-009",
+    "question": "A compliance analyst needs records of who performed actions on Fabric warehouse items. Which documented capability is intended for this investigation?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The warehouse's column histograms."
+      },
+      {
+        "id": "b",
+        "text": "Spark high-concurrency session matching."
+      },
+      {
+        "id": "c",
+        "text": "The formatting of a masked email address."
+      },
+      {
+        "id": "d",
+        "text": "User audit activities accessible through Microsoft Purview and PowerShell."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "User audit logs support investigating actions on Fabric items.",
+    "deepExplanation": "Warehouse security guidance identifies audit activities for regulatory and recordkeeping needs. These logs concern user activity. Query statistics, compute settings, and data masking serve other purposes and do not replace an audit trail.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Histograms support query-plan estimation, not identifying which user performed an item action.",
+      "b": "Session compatibility is a compute-reuse mechanism, not an audit-record system.",
+      "c": "A displayed mask protects result exposure but contains no history of user actions."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "configure-security-and-governance",
+    "subskill": "Implement and use Microsoft Fabric audit logs",
+    "difficulty": "intermediate",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-security"],
+    "featureStatus": "GA",
+    "tags": ["audit", "purview", "compliance"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-warehouse/security"
+    ],
+    "documentationTitles": ["Secure your Fabric Data Warehouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-010",
+    "question": "A Fabric pipeline parameter named batchSize is an integer with value 240. A dynamic property expects a number rather than a string. Which expression preserves the parameter's numeric type?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "@{pipeline().parameters.batchSize}"
+      },
+      {
+        "id": "b",
+        "text": "@pipeline().parameters.batchSize"
+      },
+      {
+        "id": "c",
+        "text": "@concat('', string(pipeline().parameters.batchSize))"
+      },
+      {
+        "id": "d",
+        "text": "Batch: @{pipeline().parameters.batchSize}"
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "A direct parameter expression preserves a numeric value; string interpolation produces a string.",
+    "deepExplanation": "The distinction is between evaluating a typed expression and embedding a value inside text. The @{...} interpolation form returns text even when it contains only a numeric parameter. This matters when activity property validation expects an integer.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The interpolation form converts the result into a string.",
+      "c": "string and concat explicitly build a string, not a number.",
+      "d": "This combines literal text and interpolation and therefore cannot be a numeric value."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "orchestrate-processes",
+    "subskill": "Implement orchestration patterns with notebooks and pipelines, including parameters and dynamic expressions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-parameters"],
+    "featureStatus": "GA",
+    "tags": ["pipeline", "parameters", "dynamic-expressions"],
+    "codeLanguage": "json",
+    "codeSnippet": "{\n  \"batchSize\": { \"type\": \"int\", \"defaultValue\": 240 }\n}",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-factory/parameters"
+    ],
+    "documentationTitles": ["Parameters for Data Factory in Microsoft Fabric"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-011",
+    "question": "A transformation team already has distributed PySpark DataFrame logic and a custom Python package. They want interactive development and to reuse that code in Fabric rather than rewrite it as low-code transformations. Which execution item is the best fit?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A Fabric notebook configured for PySpark with its required library available."
+      },
+      {
+        "id": "b",
+        "text": "A pipeline parameter definition by itself."
+      },
+      {
+        "id": "c",
+        "text": "A OneLake shortcut with no transformation step."
+      },
+      {
+        "id": "d",
+        "text": "A Dataflow Gen2 solely because it automatically executes arbitrary PySpark notebook cells unchanged."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Fabric notebooks provide interactive PySpark execution and library support.",
+    "deepExplanation": "Fabric's Python support covers interactive notebooks, distributed Spark APIs, and Python libraries installed in a session or supplied through an environment. A pipeline can orchestrate work, but defining a parameter is not an execution step. A pointer to data also does not execute the required transformations.",
+    "whyOtherAnswersAreWrong": {
+      "b": "A parameter supplies an input value; it is not a Python execution engine.",
+      "c": "A shortcut references data without running the team's Python transformation code.",
+      "d": "Dataflow Gen2 is not an unchanged PySpark-notebook-cell execution surface; the stated reason for selecting it is invalid."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "orchestrate-processes",
+    "subskill": "Choose between Dataflow gen 2, a pipeline and a notebook",
+    "difficulty": "advanced",
+    "complexity": "scenario-based",
+    "sourceIds": ["content-python-fabric", "content-lakehouse-shortcuts"],
+    "featureStatus": "GA",
+    "tags": ["orchestration", "notebooks", "python-libraries"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-science/python-guide/python-overview",
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-shortcuts"
+    ],
+    "documentationTitles": [
+      "Use Python for Apache Spark",
+      "Shortcuts in a lakehouse"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-012",
+    "question": "A pipeline fails after a source schema change. The team wants a Teams notification and an approved cleanup notebook when that failure event occurs, but must not create an endless retry loop. Which event-driven response is appropriate?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use only the Schedule failures email page to launch the cleanup notebook."
+      },
+      {
+        "id": "b",
+        "text": "Trigger the same broken pipeline on every failure indefinitely."
+      },
+      {
+        "id": "c",
+        "text": "Use Activator rules for the relevant Fabric job-failure events to notify and invoke the approved cleanup action, while repairing the schema issue separately."
+      },
+      {
+        "id": "d",
+        "text": "Treat the failure as a success event so downstream jobs continue normally."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Activator can react to job events with richer notifications and follow-up activities; it does not fix the root cause.",
+    "deepExplanation": "Real-Time hub exposes Fabric job events for Activator rules. Teams notifications and Fabric activity actions can implement the requested response. Schedule failures is suited to scheduled-failure emails. Repeating a job with a deterministic schema error is not remediation, so investigate and repair that error independently.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Schedule failures manages email notifications; it is not the documented mechanism for launching cleanup activities.",
+      "b": "An unchanged schema error will recur, and unbounded retriggering violates the loop-avoidance requirement.",
+      "d": "Relabelling the outcome hides the failure and risks sending downstream jobs incomplete data."
+    },
+    "objectiveDomain": "implement-and-manage-an-analytics-solution",
+    "skill": "orchestrate-processes",
+    "subskill": "Design and implement schedules and event-based triggers",
+    "difficulty": "expert",
+    "complexity": "troubleshooting",
+    "sourceIds": ["content-alerts"],
+    "featureStatus": "GA",
+    "tags": ["activator", "event-based-triggers", "failure-handling"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/monitor-fabric-items/4-take-action-with-activator"
+    ],
+    "documentationTitles": ["Respond to Fabric events with Activator"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-013",
+    "question": "A serialized incremental-load pipeline has a committed old watermark and captures a new upper watermark before copying. ModifiedAt increases for each eligible change. Which predicate selects the next interval without re-reading the old boundary?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "ModifiedAt >= @OldWatermark AND ModifiedAt <= @NewWatermark"
+      },
+      {
+        "id": "b",
+        "text": "ModifiedAt > @NewWatermark"
+      },
+      {
+        "id": "c",
+        "text": "ModifiedAt < @OldWatermark"
+      },
+      {
+        "id": "d",
+        "text": "ModifiedAt > @OldWatermark AND ModifiedAt <= @NewWatermark"
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "The documented watermark pattern uses an exclusive old boundary and inclusive new boundary.",
+    "deepExplanation": "Two lookups obtain the saved lower bound and the captured upper bound. Copying (old, new] avoids re-reading the committed boundary while including the newly captured maximum. Persist the new watermark only after a successful copy. This interval logic is not a general guarantee against changes whose timestamps fail to advance.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Including the old boundary re-reads records at the previously committed watermark.",
+      "b": "This skips the interval that the run was supposed to copy and selects later changes instead.",
+      "c": "This selects historical rows before the prior checkpoint."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "design-and-implement-loading-patterns",
+    "subskill": "Design and implement full and incremental data loads",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-incremental"],
+    "featureStatus": "GA",
+    "tags": ["incremental-load", "watermark", "sql"],
+    "codeLanguage": "sql",
+    "codeSnippet": "SELECT OrderId, ModifiedAt, TotalAmount\nFROM dbo.OrderChanges\nWHERE /* choose the interval predicate */;",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-factory/tutorial-incremental-copy-data-warehouse-lakehouse"
+    ],
+    "documentationTitles": [
+      "Incrementally load data from Data Warehouse to Lakehouse"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-014",
+    "question": "A source order can be edited without changing its OrderId. An incremental pipeline uses MAX(OrderId) as its only checkpoint, and a failed copy currently still advances that checkpoint. The next design must capture edits and avoid skipping failed intervals. Which paired correction is required?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use a change-tracking column that advances for inserts and updates, and persist the captured upper watermark only after copy succeeds."
+      },
+      {
+        "id": "b",
+        "text": "Keep OrderId as the only watermark and advance it before the copy starts."
+      },
+      {
+        "id": "c",
+        "text": "Use a modification timestamp but save its maximum on both success and failure."
+      },
+      {
+        "id": "d",
+        "text": "Save the watermark only on success but keep unchanged OrderId values as the only update detector."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "The change indicator and the checkpoint dependency must both be correct.",
+    "deepExplanation": "A watermark must increase for the changes the process intends to load; a stable order identifier cannot reveal edits to an existing order. The tutorial also connects watermark persistence to the copy activity's success output. Advancing past failed work can skip it later. This fixes interval selection and checkpoint ordering, not every possible sink-retry or deletion-handling concern.",
+    "whyOtherAnswersAreWrong": {
+      "b": "It misses edits to existing identifiers and can checkpoint data that never copied successfully.",
+      "c": "The better change indicator still does not prevent losing a failed interval when its watermark is committed.",
+      "d": "Correct dependency ordering does not make a stable identifier detect updates."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "design-and-implement-loading-patterns",
+    "subskill": "Design and implement full and incremental data loads",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["content-incremental"],
+    "featureStatus": "GA",
+    "tags": ["incremental-load", "checkpoint", "failure-recovery"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-factory/tutorial-incremental-copy-data-warehouse-lakehouse"
+    ],
+    "documentationTitles": [
+      "Incrementally load data from Data Warehouse to Lakehouse"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-015",
+    "question": "A curated Delta table already exists in another Fabric lakehouse. A team wants to reference it from its own lakehouse without maintaining a duplicate copy. Which capability directly meets that need?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A nightly full-copy pipeline."
+      },
+      {
+        "id": "b",
+        "text": "A new independent CSV export."
+      },
+      {
+        "id": "c",
+        "text": "A OneLake shortcut to the existing data."
+      },
+      {
+        "id": "d",
+        "text": "A dynamic mask on an unrelated warehouse column."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "A shortcut references existing data rather than copying it.",
+    "deepExplanation": "Lakehouse shortcuts make another location appear as a local folder or table. A supported Delta target in the Tables area can be recognized as a table. A shortcut avoids a redundant ingestion copy, but access to its target still has to be authorized.",
+    "whyOtherAnswersAreWrong": {
+      "a": "A full-copy pipeline creates and refreshes the duplicate the team wants to avoid.",
+      "b": "An export is an independent copy and can become stale.",
+      "d": "Masking changes column exposure; it does not reference a remote Delta table."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-batch-data",
+    "subskill": "Create and manage OneLake shortcuts",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-lakehouse-shortcuts"],
+    "featureStatus": "GA",
+    "tags": ["onelake", "shortcuts", "delta"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-shortcuts"
+    ],
+    "documentationTitles": ["Shortcuts in a lakehouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-016",
+    "question": "An approved replication process must place a dataset physically in a specified region. The source is in a different region. A proposed design creates only a shortcut in the destination lakehouse. Which change satisfies the placement requirement?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Rename the shortcut to include the destination region."
+      },
+      {
+        "id": "b",
+        "text": "Copy the approved data into storage in the required region instead of relying only on a shortcut."
+      },
+      {
+        "id": "c",
+        "text": "Move the shortcut from Files to Tables and assume this relocates its target."
+      },
+      {
+        "id": "d",
+        "text": "Create a second shortcut to the first shortcut."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Shortcuts do not move source data, so physical placement requires an actual copy.",
+    "deepExplanation": "The shortcut-versus-copy guidance explicitly distinguishes reference access from moving data for compliance or regional requirements. Creating a pointer in another lakehouse does not change where the source is stored. The scenario states that replication is approved; authorization and residency policy must still be checked in a real deployment.",
+    "whyOtherAnswersAreWrong": {
+      "a": "A display name has no effect on physical data location.",
+      "c": "Tables placement affects table recognition, not relocation of the target data.",
+      "d": "An additional pointer still does not materialize data in the required region."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-batch-data",
+    "subskill": "Choose an appropriate data store",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["content-lakehouse-shortcuts"],
+    "featureStatus": "GA",
+    "tags": ["data-residency", "shortcuts", "batch-loading"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-shortcuts"
+    ],
+    "documentationTitles": ["Shortcuts in a lakehouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-017",
+    "question": "A Fabric notebook has a static PySpark DataFrame named orders with numeric Amount and a Region column. Which expression produces one total-amount row per region?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "orders.groupBy('Region').agg(F.sum('Amount').alias('TotalAmount'))"
+      },
+      {
+        "id": "b",
+        "text": "orders.select('Region', 'Amount')"
+      },
+      {
+        "id": "c",
+        "text": "orders.groupBy('Region', 'Amount').count()"
+      },
+      {
+        "id": "d",
+        "text": "orders.agg(F.sum('Amount').alias('TotalAmount'))"
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "groupBy defines the regional grain and agg applies the sum within each group.",
+    "deepExplanation": "PySpark DataFrames support distributed grouping and aggregate functions. Grouping only by Region yields the requested grain. The source pairs Fabric's built-in PySpark support with Learn's standard DataFrame API guidance; no Databricks-specific catalog behavior is needed.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Projection retains individual rows and does not aggregate amounts.",
+      "c": "This counts region/amount combinations rather than summing all amounts per region.",
+      "d": "Without grouping by Region, the result is one overall total."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-batch-data",
+    "subskill": "Group and aggregate data",
+    "difficulty": "beginner",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-pyspark-basics", "content-python-fabric"],
+    "featureStatus": "GA",
+    "tags": ["pyspark", "batch", "aggregation"],
+    "codeLanguage": "python",
+    "codeSnippet": "from pyspark.sql import functions as F\n\n# orders is a static DataFrame with Region and Amount columns.\nregional_totals = ...",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/databricks/pyspark/basics",
+      "https://learn.microsoft.com/en-us/fabric/data-science/python-guide/python-overview"
+    ],
+    "documentationTitles": ["PySpark basics", "Use Python for Apache Spark"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-018",
+    "question": "An Eventhouse table contains multiple status records per device. ObservedAt is unique within each device. Complete the KQL query to return the latest record, including that record's Status and Voltage, for every DeviceId.",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "summarize max(ObservedAt) by DeviceId"
+      },
+      {
+        "id": "b",
+        "text": "summarize arg_max(ObservedAt, *)"
+      },
+      {
+        "id": "c",
+        "text": "summarize count() by DeviceId"
+      },
+      {
+        "id": "d",
+        "text": "summarize arg_max(ObservedAt, *) by DeviceId"
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "arg_max selects the row with the latest timestamp within each DeviceId group.",
+    "deepExplanation": "max returns the maximum scalar value, while arg_max can return other columns from the maximizing row. Grouping by DeviceId makes the selection per device rather than global. The unique-timestamp assumption removes any need to define tie-breaking for equally recent records.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This returns only the maximum timestamp per device, not the associated Status and Voltage.",
+      "b": "Without the DeviceId grouping, it selects one latest row across the entire table.",
+      "c": "Counts tell how many records exist, not which record is latest."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-batch-data",
+    "subskill": "Handle duplicate, missing, and late-arriving data",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-arg-max"],
+    "featureStatus": "GA",
+    "tags": ["kql", "latest-record", "data-quality"],
+    "codeLanguage": "kusto",
+    "codeSnippet": "DeviceStatus\n| /* return the most recent complete row for each device */",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/kusto/query/arg-max-aggregation-function"
+    ],
+    "documentationTitles": ["arg_max() (aggregation function)"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-019",
+    "question": "A KQL transformation queries a known table with a datetime column and a message column. It only needs recent rows whose message contains the full token 'fault', not arbitrary substrings. Which TWO choices match these semantics and documented query guidance?",
+    "questionType": "multi-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Search all columns with a wildcard even though the message column is known."
+      },
+      {
+        "id": "b",
+        "text": "Apply the datetime filter near the table reference before expensive downstream work."
+      },
+      {
+        "id": "c",
+        "text": "Use the has operator on the message column for the full-token test."
+      },
+      {
+        "id": "d",
+        "text": "Use contains because substring matching and full-token matching are always identical."
+      }
+    ],
+    "correctAnswer": ["b", "c"],
+    "explanation": "Early selective filtering reduces work, and has expresses a full-token test.",
+    "deepExplanation": "KQL guidance prioritizes reducing processed data, especially by filtering datetime columns early. It also distinguishes token search from substring search: has is appropriate here because the requirement explicitly names a full token. The operator should match the required semantics, not be substituted blindly.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Searching every column adds unnecessary scope when the relevant column is already known.",
+      "d": "contains can match a token as part of a longer string, so it does not express the same test."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-batch-data",
+    "subskill": "Transform data by using PySpark, SQL, and KQL",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-kql-best"],
+    "featureStatus": "GA",
+    "tags": ["kql", "filtering", "transformation"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/kusto/query/best-practices"
+    ],
+    "documentationTitles": ["Best practices for Kusto Query Language queries"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-020",
+    "question": "A Fabric eventstream SQL operator must report independent, nonoverlapping two-minute totals. Which temporal grouping matches this requirement?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A ten-minute hopping window evaluated every minute."
+      },
+      {
+        "id": "b",
+        "text": "A cumulative total with no temporal grouping."
+      },
+      {
+        "id": "c",
+        "text": "A two-minute tumbling window."
+      },
+      {
+        "id": "d",
+        "text": "Grouping by device only, with no window."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Tumbling windows provide fixed-size, nonoverlapping intervals.",
+    "deepExplanation": "The eventstream SQL operator supports windowed aggregation. Tumbling windows divide the timeline into distinct fixed intervals; hopping windows support regularly evaluated overlapping periods. Grouping only by a business key does not create the required time intervals.",
+    "whyOtherAnswersAreWrong": {
+      "a": "That hopping configuration overlaps and uses a different duration.",
+      "b": "An unbounded cumulative total does not reset into independent two-minute groups.",
+      "d": "A device key partitions entities, not event time."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-streaming-data",
+    "subskill": "Create windowing functions",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-eventstream-sql"],
+    "featureStatus": "GA",
+    "tags": ["eventstream", "tumbling-window", "streaming"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/real-time-intelligence/event-streams/process-events-using-sql-code-editor"
+    ],
+    "documentationTitles": ["Process events by using a SQL operator"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-021",
+    "question": "A Fabric eventstream SQL operator needs a rolling six-minute event count per SensorId, recalculated every two minutes using the eventstream's default arrival-time behavior. Which GROUP BY window fills the placeholder?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "HoppingWindow(minute, 6, 2)"
+      },
+      {
+        "id": "b",
+        "text": "TumblingWindow(minute, 6)"
+      },
+      {
+        "id": "c",
+        "text": "HoppingWindow(minute, 2, 6)"
+      },
+      {
+        "id": "d",
+        "text": "TumblingWindow(minute, 2)"
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "The hopping window's size is six minutes and its evaluation interval is two minutes.",
+    "deepExplanation": "HoppingWindow takes a time unit, window size, and hop interval. The larger size than hop creates overlap. Eventstream uses arrival time by default; an event-time requirement would additionally need TIMESTAMP BY rather than assuming a payload timestamp is used automatically.",
+    "whyOtherAnswersAreWrong": {
+      "b": "A six-minute tumbling window does not produce the required rolling evaluation every two minutes.",
+      "c": "This reverses the window size and hop interval.",
+      "d": "This only aggregates each independent two-minute period, not the preceding six minutes."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-streaming-data",
+    "subskill": "Process data by using Eventstreams",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-eventstream-sql"],
+    "featureStatus": "GA",
+    "tags": ["eventstream", "sql", "hopping-window"],
+    "codeLanguage": "sql",
+    "codeSnippet": "SELECT SensorId, COUNT(*) AS EventCount\nINTO [output]\nFROM [SensorInput]\nGROUP BY SensorId, /* window expression */;",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/real-time-intelligence/event-streams/process-events-using-sql-code-editor"
+    ],
+    "documentationTitles": ["Process events by using a SQL operator"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-022",
+    "question": "A Fabric Structured Streaming query uses an event-time watermark before its windowed aggregation. A stakeholder claims that every event older than the watermark is guaranteed to be processed. How should the engineer correct that claim?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A watermark guarantees all historical events are accepted forever."
+      },
+      {
+        "id": "b",
+        "text": "Watermarks affect only output column names, not state or lateness."
+      },
+      {
+        "id": "c",
+        "text": "Spark guarantees every event older than the watermark is rejected immediately."
+      },
+      {
+        "id": "d",
+        "text": "Data within the configured delay is protected by the lateness guarantee; older data may be processed, but that is not guaranteed."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "The watermark guarantee is one-sided; older data is not guaranteed to be processed or to be rejected immediately.",
+    "deepExplanation": "Watermarks help bound state and define how much lateness the query is prepared to handle. The documented guarantee protects data within the configured delay. Cleanup is asynchronous, so some older records can still be processed. Increasing the delay trades additional late-data tolerance for larger retained state.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Watermarks exist partly to bound old state; they do not promise unlimited late-data acceptance.",
+      "b": "Watermarks govern lateness and state cleanup, not merely presentation.",
+      "c": "The documentation explicitly allows older data to be processed without guaranteeing it, and cleanup is not immediate."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-streaming-data",
+    "subskill": "Process data by using Spark structured streaming",
+    "difficulty": "advanced",
+    "complexity": "scenario-based",
+    "sourceIds": ["content-stateful"],
+    "featureStatus": "GA",
+    "tags": ["spark", "watermark", "late-data"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/structured-streaming-stateful-processing"
+    ],
+    "documentationTitles": ["Stateful processing with Structured Streaming"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-023",
+    "question": "A sensor may resend the same logical EventId with a slightly different EventTime. Duplicate arrivals fit within the chosen watermark horizon, and the Fabric Spark runtime supports dropDuplicatesWithinWatermark. Which replacement removes duplicates by EventId while allowing bounded state?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Remove the watermark and call dropDuplicates(['EventId'])."
+      },
+      {
+        "id": "b",
+        "text": "Keep the watermark and use dropDuplicatesWithinWatermark(['EventId'])."
+      },
+      {
+        "id": "c",
+        "text": "Keep the watermark and use dropDuplicates(['EventId', 'EventTime'])."
+      },
+      {
+        "id": "d",
+        "text": "Drop EventId from the DataFrame before identifying duplicates."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "The within-watermark API can deduplicate by the logical identifier even when timestamps differ.",
+    "deepExplanation": "Legacy dropDuplicates retains its duplicate keys as state. Including event time can enable eviction but makes differing timestamps distinct keys. The supported within-watermark API separates the EventId duplicate definition from the event-time horizon. The explicit runtime and bounded-arrival assumptions matter; this is not unlimited all-time deduplication.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Without a watermark, streaming deduplication can retain keys for the life of the query rather than bounding state.",
+      "c": "Resends with different EventTime values are different composite keys and can pass through.",
+      "d": "Removing the logical identifier discards the information needed for the requested duplicate definition."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "ingest-and-transform-streaming-data",
+    "subskill": "Process data by using Spark structured streaming",
+    "difficulty": "expert",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-stateful"],
+    "featureStatus": "GA",
+    "tags": ["streaming", "deduplication", "bounded-state"],
+    "codeLanguage": "python",
+    "codeSnippet": "clean = (\n    events.withWatermark('EventTime', '12 minutes')\n    .dropDuplicates(['EventId', 'EventTime'])\n)",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/structured-streaming-stateful-processing"
+    ],
+    "documentationTitles": ["Stateful processing with Structured Streaming"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-024",
+    "question": "An architect is reviewing a long-running stream-stream join between dispatches and acknowledgments. Acknowledgments are only valid within a bounded interval after dispatch, and one input can temporarily stop. Which TWO statements correctly inform the design?",
+    "questionType": "multi-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use event-time watermarks and an appropriate join time-range condition to enable old buffered state to be removed."
+      },
+      {
+        "id": "b",
+        "text": "Assume wall-clock passage alone always advances the watermark when both inputs are idle."
+      },
+      {
+        "id": "c",
+        "text": "Account for the slowest input controlling the default combined watermark and potentially delaying cleanup."
+      },
+      {
+        "id": "d",
+        "text": "Omit the time-range condition because an equality join key alone always bounds retained state."
+      }
+    ],
+    "correctAnswer": ["a", "c"],
+    "explanation": "Bounded event-time joins need explicit temporal constraints, and watermark progress depends on the input streams.",
+    "deepExplanation": "Spark buffers unmatched rows while a future match remains possible. Watermarks and the business time range provide a cleanup boundary. With multiple inputs, the default query watermark follows the slowest input to protect its late data. An idle stream can therefore delay progress; a clock simply ticking is not enough to assume all old state has been cleared.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Watermarks advance with processed input, not merely because wall-clock time passes.",
+      "d": "An equality key can accumulate unmatched rows indefinitely when no temporal limit allows eviction."
+    },
+    "objectiveDomain": "ingest-and-transform-data",
+    "skill": "design-and-implement-loading-patterns",
+    "subskill": "Design and implement a loading pattern for streaming data",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["content-stateful"],
+    "featureStatus": "GA",
+    "tags": ["stream-stream-join", "watermark", "architecture"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/structured-streaming-stateful-processing"
+    ],
+    "documentationTitles": ["Stateful processing with Structured Streaming"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-025",
+    "question": "An operator wants to see how many rows have been ingested into an Eventhouse and how many databases received those rows. Which system-overview tile directly provides these ingestion measures?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Eventhouse schema changes."
+      },
+      {
+        "id": "b",
+        "text": "Activity in minutes by application."
+      },
+      {
+        "id": "c",
+        "text": "Ingestion."
+      },
+      {
+        "id": "d",
+        "text": "Top 10 queried databases."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "The Ingestion tile reports ingested rows and the number of receiving databases.",
+    "deepExplanation": "The Eventhouse system overview separates ingestion, query, storage, schema, and compute activity. The Ingestion tile also exposes its underlying KQL through Open query, supporting inspection of how its measures are calculated.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Schema changes concern operations such as table creation or policy changes, not the requested row-volume measures.",
+      "b": "This tile summarizes compute activity duration by application rather than ingestion row counts.",
+      "d": "This highlights query activity, errors, duration, and cache misses."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "monitor-fabric-items",
+    "subskill": "Monitor data ingestion",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-monitor-eventhouse"],
+    "featureStatus": "GA",
+    "tags": ["eventhouse", "ingestion", "monitoring"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/real-time-intelligence/manage-monitor-eventhouse"
+    ],
+    "documentationTitles": ["Manage and monitor an eventhouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-026",
+    "question": "A semantic model refresh eventually succeeds, but users report intermittent delays. You need to determine whether earlier attempts failed or retried. What is the most useful first investigation in the Fabric monitoring hub?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Review the item's historical runs and activity details, comparing duration, status, errors, and refresh-attempt metadata where available."
+      },
+      {
+        "id": "b",
+        "text": "Consider only the latest Succeeded status and conclude every attempt was healthy."
+      },
+      {
+        "id": "c",
+        "text": "Change all source data types before inspecting run evidence."
+      },
+      {
+        "id": "d",
+        "text": "Delete the model and its run history to eliminate the intermittent issue."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Historical runs and activity details reveal patterns that a final success state can hide.",
+    "deepExplanation": "The monitoring hub exposes per-execution status, duration, errors, and item-specific metadata. Historical comparisons can reveal recurring retries or increasing refresh duration. These observations guide diagnosis; a successful final outcome alone does not establish that earlier attempts or source connectivity were healthy.",
+    "whyOtherAnswersAreWrong": {
+      "b": "A final success does not rule out retries or previous failed attempts.",
+      "c": "Changing schema without evidence introduces risk and does not diagnose the reported pattern.",
+      "d": "Deleting the item destroys useful evidence and is not a justified first troubleshooting step."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "monitor-fabric-items",
+    "subskill": "Monitor semantic model refresh",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["content-monitor-hub"],
+    "featureStatus": "GA",
+    "tags": ["semantic-model", "refresh", "run-history"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/monitor-fabric-items/3-use-monitor-hub"
+    ],
+    "documentationTitles": ["Use the Microsoft Fabric monitoring hub"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-027",
+    "question": "A workspace Contributor only needs centrally managed email notifications when scheduled items fail. No Teams message or automated follow-up activity is required. Which monitoring-hub feature is the simplest fit?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The Historical runs view without any notification configuration."
+      },
+      {
+        "id": "b",
+        "text": "The Duration column in the monitoring grid."
+      },
+      {
+        "id": "c",
+        "text": "An Activator rule that listens only for successful jobs."
+      },
+      {
+        "id": "d",
+        "text": "The Schedule failures page and its Configure notifications action."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Schedule failures is designed for centrally configuring scheduled-failure emails.",
+    "deepExplanation": "The monitoring hub lets a Contributor or higher configure notification recipients for scheduled failures. Activator becomes useful when requirements include richer channels, job-success events, or follow-up Fabric activities. None of those extras is required in this scenario.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Historical runs support investigation but do not configure automatic failure emails.",
+      "b": "A displayed metric does not configure notification recipients or conditions.",
+      "c": "Success-only events do not match the scheduled-failure condition, and Activator is unnecessary for this simpler requirement."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "monitor-fabric-items",
+    "subskill": "Configure alerts",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-monitor-hub", "content-alerts"],
+    "featureStatus": "GA",
+    "tags": ["alerts", "monitoring-hub", "scheduled-failure"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/monitor-fabric-items/3-use-monitor-hub",
+      "https://learn.microsoft.com/en-us/training/modules/monitor-fabric-items/4-take-action-with-activator"
+    ],
+    "documentationTitles": [
+      "Use the Microsoft Fabric monitoring hub",
+      "Respond to Fabric events with Activator"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-028",
+    "question": "A Fabric transformation notebook has become slower over recent runs. Before changing compute, you need evidence of the duration trend and execution context. Which TWO monitoring-hub actions directly help?",
+    "questionType": "multi-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Treat the latest Succeeded status as proof that execution duration has not increased."
+      },
+      {
+        "id": "b",
+        "text": "Compare Duration values across the notebook's historical runs."
+      },
+      {
+        "id": "c",
+        "text": "Open the activity details to inspect execution metadata, including the Spark application ID where available."
+      },
+      {
+        "id": "d",
+        "text": "Increase executor memory before examining any historical timings or run metadata."
+      }
+    ],
+    "correctAnswer": ["b", "c"],
+    "explanation": "Historical durations show the trend, and activity details identify the execution context for further investigation.",
+    "deepExplanation": "The monitoring hub provides historical runs, configurable duration columns, and activity-specific metadata such as Spark application IDs. Together they establish whether the transformation has slowed and which execution to investigate. A successful result does not establish that its duration is unchanged, and speculative resource changes destroy a useful baseline.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Succeeded describes the execution outcome, not whether its duration matches the earlier baseline.",
+      "d": "This changes configuration without gathering the evidence the question requires."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "monitor-fabric-items",
+    "subskill": "Monitor data transformation",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["content-monitor-hub"],
+    "featureStatus": "GA",
+    "tags": ["notebook", "transformation", "run-history"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/monitor-fabric-items/3-use-monitor-hub"
+    ],
+    "documentationTitles": ["Use the Microsoft Fabric monitoring hub"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-029",
+    "question": "A pipeline activity rejects an integer property with a type-mismatch error. Its run input shows the value \"80\" as text. The source parameter maxRows is an integer, but the dynamic content shown below uses interpolation. What is the targeted correction?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Increase the retry count without changing the expression."
+      },
+      {
+        "id": "b",
+        "text": "Replace the integer parameter with the string 'eighty'."
+      },
+      {
+        "id": "c",
+        "text": "Use @pipeline().parameters.maxRows so the dynamic value remains numeric."
+      },
+      {
+        "id": "d",
+        "text": "Add a prefix such as 'Rows: ' to the interpolated value."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "The interpolation converted a numeric parameter into text; a direct expression preserves its type.",
+    "deepExplanation": "The observed input, not merely the parameter declaration, determines what the activity receives. Fabric's parameter documentation distinguishes direct expression evaluation from @{...} string interpolation. The pipeline troubleshooting guide recommends correcting the supplied property type for type-mismatch errors; retries do not repair a deterministic expression problem.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Every retry evaluates the same incorrect text-producing expression.",
+      "b": "A spelled-out string is still not an integer and loses the numeric value.",
+      "d": "Adding literal text makes the result even less suitable for an integer property."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "identify-and-resolve-errors",
+    "subskill": "Identify and resolve pipeline errors",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": [
+      "content-parameters",
+      "content-pipeline-errors",
+      "content-monitor-pipeline"
+    ],
+    "featureStatus": "GA",
+    "tags": ["pipeline-error", "type-mismatch", "expressions"],
+    "codeLanguage": "json",
+    "codeSnippet": "{ \"configuredDynamicValue\": \"@{pipeline().parameters.maxRows}\" }",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-factory/parameters",
+      "https://learn.microsoft.com/en-us/fabric/data-factory/pipeline-troubleshoot-guide",
+      "https://learn.microsoft.com/en-us/fabric/data-factory/monitor-pipeline-runs"
+    ],
+    "documentationTitles": [
+      "Parameters for Data Factory in Microsoft Fabric",
+      "Troubleshoot pipelines for Data Factory in Microsoft Fabric",
+      "Monitor pipeline runs in Fabric Data Factory"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-030",
+    "question": "A Fabric Spark join repeatedly loses a few executors. Logs report exit code 137, and the failed stage shows those tasks processing far more input than their peers. Which investigation and remedy best match this evidence?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Investigate skewed join partitions and executor memory pressure; evaluate AQE skew handling and partition/key strategies."
+      },
+      {
+        "id": "b",
+        "text": "Disable all stage metrics because unequal input sizes are irrelevant."
+      },
+      {
+        "id": "c",
+        "text": "Treat 137 as proof that the SQL syntax is invalid."
+      },
+      {
+        "id": "d",
+        "text": "Increase only the allowed executor-failure count and assume the oversized partitions are fixed."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Exit code 137 and disproportionately large tasks are consistent with memory pressure driven by skew.",
+    "deepExplanation": "The troubleshooting guide associates code 137 with a container exceeding its memory limit. Stage input-size and duration disparities help identify skew. Remedies should address the root cause through skew handling, partition strategy, or appropriate memory resources; allowing more failures does not reduce the oversized work.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The size disparity is a key diagnostic signal, so suppressing it removes useful evidence.",
+      "c": "The documented meaning is an OS/container kill associated with memory pressure, not proof of SQL syntax failure.",
+      "d": "Failure tolerance can change how long a job keeps trying but does not correct skewed partitions."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "identify-and-resolve-errors",
+    "subskill": "Identify and resolve notebook errors",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["content-spark-errors"],
+    "featureStatus": "GA",
+    "tags": ["spark", "out-of-memory", "data-skew"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/troubleshoot-spark-memory-performance"
+    ],
+    "documentationTitles": ["Troubleshoot Spark memory and performance issues"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-031",
+    "question": "A T-SQL engine explicitly configured for Delegated identity mode reads a OneLake shortcut. An end user can see permitted rows despite lacking direct target-path permission, while the item owner has target access. Which diagnosis respects the documented identity exception?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Conclude that all shortcut target security has stopped working for every query engine."
+      },
+      {
+        "id": "b",
+        "text": "Assume the user's direct target permissions are always the identity used by this delegated engine."
+      },
+      {
+        "id": "c",
+        "text": "Remove the owner's target access and expect delegated reads to remain unaffected."
+      },
+      {
+        "id": "d",
+        "text": "Evaluate the owner's target permissions and the OneLake security roles that filter the end user's access, rather than applying passthrough assumptions."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "This delegated engine uses the item owner's identity at the shortcut target and then applies OneLake security roles.",
+    "deepExplanation": "The general shortcut model combines permissions on the shortcut and target paths, but the source documents an explicit exception for certain engines, including T-SQL Delegated identity mode. They do not pass the caller's identity to the target. Diagnose the actual identity path and consumer filtering rather than incorrectly treating a delegated read as a passthrough read.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The observation matches a documented engine-specific model, not evidence that all security has failed.",
+      "b": "The question explicitly selects the delegated-mode exception, where the item owner's identity accesses the target.",
+      "c": "The owner's target access is part of this read path, so removing it can break delegated access."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "identify-and-resolve-errors",
+    "subskill": "Identify and resolve OneLake shortcut errors",
+    "difficulty": "expert",
+    "complexity": "troubleshooting",
+    "sourceIds": ["content-shortcut-security"],
+    "featureStatus": "GA",
+    "tags": ["onelake", "shortcut-security", "delegated-identity"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/onelake/onelake-shortcut-security"
+    ],
+    "documentationTitles": ["OneLake shortcut security"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-032",
+    "question": "JSON ingestion into an Eventhouse table uses identity mapping. The table has a column named DeviceId, but the incoming JSON field is named deviceId. Other fields populate correctly while this column is empty. What should you check first?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Whether the Eventhouse display name contains uppercase characters."
+      },
+      {
+        "id": "b",
+        "text": "The case-sensitive field-name match; align the names or supply an explicit JSON mapping."
+      },
+      {
+        "id": "c",
+        "text": "Whether a shorter query timeout can change the ingested field name."
+      },
+      {
+        "id": "d",
+        "text": "Whether disabling all table schemas will preserve the desired typed column."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Identity mapping for named-field formats matches field names case-sensitively.",
+    "deepExplanation": "With JSON identity mapping, table columns map to same-named input fields. A casing mismatch can yield empty or incorrect ingested data. An explicit mapping can associate the desired source path with the target column. Inspect names, types, and mapping definitions before tuning unrelated query settings.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The relevant names are the target column and input field, not the Eventhouse display name.",
+      "c": "Query timeouts affect query execution, not ingestion-field mapping.",
+      "d": "Removing schema control is not the targeted correction for an identifiable name mismatch."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "identify-and-resolve-errors",
+    "subskill": "Identify and resolve Eventhouse errors",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["content-mappings"],
+    "featureStatus": "GA",
+    "tags": ["eventhouse", "json", "ingestion-mapping"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/kusto/management/mappings"
+    ],
+    "documentationTitles": ["Ingestion mappings"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-033",
+    "question": "Repeated small writes have left a local lakehouse Delta table with many small data files. Which table-maintenance operation is intended to compact files and improve read efficiency?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "VACUUM as a replacement for all file compaction."
+      },
+      {
+        "id": "b",
+        "text": "Only refresh query statistics without rewriting data files."
+      },
+      {
+        "id": "c",
+        "text": "OPTIMIZE."
+      },
+      {
+        "id": "d",
+        "text": "Reduce the VACUUM retention interval without running compaction."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "OPTIMIZE compacts small Delta files; VACUUM removes obsolete files.",
+    "deepExplanation": "Lakehouse maintenance distinguishes optimization from retention cleanup. OPTIMIZE improves file layout by compacting files, while VACUUM targets unreferenced files older than a retention threshold. The question concerns the local Delta table maintenance behavior, not the separately labelled preview pipeline maintenance activity.",
+    "whyOtherAnswersAreWrong": {
+      "a": "VACUUM removes eligible obsolete files; it is not a substitute for compacting active small files.",
+      "b": "Statistics can inform query planning but do not compact active data files.",
+      "d": "Changing obsolete-file retention does not combine the active small files."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "optimize-performance",
+    "subskill": "Optimize a Lakehouse table",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["content-maintenance"],
+    "featureStatus": "GA",
+    "tags": ["lakehouse", "delta", "optimize"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-table-maintenance"
+    ],
+    "documentationTitles": ["Run Delta table maintenance in lakehouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-034",
+    "question": "A storage-saving proposal would disable the Delta retention safety check and run VACUUM with a very short retention interval. The lakehouse supports long-running readers and recovery to older versions. Which review decision is most defensible?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Keep a retention interval consistent with reader and recovery requirements; do not bypass the safety check merely to reduce storage."
+      },
+      {
+        "id": "b",
+        "text": "Approve immediately because VACUUM cannot affect readers or time travel."
+      },
+      {
+        "id": "c",
+        "text": "Assume OPTIMIZE guarantees every old version remains readable after VACUUM."
+      },
+      {
+        "id": "d",
+        "text": "Set retention to zero and rely on a shortcut to reconstruct deleted historical files."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Aggressive VACUUM can compromise historical reads and concurrent workloads.",
+    "deepExplanation": "VACUUM removes unreferenced files older than its threshold. The documented default is seven days, and shorter intervals can affect time-travel history and concurrent readers or writers. Fabric portal/API maintenance rejects under-seven-day requests by default. Disabling a guard is a deliberate risk decision, not routine optimization.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The documented retention warning explicitly identifies time-travel and concurrent-workload risks.",
+      "c": "Compaction does not guarantee retention of old files needed for every historical version.",
+      "d": "A shortcut is a pointer, not a backup capable of recreating deleted historical files."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "optimize-performance",
+    "subskill": "Optimize a Lakehouse table",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["content-maintenance", "content-lakehouse-shortcuts"],
+    "featureStatus": "GA",
+    "tags": ["vacuum", "retention", "time-travel"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-table-maintenance",
+      "https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-shortcuts"
+    ],
+    "documentationTitles": [
+      "Run Delta table maintenance in lakehouse",
+      "Shortcuts in a lakehouse"
+    ],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-035",
+    "question": "The KQL query below must return recent telemetry rows with a particular JSON key value. Payload is dynamic and millions of historical rows are irrelevant. Which rewrite reduces unnecessary processing without changing the required time and key filters?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Remove the time filter so the engine has more data to optimize."
+      },
+      {
+        "id": "b",
+        "text": "Replace Payload.Key == 'pump-7' with a search across every column."
+      },
+      {
+        "id": "c",
+        "text": "Return the entire table and filter it manually after downloading."
+      },
+      {
+        "id": "d",
+        "text": "Filter EventTime immediately after Telemetry, then evaluate the Payload.Key condition on the remaining rows."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Early datetime filtering can prune irrelevant data before downstream dynamic-field work.",
+    "deepExplanation": "KQL guidance prioritizes reducing processed rows and recommends datetime predicates early after the table reference. The optimizer can reorder predicates, but the documentation does not guarantee it in every case. Keep the exact key condition and move the selective time filter earlier rather than changing the query's meaning.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Removing the filter changes the result and increases the historical data considered.",
+      "b": "A broad search changes scope and does not preserve the exact field-equality requirement.",
+      "c": "Downloading irrelevant data adds work and transfers filtering away from the query engine."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "optimize-performance",
+    "subskill": "Optimize query performance",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["content-kql-best"],
+    "featureStatus": "GA",
+    "tags": ["kql", "query-optimization", "predicate-pushdown"],
+    "codeLanguage": "kusto",
+    "codeSnippet": "Telemetry\n| where Payload.Key == 'pump-7'\n| where EventTime >= ago(2h)\n| project EventTime, Payload",
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/kusto/query/best-practices"
+    ],
+    "documentationTitles": ["Best practices for Kusto Query Language queries"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  },
+  {
+    "id": "fabric-036",
+    "question": "A warehouse benchmark compares a first query run after inactivity with a repeated run and attributes all of the improvement to a recent SQL rewrite. Remote-storage reads were nonzero on the first run. Which evaluation avoids that unsupported conclusion?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use only the first run, because caches and statistics cannot affect warehouse latency."
+      },
+      {
+        "id": "b",
+        "text": "Compare repeated executions under comparable conditions and inspect queryinsights.exec_requests_history, including data_scanned_remote_storage_mb, before crediting the rewrite."
+      },
+      {
+        "id": "c",
+        "text": "Treat every reduction in execution time as proof that the new query plan is superior."
+      },
+      {
+        "id": "d",
+        "text": "Disable governance permissions because they are the documented cause of every cold start."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Cold-start work and cache warming are confounders that must be separated from the SQL change.",
+    "deepExplanation": "The first warehouse execution can load OneLake data into caches, initialize compute, or generate statistics. The guidance recommends checking remote-storage scan volume in query history and not judging performance solely from the first execution. Repeated comparable runs help distinguish cache effects from a genuine improvement, without promising identical timings.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documentation explicitly describes cache and statistics effects on initial execution latency.",
+      "c": "Timing differences alone cannot separate the rewrite from cache warming or initialization.",
+      "d": "Removing permissions is unrelated to the documented cold-start causes and weakens security."
+    },
+    "objectiveDomain": "monitor-and-optimize-an-analytics-solution",
+    "skill": "optimize-performance",
+    "subskill": "Optimize a data warehouse",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["content-warehouse-performance"],
+    "featureStatus": "GA",
+    "tags": ["warehouse", "cold-cache", "query-insights"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/fabric/data-warehouse/guidelines-warehouse-performance"
+    ],
+    "documentationTitles": ["Performance guidelines in Fabric Data Warehouse"],
+    "generatedAt": "2026-09-11T16:21:23.012Z",
+    "lastValidatedAt": "2026-09-11T16:28:14.687Z"
+  }
+]

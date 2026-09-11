@@ -1,0 +1,41 @@
+import { createContext, useContext } from 'react';
+import type {
+  GroundingManifest,
+  Question,
+  Taxonomy,
+} from '../grounding/schema';
+import type {
+  ActiveSession,
+  Preferences,
+  QuizConfig,
+  SessionResult,
+} from './types';
+
+export interface GameContextValue {
+  bank: Question[];
+  taxonomy: Taxonomy;
+  manifest: GroundingManifest;
+  config: QuizConfig;
+  preferences: Preferences;
+  history: SessionResult[];
+  active: ActiveSession | null;
+  lastResult: SessionResult | null;
+  storageError: string | null;
+  notices: string[];
+  setConfig: (config: QuizConfig) => void;
+  setPreferences: (preferences: Preferences) => void;
+  startSession: (config: QuizConfig, overrideQuestions?: Question[]) => boolean;
+  submitAnswer: (selected: string[], flagged: boolean) => void;
+  nextQuestion: () => void;
+  expireTimer: (flagged?: boolean) => void;
+  finishSession: (flagged?: boolean) => void;
+  abandonSession: () => void;
+  clearLocalData: () => void;
+}
+
+export const GameContext = createContext<GameContextValue | null>(null);
+export function useGame() {
+  const value = useContext(GameContext);
+  if (!value) throw new Error('Quiz components require GameProvider.');
+  return value;
+}
