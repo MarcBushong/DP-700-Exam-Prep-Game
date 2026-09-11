@@ -1,20 +1,23 @@
 import { useState, type ReactNode } from 'react';
 import { HostReaction } from './HostReaction';
 import { useReaction } from './useReaction';
+import type { ReactionContext } from './reactions';
 
 export function DocumentationReactions({
   scope,
   children,
+  context = {},
 }: {
   scope: string;
   children: ReactNode;
+  context?: ReactionContext;
 }) {
   const [opened, setOpened] = useState('');
   const reaction = useReaction(
     scope,
     `documentation:${opened}`,
-    ['documentation'],
-    {},
+    ['tome-opened', 'documentation'],
+    context,
     'context',
     Boolean(opened),
   );

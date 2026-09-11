@@ -7,24 +7,28 @@ import { defaultConfig } from '../src/features/quiz/types';
 import { loadData, STORAGE_KEY } from '../src/services/storage';
 import { question } from './fixtures';
 
-vi.mock('../src/features/grounding/content', async () => {
-  const { question: fixture, taxonomy, date } = await import('./fixtures');
+vi.mock('../src/features/dungeons/packages', async () => {
+  const { question: fixture } = await import('./fixtures');
+  const { dungeon } = await import('./runtime-fixtures');
+  const base = dungeon('dp-700', [
+    fixture(),
+    fixture('next'),
+    fixture('stale', { verificationStatus: 'stale' }),
+    fixture('manual', { requiresManualReview: true }),
+  ]);
+  const other = dungeon('other', [fixture('other-q')]);
+  other.taxonomy.domains[0].title = 'Other floor';
+  const locked = dungeon('locked');
+  locked.credential.status = 'retired';
+  const studyOnly = dungeon('study-only', [fixture('study-only-q')]);
+  studyOnly.readiness.gauntlet = false;
+  const stale = dungeon('stale');
+  stale.credential.objectiveVersion = 'Changed map';
   return {
-    content: {
-      questions: [
-        fixture(),
-        fixture('next'),
-        fixture('stale', { verificationStatus: 'stale' }),
-        fixture('manual', { requiresManualReview: true }),
-      ],
-      taxonomy,
-      manifest: {
-        schemaVersion: 1,
-        lastGroundedAt: date,
-        retrievalMethod: 'Microsoft Learn MCP',
-        sources: [],
-      },
-    },
+    getDungeonPackage: (id: string) =>
+      [base, other, locked, studyOnly, stale].find(
+        (p) => p.credential.credentialId === id,
+      ),
   };
 });
 
@@ -40,6 +44,11 @@ function Harness() {
       </p>
       <p>Recent: {game.recentQuestionIds.join(', ') || 'none'}</p>
       <p>Banter: {game.preferences.banterLevel}</p>
+      <p>Dungeon: {game.selectedCredentialId}</p>
+      <p>Floor: {game.taxonomy.domains[0].title}</p>
+      <p>Favorites: {game.favoriteCredentialIds.join(', ')}</p>
+      <p>Class: {game.heroClassId}</p>
+      <p>Mode: {game.active?.config.answerMode ?? 'none'}</p>
       <p>Notices: {game.notices.join(' ')}</p>
       {game.storageError && <p role="alert">{game.storageError}</p>}
       <button
@@ -78,6 +87,50 @@ function Harness() {
         Start two
       </button>
       <button onClick={game.abandonSession}>Abandon</button>
+      <button onClick={() => game.selectDungeon('other')}>Select other</button>
+      <button onClick={() => game.selectDungeon('dp-700')}>
+        Select DP-700
+      </button>
+      <button onClick={() => game.selectDungeon('locked')}>
+        Select locked
+      </button>
+      <button onClick={() => game.selectDungeon('stale')}>Select stale</button>
+      <button
+        onClick={() =>
+          game.startSession({ ...game.config, credentialId: 'locked' })
+        }
+      >
+        Bypass locked
+      </button>
+      <button onClick={() => game.startSession(game.config)}>
+        Start current
+      </button>
+      <button
+        onClick={() => {
+          game.abandonSession();
+          game.selectDungeon('other');
+        }}
+      >
+        Abandon and select other
+      </button>
+      <button
+        onClick={() => {
+          game.selectDungeon('study-only');
+          game.startSession({
+            ...defaultConfig,
+            credentialId: 'study-only',
+            answerMode: 'exam',
+          });
+        }}
+      >
+        Bypass gauntlet
+      </button>
+      <button onClick={() => game.toggleFavoriteCredential('dp-700')}>
+        Favorite DP-700
+      </button>
+      <button onClick={() => game.setHeroClassId('data-engineer')}>
+        Data engineer
+      </button>
       <button
         onClick={() =>
           game.startSession(defaultConfig, [
@@ -130,6 +183,73 @@ it('persists completed sessions and settings across provider remounts', async ()
   expect(screen.getByText('Completed: 0')).toBeInTheDocument();
 });
 
+it('blocks locked, stale and direct-call bypasses and gates legacy exam mode', async () => {
+  const user = userEvent.setup();
+  render(
+    <GameProvider>
+      <Harness />
+    </GameProvider>,
+  );
+  for (const name of ['Select locked', 'Select stale', 'Bypass locked']) {
+    await user.click(screen.getByRole('button', { name }));
+    expect(screen.getByText('Dungeon: dp-700')).toBeInTheDocument();
+    expect(screen.getByText('Question: none')).toBeInTheDocument();
+  }
+  await user.click(screen.getByRole('button', { name: 'Bypass gauntlet' }));
+  expect(screen.getByText('Dungeon: study-only')).toBeInTheDocument();
+  expect(screen.getByText('Question: none')).toBeInTheDocument();
+  expect(screen.getByText(/^Notices:/)).toHaveTextContent('Gauntlet');
+});
+
+it('changes content/maps only after explicit abandonment and scopes recent history', async () => {
+  const user = userEvent.setup();
+  render(
+    <GameProvider>
+      <Harness />
+    </GameProvider>,
+  );
+  await user.click(screen.getByRole('button', { name: 'Start fixture' }));
+  await user.click(screen.getByRole('button', { name: 'Select other' }));
+  expect(screen.getByText('Dungeon: dp-700')).toBeInTheDocument();
+  expect(screen.getByText('Question: q1')).toBeInTheDocument();
+  await user.click(
+    screen.getByRole('button', { name: 'Abandon and select other' }),
+  );
+  expect(screen.getByText('Dungeon: other')).toBeInTheDocument();
+  expect(screen.getByText('Floor: Other floor')).toBeInTheDocument();
+  expect(screen.getByText('Recent: none')).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name: 'Start current' }));
+  expect(screen.getByText('Question: other-q')).toBeInTheDocument();
+  await user.click(
+    screen.getByRole('button', { name: 'Reset question history' }),
+  );
+  await user.click(screen.getByRole('button', { name: 'Abandon' }));
+  await user.click(screen.getByRole('button', { name: 'Select DP-700' }));
+  expect(screen.getByText('Recent: q1')).toBeInTheDocument();
+});
+
+it('persists favorite dungeons and hero class without clearing scores or settings', async () => {
+  const user = userEvent.setup();
+  const mounted = render(
+    <GameProvider>
+      <Harness />
+    </GameProvider>,
+  );
+  await user.click(screen.getByRole('button', { name: 'Favorite DP-700' }));
+  await user.click(screen.getByRole('button', { name: 'Data engineer' }));
+  await waitFor(() =>
+    expect(loadData(localStorage).data.heroClassId).toBe('data-engineer'),
+  );
+  mounted.unmount();
+  render(
+    <GameProvider>
+      <Harness />
+    </GameProvider>,
+  );
+  expect(screen.getByText('Favorites: dp-700')).toBeInTheDocument();
+  expect(screen.getByText('Class: data-engineer')).toBeInTheDocument();
+});
+
 it('surfaces damaged stored data on startup without overwriting it', () => {
   localStorage.setItem(STORAGE_KEY, '{"version":99}');
   render(
@@ -139,6 +259,20 @@ it('surfaces damaged stored data on startup without overwriting it', () => {
   );
   expect(screen.getByRole('alert')).toHaveTextContent('unsupported');
   expect(localStorage.getItem(STORAGE_KEY)).toBe('{"version":99}');
+});
+
+it('does not overwrite damaged originals when the user changes settings in memory', async () => {
+  const raw = '{"version":99}';
+  localStorage.setItem(STORAGE_KEY, raw);
+  const user = userEvent.setup();
+  render(
+    <GameProvider>
+      <Harness />
+    </GameProvider>,
+  );
+  await user.click(screen.getByRole('button', { name: 'Set light theme' }));
+  expect(screen.getByText('Theme: light')).toBeInTheDocument();
+  expect(localStorage.getItem(STORAGE_KEY)).toBe(raw);
 });
 
 it('persists only shown IDs, including abandoned sessions, and resets them without scores/settings', async () => {

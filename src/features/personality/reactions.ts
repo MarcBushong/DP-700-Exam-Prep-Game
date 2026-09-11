@@ -1,17 +1,31 @@
 import {
   reactionCatalog,
+  openingForText,
   type BanterLevel,
   type ReactionCategory,
   type ReactionMessage,
 } from './catalog';
 
 export interface ReactionContext {
+  runMode?: 'study' | 'gauntlet' | 'raid';
+  inProgress?: boolean;
+  credentialId?: string;
+  dungeon?: string;
+  floorId?: string;
+  floor?: string;
+  objectiveId?: string;
+  objective?: string;
+  subjectTheme?: string;
+  themes?: string[];
   domainId?: string;
   domain?: string;
   skill?: string;
   difficulty?: string;
   streak?: number;
   answerNumber?: number;
+  timeMs?: number;
+  recovered?: boolean;
+  boss?: boolean;
 }
 export type ReactionSurface = 'answer' | 'summary' | 'context';
 export interface Reaction extends ReactionMessage {
@@ -19,9 +33,18 @@ export interface Reaction extends ReactionMessage {
 }
 export interface ReactionOptions {
   random?: () => number;
+  seed?: number;
   exhaustProportion?: number;
   themeWindow?: number;
   openingWindow?: number;
+}
+
+export function seededReactionRandom(initialSeed: number): () => number {
+  let seed = initialSeed >>> 0;
+  return () => {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 4294967296;
+  };
 }
 
 export function readBanterLevel(preferences: {
@@ -39,6 +62,8 @@ export function allowsReaction(
   surface: ReactionSurface,
   context: ReactionContext,
 ): boolean {
+  if (context.runMode === 'gauntlet' && context.inProgress !== false)
+    return false;
   if (level === 'none') return false;
   if (level === 'full') return true;
   if (surface === 'context') return false;
@@ -51,13 +76,31 @@ export function allowsReaction(
 
 function matches(message: ReactionMessage, context: ReactionContext): boolean {
   return (
+    (!message.applicableDungeons.length ||
+      message.applicableDungeons.includes(context.credentialId ?? '')) &&
     (!message.applicableDomains.length ||
-      message.applicableDomains.includes(context.domainId ?? '')) &&
+      message.applicableDomains.includes(
+        context.domainId ?? context.floorId ?? '',
+      )) &&
+    (!message.applicableObjectives.length ||
+      message.applicableObjectives.includes(context.objectiveId ?? '')) &&
     (!message.applicableDifficulties.length ||
-      message.applicableDifficulties.includes(context.difficulty ?? '')) &&
+      message.applicableDifficulties.some(
+        (difficulty) => difficulty === context.difficulty,
+      )) &&
     (context.streak ?? 0) >= message.minimumStreak &&
     (message.maximumStreak === null ||
-      (context.streak ?? 0) <= message.maximumStreak)
+      (context.streak ?? 0) <= message.maximumStreak) &&
+    (message.minTimeMs === undefined ||
+      (Number.isFinite(context.timeMs) &&
+        context.timeMs! >= message.minTimeMs)) &&
+    (message.maxTimeMs === undefined ||
+      (Number.isFinite(context.timeMs) &&
+        context.timeMs! >= 0 &&
+        context.timeMs! <= message.maxTimeMs)) &&
+    (message.recovered === undefined ||
+      message.recovered === context.recovered) &&
+    (message.boss === undefined || message.boss === context.boss)
   );
 }
 
@@ -67,14 +110,12 @@ function renderText(text: string, context: ReactionContext): string {
     skill: context.skill ?? 'this skill',
     difficulty: context.difficulty ?? 'this difficulty',
     streak: String(context.streak ?? 0),
+    credentialId: context.credentialId ?? 'this dungeon',
+    dungeon: context.dungeon ?? context.credentialId ?? 'this dungeon',
+    floor: context.floor ?? context.domain ?? 'this floor',
+    objective: context.objective ?? context.skill ?? 'this objective',
   };
   return text.replace(/\{(\w+)\}/g, (_, key: string) => variables[key] ?? '');
-}
-
-function openingFor(message: ReactionMessage, level: BanterLevel): string {
-  return level === 'reduced'
-    ? message.reducedBanterText.split(/[\s.,!?—:]+/)[0].toLowerCase()
-    : message.opening;
 }
 
 export class ReactionSession {
@@ -83,19 +124,44 @@ export class ReactionSession {
   private readonly themeWindow: number;
   private readonly openingWindow: number;
   private readonly used: ReactionMessage[] = [];
-  private readonly events = new Map<string, ReactionMessage>();
+  private readonly events = new Map<
+    string,
+    {
+      message: ReactionMessage;
+      historyIndex: number;
+    }
+  >();
 
   constructor(
-    private readonly catalog = reactionCatalog,
+    private readonly catalog: readonly ReactionMessage[] = reactionCatalog,
     options: ReactionOptions = {},
   ) {
-    this.random = options.random ?? Math.random;
+    this.random =
+      options.random ??
+      (options.seed === undefined
+        ? Math.random
+        : seededReactionRandom(options.seed));
     this.proportion = Math.min(
       1,
-      Math.max(0, options.exhaustProportion ?? 0.8),
+      Math.max(
+        0,
+        Number.isFinite(options.exhaustProportion)
+          ? options.exhaustProportion!
+          : 0.8,
+      ),
     );
-    this.themeWindow = Math.max(1, options.themeWindow ?? 2);
-    this.openingWindow = Math.max(1, options.openingWindow ?? 2);
+    this.themeWindow = Math.max(
+      1,
+      Math.floor(
+        Number.isFinite(options.themeWindow) ? options.themeWindow! : 2,
+      ),
+    );
+    this.openingWindow = Math.max(
+      1,
+      Math.floor(
+        Number.isFinite(options.openingWindow) ? options.openingWindow! : 2,
+      ),
+    );
   }
 
   reset() {
@@ -115,20 +181,28 @@ export class ReactionSession {
     surface: ReactionSurface,
   ): Reaction | null {
     if (!allowsReaction(level, surface, context)) return null;
-    const cached = this.events.get(eventId);
-    const message = cached ?? this.choose(categories, context, level);
+    const key = JSON.stringify([context.credentialId ?? '', eventId]);
+    const cached = this.events.get(key);
+    const message = cached?.message ?? this.choose(categories, context, level);
     if (!message) return null;
+    const renderedText = renderText(
+      level === 'reduced' ? message.reducedBanterText : message.text,
+      context,
+    );
+    const opening = openingForText(renderedText);
     if (!cached) {
-      this.events.set(eventId, message);
-      this.used.push({ ...message, opening: openingFor(message, level) });
+      this.events.set(key, { message, historyIndex: this.used.length });
+      this.used.push({ ...message, opening });
+    } else if (this.used[cached.historyIndex].opening !== opening) {
+      // A preference change re-renders the same event without consuming another one.
+      this.used[cached.historyIndex] = { ...message, opening };
     }
     return {
       ...message,
-      opening: openingFor(message, level),
-      renderedText: renderText(
-        level === 'reduced' ? message.reducedBanterText : message.text,
-        context,
-      ),
+      intensity: level === 'reduced' ? 1 : message.intensity,
+      tone: level === 'reduced' ? 'warm' : message.tone,
+      opening,
+      renderedText,
     };
   }
 
@@ -149,7 +223,9 @@ export class ReactionSession {
       const recentIds = new Set(
         window
           ? this.used
-              .filter((message) => message.category === category)
+              .filter((message) =>
+                pool.some((eligible) => eligible.id === message.id),
+              )
               .slice(-window)
               .map((message) => message.id)
           : [],
@@ -162,26 +238,62 @@ export class ReactionSession {
         if (preferred.length) candidates = preferred;
       };
       const previous = this.used.at(-1);
+      const opening = (message: ReactionMessage) =>
+        openingForText(
+          renderText(
+            level === 'reduced' ? message.reducedBanterText : message.text,
+            context,
+          ),
+        );
+      const differentTheme = (message: ReactionMessage) =>
+        !message.themes.some((theme) => previous?.themes.includes(theme)) &&
+        !(message.jokeThemes ?? []).some((theme) =>
+          previous?.jokeThemes?.includes(theme),
+        );
       avoid((message) => message.id !== previous?.id);
       avoid(
         (message) =>
-          !message.themes.some((theme) => previous?.themes.includes(theme)),
+          differentTheme(message) && opening(message) !== previous?.opening,
       );
-      avoid((message) => openingFor(message, level) !== previous?.opening);
+      avoid(differentTheme);
+      avoid((message) => opening(message) !== previous?.opening);
       const recentThemes = new Set(
         this.used.slice(-this.themeWindow).flatMap((message) => message.themes),
       );
       const recentOpenings = new Set(
         this.used.slice(-this.openingWindow).map((message) => message.opening),
       );
-      avoid(
-        (message) => !message.themes.some((theme) => recentThemes.has(theme)),
+      const recentJokes = new Set(
+        this.used
+          .slice(-this.themeWindow)
+          .flatMap((message) => message.jokeThemes ?? []),
       );
-      avoid((message) => !recentOpenings.has(openingFor(message, level)));
+      avoid(
+        (message) =>
+          !message.themes.some((theme) => recentThemes.has(theme)) &&
+          !(message.jokeThemes ?? []).some((theme) => recentJokes.has(theme)),
+      );
+      avoid((message) => !recentOpenings.has(opening(message)));
+      const normalize = (theme: string) =>
+        theme.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const requestedThemes = new Set(
+        [...(context.themes ?? []), context.subjectTheme ?? ''].map(normalize),
+      );
       const specificity = (message: ReactionMessage) =>
-        message.applicableDomains.length +
-        message.applicableDifficulties.length +
-        Number(message.minimumStreak > 0);
+        Number(message.applicableDungeons.length > 0) * 8 +
+        Number(message.applicableDomains.length > 0) * 4 +
+        Number(message.applicableObjectives.length > 0) * 4 +
+        Number(
+          message.themes.some((theme) => requestedThemes.has(normalize(theme))),
+        ) *
+          3 +
+        Number(message.applicableDifficulties.length > 0) * 2 +
+        Number(message.minimumStreak > 0) +
+        Number(
+          message.minTimeMs !== undefined || message.maxTimeMs !== undefined,
+        ) +
+        Number(message.recovered !== undefined) +
+        Number(message.boss !== undefined);
       const best = Math.max(...candidates.map(specificity));
       candidates = candidates.filter(
         (message) => specificity(message) === best,
@@ -209,11 +321,13 @@ export function answerCategories(input: {
   previousStreak: number;
   previousCorrect?: boolean;
   recovered?: boolean;
+  boss?: boolean;
 }): ReactionCategory[] {
   if (input.timedOut) return ['time-expired', 'unanswered'];
   if (!input.selected.length) return ['unanswered'];
   if (input.correct) {
     return [
+      ...(input.boss ? ['boss-defeat' as const] : []),
       ...(input.previousCorrect === false || input.recovered
         ? ['improved' as const]
         : []),
@@ -223,6 +337,7 @@ export function answerCategories(input: {
     ];
   }
   return [
+    ...(input.boss ? ['boss-loss' as const] : []),
     ...(input.correctAnswer.length > 1 &&
     input.selected.some((id) => input.correctAnswer.includes(id))
       ? ['partial' as const]

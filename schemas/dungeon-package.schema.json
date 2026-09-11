@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "credentialId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "objectiveVersion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "objectiveHistory": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "objectiveVersion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "replacedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": ["objectiveVersion", "replacedAt", "notes"]
+      }
+    },
+    "readinessThresholds": {
+      "type": "object",
+      "properties": {
+        "studyMinimum": {
+          "default": 25,
+          "type": "integer",
+          "minimum": 25,
+          "maximum": 9007199254740991
+        },
+        "gauntletMinimum": {
+          "default": 75,
+          "type": "integer",
+          "minimum": 75,
+          "maximum": 9007199254740991
+        },
+        "minimumQuestionsPerSkill": {
+          "default": 2,
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "rubricMinimum": {
+          "default": 18,
+          "type": "integer",
+          "minimum": 18,
+          "maximum": 20
+        },
+        "matureBankTarget": {
+          "default": 150,
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+        },
+        "advancedExpertTarget": {
+          "default": 0.4,
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "credentialId",
+    "objectiveVersion",
+    "readinessThresholds"
+  ],
+  "$comment": "Generated from Zod workflow schemas. Cross-field semantic refinements additionally run in TypeScript; JSON Schema alone is not sufficient."
+}

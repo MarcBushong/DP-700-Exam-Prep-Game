@@ -12,6 +12,12 @@ import {
   type QuizResponse,
   type SessionResult,
 } from './types';
+import {
+  historyForCredential,
+  LEGACY_CREDENTIAL_ID,
+  questionOrigin,
+  withSessionOrigins,
+} from './origins';
 
 export function shuffle<T>(
   values: readonly T[],
@@ -35,9 +41,15 @@ export function isCorrect(question: Question, selected: string[]): boolean {
   );
 }
 
-export function topicPerformance(history: SessionResult[]) {
+export function topicPerformance(
+  history: SessionResult[],
+  credentialId = LEGACY_CREDENTIAL_ID,
+) {
   const topics = new Map<string, { total: number; correct: number }>();
-  for (const result of history.slice(0, 20)) {
+  for (const result of historyForCredential(history, credentialId).slice(
+    0,
+    20,
+  )) {
     for (const question of result.questions) {
       const topic = topics.get(question.skill) ?? { total: 0, correct: 0 };
       topic.total++;
@@ -58,7 +70,7 @@ export function eligibleQuestions(
   history: SessionResult[] = [],
 ) {
   configSchema.parse(config);
-  const topics = topicPerformance(history);
+  const topics = topicPerformance(history, config.credentialId);
   const weakSkills = [...topics]
     .filter(([, p]) => p.correct < p.total)
     .map(([id]) => id);
@@ -102,7 +114,10 @@ export function initialAdaptiveDifficulty(
   config: QuizConfig = defaultConfig,
 ): Question['difficulty'] {
   const evidence: number[] = [];
-  for (const result of history.slice(0, 20)) {
+  for (const result of historyForCredential(
+    history,
+    config.credentialId ?? LEGACY_CREDENTIAL_ID,
+  ).slice(0, 20)) {
     for (const response of [...result.responses].reverse()) {
       const question = result.questions.find(
         (q) => q.id === response.questionId,
@@ -147,25 +162,32 @@ function balancedQuestions(
       !config.objectiveDomains.length ||
       config.objectiveDomains.includes(domain.id),
   );
+  const publishedWeights = domains.every(
+    (domain) => domain.weightRange != null,
+  );
+  const weights = (domain: Taxonomy['domains'][number]): [number, number] =>
+    publishedWeights && domain.weightRange
+      ? domain.weightRange
+      : [100 / domains.length, 100 / domains.length];
   const totalWeight = domains.reduce(
-    (sum, domain) => sum + (domain.weightRange[0] + domain.weightRange[1]) / 2,
+    (sum, domain) => sum + (weights(domain)[0] + weights(domain)[1]) / 2,
     0,
   );
   const groups = domains.map((domain) => {
     const questions = pool.filter((q) => q.objectiveDomain === domain.id);
-    const [low, high] = domain.weightRange;
+    const [low, high] = weights(domain);
     const subset = domains.length !== taxonomy.domains.length;
     const lowTotal = subset
       ? low +
         domains
           .filter((d) => d.id !== domain.id)
-          .reduce((sum, d) => sum + d.weightRange[1], 0)
+          .reduce((sum, d) => sum + weights(d)[1], 0)
       : 100;
     const highTotal = subset
       ? high +
         domains
           .filter((d) => d.id !== domain.id)
-          .reduce((sum, d) => sum + d.weightRange[0], 0)
+          .reduce((sum, d) => sum + weights(d)[0], 0)
       : 100;
     return {
       questions,
@@ -295,7 +317,7 @@ function balancedQuestions(
     ).length;
     return picked >= group.minimum && picked <= group.maximum;
   });
-  return { questions, withinRanges };
+  return { questions, withinRanges, publishedWeights };
 }
 
 export function selectQuestions(
@@ -324,7 +346,7 @@ export function selectQuestions(
     warnings.push(
       'Near-duplicate concepts are limited to one question per session.',
     );
-  const topics = topicPerformance(history);
+  const topics = topicPerformance(history, config.credentialId);
   if (
     config.practiceMode === 'weak' &&
     ![...topics.values()].some((p) => p.correct < p.total)
@@ -354,7 +376,11 @@ export function selectQuestions(
       initialDifficulty,
     );
     selected = allocation.questions;
-    if (!allocation.withinRanges)
+    if (!allocation.publishedWeights)
+      warnings.push(
+        'Published floor weights are unavailable. Equal per-floor allocation is a practice heuristic, not an official exam blueprint.',
+      );
+    else if (!allocation.withinRanges)
       warnings.push(
         'Exact study-guide weight ranges are not possible with this question count and eligible domain/concept capacity. A capacity-adjusted weighted mix is used.',
       );
@@ -500,6 +526,7 @@ function closestRemainingQuestion(
   questions: Question[],
   nextIndex: number,
   targetDifficulty: Question['difficulty'],
+  session?: ActiveSession,
 ) {
   const target = difficulties.indexOf(targetDifficulty);
   const domain = questions[nextIndex].objectiveDomain;
@@ -507,6 +534,9 @@ function closestRemainingQuestion(
   for (let i = nextIndex + 1; i < questions.length; i++) {
     if (
       questions[i].objectiveDomain === domain &&
+      (!session ||
+        questionOrigin(session, questions[i].id).credentialId ===
+          questionOrigin(session, questions[nextIndex].id).credentialId) &&
       Math.abs(difficulties.indexOf(questions[i].difficulty) - target) <
         Math.abs(difficulties.indexOf(questions[closest].difficulty) - target)
     )
@@ -523,16 +553,29 @@ export function advanceSession(
   if (nextIndex >= session.questions.length)
     throw new Error('Session is already at its last question.');
   const questions = [...session.questions];
-  if (session.config.difficulty === 'adaptive') {
+  if (
+    session.config.difficulty === 'adaptive' &&
+    session.config.answerMode !== 'exam'
+  ) {
     // Keep the selected domain mix; adapt only within the next domain's remaining questions.
+    const credentialId = questionOrigin(
+      session,
+      questions[nextIndex].id,
+    ).credentialId;
+    const ownQuestions = questions.filter(
+      (q) => questionOrigin(session, q.id).credentialId === credentialId,
+    );
     const swapIndex = closestRemainingQuestion(
       questions,
       nextIndex,
       adaptiveDifficulty(
-        questions,
-        session.responses,
-        session.actualDifficulty,
+        ownQuestions,
+        session.responses.filter((r) =>
+          ownQuestions.some((q) => q.id === r.questionId),
+        ),
+        questions[nextIndex].difficulty,
       ),
+      session,
     );
     [questions[nextIndex], questions[swapIndex]] = [
       questions[swapIndex],
@@ -552,7 +595,7 @@ export function completeSession(
   session: ActiveSession,
   now: number,
 ): SessionResult {
-  return {
+  return withSessionOrigins({
     id: session.id,
     config: session.config,
     questions: session.questions,
@@ -560,5 +603,8 @@ export function completeSession(
     startedAt: session.startedAt,
     completedAt: new Date(now).toISOString(),
     groundedAt: session.groundedAt,
-  };
+    credentialId: session.credentialId,
+    questionOrigins: session.questionOrigins,
+    objectiveSnapshots: session.objectiveSnapshots,
+  });
 }

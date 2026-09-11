@@ -3,6 +3,8 @@ import {
   addResult,
   freshData,
   rememberQuestion,
+  saveCredentialConfig,
+  selectSavedCredential,
   type SavedData,
 } from '../../services/storage';
 import {
@@ -17,8 +19,11 @@ import {
   type ActiveSession,
   type PreferencesInput,
   type QuizConfig,
+  type QuestionOrigin,
   type SessionResult,
 } from './types';
+import { LEGACY_CREDENTIAL_ID, questionOrigin } from './origins';
+import type { Taxonomy } from '../grounding/schema';
 
 export interface GameState {
   saved: SavedData;
@@ -27,11 +32,15 @@ export interface GameState {
   storageError: string | null;
   notices: string[];
   dirty: boolean;
+  persistenceBlocked?: boolean;
 }
 
 export type GameAction =
   | { type: 'config'; config: QuizConfig }
   | { type: 'preferences'; preferences: PreferencesInput }
+  | { type: 'select-dungeon'; credentialId: string }
+  | { type: 'favorite'; credentialId: string }
+  | { type: 'hero-class'; heroClassId: string }
   | {
       type: 'start';
       config: QuizConfig;
@@ -40,6 +49,9 @@ export type GameAction =
       now: number;
       id: string;
       groundedAt: string;
+      credentialId?: string;
+      questionOrigins?: Record<string, QuestionOrigin>;
+      objectiveSnapshots?: Record<string, Taxonomy>;
     }
   | { type: 'notice'; notices: string[] }
   | { type: 'submit'; selected: string[]; flagged: boolean; now: number }
@@ -68,7 +80,47 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
   if (action.type === 'config')
     return {
       ...state,
-      saved: { ...state.saved, config: configSchema.parse(action.config) },
+      saved: saveCredentialConfig(
+        state.saved,
+        configSchema.parse(action.config),
+      ),
+      dirty: true,
+    };
+  if (action.type === 'select-dungeon') {
+    if (
+      state.active &&
+      state.saved.selectedCredentialId !== action.credentialId
+    )
+      return {
+        ...state,
+        notices: ['Abandon the active run before entering another dungeon.'],
+      };
+    return {
+      ...state,
+      saved: selectSavedCredential(state.saved, action.credentialId),
+      notices: [],
+      dirty: true,
+    };
+  }
+  if (action.type === 'favorite')
+    return {
+      ...state,
+      saved: {
+        ...state.saved,
+        favoriteCredentialIds: state.saved.favoriteCredentialIds.includes(
+          action.credentialId,
+        )
+          ? state.saved.favoriteCredentialIds.filter(
+              (id) => id !== action.credentialId,
+            )
+          : [...state.saved.favoriteCredentialIds, action.credentialId],
+      },
+      dirty: true,
+    };
+  if (action.type === 'hero-class')
+    return {
+      ...state,
+      saved: { ...state.saved, heroClassId: action.heroClassId },
       dirty: true,
     };
   if (action.type === 'preferences') {
@@ -91,7 +143,17 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
   if (action.type === 'reset-question-history')
     return {
       ...state,
-      saved: { ...state.saved, recentQuestionIds: [] },
+      saved: {
+        ...state.saved,
+        recentQuestionIds:
+          state.saved.selectedCredentialId === LEGACY_CREDENTIAL_ID
+            ? []
+            : state.saved.recentQuestionIds,
+        recentQuestionIdsByCredential: {
+          ...state.saved.recentQuestionIdsByCredential,
+          [state.saved.selectedCredentialId]: [],
+        },
+      },
       notices: [
         'Recent question history reset. Saved scores and preferences are unchanged.',
       ],
@@ -108,6 +170,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
           lastResult: null,
           storageError: null,
           dirty: false,
+          persistenceBlocked: false,
           notices: ['Local study data cleared.'],
         };
   if (action.type === 'notice') return { ...state, notices: action.notices };
@@ -120,8 +183,12 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       dirty: true,
       lastResult: null,
       saved: rememberQuestion(
-        { ...state.saved, config: action.config },
+        saveCredentialConfig(state.saved, action.config),
         action.questions[0].id,
+        action.questionOrigins?.[action.questions[0].id]?.credentialId ??
+          action.credentialId ??
+          action.config.credentialId ??
+          LEGACY_CREDENTIAL_ID,
       ),
       active: {
         id: action.id,
@@ -133,6 +200,12 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         questionStartedAt: action.now,
         groundedAt: action.groundedAt,
         actualDifficulty: action.questions[0].difficulty,
+        credentialId:
+          action.credentialId ??
+          action.config.credentialId ??
+          LEGACY_CREDENTIAL_ID,
+        questionOrigins: action.questionOrigins,
+        objectiveSnapshots: action.objectiveSnapshots,
       },
     };
   }
@@ -230,6 +303,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       saved: rememberQuestion(
         state.saved,
         next.questions[next.currentIndex].id,
+        questionOrigin(next, next.questions[next.currentIndex].id).credentialId,
       ),
       dirty: true,
     };

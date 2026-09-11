@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
-import questionsJson from '../src/data/questions.json';
-import manifestJson from '../src/data/grounding-manifest.json';
-import objectivesJson from '../src/data/objectives.json';
+import questionsJson from '../src/content/exams/dp-700/questions.json';
+import manifestJson from '../src/content/exams/dp-700/sources.json';
+import objectivesJson from '../src/content/exams/dp-700/objectives.json';
 import {
   complexities,
   difficulties,

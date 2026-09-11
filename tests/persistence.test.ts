@@ -12,6 +12,7 @@ import {
   STORAGE_KEY,
 } from '../src/services/storage';
 import { date, question, result, taxonomy } from './fixtures';
+import { LEGACY_OBJECTIVE_VERSION } from '../src/features/quiz/origins';
 
 const now = Date.parse(date);
 const state = (): GameState => ({
@@ -106,6 +107,84 @@ describe('recent local question history', () => {
 });
 
 describe('version-one compatibility and banter preferences', () => {
+  it('migrates all 30 original v1 scores, settings and MRU into the DP-700 namespace without inventing maps', () => {
+    const config = {
+      ...defaultConfig,
+      difficulty: 'expert',
+      timerMode: 'session',
+    };
+    const raw = JSON.stringify({
+      version: 1,
+      config: Object.fromEntries(
+        Object.entries(config).filter(
+          ([key]) =>
+            !['credentialId', 'runMode', 'raidCredentialIds'].includes(key),
+        ),
+      ),
+      preferences: { theme: 'light', reducedMotion: true, reducedBanter: true },
+      recentQuestionIds: ['old-29', 'old-28'],
+      history: Array.from({ length: 30 }, (_, i) => ({
+        ...result([question(`old-${i}`)], [`old-${i}`]),
+        id: `session-${i}`,
+      })),
+    });
+    localStorage.setItem(STORAGE_KEY, raw);
+    const loaded = loadData(localStorage);
+    expect(loaded.error).toBeNull();
+    expect(localStorage.getItem(STORAGE_KEY)).toBe(raw);
+    expect(loaded.data.config).toMatchObject({
+      credentialId: 'dp-700',
+      difficulty: 'expert',
+      timerMode: 'session',
+    });
+    expect(loaded.data.history).toHaveLength(30);
+    expect(loaded.data.recentQuestionIdsByCredential['dp-700']).toEqual([
+      'old-29',
+      'old-28',
+    ]);
+    for (const session of loaded.data.history) {
+      expect(session.credentialId).toBe('dp-700');
+      expect(session.objectiveSnapshots).toEqual({});
+      expect(
+        session.questionOrigins?.[session.questions[0].id].objectiveVersion,
+      ).toBe(LEGACY_OBJECTIVE_VERSION);
+      expect(scoreSession(session, taxonomy).percentage).toBe(100);
+      expect(scoreSession(session, taxonomy).readiness.ready).toBe(false);
+    }
+    expect(saveData(localStorage, loaded.data)).toBeNull();
+    expect(loadData(localStorage).data).toEqual(loaded.data);
+  });
+
+  it('keeps per-dungeon configurations, classes, favorites and recent resets independent', () => {
+    let game = start();
+    game = gameReducer(game, { type: 'abandon' });
+    game = gameReducer(game, {
+      type: 'config',
+      config: { ...defaultConfig, difficulty: 'expert' },
+    });
+    game = gameReducer(game, { type: 'favorite', credentialId: 'other' });
+    game = gameReducer(game, {
+      type: 'hero-class',
+      heroClassId: 'data-engineer',
+    });
+    game = gameReducer(game, { type: 'select-dungeon', credentialId: 'other' });
+    expect(game.saved.config.difficulty).toBe('adaptive');
+    game.saved = rememberQuestion(game.saved, 'other-shown', 'other');
+    game = gameReducer(game, { type: 'reset-question-history' });
+    expect(game.saved.recentQuestionIdsByCredential.other).toEqual([]);
+    expect(game.saved.recentQuestionIdsByCredential['dp-700']).toEqual([
+      'shown',
+    ]);
+    game = gameReducer(game, {
+      type: 'select-dungeon',
+      credentialId: 'dp-700',
+    });
+    expect(game.saved.config.difficulty).toBe('expert');
+    expect(game.saved.favoriteCredentialIds).toEqual(['other']);
+    expect(game.saved.heroClassId).toBe('data-engineer');
+    expect(saveData(localStorage, game.saved)).toBeNull();
+    expect(loadData(localStorage).data).toEqual(game.saved);
+  });
   it.each([true, false])(
     'migrates legacy reducedBanter=%s without resetting historical scores',
     (reducedBanter) => {

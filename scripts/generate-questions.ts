@@ -2,61 +2,26 @@ import { copyFile, mkdir, writeFile, constants } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { z } from 'zod';
 import {
-  complexities,
-  difficulties,
-  formats,
-  taxonomySchema,
-} from '../src/features/grounding/schema';
-import {
   generationOutputSchema,
   generationRequestSchema,
   verificationReviewSchema,
   type GenerationRequest,
 } from '../src/features/grounding/workflow';
 import { argument, isMain, readJsonFile } from './validate-questions';
-
-export function buildGenerationRequest(
-  taxonomyData: unknown,
-  options: {
-    requestId: string;
-    authorId: string;
-    requestedCount: number;
-    createdAt: string;
-  },
-): GenerationRequest {
-  const taxonomy = taxonomySchema.parse(taxonomyData);
-  return generationRequestSchema.parse({
-    schemaVersion: 1,
-    ...options,
-    objectiveTargets: taxonomy.domains.flatMap((domain) =>
-      domain.skills.flatMap((skill) =>
-        skill.subskills.map((subskill) => ({
-          objectiveDomain: domain.id,
-          skill: skill.id,
-          subskill,
-        })),
-      ),
-    ),
-    difficulties,
-    complexities,
-    questionTypes: formats,
-    studyGuideEffectiveDate: taxonomy.studyGuideEffectiveDate,
-    taxonomyRetrievedAt: taxonomy.retrievedAt,
-    primaryEvidence: {
-      studyGuide: 'study-guide.json',
-      certification: 'certification.json',
-      course: 'course.json',
-    },
-    supportingEvidence: [],
-    constraints: [
-      'This scaffolding is not generation or evidence. Retrieve all three primary pages and supporting articles through actual Microsoft Learn MCP before authoring.',
-      'Narrow objectiveTargets to this batch; preserve current guide scope, effective date, and true retrieval timestamps.',
-      'Author original candidates and every distractor; generation output remains manual-review-required.',
-      'An independent reviewer must inspect the completed candidates and supporting evidence, including alternatives, constraints, code, and feature status.',
-      'Do not invent MCP responses, verification dates, or confidence percentages. Unsupported or ambiguous content stays excluded.',
-    ],
-  });
-}
+import { examDirectory, examId } from './content-files';
+import { credentials } from '../src/features/dungeons/catalog';
+import {
+  buildGenerationRequest,
+  parseDifficultyMix,
+} from '../src/features/dungeons/generation';
+import {
+  credentialSchema,
+  encounterMetadataFileSchema,
+  packageManifestSchema,
+  dungeonReadinessSchema,
+  readinessThresholdsSchema,
+} from '../src/features/dungeons/schema';
+export { buildGenerationRequest } from '../src/features/dungeons/generation';
 
 export async function exportWorkflowSchemas(output: string) {
   await mkdir(output, { recursive: true });
@@ -64,6 +29,11 @@ export async function exportWorkflowSchemas(output: string) {
     ['generation-request.schema.json', generationRequestSchema],
     ['generation-output.schema.json', generationOutputSchema],
     ['verification-review.schema.json', verificationReviewSchema],
+    ['credential.schema.json', credentialSchema],
+    ['encounter-metadata.schema.json', encounterMetadataFileSchema],
+    ['dungeon-package.schema.json', packageManifestSchema],
+    ['dungeon-readiness.schema.json', dungeonReadinessSchema],
+    ['readiness-thresholds.schema.json', readinessThresholdsSchema],
   ] as const) {
     const json = z.toJSONSchema(schema, { io: 'input' });
     await writeFile(
@@ -105,10 +75,12 @@ export async function scaffoldGeneration(
     )}\n`,
     { flag: 'wx' },
   );
-  for (const file of [
-    'generate-dp700-questions.prompt.md',
-    'verify-dp700-questions.prompt.md',
-  ])
+  for (const file of request.credentialId === 'dp-700'
+    ? ['generate-dp700-questions.prompt.md', 'verify-dp700-questions.prompt.md']
+    : [
+        'generate-dungeon-questions.prompt.md',
+        'verify-dungeon-questions.prompt.md',
+      ])
     await copyFile(
       resolve('.github', 'prompts', file),
       resolve(directory, file),
@@ -125,17 +97,28 @@ if (isMain(import.meta.url)) {
       );
     } else {
       const now = new Date().toISOString();
+      const id = examId();
+      const credential = credentials.find(
+        (entry) => entry.credentialId === id,
+      )!;
       const requestId =
-        argument('--id') ?? `dp700-${now.replace(/[:.]/g, '-')}`;
+        argument('--id') ?? `${id}-${now.replace(/[:.]/g, '-')}`;
       const request = buildGenerationRequest(
         await readJsonFile(
-          argument('--taxonomy') ?? resolve('src', 'data', 'objectives.json'),
+          argument('--taxonomy') ??
+            resolve(examDirectory(id), 'objectives.json'),
         ),
         {
           requestId,
           authorId: argument('--author') ?? 'maintainer',
           requestedCount: Number(argument('--count') ?? 6),
           createdAt: now,
+          credentialId: id,
+          provider: credential.provider,
+          ...parseDifficultyMix(argument('--difficulty')),
+          objectiveDomains: (argument('--floors') ?? argument('--domains'))
+            ?.split(',')
+            .map((id) => id.trim()),
         },
       );
       const output = resolve(

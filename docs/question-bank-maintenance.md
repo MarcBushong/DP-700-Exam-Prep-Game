@@ -1,6 +1,53 @@
 # Question-bank maintenance
 
-This is original, unofficial DP-700 practice material, **not a Microsoft practice exam**. The browser reads a versioned, build-time-grounded bank. It makes no AI or telemetry requests and needs no API key. Generation is a maintainer/Copilot workflow; the deterministic CLI only scaffolds work and validates recorded evidence.
+The Certification Dungeon is original, unofficial study material, **not a Microsoft or GitHub practice exam**. The browser reads versioned, build-time-grounded packages. It makes no AI or telemetry requests and needs no API key. Generation is a maintainer/Copilot workflow; the deterministic CLI only scaffolds work and validates recorded evidence.
+
+## Multi-credential packages and independent realism review
+
+All commands accept `--exam <credentialId>` (default `dp-700`). The canonical
+DP-700 bank is now `src\content\exams\dp-700`; its questions, objectives, source
+manifest and ledger were moved byte-for-byte, without reauthoring facts or
+changing fingerprints. `sources.json` replaces the legacy
+`grounding-manifest.json` filename. There is no independently editable `src\data`
+bank.
+
+Use `credentials:discover` and `objectives:refresh` to prepare authoritative
+retrieval work, not to claim automatic verification. `credentials:validate`
+checks catalog metadata. `content:status` reports all packages and sealed
+entries. The build requires `content:validate-all`, which includes independent
+ledger, claim-envelope, source-policy, rubric and readiness gates for **every**
+installed package.
+
+Each candidate also has a keyed `encounter-metadata.json` envelope containing
+credentialId, objectiveVersion, questionFingerprint, sourceIds, retrievedAt,
+lastValidatedAt, answerEvidence, distractorEvidence and rubric. Retrieval equals
+the latest cited source retrieval; validation matches the factual question
+snapshot. Each option's summary and source IDs match its genuine independent
+ledger rationale. Do not rewrite facts merely to add metadata.
+
+A separate reviewer scores ten realism criteria 0–2: alignment, accuracy,
+scenario completeness, distractor plausibility, answer uniqueness, documentation
+strength, difficulty authenticity, explanation quality, originality, and
+clarity/accessibility. Passing requires >=18/20, no zero, and 2 for accuracy,
+uniqueness and documentation strength. Store actual reviewer identity/date and
+question-specific notes. Null, incomplete, stale or failing rubrics do not play.
+Structural tests and fingerprints are not semantic reviews.
+
+Every rubric additionally requires the independently reviewed `objectiveVersion`
+and `objectiveFingerprint` (64 lowercase hexadecimal SHA-256 characters).
+The reviewer uses `objectiveFingerprint(taxonomy)` from
+`src\features\dungeons\review.ts` or `scripts\review-helpers.ts` **after re-reading
+the actual current outline**. Its canonical payload contains
+`studyGuideEffectiveDate`, `studyGuideUrl`, and ordered domains with IDs, titles,
+weights, skills and subskills. Object key order is canonicalized and omitted/null
+weights are equivalent; retrieval time is not included in this content hash.
+The rubric's actual `reviewedAt` must nevertheless follow the outline retrieval.
+Mismatched bindings make the question stale, including same-version map changes.
+No authoring, migration or validation command manufactures these review fields;
+old rubrics cannot be renewed merely by rewriting envelope versions or dates.
+
+See [architecture](architecture.md), [onboarding](dungeon-onboarding.md),
+[lifecycle](dungeon-lifecycle.md), and [source policy](source-policy.md).
 
 ## Evidence and dates
 
@@ -37,7 +84,7 @@ npm run grounding:retrieve -- search "Microsoft Fabric specific implementation b
 npm run grounding:retrieve -- fetch "https://learn.microsoft.com/en-us/fabric/security/security-overview" .grounding\batch-001\security.json
 ```
 
-Replace the example supporting article with direct pages for the actual scenario. Inspect current documentation, including constraints, alternatives, terminology, and Preview status. Review candidate taxonomy changes before replacing `src\data\objectives.json`; never change objectives to disguise gaps. Refresh affected source records using true retrieval/review dates.
+Replace the example supporting article with direct pages for the actual scenario. Inspect current documentation, including constraints, alternatives, terminology, and Preview status. Review candidate taxonomy changes before replacing the package's `objectives.json`; never change objectives to disguise gaps. Refresh affected source records using true retrieval/review dates.
 
 In Copilot, use `.github\prompts\generate-dp700-questions.prompt.md` with the batch's `request.json`. Narrow objective targets, populate evidence references, and author `generation-output.json` matching the output schema. Every generated candidate remains `manual-review-required`. The script does not invoke a model or require a paid service.
 
@@ -46,7 +93,7 @@ Extract the candidate array for standalone validators and prepare a candidate so
 ```powershell
 $output = Get-Content .grounding\batch-001\generation-output.json -Raw | ConvertFrom-Json
 ConvertTo-Json -InputObject @($output.candidates) -Depth 100 | Set-Content .grounding\batch-001\candidates.json -Encoding utf8
-Copy-Item src\data\grounding-manifest.json .grounding\batch-001\manifest.json
+Copy-Item src\content\exams\dp-700\sources.json .grounding\batch-001\manifest.json
 ```
 
 Add genuinely reviewed supporting records to the candidate manifest; do not silently overwrite existing source evidence. Raw responses remain local. Commit original short summaries, citations, reviewed questions, and final manifests—not retrieved article bodies.
@@ -57,7 +104,7 @@ Add genuinely reviewed supporting records to the candidate manifest; do not sile
 
 **Pass 2 — independent verification:** a different person or separate reviewer context uses `.github\prompts\verify-dp700-questions.prompt.md` to inspect the completed item against the cited documents. Check every correct answer, every distractor, explanation, limitation, prerequisite, code operation, source applicability, and feature status. A wordy scenario is not automatically Expert. Ambiguous or unsupported questions stay excluded.
 
-The reviewer writes question-specific notes and a qualitative `confidenceReason`, not an invented probability. Machine-readable `reviews.json` binds a separate author/reviewer declaration, exact content SHA-256, per-option judgments, source snapshots, and all checklist results. Final independently authored attestations are committed in `src\data\verification-reviews.json`, covering **every candidate, including nonverified statuses**. The validator checks the declaration's consistency; it cannot authenticate people or prove independent thought.
+The reviewer writes question-specific notes and a qualitative `confidenceReason`, not an invented probability. Machine-readable `reviews.json` binds a separate author/reviewer declaration, exact content SHA-256, per-option judgments, source snapshots, and all checklist results. Final independently authored attestations are committed in the selected package's `verification-reviews.json`, covering **every candidate, including nonverified statuses**. The validator checks the declaration's consistency; it cannot authenticate people or prove independent thought.
 
 ```powershell
 npm run questions:validate -- --questions .grounding\batch-001\candidates.json --manifest .grounding\batch-001\manifest.json --taxonomy .grounding\batch-001\objectives.candidate.json
@@ -71,7 +118,17 @@ The last command prints fingerprints, statuses, and failures; it changes **nothi
 npm run questions:verify -- --questions .grounding\batch-001\candidates.json --manifest .grounding\batch-001\manifest.json --taxonomy .grounding\batch-001\objectives.candidate.json --reviews .grounding\batch-001\reviews.json
 ```
 
-Default `questions:verify` requires the committed `src\data\verification-reviews.json` ledger and fails if it is missing or mismatched. Every candidate in the selected bank, regardless of status, needs exactly one matching attestation; extra/unknown or duplicate entries fail. Verification notes and confidence reasons must match the candidate for every status; verified records additionally match the review timestamp. Changing substantive content or its generation/validation dates invalidates its fingerprint. The build runs this gate immediately after structural validation.
+Default `questions:verify` requires the selected package's committed `verification-reviews.json` ledger and fails if it is missing or mismatched. Every candidate in the selected bank, regardless of status, needs exactly one matching attestation; extra/unknown or duplicate entries fail. Verification notes and confidence reasons must match the candidate for every status; verified records additionally match the review timestamp. Changing substantive content or its generation/validation dates invalidates its fingerprint. The build includes this gate in `content:validate-all`, along with evidence envelopes and realism rubrics.
+
+The repository also keeps the consolidated audit ledger at
+`src\data\verification-reviews.json`. It must contain exact copies of every
+installed package's independently authored attestations, including nonverified
+records. After completing real reviews, run `npm run reviews:sync` to copy the
+matching records; this command refuses mismatched attestations and never creates
+verdicts, rationales, scores, timestamps, or approvals. Commit the package reviews
+and consolidated ledger together. Default verification checks the selected
+package's agreement with it; `content:validate-all` checks completeness across
+all packages.
 
 For authoring, an explicit `--questions` without `--reviews` intentionally runs **metadata-only** mode and prints fingerprints; it does not claim attestations were checked. Add `--reviews` to validate the batch's independently authored review file. The output exposes `mode`, `reviewFile`, and `attestationChecksPassed`; missing or invalid required files report errors and exit nonzero. No command promotes or rewrites verification metadata.
 
@@ -95,7 +152,7 @@ Quality warnings identify long scenarios, unusual answer-length cues, skewed ori
 
 ## Commands and reports
 
-All validation commands work without Copilot. Optional `--questions`, `--manifest`, and `--taxonomy` select candidate JSON paths; defaults are the versioned bank.
+All validation commands work without Copilot. `--exam` selects a catalog package (default `dp-700`). Optional `--questions`, `--manifest`, and `--taxonomy` select candidate JSON paths; defaults are the selected versioned package.
 
 | Command                                                                     | Meaning                                                                                           |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
@@ -111,7 +168,7 @@ All validation commands work without Copilot. Optional `--questions`, `--manifes
 | `npm run questions:verify -- --questions path\candidates.json`              | Explicit metadata-only authoring mode; no independent-attestation check                           |
 | `npm run questions:report`                                                  | Print readable Markdown diagnostics                                                               |
 | `npm run questions:report -- --json`                                        | Print machine-readable report                                                                     |
-| `npm run questions:report -- --write`                                       | Write `docs\content-coverage.md` and `docs\question-bank-report.json`                             |
+| `npm run questions:report -- --write`                                       | Write `content-coverage.md` and `question-bank-report.json` inside the selected package           |
 | `npm run questions:report -- --write --output .grounding\batch-001\reports` | Persist both report formats for a candidate batch                                                 |
 | `npm run validate:sources -- --online`                                      | Separate allowlisted, bounded URL availability checks                                             |
 

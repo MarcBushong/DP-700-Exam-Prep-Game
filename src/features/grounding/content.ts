@@ -1,11 +1,7 @@
-import questionData from '../../data/questions.json';
-import manifestData from '../../data/grounding-manifest.json';
-import taxonomyData from '../../data/objectives.json';
-import { validateContent } from './schema';
+import { getDungeonPackage } from '../dungeons/packages';
 
 // Invalid citations fail closed; nonverified/stale candidates remain reportable, not playable.
-export const content = validateContent(
-  questionData,
-  manifestData,
-  taxonomyData,
-);
+const dungeon = getDungeonPackage('dp-700');
+if (!dungeon)
+  throw new Error('The preserved DP-700 package could not be loaded.');
+export const content = dungeon;

@@ -6,6 +6,10 @@ import {
   Info,
   RotateCcw,
   SlidersHorizontal,
+  Flame,
+  Swords,
+  LockKeyhole,
+  Compass,
 } from 'lucide-react';
 import { useGame } from '../features/quiz/context';
 import {
@@ -18,6 +22,9 @@ import {
 import { defaultConfig, labels, type QuizConfig } from '../features/quiz/types';
 import { selectQuestions } from '../features/quiz/engine';
 import { ConfirmDialog, PageHeading } from '../components/common';
+import { getDungeonPackage } from '../features/dungeons/packages';
+import { credentials } from '../features/dungeons/catalog';
+import { planDungeonSession } from '../features/quiz/dungeonRuntime';
 
 const modeDescriptions: Record<QuizConfig['answerMode'], string> = {
   immediate:
@@ -46,7 +53,34 @@ export function SetupPage() {
     active,
     startSession,
     recentQuestionIds,
+    selectedCredentialId,
+    abandonSession,
   } = useGame();
+  const dungeon = getDungeonPackage(selectedCredentialId);
+  const gauntlet =
+    config.runMode === 'gauntlet' || config.answerMode === 'exam';
+  const raid = config.runMode === 'raid';
+  const effectiveConfig = useMemo(
+    () =>
+      gauntlet
+        ? {
+            ...config,
+            runMode: 'gauntlet' as const,
+            answerMode: 'exam' as const,
+            objectiveDomains: [],
+            skills: [],
+            subskills: [],
+            practiceMode: 'all' as const,
+            order: 'balanced' as const,
+          }
+        : config,
+    [config, gauntlet],
+  );
+  const raidIds = config.raidCredentialIds ?? [];
+  const ready = raid
+    ? raidIds.length >= 2 &&
+      raidIds.every((id) => getDungeonPackage(id)?.readiness.study)
+    : Boolean(dungeon?.readiness[gauntlet ? 'gauntlet' : 'study']);
   const [customCount, setCustomCount] = useState(
     ![5, 10, 20, 30, 50].includes(config.questionCount),
   );
@@ -54,18 +88,29 @@ export function SetupPage() {
   const [timerInput, setTimerInput] = useState(String(config.timerSeconds));
   const [replace, setReplace] = useState(false);
   const navigate = useNavigate();
-  const selection = useMemo(
-    () =>
-      selectQuestions(
-        bank,
-        taxonomy,
+  const selection = useMemo(() => {
+    if (config.runMode === 'raid') {
+      const plan = planDungeonSession(
+        (config.raidCredentialIds ?? []).map(getDungeonPackage),
         config,
         history,
-        Math.random,
-        recentQuestionIds,
-      ),
-    [bank, taxonomy, config, history, recentQuestionIds],
-  );
+        {},
+        () => 0.5,
+      );
+      return {
+        eligibleCount: plan.ok ? plan.plan.questions.length : 0,
+        warnings: plan.ok ? plan.plan.warnings : plan.warnings,
+      };
+    }
+    return selectQuestions(
+      bank,
+      taxonomy,
+      effectiveConfig,
+      history,
+      Math.random,
+      recentQuestionIds,
+    );
+  }, [bank, taxonomy, config, effectiveConfig, history, recentQuestionIds]);
   const update = <K extends keyof QuizConfig>(key: K, value: QuizConfig[K]) =>
     setConfig({ ...config, [key]: value });
   const domains = taxonomy.domains.filter(
@@ -87,9 +132,10 @@ export function SetupPage() {
     (/^\d+$/.test(timerInput) &&
       Number(timerInput) >= 10 &&
       Number(timerInput) <= 7200);
-  const canStart = selection.eligibleCount > 0 && countValid && timerValid;
+  const canStart =
+    ready && selection.eligibleCount > 0 && countValid && timerValid;
   const begin = () => {
-    if (canStart && startSession(config))
+    if (canStart && startSession(effectiveConfig))
       navigate('/play', {
         state: {
           practiceEvent: config.practiceMode === 'weak' ? 'weak' : 'start',
@@ -135,13 +181,13 @@ export function SetupPage() {
   return (
     <>
       <PageHeading
-        title="Make this challenge yours."
-        description="A quick confidence boost or a deeper dive? You set the pace."
+        title="Prepare your expedition."
+        description={`${dungeon?.credential.examCode ?? selectedCredentialId} · ${dungeon?.credential.dungeonName ?? 'Dungeon unavailable'}. Choose your pace; the answers stay grounded.`}
       >
         <button
           className="button secondary small-button"
           onClick={() => {
-            setConfig({ ...defaultConfig });
+            setConfig({ ...defaultConfig, credentialId: selectedCredentialId });
             setCustomCount(false);
             setCountInput(String(defaultConfig.questionCount));
             setTimerInput(String(defaultConfig.timerSeconds));
@@ -150,8 +196,166 @@ export function SetupPage() {
           <RotateCcw size={16} aria-hidden="true" /> Reset filters
         </button>
       </PageHeading>
+      <Link className="text-link setup-map-link" to="/">
+        Choose a different dungeon
+      </Link>
       <form className="setup-layout" onSubmit={submit}>
         <div className="setup-sections">
+          <section
+            className="panel setup-section expedition-modes"
+            aria-labelledby="expedition-heading"
+          >
+            <h2 id="expedition-heading">Pick your expedition</h2>
+            <div className="expedition-options">
+              <label
+                className={`expedition-option ${!gauntlet && !raid ? 'selected' : ''}`}
+              >
+                <input
+                  type="radio"
+                  name="run-mode"
+                  checked={!gauntlet && !raid}
+                  onChange={() =>
+                    setConfig({
+                      ...config,
+                      runMode: 'study',
+                      raidCredentialIds: undefined,
+                      answerMode: 'immediate',
+                      timerMode: 'off',
+                    })
+                  }
+                />
+                <Flame size={24} aria-hidden="true" />
+                <span>
+                  <strong>Torchlight Run</strong>
+                  <small>
+                    Study at your pace. Immediate feedback, no timer by default.
+                  </small>
+                </span>
+              </label>
+              <label
+                className={`expedition-option ${gauntlet ? 'selected' : ''}`}
+              >
+                <input
+                  type="radio"
+                  name="run-mode"
+                  checked={gauntlet}
+                  disabled={!dungeon?.readiness.gauntlet}
+                  onChange={() =>
+                    setConfig({
+                      ...config,
+                      runMode: 'gauntlet',
+                      raidCredentialIds: undefined,
+                      answerMode: 'exam',
+                      order: 'balanced',
+                      objectiveDomains: [],
+                      skills: [],
+                      subskills: [],
+                      practiceMode: 'all',
+                    })
+                  }
+                />
+                <Swords size={24} aria-hidden="true" />
+                <span>
+                  <strong>Boss Gauntlet</strong>
+                  <small>
+                    Neutral practice. No hints or feedback until completion.
+                  </small>
+                </span>
+              </label>
+              <label className={`expedition-option ${raid ? 'selected' : ''}`}>
+                <input
+                  type="radio"
+                  name="run-mode"
+                  checked={raid}
+                  onChange={() =>
+                    setConfig({
+                      ...config,
+                      runMode: 'raid',
+                      answerMode: 'immediate',
+                      objectiveDomains: [],
+                      skills: [],
+                      subskills: [],
+                      raidCredentialIds: dungeon?.readiness.study
+                        ? [selectedCredentialId]
+                        : [],
+                    })
+                  }
+                />
+                <Compass size={24} aria-hidden="true" />
+                <span>
+                  <strong>Grand Raid</strong>
+                  <small>
+                    Cross-dungeon study. At least two open dungeons, with
+                    isolated scores.
+                  </small>
+                </span>
+              </label>
+            </div>
+            {!dungeon?.readiness.gauntlet && (
+              <details className="readiness-details">
+                <summary>
+                  <LockKeyhole size={16} aria-hidden="true" /> Why is Boss
+                  Gauntlet sealed?
+                </summary>
+                <ul>
+                  {(
+                    dungeon?.readiness.reasons ?? [
+                      'No verified dungeon package.',
+                    ]
+                  ).map((reason) => (
+                    <li key={reason}>{reason}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
+            {raid && (
+              <fieldset className="raid-selector">
+                <legend>Choose raid dungeons (at least two)</legend>
+                {credentials.map((item) => {
+                  const playable = Boolean(
+                    getDungeonPackage(item.credentialId)?.readiness.study,
+                  );
+                  return (
+                    <label key={item.credentialId} className="check-label">
+                      <input
+                        type="checkbox"
+                        disabled={!playable}
+                        checked={raidIds.includes(item.credentialId)}
+                        onChange={() =>
+                          update(
+                            'raidCredentialIds',
+                            toggle(raidIds, item.credentialId),
+                          )
+                        }
+                      />
+                      {item.examCode ?? item.credentialId} · {item.dungeonName}
+                      {!playable && ' · Sealed'}
+                    </label>
+                  );
+                })}
+                <p className="field-help">
+                  Every encounter carries its source dungeon. Locked dungeons
+                  cannot join. Selection is balanced between the chosen banks.
+                  Raid runs use all floors in their selected packages.
+                </p>
+              </fieldset>
+            )}
+            {gauntlet && (
+              <p className="notice">
+                Generic practice settings, not an official exam simulation. Any
+                timer below is yours to configure; no official duration, format,
+                or passing score is implied.
+              </p>
+            )}
+            {!ready && (
+              <p className="notice warning" role="status">
+                This expedition is sealed.{' '}
+                {raid
+                  ? 'Choose at least two study-ready dungeons.'
+                  : 'The selected package does not meet this mode’s evidence and coverage safeguards.'}
+              </p>
+            )}
+          </section>
           <section
             className="panel setup-section"
             aria-labelledby="challenge-shape"
@@ -233,7 +437,8 @@ export function SetupPage() {
                 <label htmlFor="practice">Practice focus</label>
                 <select
                   id="practice"
-                  value={config.practiceMode}
+                  value={effectiveConfig.practiceMode}
+                  disabled={gauntlet}
                   onChange={(event) =>
                     update(
                       'practiceMode',
@@ -307,124 +512,132 @@ export function SetupPage() {
               )}
             </fieldset>
           </section>
-          <section
-            className="panel setup-section"
-            aria-labelledby="topic-heading"
-          >
-            <h2 id="topic-heading">Choose your territory</h2>
-            <p className="field-help">
-              No selections means all. Combine domains, skills, and subskills to
-              focus your practice.
-            </p>
-            <fieldset className="topic-field">
-              <legend>Objective domains</legend>
-              <label className="check-label">
-                <input
-                  type="checkbox"
-                  checked={config.objectiveDomains.length === 0}
-                  onChange={() => changeDomains([])}
-                />{' '}
-                All objective domains
-              </label>
-              {taxonomy.domains.map((domain) => (
-                <label key={domain.id} className="topic-option">
-                  <input
-                    type="checkbox"
-                    checked={config.objectiveDomains.includes(domain.id)}
-                    onChange={() =>
-                      changeDomains(toggle(config.objectiveDomains, domain.id))
-                    }
-                  />
-                  <span>
-                    {domain.title}
-                    <small>
-                      {domain.weightRange.join('–')}% guide weight ·{' '}
-                      {
-                        bank.filter(
-                          (question) => question.objectiveDomain === domain.id,
-                        ).length
-                      }{' '}
-                      questions
-                    </small>
-                  </span>
-                </label>
-              ))}
-            </fieldset>
-            <details className="filter-details">
-              <summary>
-                Specific skills{' '}
-                <span>
-                  {config.skills.length
-                    ? `${config.skills.length} selected`
-                    : 'All'}
-                </span>
-              </summary>
-              <fieldset>
-                <legend className="sr-only">Skills</legend>
+          {!raid && !gauntlet && (
+            <section
+              className="panel setup-section"
+              aria-labelledby="topic-heading"
+            >
+              <h2 id="topic-heading">Choose your territory</h2>
+              <p className="field-help">
+                No selections means all. Combine domains, skills, and subskills
+                to focus your practice.
+              </p>
+              <fieldset className="topic-field">
+                <legend>Floors · official objective domains</legend>
                 <label className="check-label">
                   <input
                     type="checkbox"
-                    checked={config.skills.length === 0}
-                    onChange={() => changeSkills([])}
+                    checked={config.objectiveDomains.length === 0}
+                    onChange={() => changeDomains([])}
                   />{' '}
-                  All available skills
+                  All objective domains
                 </label>
-                {availableSkills.map((skill) => (
-                  <label className="check-label" key={skill.id}>
+                {taxonomy.domains.map((domain) => (
+                  <label key={domain.id} className="topic-option">
                     <input
                       type="checkbox"
-                      checked={config.skills.includes(skill.id)}
+                      checked={config.objectiveDomains.includes(domain.id)}
                       onChange={() =>
-                        changeSkills(toggle(config.skills, skill.id))
+                        changeDomains(
+                          toggle(config.objectiveDomains, domain.id),
+                        )
                       }
                     />
-                    {skill.title}
+                    <span>
+                      {domain.title}
+                      <small>
+                        {domain.weightRange
+                          ? `${domain.weightRange.join('–')}% guide weight`
+                          : 'No published weighting'}{' '}
+                        ·{' '}
+                        {
+                          bank.filter(
+                            (question) =>
+                              question.objectiveDomain === domain.id,
+                          ).length
+                        }{' '}
+                        questions
+                      </small>
+                    </span>
                   </label>
                 ))}
               </fieldset>
-            </details>
-            <details className="filter-details">
-              <summary>
-                Specific subskills{' '}
-                <span>
-                  {config.subskills.length
-                    ? `${config.subskills.length} selected`
-                    : 'All'}
-                </span>
-              </summary>
-              <fieldset>
-                <legend className="sr-only">Subskills</legend>
-                <label className="check-label">
-                  <input
-                    type="checkbox"
-                    checked={config.subskills.length === 0}
-                    onChange={() => update('subskills', [])}
-                  />{' '}
-                  All available subskills
-                </label>
-                {availableSubskills.map((skill) => (
-                  <div className="subskill-group" key={skill.id}>
-                    <h3>{skill.title}</h3>
-                    {skill.subskills.map((subskill) => (
-                      <label className="check-label" key={subskill}>
-                        <input
-                          type="checkbox"
-                          checked={config.subskills.includes(subskill)}
-                          onChange={() =>
-                            update(
-                              'subskills',
-                              toggle(config.subskills, subskill),
-                            )
-                          }
-                        />
-                        {subskill}
-                      </label>
-                    ))}
-                  </div>
-                ))}
-              </fieldset>
-            </details>
-          </section>
+              <details className="filter-details">
+                <summary>
+                  Specific skills{' '}
+                  <span>
+                    {config.skills.length
+                      ? `${config.skills.length} selected`
+                      : 'All'}
+                  </span>
+                </summary>
+                <fieldset>
+                  <legend className="sr-only">Skills</legend>
+                  <label className="check-label">
+                    <input
+                      type="checkbox"
+                      checked={config.skills.length === 0}
+                      onChange={() => changeSkills([])}
+                    />{' '}
+                    All available skills
+                  </label>
+                  {availableSkills.map((skill) => (
+                    <label className="check-label" key={skill.id}>
+                      <input
+                        type="checkbox"
+                        checked={config.skills.includes(skill.id)}
+                        onChange={() =>
+                          changeSkills(toggle(config.skills, skill.id))
+                        }
+                      />
+                      {skill.title}
+                    </label>
+                  ))}
+                </fieldset>
+              </details>
+              <details className="filter-details">
+                <summary>
+                  Specific subskills{' '}
+                  <span>
+                    {config.subskills.length
+                      ? `${config.subskills.length} selected`
+                      : 'All'}
+                  </span>
+                </summary>
+                <fieldset>
+                  <legend className="sr-only">Subskills</legend>
+                  <label className="check-label">
+                    <input
+                      type="checkbox"
+                      checked={config.subskills.length === 0}
+                      onChange={() => update('subskills', [])}
+                    />{' '}
+                    All available subskills
+                  </label>
+                  {availableSubskills.map((skill) => (
+                    <div className="subskill-group" key={skill.id}>
+                      <h3>{skill.title}</h3>
+                      {skill.subskills.map((subskill) => (
+                        <label className="check-label" key={subskill}>
+                          <input
+                            type="checkbox"
+                            checked={config.subskills.includes(subskill)}
+                            onChange={() =>
+                              update(
+                                'subskills',
+                                toggle(config.subskills, subskill),
+                              )
+                            }
+                          />
+                          {subskill}
+                        </label>
+                      ))}
+                    </div>
+                  ))}
+                </fieldset>
+              </details>
+            </section>
+          )}
           <section
             className="panel setup-section"
             aria-labelledby="experience-heading"
@@ -443,7 +656,25 @@ export function SetupPage() {
                       name="answer-mode"
                       value={mode}
                       checked={config.answerMode === mode}
-                      onChange={() => update('answerMode', mode)}
+                      disabled={
+                        (gauntlet && mode !== 'exam') ||
+                        (mode === 'exam' &&
+                          (!dungeon?.readiness.gauntlet || raid))
+                      }
+                      onChange={() =>
+                        mode === 'exam'
+                          ? setConfig({
+                              ...config,
+                              runMode: 'gauntlet',
+                              answerMode: 'exam',
+                              order: 'balanced',
+                              objectiveDomains: [],
+                              skills: [],
+                              subskills: [],
+                              practiceMode: 'all',
+                            })
+                          : update('answerMode', mode)
+                      }
                     />
                     <span>
                       <strong>{labels[mode]}</strong>
@@ -479,7 +710,8 @@ export function SetupPage() {
                 <label htmlFor="order">Question order</label>
                 <select
                   id="order"
-                  value={config.order}
+                  value={effectiveConfig.order}
+                  disabled={gauntlet}
                   onChange={(event) => {
                     const value = orders.find(
                       (item) => item === event.target.value,
@@ -588,7 +820,7 @@ export function SetupPage() {
             disabled={!canStart}
             className="button primary start-button"
           >
-            {active ? 'Replace & begin' : 'Begin challenge'}
+            {active ? 'Replace & descend' : 'Descend'}
             <ArrowRight size={19} aria-hidden="true" />
           </button>
           {active && (
@@ -609,10 +841,13 @@ export function SetupPage() {
       </form>
       {replace && (
         <ConfirmDialog
-          title="Replace your current challenge?"
-          confirmLabel="Replace & begin"
+          title="Replace your current expedition?"
+          confirmLabel="Replace & descend"
           onClose={() => setReplace(false)}
-          onConfirm={begin}
+          onConfirm={() => {
+            abandonSession();
+            begin();
+          }}
           destructive
         >
           <p>

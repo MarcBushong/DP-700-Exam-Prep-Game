@@ -8,7 +8,12 @@ import {
   saveData,
   STORAGE_KEY,
 } from '../src/services/storage';
-import { escapeHtml, resultHtml, resultJson } from '../src/services/export';
+import {
+  escapeHtml,
+  resultHtml,
+  resultJson,
+  safeCitationUrl,
+} from '../src/services/export';
 import { question, result, taxonomy } from './fixtures';
 
 beforeEach(() => localStorage.clear());
@@ -140,15 +145,16 @@ describe('local persistence', () => {
       }),
     ).toThrow('Programming bug');
   });
-  it('retains the most recent 30 results and deduplicates completion events', () => {
+  it('preserves lifetime results beyond the legacy 30-result cap and deduplicates completion events', () => {
     let data = freshData();
     for (let i = 0; i < 35; i++)
       data = addResult(data, { ...result(), id: `result-${i}` });
-    expect(data.history).toHaveLength(30);
+    expect(data.history).toHaveLength(35);
     expect(data.history[0].id).toBe('result-34');
     expect(
       addResult(data, { ...result(), id: 'result-34' }).history,
-    ).toHaveLength(30);
+    ).toHaveLength(35);
+    expect(data.history.at(-1)?.id).toBe('result-0');
   });
 });
 
@@ -161,6 +167,28 @@ describe('safe exports', () => {
     expect(html).toContain('rel="noopener noreferrer"');
     expect(html).toContain('Your answer:');
     expect(html).toContain('Use your browser');
+    expect(html).toContain('The Certification Dungeon');
+    expect(html).toContain('Microsoft or GitHub certification programs');
+    expect(html).not.toContain('Fabric Data Engineer Challenge');
+  });
+  it('exports saved objective labels rather than the currently selected taxonomy', () => {
+    const session = result();
+    session.credentialId = 'dp-700';
+    session.questionOrigins = {
+      q1: {
+        credentialId: 'dp-700',
+        objectiveVersion: taxonomy.studyGuideEffectiveDate,
+      },
+    };
+    session.objectiveSnapshots = { 'dp-700': structuredClone(taxonomy) };
+    const latest = structuredClone(taxonomy);
+    latest.domains[0].title = 'Changed latest objective';
+    const html = resultHtml(session, latest);
+    expect(html).toContain('Manage: 0/1');
+    expect(html).not.toContain('Changed latest objective');
+    expect(
+      JSON.parse(resultJson(session, latest)).summary.byDomain[0].label,
+    ).toBe('Manage');
   });
   it('escapes user/content text and refuses non-Learn URLs', () => {
     expect(escapeHtml('<script>"&\'')).toBe('&lt;script&gt;&quot;&amp;&#39;');
@@ -170,5 +198,19 @@ describe('safe exports', () => {
     expect(resultHtml(session, taxonomy)).not.toContain('<img');
     session.questions[0].sourceUrls = ['javascript:alert(1)'];
     expect(() => resultHtml(session, taxonomy)).toThrow();
+  });
+  it('supports safe historical GitHub citations while applying known credential allowlists', () => {
+    const url =
+      'https://docs.github.com/en/copilot/concepts/about-github-copilot';
+    expect(safeCitationUrl(url, 'historical-github-fixture')).toBe(url);
+    expect(() => safeCitationUrl(url, 'dp-700')).toThrow(/not approved/);
+    for (const unsafe of [
+      'https://docs.github.com.evil.test/en/copilot',
+      'https://user:password@docs.github.com/en/copilot',
+      'javascript:alert(1)',
+    ])
+      expect(() =>
+        safeCitationUrl(unsafe, 'historical-github-fixture'),
+      ).toThrow();
   });
 });

@@ -20,6 +20,7 @@ import {
   defaultConfig,
   labels,
   type SessionResult,
+  type QuizConfig,
 } from '../features/quiz/types';
 import {
   missedQuestions,
@@ -45,9 +46,13 @@ import { useReaction } from '../features/personality/useReaction';
 import {
   domainCategory,
   scoreCategory,
+  type ReactionContext,
 } from '../features/personality/reactions';
 import { HostReaction } from '../features/personality/HostReaction';
 import { DocumentationReactions } from '../features/personality/DocumentationReactions';
+import { credentials } from '../features/dungeons/catalog';
+import { getDungeonPackage } from '../features/dungeons/packages';
+import { questionOrigin, LEGACY_CREDENTIAL_ID } from '../features/quiz/origins';
 
 function DomainReaction({
   resultId,
@@ -60,7 +65,13 @@ function DomainReaction({
     resultId,
     `domain:${row.id}`,
     [domainCategory(row.percentage)],
-    { domainId: row.id, domain: row.label },
+    {
+      credentialId: row.credentialId,
+      domainId: row.objectiveId ?? row.id,
+      domain: row.label,
+      floorId: row.objectiveId ?? row.id,
+      floor: row.label,
+    },
   );
   return <HostReaction reaction={reaction} />;
 }
@@ -152,7 +163,38 @@ export function ResultsPage() {
 }
 
 function ResultContent({ result }: { result: SessionResult }) {
-  const { taxonomy, bank, history, active, startSession } = useGame();
+  const {
+    taxonomy,
+    history,
+    active,
+    startSession,
+    selectDungeon,
+    abandonSession,
+  } = useGame();
+  const primaryId =
+    result.credentialId ?? result.config.credentialId ?? LEGACY_CREDENTIAL_ID;
+  const credential = credentials.find(
+    (item) => item.credentialId === primaryId,
+  );
+  const originIds = [
+    ...new Set(
+      result.questions.map(
+        (question) => questionOrigin(result, question.id).credentialId,
+      ),
+    ),
+  ];
+  const bank = originIds.flatMap((id) =>
+    getDungeonPackage(id)?.readiness.study
+      ? getDungeonPackage(id)!.questions
+      : [],
+  );
+  const reactionContext: ReactionContext = {
+    runMode: result.config.runMode,
+    inProgress: false,
+    credentialId: originIds.length === 1 ? primaryId : undefined,
+    dungeon: originIds.length > 1 ? 'Grand Raid' : credential?.dungeonName,
+    themes: originIds.length > 1 ? ['cross-dungeon'] : undefined,
+  };
   const [pending, setPending] = useState<'weak' | 'retry' | null>(null);
   const [downloadMessage, setDownloadMessage] = useState('');
   const navigate = useNavigate();
@@ -161,18 +203,21 @@ function ResultContent({ result }: { result: SessionResult }) {
     result.id,
     'summary',
     ['session-complete'],
-    {},
+    reactionContext,
     'summary',
   );
-  const scoreReaction = useReaction(result.id, 'score', [
-    scoreCategory(score.percentage),
-  ]);
+  const scoreReaction = useReaction(
+    result.id,
+    'score',
+    [scoreCategory(score.percentage)],
+    reactionContext,
+  );
   const timedOut = result.responses.some((response) => response.timedOut);
   const timeoutReaction = useReaction(
     result.id,
     'timeout-summary',
     ['time-expired'],
-    {},
+    reactionContext,
     'context',
     timedOut,
   );
@@ -185,16 +230,53 @@ function ResultContent({ result }: { result: SessionResult }) {
     return current ? [current] : [];
   });
   const skills = [...new Set(missed.map((question) => question.skill))];
-  const weakConfig = { ...defaultConfig, skills, order: 'weakest' as const };
+  const configurationFor = (ids: string[]): QuizConfig => ({
+    ...defaultConfig,
+    credentialId: ids[0] ?? primaryId,
+    runMode: ids.length > 1 ? 'raid' : 'study',
+    raidCredentialIds: ids.length > 1 ? ids : undefined,
+  });
+  const retryOrigins = [
+    ...new Set(
+      retryable.map(
+        (question) => questionOrigin(result, question.id).credentialId,
+      ),
+    ),
+  ];
+  const weakOrigins = [
+    ...new Set(
+      missed.map(
+        (question) => questionOrigin(result, question.id).credentialId,
+      ),
+    ),
+  ].filter((id) => getDungeonPackage(id)?.readiness.study);
+  const retryConfig = configurationFor(retryOrigins);
+  const weakConfig = {
+    ...configurationFor(weakOrigins),
+    skills,
+    order: 'weakest' as const,
+    practiceMode: weakOrigins.length > 1 ? ('weak' as const) : ('all' as const),
+  };
   const weakCount = skills.length
-    ? eligibleQuestions(bank, weakConfig, history).length
+    ? weakOrigins.reduce(
+        (total, id) =>
+          total +
+          eligibleQuestions(
+            getDungeonPackage(id)?.questions ?? [],
+            { ...weakConfig, credentialId: id },
+            history,
+          ).length,
+        0,
+      )
     : 0;
   const practice = (kind: 'weak' | 'retry') => {
+    const config = kind === 'retry' ? retryConfig : weakConfig;
+    if (!selectDungeon(config.credentialId ?? primaryId)) return;
     if (kind === 'retry') {
       if (
         retryable.length &&
         startSession(
-          { ...defaultConfig, questionCount: retryable.length },
+          { ...retryConfig, questionCount: retryable.length },
           retryable,
         )
       )
@@ -211,7 +293,7 @@ function ResultContent({ result }: { result: SessionResult }) {
   };
   const exportResult = (format: 'json' | 'html') => {
     try {
-      const filename = `fabric-challenge-${result.id.replace(/[^a-zA-Z0-9-]/g, '-')}.${format}`;
+      const filename = `certification-dungeon-${result.id.replace(/[^a-zA-Z0-9-]/g, '-')}.${format}`;
       downloadFile(
         format === 'json'
           ? resultJson(result, taxonomy)
@@ -233,11 +315,11 @@ function ResultContent({ result }: { result: SessionResult }) {
   return (
     <div className="results-page">
       <PageHeading
-        title="Challenge complete."
-        description="Your score, topic coverage, and next learning steps."
+        title="Expedition complete."
+        description="Honest scores. Documented lessons. Your next move."
       >
         <Link className="button secondary" to="/setup">
-          New challenge <ArrowRight size={17} aria-hidden="true" />
+          New expedition <ArrowRight size={17} aria-hidden="true" />
         </Link>
       </PageHeading>
       <section className="result-overview panel" aria-labelledby="result-score">
@@ -248,7 +330,7 @@ function ResultContent({ result }: { result: SessionResult }) {
               {score.percentage}
               <span>%</span>
             </strong>
-            <span>Practice score</span>
+            <span>In-game practice score</span>
           </h2>
           <p>
             {score.correct} of {score.total} questions correct
@@ -279,6 +361,22 @@ function ResultContent({ result }: { result: SessionResult }) {
             </div>
           </div>
         </div>
+      </section>
+      <section className="notice" aria-label="In-game readiness estimate">
+        <strong>{score.readiness.label}</strong>
+        <p>{score.readiness.explanation}</p>
+        <p>
+          {score.readiness.verifiedSampleSize}/{score.total} verified question
+          snapshots · {Math.round(score.readiness.advancedShare * 100)}%
+          Advanced/Expert · {score.readiness.freshness}
+        </p>
+        {score.readiness.warnings.length > 0 && (
+          <ul>
+            {score.readiness.warnings.map((warning) => (
+              <li key={warning}>{warning}</li>
+            ))}
+          </ul>
+        )}
       </section>
       <HostReaction reaction={summaryReaction} />
       <HostReaction reaction={scoreReaction} />
@@ -342,7 +440,7 @@ function ResultContent({ result }: { result: SessionResult }) {
             disabled={!weakCount}
             onClick={() => start('weak')}
           >
-            <Target size={17} aria-hidden="true" /> Practice weak areas
+            <Target size={17} aria-hidden="true" /> Revisit cursed chambers
           </button>
         </div>
         {missed.length > retryable.length && (
@@ -360,64 +458,110 @@ function ResultContent({ result }: { result: SessionResult }) {
         )}
         {weakCount > 0 && (
           <p className="small muted">
-            Weak-area practice starts {Math.min(10, weakCount)} questions from
-            the skills missed in this session, with unrelated filters cleared.
+            Cursed-chamber practice requests up to {Math.min(10, weakCount)}{' '}
+            encounters{' '}
+            {weakOrigins.length > 1
+              ? 'from missed topics in each dungeon’s saved history. Balanced raid quotas may reduce the count.'
+              : 'from the skills missed in this session, with unrelated filters cleared.'}
           </p>
         )}
       </section>
       <section className="result-domains" aria-labelledby="domain-performance">
         <div className="section-heading">
           <div>
-            <h2 id="domain-performance">Your objective map</h2>
+            <h2 id="domain-performance">Your floor results</h2>
             <p>
               Less than 5 questions in a category? Treat it as a small sample,
               not mastery.
             </p>
           </div>
         </div>
-        <div className="domain-grid">
-          {taxonomy.domains.map((domain) => {
-            const sampled = score.byDomain.find(
-              (item) => item.id === domain.id,
-            );
-            return (
-              <article className="panel domain-result" key={domain.id}>
-                <span className="domain-weight">
-                  {domain.weightRange.join('–')}% guide weight
-                </span>
-                <h3>{domain.title}</h3>
-                {sampled ? (
-                  <>
-                    <div className="domain-result-score">
-                      <strong>{sampled.percentage}%</strong>
-                      <span>
-                        {sampled.correct} / {sampled.total} correct
+        {score.byDungeon.map((dungeonScore) => {
+          const snapshot =
+            result.objectiveSnapshots?.[dungeonScore.credentialId];
+          const dungeonCredential = credentials.find(
+            (item) => item.credentialId === dungeonScore.credentialId,
+          );
+          const floors =
+            snapshot?.domains ??
+            dungeonScore.byDomain.map((item) => ({
+              id: item.objectiveId ?? item.id,
+              title: item.label,
+              weightRange: null,
+            }));
+          return (
+            <section
+              key={dungeonScore.id}
+              className="raid-result-grid"
+              aria-label={`${dungeonCredential?.examCode ?? dungeonScore.id} results`}
+            >
+              <div className="section-heading">
+                <div>
+                  <h3>
+                    {dungeonCredential?.examCode ?? dungeonScore.id} ·{' '}
+                    {dungeonCredential?.dungeonName ?? 'Historical dungeon'}
+                  </h3>
+                  <p>
+                    {dungeonScore.correct}/{dungeonScore.total} correct ·{' '}
+                    {dungeonScore.percentage}% · {dungeonScore.domainsCovered}/
+                    {dungeonScore.domainsTotal ?? '?'} documented floors sampled
+                  </p>
+                  <p className="small muted">
+                    Objective version:{' '}
+                    {dungeonScore.objectiveVersions.join(', ')}
+                    {!snapshot &&
+                      ' · No saved objective map; current objectives have not been substituted.'}
+                  </p>
+                </div>
+              </div>
+              <div className="domain-grid">
+                {floors.map((domain) => {
+                  const sampled = dungeonScore.byDomain.find(
+                    (item) => item.objectiveId === domain.id,
+                  );
+                  return (
+                    <article className="panel domain-result" key={domain.id}>
+                      <span className="domain-weight">
+                        {domain.weightRange
+                          ? `${domain.weightRange.join('–')}% guide weight`
+                          : 'Weighting not recorded'}
                       </span>
-                    </div>
-                    <progress
-                      max={sampled.total}
-                      value={sampled.correct}
-                      aria-label={`${domain.title}: ${sampled.correct} of ${sampled.total} correct`}
-                    />
-                    <p className="small muted">
-                      {sampled.insufficient
-                        ? 'Small sample · insufficient to estimate mastery'
-                        : 'Sampled performance · not a mastery guarantee'}
-                    </p>
-                    <DomainReaction resultId={result.id} row={sampled} />
-                  </>
-                ) : (
-                  <>
-                    <p className="not-sampled">Not sampled</p>
-                    <p className="small muted">
-                      No questions from this domain. No score to estimate.
-                    </p>
-                  </>
-                )}
-              </article>
-            );
-          })}
-        </div>
+                      <h3>{domain.title}</h3>
+                      {sampled ? (
+                        <>
+                          <div className="domain-result-score">
+                            <strong>{sampled.percentage}%</strong>
+                            <span>
+                              {sampled.correct} / {sampled.total} correct
+                            </span>
+                          </div>
+                          <progress
+                            max={sampled.total}
+                            value={sampled.correct}
+                            aria-label={`${domain.title}: ${sampled.correct} of ${sampled.total} correct`}
+                          />
+                          <p className="small muted">
+                            {sampled.insufficient
+                              ? 'Small sample · insufficient to estimate mastery'
+                              : 'Sampled performance · not a mastery guarantee'}
+                          </p>
+                          <DomainReaction resultId={result.id} row={sampled} />
+                        </>
+                      ) : (
+                        <>
+                          <p className="not-sampled">Not sampled</p>
+                          <p className="small muted">
+                            No questions from this domain. No score to estimate.
+                          </p>
+                        </>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
       </section>
       <section
         className="panel detailed-results"
@@ -431,14 +575,7 @@ function ResultContent({ result }: { result: SessionResult }) {
         <BreakdownTable title="Subskills" rows={score.bySubskill} />
         <BreakdownTable title="Difficulty" rows={score.byDifficulty} />
         <BreakdownTable title="Complexity" rows={score.byComplexity} />
-        {score.byDomain.some(
-          (item) => !taxonomy.domains.some((domain) => domain.id === item.id),
-        ) && (
-          <BreakdownTable
-            title="Historical objective domains"
-            rows={score.byDomain}
-          />
-        )}
+        <BreakdownTable title="Question type" rows={score.byType} />
       </section>
       <div className="insights-grid">
         <section className="panel insights-panel">
@@ -485,7 +622,7 @@ function ResultContent({ result }: { result: SessionResult }) {
             Recommended from your actual missed or unanswered topics.
           </p>
           {score.recommendations.length ? (
-            <DocumentationReactions scope={result.id}>
+            <DocumentationReactions scope={result.id} context={reactionContext}>
               <ol>
                 {score.recommendations.map((recommendation) => {
                   const docs = new Map(
@@ -519,7 +656,7 @@ function ResultContent({ result }: { result: SessionResult }) {
           ) : (
             <p>
               You have no missed-topic recommendations for this session.{' '}
-              <LearnLink href={taxonomy.studyGuideUrl}>
+              <LearnLink href={credential?.officialUrls.studyGuide ?? ''}>
                 Explore the full study guide
               </LearnLink>{' '}
               for objectives you haven’t sampled.
@@ -562,7 +699,11 @@ function ResultContent({ result }: { result: SessionResult }) {
             </dd>
           </div>
           <div>
-            <dt>Session content grounded</dt>
+            <dt>
+              {result.config.runMode === 'raid'
+                ? 'Starting dungeon content grounded'
+                : 'Session content grounded'}
+            </dt>
             <dd>
               <DateStamp value={result.groundedAt} precise />
             </dd>
@@ -574,7 +715,10 @@ function ResultContent({ result }: { result: SessionResult }) {
           title="Replace your in-progress challenge?"
           confirmLabel="Replace & practice"
           onClose={() => setPending(null)}
-          onConfirm={() => practice(pending)}
+          onConfirm={() => {
+            abandonSession();
+            practice(pending);
+          }}
           destructive
         >
           <p>
@@ -666,7 +810,18 @@ function ReviewContent({ result }: { result: SessionResult }) {
                     : 'Not submitted'}
                 </span>
               </header>
-              <QuestionMetadata question={question} />
+              <QuestionMetadata
+                question={question}
+                credentialId={questionOrigin(result, question.id).credentialId}
+                objectiveVersion={
+                  questionOrigin(result, question.id).objectiveVersion
+                }
+                taxonomySnapshot={
+                  result.objectiveSnapshots?.[
+                    questionOrigin(result, question.id).credentialId
+                  ] ?? null
+                }
+              />
               <h3 className="review-question-title">{question.question}</h3>
               <CodeSnippet question={question} />
               <div className="review-answer">
@@ -696,8 +851,8 @@ function ReviewContent({ result }: { result: SessionResult }) {
                     className="button secondary"
                     onClick={() => setSourceQuestion(question.id)}
                   >
-                    <BookOpen size={17} aria-hidden="true" /> View sources &
-                    objective alignment
+                    <BookOpen size={17} aria-hidden="true" /> Open tome ·
+                    sources & objective alignment
                   </button>
                   <ul>
                     {question.sourceUrls.map((url, index) => (
@@ -717,7 +872,13 @@ function ReviewContent({ result }: { result: SessionResult }) {
       {shownSource && visibility.sources && (
         <QuestionSources
           question={shownSource}
-          groundedAt={result.groundedAt}
+          groundedAt={questionOrigin(result, shownSource.id).groundedAt ?? null}
+          credentialId={questionOrigin(result, shownSource.id).credentialId}
+          taxonomySnapshot={
+            result.objectiveSnapshots?.[
+              questionOrigin(result, shownSource.id).credentialId
+            ] ?? null
+          }
           reactionScope={result.id}
           onClose={() => setSourceQuestion(null)}
         />

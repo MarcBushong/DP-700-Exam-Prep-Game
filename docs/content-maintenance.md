@@ -2,7 +2,7 @@
 
 This bank is independent, original practice material, not an official Microsoft exam or a collection of exam questions. Never use dumps, remembered exam content, copied assessments, or large documentation excerpts.
 
-Last successful online URL validation: 2026-09-11T18:35:02.684Z (95 unique URLs).
+Last successful online URL validation: 2026-09-11T20:52:39.499Z (95 unique URLs; 0 identity context URLs not checked).
 
 ## Source of truth and evidence
 
