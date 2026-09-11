@@ -1,7 +1,14 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-for (const route of ['/', '/setup', '/settings', '/about']) {
+for (const route of [
+  '/',
+  '/setup',
+  '/settings',
+  '/about',
+  '/tavern',
+  '/forge',
+]) {
   test(`accessible local-only ${route} page`, async ({ page, baseURL }) => {
     const errors: string[] = [];
     const remoteRequests: string[] = [];
@@ -34,7 +41,14 @@ for (const route of ['/', '/setup', '/settings', '/about']) {
   });
 }
 
-for (const route of ['/', '/setup', '/settings', '/about']) {
+for (const route of [
+  '/',
+  '/setup',
+  '/settings',
+  '/about',
+  '/tavern',
+  '/forge',
+]) {
   test(`keyboard skip preserves ${route} with forced colors and reduced motion`, async ({
     page,
   }) => {

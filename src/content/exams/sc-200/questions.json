@@ -1,0 +1,1701 @@
+[
+  {
+    "id": "sc200-001",
+    "conceptId": "sc200-sentinel-responder-incident-management",
+    "question": "An analyst must view Microsoft Sentinel SIEM data and change incident owners and statuses. The analyst must not receive permission to edit analytics rules or playbooks. Which single built-in Sentinel role meets this requirement?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Microsoft Sentinel Reader"
+      },
+      {
+        "id": "b",
+        "text": "Microsoft Sentinel Responder"
+      },
+      {
+        "id": "c",
+        "text": "Microsoft Sentinel Contributor"
+      },
+      {
+        "id": "d",
+        "text": "Microsoft Sentinel Playbook Operator"
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Microsoft Sentinel Responder adds incident management to Reader permissions without granting analytics-rule or playbook editing.",
+    "deepExplanation": "The SIEM role matrix distinguishes viewing data, managing incidents, editing Sentinel resources, and running playbooks. Responder is the role that combines the first two without granting the excluded editing capabilities.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Reader can view incidents but cannot manage their ownership or status.",
+      "c": "Contributor also permits creating and editing Sentinel resources, including analytics rules.",
+      "d": "Playbook Operator permits listing, viewing, and manually running playbooks; it does not provide the required incident-management permission."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-the-microsoft-sentinel-siem-and-platform",
+    "subskill": "Specify Microsoft Sentinel roles",
+    "difficulty": "beginner",
+    "complexity": "scenario-based",
+    "sourceIds": ["sc200-sentinel-roles"],
+    "sourceUrls": ["https://learn.microsoft.com/en-us/azure/sentinel/roles"],
+    "documentationTitles": [
+      "Roles and permissions in the Microsoft Sentinel platform"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "rbac", "least-privilege"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-sentinel-roles"],
+    "verificationNotes": "Independent read of raw/sentinel-roles.json confirms the built-in role matrix: Responder = Reader plus manage incidents, without analytics-rule or playbook editing. The task-matrix row for Contributor adds create/edit analytics rules, and Playbook Operator only lists/views/runs playbooks. Answer key b is uniquely defensible.",
+    "confidenceReason": "Role matrix in raw/sentinel-roles.json directly lists Responder as Reader plus incident management with no analytics or playbook editing."
+  },
+  {
+    "id": "sc200-002",
+    "conceptId": "sc200-playbook-automation-service-account-resource-group",
+    "question": "A maintainer can edit Sentinel automation rules and the associated playbook. The incident-triggered playbook is in a separate resource group, and Sentinel has never been granted permission there. The rule cannot run the playbook. Which change addresses the missing automation permission without broadening the maintainer's role?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Give the maintainer Microsoft Sentinel Reader on the workspace."
+      },
+      {
+        "id": "b",
+        "text": "Give the maintainer Microsoft Sentinel Playbook Operator on the workspace only."
+      },
+      {
+        "id": "c",
+        "text": "Give the Sentinel service account Microsoft Sentinel Automation Contributor on the workspace resource group only."
+      },
+      {
+        "id": "d",
+        "text": "Give the Sentinel service account Microsoft Sentinel Automation Contributor on the playbook resource group."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "The Sentinel service account needs Microsoft Sentinel Automation Contributor on the resource group containing the playbook.",
+    "deepExplanation": "Authoring permissions for a human account do not substitute for the identity used to execute incident-triggered playbooks. Because the playbook is in a different resource group, permission limited to the workspace group does not cover it. An authorized access administrator grants the execution identity the required role at the playbook resource group.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Reader is a user-facing read role and does not grant the Sentinel execution identity access to the playbook.",
+      "b": "Playbook Operator concerns manual execution by the user; this also targets the wrong resource group.",
+      "c": "The role is appropriate for the service account, but the stated scope excludes the separate playbook resource group."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-automation-for-microsoft-defender-xdr-and-microsoft-sentinel",
+    "subskill": "Create and configure Microsoft Sentinel playbooks",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-playbooks", "sc200-sentinel-roles"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/automate-responses-with-playbooks",
+      "https://learn.microsoft.com/en-us/azure/sentinel/roles"
+    ],
+    "documentationTitles": [
+      "Automate threat response with playbooks in Microsoft Sentinel",
+      "Roles and permissions in the Microsoft Sentinel platform"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "playbooks", "execution-identity", "resource-scope"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-playbooks", "sc200-sentinel-roles"],
+    "verificationNotes": "Independent read of raw/playbooks.json confirms that Microsoft Sentinel's service account requires Automation Contributor on the resource group where the playbook resides, and raw/sentinel-roles.json confirms the human maintainer's role is unrelated to the execution identity. Answer d fixes exactly the scoped service-account authorization the scenario removed.",
+    "confidenceReason": "raw/playbooks.json states Sentinel needs Automation Contributor on the resource group where the playbook resides."
+  },
+  {
+    "id": "sc200-003",
+    "conceptId": "sc200-sentinel-manual-playbook-operator-user-permission",
+    "question": "A Sentinel analyst already has Responder access to an incident. All Sentinel service-account permissions for its incident-triggered playbook are in place. The analyst should be allowed to run the existing playbook manually, but not edit it. Which additional role is appropriate?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Microsoft Sentinel Playbook Operator"
+      },
+      {
+        "id": "b",
+        "text": "Microsoft Sentinel Automation Contributor"
+      },
+      {
+        "id": "c",
+        "text": "Logic App Contributor"
+      },
+      {
+        "id": "d",
+        "text": "Microsoft Sentinel Reader"
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Microsoft Sentinel Playbook Operator grants manual playbook execution without playbook editing.",
+    "deepExplanation": "Responder provides incident access but not permission to execute its playbook. The missing permission belongs to the human operator, because the scenario explicitly supplies the separate service-account authorization.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Automation Contributor is for Sentinel's automation identity, not a user-account role for this task.",
+      "c": "Logic App Contributor includes editing and managing logic apps, exceeding the no-edit requirement.",
+      "d": "Reader does not add manual playbook execution."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-automation-for-microsoft-defender-xdr-and-microsoft-sentinel",
+    "subskill": "Create and configure Microsoft Sentinel playbooks",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["sc200-playbooks", "sc200-sentinel-roles"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/automate-responses-with-playbooks",
+      "https://learn.microsoft.com/en-us/azure/sentinel/roles"
+    ],
+    "documentationTitles": [
+      "Automate threat response with playbooks in Microsoft Sentinel",
+      "Roles and permissions in the Microsoft Sentinel platform"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "playbooks", "manual-response"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-playbooks", "sc200-sentinel-roles"],
+    "verificationNotes": "Independent read of raw/playbooks.json Playbook Operator description (\"Lets you run a playbook manually\") and Logic App Contributor (\"Edit and manage logic apps\") supports a as the least-privilege human role. The scenario supplies service-account permissions separately, so Automation Contributor and Reader are excluded.",
+    "confidenceReason": "raw/playbooks.json describes Playbook Operator as manual playbook run and separates Logic App Contributor and Automation Contributor scopes."
+  },
+  {
+    "id": "sc200-004",
+    "conceptId": "sc200-automation-create-update-queue-current-state",
+    "question": "A newly created Sentinel incident has no owner or tags. Creation-trigger rule C10 (order 10) adds the tag reviewed. Creation-trigger rule C20 (order 20) assigns an owner only when that tag is present. Update-trigger rule U1 (order 1) was triggered by C10's change and adds a task only when an owner is assigned. Assume no other changes or rules. Which execution outcome follows Sentinel's sequencing rules?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "U1 runs before C10 because its order number is lowest, so no task is added."
+      },
+      {
+        "id": "b",
+        "text": "U1 runs between C10 and C20 because C10 triggered it, so no task is added."
+      },
+      {
+        "id": "c",
+        "text": "C10 and C20 finish before U1; C20 sees the tag, and U1 then sees the owner and adds the task."
+      },
+      {
+        "id": "d",
+        "text": "C20 evaluates the original untagged incident, so it skips assignment and U1 skips the task."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Creation-trigger rules complete before update-trigger rules, and each rule evaluates the current incident state.",
+    "deepExplanation": "Order numbers are local to each trigger queue, not a global priority across both queues. C10's tag is visible to the later creation rule C20. Only after applicable creation rules complete does U1 evaluate the incident, by which time C20 has assigned its owner.",
+    "whyOtherAnswersAreWrong": {
+      "a": "An update rule's lower number does not place it ahead of the creation-trigger queue.",
+      "b": "A creation rule's update does not interrupt the remaining applicable creation-trigger rules.",
+      "d": "Later rules use the state after earlier actions, not an immutable snapshot of the incident at creation."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-automation-for-microsoft-defender-xdr-and-microsoft-sentinel",
+    "subskill": "Create and configure automation rules in Microsoft Sentinel",
+    "difficulty": "expert",
+    "complexity": "technical-implementation",
+    "sourceIds": ["sc200-automation"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/automate-incident-handling-with-automation-rules"
+    ],
+    "documentationTitles": [
+      "Automate threat response in Microsoft Sentinel with automation rules"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "automation", "ordering", "state"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-automation"],
+    "verificationNotes": "Independent read of raw/automation-reference.json Notes on execution order and priority section confirms: each trigger type has its own queue, creation-trigger rules run in full before update-trigger rules, and later rules see the incident state after earlier actions. Answer c is the only outcome consistent with all three rules.",
+    "confidenceReason": "Notes on execution order and priority in raw/automation-reference.json establishes trigger-type queues, creation-before-update sequencing, and current-state evaluation."
+  },
+  {
+    "id": "sc200-005",
+    "conceptId": "sc200-automation-negative-tag-collection-semantics",
+    "question": "An incident has the tags approved-maintenance and needs-triage. An automation rule must run only if none of the incident's tags contains approved-maintenance. Which tag condition correctly excludes this incident?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Any individual tag does not contain approved-maintenance."
+      },
+      {
+        "id": "b",
+        "text": "Collection of all tags does not contain approved-maintenance."
+      },
+      {
+        "id": "c",
+        "text": "Any individual tag contains approved-maintenance."
+      },
+      {
+        "id": "d",
+        "text": "Collection of all tags contains approved-maintenance."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "A negative condition over the collection requires that the tag collection as a whole contains no match.",
+    "deepExplanation": "Testing whether any individual tag lacks the text is different: needs-triage satisfies that test even though approved-maintenance is also present. The collection-level negative condition expresses the absence requirement.",
+    "whyOtherAnswersAreWrong": {
+      "a": "needs-triage individually lacks the text, so this condition is true and would not exclude the incident.",
+      "c": "The incident has a matching tag, making this positive condition true.",
+      "d": "The collection contains the matching tag, making this positive condition true rather than enforcing absence."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-automation-for-microsoft-defender-xdr-and-microsoft-sentinel",
+    "subskill": "Create and configure automation rules in Microsoft Sentinel",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-automation"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/automate-incident-handling-with-automation-rules"
+    ],
+    "documentationTitles": [
+      "Automate threat response in Microsoft Sentinel with automation rules"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "automation", "tag-conditions"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-automation"],
+    "verificationNotes": "Independent read of raw/automation-reference.json Tag property: individual vs. collection section confirms that Any individual tag operators evaluate per-tag (so needs-triage would satisfy a per-tag not-contains) while Collection-of-all-tags operators evaluate the set as one unit. Only the collection-level not-contains excludes an incident carrying approved-maintenance.",
+    "confidenceReason": "Tag property: individual vs. collection in raw/automation-reference.json distinguishes per-tag from collection-level negatives with worked examples."
+  },
+  {
+    "id": "sc200-006",
+    "conceptId": "sc200-sentinel-nrt-ingestion-window",
+    "question": "A Sentinel NRT analytics query has no additional TimeGenerated filter. A matching event was generated eight minutes ago but ingested during the minute being evaluated; ingestion delay is well below 12 hours. An analyst expects it to be excluded because it was not generated in that minute. Which explanation is correct?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "NRT evaluates ingestion time, so the event can match despite its older source-generation time."
+      },
+      {
+        "id": "b",
+        "text": "NRT evaluates only TimeGenerated, so the event is outside this run's window."
+      },
+      {
+        "id": "c",
+        "text": "NRT waits for a daily replay to examine events with any ingestion delay."
+      },
+      {
+        "id": "d",
+        "text": "NRT requires zero ingestion delay, so this source is unsupported."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Sentinel NRT rules query ingestion-time windows rather than using source-generation time as the window boundary.",
+    "deepExplanation": "These rules run every minute, with a built-in two-minute delay. The older TimeGenerated value does not by itself exclude this event from the relevant ingestion window. A separate query predicate could exclude it, which is why the scenario explicitly rules one out.",
+    "whyOtherAnswersAreWrong": {
+      "b": "This substitutes TimeGenerated for the documented NRT ingestion-time boundary.",
+      "c": "The documented cadence is every minute, not a daily delayed-event replay.",
+      "d": "The documentation permits ingestion delay below 12 hours; it does not require instantaneous ingestion."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-detections",
+    "subskill": "Configure and manage analytics rules in Microsoft Sentinel SIEM, including scheduled, near-real time (NRT), threat intelligence, and machine learning",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-nrt"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/near-real-time-rules"
+    ],
+    "documentationTitles": [
+      "Quick threat detection with near-real-time (NRT) analytics rules in Microsoft Sentinel"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "nrt", "ingestion-delay"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-nrt"],
+    "verificationNotes": "Independent read of raw/nrt-rules.json How NRT rules work confirms that Sentinel NRT queries events on their ingestion time (not TimeGenerated) with a two-minute delay and a one-minute cadence, and the Considerations section documents the 12-hour delay ceiling. An eight-minute-old event ingested during the evaluated minute is inside the ingestion window.",
+    "confidenceReason": "raw/nrt-rules.json documents ingestion-time evaluation, two-minute delay, one-minute cadence, and a 12-hour delay ceiling."
+  },
+  {
+    "id": "sc200-007",
+    "conceptId": "sc200-sentinel-nrt-single-event-alert-overflow",
+    "question": "A Sentinel NRT rule is configured for a separate alert per event. One evaluation returns 36 matching events, and the analyst sees only 30 alerts. Which documented behavior explains the result without assuming data loss?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The first 30 events receive alerts; the remaining six are automatically deleted from the workspace."
+      },
+      {
+        "id": "b",
+        "text": "All 36 events are divided into 30 equal-sized alert groups."
+      },
+      {
+        "id": "c",
+        "text": "The last six events wait for the next NRT run before any alert can reference them."
+      },
+      {
+        "id": "d",
+        "text": "The first 29 events receive individual alerts; the 30th summarizes all applicable events."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Above 30 query results, the NRT rule produces 29 individual alerts and a final alert summarizing all applicable events.",
+    "deepExplanation": "The alert-count limit is not equivalent to retaining only 30 underlying log events. Investigation should include the summary alert rather than treating the missing one-to-one alert count as evidence of ingestion loss.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documented limit changes alert grouping; it does not delete six source events.",
+      "b": "The documentation specifies 29 individual alerts plus a summary, not equal-sized grouping.",
+      "c": "The final summary handles the applicable events in this evaluation; a mandatory spillover to the next run is not the documented behavior."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-detections",
+    "subskill": "Configure and manage analytics rules in Microsoft Sentinel SIEM, including scheduled, near-real time (NRT), threat intelligence, and machine learning",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-nrt"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/near-real-time-rules"
+    ],
+    "documentationTitles": [
+      "Quick threat detection with near-real-time (NRT) analytics rules in Microsoft Sentinel"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "nrt", "alert-grouping"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-nrt"],
+    "verificationNotes": "Independent read of raw/nrt-rules.json Considerations confirms Sentinel NRT single-event grouping produces up to 30 alerts, with 29 individual alerts and a 30th alert summarizing all applicable events when the result exceeds 30. The observation of 30 alerts for 36 events matches this documented overflow, without implying data loss.",
+    "confidenceReason": "raw/nrt-rules.json event grouping paragraph specifies the 29-plus-summary alert overflow when results exceed 30."
+  },
+  {
+    "id": "sc200-008",
+    "conceptId": "sc200-custom-detection-argmax-event-identity",
+    "question": "A Defender custom detection aggregates already-filtered DeviceEvents by DeviceId. It must retain the count plus Timestamp and ReportId from the same most recent matching event for alert enrichment. Timestamps are unique within each device's input. Which replacement for the final aggregation preserves that event association?",
+    "questionType": "code",
+    "codeLanguage": "kusto",
+    "codeSnippet": "DeviceEvents\n| where ActionType == \"AntivirusDetection\"\n| summarize EventCount=count() by DeviceId",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "summarize EventCount=count(), Timestamp=max(Timestamp), ReportId=max(ReportId) by DeviceId"
+      },
+      {
+        "id": "b",
+        "text": "summarize EventCount=count() by DeviceId, Timestamp, ReportId"
+      },
+      {
+        "id": "c",
+        "text": "summarize EventCount=count(), arg_max(Timestamp, ReportId) by DeviceId"
+      },
+      {
+        "id": "d",
+        "text": "summarize EventCount=count(), Timestamp=max(Timestamp) by DeviceId"
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "arg_max selects the newest row and returns its associated ReportId while count still aggregates the device's matching events.",
+    "deepExplanation": "Separate maxima can combine a timestamp from one event with a counter from another. Grouping by event fields changes the intended one-row-per-device aggregation. arg_max is the documented technique for retaining a real event's timestamp and corresponding identifier.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The largest ReportId is not guaranteed to belong to the newest event; independent maxima can manufacture an invalid pairing.",
+      "b": "Timestamp and ReportId become grouping keys, so the result is no longer a single aggregate per device.",
+      "d": "The result omits ReportId, failing the stated requirement to preserve it with Timestamp."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-detections",
+    "subskill": "Create custom detection rules by using Advanced Hunting in Microsoft Defender XDR",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "sc200-custom-detections",
+      "sc200-arg-max",
+      "sc200-summarize"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/custom-detection-rules",
+      "https://learn.microsoft.com/en-us/kusto/query/arg-max-aggregation-function",
+      "https://learn.microsoft.com/en-us/kusto/query/summarize-operator"
+    ],
+    "documentationTitles": [
+      "Create custom detection rules in Microsoft Defender XDR",
+      "arg_max() (aggregation function)",
+      "summarize operator"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-xdr", "custom-detection", "kql", "event-identity"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": [
+      "sc200-custom-detections",
+      "sc200-arg-max",
+      "sc200-summarize"
+    ],
+    "verificationNotes": "Independent read of raw/custom-detections.json shows the recommended pattern uses arg_max(Timestamp, ReportId) inside summarize to retain the same event's identifier alongside a device-level count. Independent maxima and by grouping do not preserve the same-row association; option d drops ReportId entirely. Answer c matches the documented example.",
+    "confidenceReason": "raw/custom-detections.json example uses arg_max(Timestamp, ReportId) directly, and raw/arg-max.json confirms the maximizing-row column semantics."
+  },
+  {
+    "id": "sc200-009",
+    "conceptId": "sc200-defender-continuous-versus-sentinel-nrt-query-scope",
+    "question": "A team must preserve two detection queries while moving both to a near-real-time engine. Query P reads only DeviceProcessEvents, uses supported operators and GA columns, returns appropriate identifiers, and has no comments. Query S correlates multiple tables across Sentinel workspaces; source ingestion delays are below 12 hours. All permissions and other prerequisites are satisfied. Which 2 placements honor the documented query-shape differences? Select 2.",
+    "questionType": "multi-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Run P as a Defender custom detection with Continuous (NRT) frequency."
+      },
+      {
+        "id": "b",
+        "text": "Run S as a Defender Continuous custom detection because its sources are Sentinel tables."
+      },
+      {
+        "id": "c",
+        "text": "Require S to become a single-table query before using Sentinel NRT analytics."
+      },
+      {
+        "id": "d",
+        "text": "Run S as a Sentinel NRT analytics rule, retaining its multiple-table, cross-workspace query."
+      }
+    ],
+    "correctAnswer": ["a", "d"],
+    "explanation": "P satisfies Defender Continuous query-shape requirements. Sentinel NRT analytics permit multiple tables and cross-workspace queries, so S need not lose its correlation logic.",
+    "deepExplanation": "The shared NRT label does not imply identical engines or query restrictions. Defender Continuous requires one supported table and excludes joins, unions, externaldata, and comments. Sentinel's current NRT article explicitly permits more than one table and queries across workspaces. The supplied delay and other prerequisites avoid attributing every possible NRT query failure to shape alone.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Sentinel data does not exempt a Defender Continuous query from its single-table and no-join restrictions.",
+      "c": "Current Sentinel NRT analytics explicitly permit multiple tables, so this restriction is obsolete and needlessly changes the required query."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-detections",
+    "subskill": "Manage custom detection rules in Microsoft Defender XDR",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["sc200-custom-detections", "sc200-nrt"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/custom-detection-rules",
+      "https://learn.microsoft.com/en-us/azure/sentinel/near-real-time-rules"
+    ],
+    "documentationTitles": [
+      "Create custom detection rules in Microsoft Defender XDR",
+      "Quick threat detection with near-real-time (NRT) analytics rules in Microsoft Sentinel"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": [
+      "defender-xdr",
+      "sentinel",
+      "continuous-detection",
+      "query-eligibility"
+    ],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-custom-detections", "sc200-nrt"],
+    "verificationNotes": "Independent read of raw/custom-detections.json Tables that support Continuous (NRT) frequency and raw/nrt-rules.json Considerations confirms the two engines are distinct: Defender Continuous requires one supported table, supported operators, GA columns, no joins/unions/externaldata and no comments; Sentinel NRT explicitly allows queries across multiple workspaces and more than one table. P satisfies Continuous; S needs Sentinel NRT.",
+    "confidenceReason": "raw/custom-detections.json Continuous (NRT) restrictions and raw/nrt-rules.json Considerations independently constrain the two engines' allowed query shapes."
+  },
+  {
+    "id": "sc200-010",
+    "conceptId": "sc200-custom-detection-cross-service-manage-permissions",
+    "question": "An operator has manage permissions only for Microsoft Defender for Office 365. The operator can create a detection over EmailEvents but cannot manage a proposed custom detection over IdentityLogonEvents. Which explanation fits the documented service-permission requirements?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "All custom detections require Global Administrator, regardless of their data sources."
+      },
+      {
+        "id": "b",
+        "text": "IdentityLogonEvents holds data from Defender for Cloud Apps and Defender for Identity, so managing its detection requires permissions for both."
+      },
+      {
+        "id": "c",
+        "text": "Office 365 manage permissions automatically cover IdentityLogonEvents, so only a query comment can explain the failure."
+      },
+      {
+        "id": "d",
+        "text": "Microsoft Sentinel Reader substitutes for the required Defender service management permissions."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "IdentityLogonEvents spans Defender for Cloud Apps and Defender for Identity, requiring manage permissions for both services.",
+    "deepExplanation": "Custom-detection administration is tied to the data being targeted. Permission to manage Email tables does not establish permission to manage Identity tables or every Defender workload.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documentation lists less-privileged roles and service-scoped permissions; Global Administrator is not a universal requirement.",
+      "c": "The documentation explicitly says Office 365-only manage permissions do not allow Identity-table detections.",
+      "d": "A Sentinel read role does not supply the required management permissions for these Defender services."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "configure-detections",
+    "subskill": "Manage custom detection rules in Microsoft Defender XDR",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-custom-detections", "sc200-sentinel-roles"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/custom-detection-rules",
+      "https://learn.microsoft.com/en-us/azure/sentinel/roles"
+    ],
+    "documentationTitles": [
+      "Create custom detection rules in Microsoft Defender XDR",
+      "Roles and permissions in the Microsoft Sentinel platform"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-xdr", "permissions", "identity"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": [
+      "sc200-custom-detections",
+      "sc200-sentinel-roles"
+    ],
+    "verificationNotes": "Independent read of raw/custom-detections.json confirms IdentityLogonEvents holds authentication activity from both Defender for Cloud Apps and Defender for Identity, and manage permissions are required for each service whose data the detection targets. Answer b matches the documented cross-service rule; Global Administrator is never required as a universal fallback.",
+    "confidenceReason": "raw/custom-detections.json cross-service rule explicitly uses IdentityLogonEvents to demand manage permissions for both Cloud Apps and Identity."
+  },
+  {
+    "id": "sc200-011",
+    "conceptId": "sc200-ama-cef-syslog-destination-tables",
+    "question": "A Linux forwarder sends appliance CEF messages through the CEF via AMA connector and ordinary host syslog through Syslog via AMA. Collection is configured without duplication. Which Sentinel tables should an analyst query for these two streams?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "CEF in Syslog; ordinary syslog in CommonSecurityLog."
+      },
+      {
+        "id": "b",
+        "text": "Both streams in CommonSecurityLog."
+      },
+      {
+        "id": "c",
+        "text": "CEF in CommonSecurityLog; ordinary syslog in Syslog."
+      },
+      {
+        "id": "d",
+        "text": "Both streams in Syslog."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "The CEF connector writes CEF logs to CommonSecurityLog, while ordinary Syslog messages go to Syslog.",
+    "deepExplanation": "A shared Linux forwarder does not imply a shared destination table. The connector format and stream determine where the parsed records arrive.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This reverses the documented destinations.",
+      "b": "CommonSecurityLog is the documented CEF destination, not the ordinary Syslog destination.",
+      "d": "Syslog is the ordinary-message destination; the correctly configured CEF stream goes to CommonSecurityLog."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "ingest-data-into-the-microsoft-sentinel-siem-and-platform",
+    "subskill": "Plan and configure Syslog via AMA and Common Event Format (CEF) via AMA connectors",
+    "difficulty": "beginner",
+    "complexity": "technical-implementation",
+    "sourceIds": ["sc200-ama-architecture"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-overview"
+    ],
+    "documentationTitles": [
+      "Syslog and Common Event Format (CEF) via AMA connectors for Microsoft Sentinel"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "ama", "cef", "syslog"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-ama-architecture"],
+    "verificationNotes": "Independent read of raw/ama-architecture.json confirms CEF via AMA writes to CommonSecurityLog and Syslog via AMA writes to Syslog. A shared Linux forwarder does not merge the destinations. Answer c matches the documented destination pair.",
+    "confidenceReason": "raw/ama-architecture.json log-forwarder architecture explicitly maps CEF to CommonSecurityLog and syslog to Syslog."
+  },
+  {
+    "id": "sc200-012",
+    "conceptId": "sc200-ama-cef-duplicate-ingestion-dual-field-filter",
+    "question": "An AMA 1.41 forwarder receives CEF and non-CEF logs on a facility that cannot be changed. CEF records are duplicated in CommonSecurityLog and Syslog. Some CEF senders use nonstandard syslog headers, so ProcessName does not reliably contain CEF, but their messages contain CEF:0. The team must preserve CEF in CommonSecurityLog and ordinary syslog in Syslog. Which change meets all constraints?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Filter CEF from the Syslog stream using both ProcessName and SyslogMessage; leave the CEF stream enabled."
+      },
+      {
+        "id": "b",
+        "text": "Filter only ProcessName for CEF in the Syslog stream; leave the CEF stream enabled."
+      },
+      {
+        "id": "c",
+        "text": "Disable collection of the shared facility in both streams."
+      },
+      {
+        "id": "d",
+        "text": "Filter CEF records from the CEF stream and retain the Syslog stream unchanged."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Filter CEF messages from the Syslog ingestion stream, checking both fields to handle the documented AMA 1.41 header behavior.",
+    "deepExplanation": "Changing facilities is unavailable, so the documented alternative is a DCR ingestion-time transformation on the Syslog stream. A conjunction excluding CEF matches in either ProcessName or SyslogMessage handles senders whose CEF marker is absent from ProcessName. The CEF stream remains intact.",
+    "whyOtherAnswersAreWrong": {
+      "b": "ProcessName alone misses the explicitly described nonstandard-header senders.",
+      "c": "Removing the shared facility from both streams loses required CEF and ordinary syslog data.",
+      "d": "This removes the desired CommonSecurityLog copy while leaving CEF in the wrong stream for the stated design."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "ingest-data-into-the-microsoft-sentinel-siem-and-platform",
+    "subskill": "Plan and configure Syslog via AMA and Common Event Format (CEF) via AMA connectors",
+    "difficulty": "expert",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-ama-architecture"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-overview"
+    ],
+    "documentationTitles": [
+      "Syslog and Common Event Format (CEF) via AMA connectors for Microsoft Sentinel"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "ama", "duplicates", "ingestion-transformation"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-ama-architecture"],
+    "verificationNotes": "Independent read of raw/ama-architecture.json Data ingestion duplication avoidance confirms the constrained alternative when facilities cannot be changed: filter CEF messages from the Syslog ingestion stream via DCR transformation. Starting with AMA 1.41, ProcessName is unreliable for nonstandard headers, so the transform must check both ProcessName and SyslogMessage. Answer a captures the full documented workaround.",
+    "confidenceReason": "raw/ama-architecture.json documents both the shared-facility duplication and the AMA 1.41 dual-field transform for the Syslog stream."
+  },
+  {
+    "id": "sc200-013",
+    "conceptId": "sc200-ama-portal-minimum-severity-threshold",
+    "question": "In the Sentinel portal's Syslog via AMA data collection rule, an administrator selects LOG_ERR as the minimum level for a facility. The team expects error and more severe messages, without lower-severity messages. Which set is collected by this setting?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Only LOG_ERR."
+      },
+      {
+        "id": "b",
+        "text": "LOG_ERR and every lower-severity level, excluding critical and emergency."
+      },
+      {
+        "id": "c",
+        "text": "LOG_CRIT, LOG_ALERT, and LOG_EMERG, excluding LOG_ERR itself."
+      },
+      {
+        "id": "d",
+        "text": "LOG_ERR, LOG_CRIT, LOG_ALERT, and LOG_EMERG."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "The portal selects an inclusive minimum severity: LOG_ERR and all more severe levels.",
+    "deepExplanation": "A portal minimum-level choice is not an exact-level filter. The documentation names LOG_ERR, LOG_CRIT, LOG_ALERT, and LOG_EMERG as the collected set for this selection.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This treats a minimum-level selection as an exact-level filter.",
+      "b": "The threshold includes higher severity, not lower severity.",
+      "c": "The selected LOG_ERR level is included, not excluded."
+    },
+    "objectiveDomain": "manage-a-security-operations-environment",
+    "skill": "ingest-data-into-the-microsoft-sentinel-siem-and-platform",
+    "subskill": "Plan and configure Syslog via AMA and Common Event Format (CEF) via AMA connectors",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["sc200-ama-collection", "sc200-ama-architecture"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/sentinel/connect-cef-syslog-ama",
+      "https://learn.microsoft.com/en-us/azure/sentinel/cef-syslog-ama-overview"
+    ],
+    "documentationTitles": [
+      "Ingest syslog and CEF messages to Microsoft Sentinel with the Azure Monitor Agent",
+      "Syslog and Common Event Format (CEF) via AMA connectors for Microsoft Sentinel"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "dcr", "severity"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": [
+      "sc200-ama-collection",
+      "sc200-ama-architecture"
+    ],
+    "verificationNotes": "Independent read of raw/ama-overview.json Collect step confirms the portal selects a minimum severity per facility: selecting LOG_ERR collects LOG_ERR, LOG_CRIT, LOG_ALERT, and LOG_EMERG. Answer d matches the documented inclusive minimum semantics.",
+    "confidenceReason": "raw/ama-overview.json Collect tab section spells out the LOG_ERR minimum-selection inclusion."
+  },
+  {
+    "id": "sc200-014",
+    "conceptId": "sc200-endpoint-manual-isolation-retains-defender-channel",
+    "question": "An authorized responder must stop a compromised, onboarded Windows 11 device from communicating with the rest of the network while retaining Defender for Endpoint monitoring. The supported device has direct service connectivity and no VPN or proxy complication. Which manual action fits?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Collect investigation package"
+      },
+      {
+        "id": "b",
+        "text": "Isolate device"
+      },
+      {
+        "id": "c",
+        "text": "Restrict app execution"
+      },
+      {
+        "id": "d",
+        "text": "Run antivirus scan"
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Device isolation disconnects the device from the network while preserving its Defender for Endpoint service connection.",
+    "deepExplanation": "Isolation is a network-containment response. Evidence collection and antivirus scanning have investigative or remediation purposes, while app restriction changes which files can execute rather than providing the requested network boundary.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Collecting evidence does not implement the required network isolation.",
+      "c": "App restriction applies a code-integrity policy; it is not the device network-isolation action.",
+      "d": "An antivirus scan identifies and remediates malware but does not impose the requested network isolation."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "beginner",
+    "complexity": "scenario-based",
+    "sourceIds": ["sc200-device-response"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-endpoint/respond-machine-alerts"
+    ],
+    "documentationTitles": ["Take response actions on a device"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-endpoint", "isolation", "response"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-device-response"],
+    "verificationNotes": "Independent read of raw/device-response.json Response actions and Isolate devices from the network sections confirm manual device isolation preserves the Defender for Endpoint service channel. Investigation package, restrict app execution, and antivirus scan address different response objectives and do not implement the requested network boundary.",
+    "confidenceReason": "raw/device-response.json isolation section documents preservation of the Defender service channel and differentiates other manual actions."
+  },
+  {
+    "id": "sc200-015",
+    "conceptId": "sc200-endpoint-restrict-app-execution-microsoft-certificate",
+    "question": "A supported Windows 11 device uses Microsoft Defender Antivirus and Defender for Endpoint Plan 2. An investigator considers Restrict app execution but must assess its effect on a legitimate application signed only by a non-Microsoft vendor. Which behavior should the investigator plan for?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The restriction permits any digitally signed application, regardless of certificate issuer."
+      },
+      {
+        "id": "b",
+        "text": "The restriction stops only the process that triggered the current alert."
+      },
+      {
+        "id": "c",
+        "text": "The restriction permits files signed by a Microsoft-issued certificate, so the vendor signature alone does not qualify."
+      },
+      {
+        "id": "d",
+        "text": "The restriction disables application signature checking until the incident is closed."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Restrict app execution applies a code-integrity policy allowing files signed by a Microsoft-issued certificate.",
+    "deepExplanation": "A valid third-party signature does not meet that documented rule merely because it is a signature. The action can affect legitimate software, which is why its execution-policy impact must be distinguished from stopping a single suspicious process.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The allowed signer boundary is Microsoft-issued certificates, not all digital signatures.",
+      "b": "The action applies an execution policy rather than only terminating the alert's process.",
+      "d": "It applies a restrictive signature policy; it does not disable signature checks."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["sc200-device-response"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-endpoint/respond-machine-alerts"
+    ],
+    "documentationTitles": ["Take response actions on a device"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-endpoint", "app-restriction", "business-impact"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-device-response"],
+    "verificationNotes": "Independent read of raw/device-response.json Restrict app execution section confirms the applied code-integrity policy allows files signed by a Microsoft-issued certificate; the analyst must plan for legitimate third-party-signed applications to be blocked. Answer c matches the documented Microsoft-issued signer boundary.",
+    "confidenceReason": "raw/device-response.json Restrict app execution names Microsoft-issued certificate as the signer boundary."
+  },
+  {
+    "id": "sc200-016",
+    "conceptId": "sc200-endpoint-isolation-full-tunnel-vpn-cloud-connectivity",
+    "question": "A supported onboarded Windows device reaches Defender services through a full-tunnel VPN. A response plan requires network isolation without losing the service's monitoring connection. The team can change VPN routing before an incident. Which plan addresses the documented connectivity risk?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use split tunneling for Defender for Endpoint and Defender Antivirus cloud-protection traffic, then validate isolation connectivity."
+      },
+      {
+        "id": "b",
+        "text": "Keep the full tunnel unchanged because isolated devices preserve every VPN route."
+      },
+      {
+        "id": "c",
+        "text": "Replace isolation with an antivirus scan, which provides the same network boundary."
+      },
+      {
+        "id": "d",
+        "text": "Replace isolation with an investigation package, which blocks ordinary network traffic."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "The documentation recommends split tunneling for the Defender service traffic because a full tunnel can prevent service access after isolation.",
+    "deepExplanation": "The general promise of retained Defender connectivity has a documented full-tunnel VPN caveat. Routing planning must preserve the allowed cloud-protection path; substituting a non-containment action would not satisfy the response requirement.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The article explicitly warns that devices behind a full VPN tunnel cannot reach the service after isolation.",
+      "c": "Scanning is not equivalent to network isolation and does not satisfy the required network boundary.",
+      "d": "An investigation package collects evidence; it does not block network traffic."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["sc200-device-response"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-endpoint/respond-machine-alerts"
+    ],
+    "documentationTitles": ["Take response actions on a device"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-endpoint", "vpn", "isolation", "connectivity"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-device-response"],
+    "verificationNotes": "Independent read of raw/device-response.json Isolate devices from the network section confirms that devices behind a full VPN tunnel cannot reach the Defender for Endpoint cloud service after isolation, and recommends split-tunneling VPN for Defender for Endpoint and Defender Antivirus cloud-protection traffic. Answer a matches this pre-isolation planning recommendation.",
+    "confidenceReason": "raw/device-response.json isolation notes explicitly warn about full VPN tunnels and recommend split-tunneling for Defender traffic."
+  },
+  {
+    "id": "sc200-017",
+    "conceptId": "sc200-investigation-package-collection-summary-errors",
+    "question": "An investigator downloads a Windows device investigation package and wants to determine whether each expected data point was collected successfully before drawing conclusions from missing evidence. Which package item directly records the collection commands, execution status, and failure codes?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Processes"
+      },
+      {
+        "id": "b",
+        "text": "PrefetchFilesList.txt"
+      },
+      {
+        "id": "c",
+        "text": "SystemInformation.txt"
+      },
+      {
+        "id": "d",
+        "text": "CollectionSummaryReport.xls"
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "CollectionSummaryReport.xls summarizes data points, extraction commands, execution status, and error codes.",
+    "deepExplanation": "Missing investigative data can reflect collection failure rather than absence of activity. The summary report is the purpose-built place to check collection completeness; other artifacts describe device state or a narrower part of the package.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Processes lists currently running processes rather than the status of every collection operation.",
+      "b": "PrefetchFilesList.txt tracks copied prefetch files and related copy failures, not the entire package's data points.",
+      "c": "SystemInformation.txt describes system information such as OS version and network cards, not collection-command results."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-device-response"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-endpoint/respond-machine-alerts"
+    ],
+    "documentationTitles": ["Take response actions on a device"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-endpoint", "evidence", "collection-completeness"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-device-response"],
+    "verificationNotes": "Independent read of raw/device-response.json Windows investigation package contents table confirms CollectionSummaryReport.xls summarizes data points, extraction commands, execution status, and error codes. Processes, PrefetchFilesList, and SystemInformation each describe a narrower artifact and do not report per-command collection status.",
+    "confidenceReason": "raw/device-response.json investigation-package contents table describes CollectionSummaryReport.xls as the per-command status report."
+  },
+  {
+    "id": "sc200-018",
+    "conceptId": "sc200-high-value-asset-selective-response-live-response",
+    "question": "An analyst with appropriate live-response permissions can open sessions on ordinary supported devices. Live response is enabled tenant-wide, but the action is unavailable on one supported device onboarded as a high-value asset. Which device-specific control should be reviewed before changing the analyst's role?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The scan's ScanAvgCPULoadFactor setting."
+      },
+      {
+        "id": "b",
+        "text": "The selective response actions configured when the high-value asset was onboarded."
+      },
+      {
+        "id": "c",
+        "text": "The local folder used to copy prefetch files into an investigation package."
+      },
+      {
+        "id": "d",
+        "text": "The optional setting allowing unsigned PowerShell scripts in an existing live-response session."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "High-value asset configuration can restrict live response through selective response actions.",
+    "deepExplanation": "The scenario already establishes OS support, tenant enablement, and analyst permissions. The device-response article specifically directs investigators to selective response actions when live response is unavailable on a high-value asset.",
+    "whyOtherAnswersAreWrong": {
+      "a": "ScanAvgCPULoadFactor limits antivirus scan CPU impact; it does not enable the live-response action.",
+      "c": "Prefetch-package collection concerns evidence contents, not whether the live-response action is allowed.",
+      "d": "Unsigned-script execution is an optional capability inside live response, not the documented high-value-asset action restriction."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": [
+      "sc200-device-response",
+      "sc200-live-response",
+      "sc200-high-value-response"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-endpoint/respond-machine-alerts",
+      "https://learn.microsoft.com/en-us/defender-endpoint/live-response",
+      "https://learn.microsoft.com/en-us/defender-endpoint/restrict-response-actions-high-value-assets"
+    ],
+    "documentationTitles": [
+      "Take response actions on a device",
+      "Investigate entities on devices using live response",
+      "Restrict response actions on high-value assets"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-endpoint", "high-value-assets", "live-response"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": [
+      "sc200-device-response",
+      "sc200-live-response",
+      "sc200-high-value-response"
+    ],
+    "verificationNotes": "Independent read of raw/high-value-response.json confirms Selective Response Actions is a Defender for Endpoint capability configured at onboarding through the Defender deployment tool, and that Live response can be disallowed for a high-value asset. raw/device-response.json cross-links this article for the same behavior. raw/deployment-tool.json does not label the deployment tool Preview and the high-value asset article uses no Preview wording for the restriction. Answer b matches the documented device-specific control; featureStatus GA is retained.",
+    "confidenceReason": "raw/high-value-response.json describes Selective Response Actions and shows Live Response can be disallowed on a supported HVA; raw/deployment-tool.json contains no Preview wording for the tool."
+  },
+  {
+    "id": "sc200-019",
+    "conceptId": "sc200-live-response-fileinfo-versus-transfer",
+    "question": "During an authorized live-response investigation, an analyst needs information about a file on the device but does not want to download it, upload anything, or change it. Which command is designed for that task?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "getfile"
+      },
+      {
+        "id": "b",
+        "text": "putfile"
+      },
+      {
+        "id": "c",
+        "text": "fileinfo"
+      },
+      {
+        "id": "d",
+        "text": "remediate"
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "fileinfo obtains information about a file without selecting the transfer or remediation commands.",
+    "deepExplanation": "The live-response command reference separates metadata inspection, download from a device, placement of a library file on a device, and remediation. The requested action is inspection only.",
+    "whyOtherAnswersAreWrong": {
+      "a": "getfile downloads a file, which the scenario excludes.",
+      "b": "putfile places a library file on the device, which the scenario excludes.",
+      "d": "remediate changes the entity; for a file, its documented action is deletion."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "beginner",
+    "complexity": "technical-implementation",
+    "sourceIds": ["sc200-live-response"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-endpoint/live-response"
+    ],
+    "documentationTitles": [
+      "Investigate entities on devices using live response"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-endpoint", "live-response", "read-only-investigation"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-live-response"],
+    "verificationNotes": "Independent read of raw/live-response.json basic and advanced command tables confirms fileinfo returns metadata for a file without transferring or modifying it, getfile downloads a file, putfile places a library file on the device, and remediate for a file deletes it. Answer c uniquely satisfies the read-only requirement.",
+    "confidenceReason": "raw/live-response.json command tables directly define fileinfo, getfile, putfile, and remediate."
+  },
+  {
+    "id": "sc200-020",
+    "conceptId": "sc200-live-response-ctrl-c-portal-only-cancellation",
+    "question": "An authorized responder starts a live-response remediation command and then presses Ctrl+C in the portal after noticing an incorrect selection. Before assuming the device is unchanged, what must the responder recognize?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Ctrl+C cancels the command in the portal, but the agent-side operation may continue; the responder must verify its actual outcome."
+      },
+      {
+        "id": "b",
+        "text": "Ctrl+C confirms that the agent stopped before making any change."
+      },
+      {
+        "id": "c",
+        "text": "Ctrl+C automatically undoes any completed remediation action."
+      },
+      {
+        "id": "d",
+        "text": "Ctrl+C removes the command and its status from the session's command log."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Portal cancellation is not an agent-side stop or rollback guarantee.",
+    "deepExplanation": "The live-response documentation explicitly warns that changing operations can continue after Ctrl+C. The command log records command details and status, so investigation must establish what actually happened rather than infer rollback from the UI.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The cancellation warning expressly denies this agent-side stop guarantee.",
+      "c": "Undo is a separate action; Ctrl+C is not documented as automatically reversing remediation.",
+      "d": "The command log tracks commands and statuses; Ctrl+C is documented as cancellation in the portal, not deletion of audit details."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-live-response"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-endpoint/live-response"
+    ],
+    "documentationTitles": [
+      "Investigate entities on devices using live response"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-endpoint", "live-response", "cancellation", "audit"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-live-response"],
+    "verificationNotes": "Independent read of raw/live-response.json Cancel a command note confirms Ctrl+C cancels the command in the Microsoft Defender portal but does not stop the agent-side operation; changing operations such as remediate may continue. The Command log records command details and status, so responders must inspect actual outcome rather than infer rollback from the UI. Answer a matches this documented warning.",
+    "confidenceReason": "raw/live-response.json Cancel a command note explicitly warns Ctrl+C is a portal cancellation and does not stop the agent-side operation."
+  },
+  {
+    "id": "sc200-021",
+    "conceptId": "sc200-live-response-session-library-upload-permission",
+    "question": "An analyst can initiate a live-response session and run permitted investigation commands. Upload file to library is disabled in that session. The analyst has only delegated permissions and lacks Manage Security Settings. The team asks why the session upload control is unavailable, not for a workaround. Which explanation is documented?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The device must be taken out of every device group before the control becomes available."
+      },
+      {
+        "id": "b",
+        "text": "Enabling unsigned-script execution automatically grants library upload permission."
+      },
+      {
+        "id": "c",
+        "text": "Every analyst who can start a session must also be able to upload through its console."
+      },
+      {
+        "id": "d",
+        "text": "Uploading through the live-response session requires Manage Security Settings; delegated session permissions alone do not grant it."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "The upload control inside a live-response session has a distinct Manage Security Settings requirement.",
+    "deepExplanation": "Permission to initiate or use a session is not equivalent to permission to publish files into its library through the session console. The article separately describes Library management, so this answer is deliberately limited to the stated session upload control.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documented prerequisite for this control is Manage Security Settings, not removing device-group membership.",
+      "b": "Unsigned-script execution controls whether those scripts can run; it does not grant upload authorization.",
+      "c": "The documentation explicitly states the button is disabled for users with only delegated permissions."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-live-response"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-endpoint/live-response"
+    ],
+    "documentationTitles": [
+      "Investigate entities on devices using live response"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-endpoint", "live-response", "library", "permissions"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-live-response"],
+    "verificationNotes": "Independent read of raw/live-response.json Other requirements section confirms uploading through a live-response session console requires the Manage Security Settings permission and that the button is greyed out for users with only delegated permissions; separate Library management upload does not require this permission. Answer d is the documented explanation.",
+    "confidenceReason": "raw/live-response.json Other requirements explains the Manage Security Settings dependency for the session upload button and the separate Library management route."
+  },
+  {
+    "id": "sc200-022",
+    "conceptId": "sc200-action-center-approve-pending-remediation",
+    "question": "A Defender for Office 365 investigation proposes a remediation action that awaits approval. An authorized analyst has checked the evidence and wants the action to proceed. Which Action center operation performs that decision?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Select Undo on the History tab."
+      },
+      {
+        "id": "b",
+        "text": "Select Approve for the item on the Pending tab."
+      },
+      {
+        "id": "c",
+        "text": "Select Reject for the item on the Pending tab."
+      },
+      {
+        "id": "d",
+        "text": "Select Go hunt from the pending item's details."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Approve initiates the selected pending action.",
+    "deepExplanation": "The Action center distinguishes the decision to initiate a pending remediation from rejecting it, investigating further, or undoing a completed action. The scenario uses Office 365 AIR, which the current documentation explicitly says remains available.",
+    "whyOtherAnswersAreWrong": {
+      "a": "History and Undo concern completed supported actions, not approval of a pending one.",
+      "c": "Reject prevents the pending action from being taken.",
+      "d": "Go hunt opens Advanced hunting rather than approving the action."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-xdr",
+    "subskill": "Investigate and remediate threats by using Microsoft Defender for Office 365, including automatic attack disruption",
+    "difficulty": "beginner",
+    "complexity": "technical-implementation",
+    "sourceIds": ["sc200-action-center"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/m365d-autoir-actions"
+    ],
+    "documentationTitles": ["View and manage actions in the Action center"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-xdr", "office-365", "action-center"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-action-center"],
+    "verificationNotes": "Independent read of raw/remediation-actions.json Review pending actions confirms Approve initiates a selected pending action, Reject prevents it, and Go hunt opens Advanced hunting. Undo lives on History. The current retirement notice explicitly excludes Defender for Office 365 AIR from the change, so Approve on Pending remains the documented Office 365 workflow. Answer b is uniquely correct.",
+    "confidenceReason": "raw/remediation-actions.json Review pending actions section defines Approve and the retirement note preserves Office 365 AIR."
+  },
+  {
+    "id": "sc200-023",
+    "conceptId": "sc200-action-center-bulk-undo-same-action-type",
+    "question": "After investigating false positives, a Security Administrator must undo two completed file-quarantine actions and one completed device-isolation action. All three actions support undo. How should the administrator use the Action center's documented multiple-action undo workflow?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Select all three on Pending and choose Reject."
+      },
+      {
+        "id": "b",
+        "text": "Select all three on History in one mixed-action-type Undo operation."
+      },
+      {
+        "id": "c",
+        "text": "Undo the two quarantine actions together from History, then undo the isolation action separately."
+      },
+      {
+        "id": "d",
+        "text": "Use Go hunt on each item; opening its query automatically reverses it."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Multiple-action undo requires selected items to have the same Action type, so quarantine and isolation must be handled separately.",
+    "deepExplanation": "These actions are already completed, placing the reversal workflow in History. Grouping the two quarantine actions follows the documented same-type requirement; the isolation action is a different type.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Pending/Reject is for actions not yet performed, not completed-action reversal.",
+      "b": "The multiple-action undo instructions require the same Action type.",
+      "d": "Go hunt starts investigation in Advanced hunting; it is not an undo operation."
+    },
+    "objectiveDomain": "respond-to-security-incidents",
+    "skill": "respond-to-alerts-and-incidents-in-microsoft-defender-for-endpoint",
+    "subskill": "Perform actions on the device, including live response and collecting investigation packages",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["sc200-action-center"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/m365d-autoir-actions"
+    ],
+    "documentationTitles": ["View and manage actions in the Action center"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-xdr", "action-center", "undo"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-action-center"],
+    "verificationNotes": "Independent read of raw/remediation-actions.json Undo multiple remediation actions confirms the workflow requires selected items to share the same Action type, and Security Administrators and higher are authorized for undo of file quarantine. The undo table lists Isolate device and Quarantine a file across automated, antivirus, and manual sources. Two quarantines must be undone together, then the isolation separately. Answer c uniquely satisfies the documented same-type constraint.",
+    "confidenceReason": "raw/remediation-actions.json Undo multiple remediation actions demands identical Action type and Security Administrator authorization."
+  },
+  {
+    "id": "sc200-024",
+    "conceptId": "sc200-hunting-network-destination-table",
+    "question": "Defender for Endpoint is deployed, and a hunter needs network-connection events containing RemoteIP, RemotePort, and the process that initiated each connection. Which advanced-hunting table provides these fields for that investigation?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "DeviceNetworkEvents"
+      },
+      {
+        "id": "b",
+        "text": "DeviceProcessEvents"
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "DeviceNetworkEvents contains network connections, their remote destination fields, and initiating-process information.",
+    "deepExplanation": "DeviceProcessEvents records process creation and related process details. It does not replace the network event table when the investigative question needs the destination of each connection.",
+    "whyOtherAnswersAreWrong": {
+      "b": "DeviceProcessEvents describes process-creation events and lacks the requested RemoteIP/RemotePort connection fields in its documented schema."
+    },
+    "objectiveDomain": "perform-threat-hunting",
+    "skill": "detect-threats-by-using-microsoft-defender-xdr",
+    "subskill": "Identify the appropriate table to use in a KQL query",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["sc200-network-events", "sc200-process-events"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicenetworkevents-table",
+      "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceprocessevents-table"
+    ],
+    "documentationTitles": ["DeviceNetworkEvents", "DeviceProcessEvents"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-xdr", "hunting", "schema"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": [
+      "sc200-network-events",
+      "sc200-process-events"
+    ],
+    "verificationNotes": "Independent read of raw/network-events.json and raw/process-events.json confirms DeviceNetworkEvents carries RemoteIP, RemotePort, and initiating-process fields for connection events, while DeviceProcessEvents is a process-creation table without those network-destination columns. Answer a is the documented table.",
+    "confidenceReason": "raw/network-events.json defines RemoteIP, RemotePort, and initiating-process fields for connection rows; raw/process-events.json describes DeviceProcessEvents as a creation table."
+  },
+  {
+    "id": "sc200-025",
+    "conceptId": "sc200-created-process-signature-versus-initiator",
+    "question": "A hunter sees a DeviceProcessEvents row with populated InitiatingProcessSignatureStatus and ProcessVersionInfoCompanyName. The task is to establish signing information for the newly created executable, not its parent. Which next step uses the documented identity of the correct file?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use InitiatingProcessSignatureStatus as the created executable's signature result."
+      },
+      {
+        "id": "b",
+        "text": "Treat a populated ProcessVersionInfoCompanyName as proof that the created executable is signed."
+      },
+      {
+        "id": "c",
+        "text": "Use InitiatingProcessSignerType as the created executable's certificate issuer."
+      },
+      {
+        "id": "d",
+        "text": "Join the created executable's SHA1 to DeviceFileCertificateInfo for its available signing information."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "The created process's SHA1 is the documented join key for retrieving its signing information from DeviceFileCertificateInfo.",
+    "deepExplanation": "InitiatingProcess signature fields describe the process that caused the event, not the newly created executable. Version metadata describes the file but does not establish whether it is signed. Available certificate records must be associated with the created file's identity.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This signature-status field belongs to the initiating process.",
+      "b": "The documentation explicitly states that ProcessVersionInfo fields do not indicate whether the created process is digitally signed.",
+      "c": "InitiatingProcessSignerType describes the initiating process's signer, not the created file's signing information."
+    },
+    "objectiveDomain": "perform-threat-hunting",
+    "skill": "detect-threats-by-using-microsoft-defender-xdr",
+    "subskill": "Create Advanced Hunting queries",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-process-events"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceprocessevents-table"
+    ],
+    "documentationTitles": ["DeviceProcessEvents"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": [
+      "defender-xdr",
+      "hunting",
+      "process-signature",
+      "entity-attribution"
+    ],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-process-events"],
+    "verificationNotes": "Independent read of raw/process-events.json confirms InitiatingProcess signature and signer fields describe the initiating process, and ProcessVersionInfo* is file metadata that does not indicate signing status. The documented technique for created-process signing information is joining its SHA1 to DeviceFileCertificateInfo. Answer d matches the documented join key.",
+    "confidenceReason": "raw/process-events.json note explicitly tells hunters to join created-process SHA1 to DeviceFileCertificateInfo and disqualifies initiating-process signature fields and version metadata."
+  },
+  {
+    "id": "sc200-026",
+    "conceptId": "sc200-network-initiating-image-sha1-when-sha256-empty",
+    "question": "A hunter must return only network events from a verified image to one destination. ImageSHA1, ImageSHA256, and DestinationIP are already defined scalar values. Relevant rows have populated InitiatingProcessSHA1 but empty InitiatingProcessSHA256. Which replacement where clause preserves matching rows without including other images or destinations?",
+    "questionType": "code",
+    "codeLanguage": "kusto",
+    "codeSnippet": "DeviceNetworkEvents\n| where InitiatingProcessSHA256 == ImageSHA256\n    and RemoteIP == DestinationIP",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "where InitiatingProcessSHA256 == ImageSHA256 and RemoteIP == DestinationIP"
+      },
+      {
+        "id": "b",
+        "text": "where InitiatingProcessSHA1 == ImageSHA1 and RemoteIP == DestinationIP"
+      },
+      {
+        "id": "c",
+        "text": "where InitiatingProcessSHA1 == ImageSHA1 or RemoteIP == DestinationIP"
+      },
+      {
+        "id": "d",
+        "text": "where InitiatingProcessSHA1 == ImageSHA1 and LocalIP == DestinationIP"
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Use the populated initiating-process SHA-1 and require the remote destination to match in the same row.",
+    "deepExplanation": "The table reference warns that InitiatingProcessSHA256 is usually unpopulated and recommends available SHA1. Conjunction preserves both constraints. RemoteIP is the destination, whereas LocalIP is the source side of the connection.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The known image hash cannot match the explicitly empty SHA-256 field, so this retains the original loss of relevant rows.",
+      "c": "or accepts either match, admitting other images contacting the destination and the target image contacting other destinations.",
+      "d": "LocalIP describes the source side, so this applies the destination constraint to the wrong endpoint."
+    },
+    "objectiveDomain": "perform-threat-hunting",
+    "skill": "detect-threats-by-using-microsoft-defender-xdr",
+    "subskill": "Identify threats by using Kusto Query Language (KQL)",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-network-events", "sc200-logical-operators"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicenetworkevents-table",
+      "https://learn.microsoft.com/en-us/kusto/query/logical-operators"
+    ],
+    "documentationTitles": [
+      "DeviceNetworkEvents",
+      "Logical (binary) operators"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": [
+      "defender-xdr",
+      "hunting",
+      "hash-population",
+      "network-events",
+      "kql"
+    ],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": [
+      "sc200-network-events",
+      "sc200-logical-operators"
+    ],
+    "verificationNotes": "Independent read of raw/network-events.json confirms InitiatingProcessSHA256 is usually unpopulated and SHA1 is the recommended fallback; RemoteIP is the destination and LocalIP is the source side. raw/logical-operators.json confirms and requires both predicates to hold, while or accepts either. Answer b uniquely preserves image identity and destination match.",
+    "confidenceReason": "raw/network-events.json warns SHA256 is usually unpopulated and separates RemoteIP from LocalIP; raw/logical-operators.json separates and from or."
+  },
+  {
+    "id": "sc200-027",
+    "conceptId": "sc200-hunting-process-instance-correlation-start-key",
+    "question": "A Windows hunting dataset contains two launches of the same executable on one device, reusing the same numeric PID at different times, plus a launch on another device. A network row must be correlated to the exact launch that initiated it. DeviceId and Windows process-start-key fields are populated in both tables. Which key pairing avoids confusing the parent process, an event counter, or a reused PID?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "DeviceNetworkEvents.ReportId to DeviceProcessEvents.ReportId, without a device key."
+      },
+      {
+        "id": "b",
+        "text": "DeviceId plus InitiatingProcessId in network events to DeviceId plus ProcessId in process events."
+      },
+      {
+        "id": "c",
+        "text": "DeviceId plus InitiatingProcessUniqueId in network events to DeviceId plus ProcessUniqueId in process events."
+      },
+      {
+        "id": "d",
+        "text": "DeviceId plus InitiatingProcessUniqueId in network events to DeviceId plus InitiatingProcessUniqueId in process events."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Match the network event's initiating process instance to the process event's created process instance, retaining the device identity.",
+    "deepExplanation": "The Windows unique-process fields equal the Process Start Key. Network InitiatingProcessUniqueId identifies the process making the connection; ProcessUniqueId identifies the process represented by a creation event. The process table's InitiatingProcessUniqueId instead identifies the process that launched it.",
+    "whyOtherAnswersAreWrong": {
+      "a": "ReportId is a repeating event identifier, not a cross-table process-instance identifier, and omitting device identity adds collisions.",
+      "b": "The scenario explicitly includes PID reuse, so this key cannot distinguish the two launches on the same device.",
+      "d": "This joins the network actor to the creator/parent of the process row, not to that row's newly created process."
+    },
+    "objectiveDomain": "perform-threat-hunting",
+    "skill": "detect-threats-by-using-microsoft-defender-xdr",
+    "subskill": "Create Advanced Hunting queries",
+    "difficulty": "expert",
+    "complexity": "technical-implementation",
+    "sourceIds": ["sc200-network-events", "sc200-process-events"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicenetworkevents-table",
+      "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-deviceprocessevents-table"
+    ],
+    "documentationTitles": ["DeviceNetworkEvents", "DeviceProcessEvents"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["defender-xdr", "hunting", "correlation", "process-start-key"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": [
+      "sc200-network-events",
+      "sc200-process-events"
+    ],
+    "verificationNotes": "Independent read of raw/process-events.json and raw/network-events.json confirms ProcessUniqueId and InitiatingProcessUniqueId both equal the Windows Process Start Key, while ReportId is a repeating event counter. Correlating a network event to the exact launch requires network.InitiatingProcessUniqueId (the network actor) to process.ProcessUniqueId (the newly created process record), retaining DeviceId to survive multi-device data. Answer c is the only pairing that avoids parent/reused-PID/event-counter confusion.",
+    "confidenceReason": "raw/process-events.json and raw/network-events.json equate ProcessUniqueId and InitiatingProcessUniqueId with the Windows Process Start Key; ReportId is described as repeating."
+  },
+  {
+    "id": "sc200-028",
+    "conceptId": "sc200-hunting-innerunique-drops-repeated-left-connections",
+    "question": "A hunter creates Connections with three distinct network events for one (DeviceId, ProcessKey), and Processes with exactly one matching process row for that key. Connections is the left input. The query below returns only one connection, but the investigation needs every matching connection and no unmatched rows. What change fixes the loss without changing the keys?",
+    "questionType": "code",
+    "codeLanguage": "kusto",
+    "codeSnippet": "Connections\n| join (Processes) on DeviceId, ProcessKey",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Specify join kind=inner so all three matching left rows are retained."
+      },
+      {
+        "id": "b",
+        "text": "Specify join kind=innerunique explicitly to prevent left-key deduplication."
+      },
+      {
+        "id": "c",
+        "text": "Leave the join kind unspecified; the right-side key guarantees preservation of all left rows."
+      },
+      {
+        "id": "d",
+        "text": "Deduplicate Connections by DeviceId and ProcessKey before the existing join."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "The default join is innerunique, which deduplicates left keys. Explicit inner preserves each matching connection row.",
+    "deepExplanation": "Right-side uniqueness prevents multiplicative matches but does not disable innerunique's left-side deduplication. With exactly one right match, inner emits one result for each of the three left connection events and excludes unmatched rows.",
+    "whyOtherAnswersAreWrong": {
+      "b": "innerunique is precisely the flavor that removes duplicate left keys.",
+      "c": "An unspecified kind still defaults to innerunique regardless of right-side uniqueness.",
+      "d": "Pre-deduplicating by these keys discards the same distinct connection events the investigation needs."
+    },
+    "objectiveDomain": "perform-threat-hunting",
+    "skill": "detect-threats-by-using-microsoft-defender-xdr",
+    "subskill": "Create Advanced Hunting queries",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["sc200-innerunique", "sc200-inner", "sc200-summarize"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/kusto/query/join-innerunique",
+      "https://learn.microsoft.com/en-us/kusto/query/join-inner",
+      "https://learn.microsoft.com/en-us/kusto/query/summarize-operator"
+    ],
+    "documentationTitles": [
+      "innerunique join",
+      "inner join",
+      "summarize operator"
+    ],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["kql", "hunting", "join", "row-preservation"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": [
+      "sc200-innerunique",
+      "sc200-inner",
+      "sc200-summarize"
+    ],
+    "verificationNotes": "Independent read of raw/innerunique.json confirms the default join kind deduplicates left-side keys, and raw/inner.json confirms explicit inner emits every matching left/right pair. Right-side uniqueness does not disable left-side deduplication, so kind=inner uniquely preserves all three matching connection rows. Difficulty downgraded to advanced because the reasoning centers on one documented default behavior rather than multi-step architecture.",
+    "confidenceReason": "raw/innerunique.json states the default flavor deduplicates left keys, and raw/inner.json describes inner as producing every matching left/right pair."
+  },
+  {
+    "id": "sc200-029",
+    "conceptId": "sc200-hunting-time-buckets-preserve-device-group",
+    "question": "A hunter has already filtered DeviceNetworkEvents to the relevant activity and time range. The report must show the number of matching event rows per device in each 15-minute interval that contains events. The current query creates a group for each exact timestamp. Which replacement aggregation produces the required groups?",
+    "questionType": "code",
+    "codeLanguage": "kusto",
+    "codeSnippet": "RelevantConnections\n| summarize EventCount=count() by DeviceId, Timestamp",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "summarize EventCount=count() by bin(Timestamp, 15m)"
+      },
+      {
+        "id": "b",
+        "text": "summarize EventCount=count() by DeviceId, Timestamp"
+      },
+      {
+        "id": "c",
+        "text": "summarize EventCount=count() by DeviceId"
+      },
+      {
+        "id": "d",
+        "text": "summarize EventCount=count() by DeviceId, bin(Timestamp, 15m)"
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Grouping by DeviceId and the explicitly binned timestamp counts matching events for each device and 15-minute bucket.",
+    "deepExplanation": "Summarize creates one output row for each combination of grouping expressions. Keeping DeviceId preserves device separation; replacing raw Timestamp with bin(Timestamp, 15m) provides the desired time intervals. The scenario does not require generating empty intervals.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Omitting DeviceId combines devices within each time bucket.",
+      "b": "Raw Timestamp continues to create distinct groups for different exact event timestamps.",
+      "c": "Omitting the time grouping produces one count per device across the whole filtered range."
+    },
+    "objectiveDomain": "perform-threat-hunting",
+    "skill": "detect-threats-by-using-microsoft-defender-xdr",
+    "subskill": "Identify threats by using Kusto Query Language (KQL)",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["sc200-summarize", "sc200-network-events"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/kusto/query/summarize-operator",
+      "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-devicenetworkevents-table"
+    ],
+    "documentationTitles": ["summarize operator", "DeviceNetworkEvents"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["kql", "hunting", "aggregation", "time-buckets"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-summarize", "sc200-network-events"],
+    "verificationNotes": "Independent read of raw/summarize.json confirms summarize creates one output row per combination of by-expressions and that time buckets require explicit bin() expressions. Grouping by DeviceId and bin(Timestamp, 15m) produces the documented per-device, per-15-minute-interval result; the other options either drop DeviceId, drop the time grouping, or keep the raw Timestamp.",
+    "confidenceReason": "raw/summarize.json documents grouping expressions and explicit bin() datetime buckets in the Notes."
+  },
+  {
+    "id": "sc200-030",
+    "conceptId": "sc200-sentinel-hunting-bookmark-preserves-row-query-context",
+    "question": "In the Sentinel-specific Hunting experience, an analyst finds several rows worth revisiting but is not ready to create an incident or an alerting rule. The analyst needs to preserve each selected result with its originating query and add notes and tags. Which action fits this stage of the investigation?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Create an analytics rule immediately so that the selected historical rows become notes."
+      },
+      {
+        "id": "b",
+        "text": "Select the rows and add bookmarks in Sentinel Hunting."
+      },
+      {
+        "id": "c",
+        "text": "Favorite the query; favorites preserve the selected result rows and their individual notes."
+      },
+      {
+        "id": "d",
+        "text": "Switch to unified Advanced hunting and add bookmarks there."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Sentinel Hunting bookmarks preserve selected rows and the query that produced them, with analyst notes and tags.",
+    "deepExplanation": "A bookmark supports retaining evidence before deciding whether to escalate it. This capability belongs to the Sentinel-specific Hunting experience; the current article states that bookmarks are not available in unified Advanced hunting.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Creating an alert rule changes detection behavior; it is not the documented way to annotate and preserve selected historical rows.",
+      "c": "Favoriting a query causes it to run when the Hunting page is accessed; it does not create per-row bookmarks with notes.",
+      "d": "The article explicitly states bookmarks are unavailable in unified Advanced hunting."
+    },
+    "objectiveDomain": "perform-threat-hunting",
+    "skill": "detect-threats-by-using-the-microsoft-sentinel-platform",
+    "subskill": "Create and monitor hunting queries",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["sc200-sentinel-hunting"],
+    "sourceUrls": ["https://learn.microsoft.com/en-us/azure/sentinel/hunting"],
+    "documentationTitles": ["Threat hunting in Microsoft Sentinel"],
+    "generatedAt": "2026-09-11T19:26:32.168Z",
+    "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+    "featureStatus": "GA",
+    "tags": ["sentinel", "hunting", "bookmarks", "evidence"],
+    "verificationStatus": "verified",
+    "requiresManualReview": false,
+    "verifiedAt": "2026-09-11T19:59:59.756Z",
+    "sourceLastReviewedAt": "2026-09-11T19:59:59.756Z",
+    "verifiedAgainstSourceIds": ["sc200-sentinel-hunting"],
+    "verificationNotes": "Independent read of raw/sentinel-hunting.json confirms that bookmarks in the Sentinel-specific Hunting experience preserve selected result rows, the originating query, notes, and tags, and that bookmarks are not available in unified Advanced hunting. Favoriting a query only reruns it. Answer b is the documented mid-investigation action.",
+    "confidenceReason": "raw/sentinel-hunting.json describes bookmarks preserving selected rows, query, notes, and tags, and marks unified Advanced hunting as lacking bookmarks."
+  }
+]

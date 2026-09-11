@@ -2,8 +2,19 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { URL as NodeURL } from 'node:url';
 import { learnUrlSchema } from '../src/features/grounding/schema';
 import { isMain, loadContent } from './validate-questions';
+import {
+  assertAllowedSourceUrl,
+  isAllowedIdentityUrl,
+  type SourcePolicyContext,
+} from '../src/features/dungeons/sourcePolicy';
+import { credentials } from '../src/features/dungeons/catalog';
+import { examId } from './content-files';
 
-export function safeSourceUrl(value: string, allowCanonicalView = false): URL {
+export function safeSourceUrl(
+  value: string,
+  allowCanonicalView = false,
+  credential?: SourcePolicyContext,
+): URL {
   if (/[%\\\s<>"`]/.test(value))
     throw new Error(
       'Source URLs must not contain encoded paths, whitespace, or unsafe delimiters.',
@@ -19,7 +30,8 @@ export function safeSourceUrl(value: string, allowCanonicalView = false): URL {
   ) {
     structuralUrl.search = '';
   }
-  learnUrlSchema.parse(structuralUrl.href);
+  if (credential) assertAllowedSourceUrl(structuralUrl.href, credential);
+  else learnUrlSchema.parse(structuralUrl.href);
   if (
     /%|\\/.test(url.pathname) ||
     /(?:assessment|knowledge-check|practice-test|exam-sandbox)/i.test(
@@ -36,8 +48,9 @@ export function safeSourceUrl(value: string, allowCanonicalView = false): URL {
 export async function checkOnlineSource(
   value: string,
   fetcher: typeof fetch = fetch,
+  credential?: SourcePolicyContext,
 ) {
-  let url = safeSourceUrl(value);
+  let url = safeSourceUrl(value, false, credential);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12_000);
   try {
@@ -57,12 +70,40 @@ export async function checkOnlineSource(
           throw new Error(
             'Missing redirect target or redirect limit exceeded.',
           );
-        url = safeSourceUrl(new URL(location, url).href, true);
+        url = safeSourceUrl(new URL(location, url).href, true, credential);
         continue;
       }
       if (!response.ok) {
         await response.body?.cancel();
         throw new Error(`HTTP ${response.status}`);
+      }
+      const officialPdf =
+        credential?.provider === 'GitHub' &&
+        url.pathname.endsWith('.pdf') &&
+        /application\/pdf/i.test(response.headers.get('content-type') ?? '');
+      if (officialPdf) {
+        const reader = response.body?.getReader();
+        if (!reader) throw new Error('Empty documentation response.');
+        let bytes = 0;
+        let prefix = '';
+        try {
+          while (true) {
+            const { done, value: chunk } = await reader.read();
+            if (done) break;
+            if (prefix.length < 5)
+              prefix += new TextDecoder().decode(
+                chunk.subarray(0, 5 - prefix.length),
+              );
+            bytes += chunk.byteLength;
+            if (bytes > 2_000_000)
+              throw new Error('Documentation response exceeds the 2 MB limit.');
+          }
+        } finally {
+          await reader.cancel();
+        }
+        if (prefix !== '%PDF-')
+          throw new Error('Expected an official competency PDF document.');
+        return { finalUrl: url.href, status: response.status };
       }
       if (
         !/text\/html|application\/xhtml\+xml/i.test(
@@ -119,16 +160,38 @@ export async function checkOnlineSource(
 if (isMain(import.meta.url)) {
   try {
     const { manifest } = await loadContent();
+    const credential = credentials.find(
+      (entry) => entry.credentialId === examId(),
+    )!;
     const urls = [...new Set(manifest.sources.map((source) => source.url))];
-    urls.forEach((url) => safeSourceUrl(url));
+    const identityContextUrls = urls.filter(
+      (url) =>
+        new URL(url).hostname === 'learn.github.com' &&
+        manifest.sources
+          .filter((source) => source.url === url)
+          .every((source) => source.featureStatus === 'Not applicable'),
+    );
+    urls.forEach((url) => {
+      if (identityContextUrls.includes(url)) {
+        if (!isAllowedIdentityUrl(url, credential))
+          throw new Error(`Unapproved identity/competency context URL: ${url}`);
+      } else safeSourceUrl(url, false, credential);
+    });
     console.log(
-      `Offline structural source checks passed: ${manifest.sources.length} records, ${urls.length} direct Learn URLs.`,
+      `Offline structural source checks passed: ${manifest.sources.length} records, ${urls.length} credential-approved official URLs.`,
     );
     if (process.argv.includes('--online')) {
       const failures: string[] = [];
-      for (const url of urls) {
+      for (const url of identityContextUrls)
+        console.log(
+          `SKIP identity/competency context ${url}: availability must be checked through credential discovery, not the implementation-document checker.`,
+        );
+      const implementationUrls = urls.filter(
+        (url) => !identityContextUrls.includes(url),
+      );
+      for (const url of implementationUrls) {
         try {
-          const result = await checkOnlineSource(url);
+          const result = await checkOnlineSource(url, fetch, credential);
           console.log(
             `OK ${url}${result.finalUrl !== url ? ` -> ${result.finalUrl}` : ''}`,
           );
@@ -145,19 +208,21 @@ if (isMain(import.meta.url)) {
         '../docs/content-maintenance.md',
         import.meta.url,
       );
-      const maintenance = await readFile(maintenanceUrl, 'utf8');
-      const line = `Last successful online URL validation: ${checkedAt} (${urls.length} unique URLs).`;
-      if (!/^Last successful online URL validation:.*$/m.test(maintenance))
-        throw new Error(
-          'Maintenance document is missing its validation date marker.',
+      const line = `Last successful online URL validation: ${checkedAt} (${implementationUrls.length} unique URLs; ${identityContextUrls.length} identity context URLs not checked).`;
+      if (credential.credentialId === 'dp-700') {
+        const maintenance = await readFile(maintenanceUrl, 'utf8');
+        if (!/^Last successful online URL validation:.*$/m.test(maintenance))
+          throw new Error(
+            'Maintenance document is missing its validation date marker.',
+          );
+        await writeFile(
+          maintenanceUrl,
+          maintenance.replace(
+            /^Last successful online URL validation:.*$/m,
+            line,
+          ),
         );
-      await writeFile(
-        maintenanceUrl,
-        maintenance.replace(
-          /^Last successful online URL validation:.*$/m,
-          line,
-        ),
-      );
+      }
       console.log(line);
     } else {
       console.log(
@@ -165,7 +230,7 @@ if (isMain(import.meta.url)) {
       );
     }
     console.log(
-      'URL availability is not claim review. Re-ground factual changes through Microsoft Learn MCP.',
+      'URL availability is not claim review. Re-ground through the credential-specific authoritative retrieval workflow.',
     );
   } catch (error) {
     console.error(error instanceof Error ? error.message : String(error));

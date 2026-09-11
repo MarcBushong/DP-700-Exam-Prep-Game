@@ -578,7 +578,7 @@ describe('playable-only coverage and honest review reporting', () => {
 describe('two-pass workflow scaffolding and attestation validation', () => {
   it('requires the committed ledger by default and permits explicit candidate metadata-only mode', () => {
     expect(verificationReviewFile({})).toBe(
-      resolve('src', 'data', 'verification-reviews.json'),
+      resolve('src', 'content', 'exams', 'dp-700', 'verification-reviews.json'),
     );
     expect(
       verificationReviewFile({ questions: '.grounding\\candidates.json' }),
@@ -609,12 +609,12 @@ describe('two-pass workflow scaffolding and attestation validation', () => {
     await expect(readFile(path, 'utf8')).rejects.toThrow();
   });
 
-  it('requires the build to check attestations immediately after structural validation', async () => {
+  it('requires the build to gate every package, including attestations and realism metadata', async () => {
     const packageJson = JSON.parse(
       await readFile(resolve('package.json'), 'utf8'),
     ) as { scripts: { build: string } };
     expect(packageJson.scripts.build).toMatch(
-      /^npm run validate && npm run questions:verify && /,
+      /^npm run content:validate-all && /,
     );
   });
 

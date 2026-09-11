@@ -27,6 +27,9 @@ import {
   type ActiveSession,
 } from '../src/features/quiz/types';
 import { makeResponse, selectQuestions } from '../src/features/quiz/engine';
+import { getDungeonPackage } from '../src/features/dungeons/packages';
+import * as dungeonPackages from '../src/features/dungeons/packages';
+import { credentials, heroClasses } from '../src/features/dungeons/catalog';
 import {
   result as makeResult,
   question as makeQuestion,
@@ -97,6 +100,14 @@ afterEach(() => {
 
 function game(overrides: Partial<GameContextValue> = {}): GameContextValue {
   return {
+    selectedCredentialId: 'dp-700',
+    selectedDungeon: getDungeonPackage('dp-700'),
+    selectDungeon: vi.fn(() => true),
+    favoriteCredentialIds: [],
+    toggleFavoriteCredential: vi.fn(),
+    heroClassId: 'wanderer',
+    setHeroClassId: vi.fn(),
+    credentialHistory: [],
     bank: content.questions,
     taxonomy: content.taxonomy,
     manifest: content.manifest,
@@ -147,23 +158,234 @@ function mount(value: GameContextValue, path = '/') {
 }
 
 describe('accessible challenge interface', () => {
+  it('filters dungeon cards with a keyboard-accessible search and native grouped selector', async () => {
+    const user = userEvent.setup();
+    mount(game());
+    const search = screen.getByRole('searchbox', { name: 'Search dungeons' });
+    await user.type(search, 'DP-700');
+    const article = screen.getByRole('article', { name: /DP-700/ });
+    expect(article).toBeVisible();
+    expect(screen.getAllByRole('article')).toHaveLength(1);
+    expect(
+      screen
+        .getByRole('combobox', { name: 'Inspect a dungeon' })
+        .querySelector('optgroup'),
+    ).not.toBeNull();
+    await user.clear(search);
+    await user.type(search, 'definitely-not-a-credential');
+    expect(
+      screen.getByRole('heading', {
+        name: 'No dungeons on this part of the map.',
+      }),
+    ).toBeVisible();
+    expect(screen.queryAllByRole('article')).toHaveLength(0);
+  });
+
+  it('uses public hero-class mapping and preserves favorites independently of readiness', async () => {
+    const user = userEvent.setup();
+    const value = game();
+    mount(value);
+    const hero = heroClasses.find((item) => item.id !== 'wanderer');
+    expect(hero).toBeDefined();
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'Hero class' }),
+      hero!.id,
+    );
+    expect(value.setHeroClassId).toHaveBeenCalledWith(hero!.id);
+    await user.click(screen.getByRole('button', { name: 'Favorite DP-700' }));
+    expect(value.toggleFavoriteCredential).toHaveBeenCalledWith('dp-700');
+    await user.click(screen.getByRole('checkbox', { name: 'Favorites only' }));
+    expect(screen.queryAllByRole('article')).toHaveLength(0);
+  });
+
+  it('keeps verified identities sealed when their encounter package is not installed', async () => {
+    const user = userEvent.setup();
+    vi.spyOn(dungeonPackages, 'getDungeonPackage').mockReturnValue(undefined);
+    const locked = credentials.find(
+      (item) => item.isVerified && item.status === 'active',
+    );
+    expect(locked).toBeDefined();
+    const value = game();
+    mount(value, `/dungeons/${locked!.credentialId}`);
+    const card = screen.getByRole('article', {
+      name: `${locked!.examCode ?? locked!.credentialId} ${locked!.dungeonName}`,
+    });
+    expect(within(card).getByRole('button', { name: 'Sealed' })).toBeDisabled();
+    expect(
+      within(card).getByRole('button', { name: 'Boss Gauntlet' }),
+    ).toBeDisabled();
+    expect(within(card).getByText('Objective map not loaded')).toBeVisible();
+    expect(
+      within(card).queryByText('0 documented floors'),
+    ).not.toBeInTheDocument();
+    await user.click(within(card).getByText('Why is the gauntlet sealed?'));
+    expect(card.querySelector('.readiness-details li')).toBeVisible();
+    expect(value.selectDungeon).not.toHaveBeenCalled();
+  });
+
+  it('requires abandoning the active run before entering a ready dungeon', async () => {
+    const original = getDungeonPackage('dp-700');
+    if (!original) throw new Error('Default package required for UI fixture.');
+    vi.spyOn(dungeonPackages, 'getDungeonPackage').mockImplementation((id) =>
+      id === 'dp-700'
+        ? {
+            ...original,
+            questions: content.questions,
+            readiness: {
+              study: true,
+              gauntlet: false,
+              reasons: ['Synthetic fixture: gauntlet breadth unavailable.'],
+            },
+          }
+        : undefined,
+    );
+    const user = userEvent.setup();
+    const value = game({ active: session() });
+    mount(value);
+    await user.click(
+      within(screen.getByRole('article', { name: /DP-700/ })).getByRole(
+        'button',
+        { name: 'Descend' },
+      ),
+    );
+    expect(value.selectDungeon).not.toHaveBeenCalled();
+    const dialog = screen.getByRole('dialog', {
+      name: 'Abandon your current expedition?',
+    });
+    await user.click(
+      within(dialog).getByRole('button', { name: 'Abandon & prepare' }),
+    );
+    expect(value.abandonSession).toHaveBeenCalledOnce();
+    expect(value.selectDungeon).toHaveBeenCalledWith('dp-700');
+    expect(value.setConfig).toHaveBeenCalledWith(
+      expect.objectContaining({
+        credentialId: 'dp-700',
+        runMode: 'study',
+        answerMode: 'immediate',
+        timerMode: 'off',
+      }),
+    );
+  });
+
+  it('cannot bypass a sealed gauntlet through the legacy exam reveal mode', () => {
+    const original = getDungeonPackage('dp-700');
+    if (!original) throw new Error('Default package required for UI fixture.');
+    vi.spyOn(dungeonPackages, 'getDungeonPackage').mockReturnValue({
+      ...original,
+      readiness: {
+        study: true,
+        gauntlet: false,
+        reasons: ['Synthetic fixture: breadth missing.'],
+      },
+    });
+    mount(game({ config: { ...defaultConfig, answerMode: 'exam' } }), '/setup');
+    expect(screen.getByRole('button', { name: 'Descend' })).toBeDisabled();
+    expect(
+      screen.getByRole('radio', { name: /^Boss Gauntlet/ }),
+    ).toBeDisabled();
+    expect(screen.getByRole('radio', { name: /^Exam mode/ })).toBeDisabled();
+  });
+
+  it('shows boss framing outside the unchanged technical scenario and keeps gauntlets neutral', () => {
+    const question = content.questions[1];
+    const value = game({
+      active: session({ questions: [question] }),
+      preferences: { ...defaultPreferences, banterLevel: 'full' },
+    });
+    const { container, rerender } = mount(value, '/play');
+    const banner = screen.getByRole('complementary', {
+      name: 'Boss encounter framing',
+    });
+    expect(banner).toBeVisible();
+    expect(container.querySelector('legend.question-title')).toHaveTextContent(
+      question.question,
+    );
+    expect(banner).not.toContainElement(
+      container.querySelector('legend.question-title'),
+    );
+    const nextValue = {
+      ...value,
+      active: session({
+        questions: [question],
+        config: {
+          ...defaultConfig,
+          runMode: 'gauntlet',
+          answerMode: 'immediate',
+        },
+      }),
+    };
+    rerender(
+      <GameContext.Provider value={nextValue}>
+        <MemoryRouter initialEntries={['/play']}>
+          <AppRoutes />
+        </MemoryRouter>
+      </GameContext.Provider>,
+    );
+    expect(
+      screen.queryByRole('complementary', { name: 'Boss encounter framing' }),
+    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/HP/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: /Open tome/ }),
+    ).not.toBeInTheDocument();
+    expect(container.querySelectorAll('[data-reaction-id]')).toHaveLength(0);
+  });
+
+  it('keeps the forge sealed when no verified objective map exists', async () => {
+    const user = userEvent.setup();
+    vi.spyOn(dungeonPackages, 'getDungeonPackage').mockReturnValue(undefined);
+    mount(game(), '/forge');
+    const locked = credentials.find((item) => item.credentialId !== 'dp-700')!;
+    await user.selectOptions(
+      screen.getByRole('combobox', { name: 'Dungeon to extend' }),
+      locked.credentialId,
+    );
+    expect(
+      screen.getByRole('button', { name: 'Download request' }),
+    ).toBeDisabled();
+    expect(screen.getByText(/No objectives have been inferred/)).toBeVisible();
+    expect(
+      screen.queryByRole('button', { name: 'Copy commands' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('retains migration notices beside the new comfort controls', () => {
+    mount(
+      game({
+        notices: ['Saved DP-700 history was preserved during migration.'],
+        preferences: {
+          ...defaultPreferences,
+          reducedMotion: true,
+          banterLevel: 'reduced',
+          reducedBanter: true,
+        },
+      }),
+      '/settings',
+    );
+    expect(
+      screen.getByRole('status', { name: 'Study notices' }),
+    ).toHaveTextContent('history was preserved');
+    expect(screen.getByRole('switch', { name: /Calm dungeon/ })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /^Reduced/ })).toBeChecked();
+  });
+
   it('shows original content totals, exact grounding time, and the accessible entry point', async () => {
     const user = userEvent.setup();
     mount(game());
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /Fabric Data Engineer Challenge/,
+        name: /The Certification Dungeon/,
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText('DP-700 Exam Prep Without the Boring Parts'),
+      screen.getByText('Real skills. Unreasonable amounts of adventure.'),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(`${content.questions.length} original questions`),
+      screen.getByRole('combobox', { name: 'Hero class' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(content.manifest.lastGroundedAt),
+      screen.getByRole('combobox', { name: 'Inspect a dungeon' }),
     ).toBeInTheDocument();
     const skip = screen.getByRole('link', { name: 'Skip to main content' });
     await user.tab();
@@ -177,14 +399,16 @@ describe('accessible challenge interface', () => {
     const user = userEvent.setup();
     mount(game());
     await user.click(
-      within(screen.getByRole('main')).getByRole('link', {
-        name: 'Configure challenge',
+      within(
+        screen.getByRole('navigation', { name: 'Primary navigation' }),
+      ).getByRole('link', {
+        name: 'Prepare a run',
       }),
     );
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: 'Make this challenge yours.',
+        name: 'Prepare your expedition.',
       }),
     ).toBeInTheDocument();
     expect(screen.getByRole('main')).toHaveFocus();
@@ -242,9 +466,7 @@ describe('accessible challenge interface', () => {
     await user.clear(count);
     await user.type(count, '51');
     expect(count).toHaveAttribute('aria-invalid', 'true');
-    expect(
-      screen.getByRole('button', { name: 'Begin challenge' }),
-    ).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Descend' })).toBeDisabled();
     expect(value.startSession).not.toHaveBeenCalled();
   });
 
@@ -263,12 +485,30 @@ describe('accessible challenge interface', () => {
     const choice = screen.getByRole('radio', {
       name: question.answerChoices[0].text,
     });
+
     choice.focus();
     await user.keyboard('[Space]');
     expect(choice).toBeChecked();
     await user.click(screen.getByRole('button', { name: 'Submit answer' }));
     expect(value.submitAnswer).toHaveBeenCalledWith(
       [question.answerChoices[0].id],
+      false,
+    );
+  });
+
+  it('supports the advertised submit shortcut without guessing an answer', async () => {
+    const user = userEvent.setup();
+    const sample = content.questions[0];
+    const value = game({ active: session() });
+    mount(value, '/play');
+    await user.keyboard('{Alt>}{Enter}{/Alt}');
+    expect(value.submitAnswer).not.toHaveBeenCalled();
+    await user.click(
+      screen.getByRole('radio', { name: sample.answerChoices[0].text }),
+    );
+    await user.keyboard('{Alt>}{Enter}{/Alt}');
+    expect(value.submitAnswer).toHaveBeenCalledWith(
+      [sample.answerChoices[0].id],
       false,
     );
   });
@@ -329,7 +569,7 @@ describe('accessible challenge interface', () => {
       expect(screen.queryByText(question.explanation)).not.toBeInTheDocument();
       expect(screen.queryByText(/Correct answer:/)).not.toBeInTheDocument();
       expect(
-        screen.queryByRole('button', { name: /View sources/ }),
+        screen.queryByRole('button', { name: /view sources/ }),
       ).not.toBeInTheDocument();
       expect(screen.queryByText(/current streak/)).not.toBeInTheDocument();
       const choices = screen
@@ -401,7 +641,7 @@ describe('accessible challenge interface', () => {
       screen.queryByRole('heading', { name: /Correct. Nicely/ }),
     ).not.toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: /View sources/ }),
+      screen.queryByRole('button', { name: /view sources/ }),
     ).not.toBeInTheDocument();
   });
 
@@ -413,10 +653,12 @@ describe('accessible challenge interface', () => {
       }),
       '/play',
     );
-    const trigger = screen.getByRole('button', { name: 'View sources' });
+    const trigger = screen.getByRole('button', {
+      name: 'Open tome · view sources',
+    });
     await user.click(trigger);
     const dialog = screen.getByRole('dialog', {
-      name: 'The sources behind this question',
+      name: 'The tome · sources behind this question',
     });
     const link = within(dialog).getAllByRole('link')[0];
     expect(link).toHaveAttribute('target', '_blank');
@@ -428,6 +670,66 @@ describe('accessible challenge interface', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     expect(trigger).toHaveFocus();
   });
+
+  it.each([
+    {
+      label: 'current',
+      groundedAt: manifest.lastGroundedAt,
+      showSummary: true,
+    },
+    {
+      label: 'stale',
+      groundedAt: '2026-08-10T16:05:00.000Z',
+      showSummary: false,
+    },
+    { label: 'missing', groundedAt: undefined, showSummary: false },
+  ])(
+    'uses the $label per-dungeon grounding snapshot rather than the raid timestamp in the tome',
+    async ({ groundedAt, showSummary }) => {
+      const user = userEvent.setup();
+      vi.spyOn(dungeonPackages, 'getDungeonPackage').mockReturnValue(undefined);
+      const question = content.questions[0];
+      const result = {
+        ...makeResult([question]),
+        config: { ...defaultConfig, runMode: 'raid' as const },
+        groundedAt: showSummary
+          ? '2026-08-10T16:05:00.000Z'
+          : manifest.lastGroundedAt,
+        questionOrigins: {
+          [question.id]: {
+            credentialId: 'dp-700',
+            objectiveVersion: 'test-version',
+            groundedAt,
+          },
+        },
+        objectiveSnapshots: { 'dp-700': taxonomy },
+      };
+      mount(game({ history: [result] }), `/review/${result.id}`);
+      await user.click(
+        screen.getByRole('button', {
+          name: 'Open tome · sources & objective alignment',
+        }),
+      );
+      const dialog = screen.getByRole('dialog');
+      expect(
+        within(dialog).getByRole('link', {
+          name: `${question.documentationTitles[0]} (opens official documentation in a new tab)`,
+        }),
+      ).toHaveAttribute('href', question.sourceUrls[0]);
+      if (showSummary) {
+        expect(
+          within(dialog).getByText(manifest.sources[0].shortSummary),
+        ).toBeVisible();
+      } else {
+        expect(
+          within(dialog).queryByText(manifest.sources[0].shortSummary),
+        ).not.toBeInTheDocument();
+        expect(
+          within(dialog).getByText(/no summary has been inferred/),
+        ).toBeVisible();
+      }
+    },
+  );
 
   it('keeps a full-session timer active during feedback', () => {
     const question = content.questions[0];
@@ -563,10 +865,10 @@ describe('accessible challenge interface', () => {
       });
       mount(value, '/settings');
       const names = {
-        full: 'Full Banter',
+        full: 'Full',
         balanced: 'Balanced',
-        reduced: 'Reduced Banter',
-        none: 'No Banter',
+        reduced: 'Reduced',
+        none: 'Silent',
       };
       await user.click(
         screen.getByRole('radio', {
@@ -679,7 +981,9 @@ describe('accessible challenge interface', () => {
         banterLevel === 'full' || banterLevel === 'balanced' ? 1 : 0,
       );
       expect(screen.getByRole('heading', { name: 'Correct.' })).toBeVisible();
-      await user.click(screen.getByRole('button', { name: 'View sources' }));
+      await user.click(
+        screen.getByRole('button', { name: 'Open tome · view sources' }),
+      );
       const dialog = screen.getByRole('dialog');
       expect(dialog.querySelectorAll('[data-reaction-id]')).toHaveLength(
         banterLevel === 'full' ? 1 : 0,
@@ -688,13 +992,13 @@ describe('accessible challenge interface', () => {
       await user.click(
         within(
           screen.getByRole('navigation', { name: 'Primary navigation' }),
-        ).getByRole('link', { name: 'Overview' }),
+        ).getByRole('link', { name: 'The tavern' }),
       );
       expect(
         container.querySelectorAll('[data-reaction-category="returning"]'),
-      ).toHaveLength(banterLevel === 'full' ? 1 : 0);
+      ).toHaveLength(0);
       await user.click(
-        screen.getByRole('link', { name: /^1-question challenge/ }),
+        screen.getByRole('link', { name: /DP-700 · 1 encounters/ }),
       );
       expect(
         container.querySelectorAll(
@@ -713,6 +1017,30 @@ describe('accessible challenge interface', () => {
         );
     },
   );
+
+  it('reports recurring misses without claiming improvement from tiny historical samples', async () => {
+    const user = userEvent.setup();
+    const question = content.questions[0];
+    const latest = { ...makeResult([question], []), id: 'latest-miss' };
+    const previous = {
+      ...makeResult([question], []),
+      id: 'previous-miss',
+      completedAt: '2026-09-10T16:10:00.000Z',
+    };
+    mount(game({ history: [latest, previous] }), '/tavern');
+    expect(
+      screen.getByText(
+        'Not enough comparable, versioned runs to estimate improvement.',
+      ),
+    ).toBeVisible();
+    expect(screen.queryByText(/percentage points/)).not.toBeInTheDocument();
+    await user.click(screen.getByText('Recurring misses · 1 encounters'));
+    expect(screen.getByText(/2 incorrect attempts/)).toBeVisible();
+    expect(
+      screen.getByRole('link', { name: 'Review saved encounter' }),
+    ).toHaveAttribute('href', '/review/latest-miss');
+  });
+
   it('provides a recoverable direct link for missing historical results', () => {
     mount(game(), '/results/not-in-this-browser');
     expect(

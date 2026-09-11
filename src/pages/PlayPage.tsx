@@ -10,6 +10,9 @@ import {
   Lightbulb,
   LogOut,
   SkipForward,
+  Swords,
+  Heart,
+  Gem,
 } from 'lucide-react';
 import { useGame } from '../features/quiz/context';
 import {
@@ -28,9 +31,15 @@ import {
 } from '../components/QuestionContent';
 import { ConfirmDialog, EmptyState, LearnLink } from '../components/common';
 import { useReaction } from '../features/personality/useReaction';
-import { answerCategories } from '../features/personality/reactions';
+import {
+  answerCategories,
+  type ReactionContext,
+} from '../features/personality/reactions';
 import { HostReaction } from '../features/personality/HostReaction';
 import { DocumentationReactions } from '../features/personality/DocumentationReactions';
+import { questionOrigin, historyForCredential } from '../features/quiz/origins';
+import { getDungeonPackage } from '../features/dungeons/packages';
+import { cosmeticProgress } from '../features/results/scoring';
 
 function clock(seconds: number) {
   return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
@@ -46,16 +55,16 @@ export function PlayPage() {
   if (!active)
     return (
       <>
-        <h1>No challenge in progress.</h1>
-        <EmptyState title="Your next challenge is one click away.">
+        <h1>No expedition in progress.</h1>
+        <EmptyState title="A new dungeon is waiting.">
           <p>
             In-progress questions aren’t saved across reloads. Completed results
             remain in your local learning trail.
           </p>
           <Link to="/setup" className="button primary">
-            Configure challenge <ArrowRight size={18} aria-hidden="true" />
+            Prepare a run <ArrowRight size={18} aria-hidden="true" />
           </Link>
-          <Link to="/" className="text-link">
+          <Link to="/tavern" className="text-link">
             View saved results
           </Link>
         </EmptyState>
@@ -71,7 +80,7 @@ export function PlayPage() {
 
 function PlayingQuestion({ active }: { active: ActiveSession }) {
   const {
-    taxonomy,
+    taxonomy: selectedTaxonomy,
     history,
     submitAnswer,
     nextQuestion,
@@ -79,6 +88,16 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
     abandonSession,
   } = useGame();
   const question = active.questions[active.currentIndex];
+  const origin = questionOrigin(active, question.id);
+  const dungeon = getDungeonPackage(origin.credentialId);
+  const taxonomy =
+    active.objectiveSnapshots?.[origin.credentialId] ??
+    dungeon?.taxonomy ??
+    selectedTaxonomy;
+  const gauntlet =
+    active.config.runMode === 'gauntlet' || active.config.answerMode === 'exam';
+  const boss =
+    !gauntlet && ['advanced', 'expert'].includes(question.difficulty);
   const response = active.responses.find(
     (item) => item.questionId === question.id,
   );
@@ -95,7 +114,10 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
   const navigate = useNavigate();
   const location = useLocation();
   const submitted = Boolean(response);
-  const visibility = feedbackVisibility(active.config.answerMode, submitted);
+  const visibility = feedbackVisibility(
+    gauntlet ? 'exam' : active.config.answerMode,
+    submitted,
+  );
   const now = useNow(!submitted || active.config.timerMode === 'session');
   const timerNow =
     response && active.config.timerMode === 'question'
@@ -107,8 +129,9 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
     : Math.max(0, now - active.questionStartedAt);
   const visibleSelected = response?.selectedAnswer ?? selected;
   const scoringAllowed =
-    active.config.answerMode === 'immediate' ||
-    active.config.answerMode === 'study';
+    !gauntlet &&
+    (active.config.answerMode === 'immediate' ||
+      active.config.answerMode === 'study');
   const canShowSources = visibility.sources;
   const skill = taxonomy.domains
     .flatMap((domain) => domain.skills)
@@ -132,15 +155,23 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
   const domain = taxonomy.domains.find(
     (item) => item.id === question.objectiveDomain,
   );
-  const reactionContext = {
+  const reactionContext: ReactionContext = {
+    runMode: gauntlet ? 'gauntlet' : active.config.runMode,
+    inProgress: true,
+    credentialId: origin.credentialId,
+    dungeon: dungeon?.credential.dungeonName,
+    floorId: question.objectiveDomain,
+    floor: domain?.title,
+    boss,
     domainId: question.objectiveDomain,
     domain: domain?.title,
     skill: skill?.title,
     difficulty: question.difficulty,
     streak: currentStreak,
     answerNumber: active.currentIndex + 1,
+    timeMs: response?.timeMs,
   };
-  const earlier = history
+  const earlier = historyForCredential(history, origin.credentialId)
     .flatMap((result) =>
       result.questions.map((candidate) => ({
         question: candidate,
@@ -171,6 +202,7 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
       correctAnswer: question.correctAnswer,
       timedOut: response?.timedOut ?? false,
       difficulty: question.difficulty,
+      boss,
       streak: currentStreak,
       previousStreak,
       previousCorrect: earlier
@@ -184,7 +216,7 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
     }),
     reactionContext,
     'answer',
-    submitted && visibility.answer,
+    submitted && visibility.answer && !gauntlet,
   );
   const startEvent =
     location.state?.practiceEvent === 'retry'
@@ -197,9 +229,43 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
     active.id,
     'session-start',
     [startEvent],
-    {},
+    reactionContext,
     'context',
-    active.currentIndex === 0 && !submitted,
+    active.currentIndex === 0 && !submitted && !gauntlet,
+  );
+  const bossReaction = useReaction(
+    active.id,
+    `boss-intro:${question.id}`,
+    ['boss-intro'],
+    reactionContext,
+    'context',
+    boss && !submitted,
+  );
+  const cosmetic = cosmeticProgress([active]);
+  const floors = taxonomy.domains.filter((floor) =>
+    active.questions.some(
+      (item) =>
+        questionOrigin(active, item.id).credentialId === origin.credentialId &&
+        item.objectiveDomain === floor.id,
+    ),
+  );
+  const currentFloorQuestions = active.questions.filter(
+    (item) =>
+      questionOrigin(active, item.id).credentialId === origin.credentialId &&
+      item.objectiveDomain === question.objectiveDomain,
+  );
+  const floorComplete =
+    submitted &&
+    currentFloorQuestions.every((item) =>
+      active.responses.some((answer) => answer.questionId === item.id),
+    );
+  const floorReaction = useReaction(
+    active.id,
+    `floor-cleared:${origin.credentialId}:${question.objectiveDomain}`,
+    ['floor-cleared'],
+    reactionContext,
+    'context',
+    floorComplete && !gauntlet && scoringAllowed,
   );
   useEffect(() => {
     legend.current?.focus({ preventScroll: true });
@@ -221,14 +287,38 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
         : [id],
     );
   };
+  useEffect(() => {
+    const shortcut = (event: KeyboardEvent) => {
+      if (
+        event.repeat ||
+        !event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.key !== 'Enter' ||
+        document.querySelector('dialog[open]')
+      )
+        return;
+      event.preventDefault();
+      if (submitted) nextQuestion();
+      else if (selected.length) submitAnswer(selected, flagged);
+    };
+    window.addEventListener('keydown', shortcut);
+    return () => window.removeEventListener('keydown', shortcut);
+  }, [submitted, selected, flagged, nextQuestion, submitAnswer]);
   return (
     <div className="play-page">
       <header className="play-header">
         <div>
           <Link className="text-link muted" to="/setup">
-            Challenge settings
+            Expedition settings
           </Link>
-          <h1>Your next connection.</h1>
+          <h1>
+            {gauntlet
+              ? 'Practice in progress.'
+              : active.config.runMode === 'raid'
+                ? 'The Grand Raid.'
+                : 'Into the dungeon.'}
+          </h1>
         </div>
         <div className="play-mode">
           <span className="count-badge">
@@ -270,6 +360,57 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
           aria-label={`${active.responses.length} of ${active.questions.length} questions submitted`}
         />
       </div>
+      <details className="floor-strip">
+        <summary>
+          {gauntlet ? 'Objective progress' : 'Your floor map'} · {floors.length}{' '}
+          sampled floors · {dungeon?.credential.examCode ?? origin.credentialId}
+        </summary>
+        <ol>
+          {floors.map((floor) => {
+            const encounters = active.questions.filter(
+              (item) =>
+                questionOrigin(active, item.id).credentialId ===
+                  origin.credentialId && item.objectiveDomain === floor.id,
+            );
+            const done = encounters.filter((item) =>
+              active.responses.some((answer) => answer.questionId === item.id),
+            ).length;
+            return (
+              <li
+                key={floor.id}
+                aria-current={
+                  floor.id === question.objectiveDomain ? 'step' : undefined
+                }
+              >
+                {floor.title}
+                <span>
+                  {done}/{encounters.length} submitted
+                  {done === encounters.length
+                    ? ' · Complete'
+                    : floor.id === question.objectiveDomain
+                      ? ' · Current floor'
+                      : ''}
+                </span>
+              </li>
+            );
+          })}
+        </ol>
+      </details>
+      {boss && (
+        <aside className="boss-banner" aria-label="Boss encounter framing">
+          <Swords size={30} aria-hidden="true" />
+          <div>
+            <h2>Boss encounter · {labels[question.difficulty]}</h2>
+            <p>
+              {dungeon?.credential.themeMetadata.bossName ??
+                'The chamber guardian'}{' '}
+              awaits. This banner is flavor only; the technical scenario below
+              is unchanged.
+            </p>
+            <HostReaction reaction={bossReaction} />
+          </div>
+        </aside>
+      )}
       <div className="play-layout">
         <div className="question-column">
           <section className="panel question-panel">
@@ -278,7 +419,7 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
               <aside className="study-coaching">
                 <Lightbulb size={21} aria-hidden="true" />
                 <div>
-                  <strong>Study coach</strong>
+                  <strong>DM whisper · study coaching</strong>
                   <p>
                     Focus on “{question.subskill}” within{' '}
                     {skill?.title ?? question.skill}. Identify the requirements
@@ -374,6 +515,7 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
                     type="submit"
                     className="button primary"
                     disabled={!selected.length}
+                    aria-keyshortcuts="Alt+Enter"
                   >
                     Submit answer <ArrowRight size={18} aria-hidden="true" />
                   </button>
@@ -421,19 +563,32 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
                 />
               )}
               <div className="next-action">
-                <button className="button primary" onClick={nextQuestion}>
+                <button
+                  className="button primary"
+                  onClick={nextQuestion}
+                  aria-keyshortcuts="Alt+Enter"
+                >
                   {active.currentIndex === active.questions.length - 1
                     ? 'View results'
                     : 'Next question'}
                   <ArrowRight size={19} aria-hidden="true" />
                 </button>
               </div>
+              {floorComplete && scoringAllowed && !gauntlet && (
+                <div className="loot-moment">
+                  <p>
+                    Floor complete · {currentFloorQuestions.length} encounters
+                    submitted. Completion is not mastery.
+                  </p>
+                  <HostReaction reaction={floorReaction} />
+                </div>
+              )}
             </div>
           )}
         </div>
         <aside className="play-aside">
           <section className="session-note">
-            <h2>Your challenge</h2>
+            <h2>{gauntlet ? 'Your practice session' : 'Your expedition'}</h2>
             <dl className="summary-list">
               <div>
                 <dt>Question order</dt>
@@ -453,6 +608,36 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
                 </div>
               </div>
             )}
+            {scoringAllowed && !gauntlet && (
+              <div
+                className="cosmetic-hud"
+                aria-label="Cosmetic adventure statistics"
+              >
+                <div className="hud-values">
+                  <span>
+                    <Heart size={16} aria-hidden="true" /> {cosmetic.hp}/
+                    {cosmetic.maxHp} HP
+                  </span>
+                  <span>
+                    <Gem size={16} aria-hidden="true" /> {cosmetic.xp} XP
+                  </span>
+                  <span>
+                    <Swords size={16} aria-hidden="true" />{' '}
+                    {cosmetic.damageDealt} damage dealt
+                  </span>
+                </div>
+                <small>
+                  Cosmetic only. HP reaching zero never ends a run or changes
+                  scores, answers, or time.
+                </small>
+                {cosmetic.loot > 0 && (
+                  <p className="loot-moment">
+                    {cosmetic.loot} loot token{cosmetic.loot === 1 ? '' : 's'}{' '}
+                    found · one per five correct answers
+                  </p>
+                )}
+              </div>
+            )}
             <p>
               {scoringAllowed
                 ? 'Every correct answer counts equally. No speed bonuses; take time to understand the why.'
@@ -462,7 +647,7 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
           {canShowSources ? (
             <section className="session-note source-note">
               <BookOpen size={22} aria-hidden="true" />
-              <h2>Grounded, not guessed.</h2>
+              <h2>Open the tome.</h2>
               <p>
                 Check the objective alignment and documentation supporting this
                 question.
@@ -471,10 +656,14 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
                 className="button secondary"
                 onClick={() => setSourcesOpen(true)}
               >
-                View sources <BookOpen size={17} aria-hidden="true" />
+                Open tome · view sources{' '}
+                <BookOpen size={17} aria-hidden="true" />
               </button>
               {visibility.answer && (
-                <DocumentationReactions scope={active.id}>
+                <DocumentationReactions
+                  scope={active.id}
+                  context={reactionContext}
+                >
                   <ul className="compact-source-links">
                     {question.sourceUrls.map((url, index) => (
                       <li key={url}>
@@ -518,11 +707,18 @@ function PlayingQuestion({ active }: { active: ActiveSession }) {
             Leaving this page keeps the session in memory. Reloading or closing
             the app resets it.
           </p>
+          <p className="small muted">
+            Keyboard: use Tab and arrow keys for choices. Alt + Enter submits
+            your selection or continues after feedback. Shortcuts pause while a
+            dialog is open.
+          </p>
         </aside>
       </div>
       {sourcesOpen && canShowSources && (
         <QuestionSources
           question={question}
+          groundedAt={origin.groundedAt ?? null}
+          credentialId={origin.credentialId}
           onClose={() => setSourcesOpen(false)}
         />
       )}

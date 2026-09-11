@@ -13,13 +13,13 @@ import { scoreSession } from '../../src/features/results/scoring';
 const readData = (name: string): unknown =>
   JSON.parse(
     readFileSync(
-      new URL(`../../src/data/${name}.json`, import.meta.url),
+      new URL(`../../src/content/exams/dp-700/${name}.json`, import.meta.url),
       'utf8',
     ),
   );
 const content = validateContent(
   readData('questions'),
-  readData('grounding-manifest'),
+  readData('sources'),
   readData('objectives'),
 );
 
@@ -63,9 +63,7 @@ async function configuredStart(
     { key: STORAGE_KEY, value: data },
   );
   await page.goto('#/setup');
-  await page
-    .getByRole('button', { name: 'Begin challenge', exact: true })
-    .click();
+  await page.getByRole('button', { name: 'Descend', exact: true }).click();
   await currentQuestion(page);
 }
 
@@ -80,9 +78,7 @@ test('configure, answer, inspect documentation, export, review and retry missed 
   await page
     .getByLabel('Question order', { exact: true })
     .selectOption('study-guide');
-  await page
-    .getByRole('button', { name: 'Begin challenge', exact: true })
-    .click();
+  await page.getByRole('button', { name: 'Descend', exact: true }).click();
 
   for (let i = 0; i < 5; i++) {
     const question = await currentQuestion(page);
@@ -101,7 +97,9 @@ test('configure, answer, inspect documentation, export, review and retry missed 
       .getByRole('button', { name: 'Submit answer', exact: true })
       .click();
     if (i === 0) {
-      await page.getByRole('button', { name: 'View sources' }).click();
+      await page
+        .getByRole('button', { name: 'Open tome · view sources' })
+        .click();
       const dialog = page.getByRole('dialog');
       await expect(dialog).toBeVisible();
       await expect(dialog.getByRole('link').first()).toHaveAttribute(
@@ -122,7 +120,7 @@ test('configure, answer, inspect documentation, export, review and retry missed 
       await page.keyboard.press('Escape');
       await expect(dialog).not.toBeVisible();
       await expect(
-        page.getByRole('button', { name: 'View sources' }),
+        page.getByRole('button', { name: 'Open tome · view sources' }),
       ).toBeFocused();
     }
     await page
@@ -241,7 +239,7 @@ for (const difficulty of ['advanced', 'expert'] as const) {
       ).toContainText(question.explanation);
       await expect(reaction).toHaveAttribute('aria-live', 'off');
       await page
-        .getByRole('button', { name: 'View sources', exact: true })
+        .getByRole('button', { name: 'Open tome · view sources', exact: true })
         .click();
       const dialog = page.getByRole('dialog');
       const links = dialog.getByRole('link');
@@ -256,7 +254,10 @@ for (const difficulty of ['advanced', 'expert'] as const) {
       await expect(dialog).toContainText('Source ID:');
       await page.keyboard.press('Escape');
       await expect(
-        page.getByRole('button', { name: 'View sources', exact: true }),
+        page.getByRole('button', {
+          name: 'Open tome · view sources',
+          exact: true,
+        }),
       ).toBeFocused();
       await page
         .getByRole('button', {
@@ -271,7 +272,7 @@ for (const difficulty of ['advanced', 'expert'] as const) {
     expect(score.correct).toBe(4);
     expect(snapshot.questions).toHaveLength(5);
     await expect(
-      page.getByRole('heading', { name: 'Your objective map' }),
+      page.getByRole('heading', { name: 'Your floor results' }),
     ).toBeVisible();
     for (const row of score.byDomain) {
       const card = page.locator('.domain-result').filter({
@@ -284,7 +285,7 @@ for (const difficulty of ['advanced', 'expert'] as const) {
       );
     }
     await page
-      .getByRole('button', { name: 'Practice weak areas', exact: true })
+      .getByRole('button', { name: 'Revisit cursed chambers', exact: true })
       .click();
     await page.waitForURL(/\/play$/);
     const next = await currentQuestion(page);
@@ -319,11 +320,11 @@ for (const answerMode of [
     const question = await currentQuestion(page);
     if (answerMode === 'study')
       await expect(
-        page.getByRole('button', { name: 'View sources' }),
+        page.getByRole('button', { name: 'Open tome · view sources' }),
       ).toBeVisible();
     if (answerMode === 'exam' || answerMode === 'hidden')
       await expect(
-        page.getByRole('button', { name: 'View sources' }),
+        page.getByRole('button', { name: 'Open tome · view sources' }),
       ).toHaveCount(0);
     await page
       .getByRole('radio', {
@@ -344,7 +345,7 @@ for (const answerMode of [
       ).toHaveCount(0);
       await expect(page.getByText(/Correct answer:/)).toHaveCount(0);
       await expect(
-        page.getByRole('button', { name: 'View sources' }),
+        page.getByRole('button', { name: 'Open tome · view sources' }),
       ).toHaveCount(0);
       await expect(page.getByText(/current streak/)).toHaveCount(0);
     } else {
@@ -440,7 +441,7 @@ test('persists setup choices and theme across reload', async ({ page }) => {
   ).toBeChecked();
   await page.goto('#/settings');
   await page.getByRole('radio', { name: /light/i }).check();
-  await page.getByRole('radio', { name: /^No Banter/ }).check();
+  await page.getByRole('radio', { name: /^Silent/ }).check();
   await page.reload();
   expect((await saved(page)).preferences.theme).toBe('light');
   expect((await saved(page)).preferences.banterLevel).toBe('none');
@@ -458,9 +459,7 @@ test('resetting recent questions preserves saved scores and preferences across r
 }) => {
   await page.goto('#/setup');
   await page.getByRole('radio', { name: '5', exact: true }).check();
-  await page
-    .getByRole('button', { name: 'Begin challenge', exact: true })
-    .click();
+  await page.getByRole('button', { name: 'Descend', exact: true }).click();
   await currentQuestion(page);
   await page
     .getByRole('button', { name: 'Skip question', exact: true })
@@ -472,8 +471,8 @@ test('resetting recent questions preserves saved scores and preferences across r
     .click();
   await page.waitForURL(/\/results\//);
   await page.goto('#/settings');
-  await page.getByRole('radio', { name: /^Full Banter/ }).check();
-  await page.getByRole('radio', { name: /Warm light/ }).check();
+  await page.getByRole('radio', { name: /^Full/ }).check();
+  await page.getByRole('radio', { name: /Torch · light/ }).check();
   const before = await saved(page);
   expect(before.recentQuestionIds.length).toBeGreaterThan(0);
   await page

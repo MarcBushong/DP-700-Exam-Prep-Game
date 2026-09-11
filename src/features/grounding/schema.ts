@@ -1,4 +1,11 @@
 import { z } from 'zod';
+import {
+  learnUrlSchema,
+  officialSourceUrlSchema,
+  isAllowedSourceUrl,
+  isAllowedIdentityUrl,
+  type SourcePolicyContext,
+} from '../dungeons/sourcePolicy';
 import { duplicateFindings, normalizedChoice } from './quality';
 import type { ContentFinding } from './quality';
 
@@ -46,36 +53,13 @@ export const verificationStatuses = [
 
 const text = z.string().trim().min(1);
 export const timestampSchema = z.iso.datetime();
-export const learnUrlSchema = z.string().refine((value) => {
-  try {
-    const url = new URL(value);
-    return (
-      url.protocol === 'https:' &&
-      url.hostname === 'learn.microsoft.com' &&
-      !url.username &&
-      !url.password &&
-      !url.port &&
-      /^\/en-us\/(fabric|azure|kusto|sql|training|credentials|power-bi)\//.test(
-        url.pathname,
-      ) &&
-      !url.pathname.includes('/search') &&
-      !/[%\\\s<>"`]/.test(value) &&
-      !url.pathname.includes('%') &&
-      !/(?:assessment|knowledge-check|practice-test|exam-sandbox)/i.test(
-        url.pathname,
-      ) &&
-      !url.search
-    );
-  } catch {
-    return false;
-  }
-}, 'Use a direct HTTPS English Microsoft Learn documentation URL, not a search URL.');
+export { learnUrlSchema, officialSourceUrlSchema };
 
 export const taxonomySchema = z.object({
   schemaVersion: z.literal(1),
   retrievedAt: timestampSchema,
   studyGuideEffectiveDate: text,
-  studyGuideUrl: learnUrlSchema,
+  studyGuideUrl: officialSourceUrlSchema,
   domains: z
     .array(
       z.object({
@@ -89,7 +73,9 @@ export const taxonomySchema = z.object({
           .refine(
             ([min, max]) => min <= max,
             'Weight minimum cannot exceed maximum.',
-          ),
+          )
+          .nullable()
+          .optional(),
         skills: z
           .array(
             z.object({
@@ -107,7 +93,7 @@ export const taxonomySchema = z.object({
 export const sourceSchema = z.object({
   sourceId: text,
   title: text,
-  url: learnUrlSchema,
+  url: officialSourceUrlSchema,
   retrievedAt: timestampSchema,
   lastReviewedAt: timestampSchema,
   applicableObjectiveDomains: z.array(text).min(1),
@@ -119,7 +105,10 @@ export const sourceSchema = z.object({
 export const manifestSchema = z.object({
   schemaVersion: z.literal(1),
   lastGroundedAt: timestampSchema,
-  retrievalMethod: z.literal('Microsoft Learn MCP'),
+  retrievalMethod: z.enum([
+    'Microsoft Learn MCP',
+    'Official GitHub documentation',
+  ]),
   sources: z.array(sourceSchema).min(1),
 });
 
@@ -142,7 +131,7 @@ export const questionSchema = z
     difficulty: z.enum(difficulties),
     complexity: z.enum(complexities),
     sourceIds: z.array(text).min(1),
-    sourceUrls: z.array(learnUrlSchema).min(1),
+    sourceUrls: z.array(officialSourceUrlSchema).min(1),
     documentationTitles: z.array(text).min(1),
     generatedAt: timestampSchema,
     lastValidatedAt: timestampSchema,
@@ -292,6 +281,7 @@ export function inspectContent(
   questionData: unknown,
   manifestData: unknown,
   taxonomyData: unknown,
+  sourcePolicy?: SourcePolicyContext,
 ) {
   const taxonomy = taxonomySchema.parse(taxonomyData);
   const findings: ContentFinding[] = [];
@@ -382,6 +372,32 @@ export function inspectContent(
     'question ID',
   );
   const now = Date.now();
+  const permitted = (url: string) =>
+    sourcePolicy
+      ? isAllowedSourceUrl(url, sourcePolicy)
+      : learnUrlSchema.safeParse(url).success;
+  const permittedOutline = (url: string) =>
+    sourcePolicy
+      ? isAllowedIdentityUrl(url, sourcePolicy)
+      : learnUrlSchema.safeParse(url).success;
+  if (!permittedOutline(taxonomy.studyGuideUrl))
+    fail(
+      'Study guide URL is outside the credential source policy.',
+      [],
+      'citation',
+    );
+  if (
+    sourcePolicy &&
+    manifest.retrievalMethod !==
+      (sourcePolicy.provider === 'Microsoft'
+        ? 'Microsoft Learn MCP'
+        : 'Official GitHub documentation')
+  )
+    fail(
+      'Retrieval method does not match the credential provider.',
+      [],
+      'citation',
+    );
   if (
     Date.parse(taxonomy.retrievedAt) > now ||
     Date.parse(manifest.lastGroundedAt) > now
@@ -390,6 +406,16 @@ export function inspectContent(
       'Grounding and taxonomy retrieval timestamps cannot be in the future.',
     );
   for (const source of manifest.sources) {
+    if (
+      !(source.featureStatus === 'Not applicable'
+        ? permittedOutline(source.url)
+        : permitted(source.url))
+    )
+      fail(
+        `${source.sourceId}: URL is outside the credential source policy.`,
+        [],
+        'citation',
+      );
     if (Date.parse(source.lastReviewedAt) < Date.parse(source.retrievedAt))
       fail(`${source.sourceId}: review cannot predate retrieval.`);
     if (
@@ -415,6 +441,8 @@ export function inspectContent(
       message: string,
       category: ContentFinding['category'] = 'citation',
     ) => fail(`${question.id}: ${message}`, [question.id], category);
+    if (question.sourceUrls.some((url) => !permitted(url)))
+      questionFail('URL is outside the credential source policy.');
     const domain = taxonomy.domains.find(
       (d) => d.id === question.objectiveDomain,
     );
@@ -525,8 +553,14 @@ export function validateContent(
   questionData: unknown,
   manifestData: unknown,
   taxonomyData: unknown,
+  sourcePolicy?: SourcePolicyContext,
 ) {
-  const content = inspectContent(questionData, manifestData, taxonomyData);
+  const content = inspectContent(
+    questionData,
+    manifestData,
+    taxonomyData,
+    sourcePolicy,
+  );
   const verifiedIds = new Set(
     content.allQuestions
       .filter((q) => q.verificationStatus === 'verified')

@@ -1,8 +1,26 @@
 import { render, screen } from '@testing-library/react';
 import { expect, it } from 'vitest';
-import { QuestionExplanation } from '../src/components/QuestionContent';
+import {
+  CodeSnippet,
+  QuestionExplanation,
+} from '../src/components/QuestionContent';
 import { ReactionSession } from '../src/features/personality/reactions';
 import { question } from './fixtures';
+
+it('presents syntax tokens without changing or interpreting the source code', () => {
+  const codeSnippet =
+    'SELECT "<script>literal</script>" AS value;\n-- preserved comment\nWHERE amount = 42';
+  const sample = question('synthetic-code', {
+    codeSnippet,
+    codeLanguage: 'sql',
+  });
+  const { container } = render(<CodeSnippet question={sample} />);
+  expect(container.querySelector('code')?.textContent).toBe(codeSnippet);
+  expect(container.querySelector('script')).toBeNull();
+  expect(container.querySelectorAll('.syntax-keyword').length).toBeGreaterThan(
+    0,
+  );
+});
 
 it('removes game-host reactions without removing direct technical feedback', () => {
   const sample = question();

@@ -1,4 +1,5 @@
 import { createContext, useContext } from 'react';
+import type { DungeonPackage } from '../dungeons/packages';
 import type {
   GroundingManifest,
   Question,
@@ -13,6 +14,14 @@ import type {
 } from './types';
 
 export interface GameContextValue {
+  selectedCredentialId: string;
+  selectedDungeon: DungeonPackage | undefined;
+  selectDungeon: (credentialId: string) => boolean;
+  favoriteCredentialIds: string[];
+  toggleFavoriteCredential: (credentialId: string) => void;
+  heroClassId: string;
+  setHeroClassId: (heroClassId: string) => void;
+  credentialHistory: SessionResult[];
   bank: Question[];
   taxonomy: Taxonomy;
   manifest: GroundingManifest;

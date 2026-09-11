@@ -14,16 +14,16 @@ test('launches from the project URL and keeps navigation on the static host', as
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'Fabric Data Engineer Challenge',
+      name: 'The Certification Dungeon',
     }),
   ).toBeVisible();
   await page
-    .getByRole('main')
-    .getByRole('link', { name: 'Configure challenge', exact: true })
+    .locator('#dungeon-dp-700')
+    .getByRole('button', { name: 'Descend', exact: true })
     .click();
   await expect(page).toHaveURL(`${baseURL}#/setup`);
   await expect(
-    page.getByRole('heading', { level: 1, name: 'Make this challenge yours.' }),
+    page.getByRole('heading', { level: 1, name: 'Prepare your expedition.' }),
   ).toBeVisible();
 
   await page.goBack();
@@ -31,9 +31,7 @@ test('launches from the project URL and keeps navigation on the static host', as
   await page.goForward();
   await expect(page).toHaveURL(`${baseURL}#/setup`);
   await page.reload();
-  await expect(
-    page.getByRole('button', { name: 'Begin challenge' }),
-  ).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Descend' })).toBeVisible();
   expect(failedRequests).toEqual([]);
 });
 
@@ -45,12 +43,12 @@ test('a missing hash route offers navigation back to the hosted app', async ({
   await expect(
     page.getByRole('heading', { level: 1, name: /^This path/ }),
   ).toBeVisible();
-  await page.getByRole('link', { name: 'Back to overview' }).click();
+  await page.getByRole('link', { name: 'Back to dungeon map' }).click();
   await expect(page).toHaveURL(`${baseURL}#/`);
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'Fabric Data Engineer Challenge',
+      name: 'The Certification Dungeon',
     }),
   ).toBeVisible();
 });

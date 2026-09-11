@@ -1,6 +1,18 @@
-import { learnUrlSchema, type Taxonomy } from '../features/grounding/schema';
+import type { Taxonomy } from '../features/grounding/schema';
+import { credentials } from '../features/dungeons/catalog';
+import {
+  assertAllowedSourceUrl,
+  officialSourceUrlSchema,
+} from '../features/dungeons/sourcePolicy';
 import type { SessionResult } from '../features/quiz/types';
 import { scoreSession } from '../features/results/scoring';
+
+export function safeCitationUrl(url: string, credentialId: string): string {
+  const credential = credentials.find((c) => c.credentialId === credentialId);
+  return credential
+    ? assertAllowedSourceUrl(url, credential).href
+    : officialSourceUrlSchema.parse(url);
+}
 
 export function escapeHtml(text: string) {
   return text.replace(
@@ -27,10 +39,10 @@ export function resultJson(result: SessionResult, taxonomy: Taxonomy) {
 
 export function resultHtml(result: SessionResult, taxonomy: Taxonomy) {
   const score = scoreSession(result, taxonomy);
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fabric Challenge results</title><style>body{font:16px/1.6 system-ui;max-width:900px;margin:2rem auto;padding:1rem;color:#152a26}section{break-inside:avoid;border-top:1px solid #bbb;padding-block:1rem}a{color:#075f50}pre{white-space:pre-wrap}button{padding:.6rem}@media print{button{display:none}}</style></head><body><h1>Fabric Data Engineer Challenge</h1><p>Unofficial study aid. Not affiliated with or endorsed by Microsoft Certification.</p><p>${score.correct}/${score.total} correct (${score.percentage}%). ${score.incorrect} incorrect; ${score.unanswered} unanswered.</p><p>Completed ${escapeHtml(result.completedAt)}. Grounded ${escapeHtml(result.groundedAt)}.</p><p>Use your browser's Print command to print or save as PDF.</p><h2>Objective domains</h2>${score.byDomain.map((d) => `<p>${escapeHtml(d.label)}: ${d.correct}/${d.total}${d.insufficient ? ' (small sample)' : ''}</p>`).join('')}<h2>Question review</h2>${score.rows
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Certification Dungeon results</title><style>body{font:16px/1.6 system-ui;max-width:900px;margin:2rem auto;padding:1rem;color:#152a26}section{break-inside:avoid;border-top:1px solid #bbb;padding-block:1rem}a{color:#075f50}pre{white-space:pre-wrap}button{padding:.6rem}@media print{button{display:none}}</style></head><body><h1>The Certification Dungeon</h1><p>Unofficial study aid. Not affiliated with or endorsed by Microsoft or GitHub certification programs.</p><p>${score.correct}/${score.total} correct (${score.percentage}%). ${score.incorrect} incorrect; ${score.unanswered} unanswered.</p><p>Completed ${escapeHtml(result.completedAt)}. Grounded ${escapeHtml(result.groundedAt)}.</p><p>Use your browser's Print command to print or save as PDF.</p><h2>Dungeons</h2>${score.byCredential.map((d) => `<p>${escapeHtml(d.label)}: ${d.correct}/${d.total}. Objective version: ${escapeHtml(d.objectiveVersions.join(', '))}${d.insufficient ? ' (small or incomplete sample)' : ''}</p>`).join('')}<p>${escapeHtml(score.readiness.explanation)}</p>${score.readiness.warnings.map((warning) => `<p>${escapeHtml(warning)}</p>`).join('')}<h2>Objective domains</h2>${score.byDomain.map((d) => `<p>${escapeHtml(d.label)}: ${d.correct}/${d.total}${d.insufficient ? ' (small sample)' : ''}</p>`).join('')}<h2>Question review</h2>${score.rows
     .map(
       (row, i) =>
-        `<section><h3>${i + 1}. ${escapeHtml(row.question.question)}</h3><p>${row.correct ? 'Correct' : row.answered ? 'Incorrect' : 'Unanswered'}${row.response?.flagged ? ' | Flagged' : ''} | ${((row.response?.timeMs ?? 0) / 1000).toFixed(1)} seconds</p>${row.question.codeSnippet ? `<pre>${escapeHtml(row.question.codeSnippet)}</pre>` : ''}<p>Your answer: ${escapeHtml(
+        `<section><h3>${i + 1}. ${escapeHtml(row.question.question)}</h3><p>Dungeon: ${escapeHtml(row.credentialId)} | Objective version: ${escapeHtml(row.objectiveVersion)}</p><p>${row.correct ? 'Correct' : row.answered ? 'Incorrect' : 'Unanswered'}${row.response?.flagged ? ' | Flagged' : ''} | ${((row.response?.timeMs ?? 0) / 1000).toFixed(1)} seconds</p>${row.question.codeSnippet ? `<pre>${escapeHtml(row.question.codeSnippet)}</pre>` : ''}<p>Your answer: ${escapeHtml(
           row.question.answerChoices
             .filter((c) => row.response?.selectedAnswer.includes(c.id))
             .map((c) => c.text)
@@ -49,7 +61,7 @@ export function resultHtml(result: SessionResult, taxonomy: Taxonomy) {
           )
           .join(
             '',
-          )}${row.question.sourceUrls.map((url, index) => `<p><a href="${escapeHtml(learnUrlSchema.parse(url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.question.documentationTitles[index])}</a></p>`).join('')}</section>`,
+          )}${row.question.sourceUrls.map((url, index) => `<p><a href="${escapeHtml(safeCitationUrl(url, row.credentialId))}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.question.documentationTitles[index])}</a></p>`).join('')}</section>`,
     )
     .join(
       '',

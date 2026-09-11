@@ -68,6 +68,7 @@ function range(values: (string | undefined)[]) {
 export function buildContentReport(
   content: InspectedContent,
   generatedAt = new Date().toISOString(),
+  targets = { matureBankTarget: 150, advancedExpertTarget: 0.4 },
 ) {
   const { questions, allQuestions, taxonomy, manifest } = content;
   const playableCounts = countsFor(questions, content);
@@ -128,15 +129,19 @@ export function buildContentReport(
       allCandidates: countsFor(allQuestions, content),
     },
     targets: {
-      minimumPlayableQuestions: 150,
+      minimumPlayableQuestions: targets.matureBankTarget,
       actualPlayableQuestions: questions.length,
-      questionShortfall: Math.max(0, 150 - questions.length),
-      minimumAdvancedExpertShare: 0.4,
+      questionShortfall: Math.max(
+        0,
+        targets.matureBankTarget - questions.length,
+      ),
+      minimumAdvancedExpertShare: targets.advancedExpertTarget,
       actualAdvancedExpertShare: questions.length
         ? advancedExpert / questions.length
         : 0,
       meetsAdvancedExpertTarget:
-        questions.length > 0 && advancedExpert / questions.length >= 0.4,
+        questions.length > 0 &&
+        advancedExpert / questions.length >= targets.advancedExpertTarget,
     },
     taxonomy: {
       studyGuideUrl: taxonomy.studyGuideUrl,
@@ -176,6 +181,7 @@ export function buildContentReport(
     },
     findings,
     freshness: {
+      retrievalMethod: manifest.retrievalMethod,
       policy:
         'Change-driven: any newer cited source review invalidates the question snapshot. No calendar-based expiry; re-retrieve and independently review after documentation/taxonomy changes. Fresh is relative to checked-in evidence, not a claim of perpetual correctness.',
       lastGroundedAt: manifest.lastGroundedAt,
@@ -242,10 +248,10 @@ export function reportMarkdown(report: ContentReport): string {
     '',
     `- Total candidate records: **${report.totalQuestions}**; malformed: **${report.malformedRecords}**.`,
     `- Playable verified questions: **${report.playableVerifiedQuestions}**. Coverage below counts only these questions.`,
-    `- Target shortfall: ${report.targets.questionShortfall}; Advanced/Expert share: ${(report.targets.actualAdvancedExpertShare * 100).toFixed(1)}% (target >=40%).`,
+    `- Target shortfall: ${report.targets.questionShortfall}; Advanced/Expert share: ${(report.targets.actualAdvancedExpertShare * 100).toFixed(1)}% (target >=${report.targets.minimumAdvancedExpertShare * 100}%).`,
     `- Taxonomy: ${report.taxonomy.domains.length} domains, ${report.taxonomy.skillCount} skills, ${report.taxonomy.subskillCount} subskills.`,
     `- Study guide effective date: **${report.taxonomy.effectiveDate}**; retrieved: ${report.taxonomy.retrievedAt}.`,
-    `- Last grounded through Microsoft Learn MCP: ${report.freshness.lastGroundedAt}.`,
+    `- Last grounded through ${report.freshness.retrievalMethod}: ${report.freshness.lastGroundedAt}.`,
     `- Last recorded verification: ${report.freshness.questionVerification.latest ?? 'None'}; last playable verification: ${report.freshness.playableVerification.latest ?? 'None'}.`,
     `- Source retrieval range: ${report.freshness.sourceRetrieval.oldest} to ${report.freshness.sourceRetrieval.latest}.`,
     `- Source review range: ${report.freshness.sourceReview.oldest} to ${report.freshness.sourceReview.latest}.`,
@@ -264,7 +270,7 @@ export function reportMarkdown(report: ContentReport): string {
     '',
     ...report.taxonomy.domains.map(
       (d) =>
-        `- ${d.title}: guide ${d.weightRange.join('–')}%; bank ${(d.playableShare * 100).toFixed(1)}% (${d.playableQuestions} playable).`,
+        `- ${d.title}: guide ${d.weightRange ? `${d.weightRange.join('–')}%` : 'weighting not published'}; bank ${(d.playableShare * 100).toFixed(1)}% (${d.playableQuestions} playable).`,
     ),
     '',
     ...table(

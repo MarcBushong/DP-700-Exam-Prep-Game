@@ -1,0 +1,1571 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "gh300-001": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "675fbda85a7c7e477249dd570de0ce78a048ea7247485628f41dde2efdb185ff",
+      "sourceIds": ["gh300-chat"],
+      "retrievedAt": "2026-09-11T19:22:35.699Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-chat"],
+          "summary": "The Chat card directs users to review and test Copilot's output against the actual code and documentation; the correct step is to check the real library API before use."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-chat"],
+          "summary": "The Chat application card explicitly says generated code can be syntactically or semantically incorrect, so a detailed signature does not itself establish that the method exists."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-chat"],
+          "summary": "The Chat card treats hallucinations as an output-generation risk; asking the same conversation to confirm itself does not provide the documented independent validation."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-chat"],
+          "summary": "Public-code matching is described as a check for suggestions resembling public code, not as an API-existence validator for library methods."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Alignment maps cleanly to responsible-AI validation subskill. Accuracy matches Chat card text on hallucination and validation. Distractors reuse plausible but wrong concepts (signature detail, self-confirmation, public-code matching) that a real candidate could confuse. Uniqueness is preserved because only B is documented as the resolution. Difficulty is intentionally beginner recall of validation duty rather than applied reasoning.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-002": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "a30bd86259ddf5ccb05634967d3ee70954e721067ff2064fed26cdf0123c9214",
+      "sourceIds": ["gh300-inline"],
+      "retrievedAt": "2026-09-11T19:20:36.103Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-inline"],
+          "summary": "The inline card explicitly attributes coding-style bias to training data and tells users to evaluate output against project requirements before adoption."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-inline"],
+          "summary": "The inline card describes bias as a training-data limitation, not evidence that the project's own conventions are invalid at the language level."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-inline"],
+          "summary": "The card warns that biased patterns can appear consistently across suggestions, so repetition is exactly the symptom of the risk and not its refutation."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-inline"],
+          "summary": "Public-code matching flags similarity to public code with provenance information; the inline card treats coding-style bias as a distinct model-limitation risk."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Realistic scenario (repeated style clash) with a documented root cause. Distractors misuse commonly seen concepts (support-by-repetition fallacy, misapplied public-code matching). Difficulty rests on identifying the bias risk rather than resolving conflicting evidence; intermediate scenario-based grading is appropriate.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-003": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "dd66e8c8f5dff40c7907f227473fc0e131e40e9ea8beaa24b08764cc06e8e796",
+      "sourceIds": ["gh300-chat"],
+      "retrievedAt": "2026-09-11T19:22:35.699Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-chat"],
+          "summary": "Regenerating restores freshness, and directly reviewing the 430-line file addresses the documented over-400 exclusion; both limitations are satisfied."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-chat"],
+          "summary": "Regeneration does not remove the 400-line exclusion; the file over the limit remains excluded from summarization even after regeneration."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-chat"],
+          "summary": "The card says summaries are not automatically refreshed after commits, so relying on unchanged bullets to be current is incorrect."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-chat"],
+          "summary": "Completion of pull-request checks is not the documented refresh mechanism; summaries are regenerated only on explicit user request."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Scenario combines two independent constraints into a single decision, which is authentic advanced troubleshooting. Distractors each violate exactly one documented rule so the answer is uniquely defensible. Difficulty grade is appropriate.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-004": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "1e38062485f94417766cb9278051351150c7dc2f40f044d1568f58a7f8a32c82",
+      "sourceIds": ["gh300-agent"],
+      "retrievedAt": "2026-09-11T19:20:36.850Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-agent"],
+          "summary": "The agent card directs users to investigate and test comments before acting; tracing the suspected input and adding a targeted test satisfies that instruction."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-agent"],
+          "summary": "Passing tests do not exercise the suspected uncommon input; the agent card says code-review comments and code suggestions may be wrong and require careful review."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-agent"],
+          "summary": "The card requires careful consideration of comments rather than blanket dismissal, especially where an unexamined input may distinguish behavior."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-agent"],
+          "summary": "Repeated AI reviews do not eliminate false-positive risk; the card describes human review as the mitigation, not agreement between AI reviewers."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Realistic troubleshooting decision distinguishes AI suggestion from evidence. Distractors capture recognizable anti-patterns (test-suite worship, dismissal, double AI review). Advanced grade fits the applied reasoning required.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-005": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "11f4c25e0d2714f9313ea25a70ea38c2156f0fc2880757b25697845cfdc62b2a",
+      "sourceIds": ["gh300-cli"],
+      "retrievedAt": "2026-09-11T19:20:43.403Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-cli"],
+          "summary": "The documented risk mitigation is a virtual machine, container, or dedicated system with tightly controlled permissions and network access before unattended use."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-cli"],
+          "summary": "The CLI concept page says trusted-directory scoping is heuristic and does not guarantee protection of files outside; combining with auto-approval expands risk."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-cli"],
+          "summary": "The 'write' argument covers tools other than shell commands, so denying it does not block shell-based writes that a separately allowed shell tool can still perform."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-cli"],
+          "summary": "The article warns against launching from the home directory and does not describe trusted-directory selection as revoking the launching account's inherited permissions."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Applied architecture decision with three specific misreadings of CLI concepts, each individually plausible. Expert grade rests on integrating three separate CLI constraints rather than surface recall; grading is honest.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-006": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "63ef1d99f7bab0b4b16be8e495dee855d78902c86c68fb0d7363a44be2903ed4",
+      "sourceIds": ["gh300-review", "gh300-chat", "gh300-inline"],
+      "retrievedAt": "2026-09-11T19:22:36.974Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-review", "gh300-chat", "gh300-inline"],
+          "summary": "The inline-suggestion card explicitly documents typing-time completions with full or partial acceptance and ignore-by-typing behavior, exactly matching the scenario."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-review", "gh300-chat", "gh300-inline"],
+          "summary": "Copilot code review is a pull-request review feature and does not describe the requested as-you-type editor autocomplete."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-review", "gh300-chat", "gh300-inline"],
+          "summary": "PR summaries generate an on-demand overview of pull requests and are not the editor autocomplete described in the scenario."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-review", "gh300-chat", "gh300-inline"],
+          "summary": "Spaces curate reusable project context for Chat and search, which is not the cursor-position autocomplete workflow."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Straightforward feature identification with three real Copilot features as distractors. Difficulty is honest beginner recall; not artificially inflated.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-007": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "98d5f6f6ac4b5b9c4f8837428e0f978b99746018278a6805ae59d7ba07db372f",
+      "sourceIds": ["gh300-cli-usage"],
+      "retrievedAt": "2026-09-11T19:20:44.368Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-cli-usage"],
+          "summary": "The CLI usage doc explicitly documents the @relative-path syntax to add a file's contents to the prompt as context."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-cli-usage"],
+          "summary": "/context provides a visual overview of token usage rather than a file attachment mechanism."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-cli-usage"],
+          "summary": "/cwd changes the working directory rather than attaching a specified file's contents to the prompt."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-cli-usage"],
+          "summary": "/compact compresses conversation history to free context space; it is not a file attachment command."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Real CLI slash commands are used as distractors, making the question authentic. Intermediate technical-implementation grade is appropriate for a memorable but non-trivial recall.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-008": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "7c122522b8764b0bf4d10a06e02e3e0b165d54e4961a82bc4eb062982086a1e9",
+      "sourceIds": ["gh300-cli-usage", "gh300-cli"],
+      "retrievedAt": "2026-09-11T19:20:44.368Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-cli-usage", "gh300-cli"],
+          "summary": "The one-time Yes option approves only the current command, so every later use of the same tool during the current session triggers a fresh approval prompt, matching the requirement."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-cli-usage", "gh300-cli"],
+          "summary": "Session-wide approval permits the tool with any options for the running session, not just the displayed arguments."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-cli-usage", "gh300-cli"],
+          "summary": "The approval lasts the running session, not one prompt; the CLI asks again only in new or resumed sessions."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-cli-usage", "gh300-cli"],
+          "summary": "--allow-tool='shell(node)' pre-approves that tool for the whole session, not just one invocation."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Distinguishes a per-command approval from a per-tool approval and from a startup allow flag, all documented behaviors. Advanced scenario-based grade fits the applied comparison across three real approval scopes.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-009": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "63fec3545468afff305e3c8c9f80f45adafae1c9e9457c4137f9b27514258e4c",
+      "sourceIds": ["gh300-cli"],
+      "retrievedAt": "2026-09-11T19:20:43.403Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-cli"],
+          "summary": "The allow rule covers general git shell usage such as git status, and the deny rule specifically blocks the git push subcommand, matching the documented precedence."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-cli"],
+          "summary": "--deny-tool takes precedence over --allow-tool, including for a specific first-level git subcommand, so git push is not automatically approved."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-cli"],
+          "summary": "The doc supports denying a particular first-level subcommand without disabling other git subcommands; this is not a blanket denial."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-cli"],
+          "summary": "The specific rule denies the subcommand; it does not approve it, and the broad allow rule already covers git status without an additional approval prompt."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Original code snippet drives a decision hinged on precedence and subcommand scoping. Distractors capture the two most common misreadings. Advanced code-interpretation grade is honest.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-010": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "0ac28c9c571a65a11b5c3940442d94a77420ba4fbcd5fb77b210aa1e4e085b17",
+      "sourceIds": ["gh300-instructions"],
+      "retrievedAt": "2026-09-11T19:20:38.542Z",
+      "lastValidatedAt": "2026-09-11T19:42:06.585Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-instructions"],
+          "summary": "A .github/instructions/*.instructions.md file with applyTo: 'services/**' and excludeAgent: 'code-review' scopes the additional rules to cloud agent while combining with the repo-wide file."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-instructions"],
+          "summary": "Repository-wide files apply broadly; consumer scoping requires the excludeAgent field in a path-specific instruction file, not prose in the repo-wide file."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-instructions"],
+          "summary": "excludeAgent: cloud-agent removes the very consumer that should receive the additional rules."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-instructions"],
+          "summary": "On GitHub.com, path-specific instructions are supported for both cloud agent and code review; without excludeAgent the file is available to both."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced implementation decision that trades two orthogonal fields (path scope, consumer exclusion). Distractor B inverts the exclusion target; C invents a default; A misuses prose scoping. Grade fits applied instruction-file design.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-011": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "3c7deb74383f311492e58cfd0e49e3db3da89176afbf62196104e2278768e003",
+      "sourceIds": ["gh300-prompt-files", "gh300-instructions", "gh300-review"],
+      "retrievedAt": "2026-09-11T19:22:36.974Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "gh300-prompt-files",
+            "gh300-instructions",
+            "gh300-review"
+          ],
+          "summary": "Prompt files package a reusable task prompt invoked on demand and are labeled public preview in the retrieved article."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "gh300-prompt-files",
+            "gh300-instructions",
+            "gh300-review"
+          ],
+          "summary": "Repository-wide instructions apply to all interactions rather than being invoked on demand for a specific task."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "gh300-prompt-files",
+            "gh300-instructions",
+            "gh300-review"
+          ],
+          "summary": "Path-specific instructions apply automatically when matching files are in context, not on-demand as the scenario requires."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": [
+            "gh300-prompt-files",
+            "gh300-instructions",
+            "gh300-review"
+          ],
+          "summary": "AGENTS.md provides standing cross-agent guidance; it is not the reusable on-demand prompt-file mechanism."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Real Copilot customization primitives used as distractors, and Preview is correctly labeled. Beginner recall grade fits.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-012": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "a07c4925b579d403c654cf75c03e4458d662235cc27ae948778f2a36502d01a5",
+      "sourceIds": ["gh300-mcp"],
+      "retrievedAt": "2026-09-11T19:20:47.959Z",
+      "lastValidatedAt": "2026-09-11T19:42:06.585Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-mcp"],
+          "summary": "The doc explicitly recommends enabling only the required toolsets to improve selection accuracy and free context tokens."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-mcp"],
+          "summary": "Enabling every toolset increases selection noise and consumes context tokens, contradicting the doc's guidance to enable only needed toolsets."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-mcp"],
+          "summary": "Instructions cannot reclaim tokens or hide unused tool definitions; the doc prescribes disabling unused toolsets."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-mcp"],
+          "summary": "MCP integrates models with tools and data; a text prompt file does not supply the API capabilities that toolsets expose."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced architecture decision on scope trade-offs. Distractor D creates a real confusion between prompt files and MCP; B captures the 'just tell the model' anti-pattern. Grade fits.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-013": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "8fa21ed4ce8ce14e13fa68ab62a0e14e28fc451c19834b40a328bd2cf2b4149e",
+      "sourceIds": ["gh300-policies", "gh300-instructions"],
+      "retrievedAt": "2026-09-11T19:20:42.280Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-policies", "gh300-instructions"],
+          "summary": "The org-policy doc explicitly says the organization cannot override an enterprise-selected policy."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-policies", "gh300-instructions"],
+          "summary": "License assignment does not reverse enterprise policy precedence; the doc explicitly disallows organization-level override."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-policies", "gh300-instructions"],
+          "summary": "Model selection and feature policy are distinct controls; user model choice does not enable a disabled feature."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-policies", "gh300-instructions"],
+          "summary": "Custom instructions provide guidance, not feature-availability authorization, and cannot override enterprise policy."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate policy-precedence recall with three plausible ways real admins misunderstand policy layering. Grade is fair.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-014": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "d74ccef2ee1ba40954182576bed4114dfa72da639033958d5be0b7df98c5eaca",
+      "sourceIds": ["gh300-review"],
+      "retrievedAt": "2026-09-11T19:22:36.974Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-review"],
+          "summary": "This matches the documented order (enable AI credits paid usage first, then the unlicensed GitHub.com review sub-policy) and removes the unsupported IDE promise."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-review"],
+          "summary": "The doc requires both AI credits paid usage AND the unlicensed GitHub.com review sub-policy; the sub-policy alone is insufficient and does not enable IDE reviews."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-review"],
+          "summary": "Paid AI credits usage is prerequisite but does not itself grant unlicensed review, and there is no unlicensed IDE entitlement."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-review"],
+          "summary": "The doc says the capability is on GitHub.com and 'not available in IDEs', so limiting the rollout to IDE reviews is the exact wrong scope."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Expert configuration decision requires reconciling a prerequisite, a specific sub-policy, and a surface limitation. Distractors capture realistic partial understandings. Grade is appropriate.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-015": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "34f92cc159650781fa76f05cf36278b8c92c4ea4abd51192ec461f534201f034",
+      "sourceIds": ["gh300-inline"],
+      "retrievedAt": "2026-09-11T19:20:36.103Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-inline"],
+          "summary": "Input processing is the documented stage where cursor code and open-tab snippets are combined into the model prompt."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-inline"],
+          "summary": "Output formatting presents the generated suggestion; combining cursor code and open-tab context is described earlier at input processing."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-inline"],
+          "summary": "Language model analysis operates on a prompt whose context has already been assembled during input processing."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-inline"],
+          "summary": "Response generation uses the prepared prompt; it is not the earlier context-assembly step."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Beginner recall grounded in a named lifecycle stage. Distractors mirror other real stages so guessing is not trivial. Grade is honest.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-016": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "633cb85c68962b8314a13c10a69eeff45c5559cfe0774c9fc674f5fa94734e7d",
+      "sourceIds": ["gh300-personal-policy"],
+      "retrievedAt": "2026-09-11T19:22:39.103Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-personal-policy"],
+          "summary": "The doc explicitly grants an opt-out on individual plans and says Business/Enterprise data is not used for training and does not display the setting."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-personal-policy"],
+          "summary": "Public-code matching is a separate feature; the doc treats it distinctly from the model-training preference."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-personal-policy"],
+          "summary": "The missing setting reflects the Business/Enterprise data-protection policy, not compulsory training use."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-personal-policy"],
+          "summary": "The doc treats Bing web search as a distinct setting from the AI-training preference; disabling web search is not the training opt-out."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate scenario over three real settings on the same personal-policy page. Distractors reuse real controls (public-code matching, Bing search) so surface reading is not enough. Grade is fair.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-017": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "2095d950c5e6c30fa0bcdda688e0adcc7fbc93c756475c84d15bbf0b4007cb1e",
+      "sourceIds": ["gh300-public-code"],
+      "retrievedAt": "2026-09-11T19:20:41.368Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-public-code"],
+          "summary": "Private code is excluded from the index and the periodically refreshed public index may omit newly committed code, so absent references do not certify no match anywhere."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-public-code"],
+          "summary": "The doc excludes private code from the search and does not exclude public repositories; A inverts the scope."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-public-code"],
+          "summary": "References report code matches, not security defects, and the index is refreshed periodically rather than continuously."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-public-code"],
+          "summary": "Code referencing surfaces matches to public code; it is not a commit-triggered authorship certificate."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced scenario requires distinguishing scope (private vs public) and freshness (refresh cadence). Distractors invert coverage or misuse the feature as an authorship stamp. Grade fits.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-018": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "3e47b763bf49a11b4c85eff9b7d8b0e6e2009c4528d6e4b94cdd97994ae6ca7d",
+      "sourceIds": ["gh300-agent"],
+      "retrievedAt": "2026-09-11T19:20:36.850Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-agent"],
+          "summary": "The card says prompts go directly to the provider, offline mode disables telemetry and web-based tools, and provider requests remain permitted, matching B."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-agent"],
+          "summary": "The card says BYOK prompts go directly to the provider and web-based tools are disabled in offline mode, so 'through GitHub with telemetry and tools' is wrong."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-agent"],
+          "summary": "The card says offline mode permits calls to the configured provider and disables GitHub Code Search, the opposite of C."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-agent"],
+          "summary": "The card explicitly says an invalid provider configuration produces an error and 'does not fall back to GitHub-hosted models'."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Applied architecture reasoning across three orthogonal aspects (routing, telemetry/tool posture, failure behavior). Advanced grade is warranted because a candidate must reconcile multiple sentences in the app card.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-019": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "6a7df1f0b179587f657c89d91829c3ed2cbd30eb610cc5ff0acf7d30b3cda7c6",
+      "sourceIds": ["gh300-prompts"],
+      "retrievedAt": "2026-09-11T19:20:37.616Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "The doc's 'Give examples' section explicitly recommends providing example inputs paired with expected outputs."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "The doc separately advises specifying goals and requirements but reserves 'examples' for input/output pairs."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "The doc's 'break complex tasks' section is separate from the 'give examples' technique; decomposition without demonstration inputs does not supply few-shot examples."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "Naming a library without example results falls under 'Avoid ambiguity', not the examples technique."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Distractors use other real doc techniques as plausible foils. Beginner recall grade is fair.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-020": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "9fab7a8df34fb2ada976d4da35b159ee904cd9f47875a1197cbcba9f035f8c93",
+      "sourceIds": [
+        "gh300-prompts",
+        "gh300-public-code",
+        "gh300-exclusion-concepts"
+      ],
+      "retrievedAt": "2026-09-11T19:20:41.368Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "gh300-prompts",
+            "gh300-public-code",
+            "gh300-exclusion-concepts"
+          ],
+          "summary": "The doc directly recommends starting a new thread or deleting irrelevant history to control chat context."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "gh300-prompts",
+            "gh300-public-code",
+            "gh300-exclusion-concepts"
+          ],
+          "summary": "Adding more unrelated utility context strengthens the confused state; the doc recommends narrowing history instead."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "gh300-prompts",
+            "gh300-public-code",
+            "gh300-exclusion-concepts"
+          ],
+          "summary": "Public-code matching addresses similarity to public code and does not control conversation history."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": [
+            "gh300-prompts",
+            "gh300-public-code",
+            "gh300-exclusion-concepts"
+          ],
+          "summary": "Content exclusions govern file access and do not delete conversation-history requests."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Distractors use realistic control confusion (public-code matching, content exclusions). Intermediate troubleshooting grade fits.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-021": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "b224044fe6b8bc44e8be1119a28663bab3932b1205687cfaff629a34b0f83874",
+      "sourceIds": ["gh300-prompts"],
+      "retrievedAt": "2026-09-11T19:20:37.616Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "This combines the two documented remedies: name and describe the uncommon library, include its imports, and indicate the code to update."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "'Avoid ambiguity' recommends naming and describing uncommon libraries; ambiguous references make the problem worse."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "'Indicate relevant code' says to open relevant files and close irrelevant ones, not to keep unrelated ones open."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "Response length is not the documented remedy; the missing dependency identity is the root cause."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate implementation decision that leverages two prompt-engineering sections. Distractors capture common misconceptions. Grade is fair.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-022": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "394f85e7f5c1b393bc623b446dac64453fe270626b1df9d8182d9fd9c8ec4dfa",
+      "sourceIds": ["gh300-prompts"],
+      "retrievedAt": "2026-09-11T19:20:37.616Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "Decomposition plus using agreed examples as tests to constrain each stage matches both documented techniques."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "Removing stage examples and enlarging the request violates both decomposition and examples-as-tests guidance."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "Withholding known stage requirements does not use the examples to constrain behavior and does not decompose the workflow."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-prompts"],
+          "summary": "The doc says to keep relevant context in the request or conversation; scattering examples across unrelated threads and asking for integration without supplying results is inconsistent."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced architecture decision that combines two documented prompt-engineering techniques into a workflow. Distractors capture real misuses. Grade fits.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-023": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "3729ad78812c524a9b9e4a5a9124ad6e2bd3e6883c2c1766c4e2c6fc6afe7988",
+      "sourceIds": ["gh300-refactoring", "gh300-chat"],
+      "retrievedAt": "2026-09-11T19:22:35.699Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-refactoring", "gh300-chat"],
+          "summary": "The refactor tutorial explicitly uses /explain on the selected code as the way to understand existing behavior before refactoring."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-refactoring", "gh300-chat"],
+          "summary": "Renaming is itself a refactor; the doc says to understand behavior before modifying code."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-refactoring", "gh300-chat"],
+          "summary": "Requesting an optimized implementation modifies code and does not deliver a documented explanation of the existing behavior."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-refactoring", "gh300-chat"],
+          "summary": "PR summaries describe pull request changes, not selected-code explanations of an existing function."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Beginner recall grounded in a named tutorial step. Distractors misuse real Copilot commands. Grade is fair.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-024": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "ebff342327c6d5ca53a25919120961cc34c49fa213ff7dd12c1c42be3e643e38",
+      "sourceIds": ["gh300-testing", "gh300-public-code"],
+      "retrievedAt": "2026-09-11T19:20:45.258Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-testing", "gh300-public-code"],
+          "summary": "The tutorial explicitly recommends opening existing test files in adjacent tabs so Copilot can see the framework and patterns."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-testing", "gh300-public-code"],
+          "summary": "Closing existing tests removes precisely the context the tutorial uses to establish framework consistency."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-testing", "gh300-public-code"],
+          "summary": "A coverage percentage does not show a testing framework; the tutorial cites adjacent test files as the mechanism."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-testing", "gh300-public-code"],
+          "summary": "Public-code matching compares to a public index; it does not select a project's test framework."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate implementation grade fits. Distractor D captures a common confusion. Answer is defensible only through the documented tabs mechanism.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-025": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "9b68f30df2fad71a3674b8215b3e7da07f52693a19a86293195861ef3e354467",
+      "sourceIds": ["gh300-refactoring"],
+      "retrievedAt": "2026-09-11T19:20:46.368Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-refactoring"],
+          "summary": "The tutorial's documented pattern extracts helpers and keeps the original entry point as a wrapper that calls them in the original order, preserving callers and observable behavior."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-refactoring"],
+          "summary": "Removing the entry point and forcing callers to print violates the constraint that existing callers must not change and that behavior must be preserved."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-refactoring"],
+          "summary": "Removing the printed output changes observable behavior, violating the behavior-preservation principle."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-refactoring"],
+          "summary": "Duplicating printed output changes observable behavior and gives the reusable helper a side effect it should not have."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Original small Python function; distractors each break a distinct behavior-preservation constraint. Advanced code-interpretation grade fits.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-026": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "4621048eb2676126f6c58adc114f0bc273644013c1a77d8b021f1bcabeb26c6d",
+      "sourceIds": ["gh300-testing"],
+      "retrievedAt": "2026-09-11T19:20:45.258Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-testing"],
+          "summary": "This matches the tutorial's mock-based pattern: boundary asserts on 0/100 with expected notifier calls, missing-sensor and out-of-range assertions on exceptions and no calls."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-testing"],
+          "summary": "Testing against the live notifier violates the explicit isolation requirement and does not verify absence-of-call semantics on rejection."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-testing"],
+          "summary": "Additional happy-path returns cover neither boundaries nor negative-input notifier absence, missing multiple contract gaps."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-testing"],
+          "summary": "The tutorial separately verifies both the exception and that the notifier was not called; an exception assertion alone does not establish absence of the side effect."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Expert grade reflects reasoning over multiple contract obligations (boundaries, validation, exception, side-effect absence) rather than wordiness. Distractors capture believable partial coverage. Difficulty is authentic.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-027": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "aab213d85505c2b19a8c6e95902aef9bc8c8acb7480d7b08ad14237579429fbc",
+      "sourceIds": ["gh300-exclusions", "gh300-personal-policy"],
+      "retrievedAt": "2026-09-11T19:22:39.103Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-exclusions", "gh300-personal-policy"],
+          "summary": "The exclusion how-to explicitly documents Developer: Reload Window as the VS Code manual refresh."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-exclusions", "gh300-personal-policy"],
+          "summary": "The doc names window reload as the client-side refresh step; recloning is not documented."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-exclusions", "gh300-personal-policy"],
+          "summary": "The concept doc states 'Agent mode in Copilot Chat in IDEs does not support content exclusion', so switching to Agent mode is not the refresh mechanism."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-exclusions", "gh300-personal-policy"],
+          "summary": "Public-code matching is a separate personal setting and not the documented refresh mechanism."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate troubleshooting grade fits. Distractor B correctly flags the Agent-mode non-support and rules it out. Grade is honest.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-028": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "ea12c52107eaad69fd641508402437651af35dde09839ddad777b4e8f5138c89",
+      "sourceIds": ["gh300-public-code", "gh300-personal-policy"],
+      "retrievedAt": "2026-09-11T19:22:39.103Z",
+      "lastValidatedAt": "2026-09-11T19:42:06.585Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-public-code", "gh300-personal-policy"],
+          "summary": "The doc directs users to review matching file URLs and license information and decide on attribution or removal, matching A verbatim."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-public-code", "gh300-personal-policy"],
+          "summary": "The doc supplies license information for decision-making; it does not lift or grant permission under a matching repository's license."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-public-code", "gh300-personal-policy"],
+          "summary": "The doc explicitly excludes developer-written and altered suggestions from inline code-reference checks."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-public-code", "gh300-personal-policy"],
+          "summary": "In products that support blocking, matched or near-matched suggestions are not shown; the scenario instead allows public-code matches, so blocking is not enabled."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate scenario grounded in three distinct doc statements. Distractors are realistic misinterpretations. Grade is fair.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-029": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "2b5fa7949b1e0fc33f232a46be0cc9069ecf7952f53512cab85b34e2490d037b",
+      "sourceIds": ["gh300-exclusion-concepts", "gh300-exclusions"],
+      "retrievedAt": "2026-09-11T19:20:40.686Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-exclusion-concepts", "gh300-exclusions"],
+          "summary": "This exactly captures the two documented limits: exclusions do not apply to symlinks, and semantic information can still be supplied indirectly by the IDE."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-exclusion-concepts", "gh300-exclusions"],
+          "summary": "Propagation does not remove the documented symlink limitation or the indirect-semantic-information pathway."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-exclusion-concepts", "gh300-exclusions"],
+          "summary": "The concept doc names symlinks and remote filesystems together as limitations, not just remote filesystems."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-exclusion-concepts", "gh300-exclusions"],
+          "summary": "The how-to states patterns are case-insensitive; renaming with a different case does not remove indirect semantic pathways."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced architecture reasoning integrates two orthogonal exclusion limits. Distractors each corrupt one limit. Grade fits.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    },
+    "gh300-030": {
+      "credentialId": "github-copilot",
+      "objectiveVersion": "August 7, 2026",
+      "questionFingerprint": "9189aff95a6eddeb8d63013fbfabdc8b5b5862dbcfeea79a36cc66043833a5bf",
+      "sourceIds": ["gh300-exclusions", "gh300-instructions"],
+      "retrievedAt": "2026-09-11T19:20:39.792Z",
+      "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["gh300-exclusions", "gh300-instructions"],
+          "summary": "Enterprise-level exclusion covers all enterprise Copilot users, supports non-Git paths, and inherited settings cannot be edited locally, matching every documented constraint."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["gh300-exclusions", "gh300-instructions"],
+          "summary": "Organization rules apply only to users given seats by that organization, and Maintain users cannot edit repository exclusion settings, so override authority is not present."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["gh300-exclusions", "gh300-instructions"],
+          "summary": "Repository settings apply only to that repository; they do not extend to the cross-organization or non-Git scope required."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["gh300-exclusions", "gh300-instructions"],
+          "summary": "Custom instructions provide guidance, not administrator-enforced exclusion policy, and cannot override inherited enterprise exclusions."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-gh300",
+        "reviewedAt": "2026-09-11T21:02:43.031Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Expert governance decision integrates scope, non-Git support, and inheritance rules. Distractors capture recognizable misgovernance patterns. Grade fits.",
+        "objectiveVersion": "August 7, 2026",
+        "objectiveFingerprint": "8c9652727fbcf23632fba4b8470abd91a349f0c4bdd98357cb2a61e68110d57d"
+      }
+    }
+  }
+}

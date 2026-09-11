@@ -2,21 +2,60 @@ import { BookOpen, CheckCircle2, Flag, Lightbulb, XCircle } from 'lucide-react';
 import { useGame } from '../features/quiz/context';
 import { labels } from '../features/quiz/types';
 import { isCorrect } from '../features/quiz/engine';
-import type { Question } from '../features/grounding/schema';
+import type { Question, Taxonomy } from '../features/grounding/schema';
+import { questionOrigin } from '../features/quiz/origins';
+import { getDungeonPackage } from '../features/dungeons/packages';
+import { credentials } from '../features/dungeons/catalog';
 import { DateStamp, LearnLink, Modal } from './common';
 import { HostReaction } from '../features/personality/HostReaction';
 import { useReaction } from '../features/personality/useReaction';
 import type { Reaction } from '../features/personality/reactions';
 
-export function QuestionMetadata({ question }: { question: Question }) {
-  const { taxonomy } = useGame();
-  const domain = taxonomy.domains.find(
+export function QuestionMetadata({
+  question,
+  taxonomySnapshot,
+  credentialId,
+  objectiveVersion,
+}: {
+  question: Question;
+  taxonomySnapshot?: Taxonomy | null;
+  credentialId?: string;
+  objectiveVersion?: string;
+}) {
+  const game = useGame();
+  const neutral =
+    game.active?.config.runMode === 'gauntlet' ||
+    game.active?.config.answerMode === 'exam';
+  const origin = game.active
+    ? questionOrigin(game.active, question.id)
+    : undefined;
+  const id = credentialId ?? origin?.credentialId ?? game.selectedCredentialId;
+  const taxonomy =
+    taxonomySnapshot !== undefined
+      ? taxonomySnapshot
+      : (game.active?.objectiveSnapshots?.[id] ??
+        getDungeonPackage(id)?.taxonomy ??
+        game.taxonomy);
+  const credential = credentials.find((item) => item.credentialId === id);
+  const domain = taxonomy?.domains.find(
     (item) => item.id === question.objectiveDomain,
   );
   const skill = domain?.skills.find((item) => item.id === question.skill);
   return (
     <div className="question-metadata">
+      <div className="dungeon-origin" data-dungeon-id={id}>
+        <span>{credential?.examCode ?? id}</span>
+        {!neutral && (
+          <span>· {credential?.dungeonName ?? 'Historical dungeon'}</span>
+        )}
+        {(objectiveVersion ?? origin?.objectiveVersion) && (
+          <span className="small muted">
+            Map: {objectiveVersion ?? origin?.objectiveVersion}
+          </span>
+        )}
+      </div>
       <p className="question-domain">
+        {neutral ? 'Objective' : 'Floor'} ·{' '}
         {domain?.title ?? question.objectiveDomain}
       </p>
       <p className="question-objective">
@@ -42,11 +81,33 @@ export function QuestionMetadata({ question }: { question: Question }) {
 
 export function CodeSnippet({ question }: { question: Question }) {
   if (!question.codeSnippet) return null;
+  const tokens = question.codeSnippet.split(
+    /("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|#[^\n]*|--[^\n]*|\b(?:SELECT|FROM|WHERE|AS|AND|OR|JOIN|ON|GROUP|BY|CREATE|TABLE|INSERT|INTO|WITH|ORDER|DESC|TRUE|FALSE|NULL|let|in|def|return|import|from|if|else|for|None|True|False|where|summarize|project|extend|join)\b|\b\d+(?:\.\d+)?\b)/g,
+  );
   return (
     <div className="code-block">
       <span className="code-language">{question.codeLanguage}</span>
       <pre tabIndex={0} aria-label={`${question.codeLanguage} code snippet`}>
-        <code>{question.codeSnippet}</code>
+        <code>
+          {tokens.map((token, index) => {
+            const kind = /^["']/.test(token)
+              ? 'string'
+              : /^(#|--)/.test(token)
+                ? 'comment'
+                : /^\d/.test(token)
+                  ? 'number'
+                  : /^\w+$/.test(token)
+                    ? 'keyword'
+                    : '';
+            return index % 2 === 1 && kind ? (
+              <span key={index} className={`syntax-${kind}`}>
+                {token}
+              </span>
+            ) : (
+              token
+            );
+          })}
+        </code>
       </pre>
     </div>
   );
@@ -133,39 +194,66 @@ export function QuestionSources({
   question,
   groundedAt,
   reactionScope,
+  credentialId,
+  taxonomySnapshot,
   onClose,
 }: {
   question: Question;
-  groundedAt?: string;
+  groundedAt?: string | null;
   reactionScope?: string;
+  credentialId?: string;
+  taxonomySnapshot?: Taxonomy | null;
   onClose: () => void;
 }) {
-  const { manifest, taxonomy, active } = useGame();
-  const isCurrent = !groundedAt || groundedAt === manifest.lastGroundedAt;
-  const domain = taxonomy.domains.find(
+  const game = useGame();
+  const { active } = game;
+  const origin = active ? questionOrigin(active, question.id) : undefined;
+  const id = credentialId ?? origin?.credentialId ?? game.selectedCredentialId;
+  const dungeon = getDungeonPackage(id);
+  const manifest =
+    dungeon?.manifest ??
+    (id === game.selectedCredentialId ? game.manifest : undefined);
+  const taxonomy =
+    taxonomySnapshot !== undefined
+      ? taxonomySnapshot
+      : (active?.objectiveSnapshots?.[id] ??
+        dungeon?.taxonomy ??
+        game.taxonomy);
+  const snapshotGroundedAt =
+    groundedAt === undefined ? origin?.groundedAt : groundedAt;
+  const isCurrent = Boolean(
+    manifest &&
+    snapshotGroundedAt &&
+    snapshotGroundedAt === manifest.lastGroundedAt,
+  );
+  const domain = taxonomy?.domains.find(
     (item) => item.id === question.objectiveDomain,
   );
   const skill = domain?.skills.find((item) => item.id === question.skill);
   const reaction = useReaction(
     reactionScope ?? active?.id ?? 'sources',
     `documentation:${question.id}`,
-    ['documentation'],
+    ['tome-opened', 'documentation'],
     {
       domainId: domain?.id,
       domain: domain?.title,
+      floorId: domain?.id,
+      floor: domain?.title,
       skill: skill?.title,
       difficulty: question.difficulty,
+      credentialId: id,
+      dungeon: dungeon?.credential.dungeonName,
     },
   );
   return (
     <Modal
-      title="The sources behind this question"
+      title="The tome · sources behind this question"
       onClose={onClose}
       className="sources-modal"
     >
       <p className="muted">
-        Direct public Microsoft Learn documentation. Links open in a new tab
-        only when you choose them.
+        Direct official documentation, unchanged by the dungeon theme. Links
+        open in a new tab only when you choose them.
       </p>
       <div className="source-alignment">
         <strong>Objective alignment</strong>
@@ -179,8 +267,14 @@ export function QuestionSources({
       </div>
       {!isCurrent && (
         <p className="notice">
-          Historical question snapshot, grounded{' '}
-          <DateStamp value={groundedAt ?? question.lastValidatedAt} precise />.
+          {snapshotGroundedAt ? (
+            <>
+              Historical question snapshot, grounded{' '}
+              <DateStamp value={snapshotGroundedAt} precise />.
+            </>
+          ) : (
+            <>A per-dungeon grounding date was not saved with this question.</>
+          )}{' '}
           Current source-manifest summaries may differ, so this view uses the
           titles and URLs saved with your question. Per-source retrieval and
           review records are not stored with question snapshots.
@@ -189,7 +283,7 @@ export function QuestionSources({
       <ol className="source-list">
         {question.sourceUrls.map((url, index) => {
           const source = isCurrent
-            ? manifest.sources.find(
+            ? manifest?.sources.find(
                 (item) =>
                   item.sourceId === question.sourceIds[index] &&
                   item.url === url &&

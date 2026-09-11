@@ -6,10 +6,14 @@ import {
   formats,
   orders,
   questionSchema,
+  taxonomySchema,
   timestampSchema,
 } from '../grounding/schema';
 
 export const configSchema = z.object({
+  credentialId: z.string().trim().min(1).optional(),
+  runMode: z.enum(['study', 'gauntlet', 'raid']).optional(),
+  raidCredentialIds: z.array(z.string().trim().min(1)).optional(),
   difficulty: z.enum([...difficulties, 'adaptive']),
   complexity: z.enum([...complexities, 'mixed']),
   questionCount: z.number().int().min(1).max(50),
@@ -25,6 +29,8 @@ export const configSchema = z.object({
 });
 export type QuizConfig = z.infer<typeof configSchema>;
 export const defaultConfig: QuizConfig = {
+  credentialId: 'dp-700',
+  runMode: 'study',
   difficulty: 'adaptive',
   complexity: 'mixed',
   questionCount: 10,
@@ -76,8 +82,20 @@ export const responseSchema = z.object({
   timedOut: z.boolean(),
 });
 export type QuizResponse = z.infer<typeof responseSchema>;
+export const questionOriginSchema = z.object({
+  credentialId: z.string().trim().min(1),
+  objectiveVersion: z.string().trim().min(1),
+  groundedAt: timestampSchema.optional(),
+});
+export type QuestionOrigin = z.infer<typeof questionOriginSchema>;
+export const sessionMetadataSchema = z.object({
+  credentialId: z.string().trim().min(1).optional(),
+  questionOrigins: z.record(z.string(), questionOriginSchema).optional(),
+  objectiveSnapshots: z.record(z.string(), taxonomySchema).optional(),
+});
 export const sessionResultSchema = z
   .object({
+    ...sessionMetadataSchema.shape,
     id: z.string(),
     startedAt: timestampSchema,
     completedAt: timestampSchema,
@@ -89,10 +107,41 @@ export const sessionResultSchema = z
   .superRefine((result, ctx) => {
     const fail = (message: string) => ctx.addIssue({ code: 'custom', message });
     if (
+      result.credentialId &&
+      result.config.credentialId &&
+      result.credentialId !== result.config.credentialId
+    )
+      fail('Session identity must match its saved configuration.');
+    if (
       new Set(result.questions.map((q) => q.id)).size !==
       result.questions.length
     )
       fail('Session question IDs must be unique.');
+    if (result.questionOrigins) {
+      const origins = result.questionOrigins;
+      if (
+        result.questions.some((q) => !origins[q.id]) ||
+        Object.keys(origins).some(
+          (id) => !result.questions.some((q) => q.id === id),
+        )
+      )
+        fail('Every session question must have exactly one dungeon origin.');
+      const primary =
+        result.credentialId ?? result.config.credentialId ?? 'dp-700';
+      if (
+        result.config.runMode !== 'raid' &&
+        Object.values(origins).some((origin) => origin.credentialId !== primary)
+      )
+        fail('Single-dungeon sessions cannot contain another dungeon.');
+      for (const origin of Object.values(origins)) {
+        const snapshot = result.objectiveSnapshots?.[origin.credentialId];
+        if (
+          snapshot &&
+          snapshot.studyGuideEffectiveDate !== origin.objectiveVersion
+        )
+          fail('A saved objective map must match the question origin version.');
+      }
+    }
     if (
       new Set(result.responses.map((r) => r.questionId)).size !==
       result.responses.length
@@ -134,6 +183,11 @@ export interface ActiveSession {
   currentIndex: number;
   questionStartedAt: number;
   actualDifficulty?: (typeof difficulties)[number];
+  credentialId?: string;
+  questionOrigins?: Record<string, QuestionOrigin>;
+  objectiveSnapshots?: z.infer<
+    typeof sessionMetadataSchema
+  >['objectiveSnapshots'];
 }
 
 export const labels: Record<string, string> = {

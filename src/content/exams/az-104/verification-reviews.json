@@ -1,0 +1,1860 @@
+{
+  "schemaVersion": 1,
+  "requestId": "dungeon-az104-review",
+  "reviews": [
+    {
+      "questionId": "az104-001",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "7dd2b26a3ddd2be4dce8d94ece2c84a693752b1bbd87d10c21c1f034eb40b211",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-rbac-scope",
+          "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\rbac-scope.json",
+          "retrievedAt": "2026-09-11T19:18:14.161Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Azure RBAC supports management-group, subscription, resource-group and resource scopes. Lower scopes inherit the access assigned above them."
+        },
+        {
+          "sourceId": "az104-rbac-roles",
+          "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\rbac-roles.json",
+          "retrievedAt": "2026-09-11T19:18:19.762Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "The built-in-role table distinguishes read-only Reader, resource-managing Contributor, and Owner with role-assignment permissions. Only these cited role definitions support this batch."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Subscription-scope Reader inherits down to every RG in the subscription, exceeding the Finance-only requirement per scope-overview.",
+          "sourceIds": ["az104-rbac-scope", "az104-rbac-roles"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Reader on the RG scope inherits to all current and future resources per scope-overview parent-child hierarchy while granting only read-only management via built-in Reader.",
+          "sourceIds": ["az104-rbac-scope", "az104-rbac-roles"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Built-in Contributor grants resource management writes, which the auditor is not permitted to receive.",
+          "sourceIds": ["az104-rbac-scope", "az104-rbac-roles"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Assignments on individually enumerated resources do not carry to separately created future resources; scope-overview inheritance runs top-down, not sibling to sibling.",
+          "sourceIds": ["az104-rbac-scope", "az104-rbac-roles"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Independent reread of scope-overview (Reader on the RG scope inherits to current and future resources; sibling RGs excluded) and built-in-roles (Reader is read-only management) confirms option b is the only choice matching both scope and least privilege; sibling RGs excluded.",
+      "confidenceReason": "Scope-overview parent-child inheritance and built-in Reader permissions independently reread."
+    },
+    {
+      "questionId": "az104-002",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "b9442884d69dcb46b7c00c3aafd9cd40a1f2d6c98f9ae95045178712387512db",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-rbac-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\rbac-overview.json",
+          "retrievedAt": "2026-09-11T19:20:31.975Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Azure RBAC combines all applicable direct and group-derived role assignments. Adding Reader at a narrower scope does not subtract inherited Contributor permissions; deny assignments remain a separate evaluation step."
+        },
+        {
+          "sourceId": "az104-rbac-roles",
+          "url": "https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\rbac-roles.json",
+          "retrievedAt": "2026-09-11T19:18:19.762Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "The built-in-role table distinguishes read-only Reader, resource-managing Contributor, and Owner with role-assignment permissions. Only these cited role definitions support this batch."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "RBAC overview describes narrower assignments as considered alongside inherited assignments, not categorically ignored.",
+          "sourceIds": ["az104-rbac-overview", "az104-rbac-roles"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Reader is read-only and does not carry role-assignment privileges to remove; and Contributor itself excludes role assignment via NotActions.",
+          "sourceIds": ["az104-rbac-overview", "az104-rbac-roles"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Group and direct assignments are combined additively, not prioritized by source.",
+          "sourceIds": ["az104-rbac-overview", "az104-rbac-roles"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "RBAC overview Multiple role assignments example: subscription Contributor sums with a narrower Reader to yield Contributor; Reader has no impact.",
+          "sourceIds": ["az104-rbac-overview", "az104-rbac-roles"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Rechecked RBAC overview Multiple role assignments section: sum of Contributor + Reader = Contributor for the scope; Reader assignment has no impact. Groups transitive line supports group-derived Contributor. Additive model contradicts every distractor.",
+      "confidenceReason": "The Multiple role assignments section explicitly states the additive-sum behavior against this scenario."
+    },
+    {
+      "questionId": "az104-003",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "c54b74ae1b88444042d01ea7484e0b19c06ee571c7e2e0288c420d3c72828c20",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-policy-effects",
+          "url": "https://learn.microsoft.com/en-us/azure/governance/policy/concepts/effect-basics",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\policy-effects.json",
+          "retrievedAt": "2026-09-11T19:18:32.149Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Policy assignments are evaluated independently and restrictions are cumulative across scopes. A child audit assignment does not override an inherited deny."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Effect-basics states each assignment is independently evaluated and the cumulative most restrictive assignment applies; deny at subscription blocks a non-eastus2 request even when child audit does not object.",
+          "sourceIds": ["az104-policy-effects"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Effect-basics does not describe more-specific audits as replacements for inherited deny assignments.",
+          "sourceIds": ["az104-policy-effects"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Deny only rejects noncompliant requests; effect-basics separately documents modify effects for property adjustments.",
+          "sourceIds": ["az104-policy-effects"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Different allowed regions do not disable enforcement; deny remains deny per effect-basics evaluation order.",
+          "sourceIds": ["az104-policy-effects"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against effect-basics Layering policy definitions: assignments are independently evaluated and the layered net effect is cumulative most restrictive, mirroring the article example with deny at subscription and audit at RG. centralus violates the subscription deny.",
+      "confidenceReason": "Effect-basics example directly maps to the scenario with matching allowed-region prefixes and effects."
+    },
+    {
+      "questionId": "az104-004",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "2815c6a87010039ec6aee7a181c4427338a909f8cbfa3a16f2718c604119523c",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-resource-locks",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/lock-resources",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\resource-locks.json",
+          "retrievedAt": "2026-09-11T19:18:26.078Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "CanNotDelete allows management changes while ReadOnly also blocks updates and management POST operations. The most restrictive inherited lock applies across roles, but management locks do not protect data-plane operations."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "ReadOnly limits authorized users to Reader-equivalent access, blocking VM size and configuration updates.",
+          "sourceIds": ["az104-resource-locks"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Moving ReadOnly to VMs still blocks the required configuration updates on those VMs.",
+          "sourceIds": ["az104-resource-locks"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "CanNotDelete permits reads and modifications while blocking deletes; applied to the RG it inherits to its resources without preventing authorized updates.",
+          "sourceIds": ["az104-resource-locks"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Configure locks note explicitly forbids adding a lock at management-group scope.",
+          "sourceIds": ["az104-resource-locks"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Reread lock-resources: CanNotDelete permits read and modify while blocking delete; ReadOnly restricts to Reader-equivalent read-only actions. Configure locks note explicitly states you cannot add a lock to management groups.",
+      "confidenceReason": "Lock-resources introductory definitions and configure-locks note directly answer the question."
+    },
+    {
+      "questionId": "az104-005",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "c097f029a020cf93ea40e8c822ddd4a28f0f0ea38cfe5ffa5788037dc920097b",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-resource-locks",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/lock-resources",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\resource-locks.json",
+          "retrievedAt": "2026-09-11T19:18:26.078Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "CanNotDelete allows management changes while ReadOnly also blocks updates and management POST operations. The most restrictive inherited lock applies across roles, but management locks do not protect data-plane operations."
+        },
+        {
+          "sourceId": "az104-storage-sas",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\storage-sas.json",
+          "retrievedAt": "2026-09-11T19:18:16.011Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "User delegation SAS uses Microsoft Entra credentials; service and account SAS use account keys. Stored access policies apply to service SAS and provide permission revocation without key regeneration."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Locks override user permissions per lock-resources; adding Owner does not remove an inherited ReadOnly.",
+          "sourceIds": ["az104-resource-locks", "az104-storage-sas"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Replacing the RG lock with CanNotDelete keeps group-wide deletion protection (inheritance) while allowing VM start and List Keys POSTs; storage account still has its own CanNotDelete, and SAS overview shows uploads are data-plane and unaffected.",
+          "sourceIds": ["az104-resource-locks", "az104-storage-sas"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Removing the RG lock leaves other resources in the group unprotected against deletion, violating the group-wide requirement.",
+          "sourceIds": ["az104-resource-locks", "az104-storage-sas"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Removing only the storage account lock leaves ReadOnly on the RG, which still blocks VM start and List Keys per the article examples.",
+          "sourceIds": ["az104-resource-locks", "az104-storage-sas"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Lock inheritance section states the most restrictive lock in the chain wins, so an RG ReadOnly overrides a child CanNotDelete. Considerations list ReadOnly on RG blocking VM start (POST) and ReadOnly on storage account blocking List Keys POST. SAS overview confirms data-plane uploads bypass management locks.",
+      "confidenceReason": "Lock-resources most-restrictive rule and blocked-POST examples both apply to this scenario; SAS overview supports data-plane behavior."
+    },
+    {
+      "questionId": "az104-006",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "d2b79b368d31bb0bdede0df5a419df5320b3de0b46363160df19503df56beab0",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-sspr",
+          "url": "https://learn.microsoft.com/en-us/entra/identity/authentication/tutorial-enable-sspr",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\sspr.json",
+          "retrievedAt": "2026-09-11T19:20:26.634Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "SSPR can be enabled for None, Selected or All. The Microsoft Entra admin center selects one group, and nested groups can define a pilot population; registration is separate from enablement."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "All enables SSPR tenant-wide, expanding the pilot beyond the two permitted groups; registration prompts are separate from enablement scope.",
+          "sourceIds": ["az104-sspr"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The tutorial documents Microsoft Entra admin center as supporting selection of only one group at a time.",
+          "sourceIds": ["az104-sspr"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "None disables SSPR for the tenant; registration does not enable users whose scope is None.",
+          "sourceIds": ["az104-sspr"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Selected with a nesting parent group is the documented pilot pattern because the admin center supports one selected group and SSPR resolves nested groups.",
+          "sourceIds": ["az104-sspr"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Reread tutorial-enable-sspr: only one Microsoft Entra group can be enabled for SSPR from the Microsoft Entra admin center, and SSPR supports nested groups. None disables SSPR entirely; All enables tenant-wide; Selected supports one group. Nesting is the documented pilot pattern.",
+      "confidenceReason": "Tutorial note directly states the one-group admin center limit plus nested-group support for wider deployments."
+    },
+    {
+      "questionId": "az104-007",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "d74fbb94097fccef876d57beaabb64be97cf9899ecccfcbc2844bb90d5a4b0b9",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-policy-remediation",
+          "url": "https://learn.microsoft.com/en-us/azure/governance/policy/how-to/remediate-resources",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\policy-remediation.json",
+          "retrievedAt": "2026-09-11T19:20:30.005Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Policy remediation uses the assignment's managed identity rather than the initiating administrator. Editing roleDefinitionIds does not update identity permissions automatically, even for assignments originally created in the portal."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Assignment managed identity performs the deployment; per the note under Configure the managed identity, roleDefinitionIds edits require manual role grants on that identity, even in the portal.",
+          "sourceIds": ["az104-policy-remediation"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Administrator privileges do not become the managed identity permissions used for remediation.",
+          "sourceIds": ["az104-policy-remediation"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The article states managed identity location does not affect Policy operation.",
+          "sourceIds": ["az104-policy-remediation"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Re-evaluation is not a role grant; Changing a policy definition does not automatically update the associated managed identity per the boxed note.",
+          "sourceIds": ["az104-policy-remediation"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Remediate-resources How remediation access control works separates evaluation identity (caller) from remediation identity (assignment managed identity). Configure the managed identity note explicitly states later roleDefinitionIds edits require manual permission grants, even in the portal. Managed-identity location does not affect Policy operation.",
+      "confidenceReason": "The remediation article isolates the exact edited-roleDefinitionIds warning that matches the failure symptom."
+    },
+    {
+      "questionId": "az104-008",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "23e75972e2d5f01c66368825e66f64f2045d06dac5b891c94f916602a6f88d10",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-storage-sas",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\storage-sas.json",
+          "retrievedAt": "2026-09-11T19:18:16.011Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "User delegation SAS uses Microsoft Entra credentials; service and account SAS use account keys. Stored access policies apply to service SAS and provide permission revocation without key regeneration."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Storage-sas describes account SAS as signed with the storage account key regardless of the service subset.",
+          "sourceIds": ["az104-storage-sas"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Service SAS is signed with the account key with or without a stored access policy.",
+          "sourceIds": ["az104-storage-sas"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "User delegation SAS is signed with the user delegation key obtained with Microsoft Entra credentials, avoiding possession of an account key.",
+          "sourceIds": ["az104-storage-sas"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Short expiry does not change the account-key signing requirement of an ad hoc service SAS.",
+          "sourceIds": ["az104-storage-sas"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Storage-sas overview table shows user delegation SAS authorized via Microsoft Entra ID while service and account SAS are signed with Shared Key. The user delegation key requires the generateUserDelegationKey action, satisfying the delegation-permission precondition.",
+      "confidenceReason": "Table Type of SAS/authorization plus signing-key discussion directly answer the account-key-free requirement."
+    },
+    {
+      "questionId": "az104-009",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "3ad792f2203a2245e49384e3ce348c443a7be6c68d6c7516d3627f70ccb4c7f9",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-storage-sas",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\storage-sas.json",
+          "retrievedAt": "2026-09-11T19:18:16.011Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "User delegation SAS uses Microsoft Entra credentials; service and account SAS use account keys. Stored access policies apply to service SAS and provide permission revocation without key regeneration."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Ad hoc tokens embed their constraints in the URI; tracking them elsewhere does not create server-side revocation control.",
+          "sourceIds": ["az104-storage-sas"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Storage-sas describes a service SAS associated with a container stored access policy that inherits its constraints and supports revocation without regenerating account keys.",
+          "sourceIds": ["az104-storage-sas"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Storage-sas note explicitly states an account SAS must be ad hoc and cannot use a stored access policy.",
+          "sourceIds": ["az104-storage-sas"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Shortening future token expiries does not modify the permissions already granted to distributed tokens.",
+          "sourceIds": ["az104-storage-sas"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Storage-sas identifies the service SAS with stored access policy variant that inherits constraints from a server-side policy and can be updated or revoked without key rotation. The article also states account SAS and user delegation SAS must be ad hoc and cannot use stored access policies.",
+      "confidenceReason": "Storage-sas ad hoc vs stored access policy section and note isolate the revocation control asked for."
+    },
+    {
+      "questionId": "az104-010",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "819d748b3fb87345d754a428eed652e9d0548303bea9bcb2d3acd7f0c80bd57e",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-storage-redundancy",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\storage-redundancy.json",
+          "retrievedAt": "2026-09-11T19:18:21.001Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "ZRS supplies primary-zone redundancy; GZRS adds asynchronous secondary-region replication. RA-GZRS adds secondary read access without failover, with potential replication lag and no immediate secondary write access."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "GZRS without read access does not expose the secondary for reads until a failover is initiated per Read access to data in the secondary region.",
+          "sourceIds": ["az104-storage-redundancy"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "RA-GRS replicates within the primary region using LRS, not ZRS, so a primary-zone outage can interrupt reads and writes.",
+          "sourceIds": ["az104-storage-redundancy"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "ZRS alone has no geographically separate secondary region for reads during a regional outage.",
+          "sourceIds": ["az104-storage-redundancy"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "RA-GZRS supplies zone-redundant primary-region availability plus read access to the asynchronously replicated secondary without failover, accepting replication lag.",
+          "sourceIds": ["az104-storage-redundancy"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Storage-redundancy ZRS section confirms primary-zone read/write tolerance; GZRS builds on ZRS in the primary region and asynchronously replicates to a paired secondary; RA-GZRS enables secondary reads without failover. RA-GRS uses LRS in the primary region and does not tolerate zone loss.",
+      "confidenceReason": "Multiple named subsections separately substantiate the primary-zone, secondary-read and asynchronous-lag constraints."
+    },
+    {
+      "questionId": "az104-011",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "a9ff00f286cd4e41621def7242d6970f9b55fb873aaf96bd307ca44c863c1fc7",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-blob-replication",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/object-replication-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\blob-replication.json",
+          "retrievedAt": "2026-09-11T19:18:33.559Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "GA block-blob replication requires source change feed and both-account versioning. Archive blocks replication, rehydration needs a subsequent source data update, and active destination containers reject direct writes. Preview index-tag replication is not tested."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Blob tiering states rehydration alone does not trigger object replication and that replication requires a subsequent data update on the source blob once both copies are online.",
+          "sourceIds": ["az104-blob-replication"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Replication rules subsection states write operations to the destination container are not permitted while replication is active and return 409 Conflict.",
+          "sourceIds": ["az104-blob-replication"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Blob tiering explicitly requires a data update, and the article notes source-tier changes do not change destination tier.",
+          "sourceIds": ["az104-blob-replication"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Blob versioning subsection states versioning cannot be disabled while an object-replication policy is in effect.",
+          "sourceIds": ["az104-blob-replication"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Object-replication Blob tiering explicitly states rehydrating an archived blob does not trigger replication and that replication resumes only when the blob data is updated again after rehydration. Replication rules disallow direct writes to the destination container and versioning cannot be disabled while a replication policy exists.",
+      "confidenceReason": "Blob tiering, Replication rules and Blob versioning subsections independently support the correct action and each rejection."
+    },
+    {
+      "questionId": "az104-012",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "d44b5e00a2070e9ae4800ba455fa820982fc3beacbd156dde0a0e089b631227a",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-blob-softdelete",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\blob-softdelete.json",
+          "retrievedAt": "2026-09-11T19:20:34.530Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Without HNS or versioning, overwriting a protected blob creates a soft-deleted snapshot. Undelete restores snapshots and a copy promotes the chosen snapshot to current content; retention and versioning settings change recovery semantics."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Undelete restores blobs and snapshots but does not automatically promote a snapshot to replace the surviving base blob.",
+          "sourceIds": ["az104-blob-softdelete"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Versioning enabled retroactively does not create a version of a prior overwrite; the article covers the versionless overwrite path.",
+          "sourceIds": ["az104-blob-softdelete"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Overwrites with soft delete on create a soft-deleted snapshot; restoration is Undelete Blob followed by copying the desired snapshot over the base blob to promote it.",
+          "sourceIds": ["az104-blob-softdelete"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Soft-deleted data cannot be read without first restoring it, and disabling soft delete does not perform that restoration.",
+          "sourceIds": ["az104-blob-softdelete"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Soft-delete overview How overwrites are handled with soft delete and Restoring soft-deleted objects sections describe the two-step Undelete Blob then copy-snapshot promotion sequence when versioning is disabled. Soft-deleted content cannot be read without restoration.",
+      "confidenceReason": "Restoring soft-deleted objects paragraph literally documents the two-step promotion process to overwrite the base blob."
+    },
+    {
+      "questionId": "az104-013",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "dde53731c177561b71fc9b8944c5be2297d2e09309090ecdf40f51ecc5fc7920",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-blob-lifecycle",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\blob-lifecycle.json",
+          "retrievedAt": "2026-09-11T19:18:28.610Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Lifecycle rules combine filters with logical AND and can apply deletion to selected blobs. Deletion honors enabled soft delete, and lifecycle deletion does not remove an already-soft-deleted blob before retention ends."
+        },
+        {
+          "sourceId": "az104-blob-softdelete",
+          "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\blob-softdelete.json",
+          "retrievedAt": "2026-09-11T19:20:34.530Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Without HNS or versioning, overwriting a protected blob creates a soft-deleted snapshot. Undelete restores snapshots and a copy promotes the chosen snapshot to current content; retention and versioning settings change recovery semantics."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Lifecycle Known issues state the delete action places matching blobs into the soft-deleted state when soft delete is enabled instead of permanent deletion.",
+          "sourceIds": ["az104-blob-lifecycle", "az104-blob-softdelete"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Filters are combined with logical AND per the rule element table; matching only one filter does not select the blob.",
+          "sourceIds": ["az104-blob-lifecycle", "az104-blob-softdelete"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Soft delete does not prevent lifecycle delete from acting on current matching blobs; it changes the outcome to soft-deleted retention.",
+          "sourceIds": ["az104-blob-lifecycle", "az104-blob-softdelete"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Only the blob matching both prefix and tag filters is selected, and the lifecycle delete action honors soft delete by moving it to the soft-deleted state for the configured retention.",
+          "sourceIds": ["az104-blob-lifecycle", "az104-blob-softdelete"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Lifecycle overview Filters row states multiple filters are combined with a logical AND, so only the double-matching blob is selected. Known issues and limitations state the delete action places matching blobs into soft-deleted state when soft delete is enabled, rather than permanently deleting.",
+      "confidenceReason": "Filters AND semantics and soft-delete integration are both stated in the same lifecycle article."
+    },
+    {
+      "questionId": "az104-014",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "1958a67164ce82c9cbb84bced7b475495244a0f7bddc2b7c934945f9502dac5b",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-arm-modes",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deployment-modes",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\arm-modes.json",
+          "retrievedAt": "2026-09-11T19:18:31.543Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Incremental ARM deployments preserve omitted resources, not omitted properties of included resources. Included resources need their intended final non-default configuration; complete mode can delete omitted resources and is not recommended for new deletion workflows."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Complete mode deletes resources not present in the template and does not perform property-merge behavior on included resources.",
+          "sourceIds": ["az104-arm-modes"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Incremental mode reapplies the complete set of properties for included resources and resets omitted properties to defaults, so the fix is to include all required non-default properties.",
+          "sourceIds": ["az104-arm-modes"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Deployment-modes explicitly refutes partial-property incremental merging.",
+          "sourceIds": ["az104-arm-modes"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Removing the resource leaves it unchanged in incremental mode, so the intended update is not applied.",
+          "sourceIds": ["az104-arm-modes"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Deployment-modes Incremental mode section states all properties are reapplied and omitted properties are reset to defaults, requiring non-default final configuration. Complete mode deletes omitted resources and is not the property-preservation solution.",
+      "confidenceReason": "Incremental mode paragraph explicitly refutes the partial-property misunderstanding highlighted in the scenario."
+    },
+    {
+      "questionId": "az104-015",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "a592e6fc0eef4eab4513b21f6a60cc8353a90e5dbd78f5f6ddc1338d7bfcd0d7",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-arm-dependencies",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/resource-dependency",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\arm-dependencies.json",
+          "retrievedAt": "2026-09-11T19:20:26.890Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "ARM dependsOn arrays accept resource names or IDs to establish prerequisite order. Independent resources deploy in parallel; the dependent resource contains the array."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "dependsOn on the network interface with a resourceId expression makes the interface wait for the referenced virtual network per the resource-dependency example.",
+          "sourceIds": ["az104-arm-dependencies"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The dependsOn array explicitly accepts resource names or IDs including resourceId expressions, so the dependency edge is honored.",
+          "sourceIds": ["az104-arm-dependencies"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The dependsOn belongs to the network interface, so the interface depends on the network, not the reverse.",
+          "sourceIds": ["az104-arm-dependencies"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Independent resources deploy in parallel; one dependency does not force JSON textual serial ordering across the template.",
+          "sourceIds": ["az104-arm-dependencies"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Resource-dependency article and its network-interface example show dependsOn as an array of resource names or IDs that runs on the dependent resource. Independent resources deploy in parallel. The fragment matches the documented resourceId-style expression on the dependent resource.",
+      "confidenceReason": "The article example directly matches the shown resourceId expression pattern on a networkInterface resource."
+    },
+    {
+      "questionId": "az104-016",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "8d15b98d58cd7fd86ace0f468d87e0ece2643c58a0e2e4ed2a131f4fe6b21b31",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-vm-host-encryption",
+          "url": "https://learn.microsoft.com/en-us/azure/virtual-machines/disks-enable-host-based-encryption-portal",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\vm-host-encryption.json",
+          "retrievedAt": "2026-09-11T19:18:25.682Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Encryption at host uses platform-managed keys for temporary disks and the managed disks' selected key type for OS/data caches. Supported VM size and feature enablement prerequisites apply; VMs with Azure Disk Encryption history are restricted."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Temporary disks are always encrypted with platform-managed keys regardless of the disk key type.",
+          "sourceIds": ["az104-vm-host-encryption"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "When the disk is encrypted with customer-managed keys the cache for the disk uses customer-managed keys, per the intro paragraph.",
+          "sourceIds": ["az104-vm-host-encryption"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The article states temporary disks are encrypted at rest with platform-managed keys, not left unencrypted.",
+          "sourceIds": ["az104-vm-host-encryption"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Temporary disks use platform-managed keys while OS and data disk caches inherit the customer-managed key type from their managed disks.",
+          "sourceIds": ["az104-vm-host-encryption"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Encryption-at-host portal article introductory paragraph states temporary disks and ephemeral OS disks are encrypted with platform-managed keys and OS and data disk caches follow the disk key type (CMK when the disk is CMK). Restrictions list VMs with Azure Disk Encryption history and require deallocate/reallocate.",
+      "confidenceReason": "Introductory statement in the portal article directly maps to the temp-vs-cache key attribution asked in the scenario."
+    },
+    {
+      "questionId": "az104-017",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "8a392fec2b451f43b792fbbf6f167c5cc6593d159aa705c908a8081da7e1dbf8",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-vm-resize",
+          "url": "https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/resize-vm",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\vm-resize.json",
+          "retrievedAt": "2026-09-11T19:20:30.338Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "A desired VM size unavailable on the current host cluster can require deallocation. Resizing a running VM restarts it, deallocation releases dynamic addresses, and persistent OS/data disks are retained."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Regional availability does not guarantee the current hardware cluster supports the size; deallocation may still be required.",
+          "sourceIds": ["az104-vm-resize"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Stopping only the guest OS leaves the VM on the same allocated hardware cluster, which cannot supply the size.",
+          "sourceIds": ["az104-vm-resize"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Resize is disruptive, cluster availability may require deallocation, OS and data disks persist and deallocation releases dynamic IPs per the article.",
+          "sourceIds": ["az104-vm-resize"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Deallocating a VM releases its dynamic public IP address; the address is not guaranteed to persist across allocation.",
+          "sourceIds": ["az104-vm-resize"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Resize-vm article states deallocation may be required when the desired size is unavailable on the current hardware cluster, resizing a running VM restarts it, and deallocation releases dynamic IP addresses while retaining OS and data disks.",
+      "confidenceReason": "Introductory notes and warnings on resize-vm articulate cluster availability, restart and dynamic-IP release in one place."
+    },
+    {
+      "questionId": "az104-018",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "aeb584e22f3092526501d8db550e4f8408b10ea8f71c9d81074dffae9aba1a83",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-aci-restart",
+          "url": "https://learn.microsoft.com/en-us/azure/container-instances/container-instances-restart-policy",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\aci-restart.json",
+          "retrievedAt": "2026-09-11T19:20:32.706Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "ACI OnFailure explicitly retries nonzero process exits without repeating successful completion. Always repeats completed processes; current Never documentation allows some platform restarts after nonzero exits."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "OnFailure is the only policy documented to restart specifically on nonzero exit codes while leaving successful completion stopped.",
+          "sourceIds": ["az104-aci-restart"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Always restarts containers on successful completion as well, contradicting the desire to stop after a zero-exit success.",
+          "sourceIds": ["az104-aci-restart"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Never only guarantees no restart on zero exit; the platform can still restart the container on nonzero exit codes per the article.",
+          "sourceIds": ["az104-aci-restart"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Container-restart-policy article defines OnFailure as restart only on nonzero exit and containers are run at least once, Always as restart even after zero exit (default) and Never as no restart on zero exit while noting the platform may still restart on nonzero exits.",
+      "confidenceReason": "The restart-policy table plus Restart behavior with nonzero exit codes section make each option unambiguous."
+    },
+    {
+      "questionId": "az104-019",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "8afceab640a758e64ff0234c2afeecd4c1c7ae4e938475ccd1ffb27a6f846f8b",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-containerapps-scale",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\containerapps-scale.json",
+          "retrievedAt": "2026-09-11T19:18:19.996Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Container Apps limits and event rules jointly control replicas. A no-ingress app without custom rules can be stranded at zero; Service Bus rules support managed identity, configured through CLI or ARM rather than the portal, with single mode for non-HTTP event scaling."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The default HTTP rule cannot wake a zero-replica worker on Service Bus messages when ingress is disabled per the closing note.",
+          "sourceIds": ["az104-containerapps-scale"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "CLI or ARM is required for managed-identity authentication on a Service Bus scale rule with single revision mode; minReplicas remains zero to satisfy scale-to-zero.",
+          "sourceIds": ["az104-containerapps-scale"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Setting minReplicas to 1 violates the explicit zero-instance idle requirement.",
+          "sourceIds": ["az104-containerapps-scale"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Configuring a connection-string secret violates the no-stored-secrets requirement even though scale-app supports secret-based authentication.",
+          "sourceIds": ["az104-containerapps-scale"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Scale-app article warns that with ingress disabled and no rule or minReplicas the app scales to zero with no way to start; recommends a custom rule; requires single revision mode for non-HTTP event scale rules; states Service Bus rules support managed identity but the portal does not support managed identity authentication so CLI or ARM must be used.",
+      "confidenceReason": "The zero-ingress note, single-revision requirement, managed-identity support and portal limitation are all in scale-app."
+    },
+    {
+      "questionId": "az104-020",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "7246eeda688bb2ba9fe7fe09510c114de0fc107619db8c08a241d04018b0f422",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-appservice-slots",
+          "url": "https://learn.microsoft.com/en-us/azure/app-service/deploy-staging-slots",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\appservice-slots.json",
+          "retrievedAt": "2026-09-11T19:18:15.027Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Supported App Service tiers provide slots for content swaps and rollback. Connection strings can be marked slot-specific; target settings may be applied to source instances during swap warm-up."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Slot host names do not make an unmarked connection string sticky; unmarked connection strings swap with the content.",
+          "sourceIds": ["az104-appservice-slots"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Overwriting both slots with the test setting eliminates the production database configuration.",
+          "sourceIds": ["az104-appservice-slots"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Marking the connection string as a Deployment slot setting preserves per-slot database targets while a same-direction re-swap performs the requested content rollback.",
+          "sourceIds": ["az104-appservice-slots"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Deleting the staging slot removes the retained previous production content that enables the slot-based rollback.",
+          "sourceIds": ["az104-appservice-slots"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Deploy-staging-slots article states Standard, Premium and Isolated support slots; after a swap the source slot holds the previous production content so a same-direction swap performs rollback; connection strings can be marked as slot-specific via the Deployment slot setting checkbox so they do not swap.",
+      "confidenceReason": "The tier list, slot-setting checkbox description and post-swap rollback text sit in the same authoritative article."
+    },
+    {
+      "questionId": "az104-021",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "a23f753a9efd1d81b288722c0777b4d1c4ff39f92e8bf21033013c16ba77a9f2",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-appservice-privateendpoint",
+          "url": "https://learn.microsoft.com/en-us/azure/app-service/overview-private-endpoint",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\appservice-privateendpoint.json",
+          "retrievedAt": "2026-09-11T19:20:35.911Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "App Service private endpoints provide inbound Private Link access, not outbound app connectivity. Public access must be explicitly disabled for isolation, private DNS must be configured, and the private endpoint subnet must differ from the integration subnet."
+        },
+        {
+          "sourceId": "az104-appservice-vnetintegration",
+          "url": "https://learn.microsoft.com/en-us/azure/app-service/overview-vnet-integration",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\appservice-vnetintegration.json",
+          "retrievedAt": "2026-09-11T19:20:38.293Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "App Service VNet integration provides outbound access to private network resources on supported dedicated tiers. It does not provide private inbound app access and uses an appropriately sized dedicated subnet."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "VNet integration is outbound only per overview-vnet-integration and provides no private inbound path to the app.",
+          "sourceIds": [
+            "az104-appservice-privateendpoint",
+            "az104-appservice-vnetintegration"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "App Service private endpoints are documented as inbound-only per overview-private-endpoint and do not carry outbound app calls.",
+          "sourceIds": [
+            "az104-appservice-privateendpoint",
+            "az104-appservice-vnetintegration"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Private-endpoint article requires a different subnet from VNet integration and states public access must be explicitly disabled to isolate the app.",
+          "sourceIds": [
+            "az104-appservice-privateendpoint",
+            "az104-appservice-vnetintegration"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Private endpoint provides inbound isolation once public access is disabled, VNet integration in a separate subnet supplies outbound to the private database, and DNS resolves the app privately.",
+          "sourceIds": [
+            "az104-appservice-privateendpoint",
+            "az104-appservice-vnetintegration"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Overview-private-endpoint states private endpoints handle inbound only and outbound traffic is inbound-endpoint independent, that VNet integration must use a different subnet, that private endpoints and public access can coexist so public network access must be explicitly disabled and that a private DNS zone is required. Overview-vnet-integration confirms outbound-only integration on eligible tiers.",
+      "confidenceReason": "Both cited App Service networking articles align on inbound vs outbound roles, subnet separation and explicit public-access disablement."
+    },
+    {
+      "questionId": "az104-022",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "795aa5c98507a68dc6b9e98e6279fb614e64b45319198435a9f60f2c892ebe5d",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-nsg-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\nsg-overview.json",
+          "retrievedAt": "2026-09-11T19:18:14.944Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "NSGs process lower numeric priorities first and stop at the first match. Stateful flow records preserve established connections after rule changes while new connections use the updated rules."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Rules are processed in priority order lowest first and processing stops on match, so priority 220 denies the connection.",
+          "sourceIds": ["az104-nsg-overview"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Lower numbers are higher priority; a larger priority number is not preferred.",
+          "sourceIds": ["az104-nsg-overview"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A later matching allow does not override an earlier matching deny; processing stops at the first match.",
+          "sourceIds": ["az104-nsg-overview"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Only identical priority and direction is a conflict; the two shown rules differ in priority and coexist.",
+          "sourceIds": ["az104-nsg-overview"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Network-security-groups-overview Priority row states rules run in ascending numeric order and processing stops on the first match; conflict is only rejected for identical priority and direction. Priority 220 fires first and denies.",
+      "confidenceReason": "Priority row of the rule properties table directly encodes the answer and rejects the distractor claims."
+    },
+    {
+      "questionId": "az104-023",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "a59e1079d932c419dcc1f81da8cfc665c48e4a0bf46f70522e3e8109f504872c",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-nsg-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\nsg-overview.json",
+          "retrievedAt": "2026-09-11T19:18:14.944Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "NSGs process lower numeric priorities first and stop at the first match. Stateful flow records preserve established connections after rule changes while new connections use the updated rules."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The stateful behavior applies to TCP and UDP flows alike per the flow-record paragraph.",
+          "sourceIds": ["az104-nsg-overview"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "NSG flow records are stateful; rule changes affect only new connections, so the current SSH session survives while new attempts are denied.",
+          "sourceIds": ["az104-nsg-overview"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "DenyAllInbound at 65500 is the default, and no default rule provides internet-to-SSH allow.",
+          "sourceIds": ["az104-nsg-overview"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Existing flow records preserve state; they do not create replacement NSG rules.",
+          "sourceIds": ["az104-nsg-overview"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Network-security-groups-overview Security rules paragraph explicitly walks through an SSH session remaining connected after removing its allow rule while new SSH connections are blocked. NSGs are stateful via flow records.",
+      "confidenceReason": "The article uses the exact SSH example, aligning line-for-line with the scenario."
+    },
+    {
+      "questionId": "az104-024",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "7933cced7cb6dcd25fd84cd5534cb751170e33ea7c8683b9dfc287cd78cedd37",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-routing",
+          "url": "https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-udr-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\routing.json",
+          "retrievedAt": "2026-09-11T19:18:20.545Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Azure chooses the longest matching route prefix before applying route-source precedence to equal prefixes. Preferred VNet, peering and service-endpoint system routes have documented exceptions excluded from the tested scenario."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "For equal prefixes the documented order is user-defined then BGP then system, not BGP first.",
+          "sourceIds": ["az104-routing"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A UDR 0.0.0.0/0 default route can match private and public addresses alike; the routing article does not carve out private destinations.",
+          "sourceIds": ["az104-routing"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Longest prefix wins first so BGP /24 beats UDR /0, and equal-prefix tie-breaking by source only applies for identical prefixes.",
+          "sourceIds": ["az104-routing"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "The article specifies a most-specific-route decision, not load balancing across unequal prefixes.",
+          "sourceIds": ["az104-routing"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Virtual-networks-udr-overview How Azure selects routes section states longest prefix match is applied first, then route source order (user-defined, BGP, system) breaks equal-prefix ties. Preferred exceptions and service-endpoint routes are excluded by the scenario.",
+      "confidenceReason": "The two-step selection algorithm and its exceptions are stated in the same article the source cites."
+    },
+    {
+      "questionId": "az104-025",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "a689d19652cb70afb4b191745d2159c06625f703c11edc69ecc2994a8c52a43a",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-dns-links",
+          "url": "https://learn.microsoft.com/en-us/azure/dns/private-dns-virtual-network-links",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\dns-links.json",
+          "retrievedAt": "2026-09-11T19:20:26.680Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "A private DNS zone link without autoregistration permits linked VMs to resolve zone records without automatically adding their own records. Only one link is allowed for a particular virtual-network/zone pair."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Autoregistration would automatically create records for both existing and new VMs in the linked network, violating the requirement.",
+          "sourceIds": ["az104-dns-links"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Only one link between a private DNS zone and a given virtual network is supported per Other considerations.",
+          "sourceIds": ["az104-dns-links"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Without a link, VMs in the network cannot resolve records in the private zone regardless of manually created records.",
+          "sourceIds": ["az104-dns-links"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Linking without autoregistration makes the network a resolution network whose VMs query zone records without registering their own names.",
+          "sourceIds": ["az104-dns-links"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Private-dns-virtual-network-links article defines a resolution virtual network as one linked without autoregistration whose VMs can query zone records but do not register their own, and explicitly permits only one link between a private DNS zone and a virtual network.",
+      "confidenceReason": "Registration virtual network and Resolution virtual network sections plus Other considerations directly encode the choice."
+    },
+    {
+      "questionId": "az104-026",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "b2a9088cec30e372924fd0ab116298f61efd56a09cf79b3476e14f3aa7d478ef",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-loadbalancer-probes",
+          "url": "https://learn.microsoft.com/en-us/azure/load-balancer/load-balancer-custom-probe-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\loadbalancer-probes.json",
+          "retrievedAt": "2026-09-11T19:20:30.143Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Standard Load Balancer probes determine backend eligibility for new connections. IPv4 probes originate from 168.63.129.16 and must pass both NSG rules and the guest firewall to reach the configured listener."
+        },
+        {
+          "sourceId": "az104-nsg-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\nsg-overview.json",
+          "retrievedAt": "2026-09-11T19:18:14.944Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "NSGs process lower numeric priorities first and stop at the first match. Stateful flow records preserve established connections after rule changes while new connections use the updated rules."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "IPv4 probes originate from 168.63.129.16 and must be permitted in both NSGs and local firewall policies, so allowing that source in the guest firewall unblocks the probe.",
+          "sourceIds": ["az104-loadbalancer-probes", "az104-nsg-overview"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Changing the probe interval does not make the local firewall accept the blocked source address.",
+          "sourceIds": ["az104-loadbalancer-probes", "az104-nsg-overview"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The documented probe source is 168.63.129.16, not the load-balancer frontend public IP.",
+          "sourceIds": ["az104-loadbalancer-probes", "az104-nsg-overview"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "The NSG already permits AzureLoadBalancer probes and client access is working; the failure is in the guest firewall, not NSG client rules.",
+          "sourceIds": ["az104-loadbalancer-probes", "az104-nsg-overview"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Load-balancer-custom-probe-overview Probe source IP address section states IPv4 probes originate from 168.63.129.16 and must be allowed in NSGs and local firewalls; NSG article documents AzureLoadBalancer service-tag default. The scenario failure narrows to the local firewall block.",
+      "confidenceReason": "The Probe source IP address section maps the exact firewall symptom to the required fix."
+    },
+    {
+      "questionId": "az104-027",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "5c4f4c6e106c9cfe05b83f20d1869c559b56cb97e0cdc6be722208a4d189cad5",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-alert-processing",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-processing-rules",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\alert-processing.json",
+          "retrievedAt": "2026-09-11T19:18:27.431Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Alert processing rules can suppress action groups for scoped, scheduled maintenance while fired alerts remain visible. Scope and propagation must be considered; Service Health alerts are outside this feature."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Disabling the alert rules stops them firing and, being shared, also silences resources outside maintenance.",
+          "sourceIds": ["az104-alert-processing"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "A scheduled alert processing rule scoped to the maintenance RG suppresses action groups while the fired alerts remain visible, matching the documented maintenance pattern.",
+          "sourceIds": ["az104-alert-processing"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Deleting shared action groups affects unrelated resources and is not the scheduled scoped suppression control offered by the feature.",
+          "sourceIds": ["az104-alert-processing"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "An unfiltered subscription scope suppresses notifications for resources that must keep notifying normally.",
+          "sourceIds": ["az104-alert-processing"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Alerts-processing-rules Suppress notifications during planned maintenance section recommends a scoped, scheduled processing rule that removes action groups from fired alerts, leaving the alerts visible; it also warns that disabling alert rules stops the alerts from firing.",
+      "confidenceReason": "The maintenance suppression use case is the exact scenario the article walks through, with tradeoffs enumerated."
+    },
+    {
+      "questionId": "az104-028",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "c5feccc8865fa6210cf08ffa3c703bce799c0c0bbcc955ed64f1a675b6d2af39",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-diagnostic-settings",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-monitor/platform/diagnostic-settings",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\diagnostic-settings.json",
+          "retrievedAt": "2026-09-11T19:20:32.292Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Resource logs need diagnostic settings. A setting can route to multiple destination types but at most one destination of each type; two Log Analytics workspaces therefore require separate settings."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A single setting cannot include two destinations of the same type per the requirements bullet.",
+          "sourceIds": ["az104-diagnostic-settings"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "One setting may fan out to multiple destination types, so a third setting is unnecessary for the mixed workspace-plus-storage design.",
+          "sourceIds": ["az104-diagnostic-settings"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Two Log Analytics workspaces require two settings, and storage can be added to one of them since a setting may hold one destination of each type.",
+          "sourceIds": ["az104-diagnostic-settings"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Resource logs are not collected by default; diagnostic settings must select and route them.",
+          "sourceIds": ["az104-diagnostic-settings"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Diagnostic-settings article Requirements bullet states a single diagnostic setting can define no more than one of each destination type and multiple destinations of the same type require multiple settings, and each resource can have up to five settings. Diagnostic settings are what select and route resource logs.",
+      "confidenceReason": "The per-type destination limit and per-resource setting cap are stated in a single Requirements bullet."
+    },
+    {
+      "questionId": "az104-029",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "24a8c59548d24a01336d192dedca696809baff97341b3eab91fccd30e049f29b",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-backup-vm-softdelete",
+          "url": "https://learn.microsoft.com/en-us/azure/backup/soft-delete-virtual-machines",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\backup-vm-softdelete.json",
+          "retrievedAt": "2026-09-11T19:34:46.598Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "For a soft-deleted Azure VM backup, first use Undelete to recover the retained restore points. The item returns to stopped protection with retained data, permitting Restore VM or a later Resume backup; a fresh backup is not a prerequisite."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Retention configuration is not the item-recovery operation; the documented step is Undelete first.",
+          "sourceIds": ["az104-backup-vm-softdelete"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Resume backup only after Undelete returns the item to Stop protection with retain data per the documented flow.",
+          "sourceIds": ["az104-backup-vm-softdelete"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The article states retained restore points are used for the restore operation after Undelete; a fresh backup is not a prerequisite.",
+          "sourceIds": ["az104-backup-vm-softdelete"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Undelete restores the soft-deleted backup item and its retained restore points, permitting Restore VM from that data as documented in the portal steps.",
+          "sourceIds": ["az104-backup-vm-softdelete"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Soft-delete-virtual-machines walkthrough explicitly says the soft-deleted VM item must first be Undeleted; that returns the item to Stop protection with retain data with all restore points available, from which Restore VM or later Resume backup can be initiated. No fresh backup is required.",
+      "confidenceReason": "The step-by-step portal procedure literally names the Undelete-first sequence and the Stop-with-retain-data end state."
+    },
+    {
+      "questionId": "az104-030",
+      "authorId": "dungeon-author-az104",
+      "reviewerId": "dungeon-verify-az104",
+      "questionFingerprint": "956516dfa49445ebf22fe884278bbef18b730dc091411fc396accb0e6c18ef9b",
+      "reviewedAt": "2026-09-11T20:11:35.023Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "az104-asr-test-failover",
+          "url": "https://learn.microsoft.com/en-us/azure/site-recovery/site-recovery-test-failover-to-azure",
+          "evidencePath": ".grounding\\dungeon\\az-104\\raw\\asr-test-failover.json",
+          "retrievedAt": "2026-09-11T19:18:33.317Z",
+          "lastReviewedAt": "2026-09-11T20:11:35.023Z",
+          "supportingSummary": "Site Recovery test failover supports isolated drills. Latest processed avoids processing additional received data, whereas Latest processes received data to favor recovery-point freshness; application-consistent choices serve distinct consistency requirements."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Latest processed uses the most recent recovery point already processed by Site Recovery and does not spend time processing additional received data, matching the stated priority.",
+          "sourceIds": ["az104-asr-test-failover"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Latest first processes all data sent to Site Recovery to build a fresh recovery point before failover, which the scenario explicitly rules out.",
+          "sourceIds": ["az104-asr-test-failover"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Latest app-consistent chooses the latest application-consistent point, which the scenario says it does not require.",
+          "sourceIds": ["az104-asr-test-failover"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Latest multi-VM app-consistent targets multi-VM consistency groups and enforces application consistency, neither of which is required here.",
+          "sourceIds": ["az104-asr-test-failover"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Site-recovery-test-failover-to-azure Recovery Point section states Latest processed fails over to the most recent processed recovery point without processing additional data, giving low RTO, while Latest processes received data before failover and app-consistent choices target consistency requirements.",
+      "confidenceReason": "The recovery-point bullet list distinguishes latest processed from latest and both app-consistent variants."
+    }
+  ]
+}

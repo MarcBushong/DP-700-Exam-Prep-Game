@@ -19,10 +19,11 @@ import {
 } from '../components/common';
 import { banterLevels } from '../features/personality/catalog';
 import { readBanterLevel } from '../features/personality/reactions';
+import { credentials } from '../features/dungeons/catalog';
 
 const banterOptions = {
   full: {
-    label: 'Full Banter',
+    label: 'Full',
     description: 'Answer reactions, summaries, and extra contextual moments.',
   },
   balanced: {
@@ -30,12 +31,12 @@ const banterOptions = {
     description: 'Short reactions after answers and in the session summary.',
   },
   reduced: {
-    label: 'Reduced Banter',
+    label: 'Reduced',
     description: 'Occasional mild encouragement, plus a short summary.',
   },
   none: {
-    label: 'No Banter',
-    description: 'Direct technical feedback only. No host reactions.',
+    label: 'Silent',
+    description: 'Direct technical feedback only. No Dungeon Master reactions.',
   },
 };
 
@@ -54,8 +55,8 @@ export function SettingsPage() {
   return (
     <div className="information-page">
       <PageHeading
-        title="A space that suits you."
-        description="A few thoughtful settings. No account required."
+        title="Set the atmosphere."
+        description="Your dungeon, your comfort. These settings never change the answers."
       />
       <section className="panel settings-section">
         <h2>Make yourself comfortable.</h2>
@@ -64,8 +65,8 @@ export function SettingsPage() {
           <div className="theme-options">
             {(
               [
-                { value: 'dark', label: 'Dark ink', icon: Moon },
-                { value: 'light', label: 'Warm light', icon: Sun },
+                { value: 'dark', label: 'Shadow · dark', icon: Moon },
+                { value: 'light', label: 'Torch · light', icon: Sun },
                 { value: 'system', label: 'Follow system', icon: Monitor },
               ] as const
             ).map(({ value, label, icon: Icon }) => (
@@ -96,7 +97,7 @@ export function SettingsPage() {
           </div>
         </fieldset>
         <fieldset className="banter-settings">
-          <legend>Game host personality</legend>
+          <legend>DM chattiness</legend>
           <p className="small muted">
             Applies everywhere. Technical explanations and scoring never change.
           </p>
@@ -123,7 +124,7 @@ export function SettingsPage() {
         </fieldset>
         <label className="preference-option">
           <span>
-            <strong>Reduce motion</strong>
+            <strong>Calm dungeon · reduce motion</strong>
             <small>
               Remove decorative animation and transitions. Your system’s
               reduced-motion preference is always respected too.
@@ -148,8 +149,8 @@ export function SettingsPage() {
           <h2>Your data, in this browser.</h2>
         </div>
         <p>
-          Preferences, your challenge configuration, and up to 30 completed
-          sessions are stored locally. You currently have{' '}
+          Preferences, your hero class, favorite dungeons, configuration, and up
+          to 30 completed sessions are stored locally. You currently have{' '}
           <strong>
             {history.length} saved session{history.length === 1 ? '' : 's'}
           </strong>
@@ -230,30 +231,25 @@ export function SettingsPage() {
 }
 
 export function AboutPage() {
-  const { taxonomy, manifest, bank } = useGame();
-  const certification = manifest.sources.find((source) =>
-    /\/credentials\/certifications\/fabric-data-engineer-associate\/?$/.test(
-      source.url,
-    ),
-  );
-  const course = manifest.sources.find((source) =>
-    /\/training\/courses\/dp-700t00\/?$/.test(source.url),
+  const { taxonomy, manifest, bank, selectedCredentialId } = useGame();
+  const credential = credentials.find(
+    (item) => item.credentialId === selectedCredentialId,
   );
   return (
     <div className="about-page">
       <PageHeading
         title="Built for learning. Not for shortcuts."
-        description="An independent, local practice space for aspiring Fabric data engineers."
+        description="An independent technical study adventure. The theme is playful; the evidence is not."
       />
       <section className="about-intro panel">
         <ShieldCheck size={34} aria-hidden="true" />
         <div>
           <h2>Unofficial. Original. Transparent.</h2>
           <p>
-            Fabric Data Engineer Challenge is an unofficial study aid. It is{' '}
+            The Certification Dungeon is an unofficial study aid. It is{' '}
             <strong>
               not affiliated with, sponsored by, or endorsed by Microsoft or
-              Microsoft Certification
+              Microsoft Certification or GitHub
             </strong>
             .
           </p>
@@ -266,6 +262,12 @@ export function AboutPage() {
           <p>
             Microsoft, Microsoft Fabric, and other product names and trademarks
             belong to their respective owners. No official logos are used.
+          </p>
+          <p>
+            The Dungeon Master is a locally selected narrator, not a runtime AI.
+            Fantasy names, boss banners, HP, XP, and loot are a separate
+            cosmetic layer. They never alter a technical question, answer,
+            explanation, source, timer, or score.
           </p>
         </div>
       </section>
@@ -280,7 +282,9 @@ export function AboutPage() {
           <p>
             <strong>No model or AI service runs in this app.</strong> Questions
             are selected from {bank.length} bundled originals; adaptive mode
-            rearranges remaining questions, rather than generating content.
+            rearranges remaining questions, rather than generating content. This
+            page describes the selected{' '}
+            {credential?.examCode ?? selectedCredentialId} package.
           </p>
           <dl className="about-dates">
             <div>
@@ -318,7 +322,7 @@ export function AboutPage() {
           </p>
           <p>
             After the app is served locally, it makes no external network
-            requests. Documentation links go to Microsoft Learn only when you
+            requests. Documentation links go to official sources only when you
             choose to open them.
           </p>
           <p>
@@ -351,31 +355,24 @@ export function AboutPage() {
         <ul>
           <li>
             <LearnLink href={taxonomy.studyGuideUrl}>
-              DP-700 study guide and measured objectives
+              {credential?.examCode ?? selectedCredentialId} study guide and
+              measured objectives
             </LearnLink>
           </li>
-          <li>
-            <LearnLink
-              href={
-                certification?.url ??
-                'https://learn.microsoft.com/en-us/credentials/certifications/fabric-data-engineer-associate/'
-              }
-            >
-              {certification?.title ??
-                'Microsoft Certified: Fabric Data Engineer Associate'}
-            </LearnLink>
-          </li>
-          <li>
-            <LearnLink
-              href={
-                course?.url ??
-                'https://learn.microsoft.com/en-us/training/courses/dp-700t00'
-              }
-            >
-              {course?.title ??
-                'DP-700: Implementing Data Engineering Solutions Using Microsoft Fabric'}
-            </LearnLink>
-          </li>
+          {credential?.officialUrls.credential && (
+            <li>
+              <LearnLink href={credential.officialUrls.credential}>
+                {credential.currentName ?? 'Official credential page'}
+              </LearnLink>
+            </li>
+          )}
+          {credential?.officialUrls.training && (
+            <li>
+              <LearnLink href={credential.officialUrls.training}>
+                Official preparation material
+              </LearnLink>
+            </li>
+          )}
         </ul>
         <p className="small muted">
           The study guide is the authority for exam objectives. Use the
@@ -422,10 +419,10 @@ export function NotFoundPage() {
       </p>
       <div className="actions">
         <Link to="/" className="button primary">
-          Back to overview <ArrowRight size={18} aria-hidden="true" />
+          Back to dungeon map <ArrowRight size={18} aria-hidden="true" />
         </Link>
         <Link to="/setup" className="button secondary">
-          Configure challenge
+          Prepare a run
         </Link>
       </div>
     </section>

@@ -5,9 +5,17 @@ import {
   reportMarkdown,
 } from '../src/features/grounding/report';
 import { argument, isMain, loadContent } from './validate-questions';
+import { examDirectory } from './content-files';
 
 export async function buildReportData() {
-  return buildContentReport(await loadContent(true));
+  const content = await loadContent(true);
+  return buildContentReport(
+    content,
+    undefined,
+    'packageManifest' in content
+      ? content.packageManifest.readinessThresholds
+      : undefined,
+  );
 }
 
 export async function buildReport() {
@@ -17,7 +25,7 @@ export async function buildReport() {
 export async function runReport() {
   const report = await buildReportData();
   if (process.argv.includes('--write')) {
-    const output = resolve(argument('--output') ?? 'docs');
+    const output = resolve(argument('--output') ?? examDirectory());
     await mkdir(output, { recursive: true });
     for (const [name, text] of [
       ['content-coverage.md', reportMarkdown(report)],

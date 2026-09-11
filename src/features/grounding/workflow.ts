@@ -3,7 +3,7 @@ import {
   complexities,
   difficulties,
   formats,
-  learnUrlSchema,
+  officialSourceUrlSchema,
   questionSchema,
   timestampSchema,
   verificationStatuses,
@@ -13,7 +13,7 @@ const text = z.string().trim().min(1);
 export const evidenceReferenceSchema = z
   .object({
     sourceId: text,
-    url: learnUrlSchema,
+    url: officialSourceUrlSchema,
     evidencePath: text,
     retrievedAt: timestampSchema,
     lastReviewedAt: timestampSchema,
@@ -27,6 +27,8 @@ export const generationRequestSchema = z
     requestId: text,
     createdAt: timestampSchema,
     authorId: text,
+    credentialId: text.default('dp-700'),
+    objectiveVersion: text.optional(),
     requestedCount: z.number().int().min(1).max(300),
     objectiveTargets: z
       .array(
@@ -40,6 +42,9 @@ export const generationRequestSchema = z
       )
       .min(1),
     difficulties: z.array(z.enum(difficulties)).min(1),
+    difficultyMix: z
+      .partialRecord(z.enum(difficulties), z.number().positive().max(100))
+      .optional(),
     complexities: z.array(z.enum(complexities)).min(1),
     questionTypes: z.array(z.enum(formats)).min(1),
     studyGuideEffectiveDate: text,
@@ -54,7 +59,32 @@ export const generationRequestSchema = z
     supportingEvidence: z.array(evidenceReferenceSchema),
     constraints: z.array(text).min(1),
   })
-  .strict();
+  .strict()
+  .superRefine((request, context) => {
+    if (new Set(request.difficulties).size !== request.difficulties.length)
+      context.addIssue({
+        code: 'custom',
+        message: 'Requested difficulties must be distinct.',
+      });
+    if (request.difficultyMix) {
+      const entries = Object.entries(request.difficultyMix);
+      if (
+        entries.reduce((sum, [, value]) => sum + value, 0) !== 100 ||
+        entries.length !== request.difficulties.length ||
+        entries.some(
+          ([key]) =>
+            !request.difficulties.includes(
+              key as (typeof difficulties)[number],
+            ),
+        )
+      )
+        context.addIssue({
+          code: 'custom',
+          message:
+            'Difficulty mix must sum to 100 and match the selected difficulties.',
+        });
+    }
+  });
 
 export const generationOutputSchema = z
   .object({

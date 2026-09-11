@@ -1,18 +1,18 @@
-# Fabric Data Engineer Challenge
+# The Certification Dungeon
 
-**DP-700 Exam Prep Without the Boring Parts**
+**Bring a torch. Bring evidence. Leave the exam dumps outside.**
 
-A browser-based, documentation-grounded trivia app for practicing data engineering with
-Microsoft Fabric. Configure a challenge, work through original questions, learn
-why each alternative does or does not fit, and turn actual missed topics into a
-focused study plan.
+A browser-based technical study platform disguised as a dungeon crawl. Choose
+a hero class, explore the credential map, and enter only dungeons with enough
+independently verified encounters. A rogue Dungeon Master supplies the flavor;
+official documentation supplies the facts.
 
-**Unofficial study aid. Not affiliated with or endorsed by Microsoft
-Certification. This is not an official practice exam.**
+**Unofficial study aid. Not affiliated with or endorsed by Microsoft or GitHub
+Certification. Not an official exam, practice assessment, or source of real exam questions.**
 
 ## Launch in your browser
 
-**[Launch Fabric Data Engineer Challenge](https://marcbushong.github.io/DP-700-Exam-Prep-Game/)**
+**[Enter The Certification Dungeon](https://marcbushong.github.io/DP-700-Exam-Prep-Game/)**
 
 The app is live on GitHub Pages. This repository is public, so a GitHub Pro
 upgrade is not required to host it. The app and its bundled question bank are public.
@@ -37,17 +37,53 @@ No account, API key, database, Azure subscription, Docker, or environment
 variables are required. Initial dependency installation needs internet access.
 The quiz itself uses bundled content and does not call an AI service.
 
-**Grounded on September 11, 2026**, against the **July 21, 2026** DP-700 study
-guide. Exact retrieval and review timestamps are in
-[`src/data/grounding-manifest.json`](src/data/grounding-manifest.json);
-the app also displays its grounding date. This bank is versioned, **not always
-current**. Product behavior and exam objectives change.
+Every dungeon has its own source manifest, objective version, evidence ledger,
+and readiness state under [`src/content/exams/`](src/content/exams/). Exact
+retrieval and review timestamps appear in the packages and catalog. These banks
+are versioned, **not always current**. Product behavior and objectives change.
 
-## Screenshot
+## Choose your expedition
 
-![Dark-theme landing page with challenge setup, objective domains, and grounding information](docs/screenshots/landing.png)
+The **Dungeon Map** supports generic hero-class filters, code/name/product
+search, favorites, and visible readiness. **The Tavern** shows local progress
+and sample-aware recommendations. **The Forge** prepares maintainer generation
+requests; it does not call a model or generate answers in the browser.
 
-Actual locally running application. Light and system themes are available in Settings.
+**Torchlight Runs** are study sessions with explanations and tome links.
+**Boss Gauntlets** withhold feedback until the end and require a larger,
+broader verified bank. Their timer is a configurable practice timer, not an
+invented official exam duration. **Raids** mix eligible dungeons without letting
+one large bank dominate, and preserve each encounter's source and floor scores.
+
+A catalog entry is not an open dungeon. By default, Study Runs require at least
+25 verified encounters and every major floor; Gauntlets require at least 75,
+skill breadth, boss-tier content, and no blocking failures. Sealed, stale,
+retiring, beta, and insufficiently reviewed content stays out of play.
+
+The map represents all 18 requested identifiers. AZ-800 is explicitly retiring;
+GH-600 is beta; DP-420 is sealed because its captured objective outline is
+future-dated. Undated outlines use clearly labelled retrieved-content versions,
+not invented effective dates. Other mapped credentials without a reviewed
+package remain sealed even when their identity and current outline are verified.
+
+### Playable content in this revision
+
+| Dungeon                         | Verified encounters | Modes                   |
+| ------------------------------- | ------------------: | ----------------------- |
+| DP-700: The Fabric Depths       |                 162 | Study and Boss Gauntlet |
+| AZ-104: The Infrastructure Keep |                  30 | Study                   |
+| SC-200: The Sentinel Watch      |                  30 | Study                   |
+| AI-103: The AI Workshop         |                  30 | Study                   |
+| GH-300: The Copilot Spire       |                  30 | Study                   |
+
+**282 verified encounters**, with zero manual-review-required, rejected, or
+stale records in the installed packages. All major floors are sampled; the
+four smaller banks deliberately retain subskill gaps and keep their gauntlets
+locked. The other **13 catalog entries are sealed**. See the
+[implementation and coverage report](docs/dungeon-implementation-report.md)
+for source evidence, exact coverage, lifecycle states, and remaining work.
+
+![The Certification Dungeon map with original castle artwork, hero-class selection, and five open dungeons](docs/screenshots/dungeon-map.png)
 
 ## Features
 
@@ -58,15 +94,17 @@ Actual locally running application. Light and system themes are available in Set
 - Random, study-guide, weakest-first, and weighted exam-style question order.
 - Immediate answers, explanations only, deferred answers, study coaching, and exam mode.
 - Optional per-question or full-session countdown; flags and unanswered questions.
-- Technical explanations, individual distractor rationales, and direct Learn citations.
+- Technical explanations, individual distractor rationales, and direct official citations.
 - Score breakdowns by domain, skill, subskill, difficulty, and complexity.
 - Evidence-based recommendations, missed-question retries, and weak-area practice.
 - JSON and printable HTML result exports, and locally saved recent results.
 - Unseen-question preference, concept diversity, and a separately resettable question history.
-- Contextual host reactions with Full, Balanced, Reduced, and No Banter settings.
+- Contextual Dungeon Master reactions with Full, Balanced, Reduced, and Silent settings.
 - Dark/light/system themes, reduced motion, and keyboard operation.
 
-The bank contains **162 independently reviewed, verified playable questions**:
+### DP-700: The Fabric Depths
+
+The preserved DP-700 bank contains **162 independently reviewed questions**:
 **54 per objective domain**, with **30 Beginner, 42 Intermediate, 54 Advanced,
 and 36 Expert** questions. Advanced and Expert make up **55.6%** of the bank.
 There are **0 manual-review-required, rejected, or stale** records in this revision.
@@ -76,8 +114,8 @@ that is sampled coverage, not exhaustive mastery or an exam-readiness guarantee.
 Last Learn MCP grounding: **2026-09-11T17:57:55.860Z**. Latest independent review
 finalization: **2026-09-11T18:30:09.514Z**. Source and question records preserve
 their individual real retrieval/review times. See the
-[readable coverage report](docs/content-coverage.md) and
-[machine-readable report](docs/question-bank-report.json) for distributions,
+[readable coverage report](src/content/exams/dp-700/content-coverage.md) and
+[machine-readable report](src/content/exams/dp-700/question-bank-report.json) for distributions,
 source counts, editorial warnings, and any future review queue.
 The report keeps **124 nonblocking heuristic warnings across 92 verified
 questions** visible for editorial inspection (for example, pronouns or scenario
@@ -96,14 +134,19 @@ Zod, Vitest, React Testing Library, Playwright, and axe-core.
 
 ```text
 src/
+  content/
+    credentials/          Reviewed credential catalog and generic hero classes
+    exams/<credential>/   Manifest, objectives, facts, sources, reviews, rubrics, DM extensions
+    personality.json      Shared Dungeon Master message catalog
   components/             Shared accessible UI and documentation surfaces
-  pages/                  Landing, setup, play, results, review, settings, about
+  pages/                  Map, tavern, forge, setup, play, results, review, settings
   features/
+    dungeons/             Package registry, readiness, identity and source policies
     grounding/            Runtime content schemas and taxonomy extraction
     quiz/                 Pure selection/timing engine, state, configuration
     results/              Pure scoring and recommendations
+    personality/          Context matching and seeded repetition protection
   services/               Local storage and safe exports
-  data/                   Versioned questions, source manifest, objective taxonomy
   styles/                 Responsive light/dark presentation
 scripts/                  MCP retrieval and content validation/reporting
 tests/                    Unit, interaction, and browser tests
@@ -112,38 +155,69 @@ docs/                     Coverage and maintainer documentation
 .github/copilot-instructions.md
 ```
 
-The browser validates the question bank before mounting the quiz. UI, selection,
+The browser validates dungeon packages before allowing a run. UI, selection,
 scoring, content validation, persistence, and exports are separate. Questions and
 source metadata ship in the static bundle. There is no backend, URL proxy, live
 model provider, or browser-to-MCP request.
 
+The factual DP-700 files were moved without rewriting questions or their
+independent-review fingerprints. Each encounter also has a content-bound
+evidence envelope and an independently assessed ten-criterion realism rubric.
+The minimum is 18/20, with full marks required for accuracy, answer uniqueness,
+and documentation strength, and no zero-scored criterion. These are human or
+independent-reviewer judgments, never scores inferred from JSON field presence.
+Rubric records independently bind the reviewed objective-map version and
+fingerprint, so changing a version label alone cannot reopen old content.
+
+[Architecture](docs/architecture.md) · [Dungeon onboarding](docs/dungeon-onboarding.md) ·
+[Hero classes](docs/hero-classes.md) · [Scoring and readiness](docs/dungeon-scoring.md) ·
+[Lifecycle](docs/dungeon-lifecycle.md) · [Source policy](docs/source-policy.md) ·
+[Theme/fact separation](docs/theme-fact-separation.md)
+
 ## Commands
 
-| Command                                | Purpose                                                                                           |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `npm install`                          | Install dependencies from the manifest/lockfile                                                   |
-| `npm ci`                               | Reproducible clean installation for CI                                                            |
-| `npm run dev`                          | Local Vite development server                                                                     |
-| `npm run lint`                         | ESLint, TypeScript rules, and React Hooks rules                                                   |
-| `npm run typecheck`                    | Strict TypeScript checking                                                                        |
-| `npm run test`                         | Unit and component tests, one run                                                                 |
-| `npm run test:coverage`                | Unit coverage, including HTML in `coverage/`                                                      |
-| `npm run test:e2e`                     | Chromium desktop/mobile browser journeys and accessibility                                        |
-| `npm run validate`                     | Reject malformed, misaligned, duplicate, or uncited questions                                     |
-| `npm run validate:sources`             | Offline citation and manifest validation                                                          |
-| `npm run validate:sources -- --online` | Additionally check direct Learn sources online                                                    |
-| `npm run content:report`               | Generate content coverage information                                                             |
-| `npm run content:report -- --write`    | Update the checked-in coverage report                                                             |
-| `npm run format`                       | Format source and documentation with Prettier                                                     |
-| `npm run format:check`                 | Check formatting without modifying files                                                          |
-| `npm run build`                        | Validate content, check types, and build `dist/`                                                  |
-| `npm run preview`                      | Serve the production build locally                                                                |
-| `npm run questions:generate`           | Scaffold a maintainer request and reusable Copilot prompts; does not generate questions by itself |
-| `npm run questions:validate`           | Validate the bank, citations, objective mappings, and playable status                             |
-| `npm run questions:coverage`           | Report verified-only coverage, targets, and gaps                                                  |
-| `npm run questions:duplicates`         | Check exact/near duplicates and report editorial quality warnings                                 |
-| `npm run questions:verify`             | Validate recorded independent reviews and content fingerprints, without inventing verification    |
-| `npm run questions:report -- --write`  | Write readable and machine-readable question-bank reports                                         |
+| Command                                       | Purpose                                                                                                        |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `npm install`                                 | Install dependencies from the manifest/lockfile                                                                |
+| `npm ci`                                      | Reproducible clean installation for CI                                                                         |
+| `npm run dev`                                 | Local Vite development server                                                                                  |
+| `npm run lint`                                | ESLint, TypeScript rules, and React Hooks rules                                                                |
+| `npm run typecheck`                           | Strict TypeScript checking                                                                                     |
+| `npm run test`                                | Unit and component tests, one run                                                                              |
+| `npm run test:coverage`                       | Unit coverage, including HTML in `coverage/`                                                                   |
+| `npm run test:e2e`                            | Chromium desktop/mobile browser journeys and accessibility                                                     |
+| `npm run validate`                            | Reject malformed, misaligned, duplicate, or uncited questions                                                  |
+| `npm run validate:sources`                    | Offline citation and manifest validation                                                                       |
+| `npm run validate:sources -- --online`        | Additionally check direct Learn sources online                                                                 |
+| `npm run content:report`                      | Generate content coverage information                                                                          |
+| `npm run content:report -- --write`           | Update the selected package's checked-in coverage report                                                       |
+| `npm run format`                              | Format source and documentation with Prettier                                                                  |
+| `npm run format:check`                        | Check formatting without modifying files                                                                       |
+| `npm run build`                               | Validate content, check types, and build `dist/`                                                               |
+| `npm run preview`                             | Serve the production build locally                                                                             |
+| `npm run questions:generate`                  | Scaffold a maintainer request and reusable Copilot prompts; does not generate questions by itself              |
+| `npm run questions:validate`                  | Validate the bank, citations, objective mappings, and playable status                                          |
+| `npm run questions:coverage`                  | Report verified-only coverage, targets, and gaps                                                               |
+| `npm run questions:duplicates`                | Check exact/near duplicates and report editorial quality warnings                                              |
+| `npm run questions:verify`                    | Validate recorded independent reviews and content fingerprints, without inventing verification                 |
+| `npm run reviews:sync`                        | Copy already-authored matching package attestations into the consolidated audit ledger; never create approvals |
+| `npm run questions:report -- --write`         | Write readable and machine-readable question-bank reports                                                      |
+| `npm run credentials:discover`                | Inspect discovery/scaffolding state; never auto-verify a credential                                            |
+| `npm run credentials:validate`                | Validate identities, dates, class mappings, and sealed states                                                  |
+| `npm run objectives:refresh -- --exam dp-700` | Prepare a controlled objective refresh                                                                         |
+| `npm run content:validate-all`                | Validate every installed package, ledger, rubric, and readiness gate                                           |
+| `npm run content:status`                      | Report package readiness and locked reasons                                                                    |
+| `npm run sources:validate -- --exam dp-700`   | Validate the selected credential's official-source policy                                                      |
+
+Question commands accept `--exam <credential-id>`; omitted exam selection
+defaults to DP-700 for existing maintainer workflows. For example:
+
+```powershell
+npm run questions:generate -- --exam dp-700 --count 6 --difficulty advanced,expert
+npm run questions:verify -- --exam dp-700
+npm run questions:coverage -- --exam dp-700
+npm run content:validate-all
+```
 
 Install the browser once before running end-to-end tests:
 
@@ -232,8 +306,11 @@ workaround; a normal browser GET can return 405.
 
 ## Grounding, not runtime generation
 
-Copilot retrieved the authoritative guide, certification, course, and supporting
-documentation through Microsoft Learn MCP. Original questions were then written
+For Microsoft credentials, Copilot retrieves the authoritative guide,
+certification, course, and supporting documentation through Microsoft Learn MCP.
+GitHub credentials use official GitHub competency outlines and product
+documentation, with directly relevant Learn preparation material where appropriate.
+Original questions are written
 from the retrieved evidence and linked to source records. **MCP retrieves
 documentation; it does not generate questions.**
 
@@ -247,13 +324,20 @@ Generation and verification are separate passes. An author first creates a
 candidate from retrieved documents. A different reviewer then evaluates the
 finished scenario, each answer choice, the explanations, code, constraints, and
 feature status against the evidence. The committed
-[`verification-reviews.json`](src/data/verification-reviews.json) records those
+per-package `verification-reviews.json` records those
 reviews and fingerprints the exact reviewed content. A changed answer, scenario,
 or citation requires another review; a successful build cannot silently reuse
 the old attestation.
+The consolidated [`src/data/verification-reviews.json`](src/data/verification-reviews.json)
+retains those same independently authored records across all dungeons. Default
+verification and builds require it to agree with the packages. After integrating
+real reviews, `npm run reviews:sync` copies them verbatim; it does not manufacture
+an attestation, score, rationale, or date.
 
 Only `verified` questions with complete, current review metadata enter gameplay.
 `manual-review-required`, `rejected`, and `stale` questions remain excluded.
+The credential must also be verified active, its current objectives must match
+the encounter envelope, and the realism/readiness gates must pass.
 Newer source-review timestamps make affected questions stale until re-reviewed.
 Freshness is change-driven, not a guarantee that a fixed-age question is correct:
 maintainers still need to retrieve current documentation and record changes.
@@ -302,7 +386,7 @@ Read the [question-bank maintenance guide](docs/question-bank-maintenance.md)
 and `src/features/grounding/schema.ts`. Start a small, reviewable batch:
 
 ```powershell
-npm run questions:generate -- --author maintainer --count 6 --output ".grounding\next-batch"
+npm run questions:generate -- --exam dp-700 --author maintainer --count 6 --difficulty advanced,expert --output ".grounding\next-batch"
 ```
 
 This creates a machine-readable request and copies the
@@ -318,6 +402,7 @@ attestation. Merge reviewed questions, source records, and their attestations
 together, then run:
 
 ```powershell
+npm run reviews:sync
 npm run questions:validate
 npm run validate:sources -- --online
 npm run questions:duplicates
@@ -353,10 +438,13 @@ remove unsupported claims instead of changing a status just to make a check pass
 | `verifiedAgainstSourceIds`                       | Exact set of cited source IDs covered by the review                      |
 | `verificationNotes`, `confidenceReason`          | Evidence-specific reasoning, not a model-generated confidence percentage |
 
-Sources require `sourceId`, title, direct HTTPS `learn.microsoft.com` URL,
+Sources require `sourceId`, title, a direct HTTPS URL approved for the credential,
 retrieval/review dates, applicable domain and skill IDs, feature status, and
 supporting summary. No search URLs, arbitrary external hosts, ambiguous preview
 status, empty citations, or guide-only evidence for product behavior.
+GitHub technical evidence must come from the selected package's explicit
+official-source policy, not a community post or a Microsoft article on a merely
+similar feature.
 
 Duplicate checks normalize text and choice ordering, inspect code similarities,
 and compare concept IDs. Editorial warnings also identify answer-length bias,
@@ -403,9 +491,9 @@ only sampled topics. Categories with fewer than five questions carry a small
 sample warning; a broader performance label requires at least 15 questions and
 five in each current domain. Even this is **not an exam-readiness prediction**.
 
-## Host personality
+## Dungeon Master personality
 
-Settings offers **Full Banter**, **Balanced**, **Reduced Banter**, and **No Banter**.
+DM Chattiness offers **Full**, **Balanced**, **Reduced**, and **Silent**.
 The choice affects the entire host, not just correct-answer feedback. Technical
 results, explanations, citations, and scoring never depend on the amount of humor.
 Legacy reduced-banter preferences are migrated without discarding saved results.
@@ -415,9 +503,15 @@ streak, tone, intensity, themes, and direct reduced-banter wording. Context
 distinguishes ordinary answers, partial multi-select attempts, timeouts, recovery,
 expert questions, documentation, retries, weak-area practice, and results.
 Partial multi-select reactions do **not** introduce partial-credit scoring.
-The catalog contains **196 reactions across 23 categories**, including 33 general
-correct, 33 incorrect, 15 streak, 15 timeout, 20 session-completion, 10 documentation,
-and 10 weak-area reactions, plus domain-specific and other contextual messages.
+The shared JSON catalog supplies genuine context-specific lines, while dungeon
+packages add their own boss and biome reactions. Infrastructure, networking,
+security, data, AI, DevOps, GitHub, and other public product themes are kept
+separate from factual questions and citations.
+There are **278 original lines**: **242 shared** and **36 dungeon-specific boss
+extensions**, across **29 categories and 16 themes**. The main pools contain 35
+correct, 35 incorrect, 15 streak, 15 timeout, 20 completion, 10 documentation,
+and 10 weak-practice reactions, with additional tome, cursed-chamber, boss, and
+floor-clear categories.
 
 The selection engine remembers recent message IDs, openings, and joke themes,
 and avoids repetition when alternatives exist. The default category-exhaustion
@@ -427,15 +521,18 @@ fourth answer and in summaries; Full also enables contextual events; None disabl
 all reactions. Seeded tests make choices
 reproducible; session boundaries reset message history. Screen-reader feedback
 prioritizes the answer result and explanation, not a live announcement of the joke.
-To add reactions, follow the typed catalog in `src/features/personality/`, assign
+To add reactions, follow [personality authoring](docs/personality-authoring.md),
+edit the shared or per-dungeon JSON catalog, and assign
 unique IDs and accurate context metadata, and include a mild direct alternative.
 Keep humor out of technical definitions, code, and citations.
 
 ## Local data, privacy, and exports
 
-Study preferences, the most recent **30 completed sessions**, and up to **200
-recently shown question IDs** are stored under `fabric-challenge:v1` in this
-browser's localStorage. Results include
+Study preferences, completed sessions, favorites, the chosen hero class, and up
+to **200 recently shown question IDs per dungeon** are stored under
+`fabric-challenge:v1` in this browser's localStorage. The migration preserves
+the existing DP-700 history and removes the old 30-result truncation for new
+runs. Configurations and recent-question lists are credential-scoped. Results include
 question snapshots so later bank updates cannot silently rescore history.
 In-progress quizzes are held in memory: **reloading loses an unfinished session**.
 Question history records questions actually shown, not unused preselected items.
@@ -443,6 +540,12 @@ Use **Reset question history** in Settings to reset unseen-question preference
 without removing saved scores or preferences. Retrying an older result uses the
 matching currently verified bank entries, not obsolete historical answer keys;
 historical review and scoring still use the original snapshots.
+
+New runs record each encounter's credential, objective version, grounding time,
+and objective-map snapshot. Older records remain tagged `dp-700` with an
+explicitly unknown legacy objective version when that version was never saved.
+See [storage migration](docs/storage-migration.md); current objectives are never
+substituted for missing historical evidence.
 
 No telemetry, sign-in, cookies for tracking, external database, or third-party
 model calls are enabled. LocalStorage is not encrypted; anyone using the same
@@ -456,10 +559,10 @@ separate files and must be removed yourself. Export JSON for structured data or
 printable HTML for a readable report; open the downloaded HTML and use your
 browser's Print command to print or save as PDF.
 
-Opening a documentation link contacts Microsoft Learn using your browser.
+Opening a documentation link contacts its official documentation host using your browser.
 The link is opened with `noopener noreferrer`. Browser content is rendered as
 text/React, not arbitrary HTML; exports escape text and validate source URLs.
-No environment variables are supported, so no `.env.example` is needed.
+No browser API keys or runtime `.env` files are needed.
 Never introduce secrets into frontend configuration.
 
 ## Accessibility

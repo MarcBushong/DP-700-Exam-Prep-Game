@@ -1,0 +1,1739 @@
+[
+  {
+    "id": "gh300-001",
+    "question": "Copilot Chat proposes a library method with a convincing explanation, but you cannot find that method in the library's documentation. What is the appropriate next step?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use the method because the explanation includes a complete function signature."
+      },
+      {
+        "id": "b",
+        "text": "Check the actual library API and validate a supported implementation before using it."
+      },
+      {
+        "id": "c",
+        "text": "Ask the same conversation to confirm the method, and treat its confirmation as validation."
+      },
+      {
+        "id": "d",
+        "text": "Enable public-code matching to check whether the library exports the method."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "A convincing response can contain a hallucinated API. Check the library's real interface and validate the implementation rather than relying on the explanation's confidence.",
+    "deepExplanation": "Copilot Chat can produce code that is syntactically or semantically incorrect. Public-code matching addresses a different question: whether suggested code resembles public code. Neither a detailed signature nor a second confident response replaces checking the API and testing the result.",
+    "whyOtherAnswersAreWrong": {
+      "a": "A plausible-looking signature can still be a hallucination; syntactic detail does not establish that the API exists.",
+      "c": "Another model assertion is not independent evidence that a possibly fabricated API exists; the documented requirement is to review and test the output.",
+      "d": "Public-code matching checks similarity to public code; it is not an API-existence validator."
+    },
+    "objectiveDomain": "use-github-copilot-responsibly",
+    "skill": "validate-and-operate-ai-tools",
+    "subskill": "Explain the need to validate AI output",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["gh300-chat"],
+    "sourceUrls": ["https://docs.github.com/en/copilot/responsible-use/chat"],
+    "documentationTitles": ["Application card: GitHub Copilot Chat"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "chat-hallucinated-api-validation"],
+    "conceptId": "gh300-chat-hallucinated-api-validation",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-chat"],
+    "verificationNotes": "Independent review confirmed Copilot Chat card describes hallucinations of methods/APIs and requires user validation of code output. Public-code matching addresses a different concern. Correct answer B is documented; distractors A, C, D are contradicted by direct evidence in the Chat application card.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Direct Chat card text names hallucinated code as an inherent risk and requires review against the real interface. No other option matches the documented validation step.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-002",
+    "question": "A team notices that Copilot's suggestions repeatedly favor a familiar coding style that conflicts with its project conventions. Which explanation should guide the team's evaluation of these suggestions?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The repeated style indicates that the project's conventions are unsupported by the language."
+      },
+      {
+        "id": "b",
+        "text": "Consistency across suggestions establishes that the favored style is the best fit for this repository."
+      },
+      {
+        "id": "c",
+        "text": "Allowing public-code matches removes style biases because matching suggestions include provenance."
+      },
+      {
+        "id": "d",
+        "text": "Training sources can carry coding-style biases, so assess the output against the project's actual conventions."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Training data can introduce biases toward particular languages and coding styles. Repetition is not evidence that a suggestion fits a specific repository.",
+    "deepExplanation": "The documented risk is broader than a one-off syntax error: patterns inherited from source repositories can repeatedly influence suggestions. Evaluate the generated code against the team's requirements and conventions rather than interpreting frequency as authority.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documented bias toward languages or styles is a model limitation, not evidence that alternative project conventions are invalid.",
+      "b": "Training-data biases can produce consistent but suboptimal suggestions; project fit must still be assessed.",
+      "c": "Public-code matching concerns matches and references. It does not remove biases inherited from training sources."
+    },
+    "objectiveDomain": "use-github-copilot-responsibly",
+    "skill": "understand-responsible-ai-principles",
+    "subskill": "Describe risks and limitations of Generative AI tools",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["gh300-inline"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/responsible-use/inline-suggestions"
+    ],
+    "documentationTitles": [
+      "Application card: GitHub Copilot inline suggestions"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "training-data-coding-style-bias"],
+    "conceptId": "gh300-training-data-coding-style-bias",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-inline"],
+    "verificationNotes": "Independent review confirmed the inline suggestions card text: 'inline suggestions may be biased towards certain programming languages or coding styles'. Public-code matching is unrelated to bias per the same card. Correct answer D matches the documented mitigation; three distractors are directly contradicted by card text.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Direct inline-suggestion evidence names training-data style bias and prescribes evaluation against project needs; only D matches.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-003",
+    "question": "A Copilot-generated pull request summary was written before the latest commit. That commit also changes one source file by 430 combined additions and deletions. The release reviewer needs an accurate account of the final changes. What should the reviewer do?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Request a new summary, then compare it with the final diff, explicitly reviewing the large file that summarization excludes."
+      },
+      {
+        "id": "b",
+        "text": "Request a new summary and use it as the complete account, because regeneration removes the file-size limitation."
+      },
+      {
+        "id": "c",
+        "text": "Keep the existing summary and inspect only the large file, because later commits automatically refresh the other bullets."
+      },
+      {
+        "id": "d",
+        "text": "Wait for the pull request checks to finish and use the existing summary, because completed checks refresh its content."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Regenerate the stale summary, but verify it against the final diff. The 430-line-change file exceeds the documented 400-change summarization limit.",
+    "deepExplanation": "Two independent limitations apply. New commits do not automatically update an existing summary, and regeneration still excludes files with more than 400 combined additions and deletions. A release description therefore requires direct review of the final changes, including excluded files.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Requesting a new summary addresses freshness, not the documented exclusion of files over the change limit.",
+      "c": "The summary is not automatically refreshed after commits, including bullets concerning smaller files.",
+      "d": "Summaries are generated on explicit request; completion of checks is not the documented refresh mechanism."
+    },
+    "objectiveDomain": "use-github-copilot-responsibly",
+    "skill": "validate-and-operate-ai-tools",
+    "subskill": "Explain the need to validate AI output",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["gh300-chat"],
+    "sourceUrls": ["https://docs.github.com/en/copilot/responsible-use/chat"],
+    "documentationTitles": ["Application card: GitHub Copilot Chat"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "pr-summary-staleness-and-diff-limits"
+    ],
+    "conceptId": "gh300-pr-summary-staleness-and-diff-limits",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-chat"],
+    "verificationNotes": "Independent review confirmed the two Chat card sections on 400 combined additions/deletions exclusion and on manual, non-auto-refresh summary generation. Correct answer A reconciles both limitations; distractors ignore one or the other.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Two distinct card-documented limitations combine to require both actions in A; other options each violate one documented limitation.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-004",
+    "question": "Copilot code review reports that a validation branch is unreachable and proposes removing it. The proposed patch passes the current tests, but a maintainer suspects an uncommon input can reach that branch. How should the team handle the comment?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Apply the patch because passing tests confirm that the review comment describes a real defect."
+      },
+      {
+        "id": "b",
+        "text": "Dismiss the comment without checking the input because a passing test suite makes additional review unnecessary."
+      },
+      {
+        "id": "c",
+        "text": "Trace the suspected input and test the behavior before deciding whether the comment and patch are correct."
+      },
+      {
+        "id": "d",
+        "text": "Request a second Copilot review and let agreement between the reviews replace the maintainer's investigation."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Investigate the suspected execution path before accepting or rejecting the suggestion. Copilot code review can report false positives and propose incorrect fixes.",
+    "deepExplanation": "The question is whether the reported defect exists, not merely whether the proposed patch passes today's tests. An untested valid input could distinguish the existing code from the patch. Human review of the path and a targeted test provide evidence that another unexamined AI review does not.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Code review may report nonexistent problems, and existing tests need not cover the uncommon input; suggested fixes must be reviewed and tested.",
+      "b": "The card requires careful consideration of comments and human review; neither blindly accepting nor automatically dismissing feedback investigates the suspected case.",
+      "d": "Repeated AI reviews do not remove the documented false-positive risk or replace careful human code review."
+    },
+    "objectiveDomain": "use-github-copilot-responsibly",
+    "skill": "validate-and-operate-ai-tools",
+    "subskill": "Identify how to operate GitHub Copilot responsibly",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["gh300-agent"],
+    "sourceUrls": ["https://docs.github.com/en/copilot/responsible-use/agents"],
+    "documentationTitles": ["Application card: GitHub Copilot Agents"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "code-review-false-positive-investigation"
+    ],
+    "conceptId": "gh300-code-review-false-positive-investigation",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-agent"],
+    "verificationNotes": "Independent review confirmed the agent card 'False positives' and 'Inaccurate or insecure code suggestions' sections and the requirement that users review and test suggestions. Answer C matches the documented mitigation; other options conflict with the card's guidance.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Agent card directly says code-review comments may be wrong and require human review and testing; only C describes that step.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-005",
+    "question": "A maintainer must run unattended Copilot CLI work on a repository that contains scripts not yet reviewed. The maintainer's usual account can access unrelated confidential files. A proposal enables automatic tool approval and relies only on marking the repository as a trusted directory. Which change best addresses the documented risk?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Keep the account and automatic approval; trusting a project directory is a guaranteed boundary for unrelated files."
+      },
+      {
+        "id": "b",
+        "text": "Evaluate the repository in a restricted virtual machine or container with controlled permissions and network access before unattended use."
+      },
+      {
+        "id": "c",
+        "text": "Retain the privileged account but deny the non-shell write tool; that also prevents shell commands from changing files."
+      },
+      {
+        "id": "d",
+        "text": "Start from the home directory and trust only the project afterward, so inherited access to other files is removed."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Use a controlled execution environment rather than treating trusted-directory prompts as a hard security boundary.",
+    "deepExplanation": "Automatic approval permits actions without per-command review, while the trusted-directory checks are explicitly heuristic. The write tool category also excludes shell commands. A restricted environment limits the consequences of unknown repository scripts and avoids depending on those controls to protect a privileged user's unrelated files.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Permission scoping is heuristic and GitHub does not guarantee protection of every file outside trusted directories; automatic approval increases unintended-action risk.",
+      "c": "The write permission covers tools other than shell commands. Denying it does not establish a no-write boundary for separately allowed shell execution.",
+      "d": "The article warns against launching from the home directory and does not describe trusted-directory selection as revoking the account's inherited access."
+    },
+    "objectiveDomain": "use-github-copilot-responsibly",
+    "skill": "understand-responsible-ai-principles",
+    "subskill": "Identify potential harms and mitigation strategies of AI usage",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["gh300-cli"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli"
+    ],
+    "documentationTitles": ["About GitHub Copilot CLI"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "cli-trusted-directory-not-security-boundary"
+    ],
+    "conceptId": "gh300-cli-trusted-directory-not-security-boundary",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-cli"],
+    "verificationNotes": "Independent review confirmed heuristic-boundary language, 'write' vs shell distinction, and virtual machine/container mitigation guidance. Correct answer B matches the documented control; three distractors each contradict specific CLI-concept warnings.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Three doc sections converge on isolated execution environment as the documented mitigation; other options misread specific CLI concepts.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-006",
+    "question": "A developer wants autocomplete-style Copilot suggestions while typing in a supported IDE, with the choice to accept only part of a suggestion or ignore it. Which capability matches this workflow?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Copilot code review on a pull request."
+      },
+      {
+        "id": "b",
+        "text": "A Copilot-generated pull request summary."
+      },
+      {
+        "id": "c",
+        "text": "Copilot Spaces shared project context."
+      },
+      {
+        "id": "d",
+        "text": "Copilot inline suggestions in the editor."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Inline suggestions provide the requested autocomplete-style interaction and remain optional until accepted.",
+    "deepExplanation": "This workflow is distinct from asking Chat a question, receiving a review of existing changes, or generating a pull request summary. The inline-suggestion application card explicitly describes full or partial acceptance and ignoring suggestions by continuing to type.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Code review examines changes and provides feedback; it is not the as-you-type inline-completion workflow.",
+      "b": "Pull request summaries describe changes on demand rather than suggesting edits while code is typed.",
+      "c": "Spaces curate context for questions; they do not describe the editor's autocomplete interaction."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "use-github-copilot-in-the-ide",
+    "subskill": "Trigger Copilot through inline suggestions, chat, CLI, and agent mode",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["gh300-review", "gh300-chat", "gh300-inline"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/agents/code-review",
+      "https://docs.github.com/en/copilot/responsible-use/chat",
+      "https://docs.github.com/en/copilot/responsible-use/inline-suggestions"
+    ],
+    "documentationTitles": [
+      "About GitHub Copilot code review",
+      "Application card: GitHub Copilot Chat",
+      "Application card: GitHub Copilot inline suggestions"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "inline-suggestion-explicit-acceptance"
+    ],
+    "conceptId": "gh300-inline-suggestion-explicit-acceptance",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-review", "gh300-chat", "gh300-inline"],
+    "verificationNotes": "Independent review compared three feature descriptions and confirmed only inline suggestions match the requested autocomplete workflow. Correct answer D is documented in the inline suggestions card; distractors describe recognizable but different capabilities.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Only inline-suggestion card describes the exact autocomplete-with-partial-acceptance behavior in the scenario; other options describe different features.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-007",
+    "question": "During an interactive Copilot CLI session, a developer wants a prompt to include the contents of a particular file in the current repository without changing the working directory. What should the developer use?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Reference the file with @ followed by its relative path in the prompt."
+      },
+      {
+        "id": "b",
+        "text": "Use /context followed by the file name to attach its contents."
+      },
+      {
+        "id": "c",
+        "text": "Use /cwd followed by the file name to attach it without changing location."
+      },
+      {
+        "id": "d",
+        "text": "Use /compact followed by the file name to load it into the prompt."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Use an @ reference to the relative file path. Copilot CLI adds that file's contents as prompt context.",
+    "deepExplanation": "The other commands manage the session rather than attach a selected file: /context reports token usage, /compact compresses history, and /cwd changes the working directory. Explicit file context is the narrow operation required by the scenario.",
+    "whyOtherAnswersAreWrong": {
+      "b": "/context shows a visual token-usage overview; it is not the documented file attachment syntax.",
+      "c": "/cwd switches the working directory; it does not implement the requested file-context attachment.",
+      "d": "/compact compresses conversation history to free context space; it is not a file attachment command."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "use-github-copilot-cli",
+    "subskill": "Use GitHub Copilot CLI interactively and in sessions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["gh300-cli-usage"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/overview"
+    ],
+    "documentationTitles": ["Using GitHub Copilot CLI"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "cli-explicit-file-context"],
+    "conceptId": "gh300-cli-explicit-file-context",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-cli-usage"],
+    "verificationNotes": "Independent review confirmed @relative-path syntax and slash-command roles in the CLI usage doc. Correct answer A matches the documented file attachment mechanism; distractors describe adjacent slash commands.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly names the @-path syntax; other slash commands documented as different session controls.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-008",
+    "question": "Copilot CLI asks permission to run a Node.js build command. The developer wants to allow that invocation but review any later use of Node.js separately, including later in the same session. Which approval choice meets that requirement?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Approve the tool for the rest of the running session, because approval binds only the displayed command arguments."
+      },
+      {
+        "id": "b",
+        "text": "Approve the tool for the rest of the running session, because the next prompt automatically ends its approval."
+      },
+      {
+        "id": "c",
+        "text": "Choose the one-time Yes option rather than approving the tool for the running session."
+      },
+      {
+        "id": "d",
+        "text": "Start with --allow-tool='shell(node)' so only this invocation is approved."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "The one-time Yes option approves only the current command. Session-wide tool approval permits later uses of the same tool without asking again.",
+    "deepExplanation": "The important distinction is between a specific invocation and a tool class. A command-specific-looking approval dialog can offer a much broader session-wide choice. The requirement explicitly includes later invocations in the current running session, so expiration on a future session does not help.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Session-wide approval allows the tool with any options for the rest of the running session, not only the displayed arguments.",
+      "b": "The approval lasts for the running session rather than one prompt; new or resumed sessions require approval again.",
+      "d": "An allow-tool flag permits the specified tool without individual approval; it is not a one-invocation approval."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "use-github-copilot-cli",
+    "subskill": "Describe key GitHub Copilot CLI features and commands",
+    "difficulty": "advanced",
+    "complexity": "scenario-based",
+    "sourceIds": ["gh300-cli-usage", "gh300-cli"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/overview",
+      "https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli"
+    ],
+    "documentationTitles": [
+      "Using GitHub Copilot CLI",
+      "About GitHub Copilot CLI"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "cli-running-session-tool-approval-scope"
+    ],
+    "conceptId": "gh300-cli-running-session-tool-approval-scope",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-cli-usage", "gh300-cli"],
+    "verificationNotes": "Independent review of both CLI docs confirmed option scope for one-time Yes vs session-wide approval, and --allow-tool acting session-wide. Correct answer C uniquely satisfies the 'review every later Node.js use in the same session separately' requirement.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc explicitly says session-wide approval covers 'any options' for the running session; one-time Yes is the only per-invocation control.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-009",
+    "question": "A developer starts Copilot CLI with the shown configuration. Consider direct shell tool calls to git status and git push, with no other approval flags. Which interpretation correctly distinguishes the broad allow rule from the narrower deny rule?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Both commands are automatically approved because allowing git overrides a restriction on one of its subcommands."
+      },
+      {
+        "id": "b",
+        "text": "git status can run without individual approval, while direct git push tool calls are denied."
+      },
+      {
+        "id": "c",
+        "text": "Both commands are denied because a subcommand restriction disables the entire git tool."
+      },
+      {
+        "id": "d",
+        "text": "git status still requires approval, while git push is automatically approved because it has the more specific rule."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "The deny rule takes precedence for git push. Other git shell invocations covered by the allow rule, such as git status, do not require individual approval.",
+    "deepExplanation": "Copilot CLI supports first-level subcommand restrictions for git and gh. This configuration expresses a specific tool policy, not a claim that every possible way to send data is prevented. The question is deliberately limited to the two direct shell tool calls shown.",
+    "whyOtherAnswersAreWrong": {
+      "a": "--deny-tool takes precedence over --allow-tool, including an explicitly denied first-level git subcommand.",
+      "c": "The documented syntax allows a particular first-level subcommand to be denied; it does not turn that restriction into a blanket denial of all git commands.",
+      "d": "The broad allow rule covers git status, and the specific rule is a denial rather than an approval."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "use-github-copilot-cli",
+    "subskill": "Describe key GitHub Copilot CLI features and commands",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["gh300-cli"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli"
+    ],
+    "documentationTitles": ["About GitHub Copilot CLI"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "cli-deny-tool-precedence-git-subcommand"
+    ],
+    "codeLanguage": "powershell",
+    "codeSnippet": "copilot --allow-tool='shell(git)' --deny-tool='shell(git push)'",
+    "conceptId": "gh300-cli-deny-tool-precedence-git-subcommand",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-cli"],
+    "verificationNotes": "Independent review confirmed --deny-tool precedence and the git/gh first-level subcommand rules. Correct answer B is the documented outcome for the printed configuration; distractors misread precedence or granularity.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc explicitly states deny precedence and per-subcommand deny support; other options each break one of those documented rules.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-010",
+    "question": "On GitHub.com, a repository has general rules in .github/copilot-instructions.md. Its owner wants additional rules for files under services/** to apply to Copilot cloud agent but not Copilot code review. Which arrangement matches the documented instruction model?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Put the additional rules only in the repository-wide file and name the services directory in prose; code review ignores prose-scoped rules."
+      },
+      {
+        "id": "b",
+        "text": "Create a path-specific instruction file with applyTo for services/** and excludeAgent set to cloud-agent."
+      },
+      {
+        "id": "c",
+        "text": "Create the path-specific file with applyTo for services/** and omit excludeAgent; only cloud agent reads path-specific files."
+      },
+      {
+        "id": "d",
+        "text": "Create .github/instructions/service.instructions.md with applyTo: \"services/**\" and excludeAgent: \"code-review\"."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Use a matching path-specific instruction file and exclude the code-review consumer. The repository-wide guidance remains relevant for cloud agent.",
+    "deepExplanation": "Path matching and consumer selection are separate controls. applyTo identifies the files, while excludeAgent identifies the feature that must not use that instruction file. Matching path-specific instructions do not replace the repository-wide file; both are provided when applicable.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Repository-wide instructions apply broadly; documented consumer exclusion is supplied by excludeAgent in a path-specific instruction file, not inferred from prose.",
+      "b": "excludeAgent: cloud-agent excludes the very consumer that should receive the additional rules.",
+      "c": "On GitHub.com, both cloud agent and code review support path-specific instructions; omitting excludeAgent makes the file available to both."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "use-github-copilot-features-and-capabilities",
+    "subskill": "Utilize Spaces, Spark, Pull Request summaries, and customizable review standards via instructions files",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["gh300-instructions"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions"
+    ],
+    "documentationTitles": [
+      "Adding repository custom instructions for GitHub Copilot"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:42:06.585Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "path-instructions-combine-and-exclude-agent"
+    ],
+    "conceptId": "gh300-path-instructions-combine-and-exclude-agent",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-instructions"],
+    "verificationNotes": "Independent review confirmed applyTo/excludeAgent semantics and the combine-with-repo-wide behavior. Correct answer D matches documented combine + consumer exclusion; distractors misread scope, exclusion target, or default consumer set.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly documents both applyTo and the excludeAgent options; D is the only configuration that combines with repo-wide and excludes only code review.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-011",
+    "question": "A VS Code team wants to save a repeatable Copilot task prompt and invoke it only when needed, rather than add ongoing behavior rules to every interaction. Which customization should it choose?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A Copilot prompt file, currently a public-preview feature."
+      },
+      {
+        "id": "b",
+        "text": "Repository-wide custom instructions for all interactions."
+      },
+      {
+        "id": "c",
+        "text": "Path-specific instructions that automatically apply when matching files are in context."
+      },
+      {
+        "id": "d",
+        "text": "An AGENTS.md file containing standing project guidance for agents."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Prompt files are reusable task prompts that can be invoked on demand. The retrieved documentation labels them public preview.",
+    "deepExplanation": "Custom instructions are standing guidance, while prompt files package a particular task. In VS Code the documented example saves a .prompt.md file under .github/prompts and invokes it by slash command. Availability and preview status must not be confused with an always-on instruction mechanism.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Custom instructions provide ongoing guidance, which differs from the requested on-demand task prompt.",
+      "c": "Path-specific instructions provide automatic guidance for matching paths, rather than an on-demand task prompt.",
+      "d": "AGENTS.md contains standing cross-agent rules; it is not the reusable prompt-file mechanism for invoking a particular task."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "use-github-copilot-features-and-capabilities",
+    "subskill": "Understand the limits, options, feedback, and commands of GitHub Copilot Chat; include prompt file reuse for consistent responses",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["gh300-prompt-files", "gh300-instructions", "gh300-review"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/tutorials/customization-library/prompt-files/your-first-prompt-file",
+      "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions",
+      "https://docs.github.com/en/copilot/concepts/agents/code-review"
+    ],
+    "documentationTitles": [
+      "Your first prompt file",
+      "Adding repository custom instructions for GitHub Copilot",
+      "About GitHub Copilot code review"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "Preview",
+    "tags": ["github-copilot", "gh-300", "prompt-files-on-demand-reuse"],
+    "conceptId": "gh300-prompt-files-on-demand-reuse",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "gh300-prompt-files",
+      "gh300-instructions",
+      "gh300-review"
+    ],
+    "verificationNotes": "Independent review confirmed prompt-files preview status and the three distinct customization mechanisms. Correct answer A matches on-demand reusable prompts; feature status set to Preview because the retrieved article explicitly labels prompt files public preview.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Retrieved doc directly labels prompt files 'in public preview' and describes them as on-demand, unlike the standing alternatives in the distractors.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-012",
+    "question": "A team configures the GitHub MCP server for a narrowly scoped coding workflow. Many exposed toolsets are unrelated to the task, tool selection is noisy, and tool definitions occupy valuable context. Which configuration direction directly addresses both concerns?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Enable every toolset so the model can compare more unrelated alternatives before acting."
+      },
+      {
+        "id": "b",
+        "text": "Keep every toolset enabled and place an instruction in each prompt asking the model to ignore irrelevant definitions."
+      },
+      {
+        "id": "c",
+        "text": "Enable only the required toolsets and disable unused groups of capabilities."
+      },
+      {
+        "id": "d",
+        "text": "Replace the MCP server with a prompt file, which exposes the same live API tools without tool definitions."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Reduce the enabled toolsets to those needed by the workflow. This improves selection focus and reduces unnecessary context usage.",
+    "deepExplanation": "Toolsets control groups of GitHub API capabilities and can include related resources and prompts. The decision is not merely prompt wording: disabling unused capabilities changes the tool inventory available to the assistant and frees context tokens consumed by that inventory.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documentation states that fewer tools improve selection accuracy and reduce errors; enabling unrelated toolsets works against the reported problem.",
+      "b": "The documented way to reclaim tokens and reduce exposed capabilities is to disable unused toolsets; leaving them exposed retains their context cost.",
+      "d": "MCP connects models to actual data and tools; a reusable text prompt does not itself supply those API capabilities."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "use-github-copilot-features-and-capabilities",
+    "subskill": "Use Agent Mode, Copilot Edits, and MCP for enhanced development and workflows; manage Agent Sessions and delegate tasks to Sub‑Agents for optimized context usage",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["gh300-mcp"],
+    "sourceUrls": ["https://docs.github.com/en/copilot/concepts/context/mcp"],
+    "documentationTitles": ["About Model Context Protocol (MCP)"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:42:06.585Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "mcp-toolset-selection-context-efficiency"
+    ],
+    "conceptId": "gh300-mcp-toolset-selection-context-efficiency",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-mcp"],
+    "verificationNotes": "Independent review confirmed the MCP concept text on toolset selection and token savings. Correct answer C matches the documented recommendation; distractors either invert the recommendation or confuse mechanisms.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly links reduced enabled toolsets to selection accuracy and freed context tokens; only C follows both benefits.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-013",
+    "question": "An enterprise owner has disabled a Copilot feature for every organization in the enterprise. An organization owner wants to enable that same feature for users licensed by their organization. What is the documented policy outcome?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The organization setting takes precedence because the organization grants the users their licenses."
+      },
+      {
+        "id": "b",
+        "text": "The organization owner cannot override the enterprise's explicit disabled setting."
+      },
+      {
+        "id": "c",
+        "text": "A user's personal model choice enables the feature despite the enterprise policy."
+      },
+      {
+        "id": "d",
+        "text": "Adding repository custom instructions enables the feature for that repository."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "An organization cannot override a specific enterprise-level Copilot policy.",
+    "deepExplanation": "The enterprise can enforce a setting everywhere or select which organizations receive it. Organization-level configuration operates within that enforcement, rather than acting as a more specific override. Instructions and model selection are not substitutes for feature-policy authorization.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Enterprise-selected enforcement cannot be overridden at organization level; license assignment does not reverse that precedence.",
+      "c": "Feature policy and model choice are distinct controls, and the explicit enterprise enforcement remains applicable.",
+      "d": "Instructions provide contextual guidance to Copilot; they do not override enterprise feature-availability policies."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "manage-organization-wide-settings-and-policies",
+    "subskill": "Configure organization-wide policy management; enable Copilot Code Review policies and manage feature availability across IDEs and github.com",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["gh300-policies", "gh300-instructions"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/manage-policies",
+      "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions"
+    ],
+    "documentationTitles": [
+      "Managing policies and features for GitHub Copilot in your organization",
+      "Adding repository custom instructions for GitHub Copilot"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "enterprise-policy-organization-no-override"
+    ],
+    "conceptId": "gh300-enterprise-policy-organization-no-override",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-policies", "gh300-instructions"],
+    "verificationNotes": "Independent review confirmed the explicit enterprise-precedence sentence in the org-policy doc. Correct answer B is the documented outcome; distractors mix orthogonal controls or invert precedence.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc uses the exact 'cannot override at the organization level' phrasing; other options invoke unrelated controls.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-014",
+    "question": "A Copilot Business organization wants members without Copilot licenses to request Copilot reviews of their pull requests on GitHub.com. The same rollout proposal promises those members IDE reviews without licenses. Which correction meets the documented prerequisites and surface limitation?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Enable only the unlicensed-review sub-policy; it also includes IDE reviews and does not need paid usage enabled."
+      },
+      {
+        "id": "b",
+        "text": "Enable only AI credits paid usage; that automatically grants unlicensed review on GitHub.com and in IDEs."
+      },
+      {
+        "id": "c",
+        "text": "Enable the two policies, but limit the rollout to IDE reviews because GitHub.com still requires individual licenses."
+      },
+      {
+        "id": "d",
+        "text": "Enable AI credits paid usage first, then the unlicensed GitHub.com review policy; remove the promise of unlicensed IDE reviews."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Enable the paid-usage prerequisite and the separate GitHub.com unlicensed-review policy. That capability does not provide unlicensed IDE reviews.",
+    "deepExplanation": "A plan at organization level, paid usage authorization, the feature-specific sub-policy, and the client surface all matter. The policy opens review for qualifying organization members on GitHub.com; it is not a general Copilot license or an IDE entitlement.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The article requires both paid AI-credit usage and the unlicensed GitHub.com review policy, and excludes IDE use for unlicensed users.",
+      "b": "Paid usage alone does not enable the separate sub-policy, and the IDE entitlement claim is unsupported.",
+      "c": "The documented availability is GitHub.com in covered organizational repositories, not IDEs."
+    },
+    "objectiveDomain": "use-github-copilot-features",
+    "skill": "manage-organization-wide-settings-and-policies",
+    "subskill": "Configure organization-wide policy management; enable Copilot Code Review policies and manage feature availability across IDEs and github.com",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["gh300-review"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/agents/code-review"
+    ],
+    "documentationTitles": ["About GitHub Copilot code review"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "unlicensed-code-review-two-policies-github-only"
+    ],
+    "conceptId": "gh300-unlicensed-code-review-two-policies-github-only",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-review"],
+    "verificationNotes": "Independent review confirmed the two policies, the required order, the GitHub.com scope, and the explicit IDE exclusion. Correct answer D uniquely meets all three constraints; distractors each violate at least one.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc lists both required policies in order and calls out that unlicensed code review is not in IDEs; only D matches.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-015",
+    "question": "At which stage of the documented Copilot inline-suggestion pipeline is code around the cursor combined with contextual snippets from open editor tabs?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Output formatting, when the generated suggestion is prepared for display."
+      },
+      {
+        "id": "b",
+        "text": "Language model analysis, when the model examines the already prepared prompt."
+      },
+      {
+        "id": "c",
+        "text": "Input processing, before the prompt is sent to the language model."
+      },
+      {
+        "id": "d",
+        "text": "Response generation, when the model creates a suggested code change."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Input processing assembles the surrounding code and relevant editor context into the model prompt.",
+    "deepExplanation": "Prompt construction is a runtime operation. The model then analyzes that input, generates a response, and the client formats the suggestion. Training and matching generated code against public sources are different activities.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Output formatting presents the generated suggestion; combining cursor code and open-tab context is described earlier during input processing.",
+      "b": "The model analyzes a prompt whose surrounding code and contextual snippets have already been assembled during input processing.",
+      "d": "Response generation uses the prepared prompt; it is not the earlier stage that constructs the prompt context."
+    },
+    "objectiveDomain": "understand-github-copilot-data-and-architecture",
+    "skill": "describe-data-handling-and-flow",
+    "subskill": "Describe input processing and prompt building",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["gh300-inline"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/responsible-use/inline-suggestions"
+    ],
+    "documentationTitles": [
+      "Application card: GitHub Copilot inline suggestions"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "inline-prompt-preprocessing-open-tabs"
+    ],
+    "conceptId": "gh300-inline-prompt-preprocessing-open-tabs",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-inline"],
+    "verificationNotes": "Independent review confirmed inline-card pipeline stages and the explicit input-processing description including open-tab context. Correct answer C matches doc text; distractors describe adjacent stages.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly names 'Input processing' as the stage that combines cursor code with open-tab context.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-016",
+    "question": "An individual Copilot Pro subscriber wants to opt out of having interactions used for AI model training. A colleague with a Copilot Business license cannot see the same training setting. Which explanation matches the current documented plan behavior?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The Pro subscriber can disable the training setting; Business data is not used for AI model training and does not display that control."
+      },
+      {
+        "id": "b",
+        "text": "The Pro subscriber must block public-code matches to opt out; the Business colleague must use the same filter."
+      },
+      {
+        "id": "c",
+        "text": "The missing Business setting means Business interaction data is used for training without an opt-out."
+      },
+      {
+        "id": "d",
+        "text": "Both subscribers must disable web search because the Bing setting is also the model-training opt-out."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Individual-plan users can disable the model-training setting. The documentation says Business and Enterprise customer data is not used for AI model training and those plans do not display that setting.",
+    "deepExplanation": "The retrieved page dates the individual-plan change to April 24, 2026. It distinguishes the training preference from public-code matching and web search. The missing control must be interpreted in the context of the license type, not as evidence that protection is absent.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Public-code matching and use of interaction data for model training are separate settings with different purposes.",
+      "c": "The stated reason for the missing control is the Business and Enterprise data protection policy, not compulsory training.",
+      "d": "The Bing integration setting controls web search, while a separate setting controls model-training use for individual plans."
+    },
+    "objectiveDomain": "understand-github-copilot-data-and-architecture",
+    "skill": "describe-data-handling-and-flow",
+    "subskill": "Explain data usage, flow, and sharing",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["gh300-personal-policy"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies"
+    ],
+    "documentationTitles": [
+      "Managing GitHub Copilot policies as an individual subscriber"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "individual-model-training-opt-out-plan-scope"
+    ],
+    "conceptId": "gh300-individual-model-training-opt-out-plan-scope",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-personal-policy"],
+    "verificationNotes": "Independent review confirmed the exact policy text on individual training opt-out and the Business/Enterprise data-protection exclusion. Correct answer A matches; distractors confuse orthogonal settings.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly states the individual opt-out and the missing control on Business/Enterprise plans as a protection, not a compulsory use.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-017",
+    "question": "A team allows public-code matches and treats the absence of a Copilot code reference as proof that a suggestion cannot resemble either a private repository or a recently published public repository. Why is that conclusion unsupported?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The search includes private repositories but omits public repositories when matching is allowed."
+      },
+      {
+        "id": "b",
+        "text": "The index includes every current repository, but references are shown only for code containing security defects."
+      },
+      {
+        "id": "c",
+        "text": "Code references certify authorship only after Copilot writes a commit, so the team should infer provenance from a signed commit instead."
+      },
+      {
+        "id": "d",
+        "text": "Private repositories are outside the search, and the periodically refreshed public index may omit newly committed code."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "No reference is not comprehensive provenance evidence. The matching index excludes private code and may not include recently committed public code.",
+    "deepExplanation": "The search population and its refresh schedule limit what an absent match can establish. Matching also does not determine whether code is safe or who owns it. Use references as evidence about identified public matches, not as a certification that all other possible sources were checked.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documented index contains public GitHub repositories; private repositories are excluded.",
+      "b": "References concern matches, not security defects, and the index is refreshed periodically rather than continuously.",
+      "c": "Code referencing reports source matches; it is not an authorship certificate triggered by committing the code."
+    },
+    "objectiveDomain": "understand-github-copilot-data-and-architecture",
+    "skill": "understand-lifecycle-and-limitations",
+    "subskill": "Describe limitations of LLMs and Copilot",
+    "difficulty": "advanced",
+    "complexity": "scenario-based",
+    "sourceIds": ["gh300-public-code"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/completions/code-referencing"
+    ],
+    "documentationTitles": ["GitHub Copilot code referencing"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "public-code-reference-index-coverage-limits"
+    ],
+    "conceptId": "gh300-public-code-reference-index-coverage-limits",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-public-code"],
+    "verificationNotes": "Independent review confirmed the public-code doc text on private exclusion, periodic index refresh, and inline scope limits. Correct answer D uniquely captures both stated coverage limits; distractors misread scope or purpose.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly names both limits (private exclusion + periodic index refresh) that D uses to reject the team's inference.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-018",
+    "question": "A developer configures Copilot CLI with a valid external model provider and enables COPILOT_OFFLINE=true. They still expect GitHub web-based tools to work and assume prompts will pass through GitHub before reaching the provider. Which description correctly accounts for offline mode and bring-your-own-provider routing?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Prompts pass through GitHub, telemetry continues, and web-based tools stay enabled."
+      },
+      {
+        "id": "b",
+        "text": "Prompts go directly to the configured provider; offline mode disables telemetry and web-based tools but still permits provider requests."
+      },
+      {
+        "id": "c",
+        "text": "Offline mode prevents requests to the configured external provider, while GitHub Code Search remains available."
+      },
+      {
+        "id": "d",
+        "text": "Prompts go directly to the provider, but a provider error silently reroutes the request to GitHub-hosted models."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Bring-your-own-provider requests go directly to that provider. Offline mode disables GitHub telemetry and web-based tools, not communication with the configured provider.",
+    "deepExplanation": "In this configuration, offline is not synonymous with zero network traffic: the documentation explicitly permits calls to the chosen provider. The provider's own data-handling terms still matter, and a failed provider configuration does not trigger a GitHub-hosted fallback.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The card says BYOK prompts go directly to the provider, offline mode disables telemetry, and web-based tools are disabled.",
+      "c": "Offline mode permits requests to the configured provider but disables web-based tools such as GitHub Code Search.",
+      "d": "Invalid provider configuration produces an error; it does not fall back to GitHub-hosted models."
+    },
+    "objectiveDomain": "understand-github-copilot-data-and-architecture",
+    "skill": "describe-data-handling-and-flow",
+    "subskill": "Explain data usage, flow, and sharing",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["gh300-agent"],
+    "sourceUrls": ["https://docs.github.com/en/copilot/responsible-use/agents"],
+    "documentationTitles": ["Application card: GitHub Copilot Agents"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "cli-byok-offline-provider-routing"],
+    "conceptId": "gh300-cli-byok-offline-provider-routing",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-agent"],
+    "verificationNotes": "Independent review confirmed each BYOK/offline behavior directly against the agent app-card text. Correct answer B matches every documented behavior; distractors each contradict a specific card sentence.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Card sentence-by-sentence matches B and directly contradicts A, C, D on distinct behaviors.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-019",
+    "question": "A developer wants Copilot to follow a specific input-to-output transformation. Which prompt technique supplies concrete examples of the desired behavior rather than only a general instruction?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Describe the overall goal and list requirements without supplying sample values."
+      },
+      {
+        "id": "b",
+        "text": "Divide the work into smaller prompts without showing demonstration inputs and outputs."
+      },
+      {
+        "id": "c",
+        "text": "Include representative input values paired with the expected output values."
+      },
+      {
+        "id": "d",
+        "text": "Name the required library and describe its role without showing example results."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Provide representative input-output pairs so Copilot can see the intended transformation.",
+    "deepExplanation": "Examples convey details that a high-level request can leave unspecified, such as formatting and boundary behavior. They guide generation but do not remove the need to validate the result.",
+    "whyOtherAnswersAreWrong": {
+      "a": "A goal and requirements are useful prompt structure, but without samples they do not provide concrete input-output examples.",
+      "b": "Task decomposition is a useful separate technique, but it does not itself demonstrate the desired transformation.",
+      "d": "Naming an uncommon library reduces ambiguity, but the described prompt still supplies no concrete transformation examples."
+    },
+    "objectiveDomain": "apply-prompt-engineering-and-context-crafting",
+    "skill": "craft-effective-prompts",
+    "subskill": "Use zero-shot and few-shot prompting",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["gh300-prompts"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering"
+    ],
+    "documentationTitles": ["Prompt engineering for GitHub Copilot Chat"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "few-shot-input-output-examples"],
+    "conceptId": "gh300-few-shot-input-output-examples",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-prompts"],
+    "verificationNotes": "Independent review confirmed the 'Give examples' section text and its distinction from goal-statement, decomposition, and library-disambiguation techniques. Correct answer C matches the documented few-shot approach.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc's example section describes input/output pairs; other techniques are documented as separate sections.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-020",
+    "question": "After a long Copilot Chat conversation about a command-line utility, a developer asks an unrelated question about a web component. The response keeps applying constraints from the utility. What is the most direct documented adjustment?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Start a new conversation for the new task or remove irrelevant earlier requests."
+      },
+      {
+        "id": "b",
+        "text": "Add more utility examples so the old task receives stronger context."
+      },
+      {
+        "id": "c",
+        "text": "Disable public-code matching so earlier chat messages stop influencing responses."
+      },
+      {
+        "id": "d",
+        "text": "Create a content exclusion for the utility's folder to erase the conversation's previous messages."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Keep the conversation history relevant by starting a new thread for the unrelated task or removing old requests.",
+    "deepExplanation": "The model uses more than the latest message. Older constraints can remain part of the context, so cleaning up that history directly addresses the symptom. File exclusions and public-code matching serve different purposes.",
+    "whyOtherAnswersAreWrong": {
+      "b": "More unrelated context reinforces the source of confusion rather than narrowing history to the new task.",
+      "c": "Public-code matching compares suggestions against public repositories; it does not control chat-history relevance.",
+      "d": "Content exclusions govern use of files, not deletion of already supplied conversation requests."
+    },
+    "objectiveDomain": "apply-prompt-engineering-and-context-crafting",
+    "skill": "engineer-prompts-for-performance",
+    "subskill": "Describe prompt process flow and chat history usage",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": [
+      "gh300-prompts",
+      "gh300-public-code",
+      "gh300-exclusion-concepts"
+    ],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering",
+      "https://docs.github.com/en/copilot/concepts/completions/code-referencing",
+      "https://docs.github.com/en/copilot/concepts/context/content-exclusion"
+    ],
+    "documentationTitles": [
+      "Prompt engineering for GitHub Copilot Chat",
+      "GitHub Copilot code referencing",
+      "Content exclusion for GitHub Copilot"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "chat-history-topic-isolation"],
+    "conceptId": "gh300-chat-history-topic-isolation",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "gh300-prompts",
+      "gh300-public-code",
+      "gh300-exclusion-concepts"
+    ],
+    "verificationNotes": "Independent review confirmed the 'Keep history relevant' text plus the unrelated purposes of public-code matching and content exclusions. Correct answer A is documented; other options invoke unrelated controls.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc's exact 'Keep history relevant' recommendations match A; other options reuse unrelated features.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-021",
+    "question": "A project uses an uncommon parsing library. Copilot repeatedly suggests similarly named APIs from a different library. Which prompt-and-context change is most directly supported by GitHub's prompting guidance?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Refer to the dependency only as 'the parser' so Copilot can choose the most familiar API."
+      },
+      {
+        "id": "b",
+        "text": "Keep unrelated implementation files open to increase the number of library names in context."
+      },
+      {
+        "id": "c",
+        "text": "Ask for a shorter response without identifying which library or imports the solution must use."
+      },
+      {
+        "id": "d",
+        "text": "Name and describe the required library, include its relevant imports, and identify the code to update."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Disambiguate the library and the target code. Give Copilot the relevant imports and describe the uncommon dependency's role.",
+    "deepExplanation": "The failure is not primarily response verbosity; it is an underspecified dependency and ambiguous context. GitHub's guidance explicitly addresses uncommon libraries and recommends relevant files or selected code to anchor the request.",
+    "whyOtherAnswersAreWrong": {
+      "a": "GitHub recommends explicitly naming libraries and describing uncommon ones, not using ambiguous references.",
+      "b": "The guidance is to open relevant files and close irrelevant files, rather than add unrelated library context.",
+      "c": "Changing response length does not resolve the missing dependency identity; the article calls for specifying the intended library."
+    },
+    "objectiveDomain": "apply-prompt-engineering-and-context-crafting",
+    "skill": "craft-effective-prompts",
+    "subskill": "Apply best practices for prompt crafting",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["gh300-prompts"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering"
+    ],
+    "documentationTitles": ["Prompt engineering for GitHub Copilot Chat"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "prompt-library-disambiguation"],
+    "conceptId": "gh300-prompt-library-disambiguation",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-prompts"],
+    "verificationNotes": "Independent review confirmed both prompt-engineering sections. Correct answer D matches the exact documented remedies for uncommon-library ambiguity.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Two documented sections directly prescribe the actions in D; other options either invert or ignore those sections.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-022",
+    "question": "A broad prompt to create an import workflow keeps producing inconsistent parsing, validation, and reporting behavior. The team has agreed example inputs and expected outputs for each stage. Which next workflow best uses those examples and reduces ambiguity across the implementation?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Repeat the entire request in one prompt and remove stage-specific examples to reduce context."
+      },
+      {
+        "id": "b",
+        "text": "Break the work into stages, turn agreed examples into tests, and request each implementation against those tests before integrating."
+      },
+      {
+        "id": "c",
+        "text": "Ask for the reporting stage first but leave parsing and validation unspecified until after the complete workflow is generated."
+      },
+      {
+        "id": "d",
+        "text": "Place all stage examples into unrelated chat threads and ask a new thread to integrate them without supplying their results."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Decompose the workflow and use the agreed examples as behavioral specifications. Generate and validate each stage before integrating it.",
+    "deepExplanation": "Tests can serve as concrete examples for generation, while decomposition reduces the number of simultaneous decisions in one request. This does not guarantee correctness; it creates smaller, inspectable steps whose behavior can be checked against requirements.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This removes useful behavioral examples and preserves the large undivided task that the guidance recommends decomposing.",
+      "c": "This withholds already known stage requirements, so it does not use the examples to constrain the inconsistent behavior.",
+      "d": "The documented workflow provides relevant context in the request or conversation; unrelated threads are not a substitute for supplying the agreed stage results."
+    },
+    "objectiveDomain": "apply-prompt-engineering-and-context-crafting",
+    "skill": "engineer-prompts-for-performance",
+    "subskill": "Explain prompt engineering principles",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["gh300-prompts"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering"
+    ],
+    "documentationTitles": ["Prompt engineering for GitHub Copilot Chat"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "prompt-task-decomposition-tests-as-specification"
+    ],
+    "conceptId": "gh300-prompt-task-decomposition-tests-as-specification",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-prompts"],
+    "verificationNotes": "Independent review confirmed decomposition and tests-as-examples guidance. Correct answer B uniquely combines both documented techniques; other options each violate at least one.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly supports decomposition and tests-as-examples; B is the only option using both.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-023",
+    "question": "A developer is about to refactor an unfamiliar function and first wants help understanding its existing purpose and behavior. Which Copilot action fits that immediate goal?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Ask Copilot to rename every symbol before examining the function's behavior."
+      },
+      {
+        "id": "b",
+        "text": "Request an optimized implementation and assume it explains the old behavior completely."
+      },
+      {
+        "id": "c",
+        "text": "Select the relevant code and use inline chat's /explain command."
+      },
+      {
+        "id": "d",
+        "text": "Generate a pull request summary without providing the function as context."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Use /explain with the relevant code selected to understand it before refactoring.",
+    "deepExplanation": "Refactoring should preserve existing behavior. Understanding that behavior first makes it possible to assess whether a proposed structural change is appropriate; an explanation still needs human review.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Renaming is a refactoring operation, while the article recommends understanding existing behavior before modifying code.",
+      "b": "Optimization changes code; it does not replace the initial step of understanding what the current code does.",
+      "d": "A summary describes pull request changes; it is not the documented selected-code explanation workflow."
+    },
+    "objectiveDomain": "improve-developer-productivity-with-github-copilot",
+    "skill": "enhance-productivity-and-code-quality",
+    "subskill": "Accelerate learning and reduce context switching",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["gh300-refactoring", "gh300-chat"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/tutorials/refactor-code",
+      "https://docs.github.com/en/copilot/responsible-use/chat"
+    ],
+    "documentationTitles": [
+      "Refactoring code with GitHub Copilot",
+      "Application card: GitHub Copilot Chat"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "explain-before-refactoring"],
+    "conceptId": "gh300-explain-before-refactoring",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-refactoring", "gh300-chat"],
+    "verificationNotes": "Independent review confirmed the refactoring tutorial's 'Understanding code' section and the /explain workflow. Correct answer C matches the documented immediate goal.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly demonstrates /explain as the pre-refactor understanding step; other options either modify code or describe unrelated features.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-024",
+    "question": "Copilot is asked to generate the first tests for a module, but the generated tests use a different framework from the rest of the repository. Which context change is specifically recommended to improve consistency?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Open existing repository test files in adjacent editor tabs when asking for the new tests."
+      },
+      {
+        "id": "b",
+        "text": "Close the existing tests so Copilot cannot be influenced by the current testing framework."
+      },
+      {
+        "id": "c",
+        "text": "Provide only a test-coverage percentage rather than any example tests or framework context."
+      },
+      {
+        "id": "d",
+        "text": "Enable public-code matching, which selects the repository's testing framework automatically."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Provide existing tests as context. Adjacent test files show Copilot the framework and patterns already used by the repository.",
+    "deepExplanation": "The issue is contextual consistency, not merely whether tests are generated. Existing tests are examples of both framework syntax and local conventions. Review the new tests afterward; context improves relevance but does not certify their correctness.",
+    "whyOtherAnswersAreWrong": {
+      "b": "This removes precisely the context the documented recommendation uses to improve consistency.",
+      "c": "A coverage percentage does not show the test framework or conventions that adjacent test files can supply.",
+      "d": "Public-code matching compares suggested code with a public index; it does not select the project's framework."
+    },
+    "objectiveDomain": "improve-developer-productivity-with-github-copilot",
+    "skill": "support-testing-and-security",
+    "subskill": "Generate unit and integration tests",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["gh300-testing", "gh300-public-code"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/tutorials/write-tests",
+      "https://docs.github.com/en/copilot/concepts/completions/code-referencing"
+    ],
+    "documentationTitles": [
+      "Writing tests with GitHub Copilot",
+      "GitHub Copilot code referencing"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "test-generation-existing-framework-context"
+    ],
+    "conceptId": "gh300-test-generation-existing-framework-context",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-testing", "gh300-public-code"],
+    "verificationNotes": "Independent review confirmed the adjacent-tabs recommendation and the unrelated purpose of public-code matching. Correct answer A matches the documented remedy.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Testing tutorial directly names adjacent open tests as the context remedy; others either remove context or reuse an unrelated feature.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-025",
+    "question": "Existing callers use publish_label and rely on its printed output. A team wants Copilot to separate normalization from presentation so normalization can be reused, without changing current callers or observable behavior. Which proposed refactoring meets those constraints?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Replace publish_label with a normalization function and require every existing caller to print the result itself."
+      },
+      {
+        "id": "b",
+        "text": "Keep publish_label but make it return the normalized label without printing it."
+      },
+      {
+        "id": "c",
+        "text": "Move normalization into a helper but also print from that helper before publish_label prints again."
+      },
+      {
+        "id": "d",
+        "text": "Extract normalization and presentation helpers, retaining publish_label as a wrapper that calls both in the original order."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Preserve the public entry point and its output while extracting focused helpers. The wrapper keeps existing callers working.",
+    "deepExplanation": "A structural improvement is not behavior-preserving if it removes output, duplicates output, or requires caller changes that the scenario forbids. After extraction, verify that publish_label still normalizes and prints exactly as before, while other code can reuse the normalization helper independently.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This changes the existing entry point and caller responsibilities, unlike the documented wrapper approach that preserves callers.",
+      "b": "Refactoring is behavior-preserving; replacing printed output with a return value violates the explicitly stated behavior.",
+      "c": "Duplicating the visible output changes behavior and gives the reusable normalization helper a presentation side effect."
+    },
+    "objectiveDomain": "improve-developer-productivity-with-github-copilot",
+    "skill": "enhance-productivity-and-code-quality",
+    "subskill": "Use Copilot for code generation, refactoring, and documentation",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["gh300-refactoring"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/tutorials/refactor-code"
+    ],
+    "documentationTitles": ["Refactoring code with GitHub Copilot"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "refactor-extract-functions-preserve-entry-point"
+    ],
+    "codeLanguage": "python",
+    "codeSnippet": "def publish_label(raw_label):\n    label = raw_label.strip().lower()\n    print(f\"label={label}\")",
+    "conceptId": "gh300-refactor-extract-functions-preserve-entry-point",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-refactoring"],
+    "verificationNotes": "Independent review confirmed the wrapper pattern in the refactoring tutorial and the behavior-preservation principle. Correct answer D matches the documented refactor; distractors each break a stated constraint.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Tutorial explicitly documents the wrapper pattern that keeps callers working; D is the only option preserving both callers and printed output.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-026",
+    "question": "Copilot generated a single test that calls publish_reading with value 50 and checks the return value. The requirement permits values 0 through 100, requires a sensor, and forbids notification for rejected inputs. Tests must not contact a live notifier. Which request best closes the distinct contract gaps without changing that isolation requirement?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Add tests for 0 and 100 against the live notifier, then reuse those notification results when testing rejected readings."
+      },
+      {
+        "id": "b",
+        "text": "Use a mock notifier; test accepted boundaries with expected calls and rejected missing-sensor or out-of-range inputs with exceptions and no calls."
+      },
+      {
+        "id": "c",
+        "text": "Add a mock notifier and test more accepted middle-range values, checking only that each call returns its input."
+      },
+      {
+        "id": "d",
+        "text": "Test missing sensors and out-of-range inputs for exceptions, but keep the notifier unobserved because an exception proves no earlier call occurred."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Use a mock to check both successful interactions and absence of interactions on rejected inputs. Include boundary values and each independent validation failure.",
+    "deepExplanation": "The current test checks only one happy-path return. A complete targeted request must separately address valid boundaries, sensor validation, numeric range rejection, exception behavior, and notification effects. Mocking meets the no-live-service constraint, but merely creating a mock is insufficient unless the tests assert its expected calls or absence of calls.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documented mock-based approach avoids real service connections, and invalid-input cases need their own no-call checks rather than reused successful results.",
+      "c": "More happy-path return assertions leave boundaries, validation failures, and notification interactions untested.",
+      "d": "The documentation separately verifies both the exception and that the external service was not called; an exception assertion alone does not establish absence of side effects."
+    },
+    "objectiveDomain": "improve-developer-productivity-with-github-copilot",
+    "skill": "support-testing-and-security",
+    "subskill": "Identify edge cases and write assertions",
+    "difficulty": "expert",
+    "complexity": "technical-implementation",
+    "sourceIds": ["gh300-testing"],
+    "sourceUrls": ["https://docs.github.com/en/copilot/tutorials/write-tests"],
+    "documentationTitles": ["Writing tests with GitHub Copilot"],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "test-generation-success-error-side-effect-contract"
+    ],
+    "codeLanguage": "python",
+    "codeSnippet": "def publish_reading(sensor, value, notifier):\n    if not sensor:\n        raise ValueError(\"sensor is required\")\n    if value < 0 or value > 100:\n        raise ValueError(\"reading out of range\")\n    notifier.notify(sensor, value)\n    return value",
+    "conceptId": "gh300-test-generation-success-error-side-effect-contract",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-testing"],
+    "verificationNotes": "Independent review confirmed the tutorial's dual-assertion pattern (exception + no side effect) and its mock-based isolation guidance. Correct answer B satisfies boundaries, validation branches, exceptions, and notifier interactions; distractors each miss one or more.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Tutorial's exact 'raises the correct exceptions and that the NotificationService is not called' phrasing supports B; other options each skip one guarantee.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-027",
+    "question": "An administrator changes a repository's content exclusions. A developer is testing inline suggestions in an already-open VS Code window and wants to load the new rules without waiting for normal propagation. What does GitHub document for VS Code?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Delete and reclone the repository to force the exclusion paths to change."
+      },
+      {
+        "id": "b",
+        "text": "Switch Copilot Chat to Agent mode so it immediately enforces the updated exclusions."
+      },
+      {
+        "id": "c",
+        "text": "Run Developer: Reload Window from the VS Code Command Palette."
+      },
+      {
+        "id": "d",
+        "text": "Disable public-code matching to fetch the exclusion configuration immediately."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Use Developer: Reload Window in VS Code to reload the exclusion settings.",
+    "deepExplanation": "GitHub says changes can take up to 30 minutes in IDEs with settings already loaded. It supplies client-specific reload steps; VS Code uses the window reload command. The scenario is deliberately about inline suggestions rather than unsupported Agent-mode exclusion behavior.",
+    "whyOtherAnswersAreWrong": {
+      "a": "GitHub documents reloading the VS Code window, not deleting or recloning the repository.",
+      "b": "The article explicitly says Agent mode in IDE chat does not support content exclusion, so it is not the documented refresh mechanism.",
+      "d": "Public-code matching is a separate setting and is not documented as a way to reload content exclusions."
+    },
+    "objectiveDomain": "configure-privacy-content-exclusions-and-safeguards",
+    "skill": "apply-safeguards-and-troubleshoot",
+    "subskill": "Resolve issues with suggestions and content exclusions",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["gh300-exclusions", "gh300-personal-policy"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/how-tos/configure-content-exclusion/exclude-content-from-copilot",
+      "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies"
+    ],
+    "documentationTitles": [
+      "Excluding content from GitHub Copilot",
+      "Managing GitHub Copilot policies as an individual subscriber"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": ["github-copilot", "gh-300", "vscode-exclusion-policy-reload"],
+    "conceptId": "gh300-vscode-exclusion-policy-reload",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-exclusions", "gh300-personal-policy"],
+    "verificationNotes": "Independent review confirmed the VS Code reload-window steps and the Agent-mode non-support statement in the exclusion concept doc. Correct answer C matches; distractors invoke unrelated features.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly names 'Developer: Reload Window' for VS Code; other options reuse unrelated controls or unsupported modes.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-028",
+    "question": "A VS Code developer is permitted to allow suggestions matching public code. After accepting an unchanged inline suggestion, a code-reference entry appears. What information should the developer use to decide how to handle that matched code?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Review the matching file URLs and any detected license information, then decide on attribution or removal."
+      },
+      {
+        "id": "b",
+        "text": "Treat the reference as evidence that the matching repository's license cannot restrict use."
+      },
+      {
+        "id": "c",
+        "text": "Assume the reference covers all hand-written and subsequently edited code in the file."
+      },
+      {
+        "id": "d",
+        "text": "Infer that public-code blocking is enabled, because a blocked inline suggestion remains available for acceptance."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Inspect the referenced source files and available license information. A reference supports a provenance decision, not an automatic permission grant.",
+    "deepExplanation": "The documented inline workflow records matches for accepted suggestions. It does not cover all hand-authored code or edited suggestions, and a missing license name does not establish that no obligations exist. The developer remains responsible for deciding whether and how to keep the matched code.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The documentation supplies license information for review and decision-making; it does not grant blanket permission or remove license conditions.",
+      "c": "The article says code written by the developer and altered Copilot suggestions are not checked by this inline-suggestion reference mechanism.",
+      "d": "For products supporting blocking, matched or near-matched suggestions are not shown; the scenario instead explicitly allows matching suggestions."
+    },
+    "objectiveDomain": "configure-privacy-content-exclusions-and-safeguards",
+    "skill": "apply-safeguards-and-troubleshoot",
+    "subskill": "Enable suggestions matching public code filtering",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["gh300-public-code", "gh300-personal-policy"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/completions/code-referencing",
+      "https://docs.github.com/en/copilot/how-tos/manage-your-account/manage-policies"
+    ],
+    "documentationTitles": [
+      "GitHub Copilot code referencing",
+      "Managing GitHub Copilot policies as an individual subscriber"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:42:06.585Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "accepted-inline-match-reference-review"
+    ],
+    "conceptId": "gh300-accepted-inline-match-reference-review",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-public-code", "gh300-personal-policy"],
+    "verificationNotes": "Independent review confirmed URL + license disclosure, developer-written exclusion, and Allow vs Block behavior. Correct answer A matches the documented review workflow; distractors each mishandle a distinct doc statement.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly documents URL+license review as the intended provenance workflow; other options misread scope or Allow/Block behavior.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-029",
+    "question": "A team uses supported IDE inline suggestions on local files and excludes a confidential source file. It proposes treating that rule as proof that no related information can reach Copilot, including through a symlink or IDE-provided type information. Which qualification is required?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The guarantee holds once the 30-minute propagation window has elapsed, including for symlinks."
+      },
+      {
+        "id": "b",
+        "text": "Only remote filesystems are unsupported; symlinks and indirect IDE type information are explicitly guaranteed to be excluded."
+      },
+      {
+        "id": "c",
+        "text": "Renaming the excluded file with a different case guarantees that indirect references disappear."
+      },
+      {
+        "id": "d",
+        "text": "Exclusions do not apply to symlinks, and Copilot may still receive semantic information supplied indirectly by the IDE."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Content exclusions are not the proposed universal information-flow guarantee. Symlinks and indirectly supplied semantic context have documented limitations.",
+    "deepExplanation": "Direct file exclusion, filesystem indirection, and semantic context supplied by the IDE are different paths. The article says excluded-file type information or symbol definitions can still be provided indirectly and that exclusions currently do not apply to symlinks or remote filesystems.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Propagation does not remove the documented symlink limitation or the possibility of indirectly supplied semantic information.",
+      "b": "The article separately identifies symlinks and indirect semantic information as limitations, not guarantees.",
+      "c": "Path patterns are case-insensitive, and changing case does not address IDE-provided semantic information or symlink support."
+    },
+    "objectiveDomain": "configure-privacy-content-exclusions-and-safeguards",
+    "skill": "manage-privacy-settings-and-exclusions",
+    "subskill": "Configure content exclusions and editor settings",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["gh300-exclusion-concepts", "gh300-exclusions"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/concepts/context/content-exclusion",
+      "https://docs.github.com/en/copilot/how-tos/configure-content-exclusion/exclude-content-from-copilot"
+    ],
+    "documentationTitles": [
+      "Content exclusion for GitHub Copilot",
+      "Excluding content from GitHub Copilot"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "exclusion-symlink-and-indirect-semantic-limits"
+    ],
+    "conceptId": "gh300-exclusion-symlink-and-indirect-semantic-limits",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "gh300-exclusion-concepts",
+      "gh300-exclusions"
+    ],
+    "verificationNotes": "Independent review confirmed both documented limits and the case-insensitive matching. Correct answer D uniquely captures both; distractors each misread a specific limit.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Concept doc directly names symlink non-application and indirect-semantic pathway; D is the only option honoring both.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  },
+  {
+    "id": "gh300-030",
+    "question": "Two organizations in one enterprise assign their own Copilot seats. Security needs one exclusion rule for matching local files, including files outside Git, covering all enterprise Copilot users. A repository maintainer also asks to edit that inherited rule locally. Which governance design matches the documented scopes and permissions?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "One organization owner sets the rule; it covers users licensed by both organizations, and repository maintainers can override it."
+      },
+      {
+        "id": "b",
+        "text": "An enterprise owner defines the enterprise rule; it covers enterprise Copilot users, and the repository cannot edit the inherited setting."
+      },
+      {
+        "id": "c",
+        "text": "A repository administrator defines the rule only in repository settings; that also covers non-Git files for all users across both organizations."
+      },
+      {
+        "id": "d",
+        "text": "Each developer adds a personal prompt instruction, and repository maintainers edit those instructions to override enterprise exclusions."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Use an enterprise-level exclusion rule for the required enterprise-wide scope. Repository settings cannot edit inherited exclusions.",
+    "deepExplanation": "Seat-granting scope matters: an organization's exclusions follow users licensed through that organization, while enterprise rules apply to all enterprise Copilot users. Enterprise configuration supports paths outside Git. Repository administrators' local scope and the Maintain role's view-only access do not grant authority to edit an inherited enterprise rule.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Organization rules apply to users assigned seats by that organization; Maintain users can view but not edit repository exclusion settings.",
+      "c": "Repository settings specify content in that repository; the requested cross-enterprise, non-Git scope is documented at the enterprise level.",
+      "d": "Custom instructions provide context and guidance, not administrator-enforced content-exclusion settings or overrides of inherited policy."
+    },
+    "objectiveDomain": "configure-privacy-content-exclusions-and-safeguards",
+    "skill": "manage-privacy-settings-and-exclusions",
+    "subskill": "Configure content exclusions and editor settings",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["gh300-exclusions", "gh300-instructions"],
+    "sourceUrls": [
+      "https://docs.github.com/en/copilot/how-tos/configure-content-exclusion/exclude-content-from-copilot",
+      "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions"
+    ],
+    "documentationTitles": [
+      "Excluding content from GitHub Copilot",
+      "Adding repository custom instructions for GitHub Copilot"
+    ],
+    "generatedAt": "2026-09-11T19:33:38.167Z",
+    "lastValidatedAt": "2026-09-11T19:33:38.192Z",
+    "featureStatus": "GA",
+    "tags": [
+      "github-copilot",
+      "gh-300",
+      "enterprise-exclusion-seat-scope-and-inheritance"
+    ],
+    "conceptId": "gh300-enterprise-exclusion-seat-scope-and-inheritance",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["gh300-exclusions", "gh300-instructions"],
+    "verificationNotes": "Independent review confirmed enterprise scope, non-Git support, inherited-setting non-editability, and Maintain view-only role. Correct answer B uniquely matches all three constraints; distractors each violate scope or authority.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-11T21:02:43.031Z",
+    "confidenceReason": "Doc directly documents enterprise scope, non-Git support, and inherited-setting non-editability; only B combines all three.",
+    "verifiedAt": "2026-09-11T21:02:43.031Z"
+  }
+]

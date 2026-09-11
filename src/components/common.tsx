@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { ArrowUpRight, X } from 'lucide-react';
-import { learnUrlSchema } from '../features/grounding/schema';
+import { officialSourceUrlSchema } from '../features/dungeons/sourcePolicy';
 
 export function LearnLink({
   href,
@@ -11,7 +11,7 @@ export function LearnLink({
   children: ReactNode;
   className?: string;
 }) {
-  if (!learnUrlSchema.safeParse(href).success)
+  if (!officialSourceUrlSchema.safeParse(href).success)
     return <span>{children} (documentation link unavailable)</span>;
   return (
     <a
@@ -22,7 +22,10 @@ export function LearnLink({
     >
       {children}
       <ArrowUpRight size={15} aria-hidden="true" />
-      <span className="sr-only"> (opens Microsoft Learn in a new tab)</span>
+      <span className="sr-only">
+        {' '}
+        (opens official documentation in a new tab)
+      </span>
     </a>
   );
 }

@@ -1,0 +1,1533 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "sc200-001": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "1ae3baa4b15500c9a46bc5f2735b60d8b6b3cf40c895cd13cf3a09817f778de4",
+      "sourceIds": ["sc200-sentinel-roles"],
+      "retrievedAt": "2026-09-11T19:19:11.176Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Responder adds incident management to Reader while withholding analytics-rule and playbook editing, exactly matching the requirement."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Reader lacks incident management, so an analyst with only Reader could not change owners or statuses."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Contributor also grants create/edit of Sentinel resources including analytics rules, which the requirement explicitly excludes."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Playbook Operator only permits listing, viewing, and manually running playbooks, so it cannot change incident ownership or status."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Foundational role selection with a tight constraint pair. Alignment to Sentinel roles subskill is direct; role matrix supports uniqueness; distractors each match a documented but wrong capability profile. Beginner label authentic; explanation cleanly names each role's power without leaking the answer.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-002": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "dc2454ae902bc643a41adf1593589a3359e1f31b1a5caf54c2123bcb6bca65d7",
+      "sourceIds": ["sc200-playbooks", "sc200-sentinel-roles"],
+      "retrievedAt": "2026-09-11T19:19:11.953Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-playbooks"],
+          "summary": "Automation Contributor for the Sentinel service account, scoped to the playbook resource group, is the documented fix for missing automation authorization."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Granting the maintainer Sentinel Reader adjusts the human user's role but never authorizes the Sentinel execution identity to reach the playbook resource group."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Playbook Operator on the workspace lets the user run playbooks, not the service identity, and it does not scope to the separate playbook resource group."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-playbooks"],
+          "summary": "Automation Contributor on the workspace resource group is the correct role but the wrong scope; the playbook lives in a different resource group."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced troubleshooting that separates human authoring, execution identity, and resource scope. Both service-account role and playbook-resource-group scope must be right, which enforces genuine reasoning. Distractors probe the common right-role/wrong-scope and human/service mix-ups. Documentation strength is high because the playbook article names the exact role and scope.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-003": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "173eaf7547b98caf8e6f0966bc5d790cc818d2d7355b503f55e4ac10cc8bbd02",
+      "sourceIds": ["sc200-playbooks", "sc200-sentinel-roles"],
+      "retrievedAt": "2026-09-11T19:19:11.953Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-playbooks"],
+          "summary": "Playbook Operator is the documented Sentinel role that lets a user run playbooks manually without granting editing capability."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Automation Contributor authorizes the Sentinel service account for automation, not the human analyst who needs manual execution permission."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-playbooks"],
+          "summary": "Logic App Contributor covers editing and managing logic apps, exceeding the no-edit constraint in the scenario."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Reader adds no ability to execute a playbook, so the analyst still could not run it manually."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate least-privilege choice against a pre-authorized service account. Distractors target the four most-plausible confusions (edit vs run, service vs user). Uniqueness holds because Operator is documented as the manual-run role for humans. Explanation stays specific to the operator-vs-editor axis.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-004": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "dfeed708b09f38a28efa70c74818fafb42c2ede9698b84d17c516d5022c18bab",
+      "sourceIds": ["sc200-automation"],
+      "retrievedAt": "2026-09-11T19:23:59.135Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-automation"],
+          "summary": "Creation rules run in order (C10 before C20) evaluating current state, so C20 sees the tag and assigns the owner; U1 then runs and adds the task on the owned incident."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-automation"],
+          "summary": "Order numbers are local to each trigger queue; U1's order 1 does not preempt the creation-trigger queue."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-automation"],
+          "summary": "Updates triggered by a creation-rule change wait for all applicable creation rules to finish; they do not interleave."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-automation"],
+          "summary": "The documentation states later rules see the state after earlier actions, so C20 does not evaluate an immutable snapshot from creation."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 1
+        },
+        "notes": "Expert applied-reasoning encounter that traces two ordered queues plus an update-trigger evaluation against current state. Stem carries all needed rules and states, and each distractor targets one specific ordering fallacy. Stem is somewhat dense on first read, hence a small clarity deduction; rubric still comfortably clears the 18/20 floor.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-005": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "8a4cc85376e2688ad32bc74e2f1743d64965fc9d0b68a5dae1f7091144db3897",
+      "sourceIds": ["sc200-automation"],
+      "retrievedAt": "2026-09-11T19:23:59.135Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-automation"],
+          "summary": "A collection-level negative requires no tag to contain the marker; approved-maintenance makes the collection contain it and correctly excludes the incident."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-automation"],
+          "summary": "A per-tag negative is true whenever any single tag lacks the marker; needs-triage satisfies it even though approved-maintenance is also present."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-automation"],
+          "summary": "A per-tag positive contains-check is true here because one tag matches; the condition would include, not exclude, the incident."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-automation"],
+          "summary": "A collection-level positive is true because the collection contains the marker, so it fails to enforce absence."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Focused intermediate check of the documented individual-vs-collection semantics with a concrete two-tag incident. Distractors cleanly map to the three non-answer combinations. Uniqueness is clear; explanation reproduces the exact documented distinction.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-006": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "0fa597824621c633badb053328bb2fc8a534f803db57df4594f82bba4ff9557c",
+      "sourceIds": ["sc200-nrt"],
+      "retrievedAt": "2026-09-11T19:19:15.103Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "NRT evaluates ingestion time, so an event ingested during the current minute is inside the window regardless of the older TimeGenerated value."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "NRT explicitly does not use TimeGenerated as the window boundary; it uses ingestion time."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "NRT runs every minute with a two-minute delay; there is no documented daily replay for delayed events."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "NRT tolerates ingestion delay below 12 hours; zero delay is not required."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced diagnostic that requires distinguishing Sentinel NRT's ingestion-time window from source generation time and applying the 12-hour delay ceiling. Every prerequisite in the stem (no extra predicate, delay well below 12 hours) prevents alternative rejections. Explanation cites the two documented facts precisely.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-007": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "193a41e4318029af44f8ad01cc042d5452984a4839a7e1f39011673bec9cefae",
+      "sourceIds": ["sc200-nrt"],
+      "retrievedAt": "2026-09-11T19:19:15.103Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "Above 30 events, NRT produces 29 individual alerts and a 30th summarizing all applicable events, which matches the observed 30-alert outcome."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "The documented behavior groups alerts; it does not delete underlying events from the workspace."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "The documentation specifies 29 individual alerts plus a summarizing alert, not equal-sized alert groups."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "Applicable events are handled by the summary alert; no mandatory spillover to the next run is documented."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate cardinality reasoning that stops the reader from inferring data loss from an alert-count mismatch. Distractors each match a common wrong mental model. Answer uniqueness is high because the documented rule specifies exactly 29 individual plus a 30th summary.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-008": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "f2e57236709d76ae30d4870c73a1504df20a3fd5f0528e45f256d63dc15f152e",
+      "sourceIds": [
+        "sc200-custom-detections",
+        "sc200-arg-max",
+        "sc200-summarize"
+      ],
+      "retrievedAt": "2026-09-11T19:23:13.051Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-custom-detections", "sc200-arg-max"],
+          "summary": "arg_max(Timestamp, ReportId) returns Timestamp and the ReportId from the same maximizing row while count still aggregates the device's events."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-arg-max", "sc200-summarize"],
+          "summary": "Independent max(Timestamp) and max(ReportId) can pair a newest timestamp with a different event's ReportId, breaking the same-row association."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-summarize"],
+          "summary": "Adding Timestamp and ReportId to by turns them into grouping keys, producing multiple rows per device rather than one aggregate."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-custom-detections"],
+          "summary": "The result omits ReportId entirely, failing the requirement to preserve it with Timestamp."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced KQL code question anchored in the documented arg_max example. Distractors probe independent maxima, over-grouping, and identifier omission. Explanation acknowledges enrichment is recommended without overreaching into an absolute rejection claim. Difficulty authentic for applied reasoning.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-009": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "511fa8aa5143ac5b1e45c68c7239b0fe89e450b918ed7de080db31eae70199de",
+      "sourceIds": ["sc200-custom-detections", "sc200-nrt"],
+      "retrievedAt": "2026-09-11T19:19:15.103Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-custom-detections"],
+          "summary": "P uses one supported table, GA columns, supported operators, and no comments, which are the Defender Continuous requirements documented in the custom-detection reference."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "S runs correctly as a Sentinel NRT analytics rule because that engine permits multiple tables and cross-workspace queries."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-custom-detections"],
+          "summary": "Defender Continuous requires a single supported Defender or Sentinel table with no joins or unions, so a cross-workspace multi-table Sentinel query is disqualified regardless of source origin."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-nrt"],
+          "summary": "Sentinel NRT explicitly permits queries across workspaces and reference more than one table, so rewriting S to a single-table query is unnecessary and would lose the correlation."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 1
+        },
+        "notes": "Expert multi-select that forces reviewers to keep two different NRT engines separate. Both correct picks require distinct, documented restrictions to hold. Wording is intentionally dense to establish prerequisites; a minor readability concession is offset by strong documentation and distractor plausibility.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-010": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "8ccd524910312b647e20eaecce8cf22a5078a04e60a73b8a045b7a111feeea8c",
+      "sourceIds": ["sc200-custom-detections", "sc200-sentinel-roles"],
+      "retrievedAt": "2026-09-11T19:19:11.176Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-custom-detections"],
+          "summary": "IdentityLogonEvents holds data from both Defender for Cloud Apps and Defender for Identity, so managing detections over it requires manage permissions for both services."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-custom-detections"],
+          "summary": "The documentation names less-privileged roles like Security Administrator or Security Operator; Global Administrator is not the universal requirement."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-custom-detections"],
+          "summary": "The article explicitly says Office 365 manage permissions do not authorize Identity-table detections; a query comment cannot bypass the service-permission rule."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-sentinel-roles"],
+          "summary": "Sentinel Reader is a read role for Sentinel; it does not substitute for Defender service management permissions."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate permissions troubleshooter that uses the documented shared-table example (IdentityLogonEvents) as the anchor. Distractors probe universal Global-Admin, cross-service assumptions, and role substitution. Explanation is precise about which services own the required manage permissions.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-011": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "8b53f98c7c242b02c1aeb51559ac08bd0d845ea5ade31bef0d25ba9bdfbb3883",
+      "sourceIds": ["sc200-ama-architecture"],
+      "retrievedAt": "2026-09-11T19:23:51.736Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-ama-architecture"],
+          "summary": "CEF via AMA writes to CommonSecurityLog and Syslog via AMA writes to Syslog, exactly as documented for a shared Linux forwarder."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-ama-architecture"],
+          "summary": "This inverts the documented destination tables."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-ama-architecture"],
+          "summary": "CommonSecurityLog is only the CEF destination; ordinary syslog does not land there."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-ama-architecture"],
+          "summary": "Syslog is only the ordinary-message destination; the properly configured CEF stream is directed to CommonSecurityLog."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Beginner concept check with a shared Linux forwarder as the misleading hook. Distractors capture the four permutations of destination tables. Uniqueness is straightforward once the reader consults the architecture article.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-012": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "dd87817076c57d4c7c20e608a1a76619d6ece806e84feba49f8fc85839a59903",
+      "sourceIds": ["sc200-ama-architecture"],
+      "retrievedAt": "2026-09-11T19:23:51.736Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-ama-architecture"],
+          "summary": "The documented duplication fix keeps the CEF stream and filters CEF messages from the Syslog stream, checking both ProcessName and SyslogMessage to cover AMA 1.41 nonstandard-header senders."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-ama-architecture"],
+          "summary": "Filtering ProcessName alone is insufficient because AMA 1.41 senders with nonstandard headers may not populate CEF in ProcessName."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-ama-architecture"],
+          "summary": "Disabling the shared facility on both streams removes both required data feeds."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-ama-architecture"],
+          "summary": "Filtering CEF from the CEF stream removes the desired CommonSecurityLog copy and leaves CEF duplicating into Syslog."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 1
+        },
+        "notes": "Expert AMA duplication troubleshooter that requires knowledge of both the constrained facility path and the AMA 1.41 dual-field caveat. Distractors each fail one of the three constraints. A dense stem is the necessary cost of the documented dual-field requirement; rubric still comfortably above the floor.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-013": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "20720923e20007be1e1737b3bcd7b25f4ddc55dfb6c499a97865148fb1322216",
+      "sourceIds": ["sc200-ama-collection", "sc200-ama-architecture"],
+      "retrievedAt": "2026-09-11T19:23:51.736Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-ama-collection"],
+          "summary": "Selecting LOG_ERR collects LOG_ERR, LOG_CRIT, LOG_ALERT, and LOG_EMERG, matching the documented inclusive minimum."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-ama-collection"],
+          "summary": "A minimum-level selection is inclusive, not exact-only."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-ama-collection"],
+          "summary": "The threshold is a floor, so critical and emergency are included above LOG_ERR, not excluded."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-ama-collection"],
+          "summary": "LOG_ERR is included as the minimum level; it is not excluded."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate portal-implementation check that avoids conflating inclusive minimum thresholds with exact-level filtering. Distractors exhaust the plausible alternatives (exact only, lower only, exclude selected level). Uniqueness holds because the doc example uses this exact level.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-014": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "717e3d81d5a5b67bcccb7cf9116a834f7c1467b4b477c69049dfb21037553d52",
+      "sourceIds": ["sc200-device-response"],
+      "retrievedAt": "2026-09-11T19:19:10.801Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "Manual device isolation disconnects the device from the network while preserving Defender for Endpoint service connectivity, matching the requirement."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "Collecting an investigation package gathers evidence but does not implement network containment."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "Restrict app execution controls which files can execute; it does not create a network boundary."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "An antivirus scan looks for malware; it does not create the required network isolation."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Beginner scenario that selects a manual response action for a clear operational goal. Prerequisites are stated so the manual-only, non-VPN case is unambiguous. Distractors are the other three top-level device response actions, keeping this a genuine comparison, not a giveaway.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-015": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "9580f39b2b889bb650036fcd97f99dd4150b3c579e91c94a61d11c968240239b",
+      "sourceIds": ["sc200-device-response"],
+      "retrievedAt": "2026-09-11T19:19:10.801Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "A third-party-signed application is blocked because the code-integrity policy only allows files signed by a Microsoft-issued certificate."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "The documented rule allows Microsoft-issued signatures specifically, not any digital signature."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "The action applies a code-integrity policy that limits execution scope; it is not merely killing one process."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "The action tightens signature enforcement; it does not disable signature verification."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate business-impact question anchored on the documented Microsoft-issued certificate rule. Distractors probe the tempting third-party-signed and single-process assumptions. Uniqueness is clear against the documented signer boundary.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-016": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "2026f357acb527d0812522aa36bae8894a347eafa7db98c8057d26be478adcd2",
+      "sourceIds": ["sc200-device-response"],
+      "retrievedAt": "2026-09-11T19:19:10.801Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "Split-tunneling the Defender for Endpoint and Defender Antivirus cloud-protection traffic keeps the required service path open after isolation."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "The documentation explicitly warns full-tunnel VPN blocks cloud service access after isolation, so leaving it unchanged does not preserve monitoring."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "An antivirus scan is a remediation action, not a network boundary; it cannot replace isolation."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "An investigation package collects evidence; it does not restrict network traffic."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced architectural planning that hinges on the documented full-tunnel VPN caveat. Distractors probe the two common misreadings (isolation trivially preserves connectivity, or scan/package can substitute for isolation). Documentation strength is high; explanation names the exact recommended traffic types.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-017": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "c8ac44656a0c458de95284bc5b6e1f19dcbf45124da327b7507a5747c633a758",
+      "sourceIds": ["sc200-device-response"],
+      "retrievedAt": "2026-09-11T19:19:10.801Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "CollectionSummaryReport.xls is the documented artifact recording data points, extraction commands, execution status, and error codes."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "Processes lists currently running processes rather than collection status."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "PrefetchFilesList tracks copied prefetch files and their copy failures, not the entire package's collection commands."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "SystemInformation captures OS version and network-card details, not per-command execution results."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate troubleshooting that reinforces reading collection completeness before drawing conclusions. Each distractor is a real package artifact that would tempt a hasty responder; the documented summary report is uniquely correct. Answer uniqueness and originality both strong.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-018": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "511d4bfac354913013a90636ce30f9631c98a3fbdcef79b284fc12de637b452f",
+      "sourceIds": [
+        "sc200-device-response",
+        "sc200-live-response",
+        "sc200-high-value-response"
+      ],
+      "retrievedAt": "2026-09-11T19:31:28.344Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-high-value-response"],
+          "summary": "Selective Response Actions applied at high-value asset onboarding can disallow Live Response on that device, matching the tenant-enabled, permissioned scenario."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "ScanAvgCPULoadFactor controls antivirus CPU usage, not availability of the live-response action."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-device-response"],
+          "summary": "The prefetch copy folder concerns investigation-package contents, not live-response availability."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "Unsigned-script execution is an in-session capability toggle, not the device-level restriction that disables the whole live-response action."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 1
+        },
+        "notes": "Advanced device-scoped restriction check that requires reading the high-value asset article rather than assuming a role change is next. Reviewer verified the feature-status wording independently and left GA. Slight clarity deduction reflects the stem's length; rubric still well above threshold.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-019": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "304c2c2e3e511c02e46b87a8cd73a9c1436cbc1836f9bb376626662a64f6c7ca",
+      "sourceIds": ["sc200-live-response"],
+      "retrievedAt": "2026-09-11T19:19:14.587Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "fileinfo returns metadata about the file without transferring or modifying it, meeting the read-only requirement."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "getfile downloads a file, which the scenario excludes."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "putfile places a library file on the device, which the scenario excludes."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "For a file, remediate deletes it, which the scenario excludes."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Beginner command-set discrimination anchored to the documented live-response table. Distractors are neighbouring commands with clearly different documented effects. Uniqueness is complete against the fileinfo definition.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-020": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "357f530c0105de4d76bd94da4b602faa54e39a130eab7702a98d65529464fa6b",
+      "sourceIds": ["sc200-live-response"],
+      "retrievedAt": "2026-09-11T19:19:14.587Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "Ctrl+C cancels the command in the Defender portal only; the documentation warns changing operations may continue on the agent, so responders must verify the actual outcome."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "The Cancel-a-command note explicitly says the portal cancellation does not stop the agent side."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "No automatic undo of completed remediation is documented for Ctrl+C."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "The command log continues to record command details and status; Ctrl+C is cancellation, not log deletion."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced audit reasoning that prevents portal cancellation being read as an agent-side stop. Distractors probe the three most-common wrong mental models (auto-stop, auto-undo, audit deletion). Explanation cites the exact Cancel-a-command warning.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-021": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "6eac316feeb418ab983aaa0bf4a52b5481eda0e6c0aa2d5b022da994438e2454",
+      "sourceIds": ["sc200-live-response"],
+      "retrievedAt": "2026-09-11T19:19:14.587Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "Session-console upload requires Manage Security Settings; delegated session permissions alone leave the control disabled, exactly as documented."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "Removing device-group membership is not the documented control for the session upload button."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "Unsigned-script execution governs whether unsigned PowerShell scripts can run; it does not authorize library uploads through the session."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-live-response"],
+          "summary": "The article explicitly says the button is greyed out for users with only delegated permissions, contradicting an equal-permissions assumption."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced permissions troubleshooter that keeps the reader inside a single documented paragraph on Manage Security Settings. Distractors each fail one specific documented condition. Uniqueness relies on session-console vs Library management separation, which the doc explicitly draws.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-022": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "d87f75f0125fe17a08feedd54d88323593034adb2a5f54e99a399b71a4f57c94",
+      "sourceIds": ["sc200-action-center"],
+      "retrievedAt": "2026-09-11T19:19:56.244Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-action-center"],
+          "summary": "Approve on the Pending tab initiates the selected pending action, and the retirement note preserves Office 365 AIR."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-action-center"],
+          "summary": "Undo lives on History and applies to completed actions, not to a pending item awaiting approval."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-action-center"],
+          "summary": "Reject would prevent the pending action, which contradicts the analyst's decision to proceed."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-action-center"],
+          "summary": "Go hunt opens Advanced hunting for investigation, not approval of the pending action."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Beginner Action-center operation with an explicit workflow (Office 365 AIR preserved). One-star deduction on difficulty authenticity because the correct action can be inferred from the label 'Approve'; distractors and citations still make it a defensible study-run beginner item.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-023": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "daa42b017415e979fcec72a553e790b2e3f8074d0587835dafbaf09db52605e7",
+      "sourceIds": ["sc200-action-center"],
+      "retrievedAt": "2026-09-11T19:19:56.244Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-action-center"],
+          "summary": "Grouping the two quarantine actions in one History undo and handling the isolation separately satisfies the documented same-type requirement."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-action-center"],
+          "summary": "Reject applies to Pending items, not to completed actions that need undoing on History."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-action-center"],
+          "summary": "The multiple-action undo workflow requires selected items to share the same Action type, so quarantine and isolation cannot be combined in one operation."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-action-center"],
+          "summary": "Go hunt launches Advanced hunting; it is not a reversal action."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate bulk-undo problem that requires the same-Action-type constraint plus Security Administrator authorization. Distractors probe the wrong tab, wrong operation, and mixed-type shortcuts. Explanation stays scoped to the documented workflow.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-024": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "ee708b7f148f9c1152fb08200e1461ed185267861ba45cef032bc169b7e54763",
+      "sourceIds": ["sc200-network-events", "sc200-process-events"],
+      "retrievedAt": "2026-09-11T19:19:56.198Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-network-events"],
+          "summary": "DeviceNetworkEvents contains the connection events with RemoteIP, RemotePort, and initiating-process fields required by the investigator."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-process-events"],
+          "summary": "DeviceProcessEvents describes process-creation events and does not carry the connection-destination columns."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 1,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Beginner schema-selection question deliberately limited to two options because there is no plausible third documented candidate. Difficulty and distractor plausibility one-star reflect that unavoidable narrow choice set; the item still passes as a study-run beginner because the documented schema clearly separates the two tables.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-025": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "154e92fd2868ef0b785a221605dee3a8e4643f25afdd0213b8ce7350c98220fa",
+      "sourceIds": ["sc200-process-events"],
+      "retrievedAt": "2026-09-11T19:19:52.161Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-process-events"],
+          "summary": "Joining the created executable's SHA1 to DeviceFileCertificateInfo is the documented technique for retrieving available signing information for the created file."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-process-events"],
+          "summary": "InitiatingProcessSignatureStatus describes the process that initiated the event, not the created executable, so it cannot answer the created-file question."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-process-events"],
+          "summary": "ProcessVersionInfoCompanyName is file metadata and does not indicate whether the file is digitally signed."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-process-events"],
+          "summary": "InitiatingProcessSignerType describes the initiating process's signer, not the created executable's certificate issuer."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced entity-attribution check that requires distinguishing initiating from created process fields and knowing the documented certificate-join technique. Distractors reuse the initiating-process fields that make the wrong mental model tempting. Explanation names the exact join key.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-026": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "4c66045e0344ae816d02e882f5ce30f7976ec702b96212bb8e881ee5a44052ac",
+      "sourceIds": ["sc200-network-events", "sc200-logical-operators"],
+      "retrievedAt": "2026-09-11T19:36:56.258Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-network-events", "sc200-logical-operators"],
+          "summary": "Conjunction of InitiatingProcessSHA1 == ImageSHA1 and RemoteIP == DestinationIP preserves image identity and destination match, using the SHA1 fallback the schema documents."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-network-events"],
+          "summary": "The scenario says InitiatingProcessSHA256 is empty, so equality to ImageSHA256 loses every relevant row."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-logical-operators"],
+          "summary": "or accepts either predicate, so it admits rows for other images contacting the destination or the target image contacting other destinations."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-network-events"],
+          "summary": "LocalIP is the source side of the connection, so this applies the destination check to the wrong endpoint."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced KQL code repair that combines the documented SHA256 sparse-population caveat with logical-and semantics and remote-vs-local endpoint attribution. Distractors probe each independent failure. Uniqueness against three well-documented facts is strong.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-027": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "70d50d222f5526ec4ed235175ce09cc8e17b70bb685679c2d0fe6af00972be18",
+      "sourceIds": ["sc200-network-events", "sc200-process-events"],
+      "retrievedAt": "2026-09-11T19:19:56.198Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-network-events", "sc200-process-events"],
+          "summary": "Network InitiatingProcessUniqueId identifies the process that made the connection, matched to process ProcessUniqueId (the created process), with DeviceId preserving device identity."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-network-events"],
+          "summary": "ReportId is a repeating event counter and cannot cross-table identify a process instance; dropping DeviceId also invites cross-device collisions."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-network-events", "sc200-process-events"],
+          "summary": "Numeric InitiatingProcessId and ProcessId are reused; the scenario explicitly reuses the same PID for two launches on one device, so this key confuses them."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-process-events"],
+          "summary": "Matching to InitiatingProcessUniqueId on the process side joins to the creator/parent of the process row, not to that row's newly created process."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 1
+        },
+        "notes": "Expert correlation puzzle that must survive PID reuse, initiating-vs-created attribution, and cross-device collisions. Stem density earns a small clarity deduction; rubric still well above threshold because uniqueness depends on three documented facts holding together.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-028": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "0c1f86d010a96291925d582e5332dbdf06da67e39466c215f5af4985ea0acbd0",
+      "sourceIds": ["sc200-innerunique", "sc200-inner", "sc200-summarize"],
+      "retrievedAt": "2026-09-11T19:23:13.051Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-inner"],
+          "summary": "Explicit kind=inner emits every matching left/right pair, so all three connection rows survive the join."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-innerunique"],
+          "summary": "innerunique is the flavor that deduplicates left keys, so specifying it explicitly preserves the observed loss."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-innerunique"],
+          "summary": "An unspecified kind still defaults to innerunique regardless of right-side uniqueness, so the drop persists."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-summarize"],
+          "summary": "Pre-deduplicating Connections by DeviceId and ProcessKey discards the distinct connection rows the investigation needs."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Applied KQL join semantics targeting the innerunique default and left-side deduplication. Downgraded to advanced because reasoning centers on a single documented default; nonetheless distractors are all plausible KQL mistakes and the explanation preserves the cardinality analysis.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-029": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "d1b5e5c42f2cdd388077941463357f1b07690922c11c3df4dea6df632c9f13b5",
+      "sourceIds": ["sc200-summarize", "sc200-network-events"],
+      "retrievedAt": "2026-09-11T19:23:13.051Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-summarize", "sc200-network-events"],
+          "summary": "DeviceId with bin(Timestamp, 15m) produces one row per device per 15-minute interval, matching the documented summarize grouping semantics."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-summarize"],
+          "summary": "Omitting DeviceId collapses devices within each time bucket, breaking the per-device requirement."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-summarize"],
+          "summary": "Raw Timestamp continues to create a separate bucket for every exact event timestamp instead of 15-minute intervals."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-summarize"],
+          "summary": "Dropping the time grouping yields one aggregate per device across the whole filtered range."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Advanced aggregation implementation anchored to summarize grouping and explicit bin() semantics. Distractors probe each of the three natural summarize mistakes (drop device, drop time, keep raw timestamp). Uniqueness against the documented pattern is complete.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    },
+    "sc200-030": {
+      "credentialId": "sc-200",
+      "objectiveVersion": "July 28, 2026",
+      "questionFingerprint": "ed6a51e57c6cc744721881854109460c3e8c68ee2a4836dcc082f44a7e6fcdc8",
+      "sourceIds": ["sc200-sentinel-hunting"],
+      "retrievedAt": "2026-09-11T19:20:01.127Z",
+      "lastValidatedAt": "2026-09-11T19:38:17.401Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["sc200-sentinel-hunting"],
+          "summary": "Bookmarks in the Sentinel-specific Hunting experience preserve selected rows, the originating query, notes, and tags, matching the analyst's intent."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["sc200-sentinel-hunting"],
+          "summary": "Creating an alert rule changes detection behavior; it is not the documented way to annotate and preserve selected historical rows."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["sc200-sentinel-hunting"],
+          "summary": "Favoriting a query causes it to run on load; it does not create per-row bookmarks with notes."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["sc200-sentinel-hunting"],
+          "summary": "The article explicitly says bookmarks are unavailable in unified Advanced hunting."
+        }
+      ],
+      "rubric": {
+        "reviewerId": "dungeon-verify-sc200",
+        "reviewedAt": "2026-09-11T20:45:24.667Z",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "notes": "Intermediate scenario that requires knowing bookmarks are Sentinel-specific and preserve both rows and query context. Distractors probe premature alert-rule creation, favoriting confusion, and the unified-hunting bookmark limitation. Explanation stays scoped to the documented paragraph.",
+        "objectiveVersion": "July 28, 2026",
+        "objectiveFingerprint": "c3a33c3c724382d7060f35b7065ee581c0e1f136013e08ebf8f8d2d14c703193"
+      }
+    }
+  }
+}

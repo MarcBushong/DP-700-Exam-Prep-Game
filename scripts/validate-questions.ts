@@ -1,49 +1,69 @@
-import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { fileURLToPath, URL as NodeURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import {
   inspectContent,
   validateContent,
 } from '../src/features/grounding/schema';
-
-export function argument(name: string) {
-  const index = process.argv.indexOf(name);
-  if (index < 0) return undefined;
-  const value = process.argv[index + 1];
-  if (!value || value.startsWith('--'))
-    throw new Error(`${name} requires a value.`);
-  return value;
-}
-
-export async function readJsonFile(path: string | URL): Promise<unknown> {
-  return JSON.parse(
-    (await readFile(path, 'utf8')).replace(/^\uFEFF/, ''),
-  ) as unknown;
-}
+import { credentials } from '../src/features/dungeons/catalog';
+import {
+  validateDungeonPackage,
+  type DungeonPackage,
+} from '../src/features/dungeons/validation';
+import {
+  argument,
+  examDirectory,
+  examId,
+  readJsonFile,
+  readRawPackage,
+  registryCollisions,
+} from './content-files';
+import { applyRegistryCollisions } from '../src/features/dungeons/registry';
+export { argument, readJsonFile } from './content-files';
 
 export async function loadRawContent() {
-  const files = [
-    'questions.json',
-    'grounding-manifest.json',
-    'objectives.json',
-  ];
+  const files = ['questions.json', 'sources.json', 'objectives.json'];
   const [questions, manifest, taxonomy] = await Promise.all(
     files.map((file, index) =>
       readJsonFile(
         argument(['--questions', '--manifest', '--taxonomy'][index]) ??
-          new NodeURL(`../src/data/${file}`, import.meta.url),
+          resolve(examDirectory(), file),
       ),
     ),
   );
   return { questions, manifest, taxonomy };
 }
 
-export async function loadContent(diagnostic = false) {
+export async function loadContent(
+  diagnostic = false,
+): Promise<DungeonPackage | ReturnType<typeof inspectContent>> {
   const { questions, manifest, taxonomy } = await loadRawContent();
+  const credential = credentials.find(
+    (entry) => entry.credentialId === examId(),
+  )!;
+  if (!argument('--questions')) {
+    const dungeon = applyRegistryCollisions(
+      validateDungeonPackage(credential, {
+        ...(await readRawPackage()),
+        questions,
+        manifest,
+        taxonomy,
+      }),
+      await registryCollisions(),
+    );
+    if (!diagnostic) {
+      const failures = dungeon.findings.filter(
+        (finding) => finding.severity !== 'warning',
+      );
+      if (failures.length)
+        throw new Error(failures.map((finding) => finding.message).join('\n'));
+    }
+    return dungeon;
+  }
   return (diagnostic ? inspectContent : validateContent)(
     questions,
     manifest,
     taxonomy,
+    credential,
   );
 }
 

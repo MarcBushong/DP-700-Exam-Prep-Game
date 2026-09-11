@@ -1,4 +1,5 @@
-import { fileURLToPath, URL as NodeURL } from 'node:url';
+import { resolve } from 'node:path';
+import { examDirectory, examId } from './content-files';
 import {
   argument,
   isMain,
@@ -15,15 +16,23 @@ import type {
   GroundingManifest,
   Question,
 } from '../src/features/grounding/schema';
+import { verificationReviewSchema } from '../src/features/grounding/workflow';
+import {
+  readReviewLedger,
+  reviewLedgerFindings,
+  reviewLedgerPath,
+} from './review-ledger';
 
 export function verificationReviewFile(options: {
   questions?: string;
   reviews?: string;
+  exam?: string;
 }): string | undefined {
   if (options.reviews) return options.reviews;
   if (options.questions) return undefined;
-  return fileURLToPath(
-    new NodeURL('../src/data/verification-reviews.json', import.meta.url),
+  return resolve(
+    examDirectory(options.exam ?? 'dp-700'),
+    'verification-reviews.json',
   );
 }
 
@@ -57,10 +66,28 @@ export async function runVerification() {
   const reviewFile = verificationReviewFile({
     questions: argument('--questions'),
     reviews: argument('--reviews'),
+    exam: examId(),
   });
   const reviewFindings = reviewFile
     ? await checkReviewFile(content.allQuestions, content.manifest, reviewFile)
     : [];
+  if (!argument('--questions') && reviewFile) {
+    const packageReviews = verificationReviewSchema.parse(
+      await readJsonFile(reviewFile),
+    );
+    const ledger = await readReviewLedger();
+    reviewFindings.push(
+      ...reviewLedgerFindings(packageReviews.reviews, ledger, true).map(
+        (message): ContentFinding => ({
+          code: 'consolidated-review-ledger',
+          category: 'verification',
+          severity: 'error',
+          questionIds: [],
+          message,
+        }),
+      ),
+    );
+  }
   const findings = [...content.findings, ...reviewFindings];
   console.log(
     JSON.stringify(
@@ -69,6 +96,9 @@ export async function runVerification() {
           ? 'independent-attestations'
           : 'recorded-verification-metadata',
         reviewFile: reviewFile ?? null,
+        consolidatedReviewLedger: argument('--questions')
+          ? null
+          : reviewLedgerPath,
         attestationChecksPassed:
           Boolean(reviewFile) && reviewFindings.length === 0,
         disclaimer:

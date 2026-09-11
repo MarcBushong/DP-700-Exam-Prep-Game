@@ -10,6 +10,7 @@ export function HostReaction({ reaction }: { reaction: Reaction | null }) {
       data-reaction-category={reaction.category}
       data-reaction-theme={reaction.themes.join(' ')}
       data-reaction-opening={reaction.opening}
+      data-personality="flavor"
     >
       {reaction.renderedText}
     </p>
