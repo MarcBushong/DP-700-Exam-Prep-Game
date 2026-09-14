@@ -44,7 +44,7 @@ export function normalizedCode(code: string): string {
   return codeTokens(code).join(' ');
 }
 
-function codeShape(code: string): string {
+export function codeShape(code: string): string {
   const names = new Map<string, string>();
   return codeTokens(code)
     .map((name) => {
@@ -85,6 +85,10 @@ export function duplicateFindings(questions: Question[]): ContentFinding[] {
   const findings: ContentFinding[] = [];
   const normalized = questions.map((q) => ({
     stem: normalizedQuestion(q.question),
+    operators: (
+      q.question.match(/===|!==|==|!=|<=|>=|<>|=>|&&|\|\||@\{|\}|[<>+=*/]/g) ??
+      []
+    ).join(' '),
     words: words(q.question),
     code: normalizedCode(q.codeSnippet ?? ''),
     shape: codeShape(q.codeSnippet ?? ''),
@@ -105,15 +109,17 @@ export function duplicateFindings(questions: Question[]): ContentFinding[] {
         [...b.words].every((word) => a.words.has(word));
       const sameCode = a.code === b.code;
       const sameChoices = a.choices === b.choices;
+      const sameOperators = a.operators === b.operators;
       let code = '';
       let severity: ContentFinding['severity'] = 'warning';
-      if (a.stem === b.stem && sameCode) {
+      if (a.stem === b.stem && sameCode && sameOperators) {
         code = 'exact-duplicate';
         severity = 'blocking';
       } else if (
         (lexical >= 0.8 || (contained && lexical >= 0.6)) &&
         sameCode &&
-        sameChoices
+        sameChoices &&
+        sameOperators
       ) {
         code = 'near-identical';
         severity = 'blocking';
@@ -121,7 +127,8 @@ export function duplicateFindings(questions: Question[]): ContentFinding[] {
         a.code &&
         a.shape === b.shape &&
         lexical >= 0.65 &&
-        sameChoices
+        sameChoices &&
+        sameOperators
       ) {
         code = 'code-duplicate';
         severity = 'blocking';

@@ -21,6 +21,8 @@ export interface GenerationOptions {
   difficulties?: (typeof difficulties)[number][];
   difficultyMix?: Partial<Record<(typeof difficulties)[number], number>>;
   objectiveDomains?: string[];
+  targetVerified?: number;
+  reviewPolicy?: 'three-pass-v1';
 }
 
 export function parseDifficultyMix(value = 'mix') {
@@ -94,6 +96,23 @@ export function buildGenerationRequest(
         ),
       ),
     difficulties: options.difficulties ?? difficulties,
+    ...(options.reviewPolicy
+      ? {
+          targetVerified: options.targetVerified ?? 150,
+          difficultyLabels: { beginner: 'Foundational' },
+          difficultyMix:
+            options.difficultyMix ??
+            (options.difficulties &&
+            options.difficulties.length !== difficulties.length
+              ? Object.fromEntries(
+                  options.difficulties.map((name) => [
+                    name,
+                    100 / options.difficulties!.length,
+                  ]),
+                )
+              : { beginner: 15, intermediate: 35, advanced: 35, expert: 15 }),
+        }
+      : {}),
     complexities,
     questionTypes: formats,
     studyGuideEffectiveDate: taxonomy.studyGuideEffectiveDate,
@@ -107,9 +126,18 @@ export function buildGenerationRequest(
     constraints: [
       `Scaffolding is not generation or evidence. Retrieve credential, competency outline, preparation material and supporting articles through ${provider === 'Microsoft' ? 'actual Microsoft Learn MCP' : 'official GitHub documentation'} before authoring.`,
       'Preserve published objectives, effective version, and actual retrieval timestamps. Unknown objective weighting remains unknown.',
-      'Author original candidates and every distractor. Generation output remains manual-review-required.',
+      options.reviewPolicy
+        ? 'Author original candidates only after guide-linked source approval. Generation output remains candidate, never verified. Technical and adversarial reviews use separate contexts and identities.'
+        : 'Author original candidates and every distractor. Generation output remains manual-review-required.',
       'A separate reviewer must re-evaluate every option, explanation, code operation, prerequisite, feature status, source relevance, and realism criterion.',
       'Never invent evidence, reviewer scores or dates. Unsupported or ambiguous content stays excluded. Source/rubric fingerprints must match exact candidate content.',
+      ...(options.reviewPolicy
+        ? [
+            'Retrieve current official Learn guide, credential, and self-paced training with actual Microsoft Learn MCP. Only guide/training-linked or explicitly referenced official Learn/GitHub Docs support technical claims.',
+            'Target 150 verified per exam; candidate count is a planning goal, not a certified count. Do not pad or lower thresholds. Aim for at least 40% applied reasoning when objectives support it.',
+            'Pass 3 must challenge every option and scope/plan/role/preconditions with sourced counterexamples. Record actual 12-criterion 0–4 rubric scores; critical scores must be 4, distractorEvidence >=3, total >=44.',
+          ]
+        : []),
     ],
   });
 }
@@ -121,6 +149,10 @@ export function createGenerationRequest(
 ) {
   return buildGenerationRequest(taxonomy, {
     ...options,
+    reviewPolicy:
+      credential.requiredReviewPolicy?.version ?? options.reviewPolicy,
+    targetVerified:
+      options.targetVerified ?? credential.requiredReviewPolicy?.targetVerified,
     credentialId: credential.credentialId,
     provider: credential.provider,
   });

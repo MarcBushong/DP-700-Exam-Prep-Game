@@ -28,6 +28,19 @@
   prompts. Generation scaffolding is not an AI model or proof of review.
 - Authoring and verification are separate passes/contexts. Re-evaluate every
   option against actual evidence; never batch-stamp candidates verified.
+- GH-300 and GH-600 require three distinct contexts: grounded generation,
+  independent technical review, and adversarial challenge. Follow
+  `docs/gh-three-pass-workflow.md`; candidates are never playable.
+- Strict GitHub sources must be the current official Learn guide, its linked
+  self-paced training, or official documentation linked/clearly referenced by
+  that guide or training. Preserve the complete provenance graph. A correct
+  hostname or topical relation is not approval; blogs, videos, forums, Trust
+  Center material, quizzes, and internal material are not sources for these banks.
+- Every strict option needs a sourced counterexample/context analysis; the
+  independently scored 12-criterion 0-4 rubric requires at least 44/48 and the
+  mandated critical scores. A repaired authored field restarts all three passes.
+- Do not equate an exam scheduling link with proof of GA. A reviewed GH-600
+  bank remains sealed while its current status is unverified.
 - Assign stable fact-level `conceptId` values. Resolve blocking duplicates,
   inspect quality warnings, and preserve honest review notes and dates.
 - Only complete, verified, nonstale records enter gameplay. Keep pending,

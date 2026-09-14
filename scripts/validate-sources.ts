@@ -8,7 +8,11 @@ import {
   type SourcePolicyContext,
 } from '../src/features/dungeons/sourcePolicy';
 import { credentials } from '../src/features/dungeons/catalog';
-import { examId } from './content-files';
+import { argument, examId } from './content-files';
+import {
+  strictEvidenceUrlSchema,
+  sourceRegistrySchema,
+} from '../src/features/dungeons/provenance';
 
 export function safeSourceUrl(
   value: string,
@@ -32,6 +36,8 @@ export function safeSourceUrl(
   }
   if (credential) assertAllowedSourceUrl(structuralUrl.href, credential);
   else learnUrlSchema.parse(structuralUrl.href);
+  if (credential?.strictGuideLinked)
+    strictEvidenceUrlSchema.parse(structuralUrl.href);
   if (
     /%|\\/.test(url.pathname) ||
     /(?:assessment|knowledge-check|practice-test|exam-sandbox)/i.test(
@@ -59,7 +65,10 @@ export async function checkOnlineSource(
         redirect: 'manual',
         signal: controller.signal,
         headers: {
-          Accept: 'text/html',
+          Accept:
+            url.hostname === 'docs.github.com'
+              ? 'text/markdown, text/html;q=0.9'
+              : 'text/html',
           'User-Agent': 'FabricChallenge-SourceValidator/1.0',
         },
       });
@@ -105,7 +114,14 @@ export async function checkOnlineSource(
           throw new Error('Expected an official competency PDF document.');
         return { finalUrl: url.href, status: response.status };
       }
+      const officialMarkdown =
+        credential?.provider === 'GitHub' &&
+        url.hostname === 'docs.github.com' &&
+        /^text\/markdown(?:;|$)/i.test(
+          response.headers.get('content-type') ?? '',
+        );
       if (
+        !officialMarkdown &&
         !/text\/html|application\/xhtml\+xml/i.test(
           response.headers.get('content-type') ?? '',
         )
@@ -131,11 +147,15 @@ export async function checkOnlineSource(
       } finally {
         await reader.cancel();
       }
-      const headings = [
-        ...html.matchAll(/<(?:title|h1)\b[^>]*>([\s\S]*?)<\/(?:title|h1)>/gi),
-      ]
-        .map((match) => match[1].replace(/<[^>]+>/g, ''))
-        .join(' ');
+      const headings = officialMarkdown
+        ? [...html.matchAll(/^#\s+(.+)$/gm)].map((match) => match[1]).join(' ')
+        : [
+            ...html.matchAll(
+              /<(?:title|h1)\b[^>]*>([\s\S]*?)<\/(?:title|h1)>/gi,
+            ),
+          ]
+            .map((match) => match[1].replace(/<[^>]+>/g, ''))
+            .join(' ');
       if (
         !headings.trim() ||
         /(?:404|page not found|content not found|access denied|service unavailable|temporarily unavailable)/i.test(
@@ -159,11 +179,32 @@ export async function checkOnlineSource(
 
 if (isMain(import.meta.url)) {
   try {
-    const { manifest } = await loadContent();
-    const credential = credentials.find(
+    const content = await loadContent();
+    const { manifest } = content;
+    const selected = credentials.find(
       (entry) => entry.credentialId === examId(),
     )!;
-    const urls = [...new Set(manifest.sources.map((source) => source.url))];
+    const credential = {
+      ...selected,
+      strictGuideLinked:
+        Boolean(selected.requiredReviewPolicy) ||
+        ('packageManifest' in content &&
+          Boolean(content.packageManifest.reviewPolicy)) ||
+        Boolean(argument('--source-registry')),
+    };
+    const registry =
+      credential.strictGuideLinked && 'sourceRegistry' in content
+        ? sourceRegistrySchema.parse(content.sourceRegistry)
+        : undefined;
+    const urls = [
+      ...new Set([
+        ...manifest.sources.map((source) => source.url),
+        ...(registry?.sources.flatMap((source) => [
+          source.canonicalUrl,
+          ...source.parents.map((parent) => parent.targetUrl),
+        ]) ?? []),
+      ]),
+    ];
     const identityContextUrls = urls.filter(
       (url) =>
         new URL(url).hostname === 'learn.github.com' &&
@@ -192,6 +233,18 @@ if (isMain(import.meta.url)) {
       for (const url of implementationUrls) {
         try {
           const result = await checkOnlineSource(url, fetch, credential);
+          if (registry) {
+            const expectedTargets = registry.sources.flatMap((source) => [
+              ...(source.canonicalUrl === url ? [source.canonicalUrl] : []),
+              ...source.parents
+                .filter((parent) => parent.targetUrl === url)
+                .map((parent) => parent.canonicalUrl),
+            ]);
+            if (expectedTargets.some((target) => target !== result.finalUrl))
+              throw new Error(
+                `Resolved target ${result.finalUrl} differs from the recorded canonical redirect receipt; curator review required.`,
+              );
+          }
           console.log(
             `OK ${url}${result.finalUrl !== url ? ` -> ${result.finalUrl}` : ''}`,
           );

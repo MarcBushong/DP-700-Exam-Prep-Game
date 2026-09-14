@@ -30,6 +30,14 @@ export const generationRequestSchema = z
     credentialId: text.default('dp-700'),
     objectiveVersion: text.optional(),
     requestedCount: z.number().int().min(1).max(300),
+    targetVerified: z.number().int().min(150).optional(),
+    reviewPolicy: z.literal('three-pass-v1').optional(),
+    difficultyLabels: z
+      .object({
+        beginner: z.literal('Foundational'),
+      })
+      .strict()
+      .optional(),
     objectiveTargets: z
       .array(
         z

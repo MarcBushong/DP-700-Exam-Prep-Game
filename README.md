@@ -68,20 +68,27 @@ package remain sealed even when their identity and current outline are verified.
 
 ### Playable content in this revision
 
-| Dungeon                         | Verified encounters | Modes                   |
-| ------------------------------- | ------------------: | ----------------------- |
-| DP-700: The Fabric Depths       |                 162 | Study and Boss Gauntlet |
-| AZ-104: The Infrastructure Keep |                  30 | Study                   |
-| SC-200: The Sentinel Watch      |                  30 | Study                   |
-| AI-103: The AI Workshop         |                  30 | Study                   |
-| GH-300: The Copilot Spire       |                  30 | Study                   |
+| Dungeon                         | Playable verified encounters | Modes                           |
+| ------------------------------- | ---------------------------: | ------------------------------- |
+| DP-700: The Fabric Depths       |                          162 | Study and Boss Gauntlet         |
+| AZ-104: The Infrastructure Keep |                           30 | Study                           |
+| SC-200: The Sentinel Watch      |                           30 | Study                           |
+| AI-103: The AI Workshop         |                           30 | Study                           |
+| GH-300: The Copilot Spire       |                          149 | Study and Boss Gauntlet         |
+| GH-600: The Agentic Workshop    |                            0 | Sealed: availability unverified |
 
-**282 verified encounters**, with zero manual-review-required, rejected, or
-stale records in the installed packages. All major floors are sampled; the
-four smaller banks deliberately retain subskill gaps and keep their gauntlets
-locked. The other **13 catalog entries are sealed**. See the
-[implementation and coverage report](docs/dungeon-implementation-report.md)
-for source evidence, exact coverage, lifecycle states, and remaining work.
+**401 playable verified encounters**. GH-300 retains three rejected duplicates
+and three manual-review records outside gameplay. GH-600 has **136 fully
+three-pass-reviewed questions** and 13 rejected candidates, but none can enter
+gameplay until its availability gate is resolved. All major floors are sampled;
+the smaller AZ-104, SC-200, and AI-103 banks deliberately retain subskill gaps
+and keep their gauntlets locked. GH-600 remains sealed while its current
+availability cannot be verified from the permitted evidence. The other
+unready catalog entries also remain sealed. See the
+[GitHub expansion report](docs/github-expansion-report.md) for the current
+three-pass results, source evidence, exact coverage, and remaining gaps. The
+[initial dungeon implementation report](docs/dungeon-implementation-report.md)
+records the earlier platform baseline.
 
 ![The Certification Dungeon map with original castle artwork, hero-class selection, and five open dungeons](docs/screenshots/dungeon-map.png)
 
@@ -335,7 +342,7 @@ real reviews, `npm run reviews:sync` copies them verbatim; it does not manufactu
 an attestation, score, rationale, or date.
 
 Only `verified` questions with complete, current review metadata enter gameplay.
-`manual-review-required`, `rejected`, and `stale` questions remain excluded.
+`candidate`, `manual-review-required`, `rejected`, and `stale` questions remain excluded.
 The credential must also be verified active, its current objectives must match
 the encounter envelope, and the realism/readiness gates must pass.
 Newer source-review timestamps make affected questions stale until re-reviewed.
@@ -381,6 +388,56 @@ Use Learn search to retrieve the actual relevant self-paced paths/modules;
 never invent content from a `Loading...` placeholder.
 
 ## Adding a question
+
+### GH-300 and GH-600: stricter three-pass workflow
+
+These packages require grounded generation, independent technical verification,
+and a separate adversarial challenge. A technically approved candidate still
+cannot play until the adversarial pass and its realism rubric pass. Every
+stage binds the exact question and objective-map fingerprints; a repair restarts
+all three stages instead of copying old approvals.
+
+The approved source registry is restricted to the current official Learn guide,
+its linked self-paced Learn training, and official documentation directly linked
+or clearly referenced by those materials. A matching hostname or a merely related
+article is not enough. The registry preserves source class, objective relevance,
+actual retrieval/curation dates, and the complete guide/training provenance chain.
+Search summaries, blogs, videos, forums, unofficial banks, and internal materials
+are not question sources.
+
+Adversarial records examine scope, plan, role, prerequisites, feature status,
+source changes, stem sufficiency, explanation limits, reasoning depth, and answer
+clues. Each option records its represented claim, why it is wrong in context
+(or why the correct option is supported), when it could be correct, sources,
+and a concise evidence summary.
+
+The version-2 rubric has 12 criteria scored 0-4. Its configured minimum is
+**44/48**, with 4 required for accuracy, answer uniqueness, documentation
+strength, and citation specificity; distractor evidence must score at least 3.
+This is separate from the preserved DP-700 rubric. Scores are independently
+reviewed judgments, not model-confidence percentages or field-presence checks.
+
+```powershell
+npm run objectives:refresh -- --exam gh-300
+npm run questions:generate -- --exam gh-300 --target-verified 150
+npm run questions:verify -- --exam gh-300
+npm run questions:validate -- --exam gh-300
+npm run questions:duplicates -- --exam gh-300 --cross-exam gh-600,dp-700
+npm run questions:coverage -- --exam gh-300
+npm run questions:report -- --exam gh-300 --write
+npm run sources:validate -- --exam gh-300 --online
+```
+
+Use `gh-600` for the independent agentic package. These CLI aliases resolve to
+the existing stable `github-copilot` and `github-agentic-ai-developer` package
+IDs, preserving local history rather than creating duplicate dungeons. The
+150-question value is a content-development target, never an official exam fact.
+Generation commands create maintainer requests, not AI-generated answers.
+
+See [the three-pass workflow](docs/gh-three-pass-workflow.md) for quarantine,
+repairs, source refresh, rubric scoring, and reviewed-versus-playable reporting.
+
+### Existing maintainer workflow
 
 Read the [question-bank maintenance guide](docs/question-bank-maintenance.md)
 and `src/features/grounding/schema.ts`. Start a small, reviewable batch:

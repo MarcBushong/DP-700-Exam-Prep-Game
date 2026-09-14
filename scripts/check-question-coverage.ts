@@ -6,10 +6,16 @@ try {
     JSON.stringify(
       {
         playableVerifiedQuestions: report.playableVerifiedQuestions,
+        reviewedVerifiedQuestions: report.reviewedVerifiedQuestions,
+        totalCandidateRecords: report.totalQuestions,
+        availability: report.availability,
         statusCounts: report.statusCounts,
         counts: report.counts.playable,
+        coverageBasis: 'playable-only',
+        reviewedCounts: report.counts.reviewed,
         targets: report.targets,
         gaps: report.coverageGaps,
+        reviewedGaps: report.reviewedCoverageGaps,
       },
       null,
       2,

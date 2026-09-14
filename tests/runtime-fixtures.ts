@@ -49,6 +49,7 @@ export function dungeon(
     },
     questions,
     allQuestions: questions,
+    reviewedQuestions: questions,
     taxonomy: structuredClone(taxonomy),
     manifest: structuredClone(manifest),
     reviews: {

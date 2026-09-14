@@ -28,6 +28,19 @@ export function passesRealismRubric(
 ): boolean {
   if (!rubric) return false;
   const scores = Object.values(rubric.scores);
+  if (rubric.version === 2)
+    return (
+      scores.length === 12 &&
+      scores.every(
+        (score) => Number.isInteger(score) && score >= 1 && score <= 4,
+      ) &&
+      scores.reduce((sum, score) => sum + score, 0) >= Math.max(44, minimum) &&
+      rubric.scores.accuracy === 4 &&
+      rubric.scores.answerUniqueness === 4 &&
+      rubric.scores.documentationStrength === 4 &&
+      rubric.scores.citationSpecificity === 4 &&
+      rubric.scores.distractorEvidence >= 3
+    );
   return (
     scores.length === 10 &&
     scores.every(

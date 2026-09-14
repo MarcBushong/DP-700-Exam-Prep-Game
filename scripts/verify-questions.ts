@@ -92,19 +92,31 @@ export async function runVerification() {
   console.log(
     JSON.stringify(
       {
-        mode: reviewFile
-          ? 'independent-attestations'
-          : 'recorded-verification-metadata',
+        mode:
+          'packageManifest' in content &&
+          (content.credential.requiredReviewPolicy ||
+            content.packageManifest.reviewPolicy)
+            ? 'three-pass-recorded-attestations'
+            : reviewFile
+              ? 'independent-attestations'
+              : 'recorded-verification-metadata',
+        metadataOnlyAuthoring:
+          Boolean(argument('--questions')) && !argument('--package-manifest'),
         reviewFile: reviewFile ?? null,
         consolidatedReviewLedger: argument('--questions')
           ? null
           : reviewLedgerPath,
         attestationChecksPassed:
-          Boolean(reviewFile) && reviewFindings.length === 0,
+          Boolean(reviewFile) &&
+          !findings.some((finding) => finding.severity !== 'warning'),
         disclaimer:
           'No answers generated or statuses changed. These checks do not prove factual correctness or reviewer independence; an actual separate reviewer must inspect MCP documentation.',
         statusCounts: report.statusCounts,
+        totalCandidateRecords: report.totalQuestions,
+        reviewedVerifiedQuestions: report.reviewedVerifiedQuestions,
         playableVerifiedQuestions: content.questions.length,
+        availability: report.availability,
+        threePass: report.threePass,
         excludedQuestionIds: report.excludedQuestionIds,
         findings,
         questionFingerprints: Object.fromEntries(

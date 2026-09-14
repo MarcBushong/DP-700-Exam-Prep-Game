@@ -39,7 +39,8 @@ try {
         currentObjectiveVersion: credential.objectiveVersion,
         officialUrls: credential.officialUrls,
         steps: [
-          credential.provider === 'Microsoft'
+          credential.provider === 'Microsoft' ||
+          ['github-copilot', 'github-agentic-ai-developer'].includes(id)
             ? 'Retrieve current credential, study guide and preparation pages through actual Microsoft Learn MCP.'
             : 'Retrieve authoritative GitHub credential and competency outline documentation.',
           'Preserve actual retrieval timestamps and the published effective version; do not infer unpublished objectives or weighting.',

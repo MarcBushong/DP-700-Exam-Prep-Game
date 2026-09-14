@@ -471,7 +471,7 @@ function DungeonCard({
         <div className="encounter-count">
           <strong>{dungeon?.questions.length ?? 0}</strong>
           <span>
-            verified encounters
+            playable verified encounters
             <br />
             <small>
               {dungeon?.taxonomy.domains.length
@@ -480,6 +480,13 @@ function DungeonCard({
             </small>
           </span>
         </div>
+        {(dungeon?.reviewedQuestions.length ?? 0) >
+          (dungeon?.questions.length ?? 0) && (
+          <p className="small muted">
+            {dungeon?.reviewedQuestions.length} fully reviewed encounters remain
+            unavailable because the credential or mode gates are not met.
+          </p>
+        )}
         <dl className="dungeon-facts">
           <div>
             <dt>Credential status</dt>

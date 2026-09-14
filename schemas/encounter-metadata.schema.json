@@ -99,72 +99,160 @@
           "rubric": {
             "anyOf": [
               {
-                "type": "object",
-                "properties": {
-                  "objectiveVersion": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "objectiveFingerprint": {
-                    "type": "string",
-                    "pattern": "^[a-f0-9]{64}$"
-                  },
-                  "scores": {
+                "anyOf": [
+                  {
                     "type": "object",
-                    "propertyNames": {
-                      "type": "string",
-                      "enum": [
-                        "alignment",
-                        "accuracy",
-                        "scenarioCompleteness",
-                        "distractorPlausibility",
-                        "answerUniqueness",
-                        "documentationStrength",
-                        "difficultyAuthenticity",
-                        "explanationQuality",
-                        "originality",
-                        "clarityAccessibility"
-                      ]
-                    },
-                    "additionalProperties": {
-                      "type": "integer",
-                      "minimum": 0,
-                      "maximum": 2
+                    "properties": {
+                      "objectiveVersion": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "objectiveFingerprint": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "reviewerId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "reviewedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                      },
+                      "notes": {
+                        "type": "string",
+                        "minLength": 20
+                      },
+                      "version": {
+                        "type": "number",
+                        "const": 1
+                      },
+                      "scores": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string",
+                          "enum": [
+                            "alignment",
+                            "accuracy",
+                            "scenarioCompleteness",
+                            "distractorPlausibility",
+                            "answerUniqueness",
+                            "documentationStrength",
+                            "difficultyAuthenticity",
+                            "explanationQuality",
+                            "originality",
+                            "clarityAccessibility"
+                          ]
+                        },
+                        "additionalProperties": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 2
+                        },
+                        "required": [
+                          "alignment",
+                          "accuracy",
+                          "scenarioCompleteness",
+                          "distractorPlausibility",
+                          "answerUniqueness",
+                          "documentationStrength",
+                          "difficultyAuthenticity",
+                          "explanationQuality",
+                          "originality",
+                          "clarityAccessibility"
+                        ]
+                      }
                     },
                     "required": [
-                      "alignment",
-                      "accuracy",
-                      "scenarioCompleteness",
-                      "distractorPlausibility",
-                      "answerUniqueness",
-                      "documentationStrength",
-                      "difficultyAuthenticity",
-                      "explanationQuality",
-                      "originality",
-                      "clarityAccessibility"
-                    ]
+                      "objectiveVersion",
+                      "objectiveFingerprint",
+                      "reviewerId",
+                      "reviewedAt",
+                      "notes",
+                      "scores"
+                    ],
+                    "additionalProperties": false
                   },
-                  "reviewerId": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "reviewedAt": {
-                    "type": "string",
-                    "format": "date-time",
-                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
-                  },
-                  "notes": {
-                    "type": "string",
-                    "minLength": 20
+                  {
+                    "type": "object",
+                    "properties": {
+                      "objectiveVersion": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "objectiveFingerprint": {
+                        "type": "string",
+                        "pattern": "^[a-f0-9]{64}$"
+                      },
+                      "reviewerId": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "reviewedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+                      },
+                      "notes": {
+                        "type": "string",
+                        "minLength": 20
+                      },
+                      "version": {
+                        "type": "number",
+                        "const": 2
+                      },
+                      "scores": {
+                        "type": "object",
+                        "propertyNames": {
+                          "type": "string",
+                          "enum": [
+                            "alignment",
+                            "accuracy",
+                            "scenarioCompleteness",
+                            "answerUniqueness",
+                            "distractorPlausibility",
+                            "distractorEvidence",
+                            "documentationStrength",
+                            "citationSpecificity",
+                            "difficultyAuthenticity",
+                            "explanationQuality",
+                            "originality",
+                            "clarityAccessibility"
+                          ]
+                        },
+                        "additionalProperties": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 4
+                        },
+                        "required": [
+                          "alignment",
+                          "accuracy",
+                          "scenarioCompleteness",
+                          "answerUniqueness",
+                          "distractorPlausibility",
+                          "distractorEvidence",
+                          "documentationStrength",
+                          "citationSpecificity",
+                          "difficultyAuthenticity",
+                          "explanationQuality",
+                          "originality",
+                          "clarityAccessibility"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "objectiveVersion",
+                      "objectiveFingerprint",
+                      "reviewerId",
+                      "reviewedAt",
+                      "notes",
+                      "version",
+                      "scores"
+                    ],
+                    "additionalProperties": false
                   }
-                },
-                "required": [
-                  "objectiveVersion",
-                  "objectiveFingerprint",
-                  "scores",
-                  "reviewerId",
-                  "reviewedAt",
-                  "notes"
                 ]
               },
               {
