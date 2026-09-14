@@ -32,21 +32,23 @@ export function scenarioDuplicateFindings(
   questions: Question[],
 ): ContentFinding[] {
   const findings: ContentFinding[] = [];
+  const normalized = questions.map((question) => ({
+    scenario: [
+      normalizedScenario(question.question),
+      question.answerChoices
+        .map((choice) => normalizedScenario(choice.text))
+        .sort()
+        .join('|'),
+    ].join('\n'),
+    code: codeShape(question.codeSnippet ?? ''),
+  }));
   for (let i = 0; i < questions.length; i++)
     for (let j = i + 1; j < questions.length; j++) {
       const left = questions[i],
         right = questions[j];
-      const shape = (q: Question) =>
-        [
-          normalizedScenario(q.question),
-          [...q.answerChoices]
-            .map((choice) => normalizedScenario(choice.text))
-            .sort()
-            .join('|'),
-        ].join('\n');
       if (
-        shape(left) === shape(right) &&
-        codeShape(left.codeSnippet ?? '') === codeShape(right.codeSnippet ?? '')
+        normalized[i].scenario === normalized[j].scenario &&
+        normalized[i].code === normalized[j].code
       )
         findings.push({
           code: 'cosmetic-scenario',

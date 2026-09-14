@@ -36,6 +36,21 @@ export const strictEvidenceUrlSchema = z.string().refine((value) => {
   }
 }, 'Strict evidence must be direct public Microsoft Learn or GitHub Docs, not assessments, searches, blogs, or community content.');
 
+export function englishTrainingTarget(value: string): string | undefined {
+  if (!value.startsWith('https://learn.microsoft.com/training/'))
+    return undefined;
+  const localized = value.replace(
+    'https://learn.microsoft.com/training/',
+    'https://learn.microsoft.com/en-us/training/',
+  );
+  if (!strictEvidenceUrlSchema.safeParse(localized).success) return undefined;
+  return /^\/en-us\/training\/(?:paths|modules)\/[a-z0-9-]+(?:\/[a-z0-9-]+)*\/?$/.test(
+    new URL(localized).pathname,
+  )
+    ? localized
+    : undefined;
+}
+
 const text = z.string().trim().min(1);
 const summary = text.min(20);
 export const sourceParentSchema = z
@@ -43,7 +58,14 @@ export const sourceParentSchema = z
     sourceId: text.optional(),
     credentialUrl: strictEvidenceUrlSchema.optional(),
     relation: z.enum(['direct-link', 'explicit-reference']),
-    targetUrl: strictEvidenceUrlSchema,
+    targetUrl: strictEvidenceUrlSchema.or(
+      z
+        .string()
+        .refine(
+          (value) => Boolean(englishTrainingTarget(value)),
+          'A locale-neutral receipt must be a direct official Learn training path or module.',
+        ),
+    ),
     canonicalUrl: strictEvidenceUrlSchema,
     retrievedAt: timestampSchema,
     evidenceSummary: summary,
@@ -255,6 +277,17 @@ function inspectSourceProvenance(
         );
     }
     for (const parent of source.parents) {
+      const localizedTarget = englishTrainingTarget(parent.targetUrl);
+      if (
+        localizedTarget &&
+        (source.sourceClass !== 'training' ||
+          parent.relation !== 'direct-link' ||
+          localizedTarget !== parent.canonicalUrl)
+      )
+        fail(
+          'A locale-neutral target must be a direct training link whose English URL exactly matches the recorded canonical source.',
+          id,
+        );
       if (
         parent.canonicalUrl !== source.canonicalUrl ||
         Date.parse(parent.retrievedAt) > Date.parse(source.lastValidatedAt)

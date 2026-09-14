@@ -90,6 +90,21 @@ three-pass results, source evidence, exact coverage, and remaining gaps. The
 [initial dungeon implementation report](docs/dungeon-implementation-report.md)
 records the earlier platform baseline.
 
+### DP-800 / DP-420 work on this branch
+
+**Blocked partial contribution: neither requested DP question bank is delivered.**
+DP-800 has its March 12, 2026 objective map, approved curriculum roots, strict
+three-pass scaffolding and integration tests, but **zero received candidates or
+verified questions**. DP-420 retains a null current objective version: the
+retrieved October 6, 2026 outline is prospective and stored outside gameplay.
+Both DP modes remain locked. No filler, fabricated reviews or lowered readiness
+thresholds substitute for missing content.
+
+See the [blocked expansion report](docs/dp-expansion-report.md) for exact
+counts, executed checks, outstanding acceptance gates and source evidence, and
+[DP content maintenance](docs/dp-content-maintenance.md) for the resume workflow.
+This partial branch has not been committed or pushed.
+
 ![The Certification Dungeon map with original castle artwork, hero-class selection, and five open dungeons](docs/screenshots/dungeon-map.png)
 
 ## Features

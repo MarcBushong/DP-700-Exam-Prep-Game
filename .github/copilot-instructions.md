@@ -31,6 +31,11 @@
 - GH-300 and GH-600 require three distinct contexts: grounded generation,
   independent technical review, and adversarial challenge. Follow
   `docs/gh-three-pass-workflow.md`; candidates are never playable.
+- DP-800 and DP-420 require the same catalog-bound three-pass profile and
+  unchanged strict rubric/source gates. Follow `docs/dp-content-maintenance.md`.
+  DP-420's captured October 6, 2026 outline is prospective evidence, not its
+  verified current map; retain the null current version and sealed modes until
+  current official objectives are independently established.
 - Strict GitHub sources must be the current official Learn guide, its linked
   self-paced training, or official documentation linked/clearly referenced by
   that guide or training. Preserve the complete provenance graph. A correct

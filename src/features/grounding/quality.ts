@@ -76,9 +76,16 @@ function words(text: string): Set<string> {
 }
 
 function similarity(left: Set<string>, right: Set<string>): number {
-  const common = [...left].filter((word) => right.has(word)).length;
-  const union = new Set([...left, ...right]).size;
+  let common = 0;
+  for (const word of left) if (right.has(word)) common++;
+  const union = left.size + right.size - common;
   return union ? common / union : 0;
+}
+
+function containsAll(container: Set<string>, subset: Set<string>): boolean {
+  if (subset.size > container.size) return false;
+  for (const word of subset) if (!container.has(word)) return false;
+  return true;
 }
 
 export function duplicateFindings(questions: Question[]): ContentFinding[] {
@@ -105,8 +112,7 @@ export function duplicateFindings(questions: Question[]): ContentFinding[] {
       const right = questions[j];
       const lexical = similarity(a.words, b.words);
       const contained =
-        [...a.words].every((word) => b.words.has(word)) ||
-        [...b.words].every((word) => a.words.has(word));
+        containsAll(b.words, a.words) || containsAll(a.words, b.words);
       const sameCode = a.code === b.code;
       const sameChoices = a.choices === b.choices;
       const sameOperators = a.operators === b.operators;

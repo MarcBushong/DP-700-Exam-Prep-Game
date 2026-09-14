@@ -10,8 +10,14 @@ documentation.
 Canonical package/storage IDs remain `github-copilot` (GH-300) and
 `github-agentic-ai-developer` (GH-600). CLI `--exam gh-300`, `GH-300`, `gh-600`
 and `GH-600` resolve to those existing IDs. No second engine or storage migration.
-Other packages retain the unchanged legacy two-pass and ten-criterion 0–2
+Packages without a strict opt-in retain the unchanged legacy two-pass and ten-criterion 0–2
 rubric. Missing legacy question metadata defaults to manual review.
+
+DP-800 and DP-420 also opt into this same strict profile. Their generic
+credential-scoped prompts do not import GitHub-specific subjects or personas.
+See [DP content maintenance](dp-content-maintenance.md) for current objective
+versions, source restrictions, and DP-420's separately preserved prospective map.
+The legacy profile remains unchanged for packages that do not opt in.
 
 Strict packages explicitly declare this in their existing `manifest.json`:
 

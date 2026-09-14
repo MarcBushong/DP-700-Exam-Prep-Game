@@ -56,6 +56,21 @@ for an explicit reference, preserve a short actual reference passage and justify
 the exact source/claim relevance. A hostname or topical relationship alone is
 never provenance. Link receipts must precede source validation.
 
+A credential page may render a locale-neutral Learn link such as
+`https://learn.microsoft.com/training/paths/<path>/`. Preserve that observed
+target instead of relabeling it as an English link. A narrowly allowed
+`direct-link` training receipt must map exactly to the same path under
+`/en-us/training/paths/` or `/en-us/training/modules/`. Canonical evidence URLs
+remain English and credential-allowlisted. This exception does not admit
+locale-neutral technical documents, other locales, explicit-reference targets,
+query strings, unsafe paths, or redirects to a different source. Actual
+retrieval/redirect evidence is still required; string normalization is not proof.
+The online checker admits these targets only through the validated registry's
+direct training receipts and checks the canonical English URL against the
+unchanged credential allowlist. A missing redirect or a redirect to a different
+URL fails, even when that different URL would otherwise be approved. Unbound
+targets remain rejected before network access.
+
 These helpers validate **recorded declarations**, not the truth of a link,
 reference passage, citation's meaning or reviewer independence. Curators must
 actually inspect and preserve retrieval evidence; independent technical and
