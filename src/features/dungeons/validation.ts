@@ -20,13 +20,21 @@ import {
   validateReviewAttestations,
 } from './review';
 import {
+  encounterMetadataSchema,
   encounterMetadataFileSchema,
   packageManifestSchema,
   type Credential,
   type DungeonReadiness,
   type EncounterMetadataFile,
   type PackageManifest,
+  type ReviewPolicy,
 } from './schema';
+import {
+  validatedSupportingSourceIds,
+  validateSourceProvenance,
+} from './provenance';
+import { validateThreePassReviews } from './threePass';
+import { scenarioDuplicateFindings } from './duplicateReview';
 
 export interface RawDungeonPackage {
   packageManifest: unknown;
@@ -36,6 +44,8 @@ export interface RawDungeonPackage {
   reviews: unknown;
   encounterMetadata: unknown;
   personality?: unknown;
+  validationMetadata?: unknown;
+  sourceRegistry?: unknown;
 }
 
 export interface DungeonPackage {
@@ -53,6 +63,9 @@ export interface DungeonPackage {
   totalRecords: number;
   totalSourceRecords: number;
   personality?: unknown;
+  validationMetadata?: unknown;
+  sourceRegistry?: unknown;
+  reviewedQuestions: Question[];
 }
 
 const sameIds = (left: string[], right: string[]) =>
@@ -66,12 +79,20 @@ export function validateDungeonPackage(
   raw: RawDungeonPackage,
 ): DungeonPackage {
   const packageManifest = packageManifestSchema.parse(raw.packageManifest);
-  const content = inspectContent(
-    raw.questions,
-    raw.manifest,
-    raw.taxonomy,
-    credential,
-  );
+  const requiredPolicy = credential.requiredReviewPolicy;
+  const policy = requiredPolicy ?? packageManifest.reviewPolicy;
+  const content = inspectContent(raw.questions, raw.manifest, raw.taxonomy, {
+    ...credential,
+    strictGuideLinked: Boolean(policy),
+    validatedSupportingSourceIds: policy
+      ? validatedSupportingSourceIds(
+          credential,
+          raw.taxonomy,
+          raw.manifest,
+          raw.sourceRegistry,
+        )
+      : undefined,
+  });
   const findings = [...content.findings];
   const fail = (
     message: string,
@@ -85,6 +106,18 @@ export function validateDungeonPackage(
       questionIds: questionId ? [questionId] : [],
       message,
     });
+  if (
+    requiredPolicy &&
+    (!packageManifest.reviewPolicy ||
+      (Object.keys(requiredPolicy) as (keyof ReviewPolicy)[]).some(
+        (key) => packageManifest.reviewPolicy?.[key] !== requiredPolicy[key],
+      ))
+  )
+    fail(
+      'The package reviewPolicy must exactly match the catalog requiredReviewPolicy. Missing or changed package policy cannot downgrade required provenance or three-pass review.',
+      undefined,
+      'review-policy-binding',
+    );
   if (packageManifest.credentialId !== credential.credentialId)
     fail('Package identity differs from the catalog credential.');
   if (
@@ -122,11 +155,28 @@ export function validateDungeonPackage(
   const metadataResult = encounterMetadataFileSchema.safeParse(
     raw.encounterMetadata,
   );
-  if (!metadataResult.success)
+  if (!metadataResult.success && !policy)
     fail(`Encounter metadata is invalid: ${metadataResult.error.message}`);
-  const encounterMetadata = metadataResult.success
+  const encounterMetadata: EncounterMetadataFile = metadataResult.success
     ? metadataResult.data
     : { schemaVersion: 1 as const, encounters: {} };
+  if (policy && !metadataResult.success) {
+    const value = raw.encounterMetadata as
+      Partial<EncounterMetadataFile> | undefined;
+    if (
+      value?.schemaVersion !== 1 ||
+      !value.encounters ||
+      typeof value.encounters !== 'object'
+    )
+      fail('Required encounter metadata header is invalid.');
+    else
+      for (const [id, record] of Object.entries(value.encounters)) {
+        const parsed = encounterMetadataSchema.safeParse(record);
+        if (parsed.success) encounterMetadata.encounters[id] = parsed.data;
+        else
+          fail(`${id}: invalid evidence envelope: ${parsed.error.message}`, id);
+      }
+  }
   for (const id of Object.keys(encounterMetadata.encounters))
     if (!content.allQuestions.some((q) => q.id === id))
       fail('Metadata references an unknown encounter.', id);
@@ -265,7 +315,8 @@ export function validateDungeonPackage(
       q.verificationStatus === 'verified' &&
       !passesRealismRubric(
         rubric,
-        packageManifest.readinessThresholds.rubricMinimum,
+        policy?.minimumRubricScore ??
+          packageManifest.readinessThresholds.rubricMinimum,
       )
     ) {
       fail(
@@ -279,6 +330,39 @@ export function validateDungeonPackage(
       fail(`${q.id}: unsupported question type for this credential.`, q.id);
     return q;
   });
+  if (policy) {
+    findings.push(
+      ...scenarioDuplicateFindings(content.allQuestions),
+      ...validateSourceProvenance(
+        credential,
+        content.taxonomy,
+        content.manifest,
+        content.allQuestions,
+        raw.sourceRegistry,
+      ),
+      ...validateThreePassReviews(
+        content.allQuestions,
+        content.taxonomy,
+        content.manifest,
+        reviews,
+        encounterMetadata,
+        policy,
+        raw.validationMetadata,
+      ),
+    );
+    // An explicitly nonverified, schema-valid record is a reportable quarantine,
+    // not permission to block unrelated reviewed encounters or quietly promote it.
+    for (const finding of findings)
+      if (
+        finding.questionIds.length &&
+        finding.questionIds.every((id) =>
+          content.allQuestions.some(
+            (q) => q.id === id && q.verificationStatus !== 'verified',
+          ),
+        )
+      )
+        finding.severity = 'warning';
+  }
   const blocking = findings.filter((finding) => finding.severity !== 'warning');
   const globalError = blocking.some((finding) => !finding.questionIds.length);
   const blockedIds = new Set(
@@ -299,6 +383,18 @@ export function validateDungeonPackage(
     blocking.map((finding) => finding.message),
     packageManifest.readinessThresholds,
   );
+  if (
+    policy &&
+    verifiedQuestions.length &&
+    verifiedQuestions.filter(
+      (question) => question.complexity !== 'concept-recall',
+    ).length /
+      verifiedQuestions.length <
+      0.4
+  )
+    stats.majorGaps.push(
+      'Boss Gauntlet needs at least 40% applied reasoning rather than concept recall.',
+    );
   const readiness = getDungeonReadiness(credential, stats);
   return {
     ...content,
@@ -313,5 +409,8 @@ export function validateDungeonPackage(
     objectiveVersion: packageManifest.objectiveVersion,
     findings,
     personality: raw.personality,
+    validationMetadata: raw.validationMetadata,
+    sourceRegistry: raw.sourceRegistry,
+    reviewedQuestions: verifiedQuestions,
   };
 }

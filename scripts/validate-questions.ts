@@ -18,6 +18,11 @@ import {
   registryCollisions,
 } from './content-files';
 import { applyRegistryCollisions } from '../src/features/dungeons/registry';
+import {
+  validatedSupportingSourceIds,
+  validateSourceProvenance,
+} from '../src/features/dungeons/provenance';
+import type { Credential } from '../src/features/dungeons/schema';
 export { argument, readJsonFile } from './content-files';
 
 export async function loadRawContent() {
@@ -40,6 +45,51 @@ export async function loadContent(
   const credential = credentials.find(
     (entry) => entry.credentialId === examId(),
   )!;
+  if (argument('--questions') && argument('--package-manifest')) {
+    const required = [
+      '--reviews',
+      '--encounter-metadata',
+      '--validation-metadata',
+      '--source-registry',
+    ];
+    for (const name of required)
+      if (!argument(name))
+        throw new Error(
+          `Explicit package validation requires ${name}. Omit --package-manifest for metadata-only authoring.`,
+        );
+    const [
+      packageManifest,
+      reviews,
+      encounterMetadata,
+      validationMetadata,
+      sourceRegistry,
+    ] = await Promise.all(
+      ['--package-manifest', ...required].map((name) =>
+        readJsonFile(argument(name)!),
+      ),
+    );
+    const dungeon = validateDungeonPackage(credential, {
+      questions,
+      manifest,
+      taxonomy,
+      packageManifest,
+      reviews,
+      encounterMetadata,
+      validationMetadata,
+      sourceRegistry,
+    });
+    if (
+      !diagnostic &&
+      dungeon.findings.some((finding) => finding.severity !== 'warning')
+    )
+      throw new Error(
+        dungeon.findings
+          .filter((finding) => finding.severity !== 'warning')
+          .map((finding) => finding.message)
+          .join('\n'),
+      );
+    return dungeon;
+  }
   if (!argument('--questions')) {
     const dungeon = applyRegistryCollisions(
       validateDungeonPackage(credential, {
@@ -59,12 +109,69 @@ export async function loadContent(
     }
     return dungeon;
   }
-  return (diagnostic ? inspectContent : validateContent)(
+  const sourceRegistry = argument('--source-registry')
+    ? await readJsonFile(argument('--source-registry')!)
+    : undefined;
+  return inspectAuthoringContent(
+    { questions, manifest, taxonomy },
+    credential,
+    sourceRegistry,
+    diagnostic,
+  );
+}
+
+export function inspectAuthoringContent(
+  {
     questions,
     manifest,
     taxonomy,
-    credential,
+  }: { questions: unknown; manifest: unknown; taxonomy: unknown },
+  credential: Credential,
+  sourceRegistry?: unknown,
+  diagnostic = false,
+) {
+  const hasRegistry = sourceRegistry !== undefined;
+  const content = (diagnostic ? inspectContent : validateContent)(
+    questions,
+    manifest,
+    taxonomy,
+    {
+      ...credential,
+      strictGuideLinked:
+        Boolean(credential.requiredReviewPolicy) || hasRegistry,
+      validatedSupportingSourceIds: hasRegistry
+        ? validatedSupportingSourceIds(
+            credential,
+            taxonomy,
+            manifest,
+            sourceRegistry,
+          )
+        : undefined,
+    },
   );
+  if (hasRegistry) {
+    content.findings.push(
+      ...validateSourceProvenance(
+        credential,
+        content.taxonomy,
+        content.manifest,
+        content.allQuestions,
+        sourceRegistry,
+      ),
+    );
+    if (
+      !diagnostic &&
+      content.findings.some((finding) => finding.severity !== 'warning')
+    )
+      throw new Error(
+        content.findings
+          .filter((finding) => finding.severity !== 'warning')
+          .map((finding) => finding.message)
+          .join('\n'),
+      );
+  }
+  // Custom candidate input is authoring inspection, never a gameplay promotion.
+  return { ...content, questions: [], sourceRegistry };
 }
 
 export function isMain(url: string) {

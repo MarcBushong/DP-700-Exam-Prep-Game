@@ -45,6 +45,7 @@ export const answerModes = [
 export const orders = ['random', 'study-guide', 'weakest', 'balanced'] as const;
 export const featureStatuses = ['GA', 'Preview', 'Not applicable'] as const;
 export const verificationStatuses = [
+  'candidate',
   'verified',
   'manual-review-required',
   'rejected',
@@ -108,6 +109,7 @@ export const manifestSchema = z.object({
   retrievalMethod: z.enum([
     'Microsoft Learn MCP',
     'Official GitHub documentation',
+    'Microsoft Learn MCP and official GitHub documentation',
   ]),
   sources: z.array(sourceSchema).min(1),
 });
@@ -315,7 +317,10 @@ export function inspectContent(
   }
   const manifest: GroundingManifest = { ...envelope, sources };
   const allQuestions: Question[] = [];
-  const records = z.array(z.unknown()).min(1).parse(questionData);
+  const records = z
+    .array(z.unknown())
+    .min(sourcePolicy?.strictGuideLinked ? 0 : 1)
+    .parse(questionData);
   const fail = (
     message: string,
     questionIds: string[] = [],
@@ -388,6 +393,13 @@ export function inspectContent(
     );
   if (
     sourcePolicy &&
+    !(
+      sourcePolicy.strictGuideLinked &&
+      (manifest.retrievalMethod === 'Microsoft Learn MCP' ||
+        (sourcePolicy.provider === 'GitHub' &&
+          manifest.retrievalMethod ===
+            'Microsoft Learn MCP and official GitHub documentation'))
+    ) &&
     manifest.retrievalMethod !==
       (sourcePolicy.provider === 'Microsoft'
         ? 'Microsoft Learn MCP'
@@ -492,11 +504,19 @@ export function inspectContent(
     const sources = question.sourceIds.map((id) => sourceMap.get(id));
     if (
       !sources.some(
-        (source) => source && source.featureStatus !== 'Not applicable',
+        (source) =>
+          source &&
+          (sourcePolicy?.strictGuideLinked
+            ? sourcePolicy.validatedSupportingSourceIds?.includes(
+                source.sourceId,
+              )
+            : source.featureStatus !== 'Not applicable'),
       )
     )
       questionFail(
-        'at least one citation must support implementation, not context only.',
+        sourcePolicy?.strictGuideLinked
+          ? 'at least one citation must support implementation through validated training/doc provenance, not only guide or credential context.'
+          : 'at least one citation must support implementation, not context only.',
       );
     const latestReview = sources.reduce(
       (latest, source) =>
@@ -525,7 +545,18 @@ export function inspectContent(
       }
     }
   }
-  findings.push(...duplicateFindings(allQuestions));
+  findings.push(
+    ...duplicateFindings(allQuestions).map((finding) =>
+      sourcePolicy?.strictGuideLinked &&
+      finding.questionIds.some((id) =>
+        allQuestions.some(
+          (q) => q.id === id && q.verificationStatus !== 'verified',
+        ),
+      )
+        ? { ...finding, severity: 'warning' as const }
+        : finding,
+    ),
+  );
   const blocked = new Set(
     findings
       .filter((finding) => finding.severity !== 'warning')

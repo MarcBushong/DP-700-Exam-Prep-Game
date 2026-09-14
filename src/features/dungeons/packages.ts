@@ -16,7 +16,7 @@ export type { Credential } from './schema';
 export type { DungeonPackage } from './validation';
 
 const packageFiles = import.meta.glob(
-  '../../content/exams/*/{manifest,questions,objectives,sources,verification-reviews,encounter-metadata,personality}.json',
+  '../../content/exams/*/{manifest,questions,objectives,sources,verification-reviews,encounter-metadata,validation-metadata,source-registry,personality}.json',
   { eager: true, import: 'default' },
 );
 const loaded = new Map<string, DungeonPackage>();
@@ -47,6 +47,8 @@ for (const id of folderIds) {
     manifest: read('sources'),
     reviews: read('verification-reviews'),
     encounterMetadata: read('encounter-metadata'),
+    validationMetadata: read('validation-metadata'),
+    sourceRegistry: read('source-registry'),
     personality: read('personality'),
   };
   try {

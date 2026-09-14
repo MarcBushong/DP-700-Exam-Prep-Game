@@ -60,4 +60,30 @@ describe('maintainer requests are browser-safe plans, never evidence or self-ver
       }).success,
     ).toBe(false);
   });
+  it('carries the required three-pass policy into Forge downloads even when the caller omits it', () => {
+    const { credential, raw } = dungeonFixture();
+    credential.requiredReviewPolicy = {
+      version: 'three-pass-v1',
+      minimumRubricScore: 44,
+      targetVerified: 150,
+      sourcePolicy: 'guide-linked-official',
+    };
+    const request = createGenerationRequest(credential, raw.taxonomy, {
+      requestId: 'synthetic-strict-request',
+      authorId: 'test-author',
+      createdAt: date,
+      requestedCount: 6,
+    });
+    expect(request.reviewPolicy).toBe('three-pass-v1');
+    expect(request.targetVerified).toBe(150);
+    expect(request.difficultyMix).toEqual({
+      beginner: 15,
+      intermediate: 35,
+      advanced: 35,
+      expert: 15,
+    });
+    expect(
+      JSON.parse(downloadGenerationRequest(request).content).reviewPolicy,
+    ).toBe('three-pass-v1');
+  });
 });

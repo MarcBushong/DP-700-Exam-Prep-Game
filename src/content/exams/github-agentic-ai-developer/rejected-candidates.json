@@ -1,0 +1,655 @@
+{
+  "schemaVersion": 1,
+  "candidates": [
+    {
+      "id": "gh600-a-011",
+      "question": "An administrator configures an Active branch ruleset for main in a public repository. The agent has no bypass permission. 'Require branches to be up to date before merging' is selected, but no required check has been defined. What configuration omission explains why selecting that option alone provides no up-to-date protection?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "The ruleset must be moved from Active to Disabled while the agent opens its PR."
+        },
+        {
+          "id": "b",
+          "text": "A commit-message metadata restriction must be added to the existing ruleset."
+        },
+        {
+          "id": "c",
+          "text": "The agent must receive a For pull requests only bypass entry."
+        },
+        {
+          "id": "d",
+          "text": "An actual required status check must be defined in the ruleset."
+        }
+      ],
+      "correctAnswer": ["d"],
+      "explanation": "The up-to-date requirement takes effect only when a required check is defined. Define the intended check as a requirement in the ruleset.",
+      "deepExplanation": "Enforcement status, branch targeting, and bypass are already constrained in the scenario. The source specifically qualifies the up-to-date option with a required-check dependency; naming a convention or adding metadata restrictions cannot supply that dependency.",
+      "whyOtherAnswersAreWrong": {
+        "a": "Disabling the rule removes enforcement rather than supplying the missing required check.",
+        "b": "Metadata restrictions do not define the status check required for the up-to-date setting to take effect.",
+        "c": "Giving bypass permission does not establish the omitted validation dependency and would relax the agent's restrictions."
+      },
+      "objectiveDomain": "prepare-agent-architecture-and-sdlc-processes",
+      "skill": "configure-observability-and-control-for-autonomous-agents",
+      "subskill": "Plan and implement the degree of agent autonomy, including guardrails",
+      "difficulty": "advanced",
+      "complexity": "troubleshooting",
+      "sourceIds": ["gh600-20260914-training-doc-15"],
+      "sourceUrls": [
+        "https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository"
+      ],
+      "documentationTitles": ["Creating rulesets for a repository"],
+      "generatedAt": "2026-09-14T15:25:36.710Z",
+      "lastValidatedAt": "2026-09-14T15:25:36.710Z",
+      "featureStatus": "GA",
+      "tags": ["GH-600", "pass-1", "gh600.ruleset-uptodate-needs-check"],
+      "conceptId": "gh600.ruleset-uptodate-needs-check",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "Independent Pass 3 confirms the technical key but rejects promotion because the frozen Advanced difficulty label materially overstates a direct one-step documentation recall item. No metadata-only repair can cure that authored-content defect.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.154Z",
+      "confidenceReason": "The answer is technically supported, but difficulty authenticity is an overriding quality gate and requires full regeneration."
+    },
+    {
+      "id": "gh600-b-020",
+      "question": "A team removes the explicit GITHUB_TOKEN input from an action used by an agent workflow and concludes that the action can no longer use that token. The workflow still grants write permissions. What documented property invalidates that conclusion?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "A",
+          "text": "A GitHub App installation token can supply permissions unavailable to GITHUB_TOKEN."
+        },
+        {
+          "id": "B",
+          "text": "A PAT stored as a repository secret can be referenced explicitly in a workflow."
+        },
+        {
+          "id": "C",
+          "text": "An action can access github.token even without an explicit GITHUB_TOKEN input."
+        }
+      ],
+      "correctAnswer": ["C"],
+      "explanation": "Actions can access github.token without an explicit token input. Control the granted permissions instead.",
+      "deepExplanation": "Token delivery and token authority are different. The documentation recommends least-required permissions rather than relying on omission of a parameter.",
+      "whyOtherAnswersAreWrong": {
+        "A": "The stated action already has a GITHUB_TOKEN access path; no App token is needed to explain it. Alternate context: Use an installation token when the workflow requires permissions GITHUB_TOKEN cannot provide.",
+        "B": "No PAT is involved in the stated conclusion about implicit GITHUB_TOKEN access. Alternate context: A secret-stored PAT fits a separately authorized workflow credential requirement."
+      },
+      "objectiveDomain": "implement-tool-use-and-environment-interaction",
+      "skill": "select-and-configure-agent-tools",
+      "subskill": "Configure agent tool permissions",
+      "difficulty": "advanced",
+      "complexity": "scenario-based",
+      "sourceIds": ["gh600-20260914-training-doc-05"],
+      "sourceUrls": [
+        "https://docs.github.com/en/actions/tutorials/authenticate-with-github_token"
+      ],
+      "documentationTitles": [
+        "Use GITHUB_TOKEN for authentication in workflows"
+      ],
+      "generatedAt": "2026-09-14T15:25:21.553Z",
+      "lastValidatedAt": "2026-09-14T15:25:21.553Z",
+      "featureStatus": "GA",
+      "tags": [
+        "GH-600",
+        "pass-1",
+        "implement-tool-use-and-environment-interaction",
+        "scenario-based"
+      ],
+      "conceptId": "gh600.token-implicit-github-context",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "PASS 3 rejected this technically accurate item because it duplicates gh600-a-023 at the same fact and decision level. Rewording cannot cure that bank-level redundancy without a new three-pass candidate.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.118Z",
+      "confidenceReason": "The answer remains technically supported, but the same-fact pair gh600-a-023 already tests the identical decision and overrides promotion."
+    },
+    {
+      "id": "gh600-b-029",
+      "question": "A Copilot cloud agent task accesses a service through three paths: an agent Bash-started command inside the Actions appliance, an MCP server, and a configured setup step. The security design proposes using only the agent firewall to constrain all three paths. Which assessment follows the documented coverage boundary?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "A",
+          "text": "The firewall covers the Bash-started appliance process; the MCP and setup-step paths need separate controls."
+        },
+        {
+          "id": "B",
+          "text": "Address the design by permitting the service domain and its subdomains in the firewall."
+        },
+        {
+          "id": "C",
+          "text": "Address the design by permitting only the service's required URL path in the firewall."
+        }
+      ],
+      "correctAnswer": ["A"],
+      "explanation": "The firewall does not cover MCP servers or configured setup steps. Control those paths separately.",
+      "deepExplanation": "The documentation also warns the firewall is not comprehensive protection and may be bypassed by sophisticated attacks. Destination allowlisting is not proof of complete isolation.",
+      "whyOtherAnswersAreWrong": {
+        "B": "Changing an allowlist entry cannot bring MCP or setup processes under this firewall. Alternate context: A domain rule fits covered traffic that should reach a domain and its subdomains.",
+        "C": "A narrower destination selector does not change the excluded execution paths. Alternate context: A URL rule fits covered traffic that should reach only a specific scheme, host and path subtree."
+      },
+      "objectiveDomain": "implement-tool-use-and-environment-interaction",
+      "skill": "integrate-agents-within-development-environments",
+      "subskill": "Configure an agent to handle environment-specific constraints",
+      "difficulty": "advanced",
+      "complexity": "architecture-design",
+      "sourceIds": ["gh600-20260914-training-doc-13"],
+      "sourceUrls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-the-firewall"
+      ],
+      "documentationTitles": [
+        "Customizing or disabling the firewall for GitHub Copilot"
+      ],
+      "generatedAt": "2026-09-14T15:25:21.553Z",
+      "lastValidatedAt": "2026-09-14T15:25:21.553Z",
+      "featureStatus": "GA",
+      "tags": [
+        "GH-600",
+        "pass-1",
+        "implement-tool-use-and-environment-interaction",
+        "architecture-design"
+      ],
+      "conceptId": "gh600.firewall-not-mcp-or-setup",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "PASS 3 rejected this technically accurate item because it duplicates gh600-a-035 at the same fact and decision level. Rewording cannot cure that bank-level redundancy without a new three-pass candidate.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.148Z",
+      "confidenceReason": "The answer remains technically supported, but the same-fact pair gh600-a-035 already tests the identical decision and overrides promotion."
+    },
+    {
+      "id": "gh600-b-031",
+      "question": "An organization custom firewall rule permits an entire package domain for Copilot cloud agent. A repository administrator adds a narrower URL rule but the organization grant remains. Repository custom rules are allowed, and the recommended list has no overlapping grant. Which change addresses the broad organization access?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "A",
+          "text": "Disable the recommended allowlist."
+        },
+        {
+          "id": "B",
+          "text": "Ask the organization owner to enable repository-added custom rules."
+        },
+        {
+          "id": "C",
+          "text": "Have an organization owner narrow or remove the organization custom entry."
+        }
+      ],
+      "correctAnswer": ["C"],
+      "explanation": "The allowlists combine. The repository's narrower addition does not subtract the organization rule.",
+      "deepExplanation": "This is a rule-composition issue, not a claim that every repository setting is editable. Organization locks on other firewall settings still apply.",
+      "whyOtherAnswersAreWrong": {
+        "A": "The broad grant is explicitly an organization custom entry with no overlapping recommended entry. Alternate context: Changing the recommended list fits a decision to remove its default dependency-host grants, subject to organization policy.",
+        "B": "That setting is already enabled and does not remove an organization entry. Alternate context: Enable repository custom rules when administrators need to add entries and organization policy currently forbids them."
+      },
+      "objectiveDomain": "implement-tool-use-and-environment-interaction",
+      "skill": "integrate-agents-within-development-environments",
+      "subskill": "Configure an agent to handle environment-specific constraints",
+      "difficulty": "advanced",
+      "complexity": "troubleshooting",
+      "sourceIds": ["gh600-20260914-training-doc-13"],
+      "sourceUrls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-the-firewall"
+      ],
+      "documentationTitles": [
+        "Customizing or disabling the firewall for GitHub Copilot"
+      ],
+      "generatedAt": "2026-09-14T15:25:21.553Z",
+      "lastValidatedAt": "2026-09-14T15:25:21.553Z",
+      "featureStatus": "GA",
+      "tags": [
+        "GH-600",
+        "pass-1",
+        "implement-tool-use-and-environment-interaction",
+        "troubleshooting"
+      ],
+      "conceptId": "gh600.firewall-organization-rules-combine",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "PASS 3 rejected this technically accurate item because it duplicates gh600-a-034 at the same fact and decision level. Rewording cannot cure that bank-level redundancy without a new three-pass candidate.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.148Z",
+      "confidenceReason": "The answer remains technically supported, but the same-fact pair gh600-a-034 already tests the identical decision and overrides promotion."
+    },
+    {
+      "id": "gh600-c-002",
+      "question": "A team is defining an agent task before execution. Dependency files and application source may change, infrastructure is excluded, and workflow changes require platform review. Where should these conditions appear in the task contract?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "In the inputs as repository scope and operational constraints."
+        },
+        {
+          "id": "b",
+          "text": "In the outputs as the pull request and evidence links."
+        },
+        {
+          "id": "c",
+          "text": "In the results as the observed security scan outcome."
+        }
+      ],
+      "correctAnswer": ["a"],
+      "explanation": "Record allowed repository changes and approval conditions as explicit task inputs.",
+      "deepExplanation": "These constraints are known before execution and should guide planning. Later scope evaluation can check compliance, but an output artifact or scan result does not replace the initial contract.",
+      "whyOtherAnswersAreWrong": {
+        "b": "Outputs describe deliverables rather than the permissions and limits governing their creation.",
+        "c": "A scan result evaluates security findings rather than declaring which changes are authorized."
+      },
+      "objectiveDomain": "perform-evaluation-error-analysis-and-tuning",
+      "skill": "define-success-criteria-and-evaluation-signals-for-agent-tasks",
+      "subskill": "Specify expected outcomes and operational constraints for agent tasks",
+      "difficulty": "beginner",
+      "complexity": "scenario-based",
+      "sourceIds": [
+        "gh600-20260914-architecture-3-inputs-outputs-success-criteria"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/3-inputs-outputs-success-criteria"
+      ],
+      "documentationTitles": ["Define inputs, outputs, and success criteria"],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["agent-evaluation", "original-study-candidate"],
+      "conceptId": "gh600.scope-intent-success-signal",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": [
+        "gh600-20260914-architecture-3-inputs-outputs-success-criteria"
+      ],
+      "verificationNotes": "Blocking same-fact variant of gh600-a-003: both are solved by identifying issue context, permitted paths, and operational constraints as the Inputs portion of the same task-contract example. Replace it with a task-boundary decision that tests a different documented fact, assign an honest conceptId, and restart Passes 1, 2, and 3. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.080Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    },
+    {
+      "id": "gh600-c-020",
+      "question": "A repository evaluation job runs an agent's proposed changes and produces a coverage report plus detailed failure files. Reviewers need those files after the workflow finishes, not just a pass/fail status. Which documented mechanism preserves the generated evidence for inspection?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Download a previously uploaded artifact without uploading the newly generated files."
+        },
+        {
+          "id": "b",
+          "text": "Upload the generated reports and failure files as workflow artifacts."
+        },
+        {
+          "id": "c",
+          "text": "Set a retention-days value without including the files in an artifact upload."
+        }
+      ],
+      "correctAnswer": ["b"],
+      "explanation": "Upload the actual generated evidence files as named workflow artifacts.",
+      "deepExplanation": "A workflow result is a useful summary, but debugging and coverage inspection require the underlying files. Retention and later downloads are separate parts of the evidence lifecycle.",
+      "whyOtherAnswersAreWrong": {
+        "a": "Downloading an existing artifact does not preserve the new report and failure files.",
+        "c": "Retention configures how long an uploaded artifact is stored; it does not select and upload the evidence by itself."
+      },
+      "objectiveDomain": "perform-evaluation-error-analysis-and-tuning",
+      "skill": "analyze-agent-failures-and-identify-root-causes",
+      "subskill": "Identify failures by using logs, plans, traces, outputs, and workflow artifacts",
+      "difficulty": "intermediate",
+      "complexity": "troubleshooting",
+      "sourceIds": ["gh600-20260914-training-doc-08"],
+      "sourceUrls": [
+        "https://docs.github.com/en/actions/tutorials/store-and-share-data"
+      ],
+      "documentationTitles": ["Store and share data with workflow artifacts"],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["agent-evaluation", "original-study-candidate"],
+      "conceptId": "gh600.artifact-build-test-evidence",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": ["gh600-20260914-training-doc-08"],
+      "verificationNotes": "Blocking same-fact variant of gh600-b-038: both ask where to persist a generated test or evaluation report after a workflow and resolve directly to upload-artifact. Author a distinct artifact lifecycle or interpretation problem, then rerun grounded generation and both independent reviews. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.126Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    },
+    {
+      "id": "gh600-c-021",
+      "question": "In a GitHub.com repository using CODEOWNERS, an agent opens a non-draft pull request into main. Its head branch changes the owner for the affected path, but main still names the previous owner. Each file has exactly one matching rule, both owners have explicit write access, and the files are valid. Why does review routing use the previous owner?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "The new owner lacks the explicit write access needed for code-owner requests."
+        },
+        {
+          "id": "b",
+          "text": "A later matching pattern overrides the new owner's path rule."
+        },
+        {
+          "id": "c",
+          "text": "Pull-request review requests use the CODEOWNERS version on main, the base branch."
+        }
+      ],
+      "correctAnswer": ["c"],
+      "explanation": "The base branch supplies CODEOWNERS for review requests.",
+      "deepExplanation": "The scenario controls file validity and owner access, leaving branch selection as the cause. This concerns code-owner routing, not Copilot review custom-instruction selection.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The stem explicitly establishes the required write access for both owners.",
+        "b": "The stem establishes one matching rule per file, so no later-match override exists."
+      },
+      "objectiveDomain": "perform-evaluation-error-analysis-and-tuning",
+      "skill": "analyze-agent-failures-and-identify-root-causes",
+      "subskill": "Classify root causes, including reasoning errors, tool misuse, and context or environment issues",
+      "difficulty": "advanced",
+      "complexity": "troubleshooting",
+      "sourceIds": ["gh600-20260914-training-doc-17"],
+      "sourceUrls": [
+        "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners"
+      ],
+      "documentationTitles": ["About code owners"],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["agent-evaluation", "original-study-candidate"],
+      "conceptId": "gh600.codeowners-base-branch-source",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": ["gh600-20260914-training-doc-17"],
+      "verificationNotes": "Blocking same-fact variant of gh600-a-013: both ask whether a pull request uses head-branch or base-branch CODEOWNERS and resolve to the base branch. Use a different CODEOWNERS reasoning boundary and restart all three passes; do not cosmetically invert the same branch-selection fact. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.160Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    },
+    {
+      "id": "gh600-c-022",
+      "question": "A valid CODEOWNERS file on main first assigns deployment files to a platform team, then ends with a catch-all pattern assigning every file to a core team. Both teams have write access. An agent pull request changes a deployment file and requests only the core team. Which configuration cause fits this result?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "The later catch-all match takes precedence over the earlier deployment match."
+        },
+        {
+          "id": "b",
+          "text": "The pull request targets a different base branch with a different ownership file."
+        },
+        {
+          "id": "c",
+          "text": "The platform team lacks write access required to receive a review request."
+        }
+      ],
+      "correctAnswer": ["a"],
+      "explanation": "The later catch-all overrides the earlier path-specific match.",
+      "deepExplanation": "The source order, not perceived path specificity, explains the routing. A sensitive-path rule must be ordered to take effect; the flawed training sample is not used as executable authority.",
+      "whyOtherAnswersAreWrong": {
+        "b": "The scenario identifies main as the base and supplies the ownership file used there.",
+        "c": "The stem explicitly establishes that both teams have write access."
+      },
+      "objectiveDomain": "perform-evaluation-error-analysis-and-tuning",
+      "skill": "analyze-agent-failures-and-identify-root-causes",
+      "subskill": "Classify root causes, including reasoning errors, tool misuse, and context or environment issues",
+      "difficulty": "advanced",
+      "complexity": "troubleshooting",
+      "sourceIds": ["gh600-20260914-training-doc-17"],
+      "sourceUrls": [
+        "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners"
+      ],
+      "documentationTitles": ["About code owners"],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["agent-evaluation", "original-study-candidate"],
+      "conceptId": "gh600.codeowners-last-match-wins",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": ["gh600-20260914-training-doc-17"],
+      "verificationNotes": "Blocking same-fact variant of gh600-a-014: diagnosis versus repair does not change the sole reasoning step that the last matching CODEOWNERS pattern wins. Replace it with a non-ordering ownership problem supported by approved evidence, then restart Passes 1 through 3. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.160Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    },
+    {
+      "id": "gh600-c-023",
+      "question": "A repository's version-1 Copilot hook file is valid and its script runs before the configured timeout. On a Windows execution host, the script emits pretty-printed JSON over multiple lines, and the hook reports invalid JSON output. Which documented adjustment targets the output-format failure?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Increase timeoutSec for the hook command."
+        },
+        {
+          "id": "b",
+          "text": "Emit the JSON using ConvertTo-Json -Compress."
+        },
+        {
+          "id": "c",
+          "text": "Move the hook configuration into the repository's .github/hooks directory."
+        }
+      ],
+      "correctAnswer": ["b"],
+      "explanation": "Emit compact, single-line JSON on the Windows host.",
+      "deepExplanation": "The question fixes execution, schema version, and timing so the relevant failure boundary is the script's output. It does not infer a deny protocol from the training's simplified hook pseudocode.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The script finishes before the timeout; the reported problem is output format.",
+        "c": "The hook already executes, while its emitted JSON is the identified defect."
+      },
+      "objectiveDomain": "perform-evaluation-error-analysis-and-tuning",
+      "skill": "analyze-agent-failures-and-identify-root-causes",
+      "subskill": "Classify root causes, including reasoning errors, tool misuse, and context or environment issues",
+      "difficulty": "intermediate",
+      "complexity": "troubleshooting",
+      "sourceIds": ["gh600-20260914-training-doc-11"],
+      "sourceUrls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/use-hooks"
+      ],
+      "documentationTitles": ["Customize agent workflows with hooks"],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["agent-evaluation", "original-study-candidate"],
+      "conceptId": "gh600.hooks-compact-json-output",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": ["gh600-20260914-training-doc-11"],
+      "verificationNotes": "Blocking same-fact variant of gh600-b-028: both present valid multiline JSON from a Windows hook and select ConvertTo-Json -Compress. Create a different hook troubleshooting fact without reusing this serialization decision and restart every pass. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.138Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    },
+    {
+      "id": "gh600-c-043",
+      "question": "After reviewing several stopped Copilot cloud-agent sessions, a team wants to remove them from its session list without describing that action as deletion of their history. Which documented lifecycle distinction should its audit notes preserve?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Cloud sessions use the deletion behavior documented for local sessions."
+        },
+        {
+          "id": "b",
+          "text": "Archiving a stopped cloud session removes it from the session list; it is not deletion."
+        },
+        {
+          "id": "c",
+          "text": "Stopping a running session is the operation that removes it from the list."
+        }
+      ],
+      "correctAnswer": ["b"],
+      "explanation": "Describe this as archiving stopped cloud sessions, not deleting them.",
+      "deepExplanation": "Accurate lifecycle terminology matters for post-hoc records. This does not claim that archiving implements a complete multi-agent retirement or continuity protocol.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The article explicitly distinguishes cloud sessions, which cannot be deleted, from deletable local sessions.",
+        "c": "Stopping ends the run and preserves commits; archiving is the separate list-removal operation."
+      },
+      "objectiveDomain": "orchestrate-multi-agent-coordination",
+      "skill": "configure-observability-for-multi-agent-behavior-by-using-logs-artifacts-and-operational-signals",
+      "subskill": "Perform post-hoc analysis of multi-agent behavior",
+      "difficulty": "beginner",
+      "complexity": "scenario-based",
+      "sourceIds": ["gh600-20260914-training-doc-12"],
+      "sourceUrls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents"
+      ],
+      "documentationTitles": ["Managing agent sessions"],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["multi-agent-coordination", "original-study-candidate"],
+      "conceptId": "gh600.session-archive-not-delete",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": ["gh600-20260914-training-doc-12"],
+      "verificationNotes": "Blocking same-fact variant of gh600-b-060: both remove a stopped cloud-agent session from the session list by archiving without claiming deletion. Test a genuinely different lifecycle transition or evidence interpretation and restart Passes 1, 2, and 3. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.143Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    },
+    {
+      "id": "gh600-c-048",
+      "question": "A Copilot SDK parent uses a repository-analysis skill, and skillDirectories resolves that skill successfully. A delegated specialist has its own prompt and restricted tools but no skills field. Its output omits the skill's required analysis steps. Which configuration assumption should the coordinator correct before blaming the model?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "List the skill on the specialist because sub-agents do not inherit parent skills."
+        },
+        {
+          "id": "b",
+          "text": "Add a missing skill directory to the session's skillDirectories configuration."
+        },
+        {
+          "id": "c",
+          "text": "Add a missing callable tool to the specialist's tools allowance."
+        }
+      ],
+      "correctAnswer": ["a"],
+      "explanation": "Opt the specialist into the required skill explicitly.",
+      "deepExplanation": "The failure is consistent with a context-configuration difference between parent and sub-agent. Tool access, skill discovery, and skill injection are separate controls; none implies automatic inheritance.",
+      "whyOtherAnswersAreWrong": {
+        "b": "The skill already resolves; the missing part is the specialist's opt-in skills list.",
+        "c": "The stem identifies missing skill instructions, not a missing callable tool."
+      },
+      "objectiveDomain": "orchestrate-multi-agent-coordination",
+      "skill": "operate-and-manage-multi-agent-workflows",
+      "subskill": "Configure agent isolation for parallel execution",
+      "difficulty": "advanced",
+      "complexity": "troubleshooting",
+      "sourceIds": ["gh600-20260914-sdk-custom-agents"],
+      "sourceUrls": [
+        "https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/custom-agents"
+      ],
+      "documentationTitles": ["Custom agents and sub-agent orchestration"],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["multi-agent-coordination", "original-study-candidate"],
+      "conceptId": "gh600.sdk-per-agent-skills-no-parent-inheritance",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": ["gh600-20260914-sdk-custom-agents"],
+      "verificationNotes": "Blocking same-fact variant of gh600-b-056: both correct the assumption that SDK sub-agents inherit parent skills by listing skills on the custom agent. Replace it with a distinct skill-resolution or context decision and run the complete three-pass workflow again. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.100Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    },
+    {
+      "id": "gh600-c-051",
+      "question": "A team's documented multi-agent workflow lets an implementer revise an agent branch after a failed required check, but requires human escalation if the same check fails twice. That threshold has now been reached; the validation agent has saved both runs' reports. For this high-risk change, what should the coordinator hand off?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "A failure and attempted-fix summary, evidence links tied to commits, and a proposed next step with rollback notes."
+        },
+        {
+          "id": "b",
+          "text": "Another autonomous branch revision followed by a rerun, without escalating yet."
+        },
+        {
+          "id": "c",
+          "text": "A new tool-allowlist proposal as a substitute for the failed-run handoff."
+        }
+      ],
+      "correctAnswer": ["a"],
+      "explanation": "Escalate with an actionable, commit-correlated failure and recovery package.",
+      "deepExplanation": "The twice-failed threshold is explicitly the team's adopted policy from the training example, not a built-in GitHub retry guarantee. Human review decides whether to repair, roll back, or change the plan.",
+      "whyOtherAnswersAreWrong": {
+        "b": "The explicit local policy has already reached its human-escalation threshold.",
+        "c": "No missing tool is established, and a capability proposal does not preserve the required failure evidence."
+      },
+      "objectiveDomain": "orchestrate-multi-agent-coordination",
+      "skill": "detect-and-respond-to-multi-agent-failures-and-degraded-behavior",
+      "subskill": "Implement multi-agent recovery patterns, including rollback and human-in-the-loop",
+      "difficulty": "advanced",
+      "complexity": "architecture-design",
+      "sourceIds": ["gh600-20260914-architecture-7-agent-operations-controls"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/7-agent-operations-controls"
+      ],
+      "documentationTitles": [
+        "Control and operate agents - observability, tools, MCP, secrets, hooks, and reliability"
+      ],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["multi-agent-coordination", "original-study-candidate"],
+      "conceptId": "gh600.multi-agent-bounded-failure-escalation",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": [
+        "gh600-20260914-architecture-7-agent-operations-controls"
+      ],
+      "verificationNotes": "Blocking composite duplicate of gh600-b-033 and gh600-b-035: the reached twice-failed threshold and the required failure-attempt-evidence-next-step packet are already independently tested. Author a new multi-agent failure-classification decision not solved by either existing fact, then restart all three passes. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.084Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    },
+    {
+      "id": "gh600-c-052",
+      "question": "A planning-agent job in GitHub Actions computes a short plan identifier. A separate implementation-agent job must receive that structured value through an explicit dependency, not scrape logs or retrieve a report file. Which documented data-flow mechanism fits the handoff?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Use a step output only inside the planning job."
+        },
+        {
+          "id": "b",
+          "text": "Publish a job output and consume it from the dependent job through needs."
+        },
+        {
+          "id": "c",
+          "text": "Use only a planning-job environment variable as the cross-job contract."
+        }
+      ],
+      "correctAnswer": ["b"],
+      "explanation": "Use a job output connected through the implementation job's dependency.",
+      "deepExplanation": "The requirement distinguishes a small structured result from a downloadable file. This is an explicit handoff contract, not a claim that an agent's process environment automatically becomes another job's context.",
+      "whyOtherAnswersAreWrong": {
+        "a": "That serves steps in the same job but does not expose the value to the separate implementation job.",
+        "c": "Runtime environment configuration is not the recommended replacement for explicit structured cross-job outputs."
+      },
+      "objectiveDomain": "orchestrate-multi-agent-coordination",
+      "skill": "configure-observability-for-multi-agent-behavior-by-using-logs-artifacts-and-operational-signals",
+      "subskill": "Document key decisions, handoffs, and outcomes across agents",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": ["gh600-20260914-architecture-6-reliable-workflows"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/6-reliable-workflows"
+      ],
+      "documentationTitles": [
+        "Build reliable workflows - outputs, contexts, triggers, and cross-job handoffs"
+      ],
+      "generatedAt": "2026-09-14T15:21:59.741Z",
+      "lastValidatedAt": "2026-09-14T15:21:59.741Z",
+      "featureStatus": "GA",
+      "tags": ["multi-agent-coordination", "original-study-candidate"],
+      "conceptId": "gh600.multi-agent-job-output-handoff",
+      "verificationStatus": "rejected",
+      "verifiedAgainstSourceIds": [
+        "gh600-20260914-architecture-6-reliable-workflows"
+      ],
+      "verificationNotes": "Blocking same-fact variant of gh600-b-040: both pass a short generated value from a planning job to a dependent implementation job using a job output through needs. Replace it with a meaningfully different cross-job state decision and rerun Passes 1, 2, and 3. Fresh same-URL checks found no material source change; Pass 3 duplicate override controls eligibility.",
+      "requiresManualReview": true,
+      "sourceLastReviewedAt": "2026-09-14T13:24:06.083Z",
+      "confidenceReason": "The technical answer remains supported, but the semantic duplicate override blocks promotion regardless of its passing rubric total."
+    }
+  ],
+  "archivedRevisions": []
+}

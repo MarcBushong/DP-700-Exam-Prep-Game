@@ -482,10 +482,11 @@ describe('deterministic duplicates and conservative quality warnings', () => {
 });
 
 describe('playable-only coverage and honest review reporting', () => {
-  it('reports all four statuses, target gaps, counts at each taxonomy level, and real evidence timestamps', () => {
+  it('reports every status including unauthored candidate totals, target gaps, counts and actual evidence timestamps', () => {
     const report = buildContentReport(checked(candidates()), nextDate);
     expect(report.totalQuestions).toBe(4);
     expect(report.statusCounts).toEqual({
+      candidate: 0,
       verified: 1,
       'manual-review-required': 1,
       rejected: 1,

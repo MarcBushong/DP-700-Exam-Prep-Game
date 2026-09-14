@@ -21,6 +21,11 @@ export function argument(name: string) {
 }
 
 export function examId(value = argument('--exam') ?? 'dp-700'): string {
+  const aliases: Record<string, string> = {
+    'gh-300': 'github-copilot',
+    'gh-600': 'github-agentic-ai-developer',
+  };
+  value = aliases[value.toLowerCase()] ?? value.toLowerCase();
   if (!credentials.some((credential) => credential.credentialId === value))
     throw new Error(
       `Unknown credential ${value}. Use a catalog credentialId; no arbitrary package paths are permitted.`,
@@ -80,6 +85,18 @@ export async function readRawPackage(
   ] = await Promise.all(
     files.map((file) => readJsonFile(resolve(directory, `${file}.json`))),
   );
+  const optional = async (name: string) => {
+    try {
+      return await readJsonFile(resolve(directory, `${name}.json`));
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
+      throw error;
+    }
+  };
+  const [validationMetadata, sourceRegistry] = await Promise.all([
+    optional('validation-metadata'),
+    optional('source-registry'),
+  ]);
   return {
     packageManifest,
     questions,
@@ -88,6 +105,8 @@ export async function readRawPackage(
     reviews,
     encounterMetadata,
     personality,
+    validationMetadata,
+    sourceRegistry,
   };
 }
 

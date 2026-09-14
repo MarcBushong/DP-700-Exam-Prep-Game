@@ -142,6 +142,9 @@ export interface SourcePolicyContext {
   credentialId?: string;
   provider: 'Microsoft' | 'GitHub';
   sourceAllowlist: SourceRule[];
+  strictGuideLinked?: boolean;
+  /** Only derive these IDs after validating registry ancestry and exact manifest bindings. */
+  validatedSupportingSourceIds?: readonly string[];
 }
 
 export function isAllowedIdentityUrl(

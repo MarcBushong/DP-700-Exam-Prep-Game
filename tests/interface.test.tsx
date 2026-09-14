@@ -158,6 +158,42 @@ function mount(value: GameContextValue, path = '/') {
 }
 
 describe('accessible challenge interface', () => {
+  it('distinguishes reviewed content from playable content on a sealed credential', () => {
+    const originalGet = dungeonPackages.getDungeonPackage;
+    const base = originalGet('dp-700');
+    const credential = credentials.find(
+      (item) => item.credentialId === 'github-agentic-ai-developer',
+    );
+    if (!base || !credential)
+      throw new Error('Required test catalog entries are missing.');
+    vi.spyOn(dungeonPackages, 'getDungeonPackage').mockImplementation((id) =>
+      id === credential.credentialId
+        ? {
+            ...base,
+            credential,
+            questions: [],
+            reviewedQuestions: content.questions,
+            readiness: {
+              study: false,
+              gauntlet: false,
+              reasons: ['Status remains unverified.'],
+            },
+          }
+        : originalGet(id),
+    );
+    mount(game());
+    const card = screen
+      .getByRole('heading', { name: credential.dungeonName })
+      .closest('article');
+    if (!card) throw new Error('The sealed dungeon card was not rendered.');
+    expect(
+      within(card).getByText(/4 fully reviewed encounters remain unavailable/),
+    ).toBeInTheDocument();
+    expect(within(card).getByRole('button', { name: 'Sealed' })).toBeDisabled();
+    expect(
+      within(card).getByRole('button', { name: 'Boss Gauntlet' }),
+    ).toBeDisabled();
+  });
   it('filters dungeon cards with a keyboard-accessible search and native grouped selector', async () => {
     const user = userEvent.setup();
     mount(game());

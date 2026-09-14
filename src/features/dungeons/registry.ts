@@ -53,6 +53,10 @@ export function applyRegistryCollisions(
   return {
     ...dungeon,
     questions: [],
+    reviewedQuestions: dungeon.reviewedQuestions.filter(
+      (question) =>
+        !relevant.some((collision) => collision.questionId === question.id),
+    ),
     findings: [...dungeon.findings, ...findings],
     readiness: {
       study: false,

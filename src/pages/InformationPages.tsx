@@ -246,18 +246,14 @@ export function AboutPage() {
         <div>
           <h2>Unofficial. Original. Transparent.</h2>
           <p>
-            The Certification Dungeon is an unofficial study aid. It is{' '}
-            <strong>
-              not affiliated with, sponsored by, or endorsed by Microsoft or
-              Microsoft Certification or GitHub
-            </strong>
-            .
+            This independent learning experience is not an official GitHub or
+            Microsoft exam, practice assessment, endorsement, or source of real
+            exam questions. Encounters are original study questions grounded in
+            publicly available official documentation.
           </p>
           <p>
-            These are original questions based on public documentation. They are
-            not actual exam questions, leaked questions, exam dumps, or
-            reconstructions of private exam content. Scores do not predict
-            certification outcomes.
+            No leaked questions, exam dumps, or reconstructions of private exam
+            content are used. Scores do not predict certification outcomes.
           </p>
           <p>
             Microsoft, Microsoft Fabric, and other product names and trademarks

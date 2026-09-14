@@ -40,6 +40,16 @@ export const readinessThresholdsSchema = z
       });
   });
 
+export const reviewPolicySchema = z
+  .object({
+    version: z.literal('three-pass-v1'),
+    minimumRubricScore: z.number().int().min(44).max(48),
+    targetVerified: z.number().int().min(150),
+    sourcePolicy: z.literal('guide-linked-official'),
+  })
+  .strict();
+export type ReviewPolicy = z.infer<typeof reviewPolicySchema>;
+
 export const credentialSchema = z.object({
   credentialId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
   examCode: text.nullable(),
@@ -80,6 +90,7 @@ export const credentialSchema = z.object({
   isVerified: z.boolean(),
   sealedReason: text.optional(),
   sourceAllowlist: z.array(sourceRuleSchema),
+  requiredReviewPolicy: reviewPolicySchema.optional(),
   verificationEvidence: z
     .array(
       z.object({
@@ -116,6 +127,7 @@ export const packageManifestSchema = z.object({
     )
     .default([]),
   readinessThresholds: readinessThresholdsSchema,
+  reviewPolicy: reviewPolicySchema.optional(),
 });
 export type PackageManifest = z.infer<typeof packageManifestSchema>;
 
@@ -131,14 +143,44 @@ export const rubricCriteria = [
   'originality',
   'clarityAccessibility',
 ] as const;
-export const rubricSchema = z.object({
+const rubricBinding = {
   objectiveVersion: text,
   objectiveFingerprint: z.string().regex(/^[a-f0-9]{64}$/),
-  scores: z.record(z.enum(rubricCriteria), z.number().int().min(0).max(2)),
   reviewerId: text,
   reviewedAt: timestampSchema,
   notes: text.min(20),
-});
+};
+export const rubricV2Criteria = [
+  'alignment',
+  'accuracy',
+  'scenarioCompleteness',
+  'answerUniqueness',
+  'distractorPlausibility',
+  'distractorEvidence',
+  'documentationStrength',
+  'citationSpecificity',
+  'difficultyAuthenticity',
+  'explanationQuality',
+  'originality',
+  'clarityAccessibility',
+] as const;
+export const rubricV2Schema = z
+  .object({
+    ...rubricBinding,
+    version: z.literal(2),
+    scores: z.record(z.enum(rubricV2Criteria), z.number().int().min(0).max(4)),
+  })
+  .strict();
+export const rubricSchema = z.union([
+  z
+    .object({
+      ...rubricBinding,
+      version: z.literal(1).optional(),
+      scores: z.record(z.enum(rubricCriteria), z.number().int().min(0).max(2)),
+    })
+    .strict(),
+  rubricV2Schema,
+]);
 export type RealismRubric = z.infer<typeof rubricSchema>;
 
 export const claimEvidenceSchema = z.object({
