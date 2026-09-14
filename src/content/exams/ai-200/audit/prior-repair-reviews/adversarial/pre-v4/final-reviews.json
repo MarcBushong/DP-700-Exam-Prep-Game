@@ -1,0 +1,606 @@
+{
+  "schemaVersion": 1,
+  "requestId": "ai200-classification-repair-fresh-pass3",
+  "reviews": [
+    {
+      "questionId": "ai200-i-002",
+      "authorId": "ai200-repair-author-integration",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "15e46036d86c7e14403885b80f2a3715c87ee73b711de01603a34ae9de63b23a",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions",
+          "url": "https://learn.microsoft.com/en-us/training/modules/queue-process-operations-service-bus/3-choose-queues-topics-subscriptions",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions.json",
+          "retrievedAt": "2026-09-14T17:57:45.148Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The unit's fan-out section describes independent subscription copies and failure isolation; its queue and filter sections establish competing workers and FalseFilter's rejection of all new matching traffic. These distinguish all three proposed designs without claiming indefinite audit retention."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A subscription is a virtual queue: sharing it is useful for distributing one processing responsibility among competing workers, not for giving audit and notification an independent copy each.",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Both subscriptions already match every event. The documented independent virtual queues let notification consume its copy while the unavailable audit consumer's separate backlog remains.",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "FalseFilter rejects all incoming matches. It can suppress traffic intentionally, but would stop retaining new audit events rather than preserving the audit service's work.",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Fresh pass 3 confirms the technical subscription key but withholds i-002 after incorporating semantic SEM-R001 and reading i-001's full question, key and explanations. Both test the same queue-allocation versus topic-copy fact in opposite directions. The duplicate remains reportable under its stable ID; concept-recall earns zero applied credit and no old judgment is inherited. Fresh semantic audit: SEM-R001 is incorporated: reverse-direction copy allocation duplicates i-001; originality 0 and duplicate/quality checks fail.",
+      "confidenceReason": "Direct current-source evidence supports the key, while the exact fresh semantic binding and full peer comparison independently establish a blocking duplicate. Accurate wording and a new classification cannot create a distinct fact."
+    },
+    {
+      "questionId": "ai200-i-006",
+      "authorId": "ai200-repair-author-integration",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "c074eac1b649451d8d261984da5694bedc7d4534a5a0572dda1dc49c5a0cb9dd",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-queue-process-operations-service-bus-5-process-messages-reliably",
+          "url": "https://learn.microsoft.com/en-us/training/modules/queue-process-operations-service-bus/5-process-messages-reliably",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-queue-process-operations-service-bus-5-process-messages-reliably.json",
+          "retrievedAt": "2026-09-14T17:57:49.204Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The separate Abandon, Dead-letter and Defer sections distinguish immediate ordinary redelivery, rejection/remediation, and preserved sequence-number retrieval. Reprocess dead-lettered messages documents sending a new message after repair; deferral is the direct fit for a valid job awaiting a dependency."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Abandon releases the lock and makes the message immediately available to ordinary receives. That contradicts removing this job from ordinary delivery until the prerequisite arrives.",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-5-process-messages-reliably"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The documented dead-letter reprocessing path repairs a rejected message and sends a new message. It is not explicit deferred retrieval of this valid job after its prerequisite becomes available.",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-5-process-messages-reliably"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Defer retains the message but removes it from regular delivery; the unit requires the sequence number for receive_deferred_messages and explicitly gives unavailable dependencies as a use case.",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-5-process-messages-reliably"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Freshly challenged abandon, dead-letter/remediation and defer against the actual processing unit. Deferral uniquely satisfies explicit later retrieval of the same valid message while suppressing ordinary delivery. The sequence number is an explicit obligation, not an invented guarantee of unlimited retention. All claims remain bound to fresh generation. Fresh semantic audit: The fresh audit distinguishes ordinary Abandon redelivery in i-005 from identifier-based deferred retrieval. Agree; the same source supports genuinely different operations.",
+      "confidenceReason": "The unit independently supplies each settlement's behavior and a concrete correct alternative context; no prior adversarial score or technical approval substitutes for that reading."
+    },
+    {
+      "questionId": "ai200-i-009",
+      "authorId": "ai200-repair-author-integration",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "45296a036dfb27da260f571b4fb48fd704aed96e61143dcc6472ee763f9bfd87",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-queue-process-operations-service-bus-4-structure-messages-ai-workloads",
+          "url": "https://learn.microsoft.com/en-us/training/modules/queue-process-operations-service-bus/4-structure-messages-ai-workloads",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-queue-process-operations-service-bus-4-structure-messages-ai-workloads.json",
+          "retrievedAt": "2026-09-14T17:57:46.776Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The approved unit's Set message time-to-live section supports retaining the short validity window and enabling expiration dead-lettering. It also supports longer TTL for relaxed batch latency, but does not establish the deferred-message exception or maximum-delivery-count distinction."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-servicebus-deadletter",
+          "url": "https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-dead-letter-queues",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-servicebus-deadletter.json",
+          "retrievedAt": "2026-09-14T18:02:26.404Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The actual article distinguishes expiration, delivery-count failure and deferred messages, and says TTL is not observed within the DLQ. These passages were read, but the independent explicit-source audit rejects this article's guide-parent reference; its factual usefulness does not grant strict supporting-source approval."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A longer TTL changes the required short validity window and still leaves expiry retention disabled. The approved unit supports longer TTL only for work with relaxed latency tolerance.",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-4-structure-messages-ai-workloads"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Maximum delivery count controls repeated failed deliveries, not expiry before processing. That technical distinction is present in the cited article, but the audit invalidates its provenance and therefore withholds approved evidence for this distractor.",
+          "sourceIds": [
+            "ai200-20260914-doc-servicebus-deadletter"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The approved unit explicitly makes expiration routing conditional on enabling dead-lettering on message expiration. Keeping TTL unchanged preserves the validity requirement.",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-4-structure-messages-ai-workloads"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": false,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Fresh pass 3 withholds approval after incorporating the independent explicit-reference audit. The unit supports enabling expiration dead-lettering, but the cited DLQ article lacks a genuine approved guide/training edge, leaving the delivery-count countercontext and explanation extensions without authorized evidence. Concept-recall earns zero applied credit. Fresh semantic audit: Expiration retention differs from closed-receiver settlement and Event Grid external dead-letter storage. Agree on distinctness; the independent article-provenance failure still blocks this record.",
+      "confidenceReason": "High confidence in the technical key from the unit and in the blocking provenance defect from direct guide reading plus the audited exact edge; no claim that schema acceptance validates the article's reference."
+    },
+    {
+      "questionId": "ai200-i-013",
+      "authorId": "ai200-repair-author-integration",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "38c233586407c0ad6b37694e749daa75095cb69776ac8957d48f27c3d99788b7",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-eventgrid-schema",
+          "url": "https://learn.microsoft.com/en-us/azure/event-grid/cloud-event-schema",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-eventgrid-schema.json",
+          "retrievedAt": "2026-09-14T18:02:29.351Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Configuration for CloudEvents provides the exact transformation table: CloudEvents input permits CloudEvents output, while Event Grid input can produce either output. It explicitly ties the missing reverse conversion to unsupported extension attributes. The training parent directly links this exact article."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The article's transformation table excludes Event Grid output for CloudEvents input because the proprietary output schema cannot represent CloudEvents extension attributes.",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-schema"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "CloudEvents output is the documented compatible delivery for this CloudEvents input. The capable subscriber and preserved extension attributes remove any need to transform the publisher.",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-schema"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Freshly challenged both schema choices using the actual compatibility table and the training unit's direct article link. CloudEvents output survives; Event Grid output requires a different input contract. The repaired concept-recall classification is honest, while intermediate difficulty and two-option cueing warrant deductions rather than inflated realism. Fresh semantic audit: CloudEvents output compatibility differs from custom-versus-system topic ownership in i-012. Agree; no separate API contract is inferred from merely similar names.",
+      "confidenceReason": "The exact keyed pair, rejected reverse pair and alternative correct context are all in one directly linked official table; the guide and credential-scoped ancestry were separately inspected."
+    },
+    {
+      "questionId": "ai200-i-014",
+      "authorId": "ai200-repair-author-integration",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "cfddaf4dc34c9cc59ff323ad8999ec78efd95b37c8760bd92b1c4c100abe8ce2",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-eventgrid-filtering",
+          "url": "https://learn.microsoft.com/en-us/azure/event-grid/event-filtering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-eventgrid-filtering.json",
+          "retrievedAt": "2026-09-14T18:02:32.943Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Event type filtering directly uses ResourceWriteSuccess as the example for excluding deletions and describes includedEventTypes and All. Subject filtering selects paths. The direct training-parent link to event-filtering#advanced-filtering establishes article provenance, not just a shared topic."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Subject prefixes select locations. Both stated operations share the same subject path, so the common prefix cannot isolate successful writes.",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-filtering"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "All explicitly preserves all source event kinds, including deletions, and therefore cannot meet a request for only ResourceWriteSuccess.",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-filtering"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The article explicitly identifies ResourceWriteSuccess for resource updates rather than deletions and uses includedEventTypes to declare the selected kinds.",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-filtering"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Fresh pass 3 confirms the key and the direct citation but withholds approval on the independent 43/48 rubric. Concept-recall correctly earns zero applied credit, yet intermediate difficulty and weak All-types distractor remain unpersuasive. A future authored repair requires fresh generation and both independent review passes. Fresh semantic audit: The operation-kind field differs from prefix collisions and typed advanced-filter Boolean evaluation. Agree on distinctness, but my independent rubric is 43/48 and still blocks this candidate.",
+      "confidenceReason": "High confidence in the factual distinction from the directly linked article; the adverse decision is an independently observed quality threshold failure, not an invented technical ambiguity."
+    },
+    {
+      "questionId": "ai200-i-017",
+      "authorId": "ai200-repair-author-integration",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "825e35a3c8b4ab06071837fe07013dba5cc0d20cbc47977ae7c440b409eea80f",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-eventgrid-delivery",
+          "url": "https://learn.microsoft.com/en-us/azure/event-grid/delivery-and-retry",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-eventgrid-delivery.json",
+          "retrievedAt": "2026-09-14T18:02:36.757Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The actual Retry schedule table lists webhook 401 as nonretryable and the adjoining note says such events are dropped without dead-lettering. Retryable failures and configured dead-letter storage supply technical alternatives. However, the independent audit finds the recorded training parent cites manage-event-delivery, not this selected delivery-and-retry article; the source has no approved supporting role."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The captured article expressly excludes webhook 401 from retry, although its retry schedule applies to transient failures outside that table. This technical distinction is read but cannot be treated as approved evidence after the source-edge audit.",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The subscription expressly has no dead-letter destination, so it cannot retain the event in configured dead-letter storage. The article documents preservation only when a usable destination is configured.",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The read article directly combines no retry for webhook 401 with dropping such events when no dead-lettering is configured. Its factual support is clear, but the exact source has failed strict provenance and cannot approve the record.",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": false,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": false,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Fresh pass 3 withholds this record after the explicit-reference audit. The captured article supports dropping webhook 401 without a dead-letter destination, but the current training parent references a different article. No source substitution or inferred source role was performed. Classification repair is valid but cannot resolve provenance. Fresh semantic audit: Endpoint-specific nonretryable 401 differs from TTL versus retry budgets and configuring a Blob destination. Agree on distinctness; the selected-source reference remains unsupported.",
+      "confidenceReason": "High confidence in both the observed technical table and the failed exact-target edge after independent source and parent reading. Those are separate judgments, and only the latter controls strict evidence permission."
+    },
+    {
+      "questionId": "ai200-d-013",
+      "authorId": "ai200-repair-author-data",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "4511bb98b092a22a7a2facb382bf276b1276b68855bc57834ccfdd7962254681",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-changefeed",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-changefeed-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:12.123Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The actual .NET Deployment unit and Dynamic scaling sections require a shared processorName and lease-container configuration with unique instance names; separate deployments receive changes independently. The article was read including supported modes and access prerequisites, but the independent audit rejects the guide objective as a reference to this exact article."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "The .NET Dynamic scaling section explicitly lists these three configuration conditions for distributing leases among instances of one deployment unit. The article's invalid reference edge blocks strict source approval despite the exact technical match.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Different processor names identify separate deployment units with independent state and business flows. Sharing a physical lease container does not turn them into one load-balanced workload.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Different lease stores cannot supply the shared ownership state required here. Reusing instance names also fails the stated distinct-name condition within the intended single deployment.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": false,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": false,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Fresh pass 3 reads the .NET configuration conditions and confirms the technical key, but withholds approval because the sole citation's strict guide-linked provenance failed the independent audit. No approved role is granted by its official hostname or accurate contents. Beginner/concept-recall earns zero applied credit; exact duplicate-name alternatives are not invented. Fresh semantic audit: Processor/lease/workload identity differs from Service Bus allocation, language support and initialized starting positions. Agree on distinctness; the sole citation remains provenance-blocked.",
+      "confidenceReason": "The deployment definition is explicit, while the guide only names the general mechanism. Independent reading supports both the technical distinction and the separate mandatory provenance rejection."
+    },
+    {
+      "questionId": "ai200-d-014",
+      "authorId": "ai200-repair-author-data",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "a3fd07e95c6fba2321d2ff3b45c5dc42dcfcc7179657cc08b1a938995f9d7be4",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-changefeed",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-changefeed-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:12.123Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Supported SDKs lists .NET and Java for the processor library and directs Python and Node.js to the pull model with manual checkpoint management. The actual library-versus-pull distinction supports the technical pair, but the independent audit withholds this selected article's guide-linked supporting role."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "The supported-SDK table excludes both Python and Node.js from the processor library, while the stem requires library-managed distributed leases and checkpoints rather than pull readers.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Java is supported, but Python is not. A pair must meet the requested library contract for both languages, so partial membership is insufficient.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "supported",
+          "rationale": "The processor-library supported-SDK table identifies .NET and Java. Standalone hosting and the explicit exclusion of a Functions trigger prevent confusing hosted trigger language support with library availability.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": false,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": false,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Fresh adversarial review confirms .NET/Java in the actual processor table and distinguishes Python/Node pull readers, but blocks strict verification because the exact article's guide-linked edge failed the independent audit. Beginner/concept-recall is truthful and earns no applied credit. No prior score or technical approval is inherited. Fresh semantic audit: Processor language availability differs from configuring an already-selected .NET deployment. Agree on distinctness; semantic retention cannot repair the failed source edge.",
+      "confidenceReason": "The language table is unambiguous, and the supporting-role failure is independently established by the guide and audit. These separate results are preserved instead of laundering accurate content into an approved source."
+    },
+    {
+      "questionId": "ai200-d-018",
+      "authorId": "ai200-repair-author-data",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "47d0609220448b8336e384dc8cb92250db7c1ff13231049a5b67a082ba06fba7",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/3-connect-to-postgresql",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-database-postgresql-3-connect-to-postgresql.json",
+          "retrievedAt": "2026-09-14T17:56:47.326Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Authentication methods explicitly instructs using token.token as the PostgreSQL connection password and contrasts native username/password authentication. It mentions managed identities and DefaultAzureCredential, but does not document selecting a managed identity by client identifier, so that distractor's exact correct alternative context is not supplied by the cited unit."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "The configured identity is using Entra token authentication, not another database user's native credentials. The unit separates the two authentication paths.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "The unit's Entra flow explicitly says to use the access token as the PostgreSQL password, and its Python example says to use token.token in the connection string.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "The unit requires the issued token, not an identifier, in the password field. However, its text never establishes the authored claim that a managed-identity client identifier selects the identity, so the required sourced countercontext is incomplete.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Fresh pass 3 withholds approval despite the correct token-string key. The actual cited unit supports Entra token and native-password flows but does not document the managed-identity client-identifier selection behavior asserted in option C's explanation. Its mandatory sourced counterexample is missing. Classification repair is accurate and earns zero applied credit. Fresh semantic audit: An issued PostgreSQL token in a password field differs from supplying a credential provider to a project client. Agree on distinctness, but option C's exact sourced alternative-use claim remains missing.",
+      "confidenceReason": "The connection-password example is explicit, and the full unit was read rather than searched only for the key. High confidence in the answer does not justify unsupported explanation or counterexample claims."
+    },
+    {
+      "questionId": "ai200-d-021",
+      "authorId": "ai200-repair-author-data",
+      "reviewerId": "ai200-repair-adversary",
+      "questionFingerprint": "790c8e03a1a84c514264dd988f293ad69a1f936cdb027f780a675992c2adbf98",
+      "reviewedAt": "2026-09-14T20:34:40.653Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/4-create-manage-schemas",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-database-postgresql-4-create-manage-schemas.json",
+          "retrievedAt": "2026-09-14T17:56:49.866Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Create tables demonstrates typed required fields plus JSONB metadata. Data types for AI applications explicitly recommends JSONB for varying nested structures queried with JSON operators, BYTEA for binary objects and TEXT/VARCHAR for strings; these establish every option's different valid purpose."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "BYTEA stores a byte array, so the proposed serialized binary value does not directly expose its nested keys to the requested JSON operators.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "The unit explicitly recommends JSONB for varying nested objects and arrays queried with JSON operators, and its table example keeps required fields typed alongside metadata.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "A formatted character-string summary is not the retained nested metadata object. It can hold text, but the proposed summary loses the structure needed for the stated field queries.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Fresh adversarial review accepts JSONB for the varying nested metadata while retaining typed required columns. BYTEA and VARCHAR have real documented roles but do not expose the stated metadata object as required by these choices. The beginner/concept-recall repair is truthful and receives zero applied coverage. No v1 rubric is reused. Fresh semantic audit: JSONB metadata representation differs from constraints, Redis vector representations and KQL dynamic-string parsing. Agree; no cross-platform topical similarity is substituted for an actual duplicated decision.",
+      "confidenceReason": "The exact type capabilities and alternative storage purposes occur in the directly linked schema unit, whose actual body, module link and credential-course-path ancestry were independently read."
+    }
+  ]
+}

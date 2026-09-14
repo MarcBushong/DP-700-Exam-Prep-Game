@@ -1,0 +1,1369 @@
+{
+  "schemaVersion": 1,
+  "requestId": "ai200-data-a-independent-final-pass3",
+  "reviews": [
+    {
+      "questionId": "ai200-d-001",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "634ba9b5b424259937b43c3e9c7412a473a057b06da514d3bca31dec8cda322b",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-cosmos-db/3-implement-cosmos-db-sdk",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk.json",
+          "retrievedAt": "2026-09-14T17:56:22.521Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Follow connection best practices assigns pooling and routing caches to the CosmosClient instance and recommends application-scoped reuse, including stored database/container handles. Connect using the SDK supplies the limited background in which constructing a fresh client is appropriate; that is initialization, not reuse across a running API's requests."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Retaining connection configuration while rebuilding the client retains the useful SDK state. In this context: The endpoint is a string, while pools and routing information belong to the client being discarded. This does not preserve either resource between this API's requests. Alternative context: Keeping an endpoint in configuration is appropriate when initializing a client, as the unit's connection example does. It is not a replacement for retaining that initialized client in a continuously running API. Evidence: Connect using the SDK separates endpoint/credential inputs from CosmosClient; Follow connection best practices explicitly says per-request construction discards cached state.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "Claim: Application lifetime ownership of CosmosClient keeps its pools and cached routing available across requests. In this context: This is not incorrect here: the requests share one account and container, and startup-created client/container handles can be reused by the running API. Alternative context: A continuously running service repeatedly accesses the same Cosmos account and requires warm connections rather than independent short-lived initialization. Evidence: The unit recommends singleton/application-scoped CosmosClient, initialization at Python web-app startup, and references to frequently used database/container clients.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Constructing and disposing one client for each database operation preserves reusable connection resources. In this context: Closing each operation's client abandons precisely the lifetime-owned state the subsequent operation needs; it repeats rather than removes connection setup. Alternative context: A one-off program may initialize a client for its only period of database work. The documented initialization example supports client creation, but the same source rejects making creation the recurring unit of a high-volume API. Evidence: Client construction is the connection entry point; the reuse section contrasts it with repeated construction and explicitly links the latter to setup latency and lost caches.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "B is supported by cache ownership and application-lifetime requirements. Total 45; two closely related short-lived-client distractors limit plausibility/evidence and direct best-practice framing limits originality. Scenario-based is supported independently of beginner difficulty because the learner diagnoses which object lifetime discards the required state. Compared d-037 and its pooling evidence: root-client reuse and exceptional checkout return are distinct. Separate classification assessment: Authored complexity: scenario-based; authored difficulty: beginner. The actual defect is application code retaining only settings or repeatedly disposing the object that owns pools/caches. Resolving the symptom requires locating state ownership and selecting a lifetime across requests; this is a modest scenario application, not merely naming an SDK. Beginner difficulty is appropriate and does not invalidate the applied classification. Cross-bank audit: ai200-d-001 / ai200-d-037: Keep distinct for this pair. d-001 repairs the lifetime of the cache-owning root CosmosClient, while d-037 explicitly starts with a valid process pool and asks how each checkout is returned on exceptions. A long-lived root and a bounded borrowed connection are different lifetimes; making a per-request borrowed connection permanent would be the wrong lesson for d-037.",
+      "confidenceReason": "High confidence in the client-lifetime distinction from the exact SDK unit; not a claim that client reuse alone solves all performance problems. Final independent decision: B is supported by cache ownership and application-lifetime requirements. Total 45; two closely related short-lived-client distractors limit plausibility/evidence and direct best-practice framing limits originality. Scenario-based is supported independently of beginner difficulty because the learner diagnoses which object lifetime discards the required state. Compared d-037 and its pooling evidence: root-client reuse and exceptional checkout return are distinct."
+    },
+    {
+      "questionId": "ai200-d-002",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "084407ef62a32c12f0a26ca7e35b33b5ff93ac808bbe03bac66555b43d7503bb",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-cosmos-db/3-implement-cosmos-db-sdk",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk.json",
+          "retrievedAt": "2026-09-14T17:56:22.521Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read items efficiently defines a point read by the item ID and partition-key value and shows container.read_item. Navigate the resource hierarchy places get_container_client on a database client, not on the authenticated container client established in this stem."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-cosmos-db/4-query-cosmos-db-nosql",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql.json",
+          "retrievedAt": "2026-09-14T17:56:25.149Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Basic SELECT and single-partition-query sections distinguish queries from point reads. A cross-partition predicate on id can find matches but does not become a direct read merely because only one result is desired."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "Claim: The Python container's read_item call uses the known item id and tenant partition value. In this context: This is not incorrect here: note-58 identifies the item within tenant-blue, and partition_key receives the value rather than the /tenantId schema path. Alternative context: The caller knows both the item ID and the actual partition-key value and wants the SDK's direct item lookup operation. Evidence: The SDK unit's Read items efficiently example supplies item and partition_key to read_item and contrasts that operation with SQL query execution.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: A cross-partition SQL predicate on id is the same access operation as a point read. In this context: It is a query, omits the known tenant boundary, and may find the same id in other partitions. The question asks which operation expresses a point read, not which can return an item. Alternative context: A caller lacks the partition value and intentionally needs id-matching documents across tenants; the query unit documents cross-partition query execution for data beyond one partition. Evidence: The training separates SELECT filters and cross-partition fan-out from point reads and permits cross-partition queries when the partition boundary is unavailable or not desired.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Calling get_container_client on an already established container client reads an item identified by note-58. In this context: This uses a resource-handle method at the wrong receiver level and supplies an item id where a container id would belong. It cannot perform the requested item read. Alternative context: The documented background is database.get_container_client with a container identifier to obtain a handle. No sourced context makes this exact container-client receiver and item identifier a correct call; salvaging it would rewrite the option. Evidence: Navigate the resource hierarchy explicitly obtains the container handle from the database client, then invokes item operations on that handle. It supplies no valid context for C's exact call.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-3-implement-cosmos-db-sdk"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "A is the valid point read, but C is a nonexistent method on the stated container client and has no exact favorable context without repairing its receiver/identifier role. Total 43 and distractorEvidence 2 fail. Separately, technical-implementation is overstated: naming a point read and supplying both argument values leaves signature recognition rather than applied reasoning. Completed audit has no additional assigned-pair exclusion for this item. Separate classification assessment: Authored complexity: technical-implementation; authored difficulty: beginner. The prompt expressly names a point read and supplies both arguments; the answer largely recognizes read_item's name/signature, while C is an impossible receiver method. Code-shaped choices do not make this exact lookup task applied implementation. Existing distractor evidence failure remains independent. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in the keyed point read and in the hierarchy defect; withholding is an independently observed distractor-quality failure rather than disagreement about the correct answer. Final independent decision: A is the valid point read, but C is a nonexistent method on the stated container client and has no exact favorable context without repairing its receiver/identifier role. Total 43 and distractorEvidence 2 fail. Separately, technical-implementation is overstated: naming a point read and supplying both argument values leaves signature recognition rather than applied reasoning. Completed audit has no additional assigned-pair exclusion for this item."
+    },
+    {
+      "questionId": "ai200-d-003",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "1f4fedfe233483c154bd81c2ee91dde7fc066a689dded14302f7200d90c7933b",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-cosmos-db/4-query-cosmos-db-nosql",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql.json",
+          "retrievedAt": "2026-09-14T17:56:25.149Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Use parameterized queries sends an @-named placeholder and a separate parameters array. The same unit also demonstrates fixed literal SELECT predicates; those provide the narrow background for literal SQL construction, not approval to concatenate external strings containing quotation marks."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Caller-controlled category text can be concatenated while keeping data separate from SQL structure. In this context: Concatenation turns the supplied quotation marks into part of the SQL-like text; no separate SDK value channel remains. Alternative context: A query may contain a fixed application-authored literal, as the unit's basic WHERE examples do. That is a trusted literal-query use case, not safe handling of this caller's category. Evidence: Basic WHERE examples show literal values; Use parameterized queries specifically requires external values to travel separately in a parameters array.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: A token named @category remains a bound parameter even when application code substitutes its text. In this context: The placeholder's spelling cannot preserve separation after the application embeds the caller value in the query string; it is still literal text construction. Alternative context: Producing a fixed literal query from code-owned values can yield a syntactically usable SELECT, as the source's literal predicates illustrate. It is not SDK binding, and the source gives no approval for substituting untrusted caller text. Evidence: The documented parameter example leaves @category in the query and passes its name/value object separately; static literal SELECTs are a different documented construction.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "supported",
+          "rationale": "Claim: The SDK receives the category through its separate parameter value channel. In this context: This is not incorrect here: the unchanged @category placeholder and separate value object keep caller quotation marks in data rather than query structure. Alternative context: External input supplies a predicate value to a Cosmos NoSQL query and needs driver-managed value handling. Evidence: The unit uses parameters=[{'name':'@category','value':...}] with a corresponding unchanged query placeholder and explicitly explains structure/value separation.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "C preserves the separate SDK parameter-value channel. Total 44 honestly reflects limited difficulty, two related interpolation foils and moderate originality. Technical-implementation is supported by tracing the actual query/parameter transport, not by its scenario wrapper. Re-read d-017 and both SDK units: Cosmos name/value arrays and psycopg percent-operator versus tuple semantics are sufficiently distinct, with originality still 3. Separate classification assessment: Authored complexity: technical-implementation; authored difficulty: intermediate. The decisive work is tracing whether external characters enter the query string or a separate value payload. B deliberately retains an @-looking token while doing application substitution; distinguishing that from a real SDK parameter channel is a concrete request-construction decision, not just identifying the word parameterized. Difficulty remains modest at 3. Cross-bank audit: ai200-d-003 / ai200-d-017: Keep distinct, with moderate originality score 3 for both rather than treating product names alone as sufficient. I compared all three choices in each. Cosmos uses the actual @ placeholder plus a separate name/value array and distinguishes application text substitution. Psycopg requires evaluating whether %s is consumed by Python's percent operator or is sent to execute with a one-element tuple. These actual transport/execution contracts differ; a learner must know the relevant API rather than transplant syntax.",
+      "confidenceReason": "High confidence in C's separate-parameter semantics; moderate question-quality confidence because the two distractors are closely related interpolation mistakes. Final independent decision: C preserves the separate SDK parameter-value channel. Total 44 honestly reflects limited difficulty, two related interpolation foils and moderate originality. Technical-implementation is supported by tracing the actual query/parameter transport, not by its scenario wrapper. Re-read d-017 and both SDK units: Cosmos name/value arrays and psycopg percent-operator versus tuple semantics are sufficiently distinct, with originality still 3."
+    },
+    {
+      "questionId": "ai200-d-004",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "27ecc5f87b9cec966650793c67669db8891a87b6b9566122fb04d749bab470ee",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-cosmos-db/4-query-cosmos-db-nosql",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql.json",
+          "retrievedAt": "2026-09-14T17:56:25.149Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Optimize with single-partition queries distinguishes partition-key equality/partition_key routing from cross-partition fan-out. Sort and paginate results makes max_item_count a page-size control, and projection changes returned properties rather than eligible tenant rows."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Reducing response page size supplies the missing tenant boundary. In this context: Pages still contain results eligible under the status-only predicate across tenants; paging neither binds tenant-green nor targets its partition. Alternative context: The query's logical scope is already correct and the application needs smaller pages for memory or round-trip tradeoffs. Evidence: Sort and paginate results defines max_item_count as page-size control, independently of the section on single-partition routing.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "Claim: Tenant equality plus the matching SDK partition value restricts and routes the request to the intended tenant. In this context: This is not incorrect here: tenantId is the partition property, tenant-green is the required value, and the existing open-status condition remains part of the requested query. Alternative context: The business scope is one known partition and its value is available at request construction time. Evidence: The single-partition example combines a bound partition-property predicate with partition_key and explains the difference from fan-out queries.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Projecting only id fixes tenant scope while retaining a status-only cross-partition request. In this context: A narrower payload still admits every tenant matching status and may also remove fields needed by the case response. Alternative context: The eligible rows are already correct and the application intentionally needs only their identifiers, reducing returned data through projection. Evidence: SELECT projections determine returned properties; WHERE/partition routing determine eligible items and partitions.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-cosmos-db-4-query-cosmos-db-nosql"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "B repairs both missing tenant eligibility and explicit partition routing; paging and projection have narrower legitimate uses. Total 45. Troubleshooting is supported because the current request has the wrong business scope, while intermediate difficulty remains modest. Completed audit raises no additional relevant blocking pair; no blanket all-pairs uniqueness is claimed. Separate classification assessment: Authored complexity: troubleshooting; authored difficulty: intermediate. The current status-only request has the wrong business/partition scope. The learner diagnoses why two plausible performance changes do not fix that defect and supplies the missing tenant constraint plus routing. That is actual troubleshooting independent of its medium difficulty. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in routing versus shaping distinctions; no claim that query predicates alone enforce a tenant's authorization. Final independent decision: B repairs both missing tenant eligibility and explicit partition routing; paging and projection have narrower legitimate uses. Total 45. Troubleshooting is supported because the current request has the wrong business scope, while intermediate difficulty remains modest. Completed audit raises no additional relevant blocking pair; no blanket all-pairs uniqueness is claimed."
+    },
+    {
+      "questionId": "ai200-d-005",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "efd38de19d651e5f23e6ecc4c2a0d2350924832c45df24d46e53e51c011e1c0a",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-indexing",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/index-policy",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-indexing.json",
+          "retrievedAt": "2026-09-14T18:02:01.351Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Include/exclude strategy requires the root in exactly one list and explains root inclusion for new properties. Including/excluding property paths uses /? for scalars and /* for subtrees; precedence gives more precise paths priority. Together these rules support the nested rating exception without relying on list order."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "Claim: A broad root inclusion, payload exclusion and more specific rating inclusion satisfy both default and exception requirements. In this context: This is not incorrect here: /* keeps future top-level fields indexed and /payload/rating/? outranks the less precise excluded /payload/* path. Alternative context: The indexing policy is opt-out for schema growth but must restore a scalar query field inside one deliberately excluded object. Evidence: Include/exclude strategy recommends included root for future properties; precedence favors deeper paths and /? over /*.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: An excluded root plus rating inclusion also automatically indexes unspecified new top-level fields. In this context: This is opt-in indexing. It can preserve rating, but unspecified new fields inherit the root exclusion rather than automatic indexing. Alternative context: Only a curated allowlist such as rating should receive secondary indexing and newly introduced fields should remain excluded until deliberately added. Evidence: The source explicitly contrasts excluded-root selective inclusion with included-root proactive indexing of new model properties.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: A root inclusion overrides the more specific excluded payload subtree and keeps rating indexed. In this context: The deeper payload exclusion takes precedence, so rating is removed with the subtree unless a more precise inclusion restores it. Alternative context: Every property below payload is intentionally excluded and all other existing/new properties should remain indexed. Evidence: The precedence example excludes an object and restores only a separately included deeper path; without that exception the subtree remains excluded.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "A combines opt-out root indexing, subtree exclusion and a deeper scalar exception. Total 45, with advanced-depth, originality and longest-complete-policy/notation deductions. Technical-implementation is independently supported by interacting precedence rules. Own comparison with d-007 distinguishes policy-precedence construction from workload-driven write-cost exclusion; d-007's separate distractor hold does not invalidate d-005. Separate classification assessment: Authored complexity: technical-implementation; authored difficulty: advanced. Three interacting requirements require constructing an include/exclude policy and resolving nested path precedence; neither a memorized wildcard nor a single root rule is enough. Applied classification is supported even though advanced depth is only 3. Cross-bank audit: ai200-d-005 / ai200-d-007: No additional semantic duplicate hold for this pair, but d-007 remains manual for its exact distractor defect. d-005 requires reconciling root automatic inclusion with an excluded subtree and a deeper restored scalar path. d-007 infers unused write-index work from a mixed point-read/indexed-query workload; it does not require specificity precedence. Both use path exclusion, but the distinguishing reasoning is not identical.",
+      "confidenceReason": "High confidence from explicit policy strategy and precedence rules; the score acknowledges a relatively compact advanced scenario and a completeness/length cue. Final independent decision: A combines opt-out root indexing, subtree exclusion and a deeper scalar exception. Total 45, with advanced-depth, originality and longest-complete-policy/notation deductions. Technical-implementation is independently supported by interacting precedence rules. Own comparison with d-007 distinguishes policy-precedence construction from workload-driven write-cost exclusion; d-007's separate distractor hold does not invalidate d-005."
+    },
+    {
+      "questionId": "ai200-d-006",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "c82e8c9e7c6eeb4d1fe1d202cfff79f7fd22e726fdda266a925e946ef18860c2",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-indexing",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/index-policy",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-indexing.json",
+          "retrievedAt": "2026-09-14T18:02:01.351Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Composite indexes require the same property sequence as ORDER BY. The documented index supports matching directions or the complete opposite on all paths, but not reversed properties or one independently changed direction. Completion matters: newly added composites are not immediately used until transformation finishes."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "Claim: The existing category-then-priority index supports its declared ascending/descending order. In this context: This is not incorrect here: both the property sequence and each direction match the completed index exactly. Alternative context: A multi-property ORDER BY follows category ASC then priority DESC with the corresponding complete composite index. Evidence: ORDER BY queries on multiple properties requires matching paths and directions, with the matching example marked supported.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: Reversing the property order is the supported reversal of a composite index. In this context: priority first and category second changes the property sequence, which the documented rule does not allow for this existing index. Alternative context: A separate composite index is defined with priority before category in the requested directions; the article tells developers to customize indexes for necessary ORDER BY patterns. Evidence: The source marks an age/name query unsupported by a name/age index and says paths must match the query sequence.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Only priority's direction may be flipped while category's direction stays unchanged. In this context: The requested pattern is neither the declared ASC/DESC pair nor its complete DESC/ASC opposite. Alternative context: The available composite is category ASC, priority ASC, or the complete opposite of that two-column direction set. Evidence: The documentation permits the full direction reversal and explicitly marks a partial reversal unsupported.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        },
+        {
+          "choiceId": "D",
+          "assessment": "supported",
+          "rationale": "Claim: Reversing both directions while preserving column order remains supported by the same composite. In this context: This is not incorrect here: DESC/ASC reverses every direction of ASC/DESC without changing category-before-priority ordering. Alternative context: A query needs the total opposite sort direction for every path in an existing completed composite index. Evidence: The source states the same composite supports ORDER BY with opposite order on all paths; property sequence remains mandatory.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "All four direction/property permutations were checked; A and D are the complete supported set. Total 46; the task is compact for advanced difficulty and close to known index examples. Scenario-based is supported by evaluating the actual two-dimensional compatibility set, not merely by multiselect formatting. Completed audit adds no relevant blocking pair. Separate classification assessment: Authored complexity: scenario-based; authored difficulty: advanced. The learner evaluates all four actual column/direction permutations against an existing composite, including the complete inverse with unchanged columns. The two-dimensional full-set compatibility reasoning is applied; its compact rule set independently lowers advanced difficulty to 3. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence from the exact property-sequence and all-directions reversal rules, including the completed-index prerequisite. Final independent decision: All four direction/property permutations were checked; A and D are the complete supported set. Total 46; the task is compact for advanced difficulty and close to known index examples. Scenario-based is supported by evaluating the actual two-dimensional compatibility set, not merely by multiselect formatting. Completed audit adds no relevant blocking pair."
+    },
+    {
+      "questionId": "ai200-d-007",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "44010210ce51d9d0577f860e40413e488ed73f2f3f4114147a8e8fd47a7c26f2",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-indexing",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/index-policy",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-indexing.json",
+          "retrievedAt": "2026-09-14T18:02:01.351Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Including and excluding property paths directly links fewer indexed paths to lower write latency/RUs. None is appropriate for a key-value-only workload or a controlled bulk-load phase. Composite paths index scalar values; a nonscalar object is represented as undefined, which makes the rawTrace composite proposal an especially weak alternative."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Disabling every secondary index removes unused trace work without sacrificing useful metadata-query paths. In this context: It also removes the useful status/createdAt indexing that the workload explicitly needs. A reduction in write-index work alone is not the full requirement. Alternative context: The container is a pure key-value store with no secondary-index queries, or a deliberately managed bulk-load interval will later restore indexing. Evidence: Indexing mode None is documented for pure key-value or bulk operations; selective path exclusion is separately documented as reducing write cost.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: Adding a rawTrace/status composite removes unnecessary indexing of a never-queried object. In this context: Adding a composite does not remove the object's existing indexed subtree, and rawTrace is nonscalar rather than a useful composite comparison value. Alternative context: A composite over actual scalar query/filter/order fields can improve supported workloads. The source does not supply a useful context for indexing this never-queried object path as written; treating rawTrace as a scalar would change the scenario. Evidence: Composite paths lead to scalar values; nonscalar paths receive an undefined marker. The source's useful composites serve multi-property filters or ORDER BY, not unused object payloads.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "supported",
+          "rationale": "Claim: Remove the unused rawTrace subtree from secondary indexing while retaining metadata indexes. In this context: This is not incorrect here: the trace only needs direct item retrieval, while status and createdAt still need indexed queries. Alternative context: An object subtree is stored/read with its item but never participates in secondary-index filtering or sorting, unlike other metadata fields. Evidence: The document defines /* subtree exclusion and says optimizing indexed paths can reduce write latency and RU charges without requiring container-wide None.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-indexing"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "C is technically correct, but B's never-queried nonscalar composite has no useful exact favorable context, leaving distractorEvidence 2 and total 43. Correction to my earlier preparation: the authored difficulty was and remains intermediate, not advanced; difficultyAuthenticity is 4, and scenario-based access-pattern reasoning is valid. No authored label/hash changed. The d-005 comparison is distinct; the hold is the exact distractor quality, not duplicate or difficulty. Separate classification assessment: Authored complexity: scenario-based; authored difficulty: intermediate. Access-pattern constraints distinguish a point-read payload from metadata that still needs secondary indexing. Selective exclusion follows from those differing uses, so the scenario is applied and intermediate difficulty is appropriate. The earlier adversarial prose incorrectly called this authored label advanced; that was my reading error, not an author change. Correct difficultyAuthenticity from 2 to 4 while retaining the independent invalid-composite distractor hold. Cross-bank audit: ai200-d-005 / ai200-d-007: No additional semantic duplicate hold for this pair, but d-007 remains manual for its exact distractor defect. d-005 requires reconciling root automatic inclusion with an excluded subtree and a deeper restored scalar path. d-007 infers unused write-index work from a mixed point-read/indexed-query workload; it does not require specificity precedence. Both use path exclusion, but the distinguishing reasoning is not identical.",
+      "confidenceReason": "High confidence in selective exclusion and the nonscalar-composite distractor defect. The original intermediate difficulty and scenario classification are appropriate; my earlier contrary difficulty statement was a reviewer error, now explicitly corrected without touching the candidate. Final independent decision: C is technically correct, but B's never-queried nonscalar composite has no useful exact favorable context, leaving distractorEvidence 2 and total 43. Correction to my earlier preparation: the authored difficulty was and remains intermediate, not advanced; difficultyAuthenticity is 4, and scenario-based access-pattern reasoning is valid. No authored label/hash changed. The d-005 comparison is distinct; the hold is the exact distractor quality, not duplicate or difficulty."
+    },
+    {
+      "questionId": "ai200-d-008",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "d90cb84b4cf5ebd90cb83d5aa972f7b9796b0dd7ec3c351159e989cbc33daf15",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-consistency",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/consistency-levels",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-consistency.json",
+          "retrievedAt": "2026-09-14T18:02:03.695Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Session consistency describes write-issued cached tokens as minimum version barriers, partition-bound and transferable without modification. A client without a token for that partition reads with eventual behavior. Strong consistency guarantees the most recent committed item globally; that is not the caller-only contract requested here."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: An account's Session setting alone transports a writer's read-your-writes barrier to a different client instance. In this context: B has no token for the relevant partition. The account default does not carry A's cached session barrier to B. Alternative context: The application does not require this caller's cross-instance read-your-writes guarantee and accepts the documented eventual behavior of tokenless reads. Evidence: Session consistency explicitly says tokenless reads for a partition behave as Eventual; cached tokens are client state rather than account-global session state.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-consistency"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "Claim: Carry the relevant write's session token to establish B's minimum version barrier. In this context: This is not incorrect here: using the relevant unmodified token preserves the caller's session boundary even though another API instance issues the read. Alternative context: A caller's subsequent read is served by a new client that lacks the write's partition-bound session token. Evidence: The document describes receiving/caching tokens after writes, using the relevant last token for read-your-writes, and not modifying tokens passed between clients.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-consistency"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: A token from an unrelated partition can establish the required document's write barrier. In this context: Session tokens are partition-bound. Acquiring state for another partition supplies no version barrier for the document written through A. Alternative context: That other partition itself is the subject of subsequent session-consistent reads; a token has relevance within its associated partition, not to this document's partition. Evidence: Session Tokens are exclusively associated with one partition, and the documented instruction is to use the token last generated for the relevant items.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-consistency"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "B carries the relevant partition-bound minimum-version barrier; account settings and unrelated tokens do not. Total 47. Architecture-design and advanced difficulty are independently supported by the client handoff and caller-only consistency contract. Re-read d-028 and its asynchronous replica evidence: primary/replica routing is a different mechanism from Cosmos token forwarding. Separate classification assessment: Authored complexity: architecture-design; authored difficulty: advanced. Cross-instance session state, a partition-bound version barrier and an expressly caller-only consistency contract determine what information must cross a service boundary. That is a genuine small architecture decision and not support-table recall. Cross-bank audit: ai200-d-008 / ai200-d-028: Keep distinct for the reviewed pair. d-008 needs a partition's minimum-version session barrier carried across client instances. d-028 instead splits primary and asynchronous-replica endpoints according to allowed staleness. The choices are not interchangeable: a Cosmos token is not a PostgreSQL replica catch-up mechanism, and changing endpoints is not the requested Session handoff.",
+      "confidenceReason": "High confidence from explicit tokenless-read, partition-binding and handoff passages; no vector freshness or authorization conclusions are inferred. Final independent decision: B carries the relevant partition-bound minimum-version barrier; account settings and unrelated tokens do not. Total 47. Architecture-design and advanced difficulty are independently supported by the client handoff and caller-only consistency contract. Re-read d-028 and its asynchronous replica evidence: primary/replica routing is a different mechanism from Cosmos token forwarding."
+    },
+    {
+      "questionId": "ai200-d-009",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "b019f407ff2d71dcf130fca4f1d748b0a77841b8139c63a8ed318697cc05ef2a",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-vector",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/vector-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-vector-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:10.253Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Container vector policies define a vector-valued property path, element type, common dimension count and distance metric, including float32 and float16. The examples distinguish /vector1 in a vector policy from /vector1/* in ordinary excludedPaths, and explicitly prohibit wildcards inside vector policies. None describes a 384-component embedding as a scalar JSON value."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: The vector policy may use /embedding/* for a 384-element embedding. In this context: The source explicitly prohibits wildcards in a vector policy; the vector property path is /embedding. The explanation's phrase 'scalar vector property' introduces a separate terminology error. Alternative context: The same product article uses a wildcard path in ordinary indexing excludedPaths to omit vector elements from the ordinary index. That background does not make this exact vector-policy entry valid; moving it to excludedPaths would change the option. Evidence: Vector index examples show /vector1/* only under excludedPaths and /vector1 for vectorIndexes. The following Important paragraph disallows * and [] in vector policy/index paths.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: A 1536-dimensional policy describes a model that emits exactly 384 components. In this context: The declared length conflicts with the provided model output; the common default cannot replace an explicitly known dimension count. Alternative context: The vector-valued property actually contains 1536-component float32 vectors produced for cosine comparison. Evidence: The dimensions field is defined as each vector's length; the source's single-vector example uses 1536 for an example path, not as a universal size.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "ambiguous",
+          "rationale": "Claim: An ordinary vector-valued /embedding property with 384 float32 components and cosine metric matches this policy. In this context: The proposed policy is not incorrect for the intended vector-valued property. It is not fully defensible against the literal 'scalar document property' wording, which cannot simultaneously contain the described 384-component embedding. Alternative context: The stem describes a vector-valued JSON property, not a scalar JSON value, whose actual type, length and model metric are the ones in C. Evidence: The article defines vectors in document properties and policy length/type/metric fields. It does not equate a multidimensional vector with a scalar value.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": false,
+        "correctOptionsSupported": false,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": false,
+        "prerequisitesComplete": false,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Total 36. The literal scalar property cannot hold the stated 384-component vector, and A's rationale repeats that contradiction. C is the intended policy only after an authored repair. The technical stage remains manual on the same exact hash and cannot be overridden. Separately, technical-implementation is overstated by a near-verbatim field/signature matching task. Actual product/training both support float16; that corrected uncited summary is not a current curation defect. Separate classification assessment: Authored complexity: technical-implementation; authored difficulty: beginner. The stem supplies the desired type, dimension and metric verbatim, leaving direct recognition of the property path while the alternatives are a wildcard and visibly different supplied number. The literal scalar/vector contradiction also prevents coherent implementation reasoning. Both the classification and technical terminology require repair; no silent relabeling. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in the vector policy fields and wildcard prohibition; low confidence that the literal stem admits a technically coherent keyed answer. Final independent decision: Total 36. The literal scalar property cannot hold the stated 384-component vector, and A's rationale repeats that contradiction. C is the intended policy only after an authored repair. The technical stage remains manual on the same exact hash and cannot be overridden. Separately, technical-implementation is overstated by a near-verbatim field/signature matching task. Actual product/training both support float16; that corrected uncited summary is not a current curation defect."
+    },
+    {
+      "questionId": "ai200-d-010",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "82f219ad3b2d459bfe40d4f7d140d6c1d4cd4a5677874fd944ac8050b2a494f2",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-vector",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/vector-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-vector-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:10.253Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The source recommends flat for exact recall and supports 384 dimensions under its 505 limit. It also explicitly says quantizedFlat/diskANN require at least 1000 vectors and use a full scan below that threshold. A 'small' fixed collection is not a sufficient count to assert that the other configured types must actually execute lossy/approximate indexed search in this benchmark."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "Claim: A flat vector index is the documented exact-recall choice for supported small vectors. In this context: This is not incorrect here: 384 is below the flat limit and the source explicitly recommends flat when exact results are required. Alternative context: An exact brute-force retrieval contract matters more than approximate-index performance and the dimension count is at most 505. Evidence: Vector indexing policies describes flat as brute-force with 100% recall, and Approximate search and result determinism explicitly recommends flat for exact results.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "ambiguous",
+          "rationale": "Claim: Selecting quantizedFlat necessarily introduces quantization error in this unspecified small benchmark. In this context: Once a quantized index is used, its compressed comparisons need not preserve original-vector recall. But the stem never establishes the 1000-vector minimum; the documented full-scan fallback leaves the blanket rejection unproven for this small collection. Alternative context: Quantization's accuracy tradeoff is acceptable for performance, or a below-1000-vector configuration is in the documented full-scan fallback rather than using the quantized index. The latter is a live unexcluded challenge here. Evidence: The source both warns of quantization accuracy loss and states that fewer than 1000 vectors result in a full scan instead; neither passage may be ignored.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "ambiguous",
+          "rationale": "Claim: Selecting diskANN necessarily runs approximate indexed search for every small collection. In this context: Active DiskANN sacrifices the exact top-K guarantee, but the same below-1000 full-scan fallback prevents asserting that this unquantified benchmark necessarily takes that approximate path. Alternative context: A populated large collection accepts an ANN recall/latency tradeoff, or a small configured collection is below the documented indexing threshold and falls back to a scan. Evidence: Approximate search describes DiskANN's non-guaranteed top-K behavior; Current limitations separately mandates full scanning when fewer than 1000 vectors are indexed.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": false,
+        "explanationsSupported": false,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": false,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Flat is a documented recommendation, but an unspecified small corpus may trigger the below-1000 full-scan fallback for quantizedFlat/DiskANN, undermining absolute contextual rejection of B/C. Total 41. Architecture-design is independently overstated by a bare exact-index selection without quantified tradeoffs. Read d-023/d-044 and all relevant evidence: SEM-021 recognizes shared exact-versus-ANN reasoning, so originality is reduced to 3 despite d-010's extra quantization discriminator. Choosing this representative is not approval and does not cure either hold. Separate classification assessment: Authored complexity: architecture-design; authored difficulty: intermediate. The exact-recall requirement directly names the flat-index contract and choices are bare index names. The small/fixed wrapper lacks a meaningful quantified scale, build/read tradeoff or operational design decision; its omitted 1000-vector fallback is an independent technical problem. This is not sufficient architecture-design reasoning. Cross-bank audit: ai200-d-010 / ai200-d-023 / ai200-d-044: Accept the audit's recognition of shared exhaustive-versus-approximate reasoning. Do not turn its suggested representative d-010 into approval: d-010 remains manual for its omitted fallback condition and overstated architecture classification. Reduce its originality score to 3, total 41, because quantization adds a discriminator without removing the observed conceptual overlap. PostgreSQL d-023 asks for a no-ANN exhaustive baseline, Redis d-044 asks for FLAT rather than HNSW, and Cosmos d-010 asks for flat rather than quantized/ANN alternatives. Cosmos quantization supplies some additional discrimination, but it is not an independent approval and still lacks the cardinality needed to rule out the product's below-1000 full-scan fallback. I do not modify or adjudicate final statuses for d-023/d-044 outside my assignment.",
+      "confidenceReason": "High confidence in the documented flat recommendation and 1000-vector caveat; insufficient confidence in the item's absolute rejection of the alternatives under all stated conditions. Final independent decision: Flat is a documented recommendation, but an unspecified small corpus may trigger the below-1000 full-scan fallback for quantizedFlat/DiskANN, undermining absolute contextual rejection of B/C. Total 41. Architecture-design is independently overstated by a bare exact-index selection without quantified tradeoffs. Read d-023/d-044 and all relevant evidence: SEM-021 recognizes shared exact-versus-ANN reasoning, so originality is reduced to 3 despite d-010's extra quantization discriminator. Choosing this representative is not approval and does not cure either hold."
+    },
+    {
+      "questionId": "ai200-d-011",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "559f3e0b1bd6801ef74d675d569b1af31c35b31b2230c3c0304a07c64f73d061",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-vector",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/vector-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-vector-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:10.253Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Container vector policies defines Euclidean values as zero for most similar and increasing toward less similar; the VectorDistance query section pairs ORDER BY with TOP N and warns against omitting TOP. The stem's explicit Euclidean metric avoids borrowing conflicting cosine similarity conventions from another product."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Descending Euclidean distance puts the closest six matches first. In this context: TOP 6 limits rows, but DESC puts larger Euclidean distances before smaller ones and thus reverses the requested closeness order. Alternative context: The task intentionally wants the six farthest candidates under the same Euclidean distance definition, such as inspecting dissimilar items. Evidence: The source defines zero as most similar and increasing Euclidean values as less similar; reversing that order selects dissimilar rather than nearest items.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "Claim: TOP 6 and ascending Euclidean VectorDistance jointly express the closest-first bounded request. In this context: This is not incorrect here: ASC puts the minimum distances first, and TOP expresses the required at-most-six result bound. Alternative context: The container vector metric is Euclidean and the request asks for up to six nearest records rather than an unbounded ordered list. Evidence: The metric table gives Euclidean ordering, and the query section demonstrates TOP with ORDER BY VectorDistance and recommends bounding vector requests.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Ascending VectorDistance without TOP expresses both nearest-first order and the six-row limit. In this context: The order is correct, but the SQL request has no six-row bound; relying on an unstated client-side stop would not express that bound in this query shape. Alternative context: An application deliberately requests an unbounded ordered result rather than a fixed top-K, accepting the source's warning about more work and higher RU/latency. Evidence: The product explicitly warns that omitting TOP makes vector search try to return many more results, distinguishing absence of a bound from the requested TOP N.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "B combines ascending Euclidean distance with TOP 6. Total 46. Technical-implementation is supported by independently satisfying ordering and bounded-count requirements, though difficulty is modest and structure familiar. No exact ANN recall or exactly-six-result guarantee is inferred. Completed audit has no additional relevant blocking pair. Separate classification assessment: Authored complexity: technical-implementation; authored difficulty: intermediate. The learner translates two independent requirements into a query: lower Euclidean distance first and a database-side at-most-six bound. Each distractor satisfies only one, so the work applies query semantics rather than selecting a named function. It remains modest implementation at difficulty 3. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in the two query-shape requirements and their scoped explanation; complexity is modest rather than advanced. Final independent decision: B combines ascending Euclidean distance with TOP 6. Total 46. Technical-implementation is supported by independently satisfying ordering and bounded-count requirements, though difficulty is modest and structure familiar. No exact ANN recall or exactly-six-result guarantee is inferred. Completed audit has no additional relevant blocking pair."
+    },
+    {
+      "questionId": "ai200-d-012",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "881186ae425b2481f65ecb9b441ee1108c5dbdff81927f04763ccf18bc7e790a",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-implement-vector-search-azure-cosmos-db-4-combine-vector-metadata-filtering",
+          "url": "https://learn.microsoft.com/en-us/training/modules/implement-vector-search-azure-cosmos-db/4-combine-vector-metadata-filtering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-implement-vector-search-azure-cosmos-db-4-combine-vector-metadata-filtering.json",
+          "retrievedAt": "2026-09-14T17:56:42.478Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "WHERE clauses combine metadata eligibility with vector search; status='published' and matching partition_key are separately illustrated. The unit says the optimizer chooses pre/post-filter behavior and filtering after ranking can underfill results, so moving eligibility into the request is not a promise of physical prefilter order or exactly twenty matches."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-vector",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/vector-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-vector-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:10.253Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The product allows WHERE filters in VectorDistance queries, recommends TOP N, and describes ANN recall limitations. These bounds support the revised request without claiming an exact nearest-neighbor or result-count guarantee."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Increasing a global candidate sample expresses tenant and publication eligibility in the database request. In this context: A larger sample is still global and can still fill with ineligible matches; neither requested predicate reaches the database. Alternative context: A deliberately approximate application reranker accepts sample-based recall and underfilled post-filter results, rather than requiring the database request itself to express the eligible corpus. Evidence: The unit explains that post-ranking removal can return fewer than requested results; it separately teaches WHERE filters as the way to express eligibility.",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-cosmos-db-4-combine-vector-metadata-filtering"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: Targeting the tenant partition also excludes draft documents before the limited result set is returned. In this context: Partition targeting fixes tenant scope, not publication status. Drafts remain eligible for TOP 20 and are still removed only afterward. Alternative context: All documents within the tenant partition are eligible regardless of status, or underfilled post-filtered results are acceptable to that different workload. Evidence: Optimize queries with partition keys targets one partition, while the separate status pattern adds WHERE c.status='published'; these are independent constraints.",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-cosmos-db-4-combine-vector-metadata-filtering"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "supported",
+          "rationale": "Claim: Put both bound eligibility predicates and tenant routing into the vector retrieval request. In this context: This is not incorrect here: the database sees tenant and published-status constraints instead of ranking a limited global sample with those requirements absent. Alternative context: Semantic retrieval has tenant/publication eligibility and the metadata and vector indexes are already suitable for the query. Evidence: The unit combines WHERE filters, status eligibility and matching partition_key with vector retrieval; the product permits WHERE alongside vector search without guaranteeing exact ANN recall.",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-cosmos-db-4-combine-vector-metadata-filtering",
+            "ai200-20260914-doc-cosmos-vector"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "C expresses tenant/publication eligibility in the retrieval request and targets its partition, without promising physical filter order, exact ANN recall or twenty results. Total 46. Architecture-design and advanced reasoning are supported by the cross-boundary starvation diagnosis. Read p-030 and the actual Search filter receipt: trusted authorization before model context is distinct from Cosmos eligible-corpus/partition repair. The AI-103 source is comparison evidence only, never an added AI-200 option citation. Separate classification assessment: Authored complexity: architecture-design; authored difficulty: advanced. The failure spans global candidate sampling, tenant partition routing, eligibility metadata and the boundary between database retrieval and application trimming. The redesign combines those constraints while refusing exact ANN/count guarantees. Genuine applied architecture is demonstrated. Cross-bank audit: ai103-p-030 / ai200-d-012: Keep distinct for this pair; approve neither counterpart nor AI-103 policy globally. p-030's decisive boundary is trusted server-known authorization groups before model context. d-012 diagnoses global TOP starvation and must combine tenant partition routing with publication eligibility. Cosmos's optimizer/ANN caveats remain relevant, whereas the Search security filter is an access-right proxy rather than a partition-routing fix.",
+      "confidenceReason": "High confidence in the request-level eligibility distinction, bounded by the source's post-filter and ANN caveats rather than a universal recall guarantee. Final independent decision: C expresses tenant/publication eligibility in the retrieval request and targets its partition, without promising physical filter order, exact ANN recall or twenty results. Total 46. Architecture-design and advanced reasoning are supported by the cross-boundary starvation diagnosis. Read p-030 and the actual Search filter receipt: trusted authorization before model context is distinct from Cosmos eligible-corpus/partition repair. The AI-103 source is comparison evidence only, never an added AI-200 option citation."
+    },
+    {
+      "questionId": "ai200-d-013",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "bf09ef57f3a32326374c978cf8ae1e0f8f7d83819e9e4e0dc7a808269828a36c",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-changefeed",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-changefeed-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:12.123Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Deployment unit and Dynamic scaling require the same processorName and lease-container configuration with distinct instance names. Separate business-flow units maintain independent progress; the lease store coordinates ownership, and enough leases are needed to keep multiple workers busy. The role section separates monitored readChangeFeed/readMetadata from lease read/create/replace/delete/query access."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "Claim: Shared processor identity and lease storage plus distinct worker identities create one distributed processor unit. In this context: This is not incorrect here: these are the documented three conditions for sharing lease ownership rather than independently consuming the feed. Alternative context: Multiple running .NET workers process the same monitored workload and should divide its leases within a single deployment unit. Evidence: Dynamic scaling explicitly lists same lease configuration, same processorName, and different instance names as the distribution requirements.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: Different processor names make workers divide one feed workload simply because they use the same lease container. In this context: Distinct processor names establish independent business-flow deployment units, so shared physical storage does not merge their progress. Alternative context: Two separate consumers must independently process the same changes for different business purposes while sharing a lease container. Evidence: Deployment unit gives independent external-API and data-movement examples; Share the lease container says different processorName values maintain independent state.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Separate lease stores and a reused instance name provide shared ownership coordination. In this context: The workers do not share the state needed to coordinate this workload, and repeated instance names violate the stated configuration for one shared unit. Alternative context: Isolated independent processor deployments keep separate lease stores. A name reused across isolated deployments does not itself create shared state, but this is not the requested one-unit distribution. Evidence: Components identifies the lease container as state/coordination storage; Deployment unit and Dynamic scaling distinguish independent configurations from workers sharing one unit.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "A matches the documented deployment-unit configuration and the rubric totals 45. Nevertheless architecture-design is overstated: the three-worker wrapper asks for the three-condition definition without an ownership failure or design tradeoff to resolve. A passing numeric total cannot override this authored-complexity gate. Request an authored repair and fresh passes; no silent relabeling or applied-coverage credit. Separate classification assessment: Authored complexity: architecture-design; authored difficulty: advanced. Three workers merely introduce the documented deployment-unit definition: same processor name, same lease store, different instance names. The question supplies no ownership failure, independent-consumer tradeoff or scale constraint to reason through beyond selecting that checklist. The architecture-design classification is overstated even though A is technically correct and its rubric total exceeds 44. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in the shared-unit conditions; moderate difficulty/distractor quality because the answer is close to the documented three-part checklist. Final independent decision: A matches the documented deployment-unit configuration and the rubric totals 45. Nevertheless architecture-design is overstated: the three-worker wrapper asks for the three-condition definition without an ownership failure or design tradeoff to resolve. A passing numeric total cannot override this authored-complexity gate. Request an authored repair and fresh passes; no silent relabeling or applied-coverage credit."
+    },
+    {
+      "questionId": "ai200-d-014",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "6c71a083e654f1fedc074e591e2a932e64791b230c4d82c82bf23260124c904f",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-changefeed",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-changefeed-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:12.123Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Supported SDKs marks .NET and Java supported and Python/Node.js unsupported for the change feed processor library. It explicitly directs Python and Node.js to the pull model with manual checkpoint management. The document distinguishes library support from possible hosting in Azure Functions."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Python and Node.js both offer the SDK processor library's managed distributed leases/checkpoints. In this context: Both entries are unsupported for that library in the source's table; a pull reader is not the requested standalone managed processor. Alternative context: The team intentionally chooses the change feed pull model and accepts manual checkpoint management in Python or Node.js. Evidence: Supported SDKs explicitly directs these two languages to the pull model, explaining the valid alternative while denying processor-library support.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: Python and Java form an entirely supported processor-library pair. In this context: Java is supported but Python is not, so the complete pair fails even though one language is correct. Alternative context: A system permits different consumption contracts: Java uses the processor library while Python uses the documented pull reader with manual checkpointing. Evidence: The table supports Java and the adjoining paragraph provides Python's pull alternative; it does not say that alternative inherits processor-managed checkpoints.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "supported",
+          "rationale": "Claim: .NET and Java are the documented supported SDK processor runtimes. In this context: This is not incorrect here: the requested library, standalone hosting and managed processing responsibilities match the two supported languages. Alternative context: A standalone worker requires the SDK change feed processor rather than a language-specific pull reader or Azure Functions trigger. Evidence: The opening identifies .NET V3 and Java V4 SDKs, and the Supported SDKs table marks .NET and Java as supported.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "C is the supported complete runtime pair and beginner difficulty is honest; total 45. Scenario-based is nevertheless overstated because the exact task is support-matrix recall. Standalone/no-Functions qualifiers prevent ambiguity but do not introduce applied reasoning. Hold for authored classification/content repair, without changing the label or hash and without counting this as applied. Separate classification assessment: Authored complexity: scenario-based; authored difficulty: beginner. The question explicitly asks which runtime pair is in the processor-library support matrix. Standalone/no-Functions wording disambiguates the fact but introduces no applied decision beyond retrieving the supported pair. Beginner is honest; scenario-based is not supported by the scenario wrapper. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence from the explicit current SDK matrix and its adjacent manual-checkpoint alternative. Final independent decision: C is the supported complete runtime pair and beginner difficulty is honest; total 45. Scenario-based is nevertheless overstated because the exact task is support-matrix recall. Standalone/no-Functions qualifiers prevent ambiguity but do not introduce applied reasoning. Hold for authored classification/content repair, without changing the label or hash and without counting this as applied."
+    },
+    {
+      "questionId": "ai200-d-015",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "f1be9f1c360ebe604d78ff735983dd0137db98b4cb5ccbd7a50c81cc20256320",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-changefeed",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-changefeed-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:12.123Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Error handling states that an established lease resumes from its saved position and can redeliver a batch after a delegate throws. The document separately warns that returning before asynchronous work is tracked as complete can checkpoint prematurely and miss work. Its first-ever-execution exception is excluded by the stem's successful prior checkpoints."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: A new external identity on every delivery safely handles replay after a side effect succeeded. In this context: The retry creates another record instead of repeating the intended source-item/version refresh, turning legitimate redelivery into duplicate side effects. Alternative context: The output intentionally records each delivery attempt separately, rather than representing one refreshed embedding per source item/version; the documented at-least-once behavior explains why delivery-attempt logs may contain repeated events. Evidence: Error handling documents redelivery from saved lease state. It does not guarantee exactly one callback, so a per-delivery append has different semantics from a repeat-safe refresh.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "Claim: Repeat-safe external work and awaited completion protect the side-effect/checkpoint boundary. In this context: This is not incorrect here: the same item/version may be delivered again, and the delegate must not signal successful completion while required external work is unfinished. Alternative context: An at-least-once processor writes to a separate destination that cannot be atomically committed with its lease checkpoint. Evidence: The processing lifecycle updates leases only after successful delegate completion; retry and asynchronous-completion warnings require treating duplicate delivery and early return deliberately.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Returning immediately while untracked embedding writes run prevents replay or loss. In this context: The processor can checkpoint before required work finishes, so a crash can leave a checkpoint past an embedding that was never updated. Alternative context: The background work is explicitly optional and loss is acceptable. The source's missed-event warning supplies that limited boundary; no sourced context makes untracked required embedding writes reliable. Evidence: The Important warning says asynchronous delegate work can be checkpointed before completion and cause missed events, recommending synchronous processing or proper completion tracking.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "B remains technically supported and the failure sequence genuinely supports advanced troubleshooting. However, after reading SEM-020, i-007's complete record and both products' settlement/checkpoint evidence, this exact item repeats the durable-side-effect-before-failed-acknowledgement idempotency decision without a distinct API-dependent discriminator. Reject this candidate as a blocking semantic duplicate, originality 1 and total 43. This is not a false-key verdict or an accusation of copied exam material. Separate classification assessment: Authored complexity: troubleshooting; authored difficulty: advanced. The learner must reason about a concrete failure order: external side effect succeeds, delegate throws, saved checkpoint precedes the batch, then delivery repeats. Separating side effects from checkpoint commitment and tracked async completion is genuine troubleshooting. Cross-bank audit: ai200-i-007 / ai200-d-015: Reject ai200-d-015 as a blocking semantic duplicate; no changes or approvals to ai200-i-007. Both candidates place a durable external result before a failed progress acknowledgement, followed by redelivery. Both are solved by recognizing the stable source identity and avoiding repeated side effects. The Cosmos delegate-completion caveat is real, but its key does not require a distinct checkpoint API, version-sensitive behavior or deduplication implementation. Different brokers and source-item vocabulary do not make this exact exercise original.",
+      "confidenceReason": "High confidence in the actual retry/completion boundary; no promise of exactly-once callback execution or transactional atomicity across stores. Final independent decision: B remains technically supported and the failure sequence genuinely supports advanced troubleshooting. However, after reading SEM-020, i-007's complete record and both products' settlement/checkpoint evidence, this exact item repeats the durable-side-effect-before-failed-acknowledgement idempotency decision without a distinct API-dependent discriminator. Reject this candidate as a blocking semantic duplicate, originality 1 and total 43. This is not a false-key verdict or an accusation of copied exam material."
+    },
+    {
+      "questionId": "ai200-d-016",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "94b8daed3f3a8216d77880f90849b4d7277195cb5df5ed1db257f76ebf6b8dd6",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-cosmos-changefeed",
+          "url": "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-cosmos-changefeed-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:12.123Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Reading from a previous date and time and Reading from the beginning demonstrate WithStartTime for initial latest-version processing. The explicit note says changing these settings has no effect after first lease initialization; all-versions-and-deletes mode has a different start restriction. Saved progress, rather than automatic full replay, governs restarts."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "Claim: WithStartTime initializes a starting state and does not rewind initialized leases. In this context: This is not incorrect here: the deployment and leases are unchanged and already contain saved progress. Alternative context: The same .NET latest-version processor is restarted with initialized leases after an initial-position setting is edited. Evidence: The note after the .NET start-time examples explicitly says these options only set the starting point and changes have no effect after first lease initialization.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: Latest-version mode never supports a historical initial start date. In this context: The document demonstrates WithStartTime with a previous DateTime for that mode. Ignoring an edit after initialization is not a universal ban on earlier dates. Alternative context: The documented nearby restriction is all-versions-and-deletes mode, which starts now or resumes retained lease state. It does not make B's literal claim about latest-version on every deployment correct; changing the mode would rewrite its assertion. Evidence: The article contrasts latest-version custom starts with all-versions-and-deletes restrictions, disproving the absolute statement in B.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Every ordinary restart reprocesses full history before resuming saved leases. In this context: Stored progress is the resume point; full historical starting position is an explicit initialization choice, not automatic restart behavior. Alternative context: A deliberately new latest-version workload initializes its start with DateTime.MinValue.ToUniversalTime(). That documents a from-beginning workflow, not this exact automatic-every-restart claim. Evidence: Reading from the beginning gives an explicit builder setting, while the processing/error lifecycle resumes from the lease's saved progress.",
+          "sourceIds": [
+            "ai200-20260914-doc-cosmos-changefeed"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "A correctly identifies initialized lease state as taking precedence over a changed initial-start setting. Total 41: B/C's absolute claims have no valid exact favorable context and the simple rule does not earn advanced difficulty. Troubleshooting complexity itself is supported by a real restart-behavior mismatch; it is assessed separately, not failed merely because difficulty is overstated. Preserve authored labels/hash and request repair. Separate classification assessment: Authored complexity: troubleshooting; authored difficulty: advanced. The observed restart behavior conflicts with the operator's changed initial-start setting, requiring identification of stored lease state taking precedence. That is real, albeit simple, diagnosis. Complexity can be valid while advanced difficulty and absolute distractors fail separately; do not conflate those gates. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in the initialized-lease behavior and explanation; insufficient strict realism because invalid absolute alternatives make the task superficial. Final independent decision: A correctly identifies initialized lease state as taking precedence over a changed initial-start setting. Total 41: B/C's absolute claims have no valid exact favorable context and the simple rule does not earn advanced difficulty. Troubleshooting complexity itself is supported by a real restart-behavior mismatch; it is assessed separately, not failed merely because difficulty is overstated. Preserve authored labels/hash and request repair."
+    },
+    {
+      "questionId": "ai200-d-017",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "7f339657302fbfcda15b9846cfe34dab0ea5eb9e3c2cec05c2c28f4389e9539f",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/6-integrate-sdks-apps",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-database-postgresql-6-integrate-sdks-apps.json",
+          "retrievedAt": "2026-09-14T17:56:54.459Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Python integration with psycopg explicitly targets version 3, uses cur.execute with unquoted %s and a separate one-element tuple, and prohibits formatting/concatenating user input. This distinguishes Python's percent-formatting operator from the driver's parameter placeholder despite the identical %s characters."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Concatenating the external title into a quoted SQL fragment keeps it separate from SQL syntax. In this context: The apostrophe becomes part of the constructed SQL before the driver sees it; execute receives no separate bound value. Alternative context: SQL text consists of application-controlled fixed syntax/literals rather than external title data. The unit's literal SELECT statements demonstrate fixed SQL, but explicitly deny concatenation for user input. Evidence: The psycopg unit allows SQL strings but states never to concatenate user input and demonstrates the separate execute parameter argument.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: Python percent-formatting a quoted %s is equivalent to psycopg binding. In this context: Python evaluates the percent operator first, so execute receives an already interpolated SQL string, not an SQL statement plus a parameter tuple. Alternative context: Formatting entirely code-owned text can produce a literal SQL statement, but it is not driver binding. No source-supported context approves this operation for the external title or calls it parameterized. Evidence: The source explicitly distinguishes %s positional placeholders with a separate tuple from string formatting and forbids the latter for user input.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "supported",
+          "rationale": "Claim: An unquoted %s placeholder and separate single-element tuple bind title as data. In this context: This is not incorrect here: (title,) supplies one positional value, and the driver rather than Python text interpolation handles its apostrophe. Alternative context: A psycopg 3 cursor executes a query whose external predicate value is passed separately from SQL text. Evidence: The unit's cursor example uses execute('... = %s', (value,)) and explains that parameters separate SQL structure from values.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "C uses the driver placeholder with a genuine one-element tuple rather than Python formatting. Total 44; moderate difficulty and related interpolation distractors justify the deductions. Technical-implementation is supported by evaluating what reaches execute, not simply seeing code. Read d-003 and both units; the concrete parameter transports differ sufficiently to retain this pair, without granting perfect originality. Separate classification assessment: Authored complexity: technical-implementation; authored difficulty: intermediate. The same %s characters have two distinct execution paths: Python's formatting operator before execute versus a driver placeholder receiving a tuple. Evaluating what reaches execute and why the comma creates a one-element tuple is concrete code-semantics reasoning, not mere code formatting. Cross-product parameterization overlap still needs audit adjudication. Cross-bank audit: ai200-d-003 / ai200-d-017: Keep distinct, with moderate originality score 3 for both rather than treating product names alone as sufficient. I compared all three choices in each. Cosmos uses the actual @ placeholder plus a separate name/value array and distinguishes application text substitution. Psycopg requires evaluating whether %s is consumed by Python's percent operator or is sent to execute with a one-element tuple. These actual transport/execution contracts differ; a learner must know the relevant API rather than transplant syntax.",
+      "confidenceReason": "High confidence in the exact psycopg call and one-element tuple. After reading the completed audit and comparing d-003 against both official SDK units, the concrete parameter transports are distinct, while related interpolation mistakes and familiar structure still justify moderate originality and difficulty scores. Final independent decision: C uses the driver placeholder with a genuine one-element tuple rather than Python formatting. Total 44; moderate difficulty and related interpolation distractors justify the deductions. Technical-implementation is supported by evaluating what reaches execute, not simply seeing code. Read d-003 and both units; the concrete parameter transports differ sufficiently to retain this pair, without granting perfect originality."
+    },
+    {
+      "questionId": "ai200-d-018",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "c4b6ab5afdc31e6b8092d91751b9728c720f47346839ba9f13ab14e2704ede60",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/3-connect-to-postgresql",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-database-postgresql-3-connect-to-postgresql.json",
+          "retrievedAt": "2026-09-14T17:56:47.326Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Authentication methods states that PostgreSQL Entra authentication obtains a token for https://ossrdbms-aad.database.windows.net and uses that token as the password; the Python example explicitly says token.token. Native PostgreSQL passwords are a separate authentication method, and obtaining a token does not create database identity/permissions."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: A different native user's password authenticates the configured Entra database identity. In this context: It is a credential for another principal and another authentication method, not the current Entra token required for this connection. Alternative context: The application intentionally authenticates as that native PostgreSQL user through native username/password authentication, with the corresponding permissions. Evidence: The source distinguishes native username/password authentication from Entra token authentication and describes native passwords as suitable for certain legacy/development contexts.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "Claim: The issued access token's token string is supplied as the PostgreSQL password. In this context: This is not incorrect here: the server/identity are configured and the resource-scoped current token already exists, so its token string is the documented password value. Alternative context: A configured Entra principal connects to Azure Database for PostgreSQL with a current token issued for the documented PostgreSQL resource. Evidence: The numbered Entra flow says connect using the token as password, and the code example explicitly comments to use token.token.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: A managed-identity client identifier is an authentication token for the database password field. In this context: An identifier identifies the principal but does not prove token issuance; substituting it omits the access token that PostgreSQL validates. Alternative context: An identifier is used to identify the application during credential acquisition or configuration, before the Entra-issued token is presented to PostgreSQL. It is not a database password under that flow. Evidence: The source separates identity validation/token issuance from the subsequent token-as-password connection and includes managed identities among acquisition methods.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "B correctly places token.token in the PostgreSQL password field and total is 45. But scenario-based is overstated: all setup and resource conditions are established and only a documented field mapping remains to recall. Beginner difficulty is appropriate and is not the reason for exclusion. Request authored repair; no scenario-wrapper credit toward applied coverage. Separate classification assessment: Authored complexity: scenario-based; authored difficulty: beginner. Server configuration, principal, resource and current token are already established; the sole remaining task is recall that token.token goes in the password field. Those prerequisites clarify a field-mapping fact but do not create an applied scenario. Beginner difficulty is suitable, while scenario-based is overstated. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence from the exact token.token example and numbered Entra connection flow, with modest distractor depth. Final independent decision: B correctly places token.token in the PostgreSQL password field and total is 45. But scenario-based is overstated: all setup and resource conditions are established and only a documented field mapping remains to recall. Beginner difficulty is appropriate and is not the reason for exclusion. Request authored repair; no scenario-wrapper credit toward applied coverage."
+    },
+    {
+      "questionId": "ai200-d-019",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "0157f3d31f8196dec000cbb9466bbb9b244182db7d8ddb150138deaa7663008a",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/3-connect-to-postgresql",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-database-postgresql-3-connect-to-postgresql.json",
+          "retrievedAt": "2026-09-14T17:56:47.326Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "TLS/SSL configuration distinguishes require (encrypted transport), verify-ca (encryption plus trusted issuer validation) and verify-full (adds hostname matching). The unit requires trusted root certificates for verification modes and treats networking and database authentication as separate prerequisites."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "Claim: verify-full meets encryption, trusted-CA and hostname-match requirements together. In this context: This is not incorrect here: the trusted roots are available and the policy expressly requires verifying the requested hostname in addition to the issuing CA. Alternative context: The client must validate both certificate trust and server identity, not merely encrypt transport. Evidence: The mode list and production recommendation reserve hostname confirmation for verify-full, and describe CA trust prerequisites.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: verify-ca also verifies the certificate's hostname against the requested server. In this context: It supplies encryption and issuing-CA verification but omits the explicitly required hostname match. Alternative context: The policy requires an encrypted connection with certificate-chain trust but does not require the additional hostname check. Evidence: The source lists verify-ca as encryption plus trusted-CA validation and adds hostname matching only for verify-full.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: require expresses CA validation and hostname checking as well as encryption. In this context: It does not express the full certificate-identity verification contract demanded by the policy; encryption alone is insufficient. Alternative context: The stated requirement is only to enforce encrypted transport, as in the unit's basic connection example, without claiming hostname verification. Evidence: The unit's require mode/basic connection examples enforce TLS, while stronger verification modes specify additional certificate checks.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "A meets encryption, issuer trust and hostname validation; the other real modes satisfy narrower policies. Total 47. Technical-implementation is supported by comparing three independent guarantees under supplied root-certificate prerequisites; it is a configuration decision, not broad architecture. Completed audit adds no relevant blocking pair, and no claim is made that TLS grants network or user permission. Separate classification assessment: Authored complexity: technical-implementation; authored difficulty: intermediate. The learner maps three separate transport requirements to nested sslmode guarantees and rejects partial configurations. Explicit trusted roots and separate working authentication remove irrelevant failure branches; this is bounded configuration implementation rather than a broad security architecture task. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in the three-mode guarantee comparison without conflating transport protection, networking and database identity. Final independent decision: A meets encryption, issuer trust and hostname validation; the other real modes satisfy narrower policies. Total 47. Technical-implementation is supported by comparing three independent guarantees under supplied root-certificate prerequisites; it is a configuration decision, not broad architecture. Completed audit adds no relevant blocking pair, and no claim is made that TLS grants network or user permission."
+    },
+    {
+      "questionId": "ai200-d-020",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "1a2704a1d2147b2288e8562a07cc451b50eb6256b7c23b174dc8b8762d90c14d",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/4-create-manage-schemas",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-database-postgresql-4-create-manage-schemas.json",
+          "retrievedAt": "2026-09-14T17:56:49.866Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Create tables and Define relationships distinguish NOT NULL, UNIQUE and foreign-key integrity; its required-parent example explicitly uses NOT NULL REFERENCES. A composite key ensures uniqueness of the combination rather than either component alone."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines",
+          "url": "https://learn.microsoft.com/en-us/training/modules/implement-vector-search-azure-database-postgresql/6-implement-retrieval-patterns-rag-pipelines",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines.json",
+          "retrievedAt": "2026-09-14T17:57:07.032Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Separate documents and chunks demonstrates document_id/chunk_index with UNIQUE(document_id,chunk_index). That example's nullable document_id is not sufficient by itself for this question's stronger 'every chunk' requirement; the companion schema source supplies the required NOT NULL relationship."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Global position uniqueness allows different documents to reuse the same chunk position. In this context: UNIQUE(position) rejects position 1 in a second document, and an unspecified nullable foreign key would not by itself require every chunk to have a parent. Alternative context: Positions truly must be globally unique rather than scoped to a document; optional parent references are also acceptable if document_id remains nullable. Evidence: The schema unit distinguishes uniqueness of listed values from NOT NULL and foreign-key relationships. A single-column uniqueness rule has a different scope than a composite.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: A foreign key and non-null position prevent duplicate positions within a document. In this context: They do not impose uniqueness on the document/position pair; two rows can refer to the same parent and repeat the same non-null position. Alternative context: Multiple child rows may legitimately share a position and the requirements are only non-null position plus a valid parent when supplied. Evidence: NOT NULL prevents nulls and REFERENCES enforces the relationship; UNIQUE is the separate duplicate-prevention constraint.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "supported",
+          "rationale": "Claim: Required parent and position values plus composite uniqueness enforce exactly the document-scoped chunk constraints. In this context: This is not incorrect here: NOT NULL document_id plus its foreign key requires a parent, NOT NULL position forbids missing positions, and the pair permits position reuse only across different documents. Alternative context: Each chunk must belong to an existing document and position is unique within, but not across, documents. Evidence: The RAG schema demonstrates pairwise document/chunk uniqueness; the schema unit's required REFERENCES example supplies the non-null parent condition absent from the simpler RAG example.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas",
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "C combines required parent/position, referential integrity and document-scoped uniqueness. Total 46, with originality and longest-complete-option deductions. Technical-implementation is supported by rejecting both global overconstraint and insufficient uniqueness; the nullable parent in the RAG example was independently cross-checked against the schema source's NOT NULL REFERENCES pattern. Completed audit provides no additional blocking pair. Separate classification assessment: Authored complexity: technical-implementation; authored difficulty: intermediate. The learner must combine NOT NULL parent/position, referential integrity and document-scoped composite uniqueness, rejecting both overconstraint and missing constraints. The valid cross-document reuse counterexample demonstrates applied schema reasoning. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in the combined integrity rules and their scopes; the longest-complete-option cue is recorded as a realism deduction. Final independent decision: C combines required parent/position, referential integrity and document-scoped uniqueness. Total 46, with originality and longest-complete-option deductions. Technical-implementation is supported by rejecting both global overconstraint and insufficient uniqueness; the nullable parent in the RAG example was independently cross-checked against the schema source's NOT NULL REFERENCES pattern. Completed audit provides no additional blocking pair."
+    },
+    {
+      "questionId": "ai200-d-021",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "984fd60302546707ad7fbdf973695935041fd97bd7ef277526e3b572cfc1d004",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/4-create-manage-schemas",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-query-azure-database-postgresql-4-create-manage-schemas.json",
+          "retrievedAt": "2026-09-14T17:56:49.866Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Data types for AI applications defines JSONB for varying nested structures with JSON operators, BYTEA for binary objects, and TEXT/VARCHAR for character strings. The table example combines typed required fields with JSONB metadata; it does not require putting the whole schema into flexible JSON."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "contradicted",
+          "rationale": "Claim: Binary serialized metadata directly supplies the requested nested JSON-operator interface. In this context: BYTEA stores bytes; a serialized blob does not expose the metadata object through the requested JSONB field operations without an extra unmentioned transformation. Alternative context: The application needs opaque binary payloads stored alongside relational data and does not require database-side JSON-field queries. Evidence: The source recommends BYTEA for small binary objects and separately identifies JSONB's indexing and JSON-operator capabilities.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "supported",
+          "rationale": "Claim: JSONB preserves varying nested metadata in a queryable structured value. In this context: This is not incorrect here: flexible optional keys and nested objects are precisely the documented JSONB use case, while stable required fields remain typed. Alternative context: Per-record metadata varies and the application needs PostgreSQL JSON operators for its nested fields. Evidence: The JSONB type description explicitly names varying structure, nested objects/arrays, schema flexibility and JSON-operator queries.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: An application-formatted character summary preserves the nested metadata object for structured queries. In this context: A summary is a string representation chosen by the application, not the original queryable nested object required by the stem. Alternative context: The requirement is to store a displayable text summary or a length-limited character field rather than structured JSON attributes. Evidence: TEXT/VARCHAR are documented variable-length character types, with VARCHAR(n) optionally enforcing length; JSONB is documented separately for structured JSON.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "B is a sound JSONB choice and the rubric totals 46, with beginner difficulty appropriate. The scenario-based label is overstated: the stem explicitly describes JSONB's nested JSON-operator use case and contrasts opaque bytes/display text. Application nouns and already-typed columns do not transform direct type-purpose recall into applied reasoning. Hold for authored repair, preserving the original label/hash. Separate classification assessment: Authored complexity: scenario-based; authored difficulty: beginner. The stem directly describes the documented JSONB use case and explicitly asks for JSON operators against a nested object. Contrasting opaque bytes and a display summary leaves direct type-purpose recall; named tenants/timestamps and application context do not add applied reasoning. Beginner remains appropriate but scenario-based is overstated. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence in the documented storage/query interfaces with no ungrounded universal performance or schema-design claims. Final independent decision: B is a sound JSONB choice and the rubric totals 46, with beginner difficulty appropriate. The scenario-based label is overstated: the stem explicitly describes JSONB's nested JSON-operator use case and contrasts opaque bytes/display text. Application nouns and already-typed columns do not transform direct type-purpose recall into applied reasoning. Hold for authored repair, preserving the original label/hash."
+    },
+    {
+      "questionId": "ai200-d-022",
+      "authorId": "copilot-ai200-data-pass1-20260914",
+      "reviewerId": "ai200-adversary-data-a",
+      "questionFingerprint": "653620c3d884de02fd34c89ed5d80237ba32aafcf33303aa1d121a90ca4f0a4c",
+      "reviewedAt": "2026-09-14T19:44:15.361Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-postgres-pgvector",
+          "url": "https://learn.microsoft.com/en-us/azure/postgresql/extensions/how-to-optimize-performance-pgvector",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-postgres-pgvector-canonical.json",
+          "retrievedAt": "2026-09-14T18:04:13.737Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Indexing Limits explicitly states col vector without dimensions causes 'column does not have dimensions'. HNSW can be built on an empty table; ef_search changes the query candidate list, and IVFFlat is another ANN algorithm with different build/memory tradeoffs, not a repair for unspecified column dimensions."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-2-store-query-embeddings-pgvector",
+          "url": "https://learn.microsoft.com/en-us/training/modules/implement-vector-search-azure-database-postgresql/2-store-query-embeddings-pgvector",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-implement-vector-search-azure-database-postgresql-2-store-query-embeddings-pgvector.json",
+          "retrievedAt": "2026-09-14T17:56:56.615Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Design schemas for vector storage uses vector(n) with n equal to the model output length. Enable the pgvector extension establishes the extension/permission prerequisite, already given by this stem."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "A",
+          "assessment": "supported",
+          "rationale": "Claim: Define the model's fixed 768 dimensions in the vector column before index creation. In this context: This is not incorrect here: the error names missing dimensions, all incoming vectors share length 768, and the empty table avoids existing mixed-dimension conversion complications. Alternative context: A fixed-dimension embedding model feeds a dimensionless column whose ANN index creation requires an explicit vector length. Evidence: The product's Limits section names the exact dimensionless-column error, and training defines vector(n) to match model output length.",
+          "sourceIds": [
+            "ai200-20260914-doc-postgres-pgvector",
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-2-store-query-embeddings-pgvector"
+          ]
+        },
+        {
+          "choiceId": "B",
+          "assessment": "contradicted",
+          "rationale": "Claim: Increasing a query-time HNSW candidate-list parameter supplies missing schema dimensions. In this context: ef_search affects searching an existing usable HNSW index; it does not change the vector column type or repair index creation. Alternative context: A correctly dimensioned HNSW index already exists and query recall warrants considering more search candidates at higher query cost. Evidence: HNSW Index options defines ef_search during queries and illustrates connection/transaction settings separately from the dimensionality limit.",
+          "sourceIds": [
+            "ai200-20260914-doc-postgres-pgvector"
+          ]
+        },
+        {
+          "choiceId": "C",
+          "assessment": "contradicted",
+          "rationale": "Claim: Switching from HNSW to IVFFlat removes the explicit-dimension requirement. In this context: The missing-dimensions rule applies to indexing the column, not only to HNSW. Keeping the dimensionless column retains the reported cause. Alternative context: The schema is already valid and the workload prefers IVFFlat's faster builds/lower memory over HNSW's speed-recall tradeoff; that is an algorithm choice, not this schema fix. Evidence: The product distinguishes IVFFlat/HNSW tradeoffs but introduces dimensionality under the shared Indexing Limits section.",
+          "sourceIds": [
+            "ai200-20260914-doc-postgres-pgvector"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "A addresses the exact dimensionality error with vector(768); ef_search and IVFFlat selection operate at different layers. Total 46. Troubleshooting complexity is supported by diagnosing schema versus query/build alternatives under an empty-table fixed-model constraint. Completed audit provides no additional relevant blocking pair; ordinary vector dimensions are not conflated with version-specific alternative-type limits. Separate classification assessment: Authored complexity: troubleshooting; authored difficulty: intermediate. The concrete index-creation error must be assigned to the schema layer rather than query-time ef_search or algorithm selection. Empty-table and fixed model-size facts eliminate migration and mixed-vector causes. That causal diagnosis supports troubleshooting, independently of the simple correction. Cross-bank audit: The completed audit covered this exact hash and has no listed additional blocking pair for this item; no unlisted pairwise originality decision is invented.",
+      "confidenceReason": "High confidence from the exact error and vector(n) evidence, with no dependence on unreviewed alternative-type/version behavior. Final independent decision: A addresses the exact dimensionality error with vector(768); ef_search and IVFFlat selection operate at different layers. Total 46. Troubleshooting complexity is supported by diagnosing schema versus query/build alternatives under an empty-table fixed-model constraint. Completed audit provides no additional relevant blocking pair; ordinary vector dimensions are not conflated with version-specific alternative-type limits."
+    }
+  ]
+}

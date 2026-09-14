@@ -1,0 +1,1862 @@
+{
+  "schemaVersion": 1,
+  "requestId": "dungeon-ai103-review",
+  "reviews": [
+    {
+      "questionId": "ai103-001",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "1d7d848cc715561f9b975b01bab9bfd867ee52bde37dca575a883a1f6f74528f",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-agents-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\agents-overview.json",
+          "retrievedAt": "2026-09-11T19:21:00.761Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Describes GA prompt versus hosted agents, application-owned ephemeral agents, conversation/runtime responsibilities, and toolboxes. Preview optimizer and A2A features are not tested."
+        },
+        {
+          "sourceId": "ai103-toolbox-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\toolbox-overview.json",
+          "retrievedAt": "2026-09-11T19:23:14.496Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Explains central tool management, MCP-compatible consumption, version promotion, and local function distinctions. Separately labels tool search and skills as Preview; the tool-search candidate preserves that label."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Article 'Agents in Microsoft Foundry' states prompt agents are defined entirely through configuration (instructions, model, tools) and Foundry runs them with 'no code or infrastructure to manage', which is exactly what the stem requires.",
+          "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Same article: hosted agents 'bring your own code and framework, and Foundry runs it as a container'. That introduces agent logic to maintain, which the stem rules out.",
+          "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The Responses API ephemeral pattern keeps 'the agent's definition ... in your application code' rather than as a managed configured agent, so it still requires runtime code to maintain.",
+          "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Toolbox docs describe curated tool endpoints exposed via MCP; the toolbox does not itself interpret user tasks or replace the agent runtime.",
+          "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed against raw 'Agents in Microsoft Foundry' text: prompt agents run managed with no code/containers; hosted agents own runtime code; ephemeral Responses agents live in app code; toolboxes are tool endpoints, not agents.",
+      "confidenceReason": "Direct textual match to Compare-agent-types table and 'Runtime code to maintain: None' for prompt agents leaves one defensible answer."
+    },
+    {
+      "questionId": "ai103-002",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "15293c40a4ad41cd06a43e25c28cc51b98ea0bcea22c870f8a1fcc8c5f5f6095",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-sdk",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/quickstarts/get-started-code",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\sdk.json",
+          "retrievedAt": "2026-09-11T19:21:55.508Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Documents Foundry projects (new), Python Azure AI Projects 2.x, project endpoints, model deployment selection, and DefaultAzureCredential authentication. The instant-model Preview path is not tested."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Quickstart shows the model deployment name passed to responses.create(model=...), not to AIProjectClient(endpoint=...); endpoint is the project API path.",
+          "sourceIds": ["ai103-sdk"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "The quickstart-code sample constructs AIProjectClient(endpoint=FOUNDRY_PROJECT_ENDPOINT, credential=DefaultAzureCredential()) — this is the documented Projects 2.x keyless call.",
+          "sourceIds": ["ai103-sdk"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The Python sample uses DefaultAzureCredential, not a raw resource key; the article tip explicitly says 'Code uses Azure AI Projects 2.x' with az login before running.",
+          "sourceIds": ["ai103-sdk"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "The catalog URL (ai.azure.com/catalog/models) is a model-discovery surface; the project endpoint has the form services.ai.azure.com/api/projects/<project>.",
+          "sourceIds": ["ai103-sdk"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against the raw Foundry SDK quickstart sample block: AIProjectClient takes endpoint (project path) and DefaultAzureCredential for keyless auth; model name is a separate deployment argument on responses.create.",
+      "confidenceReason": "Sample code and the '# Format: https://<...>services.ai.azure.com/api/projects/...' comment eliminate every other choice unambiguously."
+    },
+    {
+      "questionId": "ai103-003",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "c8db2f626f72ff19e9ee44f479aea25915683cca15ba8db12f368ab058b68ee5",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-quota",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\quota.json",
+          "retrievedAt": "2026-09-11T19:21:00.609Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Defines quota allocation by subscription, region, model and deployment type; separates input context limits, billing tokens, estimated admission tokens, burst checks, and bounded retry guidance."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Quota article: 'Unsuccessful requests still count toward your per-minute rate limit. Continuously resending a request without backing off makes throttling worse.' Raising max_tokens also inflates the admission-time estimate.",
+          "sourceIds": ["ai103-quota"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Article separates billing tokens ('computed after all processing') from the rate-limit estimate that is calculated at admission time; using billing totals as the counter is the wrong mental model.",
+          "sourceIds": ["ai103-quota"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Quota best-practice bullet list: 'Set max_tokens to the minimum value that serves your scenario', combined with exponential backoff and honoring retry-after-ms. This answer matches the documented remediation set exactly.",
+          "sourceIds": ["ai103-quota"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Fixed-minute-boundary synchronization ignores the short-window RPM check (Azure OpenAI evaluates over 1- or 10-second intervals) and keeps the inflated estimate; the docs recommend jittered exponential backoff instead.",
+          "sourceIds": ["ai103-quota"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Cross-checked quota 'Rate limit best practices' subsections: max_tokens sizing, best_of=1, and jittered exponential backoff with retry-after-ms are the documented burst recovery pattern; retry counts against the limit.",
+      "confidenceReason": "The article explicitly labels every distractor's behaviour as counterproductive, leaving one defensible remediation."
+    },
+    {
+      "questionId": "ai103-004",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "3139a5cca08ca908c917f0cdd2d7e877017bf3fd73be7756abf2b93076bba115",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-deployment-types",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\deployment-types.json",
+          "retrievedAt": "2026-09-11T19:21:05.887Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Distinguishes data-processing boundaries, Standard pay-per-token capacity, provisioned reserved capacity, and asynchronous Batch deployments. Model/type availability must be checked."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "'Deployment types' table: GlobalProvisionedManaged data processing = 'Any Azure region', which violates the required EU data zone constraint.",
+          "sourceIds": ["ai103-deployment-types"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Data Zone Standard is 'Pay-per-token' inside the data zone; it does not provide reserved PTU capacity, so the reserved-capacity requirement is unmet.",
+          "sourceIds": ["ai103-deployment-types"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Data Zone Batch is 'Large async jobs' with a 24-hour SLA and 50% discount — not the interactive interactive pattern the stem specifies.",
+          "sourceIds": ["ai103-deployment-types"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "'Data zone + predictable throughput | Data Zone Provisioned' is the exact row in the Recommendation table; SKU DataZoneProvisionedManaged processes within the data zone with reserved PTU.",
+          "sourceIds": ["ai103-deployment-types"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against the Deployment types comparison table and the 'Choose the right deployment type' quick-recommendation table; Data Zone Provisioned uniquely combines data-zone residency with reserved throughput.",
+      "confidenceReason": "Two independent tables in the same article pin exactly one type to this pair of requirements."
+    },
+    {
+      "questionId": "ai103-005",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "bb84f736bd82e4e984e09f3855959072a5aee4202d9c2382256b1a6c2218e2cd",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-prompt-shields",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/content-filter-prompt-shields",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\prompt-shields.json",
+          "retrievedAt": "2026-09-11T19:22:01.283Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Describes user and third-party document attacks, input/tool-response intervention points, and detected versus filtered annotations. Spotlighting is separately Preview and limited to Chat Completions."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Prompt Shields article: annotations return 'detected (true/false) and filtered (true/false) values'; portal-configured action is 'annotate or block', so switching the assigned guardrail to block is the prevention step.",
+          "sourceIds": ["ai103-prompt-shields"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Article shows detected and filtered as independent booleans; a detected-but-not-filtered event is meaningful (attack was found, action was annotate).",
+          "sourceIds": ["ai103-prompt-shields"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "filtered=false means the request was not filtered/blocked; annotate does not block requests, so this option reverses the documented semantics.",
+          "sourceIds": ["ai103-prompt-shields"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "The pair of booleans reports detection and enforcement; the article assigns attack-source classification to the shield type (user prompt vs document), not to these fields.",
+          "sourceIds": ["ai103-prompt-shields"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed with raw prompt-shields example response body and Configure section: choose intervention points AND action (annotate/block); annotate logs, block enforces.",
+      "confidenceReason": "The article's Troubleshooting section explicitly describes the annotate→block toggle as the false-positive-to-enforcement pathway."
+    },
+    {
+      "questionId": "ai103-006",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "542e0f107436cad5249282027179bcc426f70a9246a3796d89c417297fc8a8e3",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-prompt-shields",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/content-filter-prompt-shields",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\prompt-shields.json",
+          "retrievedAt": "2026-09-11T19:22:01.283Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Describes user and third-party document attacks, input/tool-response intervention points, and detected versus filtered annotations. Spotlighting is separately Preview and limited to Chat Completions."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "User-prompt scanning targets user input, not third-party tool payloads. The article's attack table clearly assigns 'Third-party content' to Document attacks.",
+          "sourceIds": ["ai103-prompt-shields"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Article: 'Document attacks — Hidden instructions embedded in third-party content ... Scanned at the user input and tool response intervention points.' Configuring a document-attack guardrail at tool response and assigning it to the agent is the documented fix.",
+          "sourceIds": ["ai103-prompt-shields"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The user's own question being benign is irrelevant: document attacks can arrive via retrieved content regardless of the user prompt's intent, per the doc's definition.",
+          "sourceIds": ["ai103-prompt-shields"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Spotlighting section explicitly states it is 'only available for models used via the Chat Completions API', so a Responses-API-only solution based on Spotlighting is documented not to work.",
+          "sourceIds": ["ai103-prompt-shields"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against the 'Types of input attacks' table, the 'Prompt Shields for documents' section, and the Spotlighting cost-and-limitations subsection: tool-response document scanning is the correct intervention path; Spotlighting is Chat-Completions only.",
+      "confidenceReason": "Two-paragraph direct match for the correct answer plus an explicit Chat-Completions limitation for the tempting Spotlighting distractor."
+    },
+    {
+      "questionId": "ai103-007",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "dbf5ebf98ae925f832d322daa9171919c2edc7c618a1f25272d23f2e6481cbbe",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-toolbox-hosted",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/use-toolbox-hosted-agent",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\toolbox-hosted.json",
+          "retrievedAt": "2026-09-11T19:23:13.960Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Documents default-following versus version-specific toolbox endpoints and the direct consuming runtime responsibility to enforce every required tool approval before invocation."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "'Use a toolbox with a hosted agent' explicitly says 'The toolbox MCP endpoint doesn't block tools/call when require_approval is always' and 'A system-prompt instruction alone doesn't enforce approval.'",
+          "sourceIds": ["ai103-toolbox-hosted"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Same article: 'Show the proposed tool name and arguments to the user, wait for an explicit approval ... Repeat this process for every call.' Session-level approval violates the per-call rule.",
+          "sourceIds": ["ai103-toolbox-hosted"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The 'always' row defines exactly this design: inspect metadata, display proposed call, suspend for a decision, then invoke only the approved pending call.",
+          "sourceIds": ["ai103-toolbox-hosted"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Switching to 'never' removes the approval prompt entirely; a post-hoc explanation from the agent isn't the required pre-invocation approval.",
+          "sourceIds": ["ai103-toolbox-hosted"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed via the require_approval table and the 'Use require_approval: never unless your runtime can pause the pending tool call, collect the user's decision, and resume or reject that exact call.' guidance.",
+      "confidenceReason": "Text explicitly enumerates every step of the correct design and identifies each other option as non-conformant."
+    },
+    {
+      "questionId": "ai103-008",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "a7e5998e3d90dcd0c342ecd1a5744227339f50b17e932a4925d65570246f182c",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-quota",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\quota.json",
+          "retrievedAt": "2026-09-11T19:21:00.609Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Defines quota allocation by subscription, region, model and deployment type; separates input context limits, billing tokens, estimated admission tokens, burst checks, and bounded retry guidance."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Quota Note: '... deployments in one or multiple Azure OpenAI resources as long as their TPM adds up to less than <total>'. Additional resources share the pool; they don't double it.",
+          "sourceIds": ["ai103-quota"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Article: 'Quota is assigned to your subscription on a per-region, per-model, per-deployment-type basis' — not per user.",
+          "sourceIds": ["ai103-quota"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Article Note: 'Quota Tokens-Per-Minute (TPM) allocation isn't related to the maximum input token limit of a model.'",
+          "sourceIds": ["ai103-quota"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Exact wording: 'Quota is assigned to your subscription on a per-region, per-model, per-deployment-type basis'. Two resources in the same region + model + deployment type share that pool.",
+          "sourceIds": ["ai103-quota"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed from the 'Introduction to quota' paragraph and the per-region distribution Note; both explicitly rule out per-user, per-resource, and TPM=context-length claims.",
+      "confidenceReason": "Single-sentence direct quote from the quota article covers the correct answer and invalidates each distractor."
+    },
+    {
+      "questionId": "ai103-009",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "bc95b7cbba44910451c825bb1dda7c241f2bb3d6daea1d86d8caf85782eb16b4",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-function-calling",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\function-calling.json",
+          "retrievedAt": "2026-09-11T19:24:41.646Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Defines function-tool name/description/parameters, client-side execution, matching function_call_output call IDs, and conversation reuse in the current prompt-agent example."
+        },
+        {
+          "sourceId": "ai103-toolbox-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\toolbox-overview.json",
+          "retrievedAt": "2026-09-11T19:23:14.496Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Explains central tool management, MCP-compatible consumption, version promotion, and local function distinctions. Separately labels tool search and skills as Preview; the tool-search candidate preserves that label."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Function-calling article: 'Define a function with its name, parameters, and description' and step 1 'Define function tools — Describe each function's name, parameters, and purpose.'",
+          "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "function_call_output is a runtime result item ('type: function_call_output, call_id, output'), not a callable interface declaration.",
+          "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The article lists 'Define function tools' as a distinct step from prompt instructions; the sample registers a FunctionTool schema alongside instructions.",
+          "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Toolbox overview table: 'Function calling | ❌ No (client-side execution) | ✅ Yes' in Direct tool integration — you cannot declare a callable local function inside a toolbox.",
+          "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Cross-checked function-calling FunctionTool example (name/parameters/description/strict) and the toolbox-overview supported-tools table that excludes function calling from toolbox-side integration.",
+      "confidenceReason": "Two direct citations from separate articles converge on the same defensible answer."
+    },
+    {
+      "questionId": "ai103-010",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "4d56c7e7d5a265baf8d987d028d0c46b632b43650a8a7c55ea020b27be13d3ec",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-function-calling",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\function-calling.json",
+          "retrievedAt": "2026-09-11T19:24:41.646Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Defines function-tool name/description/parameters, client-side execution, matching function_call_output call IDs, and conversation reuse in the current prompt-agent example."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The function schema declares the callable interface; overwriting it with a result does not deliver output back to the model.",
+          "sourceIds": ["ai103-function-calling"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Sample: FunctionCallOutput(type='function_call_output', call_id=item.call_id, output=json.dumps({...})) submitted via openai.responses.create(input=input_list, conversation=conversation.id, ...) — this is the documented continuation.",
+          "sourceIds": ["ai103-function-calling"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "function_call is the request item type; using a new call_id would fail to correlate with the pending invocation.",
+          "sourceIds": ["ai103-function-calling"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "The article shows the *application* executes the lookup and returns its result; the model never runs the local function itself in this pattern.",
+          "sourceIds": ["ai103-function-calling"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against the prompt-agents Python sample: correlation via call_id, submission via function_call_output on the same conversation.",
+      "confidenceReason": "Direct code block quoted in the article names the exact item type and correlation key."
+    },
+    {
+      "questionId": "ai103-011",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "33f546d551e6763708fbae787c5fdb447d08e044b74fc72fa03fbbc02eb03b45",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-function-calling",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\function-calling.json",
+          "retrievedAt": "2026-09-11T19:24:41.646Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Defines function-tool name/description/parameters, client-side execution, matching function_call_output call IDs, and conversation reuse in the current prompt-agent example."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Article's clean-up step uses agent versioning separately; version numbers do not carry conversational state.",
+          "sourceIds": ["ai103-function-calling"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Function names identify tools; the sample passes conversation state through the conversation argument, not tool names.",
+          "sourceIds": ["ai103-function-calling"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Sample creates conversation = openai.conversations.create() once and reuses conversation.id in both responses.create calls (initial + function_call_output submission). This matches the correct answer.",
+          "sourceIds": ["ai103-function-calling"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Both responses.create calls also pass agent_reference; reusing the agent name does not carry prior tool results, because that's the definition selector, not the conversation.",
+          "sourceIds": ["ai103-function-calling"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed from the Python sample: the same conversation.id is used for the initial user turn and the follow-up function_call_output submission, distinct from the agent_reference/agent_name argument.",
+      "confidenceReason": "Article explicitly separates agent identity from conversation state in the sample."
+    },
+    {
+      "questionId": "ai103-012",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "78460994c7f5dfb863229e732c089889adb44c87f8804088558939c27cf757f0",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-mcp-tools",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\mcp-tools.json",
+          "retrievedAt": "2026-09-11T19:24:45.462Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Documents managed remote MCP integration, authenticated project connections, allowed_tools restrictions, approval settings, and approval-request/previous-response correlation."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "'never' removes the approval requirement; system-prompt instructions cannot enforce MCP allowlisting or block delete_catalog exposure.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Successful connection authenticates access; it is not equivalent to per-call approval, which the article requires via mcp_approval_response for every invocation.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Leaving delete_catalog exposed contradicts the allowed_tools guidance; the continuation uses approval_request_id, not server name.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Article's continuation code passes approve, approval_request_id=item.id, and the follow-up response uses previous_response_id=response.id — this matches the 'return each decision using its approval-request ID and original response ID' requirement, combined with allowed_tools for the subset.",
+          "sourceIds": ["ai103-mcp-tools"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against the Python MCP sample: McpApprovalResponse populated with approval_request_id, and the follow-up openai.responses.create call using previous_response_id=response.id; best-practices bullet 'Use an allow list of tools by using allowed_tools.'",
+      "confidenceReason": "Exact three-argument continuation (allowed_tools + approval + previous_response_id) appears only in one answer choice."
+    },
+    {
+      "questionId": "ai103-013",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "913d25067f6532fa66b7228278609629dce809d583a0f6f98da1ee3513bab9dd",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-rag-evaluators",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\rag-evaluators.json",
+          "retrievedAt": "2026-09-11T19:22:00.707Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Distinguishes standard Groundedness, Relevance, Retrieval, and Document Retrieval; explains qrels, NDCG, Fidelity, and missing-judgment Holes. Preview evaluator variants are not proposed as the tested standard evaluators."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Article: 'Groundedness — Measures how well the generated response aligns with the given context without fabricating content (precision aspect).' Exactly matches 'claims not supported by that supplied context'.",
+          "sourceIds": ["ai103-rag-evaluators"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Relevance requires query+response and 'assess how well the RAG response addresses the query'; it does not target fabrication against context.",
+          "sourceIds": ["ai103-rag-evaluators"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Retrieval requires query+context and rates retrieved chunk relevance to the query, not the response's consistency with context.",
+          "sourceIds": ["ai103-rag-evaluators"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Document Retrieval measures search quality vs relevance labels (qrels); the scenario has no ground-truth labels and asks about generated claims.",
+          "sourceIds": ["ai103-rag-evaluators"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Cross-checked the RAG evaluators table's 'Purpose' cells and 'Required inputs' columns; only Groundedness matches response-vs-context fabrication.",
+      "confidenceReason": "The article uses the word 'fabrication' in the Groundedness row and nowhere else."
+    },
+    {
+      "questionId": "ai103-014",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "5f687abaedbbb58303353911e40b9ba2a90dd7c6a3bd7e5afc54a09d03ca6522",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-rag-evaluators",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\rag-evaluators.json",
+          "retrievedAt": "2026-09-11T19:22:00.707Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Distinguishes standard Groundedness, Relevance, Retrieval, and Document Retrieval; explains qrels, NDCG, Fidelity, and missing-judgment Holes. Preview evaluator variants are not proposed as the tested standard evaluators."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Groundedness assesses generated-response consistency, not retrieval coverage; and 'treat unjudged as irrelevant' contradicts Holes' purpose ('Number of documents with missing query relevance judgments').",
+          "sourceIds": ["ai103-rag-evaluators"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Article recommends Document Retrieval for parameter-sweep tuning with qrels; the Holes metric surfaces missing labels; final-response quality is measured via separate system evaluators. This is exactly the plan.",
+          "sourceIds": ["ai103-rag-evaluators"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Relevance is query/response with an LLM judge; NDCG is a Document Retrieval metric computed against relevance labels — the two are not interchangeable.",
+          "sourceIds": ["ai103-rag-evaluators"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Fidelity is 'How well the top n retrieved chunks reflect ... the known good documents' — quantity alone is not relevance.",
+          "sourceIds": ["ai103-rag-evaluators"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified from the 'Document retrieval' section metrics table (Fidelity/NDCG/XDCG/Max Relevance/Holes) and the parameter-sweep guidance; system evaluation section keeps response quality separate.",
+      "confidenceReason": "The article explicitly names Holes as label-sanity, decoupling it from irrelevance."
+    },
+    {
+      "questionId": "ai103-015",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "1709d1045d1333f4aeaad922738ecd55906e50c5df8eed07ca26bf8588107b73",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-tracing",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\tracing.json",
+          "retrievedAt": "2026-09-11T19:23:29.718Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Documents GA tracing for prompt and hosted agents, timed nested spans, evaluation-run correlation, and removing sensitive inputs, tool data, and credentials before telemetry export."
+        },
+        {
+          "sourceId": "ai103-rag-evaluators",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\rag-evaluators.json",
+          "retrievedAt": "2026-09-11T19:22:00.707Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Distinguishes standard Groundedness, Relevance, Retrieval, and Document Retrieval; explains qrels, NDCG, Fidelity, and missing-judgment Holes. Preview evaluator variants are not proposed as the tested standard evaluators."
+        },
+        {
+          "sourceId": "ai103-quota",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\quota.json",
+          "retrievedAt": "2026-09-11T19:21:00.609Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Defines quota allocation by subscription, region, model and deployment type; separates input context limits, billing tokens, estimated admission tokens, burst checks, and bounded retry guidance."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Groundedness scores response consistency (RAG evaluators article); it does not expose per-operation start/end times.",
+          "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Final text and model identity omit intermediate operations that tracing surfaces.",
+          "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Tracing article: 'Spans are the building blocks of traces, representing single operations within a trace. Each span captures start and end times, attributes, and can be nested.' This isolates the retrieval tool and its downstream call.",
+          "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Quota TPM controls throughput; it is unrelated to per-request nested operation timing.",
+          "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against tracing 'Trace key concepts' table (Spans + nested spans), RAG evaluators (Groundedness scope), and quota (TPM meaning) — each cited source contradicts the wrong choice it supports.",
+      "confidenceReason": "Only spans-with-nesting match the stem's isolation requirement across three sources."
+    },
+    {
+      "questionId": "ai103-016",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "7778e580f43967b7e84f2b65ea90f6800c2fd16fa0c1bc1b58262435069af930",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-toolbox-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\toolbox-overview.json",
+          "retrievedAt": "2026-09-11T19:23:14.496Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Explains central tool management, MCP-compatible consumption, version promotion, and local function distinctions. Separately labels tool search and skills as Preview; the tool-search candidate preserves that label."
+        },
+        {
+          "sourceId": "ai103-toolbox-hosted",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/use-toolbox-hosted-agent",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\toolbox-hosted.json",
+          "retrievedAt": "2026-09-11T19:23:13.960Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Documents default-following versus version-specific toolbox endpoints and the direct consuming runtime responsibility to enforce every required tool approval before invocation."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Prompt edits do not update centrally managed toolbox tool definitions or default version.",
+          "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Duplicating tool definitions per agent defeats the centralization the toolbox is designed to provide.",
+          "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "'A version-specific developer endpoint ... test an immutable version' — a pinned endpoint doesn't follow default_version promotions.",
+          "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "'When you promote another toolbox version to default, an agent that uses this endpoint gets the new version without an endpoint change or redeployment.' Exactly matches the stem's consumer endpoint.",
+          "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed against 'Choose the toolbox endpoint' and toolbox-overview versioning guarantee; consumer endpoint follows default, developer endpoint pins to a version.",
+      "confidenceReason": "Two article passages state the same versioning contract that only answer d honors."
+    },
+    {
+      "questionId": "ai103-017",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "945822c08612f0c9ebf1c01b6beb9a8cb4891e5c481d15d96a7c7c1c6f445e57",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-toolbox-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\toolbox-overview.json",
+          "retrievedAt": "2026-09-11T19:23:14.496Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Explains central tool management, MCP-compatible consumption, version promotion, and local function distinctions. Separately labels tool search and skills as Preview; the tool-search candidate preserves that label."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Toolbox overview: tool search (preview) 'hides tools by default and exposes only two meta-tools: tool_search ... call_tool ... Pin critical tools so they're always available.' Exact match.",
+          "sourceIds": ["ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The article identifies tool definitions as input tokens; reducing a response-token limit doesn't reduce tool-definition input consumption.",
+          "sourceIds": ["ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Tool search deliberately exposes discovery and invocation meta-tools; removing both prevents the selective-access workflow.",
+          "sourceIds": ["ai103-toolbox-overview"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Toolbox versioning manages tool releases; without changing tool surfacing, it doesn't reduce input context use.",
+          "sourceIds": ["ai103-toolbox-overview"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified via the 'Tool search (preview)' subsection and the supported-tools table showing Tool search is Toolbox-only. Preview labeling preserved.",
+      "confidenceReason": "Bullet list in the article names both meta-tools and the pinning capability that answer a describes."
+    },
+    {
+      "questionId": "ai103-018",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "f29be5fec7e0e47ad2b72b3e9f52ab2c9a47b674ceced5e619255241222a2efa",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-tracing",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\tracing.json",
+          "retrievedAt": "2026-09-11T19:23:29.718Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Documents GA tracing for prompt and hosted agents, timed nested spans, evaluation-run correlation, and removing sensitive inputs, tool data, and credentials before telemetry export."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Retention is applied after ingestion; it does not prevent sensitive data from entering telemetry, contradicting the stated policy.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Article: 'Redact or minimize personal data ... before it appears in telemetry.' Masking only the final answer still exposes prompts and tool arguments/results.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Tracing best-practices bullets exactly: 'Redact sensitive content' before export, 'Correlate evaluation run IDs' to link with evaluation runs, and keep spans for latency analysis.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "'Don't store secrets, credentials, or tokens in prompts, tool arguments, or span attributes' — and disabling all spans loses the nested timing needed for latency isolation.",
+          "sourceIds": ["ai103-tracing"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against tracing article Best-practices and Security-and-privacy sections; both mandate pre-export redaction and retention-of-timings-only for the sensitive path.",
+      "confidenceReason": "Article uses the phrase 'before they reach telemetry' explicitly for redaction."
+    },
+    {
+      "questionId": "ai103-019",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "48e54153fd5b97a342a59c7ee1847febf049b24b245fefe01cd395d70913add9",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-image-generation",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/dall-e",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\image-generation.json",
+          "retrievedAt": "2026-09-11T19:21:55.685Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Documents GPT-Image-2 as GA with image editing; edit masks use PNG, matching dimensions, and transparent target pixels. Older image-model preview statuses and DALL-E retirement are distinguished."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Article Mask section: 'The mask must be a PNG file' — JPEG darkness is not the documented representation.",
+          "sourceIds": ["ai103-image-generation"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Mask section: 'defines the area of the image that you want the model to edit, using fully transparent pixels (alpha of zero) ... same dimensions as the input image.' This matches exactly.",
+          "sourceIds": ["ai103-image-generation"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Dimensions must match the input image and the target area uses alpha zero, not opaque pixels.",
+          "sourceIds": ["ai103-image-generation"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Mask parameter takes the image input representation; a coordinate string is not the documented mask image.",
+          "sourceIds": ["ai103-image-generation"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against the image-generation Mask subsection under Image Edit API; explicit PNG + same dimensions + fully transparent pixels wording.",
+      "confidenceReason": "Article lists three concrete mask requirements that eliminate every other choice."
+    },
+    {
+      "questionId": "ai103-020",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "775bdb504f49a126e17117ad829f2ef255ac5d0cc96722853fa8e0060616f5a2",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-vision-detail",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/gpt-with-vision",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\vision-detail.json",
+          "retrievedAt": "2026-09-11T19:24:51.018Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Explains Chat Completions image detail low, high, and auto: reduced-resolution versus segmented high-resolution processing and their token/detail tradeoffs."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Reverses the documented tradeoff: high activates high-res segment processing and low omits that mode.",
+          "sourceIds": ["ai103-vision-detail"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "'low setting: the model doesn't activate the high-res mode, instead processes a lower resolution 512x512 version' — contradicts 'same high-resolution path'.",
+          "sourceIds": ["ai103-vision-detail"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "'auto setting: The model decides between low or high based on the size of the image input' — it does not force high.",
+          "sourceIds": ["ai103-vision-detail"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "low is for scenarios where fine detail isn't crucial (quicker, reduced tokens); high is 'more detailed interpretation' at higher token cost — exactly matches.",
+          "sourceIds": ["ai103-vision-detail"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed via the 'Configure image detail level' section listing all three values with their token/detail semantics.",
+      "confidenceReason": "Article's per-value bullet list gives explicit descriptions that only answer d reflects."
+    },
+    {
+      "questionId": "ai103-021",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "0e79fc0cda37d00b5b338a9980e5476bb47d720526ba44af30b61848ec3b4e72",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-video",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\video.json",
+          "retrievedAt": "2026-09-11T19:21:00.861Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "API 2026-06-01-preview distinguishes content extraction, shot detection, custom field schemas, and semantic segmentation; documents approximate 1 FPS sampling and resized frames."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Video article Segmentation-mode section: 'Custom segmentation – enableSegment : true. You describe the logic in natural language and the model creates segments to match. Set contentCategories with a string describing how you'd like the video to be segmented.' Combined with fieldSchema for the brand field, this is exactly the documented design.",
+          "sourceIds": ["ai103-video"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "'Whole-video – enableSegment : false. The service treats the entire video file as a single segment' — you'd get one segment, not per-story segments.",
+          "sourceIds": ["ai103-video"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "cameraShotTimesMs is a content-extraction shot-boundary output; the stem states camera cuts do not match story boundaries, so this isn't a story-segmentation rule.",
+          "sourceIds": ["ai103-video"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Transcription converts audio to text; custom brand metadata requires its own fieldSchema field.",
+          "sourceIds": ["ai103-video"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed against 'Segmentation mode' and 'Custom fields' sections plus the doc's example JSON with contentCategories.news-story and analyzerId.",
+      "confidenceReason": "Article's own worked example ('Break a news broadcast up into stories') mirrors this question."
+    },
+    {
+      "questionId": "ai103-022",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "14cb84fd03d197e5095a1a1fbecb2e61e0038a5d9cb96893a1fb320a40006c3d",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-video",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\video.json",
+          "retrievedAt": "2026-09-11T19:21:00.861Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "API 2026-06-01-preview distinguishes content extraction, shot detection, custom field schemas, and semantic segmentation; documents approximate 1 FPS sampling and resized frames."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Article Technical constraints: 'Frame sampling (~ 1 FPS)' and 'Frame resolution (512 × 512 px): Sampled frames are resized' — original resolution is not retained.",
+          "sourceIds": ["ai103-video"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Custom field descriptions guide extraction; nothing in the doc says they override sampling or resizing constraints.",
+          "sourceIds": ["ai103-video"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "'Rapid motions or single-frame events might be missed'; 'Small text or distant objects can be lost.' Exact match for 'conclusion is unsupported'.",
+          "sourceIds": ["ai103-video"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "enableSegment=true toggles segmentation; it does not change frame sampling or resizing described in Technical constraints.",
+          "sourceIds": ["ai103-video"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against Technical constraints section which explicitly lists ~1 FPS sampling and 512x512 resize with the missed-events warning.",
+      "confidenceReason": "Article warns 'might be missed' in the same paragraph the stem alludes to."
+    },
+    {
+      "questionId": "ai103-023",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "4b2ebf02445c21b10522c25f4fe94e14a5c2aba1817a91f854c99c3b382fef5a",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-sentiment",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\sentiment.json",
+          "retrievedAt": "2026-09-11T19:21:09.199Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Explains document/sentence sentiment and aspect-based opinion mining. Announces retirement on March 31, 2029 and recommends Foundry for new projects; the candidate covers an existing integration."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Document-level sentiment is the aggregated label; it does not attach opinions to specific product aspects like screen or battery.",
+          "sourceIds": ["ai103-sentiment"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Article: 'Opinion mining is a feature of sentiment analysis, also known as aspect-based sentiment analysis in Natural Language Processing (NLP). This feature provides more granular information about the opinions related to words (such as the attributes of products or services) in text.' Exact match.",
+          "sourceIds": ["ai103-sentiment"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Sentence-level scores are per-sentence sentiment, not per-aspect opinion associations.",
+          "sourceIds": ["ai103-sentiment"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Applying one document-level label discards the distinct opinions per aspect the stem needs.",
+          "sourceIds": ["ai103-sentiment"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Confirmed against Sentiment analysis and Opinion mining sections; retirement note (March 31, 2029) preserved in candidate explanation.",
+      "confidenceReason": "Article names 'aspect-based sentiment analysis' only under Opinion mining."
+    },
+    {
+      "questionId": "ai103-024",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "5e36a5f568d85da2715949d5e8f50697bf8e942e2f3bee53fbb6ed87f3cddfdb",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-pii",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/how-to/redact-text-pii",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\pii.json",
+          "retrievedAt": "2026-09-11T19:23:23.494Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Documents the tested 2025-11-15-preview redaction policies: characterMask preserves length/offsets, entityMask substitutes labels, syntheticReplacement substitutes values, and noMask omits redactedText."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "entityMask policy 'enables you to mask the detected PII entity text its corresponding entity type' (e.g., [PERSON_1]) — labels replace text and change offsets.",
+          "sourceIds": ["ai103-pii"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "syntheticReplacement substitutes replacement values (e.g., a different name), not a length-preserving mask.",
+          "sourceIds": ["ai103-pii"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "noMask 'enables you to return the response without including the redactedText field', so there's no masked overlay text at all.",
+          "sourceIds": ["ai103-pii"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "characterMask policy 'enables you to mask redactedText using a specified character (for example ***) while preserving the length and offset of the original text.' Exact match.",
+          "sourceIds": ["ai103-pii"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified via PII 2025-11-15-preview redactionPolicies enumeration; only characterMask keeps length and offsets.",
+      "confidenceReason": "Article uses exact phrase 'preserving the length and offset' for characterMask only."
+    },
+    {
+      "questionId": "ai103-025",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "a3dfa60f18050409d36b984113153137c87862a102766841c52e8166c702b059",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-speech-lid",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-identification",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\speech-lid.json",
+          "retrievedAt": "2026-09-11T19:22:06.994Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Distinguishes recognition mode from at-start/continuous language identification, requires one locale per base language, and limits continuous identification to between-sentence language changes."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Article: 'The SpeechServiceConnection_LanguageIdMode property ... Continuous for continuous LID' and 'Continuous LID is only supported with continuous recognition' — setting LanguageIdMode=Continuous while retaining continuous recognition is the documented fix.",
+          "sourceIds": ["ai103-speech-lid"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "'Recognize once with At-start LID. Continuous LID isn't supported for recognize once' — switching to recognize-once breaks the requirement.",
+          "sourceIds": ["ai103-speech-lid"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Article explicitly warns 'Don't include multiple locales for the same language, for example, en-US and en-GB.'",
+          "sourceIds": ["ai103-speech-lid"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Article: 'Without it, the Speech service defaults to at-start LID.' Continuous recognition doesn't imply continuous LID.",
+          "sourceIds": ["ai103-speech-lid"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified via the 'Recognize once or continuous' section — LID mode is a separate property from recognition mode; base-language rule holds.",
+      "confidenceReason": "Two-property separation is stated verbatim in the article."
+    },
+    {
+      "questionId": "ai103-026",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "39331f0f6e310805b28f1262266803e7b86826a92bde1e15733afadf03419a1d",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-translation",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/translator/text-translation/how-to/use-dynamic-dictionary",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\translation.json",
+          "retrievedAt": "2026-09-11T19:24:45.361Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Defines dynamic dictionary term markup, compound/proper/product-name scope, explicit From language, and a language pair containing English."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Doc: dynamic dictionary 'is safe only for compound nouns like proper names and product names' — arbitrary complete sentences fall outside that scope, and autodetect is disallowed.",
+          "sourceIds": ["ai103-translation"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "'The From and To languages must include English and another supported language' — removing English breaks the requirement.",
+          "sourceIds": ["ai103-translation"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "'You must include the From parameter in your API translation request instead of using the autodetect feature' plus keep the mstrans:dictionary markup — this is the exact remediation set.",
+          "sourceIds": ["ai103-translation"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "The syntax section shows the custom translation is provided via the dictionary markup; the target-language argument alone doesn't carry it.",
+          "sourceIds": ["ai103-translation"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against Requirements list and Syntax section; two constraints (explicit From, English-inclusive pair) plus safe scope of compound nouns.",
+      "confidenceReason": "Article's requirements list identifies both changes only answer c makes."
+    },
+    {
+      "questionId": "ai103-027",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "cfd1da79afa9b75927c5489e9f51332a064e5ddfa602864fd130406398b74f0c",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-semantic-ranking",
+          "url": "https://learn.microsoft.com/en-us/azure/search/semantic-search-overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\semantic-ranking.json",
+          "retrievedAt": "2026-09-11T19:21:00.292Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Describes query-side reranking of existing candidates and extractive verbatim captions/answers; semantic ranking does not synthesize missing answers or supply tenant filtering."
+        },
+        {
+          "sourceId": "ai103-hybrid-query",
+          "url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\hybrid-query.json",
+          "retrievedAt": "2026-09-11T19:21:04.878Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Describes parallel keyword/vector retrieval, RRF fusion, vector k versus final top. Separately documents Preview filterOverride fully replacing global filters, including security trimming."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Article: 'Captions and answers are always verbatim text from your index. There's no generative AI model in this workflow that creates or composes new content.' No general-knowledge generation occurs.",
+          "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Article: 'semantic ranker can't create new information or strings. The language models extract captions and answers verbatim from your content, so if the results don't include answer-like text, they won't produce one.' Exact match.",
+          "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Semantic answers are a query-response substructure, not an ingestion pipeline rewrite.",
+          "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Vector k is the vector-retrieval candidate count in hybrid queries; it does not create sentences.",
+          "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Cross-checked semantic-ranking overview + capabilities/limitations and the hybrid-query article's k-vs-top wording; extractive-only claim is stated directly.",
+      "confidenceReason": "The word 'verbatim' appears twice in the article, unique to semantic answers."
+    },
+    {
+      "questionId": "ai103-028",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "aa15cd6bd17133649c8c784044862c8853494d648c3298967c3c1be3e5e77322",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-hybrid-query",
+          "url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\hybrid-query.json",
+          "retrievedAt": "2026-09-11T19:21:04.878Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Describes parallel keyword/vector retrieval, RRF fusion, vector k versus final top. Separately documents Preview filterOverride fully replacing global filters, including security trimming."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Article: hybrid retrieval runs 'in parallel', not as keyword-failure fallback; k controls vector neighbors, not final response size.",
+          "sourceIds": ["ai103-hybrid-query"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "top controls the returned response size ('top in the 10 to 20 range' in the Balanced hybrid recommendation); vector neighbors come from k.",
+          "sourceIds": ["ai103-hybrid-query"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Merge uses Reciprocal Rank Fusion (RRF) over ranked lists, not raw score addition.",
+          "sourceIds": ["ai103-hybrid-query"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Article: 'Both queries execute in parallel. The results are merged and reordered by new search scores, using Reciprocal Rank Fusion (RRF).' k controls vector contribution; top controls returned size.",
+          "sourceIds": ["ai103-hybrid-query"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against the introduction paragraph and the Workable-hybrid-patterns bullets ('Balanced hybrid (default): Start with k in the 30 to 50 range, top in the 10 to 20 range').",
+      "confidenceReason": "Article names RRF and separates k/top responsibilities in adjacent paragraphs."
+    },
+    {
+      "questionId": "ai103-029",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "2b385fb7f12f1a2dc1345d3e210cacaa2d2572452bc7cecd6acc675c8e4fa2d7",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-hybrid-query",
+          "url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\hybrid-query.json",
+          "retrievedAt": "2026-09-11T19:21:04.878Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Describes parallel keyword/vector retrieval, RRF fusion, vector k versus final top. Separately documents Preview filterOverride fully replacing global filters, including security trimming."
+        },
+        {
+          "sourceId": "ai103-semantic-ranking",
+          "url": "https://learn.microsoft.com/en-us/azure/search/semantic-search-overview",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\semantic-ranking.json",
+          "retrievedAt": "2026-09-11T19:21:00.292Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "Describes query-side reranking of existing candidates and extractive verbatim captions/answers; semantic ranking does not synthesize missing answers or supply tenant filtering."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Article: 'you must explicitly include these filters in both the top-level filter and in each vector-level filter to ensure security and other constraints are consistently enforced.' Exactly this remediation.",
+          "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Article explicitly says the targeted filter 'fully overrides the global filter, including any filters used for security trimming' — not additive.",
+          "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Semantic ranking (semantic-ranker article) reranks existing candidates; it doesn't supply the omitted tenant filter.",
+          "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "top controls result count, not tenant restriction; unauthorized candidates remain eligible.",
+          "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified against the 'Hybrid search with filters targeting vector subqueries (preview)' section and REST API version tag; correction requires per-vector filter inclusion.",
+      "confidenceReason": "Article uses the exact phrase 'fully overrides the global filter, including any filters used for security trimming'."
+    },
+    {
+      "questionId": "ai103-030",
+      "authorId": "dungeon-author-ai103",
+      "reviewerId": "dungeon-verify-ai103",
+      "questionFingerprint": "84fc201020fc2adcbf7fa49c2297c1f83d9277150a8d03082acdb4b35554f3b4",
+      "reviewedAt": "2026-09-11T20:11:23.540Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-analyzer-quality",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/analyzer-improvement",
+          "evidencePath": ".grounding\\dungeon\\ai-103\\analyzer-quality.json",
+          "retrievedAt": "2026-09-11T19:24:41.454Z",
+          "lastReviewedAt": "2026-09-11T20:11:23.540Z",
+          "supportingSummary": "For GA 2025-11-01, documents field confidence/source estimates, source pages/coordinates/spans, representative labeled samples, unsupported generate-field training, and OCR errors not corrected by labels."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Article: 'Training supports document analyzers only, and it doesn't currently support fields that use the generate method.' 'Labeled samples don't correct text recognition problems.' Both premises of this option are contradicted.",
+          "sourceIds": ["ai103-analyzer-quality"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Editing confidence values isn't documented; removing grounding loses the source location evidence the Grounding section calls out for review.",
+          "sourceIds": ["ai103-analyzer-quality"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Confidence-scoring section: automate high, route low; Grounding section: source coordinates and spans for review; Labeled samples improve eligible fields; OCR handled separately. Exactly the documented workflow.",
+          "sourceIds": ["ai103-analyzer-quality"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "'A span locates source content' — grounding is provenance, not correctness proof; training generated summaries is unsupported and doesn't fix OCR errors.",
+          "sourceIds": ["ai103-analyzer-quality"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified from Confidence-scoring, Grounding, Improve-analyzer-training, and Limitations sections; boundary between fixes and OCR is stated verbatim.",
+      "confidenceReason": "Article explicitly lists the three feature roles in the same table answer c reflects."
+    }
+  ]
+}

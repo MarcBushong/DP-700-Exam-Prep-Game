@@ -1,0 +1,1335 @@
+{
+  "schemaVersion": 1,
+  "requestId": "ai103-language-independent-adversarial-final",
+  "reviews": [
+    {
+      "questionId": "ai103-t-001",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "53a29f67edc95f69c312f97c54a17d15a5f0177f77507a9d8fbc8f9b3f66f5c5",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-language-agent-tools",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/foundry-tools-agents",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-025.txt",
+          "retrievedAt": "2026-09-14T17:59:42.533Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The introductory comparison and sections at lines 13–53 distinguish a preview MCP tool endpoint from CLU/CQA intent routing and exact curated answering. The MCP list expressly includes NER, key phrases, summaries, sentiment and PII redaction. Contributor/Owner at resource-group scope, a Foundry resource/project, Language resource and authenticating project connection are prerequisites; network restrictions remain possible. This establishes the integration and task names, not perfect analysis or a privacy guarantee."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "An intent-routing agent is the integration surface for the requested NLP tool set. It is not the best match for exposing three named analyses to an existing MCP agent; the documented template routes CLU intents and CQA answers. Alternate context: It fits multi-intent conversations requiring deterministic routing, curated answers and optional fallback, with CLU/CQA projects deployed. Evidence: The comparison table and intent-routing capabilities distinguish routing/answer delivery from the MCP endpoint exposing NLP tools.",
+          "sourceIds": [
+            "ai103-language-agent-tools"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "The Language MCP server exposes the named analysis capabilities as callable agent tools. Not incorrect here: NER, key phrases and summarization are expressly in the MCP capability list and the stem supplies the connection and resource prerequisites. Alternate context: It is correct for an MCP-compatible agent requiring these tools with supported connectivity and an authenticated Language connection; it is not an accuracy guarantee. Evidence: Lines 19 and 30–53 identify the MCP surface, all three operations and Contributor/Owner plus project/resource prerequisites.",
+          "sourceIds": [
+            "ai103-language-agent-tools"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Exact Question Answering is the integration for analyzing fresh notes. The notes are not questions seeking stored CQA answers; a verbatim-answering agent does not match this tool-surface requirement. Alternate context: It is appropriate when deployed CQA question-answer pairs must produce consistent verbatim FAQ responses, optionally with fallback for other queries. Evidence: Lines 110–151 establish CQA deployment and exact answer delivery, not the listed open-ended text-analysis integration.",
+          "sourceIds": [
+            "ai103-language-agent-tools"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Original applied tool-selection question with a supported Preview label. The obvious MCP lexical cue and long prerequisites cost clarity/plausibility, but do not make the alternatives false in their own documented routing/FAQ contexts. Feature review: Preview is affirmative in the article’s Important note and remote endpoint version, not inferred from a source label. Semantic review: The complete audit includes this exact binding with no exclusion. My review distinguishes MCP tool exposure from routing/FAQ answering, not a reused generic agent-selection claim. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "High confidence in the scoped integration distinction after independently reading the comparison, prerequisites and both agent sections; the completed global audit includes this exact binding without exclusion."
+    },
+    {
+      "questionId": "ai103-t-002",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "1d301d9b8af5a48c22d70ecd4a02bb259a59573c182bb6b7f3f246875f8ad4e6",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-content-understanding-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-046.txt",
+          "retrievedAt": "2026-09-14T18:00:06.663Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Lines 41–74 explicitly separate GA 2025-11-01 core multimodal processing from 2026-06-01-preview additions. An analyzer configures fields and model deployments; normalized Markdown is distinct from schema-matched JSON. Extract is literal/document-only, Classify chooses predefined categories, and Generate includes audio summaries. Document-specific confidence/grounding controls must not be exported to audio. This is affirmative lifecycle evidence for the two questions actually citing this article."
+        },
+        {
+          "sourceId": "ai103-system-message",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-010.txt",
+          "retrievedAt": "2026-09-14T17:59:29.989Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The deployed-chat prerequisite, small fixed-key output contract, explicit scope/fallback instructions, conflict warning and realistic/adversarial testing guidance directly support prompt-design distinctions. Lines 32–34 and 130–134 deny enforcement guarantees and warn about model/version variation. This is model-independent design guidance; no affirmative GA statement for an identified API/model is present."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "An analyzer field schema defines the named structured output consumed by the importer. Not incorrect here: the requested contract belongs inside the analyzer, which configures fields and emits schema-matched JSON. Alternate context: It fits automation requiring named fields from supported content with configured model deployments; generated field values still need validation. Evidence: The Analyzer, Field extraction and Structured output rows at lines 66–74 explicitly connect schema settings to JSON results.",
+          "sourceIds": [
+            "ai103-content-understanding-overview"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Markdown and downstream heading inference meet the analyzer-defined field contract. The importer would still infer fields later, exactly the behavior the stem rules out; headings are not a configured analyzer field schema. Alternate context: Markdown is appropriate for normalized content supporting search, retrieval or downstream reasoning when schema-defined key-value output is not required. Evidence: The use-case and Structured output rows distinguish Markdown for retrieval from schema-aligned JSON for automation.",
+          "sourceIds": [
+            "ai103-content-understanding-overview"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A free-text JSON request enforces analyzer fields without a schema change. The option conflates prompt guidance with an analyzer contract; the existing missing schema remains unchanged and prompts do not guarantee compliance. Alternate context: A small fixed-key JSON instruction is useful prompt guidance in a chat app that tolerates testing and validation rather than claiming schema enforcement. Evidence: System message design lines 32–56 qualify JSON guidance; the Content Understanding analyzer row identifies the actual field-schema setting.",
+          "sourceIds": [
+            "ai103-system-message",
+            "ai103-content-understanding-overview"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The difficulty is modest for intermediate, and prompt enforcement is a weaker distractor after the contract restriction. This is not the same fact as prompt-only fixed keys or choosing an audio field method; the completed global audit includes this binding without exclusion. Feature review: The overview explicitly labels 2025-11-01 GA and its core document extraction stable; the option does not invoke preview agentic understanding. Semantic review: No global exclusion. Local analyzer-contract versus prompt-contract and field-method comparisons remain distinct because the configuration boundary changes. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "High confidence in the analyzer/schema distinction and affirmative GA version evidence; the independent global audit was read and no exclusion applies to this exact candidate."
+    },
+    {
+      "questionId": "ai103-t-003",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "bb6f9a66c098161e152bbd9b7f695c4b4ad6c5d2541164b86998b1a4c1cab900",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-system-message",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-010.txt",
+          "retrievedAt": "2026-09-14T17:59:29.989Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The deployed-chat prerequisite, small fixed-key output contract, explicit scope/fallback instructions, conflict warning and realistic/adversarial testing guidance directly support prompt-design distinctions. Lines 32–34 and 130–134 deny enforcement guarantees and warn about model/version variation. This is model-independent design guidance; no affirmative GA statement for an identified API/model is present."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A specialist persona and professional tone resolve the missing fixed-key format. Those instructions affect role and style but leave the importer’s field names and JSON-only requirement unstated. Alternate context: They are useful when the failure is the assistant’s role or tone rather than machine-readable format; the source treats these as separate system-message purposes. Evidence: The role/scope and output-contract sections independently identify persona versus explicit small fixed-key JSON.",
+          "sourceIds": [
+            "ai103-system-message"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Brevity and completeness specify the required stable object representation. Neither instruction names JSON nor the three required keys; the same format drift can continue. Alternate context: Brevity and useful detail can guide prose when the application has no fixed schema requirement, provided priorities avoid conflicting length/completeness rules. Evidence: The checklist requires explicit formats and the pitfalls warn that brief/comprehensive instructions can conflict.",
+          "sourceIds": [
+            "ai103-system-message"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "A JSON-only instruction with fixed equipment/symptom/action keys addresses prompt-level format drift. Not incorrect here: the permitted change is prompt guidance, and a small stable output contract targets the observed unstated requirement. Alternate context: It is correct for a deployed chat model accepting system messages when tested guidance, not API-enforced schema compliance, is the objective. Evidence: Output contract and structured entity extraction examples support explicit JSON keys, while the Important note denies guarantees.",
+          "sourceIds": [
+            "ai103-system-message"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Per-report free choice of response format fixes importer incompatibility. Allowing format variation directly preserves the defect because the importer needs stable fields. Alternate context: A conversational app without a fixed downstream contract may allow varied presentation; system messages can specify whichever format that scenario needs. Evidence: System-message purposes include output formats and scenario-specific behavior; explicit stable contracts are required when the app needs structure.",
+          "sourceIds": [
+            "ai103-system-message"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Manual for unsupported GA metadata, not a disputed key. Distinguish analyzer configuration in t-002 from prompt-level formatting here; final audit may identify other domain-prompt duplicates. Feature review: The cited article supplies general guidance, not affirmative GA evidence. Preserve the authored GA label unchanged but do not approve it; an appropriate Not applicable rewrite would restart all passes. Semantic review: No global exclusion. Prompt-format guidance differs from analyzer schema configuration and evidence-fallback design; manual lifecycle hold remains. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The prompt-level answer is directly supported, but an article without lifecycle assertion cannot verify the candidate’s unqualified GA metadata."
+    },
+    {
+      "questionId": "ai103-t-004",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "56dfb347a26b6b726d14e1ab0df298eb5dccbee48952c2f7384f6f23b9fe16fa",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-pii-basics",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/7-extract-personal-information",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-text-ai-language--7-extract-personal-information.txt",
+          "retrievedAt": "2026-09-14T17:54:35.550Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The lesson separately reads entity.text, entity.category and confidence, then obtains the masked whole document from doc.redacted_text after recognize_pii_entities. It does not establish the lifecycle of that Python path, preview redaction-policy names, perfect recall or offset preservation. The toy masking examples are not a contract for every character."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Detected entity text is the masked whole-document output. entity.text contains the detected sensitive string; iterating entities does not return the masked document. Alternate context: It is correct for inspecting which strings were recognized as PII, with suitable handling of those sensitive values. Evidence: The first Python loop prints entity.text; the distinct redaction loop prints doc.redacted_text.",
+          "sourceIds": [
+            "ai103-pii-basics"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "The document result redacted_text member supplies masked document content. Not incorrect here: successful recognize_pii_entities results in the lesson expose exactly this member for redacted output. Alternate context: It is correct for the Python result path in the stem when a service-redacted document is needed rather than entity metadata. Evidence: The Redact PII entities example prints doc.redacted_text and shows masked document output.",
+          "sourceIds": [
+            "ai103-pii-basics"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The entity category supplies a masked document string. category describes the detected type such as Person or Email, not the document with PII removed. Alternate context: It is useful for a reviewer who must categorize or filter detected PII entities by type. Evidence: The recognition loop pairs each entity text with category and confidence; the redaction member is separate.",
+          "sourceIds": [
+            "ai103-pii-basics"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Strong foundational API-output distinction; manual only because the authored lifecycle classification lacks affirmative cited evidence. The legacy offset-preservation record is a different, withheld fact. Feature review: The training lesson does not affirm GA for this SDK path. Its Not applicable curation status is not proof of the candidate’s GA declaration. Semantic review: Global historical comparison explicitly keeps t-004 distinct from archived 024; I agree after reading the original policy question. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "High confidence in all three result-member meanings from separate source loops; lifecycle evidence remains insufficient and technical review has not approved admission."
+    },
+    {
+      "questionId": "ai103-t-005",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "b7071761b1963d9239d38e5d7f53f8f19c71a7259a9be7db3344a583cba17e46",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-language-detection",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/3-detect-language",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-text-ai-language--3-detect-language.txt",
+          "retrievedAt": "2026-09-14T17:54:32.213Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The lesson returns a primary language and confidence for each document, also permits single-phrase inputs, explains dominant-language ambiguity for mixed text, and documents unknown/0 for unparseable text including encoding errors. It supplies no phrase-level labeling for one mixed document and no universal fallback threshold or affirmative GA declaration."
+        },
+        {
+          "sourceId": "ai103-language-agent-tools",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/foundry-tools-agents",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-025.txt",
+          "retrievedAt": "2026-09-14T17:59:42.533Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The introductory comparison and sections at lines 13–53 distinguish a preview MCP tool endpoint from CLU/CQA intent routing and exact curated answering. The MCP list expressly includes NER, key phrases, summaries, sentiment and PII redaction. Contributor/Owner at resource-group scope, a Foundry resource/project, Language resource and authenticating project connection are prerequisites; network restrictions remain possible. This establishes the integration and task names, not perfect analysis or a privacy guarantee."
+        },
+        {
+          "sourceId": "ai103-pii-basics",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/7-extract-personal-information",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-text-ai-language--7-extract-personal-information.txt",
+          "retrievedAt": "2026-09-14T17:54:35.550Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The lesson separately reads entity.text, entity.category and confidence, then obtains the masked whole document from doc.redacted_text after recognize_pii_entities. It does not establish the lifecycle of that Python path, preview redaction-policy names, perfect recall or offset preservation. The toy masking examples are not a contract for every character."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Language detection measures attitude while PII redaction supplies masked text. The redaction half fits, but language detection reports a language/confidence rather than the attitude expressed in the comment. Alternate context: This pair fits a different workflow that first routes comments by detected language and then masks PII; attitude classification is not its first job. Evidence: Detection returns primary_language/confidence; the separate PII lesson returns redacted_text.",
+          "sourceIds": [
+            "ai103-language-detection",
+            "ai103-pii-basics"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Entity recognition measures attitude and a summary is the masked document. Recognized entities and a shortened account are different tasks from sentiment and PII-redacted text; summarizing does not establish masking. Alternate context: NER and summarization are exposed tools for identifying entities and producing a concise account when those, rather than attitude and redacted text, are required. Evidence: The MCP list names NER and Summarization separately from Sentiment Analysis and PII redaction; the PII lesson identifies the dedicated masked output.",
+          "sourceIds": [
+            "ai103-language-agent-tools",
+            "ai103-pii-basics"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Sentiment analysis and PII redaction match the two independent jobs. Not incorrect here: expressed attitude is the sentiment task, while the documented redaction output masks detected personal information. Alternate context: It is correct for the stated operational preview MCP integration with supported input; neither capability guarantees flawless detection. Evidence: The preview MCP core list includes both Sentiment Analysis and PII redaction; the PII lesson demonstrates the latter’s masked result.",
+          "sourceIds": [
+            "ai103-language-agent-tools",
+            "ai103-pii-basics"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The MCP source names capabilities rather than explaining detailed sentiment algorithms, so approval is limited to introductory task selection. Compound distractor b earns only adequate contextual evidence; no sophisticated sentiment or privacy inference is approved. Feature review: The actual MCP article explicitly places these integrations in preview. That justifies the candidate label without inferring lifecycle from training silence. Semantic review: No global exclusion. Sentiment-versus-PII task assignment is not the old aspect-opinion association fact; that history remains withheld. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The preview capability list plus dedicated detection/PII examples support this bounded introductory distinction; no undocumented algorithmic or lifecycle extension is needed."
+    },
+    {
+      "questionId": "ai103-t-006",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "0c164cc3652366d4f1300c0e1ce68310c526ece63cdd26225f427f5c0dc0552a",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-translator-basics",
+          "url": "https://learn.microsoft.com/en-us/training/modules/translate-text-speech/3-azure-translator",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\translate-text-speech--3-azure-translator.txt",
+          "retrievedAt": "2026-09-14T17:55:09.733Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The lesson links Python client 1.0.1, illustrates optional from_language with distinct Spanish/Japanese inputs and French/English targets, and iterates each translation. It separately demonstrates ja/Jpan/Latn transliteration and supported-language discovery. Those examples substantiate the pinned ordinary-translation interface, not a newer SDK, universal language support, dynamic dictionary rules or affirmative GA status."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "English-target translation renders the same Japanese words in Latin script. An English translation changes language; the request is romanized Japanese with unchanged language. Alternate context: translate with target en is appropriate when the consumer needs the English meaning rather than a script conversion. Evidence: The Translate text section demonstrates English target output and the separate Transliterate section explains script conversion.",
+          "sourceIds": [
+            "ai103-translator-basics"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Supported-language discovery converts the submitted text. get_supported_languages enumerates names/codes and does not produce a transliterated string. Alternate context: It is appropriate for a UI that must list the languages available for translation before requesting a translation. Evidence: The Determine available languages example prints names and ISO codes; conversion is shown using a different method.",
+          "sourceIds": [
+            "ai103-translator-basics"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "ja/Jpan/Latn transliterate produces the requested writing-system rendering. Not incorrect here: the exact Japanese-to-Latin pair and Python operation are demonstrated by the cited lesson. Alternate context: It is correct for this supported script pair and pinned 1.0.1 interface; other pairs must be checked rather than assumed. Evidence: The Transliterate text example supplies language ja, from_script Jpan and to_script Latn and returns a romanized Japanese string.",
+          "sourceIds": [
+            "ai103-translator-basics"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Manual for lifecycle evidence; the instructional distinction is accurate but modest in intermediate difficulty. No unapproved external SDK documentation is substituted for the frozen lesson. Feature review: A documented method and versioned SDK link do not affirm GA. The source contains no positive lifecycle statement for this operation. Semantic review: No global exclusion. Same-language transliteration differs from source detection and target-result consumption in t-007. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The exact conversion is directly demonstrated, while affirmative GA evidence is absent and the technical gate remains manual."
+    },
+    {
+      "questionId": "ai103-t-007",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "2cbecc6e53b2fab23c1a963a976bf643b88ee4e418ed3396cd4f00e461f28b0a",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-translator-basics",
+          "url": "https://learn.microsoft.com/en-us/training/modules/translate-text-speech/3-azure-translator",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\translate-text-speech--3-azure-translator.txt",
+          "retrievedAt": "2026-09-14T17:55:09.733Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The lesson links Python client 1.0.1, illustrates optional from_language with distinct Spanish/Japanese inputs and French/English targets, and iterates each translation. It separately demonstrates ja/Jpan/Latn transliteration and supported-language discovery. Those examples substantiate the pinned ordinary-translation interface, not a newer SDK, universal language support, dynamic dictionary rules or affirmative GA status."
+        },
+        {
+          "sourceId": "ai103-language-detection",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/3-detect-language",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-text-ai-language--3-detect-language.txt",
+          "retrievedAt": "2026-09-14T17:54:32.213Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The lesson returns a primary language and confidence for each document, also permits single-phrase inputs, explains dominant-language ambiguity for mixed text, and documents unknown/0 for unparseable text including encoding errors. It supplies no phrase-level labeling for one mixed document and no universal fallback threshold or affirmative GA declaration."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Fixing targets and iteration is enough while forcing every notice to English. The batch can contain different source languages, so retaining from_language en leaves a real source-labeling defect. Alternate context: The repair would be suitable if every input were known English and both requested target results still needed to be saved. Evidence: The lesson permits an explicit known source but demonstrates per-item detection for different-language inputs.",
+          "sourceIds": [
+            "ai103-translator-basics"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Per-item source detection plus both targets and full result iteration repairs all three defects. Not incorrect here: ordinary supported input excludes special-feature exceptions, and the lesson demonstrates this exact mixed-source/two-target pattern. Alternate context: It is correct when each item has a supported source language, source detection is allowed, and every requested target translation must be retained. Evidence: The mixed Hola/Japanese example omits from_language, requests fr/en and iterates each result’s translations with target codes.",
+          "sourceIds": [
+            "ai103-translator-basics"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Only the first target can be saved after requesting both. Source detection and target requests are fixed, but translations[0] still discards a required target output. Alternate context: Selecting a single target result can fit a single-target workflow that has requested only that target; the documented response contains one translation per requested valid code. Evidence: The translate contract returns a translation for each to_language code and the sample explicitly iterates them.",
+          "sourceIds": [
+            "ai103-translator-basics"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "One detected notice language safely applies to the entire heterogeneous batch. A prediction for the first notice does not establish the language of every other notice. Alternate context: A shared source override can fit a batch independently known to be homogeneous; detection remains document-scoped, so first-item inference alone is insufficient. Evidence: Translator’s example detects distinct input languages, and Language detection returns a result for each document rather than a batch-wide language.",
+          "sourceIds": [
+            "ai103-translator-basics",
+            "ai103-language-detection"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The faulty snippet is syntactically valid and intentionally incomplete semantically; the key repairs all three requirements. Manual is for unsupported lifecycle classification, not an incorrect code diagnosis. Feature review: Neither the Translator lesson nor Language detection lesson affirms GA. Retain the metadata but withhold approval rather than assuming stable-looking syntax establishes lifecycle. Semantic review: Global historical comparison keeps ordinary per-item detection distinct from archived 026's dynamic-dictionary exception; no legacy review is revived. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "Independent line-by-line comparison to the approved mixed-source Python sample supports the repair; no live Azure invocation or SDK execution is claimed."
+    },
+    {
+      "questionId": "ai103-t-008",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "5e629dc8124dd6590fdc82c9470f1f7743c0b8379ed1652e28c24605db8f6b2d",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-language-detection",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/3-detect-language",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-text-ai-language--3-detect-language.txt",
+          "retrievedAt": "2026-09-14T17:54:32.213Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The lesson returns a primary language and confidence for each document, also permits single-phrase inputs, explains dominant-language ambiguity for mixed text, and documents unknown/0 for unparseable text including encoding errors. It supplies no phrase-level labeling for one mixed document and no universal fallback threshold or affirmative GA declaration."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "One primary-language prediction labels every phrase and unknown confirms a rare language. Both assertions overstate the response: a mixed document returns its dominant language with weaker confidence, and unknown/0 is unresolved, not confirmation. Alternate context: Per-phrase language results are possible when individual phrases are submitted separately; an actual identified language can then be routed. The exact unknown-as-confirmation clause has no supported context. Evidence: The source allows phrase inputs, explains dominant-language mixed documents and explicitly returns unknown/0 for unparseable input.",
+          "sourceIds": [
+            "ai103-language-detection"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "These per-document predictions prove a whole-request failure. The documented ambiguity outcomes are actual document results, so they do not establish request-wide failure. Alternate context: An application should handle an actual failed request separately, but this lesson supplies no whole-request failure contract; no affirmative alternative for this exact assertion is documented. Evidence: The source says the response contains a result for each document and separately describes mixed/unknown predictions; it does not characterize them as transport or request errors.",
+          "sourceIds": [
+            "ai103-language-detection"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The mixed result is weakly dominant and unknown/0 needs application-level unresolved handling. Not incorrect here: this interpretation preserves the source’s confidence semantics without assigning a language it did not identify. Alternate context: It is correct when the service returns these documented ambiguity results and the application, rather than an undocumented built-in threshold, decides how to handle them. Evidence: The final paragraphs explain lower confidence for mixed content and unknown/0 for text that cannot be parsed.",
+          "sourceIds": [
+            "ai103-language-detection"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Additional adversarial finding beyond lifecycle: the source does not give a defensible positive whole-request failure context for b, and a’s unknown-confirmation clause is unsupported in every documented context. DistractorEvidence 2 blocks strict approval; reauthoring restarts all passes. Feature review: No affirmative GA statement appears in the actual detection lesson, so the candidate’s lifecycle metadata remains unverified. Semantic review: No global exclusion. Document confidence interpretation is distinct from the mixed-source Translator repair; strict distractor and lifecycle holds remain. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The key’s meaning is explicit, but strict counterexample quality and lifecycle requirements are not met; this is a manual repair disposition, not a claim that the key is wrong."
+    },
+    {
+      "questionId": "ai103-t-009",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "6710d009dc9f5f3a3d900ed92e7f80217cc8e18cdcf96eb148e36f24a327f585",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-system-message",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-010.txt",
+          "retrievedAt": "2026-09-14T17:59:29.989Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The deployed-chat prerequisite, small fixed-key output contract, explicit scope/fallback instructions, conflict warning and realistic/adversarial testing guidance directly support prompt-design distinctions. Lines 32–34 and 130–134 deny enforcement guarantees and warn about model/version variation. This is model-independent design guidance; no affirmative GA statement for an identified API/model is present."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "An evidence boundary, explicit fallback and testing address unsupported policy invention. Not incorrect here: insufficient supplied evidence is the observed failure and explicit unsure behavior plus testing is the cited remedy. Alternate context: It is correct for a bounded domain assistant whose authorized context is incomplete, with testing and other controls retained rather than treating prompts as enforcement. Evidence: Scope, fallback behavior, the when-unsure policy and realistic/adversarial testing are explicit in the design checklist.",
+          "sourceIds": [
+            "ai103-system-message"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A legal-expert persona and formal tone solve missing-evidence claims. Changing style leaves source boundaries and missing-information behavior unspecified, and legal expertise is not the permitted task. Alternate context: Role/tone guidance can fit a permitted domain assistant with a tone defect; it does not authorize legal advice or supply missing facts. Evidence: The article distinguishes role/tone from boundaries, output contracts and uncertainty policy.",
+          "sourceIds": [
+            "ai103-system-message"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "An unconditional complete summary and no unsupported claims are sufficient when evidence is absent. The unconditional demand conflicts with the missing-evidence requirement in the exact failing case. Alternate context: Complete summaries can be requested when sufficient authorized information is actually supplied and conflicting rules are prioritized; the unconditional no-evidence form is not supported. Evidence: The pitfalls warn about conflicting instructions and the checklist requires explicit behavior when information is lacking.",
+          "sourceIds": [
+            "ai103-system-message"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Adding an excerpt rule guarantees compliance and makes testing unnecessary. The source explicitly denies guaranteed system-message compliance and requires continuing tests. Alternate context: An excerpt boundary itself is useful guidance; there is no documented prompt-only context in which the added guarantee and removal of testing become correct. Evidence: The Important note and Limitations reject guarantees; the test/measure/iterate section calls for realistic and adversarial inputs.",
+          "sourceIds": [
+            "ai103-system-message"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Agree with the independent technical difficulty/lifecycle hold after reading actual evidence. Additional strict weakness: the exact guarantee/no-testing distractor has no affirmative supported counterexample, so its context analysis is insufficient for approval. Feature review: The actual design article does not establish GA. A model-independent label repair or newly approved lifecycle evidence requires new authoring and reviews. Semantic review: No global exclusion. Fallback behavior differs from format guidance, but basic reasoning, lifecycle and absolute distractor problems still block it. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The recommended boundary is defensible; the authored GA claim, advanced label and unsupported absolute distractor prevent strict verification."
+    },
+    {
+      "questionId": "ai103-t-010",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "016f526220a430663d76b129ffc1f131943e489175f15d1f45fb314c38ffee87",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-optimization-combinations",
+          "url": "https://learn.microsoft.com/en-us/training/modules/optimize-generative-ai-model-performance/5-compare-combine-strategies",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\optimize-generative-ai-model-performance--5-compare-combine-strategies.txt",
+          "retrievedAt": "2026-09-14T17:53:39.883Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The strategy table and decision framework separate changing external facts supplied by RAG from persistent response patterns learned by fine-tuning, after prompt work and with evaluation. The lesson acknowledges index quality, model updates and operational costs. It supports combining techniques, not model-specific eligibility, an automatic success guarantee or any GA claim."
+        },
+        {
+          "sourceId": "ai103-system-message",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-010.txt",
+          "retrievedAt": "2026-09-14T17:59:29.989Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The deployed-chat prerequisite, small fixed-key output contract, explicit scope/fallback instructions, conflict warning and realistic/adversarial testing guidance directly support prompt-design distinctions. Lines 32–34 and 130–134 deny enforcement guarantees and warn about model/version variation. This is model-independent design guidance; no affirmative GA statement for an identified API/model is present."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Fine-tuning should maintain live amendments and retrieval should train writing style. This reverses the documented purposes: retrieved context supplies changing facts; learned examples target persistent behavior. Alternate context: Fine-tuning fits learned style and retrieval fits current policy facts when their assignments are reversed. The exact claim that retrieval trains style has no supported context. Evidence: The optimization spectrum and comparison table explicitly separate context optimization from model-behavior optimization.",
+          "sourceIds": [
+            "ai103-optimization-combinations"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Use retrieval for new facts, consider fine-tuning for measured style failure, and retain prompts/evaluation. Not incorrect here: prompt work has already failed on style, and the stem supplies retrieval and suitable supported-model training prerequisites. Alternate context: It fits independent current-knowledge and behavioral-consistency needs, with index quality and post-training evaluation still monitored. Evidence: The decision framework adds RAG for current/private data and fine-tuning for persistent style after prompting, while system guidance retains testing.",
+          "sourceIds": [
+            "ai103-optimization-combinations",
+            "ai103-system-message"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Fine-tuning style makes future policy facts current without retrieval. Behavior learned from current examples cannot establish facts published later; removing retrieval leaves the observed freshness requirement unresolved. Alternate context: A stable task not requiring external changing facts may use fine-tuning and prompts without retrieval, but style consistency is never evidence about future amendments. Evidence: The source says not every app needs all strategies, while RAG addresses changing information and fine-tuning may need retraining as requirements change.",
+          "sourceIds": [
+            "ai103-optimization-combinations"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Relevant retrieved passages retrain behavior, so a persistent style defect needs no separate work. RAG is query-time context, not model-weight training; the independently measured style defect is not solved merely by the index. Alternate context: RAG plus prompts can suffice when retrieved context and instructions already meet behavioral requirements; the stem expressly reports that they do not. Evidence: The common-combinations section distinguishes factual context from learned patterns, with iterative prompt testing required.",
+          "sourceIds": [
+            "ai103-optimization-combinations",
+            "ai103-system-message"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Manual for lifecycle evidence. SEM-012 confirms the same responsibility split in ai103-g-041 after I independently read both exact questions. Retain t-010 as the stronger candidate because it establishes failed prompt-only work; retention does not approve it. Originality is reduced for this overlap. Some distractor clauses are only correct after reversing their responsibilities. Feature review: Neither cited design source positively attests GA of a selected model or interface. The general strategy remains valid, but the authored GA flag is not verified. Semantic review: SEM-012 retains this candidate over g-041's same responsibilities. I agree after reading both; original-content score is reduced and lifecycle remains manual. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "High confidence in the two-dimensional optimization decision, but current cited design principles do not prove the unqualified GA metadata."
+    },
+    {
+      "questionId": "ai103-t-011",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "bbe3540686cd25c915dfb19a515df2f7323572a95b7050f666ad7c716e2e833a",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-speech-recognition",
+          "url": "https://learn.microsoft.com/en-us/training/modules/create-speech-enabled-apps/3-speech-to-text",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\create-speech-enabled-apps--3-speech-to-text.txt",
+          "retrievedAt": "2026-09-14T17:54:45.880Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Python example separates SpeechConfig connection settings from audio.AudioConfig(filename=...) and passes both into SpeechRecognizer. Omission defaults to microphone; recognize_once_async handles a single utterance. The prose uses some .NET-style property capitalization, but the Python sample supplies the tested option's actual spelling. No affirmative lifecycle statement is present."
+        },
+        {
+          "sourceId": "ai103-speech-capabilities",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-034.txt",
+          "retrievedAt": "2026-09-14T17:59:51.837Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The overview's lines 33–43 explicitly map streaming to real-time, prerecorded files to fast, large asynchronous volume to batch, and distinguish text-to-speech from recognition. LLM speech is explicitly preview at lines 60–67. Other sections being unmarked does not affirm GA for every SDK or workload category."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A local filename is the SpeechConfig service endpoint. The endpoint selects the Azure connection, while the local recording belongs in input AudioConfig. Alternate context: Changing the endpoint is appropriate when connecting to a different valid Speech resource endpoint, not when changing microphone input to a file. Evidence: The numbered setup separates SpeechConfig endpoint/region/key from AudioConfig input source; the Python example does the same.",
+          "sourceIds": [
+            "ai103-speech-recognition"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A text-to-speech operation repairs file input for recognition. Synthesis converts text into audio and cannot select a WAV input for SpeechRecognizer. Alternate context: Synthesis is appropriate when the application needs to speak supplied text rather than transcribe one recorded utterance. Evidence: The overview independently defines speech-to-text and text-to-speech as opposite input/output directions.",
+          "sourceIds": [
+            "ai103-speech-capabilities"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Pass audio.AudioConfig(filename=...) into the recognizer to select the recording. Not incorrect here: the exact Python construction in the approved example selects a local audio file while retaining the existing SpeechConfig. Alternate context: It fits a supported local recording and one-utterance recognize_once_async workflow with a working service connection. Evidence: The Transcribing an audio file example constructs speech_sdk.audio.AudioConfig and supplies audio_config to SpeechRecognizer.",
+          "sourceIds": [
+            "ai103-speech-recognition"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The valid faulty Python snippet and correct constructor spelling were reviewed without claiming a live SDK test. Manual for lifecycle and reduced distractor realism, not an incorrect audio-source repair. Feature review: The Python lesson and Speech overview demonstrate behavior but do not explicitly establish GA for this SDK path. Semantic review: No global exclusion. File-versus-microphone input configuration is not archived 025's continuous language-ID contract. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "Direct Python example support for the key is strong; affirmative lifecycle evidence is not present and technical admission remains manual."
+    },
+    {
+      "questionId": "ai103-t-012",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "b83c62958d60812fdcfed065119af2c069907bfc12ebd6e420f680b6700cafd0",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-ssml",
+          "url": "https://learn.microsoft.com/en-us/training/modules/create-speech-enabled-apps/6-speech-synthesis-markup",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\create-speech-enabled-apps--6-speech-synthesis-markup.txt",
+          "retrievedAt": "2026-09-14T17:54:47.494Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The text lesson assigns phonetic pronunciation to phonemes, speaking rate to prosody, pauses to breaks, and date/telephone interpretation to say-as. Its Python example submits SSML through speak_ssml_async. It supports the requested two-control distinction, not a universal voice/locale support promise or an affirmative GA declaration."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "A phoneme element specifies the requested term pronunciation. Not incorrect here: the task requires a particular phonetic form for one term and voice/locale support is already checked. Alternate context: It is correct when a supported SSML voice must pronounce a term using an explicitly supplied phonetic representation. Evidence: The lesson lists phonemes for phonetic pronunciation and gives a term-level phoneme example.",
+          "sourceIds": [
+            "ai103-ssml"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A break supplies phonetic pronunciation or sentence speaking rate. A pause is neither the term’s phonetic form nor the surrounding sentence’s rate, and extra pauses are expressly not requested. Alternate context: A break is useful when the desired change is inserting silence or a pause between spoken portions. Evidence: The lesson separately lists pauses/silence and includes a break element in the SSML example.",
+          "sourceIds": [
+            "ai103-ssml"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Telephone say-as interpretation supplies the requested pronunciation/rate changes. The content is a technical sentence, not a phone number, and semantic interpretation is not rate control or a phoneme specification. Alternate context: say-as fits a telephone, date or time string that should be spoken according to that semantic category. Evidence: The say-as bullet identifies date/time/telephone interpretation as distinct from phonemes and prosody.",
+          "sourceIds": [
+            "ai103-ssml"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "A prosody element controls the surrounding sentence’s speaking rate. Not incorrect here: rate is an explicitly listed prosody control and the requested change is slowing the sentence. Alternate context: It is correct for supported SSML voices/locales when the rate, pitch or related prosodic property must change. Evidence: The prosody bullet includes speaking rate; the Python example submits SSML using speak_ssml_async.",
+          "sourceIds": [
+            "ai103-ssml"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The entire two-answer set is supported and no distractor becomes correct under the stated controls. Manual for lifecycle evidence; explicit exclusions make this easier than its length suggests. Feature review: The lesson supports the controls but contains no affirmative GA evidence. A stable standard name does not verify the candidate label. Semantic review: No global exclusion. The SSML two-control selection differs from Voice Live input hints and output lexicon configuration. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "All four SSML roles are directly described; the technical choice is clear but its GA declaration is not independently supportable from the one cited lesson."
+    },
+    {
+      "questionId": "ai103-t-013",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "c79ec5ee16f2f3fb0ba5d3b5fadf4f0d55d75a422c5753c56466fd4cee50e302",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-speech-capabilities",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-034.txt",
+          "retrievedAt": "2026-09-14T17:59:51.837Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The overview's lines 33–43 explicitly map streaming to real-time, prerecorded files to fast, large asynchronous volume to batch, and distinguish text-to-speech from recognition. LLM speech is explicitly preview at lines 60–67. Other sections being unmarked does not affirm GA for every SDK or workload category."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Streaming, fast prerecorded processing and asynchronous volume map to real-time, fast and batch respectively. Not incorrect here: each stated workload category matches the overview’s explicit recommendation. Alternate context: It is correct as a best-fit category mapping with supported inputs/regions, not as a claim that no other API can ever process a recording. Evidence: The Speech to text section directly assigns these three workload categories to the three transcription paths.",
+          "sourceIds": [
+            "ai103-speech-capabilities"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A live stream should use batch and an asynchronous archive should use fast. The first workload is mapped to the archive category and the archive does not receive the documented batch fit. Alternate context: This mapping fits if A were an asynchronous archive, B a live stream and C a completed file needing the fast path; those are not the stated workloads. Evidence: The same three source bullets support the counterfactual reassignment without claiming these APIs are mutually exclusive.",
+          "sourceIds": [
+            "ai103-speech-capabilities"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A live stream should use fast and an archive should use real-time. Fast is identified for prerecorded files and real-time for streaming; the selected mapping reverses those requirements. Alternate context: This mapping fits if A were a completed file, B a large asynchronous archive and C a live stream. Evidence: The explicit streaming/file/volume distinctions give a valid alternate workload ordering and contradict this ordering here.",
+          "sourceIds": [
+            "ai103-speech-capabilities"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "All alternatives have legitimate alternate workload contexts. The authored GA claim remains unsupported by this overview and the matching-order wording reduces difficulty authenticity. Feature review: LLM speech is explicitly preview, but omission of that tag on three other bullets is not affirmative GA evidence for all three paths. Semantic review: No global exclusion. Workload-mode selection differs from single-utterance input-source repair; no lifecycle inference follows. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The mapping is explicit in the source, but three unstated lifecycle assertions cannot be promoted by the absence of Preview tags."
+    },
+    {
+      "questionId": "ai103-t-014",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "23f0d3f13507b28f9dd433e3ff8daa6285fd03b83fa8852aaf4e79218f248349",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-voice-live",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/voice-live",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-035.txt",
+          "retrievedAt": "2026-09-14T17:59:53.180Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The native-model section includes gpt-4.1 as managed. The specific note at line 80 overrides the introductory blanket statement for gpt-5.4-mini: it is supported/tested but requires a deployment in the customer's Foundry resource through BYOM. Region support is separate, pricing follows model choice, and some listed models are preview. Neither the pricing date nor supported/tested wording proves GA for the selected paths."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A managed Voice Live interface makes both selected models pre-deployed. The model-specific note expressly excludes gpt-5.4-mini from pre-deployed models despite support/testing. Alternate context: Both agents can use managed native models without customer deployments when both selected models are natively supported and pre-deployed. Evidence: The native-model management paragraph is qualified by the separate BYOM note naming gpt-5.4-mini.",
+          "sourceIds": [
+            "ai103-voice-live"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Every Voice Live model requires a customer BYOM deployment. The source lists gpt-4.1 as native and says native models are fully managed, so the universal BYOM claim fails. Alternate context: Both agents need customer deployments when both deliberately choose models in the documented non-predeployed BYOM group. Evidence: The native gpt-4.1 table row and the supported-but-not-predeployed note establish different deployment responsibilities.",
+          "sourceIds": [
+            "ai103-voice-live"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Use managed native gpt-4.1 for A and a customer gpt-5.4-mini deployment through BYOM for B. Not incorrect here: it applies the native rule to A and the explicit non-predeployed exception to B, with region access already checked. Alternate context: It is correct for these exact documented model selections and supported regions/resource access; the list must be rechecked if models change. Evidence: Lines 52–80 include gpt-4.1 and explicitly require gpt-5.4-mini deployment in the customer’s Foundry resource through BYOM.",
+          "sourceIds": [
+            "ai103-voice-live"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Manual for missing affirmative lifecycle evidence and noteworthy key cueing. The documented specific exception defeats the source introduction’s overly broad no-model-deployment wording. Feature review: Supported/tested, managed, a pricing date and unmarked table entries are not affirmative GA. The mixed-model article includes a preview model and does not establish the selected paths’ GA status. Semantic review: No global exclusion. Native versus BYOM model responsibility is distinct from custom speech resource/engine binding. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "Model responsibility is directly supported at the exact current snapshot; support/testing does not settle GA or bypass the unapproved technical stage."
+    },
+    {
+      "questionId": "ai103-t-015",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "4dcdea8f699e8c03d3aebc820d0f9986e7f70bb4af6ce61587b912ab9ba32b2c",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-voice-customization",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/voice-live-how-to-customize",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-038.txt",
+          "retrievedAt": "2026-09-14T17:59:53.183Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Lines 17–58 put phrase_list and custom_speech under input transcription, exclude Whisper and named GPT transcription engines from phrase lists, restrict custom speech to azure-speech and the same Foundry resource, and show base English with a zh-CN Model-ID map. Lines 62–74 place custom_lexicon_url on output voices. Limited custom-voice access is distinct from a lexicon on an existing standard voice. A later personal-voice link references a preview API, so this mixed article cannot establish an unqualified GA label for the earlier controls."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Copying the model fixes custom speech while retaining Whisper. Same-resource placement is necessary but custom speech is supported only with azure-speech; the input-engine blocker remains. Alternate context: Model copying is the correct repair when the engine is already azure-speech and only resource placement is wrong; this exact Whisper combination is not supported. Evidence: The custom-speech Note independently requires the same Foundry resource and azure-speech model.",
+          "sourceIds": [
+            "ai103-voice-customization"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Selecting azure-speech allows a model in another resource within the same subscription. Subscription sharing is not the documented boundary: the model must be on the actual Voice Live Foundry resource. Alternate context: Selecting azure-speech is appropriate when the model is already available on that same resource; subscription membership alone never supplies that condition. Evidence: The note names same Microsoft Foundry resource, not same subscription, and directs copying from a different resource.",
+          "sourceIds": [
+            "ai103-voice-customization"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A custom Model ID can be used as a phrase hint while retaining Whisper. A phrase list contains vocabulary, not locale-to-model bindings, and the documented phrase-list exclusions include whisper-1. Alternate context: A list of actual words/phrases fits lightweight recognition hints under azure-speech when no trained custom model is needed; it is not this proposed Model-ID/Whisper configuration. Evidence: Phrase-list examples contain terms, exclude Whisper, and the separate custom_speech dictionary maps locales to Model IDs.",
+          "sourceIds": [
+            "ai103-voice-customization"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Use azure-speech and same-resource custom model while preserving the base/custom locale map. Not incorrect here: both independent blockers are repaired without removing the requested base English plus custom Chinese combination. Alternate context: It is correct when authorized copying/deployment is available and distinct base/custom locales conform to the documented combination rules. Evidence: The custom-speech example uses base en with zh-CN Model ID and the note requires azure-speech and same-resource availability.",
+          "sourceIds": [
+            "ai103-voice-customization"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The key is technically well bounded; lifecycle evidence is insufficient. Compound distractor c has only a component-wise alternate context, not a valid exact Model-ID-as-hint configuration. Feature review: The customization article has no affirmative GA declaration for these controls and references a preview API elsewhere; supported configuration is not enough to verify the authored GA flag. Semantic review: No global exclusion. Trained locale/model placement differs from t-016's no-training hints/lexicon split and archived continuous LID. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "Independent reading confirms both blockers and the base/custom example; no affirmative GA/version lifecycle evidence exists in the one cited document."
+    },
+    {
+      "questionId": "ai103-t-016",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "bb7cddca7ff8e4e7ea512cd9bdc5cbc4aed9333668a5a1563aaa6ac252d362be",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-voice-customization",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/voice-live-how-to-customize",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-038.txt",
+          "retrievedAt": "2026-09-14T17:59:53.183Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Lines 17–58 put phrase_list and custom_speech under input transcription, exclude Whisper and named GPT transcription engines from phrase lists, restrict custom speech to azure-speech and the same Foundry resource, and show base English with a zh-CN Model-ID map. Lines 62–74 place custom_lexicon_url on output voices. Limited custom-voice access is distinct from a lexicon on an existing standard voice. A later personal-voice link references a preview API, so this mixed article cannot establish an unqualified GA label for the earlier controls."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The original GPT input engine accepts phrase_list while an output lexicon fixes pronunciation. The output half is suitable, but gpt-4o-transcribe is expressly excluded from phrase-list support. Alternate context: This two-part design fits with a phrase-list-compatible azure-speech input engine and a supported output voice, not the specified GPT input path. Evidence: The phrase-list exclusion names gpt-4o-transcribe, and the output section places custom_lexicon_url on a voice.",
+          "sourceIds": [
+            "ai103-voice-customization"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Use azure-speech input hints and a separate output voice pronunciation lexicon. Not incorrect here: it repairs engine compatibility and addresses distinct recognition and synthesis defects with separate controls. Alternate context: It is correct for supported input locales and output voices when just-in-time vocabulary hints and pronunciation overrides are wanted instead of trained models. Evidence: The source distinguishes phrase lists for audio input from custom lexicons for standard or custom output voices.",
+          "sourceIds": [
+            "ai103-voice-customization"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Input phrase_list also repairs the independent synthesis pronunciation defect. Phrase hints are input transcription settings; they do not replace the output voice’s lexicon control. Alternate context: Input hints alone suffice when only recognition is wrong and synthesis already pronounces correct text acceptably; that is not the stated two-defect case. Evidence: The input/output customization sections put phrase_list and custom_lexicon_url in different configuration objects and assign different purposes.",
+          "sourceIds": [
+            "ai103-voice-customization"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "An output lexicon biases input recognition, so no input-engine change is needed. The lexicon changes output pronunciation only; it leaves misrecognized input and the unsupported phrase-hint engine unresolved. Alternate context: An output-only lexicon fits when recognition is already satisfactory and the remaining problem is pronunciation of correct response text. Evidence: The custom-lexicon section explicitly scopes pronunciation to text-to-speech voices, not input speech recognition.",
+          "sourceIds": [
+            "ai103-voice-customization"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Advanced reasoning is credible here despite some explanatory cueing. Manual is required for missing lifecycle evidence and the prior technical hold, not a disagreement over the chosen controls. Feature review: The actual article supports these controls but does not positively attest their GA or exact minimum API version. Preserve the label and hold rather than infer from silence. Semantic review: No global exclusion. Two independent recognition/synthesis defects require different controls from a trained custom model binding. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "Direct configuration examples and the named exclusion support the two-control repair; lifecycle/version scope remains insufficient for strict approval."
+    },
+    {
+      "questionId": "ai103-t-017",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "21bfb9f76e7efbee336c9620828ec7a17472de8f450d5f8c817b71f158b92558",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-content-understanding-audio",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/audio/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-050.txt",
+          "retrievedAt": "2026-09-14T18:00:12.197Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The content-extraction section distinguishes spoken-word transcription, speaker attribution, optional role labels and language selection. Generated summaries/sentiment are downstream fields. Examples carry apiVersion 2025-11-01 but the article itself never calls that version GA; an example version is not affirmative lifecycle evidence. Some sample Markdown labels every turn alike while transcriptPhrases distinguish speakers, so the question correctly depends on the documented capability, not sample accuracy."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Transcription supplies words and diarization assigns transcript portions to speakers. Not incorrect here: the source defines those two functions separately, and real-world identity is expressly not required. Alternate context: It is correct for supported conversational recordings needing words plus speaker attribution as context for later analysis. Evidence: The content-extraction bullets define transcription, diarization and role detection as distinct capabilities.",
+          "sourceIds": [
+            "ai103-content-understanding-audio"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Language detection supplies the speaker attribution alongside transcription. Language detection selects a dominant language/locale for transcription, not the speaker attached to a transcript portion. Alternate context: Transcription plus language detection fits multilingual intake requiring a selected supported locale, where speaker attribution is not the second required output. Evidence: The Language handling section and Language detection bullet describe locale selection; diarization is a separate attribution bullet.",
+          "sourceIds": [
+            "ai103-content-understanding-audio"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Diarization recognizes words and sentiment fields attribute speakers. This swaps preprocessing and downstream field purposes; sentiment does not identify who spoke each segment. Alternate context: Diarization plus sentiment can fit a pipeline where transcription already exists and the additional tasks are speaker attribution and attitude fields. The roles assigned in this exact option remain incorrect. Evidence: The source assigns word recognition to transcription, speaker attribution to diarization and summaries/sentiments to field extraction.",
+          "sourceIds": [
+            "ai103-content-understanding-audio"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Manual for the explicit uncited GA-version assertion, with citationSpecificity 2 for that gap. This is a source-binding problem, not proof that the API is actually Preview. No source is appended during review. Feature review: The sole cited audio page shows apiVersion 2025-11-01 in examples but never labels it GA. I saw affirmative GA in the separate overview, but it is not a question source and cannot be borrowed into the ledger. Semantic review: No global exclusion. Words versus speaker attribution differs from selecting an audio summary field method; the uncited lifecycle assertion still blocks. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "High confidence in transcription versus diarization; no final approval can use an uncited overview to repair the authored lifecycle claim or bypass pass 2."
+    },
+    {
+      "questionId": "ai103-t-018",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "001a79a385014a8fe9e422e749106346cdbd894942495f346e314ba97740366a",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-content-understanding-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-046.txt",
+          "retrievedAt": "2026-09-14T18:00:06.663Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Lines 41–74 explicitly separate GA 2025-11-01 core multimodal processing from 2026-06-01-preview additions. An analyzer configures fields and model deployments; normalized Markdown is distinct from schema-matched JSON. Extract is literal/document-only, Classify chooses predefined categories, and Generate includes audio summaries. Document-specific confidence/grounding controls must not be exported to audio. This is affirmative lifecycle evidence for the two questions actually citing this article."
+        },
+        {
+          "sourceId": "ai103-content-understanding-audio",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/audio/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-050.txt",
+          "retrievedAt": "2026-09-14T18:00:12.197Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The content-extraction section distinguishes spoken-word transcription, speaker attribution, optional role labels and language selection. Generated summaries/sentiment are downstream fields. Examples carry apiVersion 2025-11-01 but the article itself never calls that version GA; an example version is not affirmative lifecycle evidence. Some sample Markdown labels every turn alike while transcriptPhrases distinguish speakers, so the question correctly depends on the documented capability, not sample accuracy."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Extract is the method for newly composing a summary from audio. The method is documented for literal input values in documents only, and the desired field is a new audio-derived account. Alternate context: Extract fits dates, item details or other literal values appearing in document input rather than an original summary of an audio conversation. Evidence: The Field extraction row limits Extract to documents and gives literal-value examples.",
+          "sourceIds": [
+            "ai103-content-understanding-overview"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A fixed billing/delivery/other class is the requested account of an unresolved issue. A category label cannot provide the requested concise descriptive account and the stem explicitly rejects fixed categories. Alternate context: Classify fits a call-routing or analytics field whose complete output is one of a predefined set of categories. Evidence: The overview describes predefined Classify outputs and the audio page supports configurable structured call fields.",
+          "sourceIds": [
+            "ai103-content-understanding-overview",
+            "ai103-content-understanding-audio"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Generate composes the requested grounded audio-summary field. Not incorrect here: the overview explicitly uses summarizing an audio conversation as a Generate example, and the stem supplies preprocessing context. Alternate context: It is correct for a free-form summary field described in an analyzer using supported deployments and audio-derived context; the content still needs evaluation. Evidence: The Generate method example and audio contextual preprocessing/field-schema sections directly support this choice.",
+          "sourceIds": [
+            "ai103-content-understanding-overview",
+            "ai103-content-understanding-audio"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": false,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Rejected after incorporating SEM-013 and independently reading ai103-v-011: both test non-document Generate versus Classify/document-only Extract. Audio is only a substituted input because preprocessing is already supplied. Retain the more discriminating paired-method vision candidate, not both. Affirmative lifecycle support is sufficient, but advanced difficulty and originality each score 1. Pass 2 remains unchanged manual; any repair restarts all passes. Feature review: Unlike t-017, this question actually cites the overview with affirmative GA 2025-11-01 core multimodal support; no preview agentic document reasoning is used. Semantic review: SEM-013 exclusion accepted after reading v-011. Same non-document field-method discriminator; reject this less demanding variant. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The method key is supported, but an exact current cross-audit duplicate and inflated difficulty justify rejection rather than promotion; retained counterpart status is not an approval."
+    },
+    {
+      "questionId": "ai103-t-019",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "764abb74cf95b4744bdfe7addfe5e3df73fbb965574c990c8c8254b05947bdc7",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-speech-translation",
+          "url": "https://learn.microsoft.com/en-us/training/modules/translate-text-speech/4-speech-translation",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\translate-text-speech--4-speech-translation.txt",
+          "retrievedAt": "2026-09-14T17:55:10.049Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Python lesson retains source text separately from the target translations dictionary. Manual synthesis iterates the dictionary and selects target voices; event-based synthesis is explicitly one-source/one-target only. The Python callback uses voice_name, synthesizing.connect and evt.result.audio even though surrounding prose uses other SDK names. Its illustrative wb+ writer can overwrite chunks and is not adopted. There is no affirmative GA statement."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Reuse each translated target text with its matching voice and synthesize both. Not incorrect here: the result already contains both target translations and the manual path iterates those values without repeating recognition. Alternate context: It is correct for multi-target speech output with appropriate voices and output configuration after one successful translation result. Evidence: The manual synthesis section explicitly iterates Translations and demonstrates French/Japanese target voices.",
+          "sourceIds": [
+            "ai103-speech-translation"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "One event-based translation voice emits both target languages. The event-based path is expressly limited to one target and cannot supply both French and Japanese this way. Alternate context: A translation voice plus synthesizing event fits one-source/one-target speech translation. Evidence: The Event-based synthesis note explicitly excludes multi-language translation and shows a single French target.",
+          "sourceIds": [
+            "ai103-speech-translation"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Changing synthesis voices translates the recognized source text into two languages. result.text is the source utterance; a different voice does not select values from the translations dictionary. Alternate context: Synthesizing source text can fit reading back what was heard in a suitable source-language voice, not producing the target translations. Evidence: The sample prints recognized source text separately and supplies translations[translation_language] to speak_text_async.",
+          "sourceIds": [
+            "ai103-speech-translation"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Repeat recognition for each target despite already having both translations. The requirement explicitly prohibits repeating recognition, and the target dictionary already supplies the necessary text. Alternate context: Separate recognition calls fit separate new utterances or independent one-target requests; they are not needed to reuse one completed multi-target result. Evidence: The lesson separately demonstrates recognition calls and reuse of a completed multi-target dictionary for manual synthesis.",
+          "sourceIds": [
+            "ai103-speech-translation"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual for lifecycle and inflated advanced difficulty, independently agreeing with pass 2. The completed global audit does not exclude this ID. My local comparison keeps t-020 distinct because it tests exact event wiring rather than the same multi-target key. Feature review: The translation lesson documents behavior but no affirmative GA status; stable-looking Python examples do not prove lifecycle. Semantic review: No global exclusion. Multi-target manual synthesis is distinct from t-020's exact single-target callback wiring, despite a shared limitation. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The source’s full Python loop supports the answer, but the current candidate cannot meet lifecycle and advanced-difficulty requirements or override the technical hold."
+    },
+    {
+      "questionId": "ai103-t-020",
+      "authorId": "ai103-language-pass1-author-20260914",
+      "reviewerId": "ai103-adversary-language",
+      "questionFingerprint": "69e95cc61035b1dc323a8c820a7f4a88b504320222206ca1bb609b700e32af05",
+      "reviewedAt": "2026-09-14T19:40:20.517Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-speech-translation",
+          "url": "https://learn.microsoft.com/en-us/training/modules/translate-text-speech/4-speech-translation",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\translate-text-speech--4-speech-translation.txt",
+          "retrievedAt": "2026-09-14T17:55:10.049Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Python lesson retains source text separately from the target translations dictionary. Manual synthesis iterates the dictionary and selects target voices; event-based synthesis is explicitly one-source/one-target only. The Python callback uses voice_name, synthesizing.connect and evt.result.audio even though surrounding prose uses other SDK names. Its illustrative wb+ writer can overwrite chunks and is not adopted. There is no affirmative GA statement."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A separate synthesizer meets the requested event-only component design. That is the manual synthesis architecture and violates the explicit no-separate-SpeechSynthesizer boundary. Alternate context: It is appropriate for manual synthesis, including multiple target translations, using a separate SpeechConfig and target voices. Evidence: The manual section creates SpeechConfig/SpeechSynthesizer; the event section instead wires translation voice and callback.",
+          "sourceIds": [
+            "ai103-speech-translation"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Set translation voice, connect synthesizing and consume evt.result.audio. Not incorrect here: this is the exact Python event path for one target, with working recognition/input setup already supplied. Alternate context: It is correct for one-source/one-target translation where the component consumes synthesized audio events rather than building a separate synthesizer. Evidence: The Python event example sets voice_name, connects translator.synthesizing and reads evt.result.audio in synthesis_callback.",
+          "sourceIds": [
+            "ai103-speech-translation"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "An unset translation voice plus recognized source text provides translated audio bytes. The documented event path requires a target voice and the source text is not an audio payload. Alternate context: Recognized source text is useful for transcript display in speech-to-text translation; it cannot stand in for event-generated audio, with or without a voice. Evidence: The sample prints translation_results.text separately and configures voice_name before consuming result.audio.",
+          "sourceIds": [
+            "ai103-speech-translation"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Manual for lifecycle. Source text is not audio under any documented event context; c’s counterexample is a different transcript-display requirement, reducing distractor strength. The key avoids the source sample’s writer problem. Feature review: The actual lesson contains no affirmative GA statement for the Python event path. The authored label remains unverified. Semantic review: No global exclusion. One-target Python event members are the key, not the multi-target architecture decision in t-019. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "confidenceReason": "The exact Python event members and single-target scope are directly evidenced, but lifecycle support remains absent and the technical review is manual."
+    }
+  ]
+}

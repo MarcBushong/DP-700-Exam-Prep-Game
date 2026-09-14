@@ -1,0 +1,1499 @@
+{
+  "schemaVersion": 1,
+  "requestId": "ai103-extraction-independent-adversarial-pass3",
+  "reviews": [
+    {
+      "questionId": "ai103-x-001",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "acb56ca54bc82c90193559188aff533c287bb3d83d8a2dc7cb8eac4bdff9646f",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-indexer-pipeline",
+          "url": "https://learn.microsoft.com/en-us/training/modules/ai-knowldge-mining/3-index",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\ai-knowldge-mining--3-index.json",
+          "retrievedAt": "2026-09-14T17:55:49.730Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The enrichment-tree lesson separates original content, source metadata, normalized image objects and per-image OCR Text. Its final paragraphs distinguish implicit direct-source mappings from explicit skill-output mappings, and demonstrate merging OCR with original content. a: The initial tree has content; the subsequent image-extraction tree adds normalized_images separately (27-46). b: The lesson describes configuration, image0/image1 and the collection as input to image-information skills (36-46). c: The language example appends language beside normalized_images, not inside the image-input collection (48-70). d: The initial metadata fields precede the separate image collection (29-45)."
+        },
+        {
+          "sourceId": "ai103-search-architecture",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-021.json",
+          "retrievedAt": "2026-09-14T17:59:39.528Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The classic-search indexing section requires JSON and separates push upload from supported-source pull serialization. The choose-your-path checklist requires push for an unsupported source. Query requests read the populated index. Serverless preview and agentic capabilities are separate from this classic contract. This citation supplies the bounded service context, not a substitute for the option-specific implementation source."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Use the original content text as the extracted-image input. Wrong here: the skill needs image objects, not the text field. Counterexample/context: Use content when a text-processing skill needs the document text rather than image data. Evidence: The initial tree has content; the subsequent image-extraction tree adds normalized_images separately (27-46).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Supply extracted image objects through normalized_images. Not incorrect here: the collection is explicitly created to provide images to later skills. Counterexample/context: Correct when image extraction is configured and a downstream skill consumes each image in that collection. Evidence: The lesson describes configuration, image0/image1 and the collection as input to image-information skills (36-46).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Supply the language-detection result as the image collection. Wrong here: language is a skill-generated language value, not extracted images. Counterexample/context: Use the language field when a later step needs the detected language value. Evidence: The language example appends language beside normalized_images, not inside the image-input collection (48-70).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Use source file-name metadata as the image input. Wrong here: a file name identifies the source artifact, not each embedded image. Counterexample/context: Use metadata_storage_name when retaining the source file name in the searchable document. Evidence: The initial metadata fields precede the separate image collection (29-45).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The key survives the image-versus-OCR challenge. Neighboring x-010 tests merging existing OCR and x-009 tests persistence, not this node identity. Final duplicate clearance still requires the global audit.\nIndependent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.\nFinal independently scored rubric total: 47/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Ingest and index content, such as documents, images, audio, and video; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: This asks about one indexer enrichment tree, not image storage across resources or query-time generation.\nplan: Image normalization configuration is necessary; no free-tier allowance or all-tier support is claimed. The architecture separately labels Serverless preview.\nrole: No authorization repair is asked: identifying a tree node does not grant the indexer source access or call a protected model.\npreconditions: The stem asks what to populate, not what an unconfigured indexer already returns; this respects the lesson requirement to configure image extraction.\nfeatureStatus: Classic enrichment is the scope. No agentic retrieval or preview Serverless behavior is borrowed from the architecture overview.\nsourceChanges: The frozen lesson explicitly separates normalized_images from content and OCR Text. No newer source-review date is substituted.\nstemSufficiency: Embedded images and a later image-consuming skill distinguish the collection from original text, metadata and language.\nexplanationBounds: The explanation correctly says normalization is not OCR output; it promises neither recognition accuracy nor implicit storage.\nreasoningDepth: An appropriate foundational node-identification item; it is not an advanced ingestion troubleshooting question.\nanswerClues: All choices name fields and their contents with parallel syntax. The image wording makes this straightforward, consistent with beginner.\nQuality warning response: Pronoun warning inspected: each extracted image and this purpose refer unambiguously to the downstream image input.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in the node distinction from the actual hierarchical lesson, bounded to configured extraction."
+    },
+    {
+      "questionId": "ai103-x-002",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "47aecb2584bfe47aef5da31de5f761d74e869a5775cd8fcbc613dd708d6ac0c9",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-search-architecture",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-021.json",
+          "retrievedAt": "2026-09-14T17:59:39.528Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The classic-search indexing section requires JSON and separates push upload from supported-source pull serialization. The choose-your-path checklist requires push for an unsupported source. Query requests read the populated index. Serverless preview and agentic capabilities are separate from this classic contract. a: Classic indexing and querying are separate workloads; the latter targets already searchable content (54-68). b: The ingestion checklist makes push the option when there is no supported source (109). c: The indexing section describes direct JSON upload and the checklist covers unsupported sources (55,109). d: The source says only JSON can be indexed, while pull retrieves and serializes original data (55)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Load source records by making a full-text query. Wrong here: a query reads the populated index and does not load prepared records. Counterexample/context: Use full-text requests after ingestion when finding indexed documents by textual criteria. Evidence: Classic indexing and querying are separate workloads; the latter targets already searchable content (54-68).",
+          "sourceIds": [
+            "ai103-search-architecture"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Pull directly from a source without a supported connector. Wrong here: the required supported-source prerequisite is expressly absent. Counterexample/context: Choose pull when a supported source can be retrieved and serialized into JSON by the documented ingestion mechanism. Evidence: The ingestion checklist makes push the option when there is no supported source (109).",
+          "sourceIds": [
+            "ai103-search-architecture"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Push application-prepared, schema-compatible JSON into the index. Not incorrect here: the application has completed conversion and does not need a pull connector. Counterexample/context: Correct for an unsupported source or real-time index synchronization when application code supplies the JSON documents. Evidence: The indexing section describes direct JSON upload and the checklist covers unsupported sources (55,109).",
+          "sourceIds": [
+            "ai103-search-architecture"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Have automatic indexing consume the original non-JSON representation directly. Wrong here: direct push requires JSON, and this source has no supported pull serializer. Counterexample/context: The related automatic-conversion approach is appropriate for supported pull sources; it is not permission to push a non-JSON body directly. Evidence: The source says only JSON can be indexed, while pull retrieves and serializes original data (55).",
+          "sourceIds": [
+            "ai103-search-architecture"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": false,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Push is defensible, but the counterexample for d must remain supported pull serialization, never a fictitious non-JSON push contract. This limits distractor evidence and plausibility scores.\nI read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.\nIndependent audit comparison: I read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.\nFinal independently scored rubric total: 42/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Ingest and index content, such as documents, images, audio, and video; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The stem explicitly limits this to classic index-bound ingestion, excluding remote knowledge-source retrieval.\nplan: No tier-dependent connector entitlement is assumed: absence of a supported connector is supplied rather than guessed.\nrole: Upload still needs authorized service access; no option claims JSON conversion creates permission. Permission is not the defect under test.\npreconditions: Schema-compatible JSON and application-side conversion make push feasible without adding a serialization or connector requirement.\nfeatureStatus: Classic-search GA is explicit in the architecture comparison; Serverless preview and agentic status are irrelevant to choosing push.\nsourceChanges: Read the current architecture indexing section and unsupported-source checklist, not the broader marketing description of multi-source access.\nstemSufficiency: Unsupported pull plus prepared JSON identifies a concrete integration boundary. The alternatives cannot satisfy both facts.\nexplanationBounds: The explanation correctly distinguishes write ingestion from read querying; it does not claim every non-JSON source is intrinsically unsupported.\nreasoningDepth: Moderate application of two supplied constraints. The unsupported-source sentence largely reveals the branch, so difficulty earns 3 rather than 4.\nanswerClues: The distractor explicitly saying unsupported source is easy to eliminate; non-JSON automatic conversion is plausible only under supported pull. No unique grammar clue.\nQuality warning response: Pronoun warning inspected: those records are the already converted records. The actual blocking problem is the independently confirmed SEM-009 duplicate.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High technical confidence in the ingestion boundary; only moderate difficulty authenticity."
+    },
+    {
+      "questionId": "ai103-x-003",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "219ec322a22c477ceb3e19af693b596b03e71951fc0e193baff08f8c47cca0a7",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-search-query-types",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-query-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-069.json",
+          "retrievedAt": "2026-09-14T18:00:34.326Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The query-form table defines hybrid as text and vector in one request. Filter text is unanalyzed and case-sensitive. Document lookup requests a selected ID without a new index search. Autocomplete completes partial indexed strings; Full Lucene controls text operators, not schema attributes. a: The hybrid row explicitly combines text search and vector search in a single query request (15). b: Full-text uses inverted indexes of tokenized terms; the hybrid row adds the vector component (13-15). c: The vector row targets vector fields, distinct from full-text and hybrid rows (13-15). d: Filter search supports search=* or a search string and operates on filterable fields (25-38)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Combine lexical and vector retrieval in a hybrid request. Not incorrect here: both requested retrieval components and their index fields are present. Counterexample/context: Correct when one request needs text search over searchable text and similarity over vector fields. Evidence: The hybrid row explicitly combines text search and vector search in a single query request (15).",
+          "sourceIds": [
+            "ai103-search-query-types"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Use full-text retrieval alone for the combined requirement. Wrong here: lexical retrieval omits the required vector component. Counterexample/context: Choose full-text search alone when matching analyzed terms is sufficient. Evidence: Full-text uses inverted indexes of tokenized terms; the hybrid row adds the vector component (13-15).",
+          "sourceIds": [
+            "ai103-search-query-types"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Use vector retrieval alone for the combined requirement. Wrong here: it does not supply the requested text-matching component. Counterexample/context: Choose vector-only retrieval when similarity over embeddings is the complete retrieval requirement. Evidence: The vector row targets vector fields, distinct from full-text and hybrid rows (13-15).",
+          "sourceIds": [
+            "ai103-search-query-types"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Replace combined retrieval with exact metadata filtering. Wrong here: a Boolean metadata constraint does not combine lexical and vector search. Counterexample/context: Use a filter alone when exact filterable metadata fully identifies the desired subset, or alongside search to constrain it. Evidence: Filter search supports search=* or a search string and operates on filterable fields (25-38).",
+          "sourceIds": [
+            "ai103-search-query-types"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The question tests only hybrid selection. Broad conceptual overlap with legacy hybrid material warrants an originality deduction and independent global comparison, not inferred ranking support.\nI read the actual archived 028 options and explanation, which distinguish parallel text/vector retrieval, RRF, k=40 and top=8. x-003 only recognizes the combined request type. The author withholding file expressly calls x-003 a separately reserved elementary fact, not renewal of 028; I agree this can be a deliberate split. The global audit nevertheless assigns final fact-identity accounting to the parent/content owner. Keep x-003 manual until that disposition is recorded; this is not a current-bank duplicate exclusion, and no old advanced coverage is restored.\nIndependent audit comparison: I read the actual archived 028 options and explanation, which distinguish parallel text/vector retrieval, RRF, k=40 and top=8. x-003 only recognizes the combined request type. The author withholding file expressly calls x-003 a separately reserved elementary fact, not renewal of 028; I agree this can be a deliberate split. The global audit nevertheless assigns final fact-identity accounting to the parent/content owner. Keep x-003 manual until that disposition is recorded; this is not a current-bank duplicate exclusion, and no old advanced coverage is restored.\nFinal independently scored rubric total: 47/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: One index and one request are stated; this is not cross-index aggregation or agentic query planning.\nplan: The question assumes populated vector and searchable text fields, not a tier upgrade or semantic-ranker purchase.\nrole: Selecting a query form neither changes index access nor introduces a permission bypass; caller authorization remains required.\npreconditions: Both field types are supplied. No vectorizer, embedding dimension or k value is silently prescribed.\nfeatureStatus: The source labels the separate agentic row preview. This answer uses the nonpreview hybrid row only.\nsourceChanges: Current query forms were reread. The architecture and query article disagree on broad agentic status, but that disagreement cannot change this hybrid definition.\nstemSufficiency: The requirement explicitly includes both text and vector components, eliminating either single-mode alternative.\nexplanationBounds: No RRF, parallel execution, k/top relationship or guaranteed relevance is asserted; old ai103-028 cannot be renewed by this citation.\nreasoningDepth: Accurate beginner taxonomy recognition, not a complex ranking problem. Historical compound hybrid facts remain separate.\nanswerClues: Parallel query-form choices are readable. The word hybrid is an intentional foundational concept, not an implausible format clue.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in the narrow table-row distinction; no claim about fusion internals."
+    },
+    {
+      "questionId": "ai103-x-004",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "c1e764e234015ae646c6621dba47a13f7bf7033406c2d2d05b8f2104e63bfa70",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-search-filters",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-filters",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-070.json",
+          "retrievedAt": "2026-09-14T18:00:34.906Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Filters evaluate Boolean constraints over filterable nonvector fields. The article explicitly forbids changing an existing field to filterable, requiring a new field or index rebuild. Whole-string equality is case-sensitive absent a normalizer; numeric selection uses filters, not full-text tokens. REST examples identify 2026-04-01. a: Text filter fundamentals explicitly reject a partial word equality match against a multiword string (118-120). b: Default text filters are case-sensitive; a normalizer can change that behavior (122). c: Whole-string equality is literal and has no lexical word-breaking (118-120). d: The exact-match example and case-sensitivity note jointly support this equality (118-122)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Compare Category to only the first token Safety. Wrong here: equality compares the entire stored Safety Manual value. Counterexample/context: This predicate matches when the complete stored Category value is Safety. Evidence: Text filter fundamentals explicitly reject a partial word equality match against a multiword string (118-120).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Compare Category to lowercase safety manual. Wrong here: no normalizer is configured and the stored initial capitals differ. Counterexample/context: The lowercase literal works if the stored value is lowercase, or appropriate normalization makes equality case-insensitive. Evidence: Default text filters are case-sensitive; a normalizer can change that behavior (122).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Compare Category to the reversed phrase Manual Safety. Wrong here: reversing word order changes the complete literal, and filtering does not tokenize it. Counterexample/context: The reversed literal works for a document whose entire stored Category is Manual Safety. Evidence: Whole-string equality is literal and has no lexical word-breaking (118-120).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Compare Category to the exact stored Safety Manual literal. Not incorrect here: it preserves the full value and case on a filterable string. Counterexample/context: Correct under the supplied no-normalizer condition when the stored value is exactly Safety Manual. Evidence: The exact-match example and case-sensitivity note jointly support this equality (118-122).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Key d survives shortened, reordered and normalized-value counterexamples. This exact literal exercise is not advanced; retain current intermediate label only with the reduced authenticity score.\nFinal independently scored rubric total: 46/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: This is a single filterable string field in one index, not fuzzy matching or token retrieval.\nplan: No semantic tier or paid feature affects whole-string equality; field filterability is already supplied.\nrole: The predicate narrows results but does not authenticate a user or establish document authorization.\npreconditions: The JSON snippet stores Safety Manual, and the explicit no-normalizer condition removes the case-insensitivity counterexample.\nfeatureStatus: This relies on documented ordinary OData equality, not vector filter overrides or a preview API property.\nsourceChanges: Rechecked the whole-string and normalizer paragraphs. The frozen source-review dates are retained.\nstemSufficiency: The exact value, data type, filterability and normalization state are supplied; there is no missing collation assumption.\nexplanationBounds: The explanation confines case sensitivity to the stated condition and does not generalize it to normalized fields.\nreasoningDepth: Applies whole-value equality and case sensitivity, though the same-literal choice is visually easy. Intermediate authenticity is 3.\nanswerClues: All choices show a predicate and description. Copying the literal is a visible clue, but distinguishing filters from token search remains the intended fact.\nQuality warning response: Pronoun warning inspected: that document is the JSON record with Safety Manual. Equality scope is explicit.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence because the article directly addresses both full-value and case behavior."
+    },
+    {
+      "questionId": "ai103-x-005",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "995f2d7f3f589aa1d1183777b46dbcfdcc73a938fcad5e695397f7405a9565f3",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-search-filters",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-filters",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-070.json",
+          "retrievedAt": "2026-09-14T18:00:34.906Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Filters evaluate Boolean constraints over filterable nonvector fields. The article explicitly forbids changing an existing field to filterable, requiring a new field or index rebuild. Whole-string equality is case-sensitive absent a normalizer; numeric selection uses filters, not full-text tokens. REST examples identify 2026-04-01. a: The field-definition examples enable filterability, but the following existing-field section forbids mutation (101-114). b: The existing-field section lists adding a new field as an alternative (112-114). c: The article names rebuilding the index as the other supported strategy (112-114). d: Advanced search changes text operators; filters still require fields attributed filterable (query 70-81; filters 35)."
+        },
+        {
+          "sourceId": "ai103-search-query-types",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-query-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-069.json",
+          "retrievedAt": "2026-09-14T18:00:34.326Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The query-form table defines hybrid as text and vector in one request. Filter text is unanalyzed and case-sensitive. Document lookup requests a selected ID without a new index search. Autocomplete completes partial indexed strings; Full Lucene controls text operators, not schema attributes. d: Advanced search changes text operators; filters still require fields attributed filterable (query 70-81; filters 35)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Turn on filterability for an existing field without rebuilding. Wrong here: the article explicitly disallows this change on an existing field. Counterexample/context: Setting filterable true is valid while defining a new field; that is not an in-place update of this existing Region. Evidence: The field-definition examples enable filterability, but the following existing-field section forbids mutation (101-114).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Create and populate a second filterable Region representation. Not incorrect here: a new field is a supported alternative and the team can reload the values. Counterexample/context: Correct when retaining the index while adding a filterable field and supplying its values is acceptable. Evidence: The existing-field section lists adding a new field as an alternative (112-114).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Rebuild the index with a filterable Region and reload data. Not incorrect here: rebuild is expressly supported and the stem permits schema changes and reload. Counterexample/context: Correct when a rebuilt index with the desired field attributes can replace the current representation. Evidence: The article names rebuilding the index as the other supported strategy (112-114).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Use Full Lucene syntax instead of changing filterability. Wrong here: a text parser cannot make Region a filterable field. Counterexample/context: Full Lucene is appropriate for fielded, fuzzy, proximity or regex text queries on the relevant searchable content. Evidence: Advanced search changes text operators; filters still require fields attributed filterable (query 70-81; filters 35).",
+          "sourceIds": [
+            "ai103-search-query-types",
+            "ai103-search-filters"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Independent quality hold agrees with technical nonapproval: 42/48 and advanced difficulty unsupported. Re-authoring an applied migration problem requires fresh generation and both independent passes, not a metadata difficulty change.\nFinal independently scored rubric total: 42/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: Schema capability is the defect; ranking, analyzers and tenant scope are not involved.\nplan: The team may rebuild or add fields; no zero-downtime alias migration or tier capacity assumption is introduced.\nrole: Schema modification and reload require authorized administration, already granted by the scenario rather than a named role guess.\npreconditions: The field currently has filterable false and reload is permitted, supporting both keyed strategies.\nfeatureStatus: No preview filter override or mutable-attribute feature is asserted. The source explicitly forbids the proposed existing-field change.\nsourceChanges: The direct existing-field prohibition was reread; it remains the current frozen evidence for both choices.\nstemSufficiency: The complete two-answer set is supported, but the problem nearly states the documented alternative pair.\nexplanationBounds: Reloading is necessary for useful values. The explanation does not promise a rebuild preserves all service state.\nreasoningDepth: Advanced is not earned: this is one documented schema limitation with two listed alternatives, not a migration trade-off.\nanswerClues: The two correct answers are the only two that actually create a filterable representation; the parser distractor is weak.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in the key, insufficient confidence in the authored advanced encounter quality."
+    },
+    {
+      "questionId": "ai103-x-006",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "72ab95fcf4fa27a362cd64dc991561724fe4d8d8a86962b76e615115aacf9694",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-search-filters",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-filters",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-070.json",
+          "retrievedAt": "2026-09-14T18:00:34.906Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Filters evaluate Boolean constraints over filterable nonvector fields. The article explicitly forbids changing an existing field to filterable, requiring a new field or index rebuild. Whole-string equality is case-sensitive absent a normalizer; numeric selection uses filters, not full-text tokens. REST examples identify 2026-04-01. a: Numeric fundamentals distinguish searching number text in strings from selecting numeric fields (132-136). b: The combined search/filter example uses ge in a numeric interval, retaining the text query (74-80). c: With search=* the filter is the sole input, unlike the combined-query pattern (31,66-80). d: The examples distinguish inclusive ge lower bounds from exclusive lt upper bounds (71,79)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Search for inspection and the token 12 without a numeric filter. Wrong here: a text token is not an inclusive constraint on numeric PageCount. Counterexample/context: A numeric-looking token can be useful when it is literal searchable string content rather than a numeric-field range. Evidence: Numeric fundamentals distinguish searching number text in strings from selecting numeric fields (132-136).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Keep inspection and add PageCount ge 12. Not incorrect here: this retains lexical matching and the inclusive lower bound. Counterexample/context: Correct when a filterable numeric field must meet a minimum while text matching remains required. Evidence: The combined search/filter example uses ge in a numeric interval, retaining the text query (74-80).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Use search=* with the minimum-page filter. Wrong here: the wildcard drops the inspection text condition. Counterexample/context: Use filter-only matching when the page-count constraint alone fully defines the desired documents. Evidence: With search=* the filter is the sole input, unlike the combined-query pattern (31,66-80).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Keep inspection and filter PageCount lt 12. Wrong here: this selects the short reports that must be excluded. Counterexample/context: Use lt 12 when the actual task is finding inspection reports shorter than twelve pages. Evidence: The examples distinguish inclusive ge lower bounds from exclusive lt upper bounds (71,79).",
+          "sourceIds": [
+            "ai103-search-filters"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The code and ge/lt boundary were inspected independently. Correctness is not based solely on the English word minimum; the numeric-filter contract and retained search term both matter.\nFinal independently scored rubric total: 47/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: Classic keyword retrieval and nonvector numeric filtering occur in one request; vector filter modes are excluded.\nplan: No ranking subscription or special tier is needed for the stated Boolean predicate; the existing field is explicitly filterable.\nrole: This narrows eligible search results but is not an access-control policy or permission grant.\npreconditions: The stem supplies searchable text, numeric PageCount and filterability; the code preserves inspection.\nfeatureStatus: The cited REST example actually uses 2026-04-01. No preview selector is introduced.\nsourceChanges: Read both combined-query and numeric-field sections; snippets containing number tokens are not evidence for numeric search.\nstemSufficiency: The inclusive minimum follows from excluding fewer than twelve, and text matching must remain.\nexplanationBounds: The answer adds only the numeric constraint and does not promise exact keyword matching or particular relevance scores.\nreasoningDepth: Combining two independent conditions is a modest intermediate task, not deep troubleshooting; authenticity receives 3.\nanswerClues: All choices are request edits. Wildcard and opposite-bound alternatives are realistic mistakes without a unique long-key cue.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in the complete conjunctive request requirement."
+    },
+    {
+      "questionId": "ai103-x-007",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "05e7febf34f7276bc89b1fea3f5c716c8ab2124840cc1171946cf0e794aaa2e8",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-search-custom-skill",
+          "url": "https://learn.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-068.json",
+          "retrievedAt": "2026-09-14T18:00:30.996Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The custom-skill interface requires HTTPS, a managed-identity caller, Entra-enabled application and authResourceId bound to that application. Each batched output preserves the input recordId; the response example reverses two results while retaining their identifiers. Data bags alone are not the record envelope. a: The input contract requires recordId for correlation and the output example reverses a1/b5 while preserving their IDs (49-52,92-119). b: The interface requires the original recordId, not order; its deliberately reordered response defeats positional matching (51,96-106). c: Each recordId uniquely identifies a record and each output must preserve that identity (49-52,90). d: The output is explicitly a set of records containing recordId and a property bag (88-90)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Return each enrichment result with the same input recordId. Not incorrect here: preserving R-17 and R-24 restores identity correlation despite reversed completion. Counterexample/context: Correct for every batch where results must be associated with their original records rather than result order. Evidence: The input contract requires recordId for correlation and the output example reverses a1/b5 while preserving their IDs (49-52,92-119).",
+          "sourceIds": [
+            "ai103-search-custom-skill"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Generate output-position IDs and rely on array order. Wrong here: newly assigned IDs do not identify R-17 and R-24. Counterexample/context: No documented positional-correlation mode exists. Sequential-looking IDs are valid only when they equal each corresponding input ID; that is not this proposed algorithm. Evidence: The interface requires the original recordId, not order; its deliberately reordered response defeats positional matching (51,96-106).",
+          "sourceIds": [
+            "ai103-search-custom-skill"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Reuse the first input ID for all results. Wrong here: the two distinct inputs require distinct identities. Counterexample/context: A one-record batch could return its sole input ID once; repeating that ID for multiple distinct inputs is not supported. Evidence: Each recordId uniquely identifies a record and each output must preserve that identity (49-52,90).",
+          "sourceIds": [
+            "ai103-search-custom-skill"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Return only output data bags without recordId. Wrong here: this omits a required response-envelope identifier. Counterexample/context: Data bags are valid output fields inside a record that also contains recordId. No source supports an identifier-free Web API skill response. Evidence: The output is explicitly a set of records containing recordId and a property bag (88-90).",
+          "sourceIds": [
+            "ai103-search-custom-skill"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": false,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "41/48. The key is technically strong but positional or identifier-free modes cannot be invented to satisfy a counterexample field. Preserve technical quality hold and require fresh authored repair.\nI independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.\nIndependent audit comparison: I independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.\nFinal independently scored rubric total: 38/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: Correlation is within a custom-skill batch, not persistent index keys or workflow run identifiers.\nplan: The error is independent of batch size limits, timeout and hosting tier; no retry guarantee is assumed.\nrole: Authorization already succeeded because the skill returned values; changing identity permissions cannot repair record correlation.\npreconditions: Two distinct known input IDs and reversed completion eliminate a single-record or stable-order exception.\nfeatureStatus: The required record envelope is documented without preview scope. No special parallel-execution feature is needed.\nsourceChanges: The actual a1/b5 output reversal was inspected, not merely the technical reviewer summary.\nstemSufficiency: The stem exposes the exact defect, leaving a one-step original-ID repair rather than substantial diagnosis.\nexplanationBounds: Correct values are not sufficient without identity. The explanation makes no claim about callback order or transport retry semantics.\nreasoningDepth: Advanced is inflated: one invariant is recalled and applied directly. It needs a genuinely interacting error case to earn that label.\nanswerClues: Three alternatives deliberately violate required identity. Two have no valid alternate mode in this API, weakening sourced distractor plausibility.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed, originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in original-ID correlation; low confidence that the alternatives constitute an advanced exam-realistic challenge."
+    },
+    {
+      "questionId": "ai103-x-008",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "20fa4617f9470feda0f212af482616fab42c17a753f7c180a6a41fb7341b6317",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-search-custom-skill",
+          "url": "https://learn.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-068.json",
+          "retrievedAt": "2026-09-14T18:00:30.996Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The custom-skill interface requires HTTPS, a managed-identity caller, Entra-enabled application and authResourceId bound to that application. Each batched output preserves the input recordId; the response example reverses two results while retaining their identifiers. Data bags alone are not the record envelope. a: The source first describes API-key authorization, then separately requires authResourceId for managed-identity calls (29-35). b: The requirements explicitly name the supported api://<appId> application-ID form (31-37). c: The endpoint must belong to the application identified by authResourceId; mismatches risk failures or unintended destinations (37). d: The source explicitly requires this match after listing the identity and application prerequisites (33-37)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Omit authResourceId after enabling the caller identity. Wrong here: caller identity and the target authentication resource are separate requirements. Counterexample/context: An API-key-authorized custom endpoint is a documented different authentication approach; it does not satisfy this managed-identity requirement. Evidence: The source first describes API-key authorization, then separately requires authResourceId for managed-identity calls (29-35).",
+          "sourceIds": [
+            "ai103-search-custom-skill"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Set authResourceId to api://<appId> for the called app. Not incorrect here: this supplies the required application audience binding. Counterexample/context: Correct when the search identity and Entra-enabled app authorization are established and the endpoint belongs to that app. Evidence: The requirements explicitly name the supported api://<appId> application-ID form (31-37).",
+          "sourceIds": [
+            "ai103-search-custom-skill"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Point the URI at a different application while retaining the old audience. Wrong here: HTTPS does not make a mismatched application/audience valid. Counterexample/context: A different HTTPS endpoint is suitable only if it is still an endpoint of the same identified app, or the resource binding is changed to the new app. Evidence: The endpoint must belong to the application identified by authResourceId; mismatches risk failures or unintended destinations (37).",
+          "sourceIds": [
+            "ai103-search-custom-skill"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Ensure the URI targets the app identified by authResourceId. Not incorrect here: this is the endpoint half of the required audience binding. Counterexample/context: Correct for a managed-identity custom-skill call whose URI and authentication resource describe the same application. Evidence: The source explicitly requires this match after listing the identity and application prerequisites (33-37).",
+          "sourceIds": [
+            "ai103-search-custom-skill"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "43/48. Technically b/d survive the security counterexamples, but authored difficulty and obvious endpoint mismatch prevent strict approval; technical nonapproval is independently maintained.\nFinal independently scored rubric total: 43/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The relevant boundary is search-service identity to a particular HTTPS application, not organization membership.\nplan: No hosting-plan or subscription-level entitlement is asserted. HTTPS and the custom-skill contract are the operative constraints.\nrole: The stem explicitly supplies managed identity, Entra configuration and necessary authorization; authResourceId alone does not grant access.\npreconditions: Caller and target prerequisites are supplied, so the two remaining checks are audience and endpoint consistency.\nfeatureStatus: No preview API or user-assigned-identity selector is required by these choices. The article describes the contract directly.\nsourceChanges: Read the current security paragraph requiring matching URI and resource, rather than inferring audience from enabled identity.\nstemSufficiency: The two-answer set is complete for the remaining definition checks, but most of the configuration is handed to the learner.\nexplanationBounds: The explanation correctly refuses to name an unsupported role or imply an audience property grants authorization.\nreasoningDepth: Two adjacent documentation bullets are recalled; the advanced label is not earned by a real authorization diagnosis.\nanswerClues: b and d repeat the application binding, while c explicitly says another application. This makes the pair unusually easy to select.\nQuality warning response: Negative wording not an ambiguity: not an API key defines the authentication requirement. Nevertheless the supplied prerequisites and obvious mismatch make the advanced item too easy.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in identity/audience distinction, moderate-to-low confidence in advanced plausibility."
+    },
+    {
+      "questionId": "ai103-x-009",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "84e787a3e3d3a81e1f5f1eaee0237babd70a4cae6dd0cefaa835a0bcaedcaca7",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-indexer-pipeline",
+          "url": "https://learn.microsoft.com/en-us/training/modules/ai-knowldge-mining/3-index",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\ai-knowldge-mining--3-index.json",
+          "retrievedAt": "2026-09-14T17:55:49.730Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The enrichment-tree lesson separates original content, source metadata, normalized image objects and per-image OCR Text. Its final paragraphs distinguish implicit direct-source mappings from explicit skill-output mappings, and demonstrate merging OCR with original content. a: The final two bullets distinguish direct-source implicit mappings from explicit hierarchical skill-output mappings (86-89). c: The lesson explicitly maps skill outputs from hierarchical locations to index fields (89). d: The initial source-field tree and direct mappings are distinct from later skill-added fields (29,48,86-89)."
+        },
+        {
+          "sourceId": "ai103-search-architecture",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-021.json",
+          "retrievedAt": "2026-09-14T17:59:39.528Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The classic-search indexing section requires JSON and separates push upload from supported-source pull serialization. The choose-your-path checklist requires push for an unsupported source. Query requests read the populated index. Serverless preview and agentic capabilities are separate from this classic contract. b: Querying reads a populated index, while indexing loads and serializes content (54-60)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Implicitly map a same-named enriched output as if it were a source field. Wrong here: the lesson requires explicit skill-output mappings. Counterexample/context: Implicit same-name mapping is documented for values extracted directly from source data. Evidence: The final two bullets distinguish direct-source implicit mappings from explicit hierarchical skill-output mappings (86-89).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Put the output path into a full-text query. Wrong here: querying does not persist the enriched value in the index. Counterexample/context: Use full-text queries after values have been mapped and indexed when retrieving matching content. Evidence: Querying reads a populated index, while indexing loads and serializes content (54-60).",
+          "sourceIds": [
+            "ai103-search-architecture"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Explicitly map the skill output path to the target index field. Not incorrect here: the enriched value exists and the missing mapping is the isolated defect. Counterexample/context: Correct when a skill creates a hierarchical value that must be persisted in a target field. Evidence: The lesson explicitly maps skill outputs from hierarchical locations to index fields (89).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Remove the successful skill and retain only direct mappings. Wrong here: the requested contractDate value is produced by that skill. Counterexample/context: A direct-source-only pipeline is sufficient when the required values already exist in source fields and no enrichment is needed. Evidence: The initial source-field tree and direct mappings are distinct from later skill-added fields (29,48,86-89).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "43/48. Maintain the technical quality hold. x-010 shares the mapping boundary but adds a distinct merge requirement; global comparison remains required.\nIndependent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.\nFinal independently scored rubric total: 43/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: This is the enrichment-to-index persistence boundary, not a query ranking or schema-name problem.\nplan: No knowledge-store projection, tier change or index capacity condition is implied by mapping one output.\nrole: The indexer successfully loads source values; no authorization failure is alleged. Editing mapping still requires normal management access.\npreconditions: Successful skill output, existing target field and absent output mapping are all supplied, leaving no extraction defect to infer.\nfeatureStatus: The answer uses classic explicit enriched-output mapping, not preview query-time enrichment.\nsourceChanges: Read the lesson final two bullets together; implicit direct mapping cannot be generalized to all enriched outputs.\nstemSufficiency: The defect is practically diagnosed in the question by stating no output mapping exists.\nexplanationBounds: The explanation correctly preserves the working producer and does not say a query edit can alter stored fields.\nreasoningDepth: Advanced difficulty is not genuine: a single missing mapping is explicitly disclosed.\nanswerClues: The only option that adds the stated missing mapping is also the only option preserving the required producer and output.\nQuality warning response: Pronoun warning inspected: that field is contractDate; successful producer and missing mapping are clear, but the diagnosis is handed to the learner.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in the mapping fact but insufficient challenge for the authored advanced label."
+    },
+    {
+      "questionId": "ai103-x-010",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "a243521ad38078733c02bf89c3500cdd913152edca8f70a4a885f6e74ab2e6c9",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-indexer-pipeline",
+          "url": "https://learn.microsoft.com/en-us/training/modules/ai-knowldge-mining/3-index",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\ai-knowldge-mining--3-index.json",
+          "retrievedAt": "2026-09-14T17:55:49.730Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The enrichment-tree lesson separates original content, source metadata, normalized image objects and per-image OCR Text. Its final paragraphs distinguish implicit direct-source mappings from explicit skill-output mappings, and demonstrate merging OCR with original content. a: The tree places Text beneath each image, separately from content, then introduces a merge (59-84). b: The merge example creates merged_content from original text and each image, followed by explicit skill-output mapping (72-89). c: Per-image OCR outputs are distinct child fields that can feed later skills; they are not automatically a whole-document union (59-72). d: The language field and merged_content are separate nodes in the final document tree (74-89)."
+        },
+        {
+          "sourceId": "ai103-search-architecture",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-021.json",
+          "retrievedAt": "2026-09-14T17:59:39.528Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The classic-search indexing section requires JSON and separates push upload from supported-source pull serialization. The choose-your-path checklist requires push for an unsupported source. Query requests read the populated index. Serverless preview and agentic capabilities are separate from this classic contract. This citation supplies the bounded service context, not a substitute for the option-specific implementation source."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Assume original content already incorporates separate OCR children. Wrong here: only original content is mapped, while OCR outputs occupy separate image child fields. Counterexample/context: Keeping only content is sufficient when no image-derived text is required or the source text already contains everything needed. Evidence: The tree places Text beneath each image, separately from content, then introduces a merge (59-84).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Merge original content and per-image OCR, then map that output. Not incorrect here: both existing text sources must reach one target field. Counterexample/context: Correct when retaining original text and image OCR together is necessary for retrieval through one index field. Evidence: The merge example creates merged_content from original text and each image, followed by explicit skill-output mapping (72-89).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Replace the original text with OCR from one image. Wrong here: it discards original content and other images despite the retain-both requirement. Counterexample/context: Selecting one image OCR value can serve a pipeline whose only required searchable material is that selected image. Evidence: Per-image OCR outputs are distinct child fields that can feed later skills; they are not automatically a whole-document union (59-72).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Index the language result instead of body text. Wrong here: a language value is not the combined document and OCR content. Counterexample/context: Persist language when downstream retrieval needs that enrichment attribute rather than the document body. Evidence: The language field and merged_content are separate nodes in the final document tree (74-89).",
+          "sourceIds": [
+            "ai103-indexer-pipeline"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The two-stage merge-and-map answer is supported. x-009 overlap must be considered globally, but the required preservation of multiple text inputs supplies a separate reasoning step.\nIndependent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.\nFinal independently scored rubric total: 47/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure RAG ingestion flow, including documents and using optical character recognition (OCR); actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The repair is one ingestion dataflow before retrieval, not a generative prompt or image-storage change.\nplan: OCR already succeeded, so OCR billing and model provisioning are not unmentioned conditions for this repair.\nrole: Existing OCR and source text establish working access. Mapping does not create new resource permissions.\npreconditions: All source text and relevant OCR children already exist; the missing merge and output mapping are actionable.\nfeatureStatus: No preview OCR or multimodal generation behavior is used; this is the classic lesson pipeline.\nsourceChanges: The actual tree and merge paragraph were reread. The original-source and OCR-child separation remains explicit.\nstemSufficiency: The retain-both requirement rules out replacing content with one image result; one target field makes combination necessary.\nexplanationBounds: No exact ordering offset, perfect OCR or safe HTML execution is claimed; the answer concerns preserving available text.\nreasoningDepth: This intermediate problem combines tree location, merge and persistence. It is distinct from merely naming normalized_images.\nanswerClues: The key is somewhat longer because it includes both actions, but all options are dataflow changes and retain/discard semantics carry the distinction.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence from the actual OCR-child and merged_content example, without promising extraction perfection."
+    },
+    {
+      "questionId": "ai103-x-011",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "a7ba2f3c3112831f403689da1c3eecefbc981f418805e57693a169731147ec3a",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-document-layout",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/prebuilt/layout",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-058.json",
+          "retrievedAt": "2026-09-14T18:00:21.311Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The v4.0 moniker explicitly identifies 2024-11-30 GA, paragraph logical-role predictions, word text and geometry, spans into top-level content, and row/column spans. The Markdown change note requires HTML tables for merged cells/multirow headers despite a remaining pipe-table sample. PDF role support is explicit; predictions are not universal guarantees. a: The version-specific note at 359 requires HTML; the later sample at 372-385 still displays a simple pipe table, so sample presence cannot override the note. b: The article separates text/word extraction from tables with row/column and span relationships (194-198,293-297). c: Text, lines and words are a separate extraction output; Markdown tables have their own version-specific contract (194-234,353-359). d: The GA note expressly explains why HTML tables replaced the earlier representation (357-359)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Accept only pipe tables because Markdown excludes HTML. Wrong here: the explicit v4.0 change note specifies HTML tables in Markdown. Counterexample/context: A pipe-table consumer can process the article retained simple pipe-table sample, but cannot serve as the only parser for v4.0 merged-cell output. Evidence: The version-specific note at 359 requires HTML; the later sample at 372-385 still displays a simple pipe table, so sample presence cannot override the note.",
+          "sourceIds": [
+            "ai103-document-layout"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Flatten table structure into unrelated text lines. Wrong here: the task requires merged-cell and header relationships. Counterexample/context: Text-only consumption is useful when the extracted words alone are sufficient and table relationships are not required. Evidence: The article separates text/word extraction from tables with row/column and span relationships (194-198,293-297).",
+          "sourceIds": [
+            "ai103-document-layout"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Keep the parser and use word-level OCR only. Wrong here: this abandons the required Markdown interface and table structure. Counterexample/context: Word output is appropriate when recognized words and their locations are the desired representation rather than structured tables. Evidence: Text, lines and words are a separate extraction output; Markdown tables have their own version-specific contract (194-234,353-359).",
+          "sourceIds": [
+            "ai103-document-layout"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Preserve documented HTML table structures within Markdown preprocessing. Not incorrect here: the consumer is dropping a supported representation needed for merged cells. Counterexample/context: Correct for v4.0 2024-11-30 Markdown table output that must retain merged cells and multirow headers. Evidence: The GA note expressly explains why HTML tables replaced the earlier representation (357-359).",
+          "sourceIds": [
+            "ai103-document-layout"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "43/48. Technically defensible despite the stale sample, but advanced difficulty and distractor design remain insufficient. Preserve technical hold, not a version-label-only repair.\nFinal independently scored rubric total: 43/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure RAG ingestion flow, including documents and using optical character recognition (OCR); actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: This is a downstream Document Intelligence consumer, not Azure AI Search skill HTML rendering or browser execution.\nplan: Existing successful layout output removes file-size and tier quotas from the repair. The source F0 two-page limit is not silently generalized.\nrole: No permission repair is needed for already received output; accepting structure does not authorize executing arbitrary HTML.\npreconditions: The version, Markdown interface and parser behavior are stated. Preserving relationships is required, not merely plain text.\nfeatureStatus: The actual moniker and note bind 2024-11-30 GA. A remaining pipe-table example does not erase the explicit change note.\nsourceChanges: The article contains both the explicit HTML transition and a leftover pipe example; I weighed the version-specific note rather than accepting the sample as universal.\nstemSufficiency: The stem directly says HTML is discarded and structure is lost, so accepting HTML is nearly given away.\nexplanationBounds: It correctly frames parsing as data preprocessing, not unsafe rendering, and does not guarantee all tables are detected.\nreasoningDepth: Version-aware but only one repair step; an advanced label requires more than knowing the representation change.\nanswerClues: The three wrong choices all discard required structure. The longest key is the only one preserving the stated interface.\nQuality warning response: Pronoun warning inspected: it means the preprocessor and their structure means the report tables. The real issue is difficulty, not pronoun ambiguity.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in explicit GA HTML behavior; reduced confidence in the advanced encounter realism."
+    },
+    {
+      "questionId": "ai103-x-012",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "f13f4e65aa4da1bd265b3efcf8524b04c0cc3394b568c9349e2b0e5d003bcd69",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-rag-design",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/retrieval-augmented-generation",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-011.json",
+          "retrievedAt": "2026-09-14T17:59:30.007Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Foundry article separates data preparation, index creation, connecting the project to the search service/index, retrieval integration and evaluation. Fine-tuning targets behavior, prompts guide use of retrieved content, and chunking prepares documents. Connection representation varies by feature/API. Grounding does not eliminate hallucination or access-control needs. a: The index section describes project connections or index asset IDs; the workflow lists connection after indexing (49,77-82). b: The choose-an-approach section explicitly separates fine-tuning behavior from RAG knowledge retrieval (69-73). c: Data preparation is distinct from connection, and the troubleshooting section recommends chunking for poor retrieval quality (79-82,113). d: The key-concepts and troubleshooting sections describe prompt guidance separately from retrieval connection (22,114)."
+        },
+        {
+          "sourceId": "ai103-search-architecture",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-021.json",
+          "retrievedAt": "2026-09-14T17:59:39.528Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The classic-search indexing section requires JSON and separates push upload from supported-source pull serialization. The choose-your-path checklist requires push for an unsupported source. Query requests read the populated index. Serverless preview and agentic capabilities are separate from this classic contract. This citation supplies the bounded service context, not a substitute for the option-specific implementation source."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Connect the Foundry project retrieval component to the intended search service and index. Not incorrect here: a populated index and model deployment do not configure this missing link. Counterexample/context: Correct when project retrieval needs to use an existing search service/index; exact connection representation depends on feature/API. Evidence: The index section describes project connections or index asset IDs; the workflow lists connection after indexing (49,77-82).",
+          "sourceIds": [
+            "ai103-rag-design"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Fine-tune response style without adding retrieval access. Wrong here: behavior tuning does not identify the disconnected index. Counterexample/context: Fine-tuning is useful when model behavior, style or task performance is the actual requirement. Evidence: The choose-an-approach section explicitly separates fine-tuning behavior from RAG knowledge retrieval (69-73).",
+          "sourceIds": [
+            "ai103-rag-design"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Re-chunk documents without connecting the index. Wrong here: changing prepared content cannot supply the missing connection. Counterexample/context: Review chunking when a connected retriever returns poor or incomplete passages. Evidence: Data preparation is distinct from connection, and the troubleshooting section recommends chunking for poor retrieval quality (79-82,113).",
+          "sourceIds": [
+            "ai103-rag-design"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Change instructions while leaving retrieval disconnected. Wrong here: instructions control use of supplied content, not access to the index. Counterexample/context: Change system messages when the model misuses already retrieved content or fabricates despite grounding. Evidence: The key-concepts and troubleshooting sections describe prompt guidance separately from retrieval connection (22,114).",
+          "sourceIds": [
+            "ai103-rag-design"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "41/48. Independent review sustains the technical quality hold: repeated absence clauses and an explicitly diagnosed dependency make the question self-answering.\nFinal independently scored rubric total: 41/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Connect retrieval pipelines directly to workflows and agent tools; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: One project-to-search integration is missing; this is not model training, cross-tenant authorization or a knowledge-base migration.\nplan: No specific Foundry SDK shape, index-asset entitlement or paid retrieval tier is claimed.\nrole: A connection still needs valid authorized access; the wording cannot be read as bypassing search RBAC.\npreconditions: Model and populated index exist. The question isolates the missing connection instead of a retrieval-quality failure.\nfeatureStatus: Classic index retrieval is stated, so newer agentic retrieval status in the broader articles is not imported.\nsourceChanges: The current source qualifies connection representation by feature and API surface, which the explanation correctly retains.\nstemSufficiency: The stem literally names the absent connection and then asks which configuration supplies it; it is too revealing.\nexplanationBounds: Fine-tuning, chunking and prompts remain useful in their own contexts; none is globally dismissed.\nreasoningDepth: A foundational dependency-recognition item wearing an intermediate scenario label, without competing feasible integration choices.\nanswerClues: Every distractor repeats leaving the connection absent. This permits solving from wording alone.\nQuality warning response: Negative/pronoun warnings inspected: its component is the workflow retriever; repeated leaving the connection absent clauses make alternatives self-disqualifying.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in connection necessity; low confidence in the authored assessment value."
+    },
+    {
+      "questionId": "ai103-x-013",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "7e6ef763aa4a2967549ffd0a61a78519d01e1267fe88a371bb949e47d128c489",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-search-query-types",
+          "url": "https://learn.microsoft.com/en-us/azure/search/search-query-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-069.json",
+          "retrievedAt": "2026-09-14T18:00:34.326Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The query-form table defines hybrid as text and vector in one request. Filter text is unanalyzed and case-sensitive. Document lookup requests a selected ID without a new index search. Autocomplete completes partial indexed strings; Full Lucene controls text operators, not schema attributes. a: Autocomplete is search-as-you-type based on partial strings and separate from search (21-23). b: Vector queries search vector fields, whereas lookup directly requests one ID (14,66-68). c: The document lookup paragraph describes this exact workflow without another index scan (66-68). d: The full-text row searches inverted indexes; lookup is explicitly contrasted with those query forms (13,66-68)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Autocomplete a title prefix to retrieve an already selected document. Wrong here: completion does not request the retained document ID. Counterexample/context: Use autocomplete while a user types partial indexed text and needs suggested completion. Evidence: Autocomplete is search-as-you-type based on partial strings and separate from search (21-23).",
+          "sourceIds": [
+            "ai103-search-query-types"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Run a vector topic query instead of using the selected ID. Wrong here: this starts a similarity retrieval rather than preserving the selected document identity. Counterexample/context: Use vector search when discovering candidate documents by embedding similarity. Evidence: Vector queries search vector fields, whereas lookup directly requests one ID (14,66-68).",
+          "sourceIds": [
+            "ai103-search-query-types"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Look up the document using its retained identifier. Not incorrect here: candidate selection has already finished and one exact record is needed. Counterexample/context: Correct when a selected search hit must populate a details view with its available fields. Evidence: The document lookup paragraph describes this exact workflow without another index scan (66-68).",
+          "sourceIds": [
+            "ai103-search-query-types"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Search title words again to rediscover the selected result. Wrong here: another full-text search is not an exact document lookup. Counterexample/context: Use full-text search when discovering documents matching analyzed title terms rather than retrieving a known ID. Evidence: The full-text row searches inverted indexes; lookup is explicitly contrasted with those query forms (13,66-68).",
+          "sourceIds": [
+            "ai103-search-query-types"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "43/48. Technically correct but the intermediate label and distractor challenge do not meet strict realism. Preserve technical hold.\nFinal independently scored rubric total: 43/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Connect retrieval pipelines directly to workflows and agent tools; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The requirement is single-record follow-up retrieval, not a new ranking pipeline or external original-file fetch.\nplan: No semantic-ranker or vector-tier assumption affects a known-ID lookup.\nrole: The lookup does not bypass authorization or expose nonretrievable fields; the explanation explicitly bounds available fields.\npreconditions: A selected hit and retained ID are supplied, making lookup feasible without a missing key.\nfeatureStatus: Document lookup is an ordinary documented operation, not a preview agentic tool.\nsourceChanges: Read the actual document-lookup paragraph and query-form rows, rather than treating semantic similarity as identity.\nstemSufficiency: Exact document and retained ID are repeated; the operation name nearly restates the requirement.\nexplanationBounds: The answer requests the indexed record, not all original-file bytes or fields excluded from index exposure.\nreasoningDepth: This is beginner operation recognition, not intermediate multi-step reasoning despite its workflow narrative.\nanswerClues: The only option using the supplied ID is the key, while all others ignore it; discrimination is weak.\nQuality warning response: Negative/pronoun warnings inspected: that exact document is the selected hit. The need for an ID lookup is stated too directly for intermediate difficulty.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in ID lookup semantics; insufficient depth for the authored difficulty."
+    },
+    {
+      "questionId": "ai103-x-014",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "6c27af1a208c9acdfeac81d5b5516815ad643e7d0c59170d95c33a2d2f44331b",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-analyzer-definition",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/03-create-analyzer",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-content-ai-api--03-create-analyzer.json",
+          "retrievedAt": "2026-09-14T17:55:38.797Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "A document analyzer schema describes source-extracted versus generated fields and processing models. The GA REST example starts creation with PUT, receives Operation-Location and checks status with GET. The Python SDK waits through a poller. This does not make an initial creation response an analysis result or prove that every non-Running state succeeded. a: The analyzer example contrasts strings that exist in a document with generated inference; methods section defines extract (definition 51; documents 81). b: The lesson requires extracted string values to exist; document methods assign new summaries to generate (51; 83)."
+        },
+        {
+          "sourceId": "ai103-content-understanding-documents",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-048.json",
+          "retrievedAt": "2026-09-14T18:00:06.729Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Document content extraction preserves paragraphs, tables and hierarchies; extractionMode text advises layout-aware versus faster text-only extraction without an explicit version binding. Field extraction documents automatic nonconfigurable canonical normalization, extract/classify/generate methods, opt-in estimates and human review. Agentic reasoning is separately labeled 2026-06-01-preview. a: The analyzer example contrasts strings that exist in a document with generated inference; methods section defines extract (definition 51; documents 81). b: The lesson requires extracted string values to exist; document methods assign new summaries to generate (51; 83). c: The methods and component tables contrast predefined categories with freely generated insights (documents 82-83; overview 69). d: The classify definition explicitly names predefined categories (82)."
+        },
+        {
+          "sourceId": "ai103-content-understanding-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-046.json",
+          "retrievedAt": "2026-09-14T18:00:06.663Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The version table separates 2025-11-01 GA core extraction from 2026-06-01-preview agentic understanding and newer additions. The component table distinguishes extract, classify, generate, Markdown/JSON output, model deployments, and opt-in confidence/grounding. Generic existing layout behavior does not establish a particular extractionMode selector in GA. c: The methods and component tables contrast predefined categories with freely generated insights (documents 82-83; overview 69)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Use extract for a reference string present in the document. Not incorrect here: the desired value is read from source rather than newly composed. Counterexample/context: Correct when a document string is required as a literal source-derived field. Evidence: The analyzer example contrasts strings that exist in a document with generated inference; methods section defines extract (definition 51; documents 81).",
+          "sourceIds": [
+            "ai103-analyzer-definition",
+            "ai103-content-understanding-documents"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Use extract for a newly composed narrative overview. Wrong here: composing a new overview is the generate use case, not literal extraction. Counterexample/context: Extract is suitable when an overview already appears in the document and that existing string is what must be read. Evidence: The lesson requires extracted string values to exist; document methods assign new summaries to generate (51; 83).",
+          "sourceIds": [
+            "ai103-analyzer-definition",
+            "ai103-content-understanding-documents"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Use generate as the predefined-category selection method. Wrong here: the requested constrained category decision is classify, not freely generated values. Counterexample/context: Generate is suitable for new summaries or insights when the output is not restricted to the predefined category contract. Evidence: The methods and component tables contrast predefined categories with freely generated insights (documents 82-83; overview 69).",
+          "sourceIds": [
+            "ai103-content-understanding-documents",
+            "ai103-content-understanding-overview"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Use classify for selection from predefined categories. Not incorrect here: classification implements the stated bounded category choice. Counterexample/context: Correct when assigning document content to one of the configured category values. Evidence: The classify definition explicitly names predefined categories (82).",
+          "sourceIds": [
+            "ai103-content-understanding-documents"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The key survives the alternate existing-summary context. The broad method distinction is common and may overlap other expansion candidates; originality is provisional pending global comparison.\nIndependent audit comparison: The full photograph question excludes document-only Extract and pairs Classify with Generate. x-014 instead requires literal document extraction as a keyed action and classification, with new narrative composition as the distractor distinction. The actual Content Understanding overview independently read in this pass scopes Extract to documents. This is a genuine modality-dependent operation difference, not just changing the image noun; no judgment is made here on v-011 technical approval or advanced difficulty.\nFinal independently scored rubric total: 47/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: This is document field-method selection, not choosing an entire service or a video extraction mode.\nplan: No training entitlement or unsupported modality is assumed: extract is document-scoped in the overview.\nrole: Selecting a field method does not change resource permissions or authorize content access.\npreconditions: The stem differentiates an existing reference string, a newly composed overview and predefined categories; all necessary semantic conditions are explicit.\nfeatureStatus: The overview identifies 2025-11-01 GA core extraction and separates preview agentic features. This asks only the established methods.\nsourceChanges: The source allows method omission in some GA scenarios; the question asks correct explicit assignments, not whether every field must specify a method.\nstemSufficiency: The two correct options are complete: a and d. Neither b nor c matches the stated evidence/output relationship.\nexplanationBounds: It does not claim generation can never produce a category-looking string; it identifies the appropriate method contract.\nreasoningDepth: A suitable beginner three-way distinction, not a training-limits or confidence problem.\nanswerClues: All four choices use the same use-method-for construction. Two correct choices are not uniquely long or qualified.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in literal, categorical and generated field-method distinctions."
+    },
+    {
+      "questionId": "ai103-x-015",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "e45c49da5fe95ac3851c1cdb87f94c34d3b1bb44a34964317cf7596ac4690f9f",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-content-understanding-documents",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-048.json",
+          "retrievedAt": "2026-09-14T18:00:06.729Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Document content extraction preserves paragraphs, tables and hierarchies; extractionMode text advises layout-aware versus faster text-only extraction without an explicit version binding. Field extraction documents automatic nonconfigurable canonical normalization, extract/classify/generate methods, opt-in estimates and human review. Agentic reasoning is separately labeled 2026-06-01-preview. a: Typed normalization is explicit (documents 73); extract source values and structured typed output are distinguished in the overview component table. b: The field-extraction paragraph explicitly says normalization is automatic, not configurable, and returned values are normalized (73). c: The same sentence that supports the key directly forbids configurable normalization (73); no alternative setting is documented in either cited article. d: The generate method serves summaries and chapter overviews, while typed normalization is separately specified (73,83)."
+        },
+        {
+          "sourceId": "ai103-content-understanding-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-046.json",
+          "retrievedAt": "2026-09-14T18:00:06.663Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The version table separates 2025-11-01 GA core extraction from 2026-06-01-preview agentic understanding and newer additions. The component table distinguishes extract, classify, generate, Markdown/JSON output, model deployments, and opt-in confidence/grounding. Generic existing layout behavior does not establish a particular extractionMode selector in GA. a: Typed normalization is explicit (documents 73); extract source values and structured typed output are distinguished in the overview component table."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Treat typed date/number values as unchanged source typography. Wrong here: supported typed values are normalized to a canonical form. Counterexample/context: Literal document strings can be extracted when preserving existing string content is the task; that differs from a supported typed date/number contract. Evidence: Typed normalization is explicit (documents 73); extract source values and structured typed output are distinguished in the overview component table.",
+          "sourceIds": [
+            "ai103-content-understanding-documents",
+            "ai103-content-understanding-overview"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Consume normalized typed values without a normalization-mode setting. Not incorrect here: canonical values are returned automatically and configuration is explicitly unavailable. Counterexample/context: Correct when downstream code consumes the supported typed date and numeric values rather than source display strings. Evidence: The field-extraction paragraph explicitly says normalization is automatic, not configurable, and returned values are normalized (73).",
+          "sourceIds": [
+            "ai103-content-understanding-documents"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Configure custom normalization on each typed field. Wrong here: the only cited normalization contract expressly rules out configurability. Counterexample/context: No supported Content Understanding field-normalization configuration context is established by these citations. External display formatting would change the action and is not evidence for this setting. Evidence: The same sentence that supports the key directly forbids configurable normalization (73); no alternative setting is documented in either cited article.",
+          "sourceIds": [
+            "ai103-content-understanding-documents"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Use generated prose as the required canonical typed-value representation. Wrong here: prose abandons the specified typed date/number contract. Counterexample/context: Generate prose when a document overview or new narrative insight is the output requirement rather than canonical typed integration. Evidence: The generate method serves summaries and chapter overviews, while typed normalization is separately specified (73,83).",
+          "sourceIds": [
+            "ai103-content-understanding-documents"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "41/48. I do not inherit the technical approval: the key is supported, but c has no sourced correct-elsewhere configuration and the intermediate item is shallow. Request fresh authored repair rather than inventing a setting or changing the label.\nFinal independently scored rubric total: 41/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The integration consumes typed field values, not OCR spans, document display layout or an external formatting library.\nplan: No model or paid-tier selection is being tested; the nonconfigurable behavior is stated for supported typed values.\nrole: Nothing about read permissions controls normalization mode; setting access cannot make an unsupported property exist.\npreconditions: Supported typed dates/numbers and canonical downstream values are explicit. Locale-specific formatting is intentionally not guessed.\nfeatureStatus: The cited overview identifies GA core extraction, but the documents article is mixed-version. No preview-only setting is inferred.\nsourceChanges: The exact automatic/nonconfigurable sentence was reread. It supports b but gives no defensible feature context for c.\nstemSufficiency: The integration goal distinguishes typed normalization from display strings; however c is an invented configuration knob.\nexplanationBounds: The authored application-display-formatting aside is conceptual, not evidence that the service exposes configurable normalization.\nreasoningDepth: A single automatic-behavior recall fact with weak alternatives; intermediate depth is limited.\nanswerClues: The key is the uniquely detailed instruction not to configure a mode; c directly invents the opposite knob, encouraging elimination.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in automatic normalization; insufficient strict distractor evidence and encounter realism."
+    },
+    {
+      "questionId": "ai103-x-016",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "940c4c122045fe719d8ec0a50ea5816c8f7d667fd292b3fa2bbfdc91cd969d61",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-document-layout",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/prebuilt/layout",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-058.json",
+          "retrievedAt": "2026-09-14T18:00:21.311Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The v4.0 moniker explicitly identifies 2024-11-30 GA, paragraph logical-role predictions, word text and geometry, spans into top-level content, and row/column spans. The Markdown change note requires HTML tables for merged cells/multirow headers despite a remaining pipe-table sample. PDF role support is explicit; predictions are not universal guarantees. a: Pages include orientation, width and height; logical roles are a separate paragraph feature (99-111,159-172). b: The words output includes content, geometry, confidence and spans, separately from paragraph role (194-234). c: The table section explains row/column spans and cell indexes; the role table addresses paragraph blocks (165-172,293-297). d: The model assigns certain paragraphs specialized roles, and PDF is listed for both roles (159-172)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Use page width and height to identify logical headings and footers. Wrong here: dimensions describe geometry, not predicted text-block roles. Counterexample/context: Use page dimensions when interpreting page geometry and coordinate-based positioning. Evidence: Pages include orientation, width and height; logical roles are a separate paragraph feature (99-111,159-172).",
+          "sourceIds": [
+            "ai103-document-layout"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Use words alone without paragraph roles for the logical distinction. Wrong here: recognized word text alone lacks the requested role prediction. Counterexample/context: Use word output when recognized text and its location are sufficient for the consumer. Evidence: The words output includes content, geometry, confidence and spans, separately from paragraph role (194-234).",
+          "sourceIds": [
+            "ai103-document-layout"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Use table-cell row and column spans for paragraph heading roles. Wrong here: table spans represent cells, not sectionHeading or pageFooter. Counterexample/context: Use row and column spans to reconstruct table-cell structure and merged cells. Evidence: The table section explains row/column spans and cell indexes; the role table addresses paragraph blocks (165-172,293-297).",
+          "sourceIds": [
+            "ai103-document-layout"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Use the predicted paragraph role for each relevant text block. Not incorrect here: PDF section headings and footers are explicitly supported logical roles. Counterexample/context: Correct when interpreting identified paragraph blocks whose predicted role is sectionHeading or pageFooter. Evidence: The model assigns certain paragraphs specialized roles, and PDF is listed for both roles (159-172).",
+          "sourceIds": [
+            "ai103-document-layout"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "43/48. Preserve the technical quality hold: correct output contract, but insufficient intermediate challenge. Source span/geometry distinctions do not rescue the difficulty.\nFinal independently scored rubric total: 43/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The target is logical roles in PDF paragraph output, not bounding coordinates or table reconstruction.\nplan: Layout output already exists, so file size and F0 page limits are not the repair; no all-pages entitlement is asserted.\nrole: Permissions do not assign paragraph roles. The caller already has the output and needs to interpret it.\npreconditions: The stem specifies PDF, v4.0 and existing text/geometry. Both named roles are supported for PDF.\nfeatureStatus: The actual v4.0 2024-11-30 GA moniker and role table were read, not an older version snippet.\nsourceChanges: The source says certain blocks receive predicted roles. I retain this qualification rather than treating every paragraph as labeled.\nstemSufficiency: It directly contrasts geometry already present with logical roles required, making d obvious.\nexplanationBounds: The explanation avoids universal assignment and infallibility. Spans point into content; they are not logical-role labels.\nreasoningDepth: This is straightforward output-field recognition rather than intermediate interpretation of conflicting extraction results.\nanswerClues: The key repeats the logical-role terminology while three alternatives name visibly different output types.\nQuality warning response: Pronoun warning inspected: it means the pipeline. PDF and logical-role requirements are unambiguous; the output-name recognition is shallow.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in PDF paragraph roles and their limits; low confidence in intermediate realism."
+    },
+    {
+      "questionId": "ai103-x-017",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "a92f8113e3154ea893af316ffdd61a812f69f9d43ef5b202811744858f6a9af8",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-content-understanding-migration",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/how-to/migration-preview-to-ga",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-053.json",
+          "retrievedAt": "2026-09-14T18:00:17.944Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The GA migration identifies 2025-11-01 and separates public preview. Confidence/grounding are absent by default and enabled by estimateFieldSourceAndConfidence. analyze takes URL inputs; inline-input clients migrate to analyzeBinary. Model-deployment examples have changed, and field method is optional; these are not licenses to assume preview behavior in GA. a: Migration lists absent-by-default estimates and the opt-in; document field extraction applies it to extract, classify and generate (migration 123; documents 71). b: Optional, default-absent confidence and grounding are explicitly documented (123)."
+        },
+        {
+          "sourceId": "ai103-content-understanding-documents",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-048.json",
+          "retrievedAt": "2026-09-14T18:00:06.729Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Document content extraction preserves paragraphs, tables and hierarchies; extractionMode text advises layout-aware versus faster text-only extraction without an explicit version binding. Field extraction documents automatic nonconfigurable canonical normalization, extract/classify/generate methods, opt-in estimates and human review. Agentic reasoning is separately labeled 2026-06-01-preview. a: Migration lists absent-by-default estimates and the opt-in; document field extraction applies it to extract, classify and generate (migration 123; documents 71). c: The opt-in is available across all three methods, while generate has a distinct semantic purpose (71,77-83)."
+        },
+        {
+          "sourceId": "ai103-content-understanding-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-046.json",
+          "retrievedAt": "2026-09-14T18:00:06.663Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The version table separates 2025-11-01 GA core extraction from 2026-06-01-preview agentic understanding and newer additions. The component table distinguishes extract, classify, generate, Markdown/JSON output, model deployments, and opt-in confidence/grounding. Generic existing layout behavior does not establish a particular extractionMode selector in GA. d: The component table separates Markdown for search/retrieval from structured JSON fields and opt-in estimates (69-74)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Enable estimateFieldSourceAndConfidence in analyzer config. Not incorrect here: the analyzer lacks the opt-in required for the missing estimates. Counterexample/context: Correct for document fields whose confidence and source grounding are needed alongside values. Evidence: Migration lists absent-by-default estimates and the opt-in; document field extraction applies it to extract, classify and generate (migration 123; documents 71).",
+          "sourceIds": [
+            "ai103-content-understanding-migration",
+            "ai103-content-understanding-documents"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Leave the analyzer unchanged because GA returns estimates by default. Wrong here: GA defaults do not return those estimates. Counterexample/context: Leaving the definition unchanged is appropriate when field values alone meet the requirement and confidence/grounding are intentionally not needed. Evidence: Optional, default-absent confidence and grounding are explicitly documented (123).",
+          "sourceIds": [
+            "ai103-content-understanding-migration"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Switch extract to generate instead of enabling estimates. Wrong here: changing field method does not enable the independent estimate configuration. Counterexample/context: Switch to generate when the field should compose a summary or insight rather than read an existing source value. Evidence: The opt-in is available across all three methods, while generate has a distinct semantic purpose (71,77-83).",
+          "sourceIds": [
+            "ai103-content-understanding-documents"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Remove fields and retain only Markdown content. Wrong here: this removes the requested field-specific estimates and values. Counterexample/context: Markdown content can be appropriate for retrieval ingestion when field-specific structured extraction is not required. Evidence: The component table separates Markdown for search/retrieval from structured JSON fields and opt-in estimates (69-74).",
+          "sourceIds": [
+            "ai103-content-understanding-overview"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "43/48. Preserve technical nonapproval for advanced quality. x-017 is not a replacement for the compound legacy ai103-030 training/OCR fact.\nThe archived 030 combines estimates, review routing, training eligibility and OCR limits; x-017 isolates missing opt-in estimates. The author explicitly reserved a separate opt-in fact. I agree these are not interchangeable and that neither old training restriction is reverified. Parent must record the deliberate split for final accounting. Independently, x-017 remains manual because its advanced difficulty is not genuine.\nIndependent audit comparison: The archived 030 combines estimates, review routing, training eligibility and OCR limits; x-017 isolates missing opt-in estimates. The author explicitly reserved a separate opt-in fact. I agree these are not interchangeable and that neither old training restriction is reverified. Parent must record the deliberate split for final accounting. Independently, x-017 remains manual because its advanced difficulty is not genuine.\nFinal independently scored rubric total: 43/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / extract-content-from-documents / Produce clean, grounded representations to use with agents and RAG by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The issue is document field-result configuration, not OCR repair, analyzer training eligibility or general model certainty.\nplan: Successful field output establishes an operating analyzer; no model redeployment or training entitlement is necessary to identify the opt-in.\nrole: Adding the flag does not grant resource access. Missing estimates are not evidence of an RBAC error.\npreconditions: The definition explicitly lacks an opt-in, and values already return, isolating the flag rather than a field-extraction failure.\nfeatureStatus: The migration explicitly describes GA default changes. Preview agentic mode and new training behavior are excluded.\nsourceChanges: The current migration and document field sections agree on the flag despite illustrative training samples displaying confidence without complete configuration.\nstemSufficiency: Naming the absent opt-in in the stem makes the corrective flag highly apparent.\nexplanationBounds: Confidence is not a correctness guarantee and grounding is not independent proof. Nothing here validates archived generated-field training restrictions.\nreasoningDepth: Advanced is not justified by toggling the setting whose absence is disclosed.\nanswerClues: Only a mentions enabling estimates; the other options either deny the documented default or remove the required output.\nQuality warning response: Absolute wording inspected: the false GA-default alternative is contradicted by migration. The key does not treat confidence or a span as proof of correctness.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in GA opt-in configuration and bounded estimate semantics; insufficient authored advanced depth."
+    },
+    {
+      "questionId": "ai103-x-018",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "e5e801ebbae809007bbeb0aefeae70e49645ec93335bf65a82881a65bfa08d18",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-content-understanding-documents",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-048.json",
+          "retrievedAt": "2026-09-14T18:00:06.729Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Document content extraction preserves paragraphs, tables and hierarchies; extractionMode text advises layout-aware versus faster text-only extraction without an explicit version binding. Field extraction documents automatic nonconfigurable canonical normalization, extract/classify/generate methods, opt-in estimates and human review. Agentic reasoning is separately labeled 2026-06-01-preview. a: The extraction-mode paragraph contrasts layout-aware structural needs with faster text-only Markdown without binding that selector to GA (59-61). b: Generate is defined for new insights and summaries, distinct from structure analysis (52-55,83). c: Documents recommends the mode; overview only says existing layout behavior in GA and includes newer preview additions, not a GA extractionMode contract (documents 61; overview 45-53). d: Classify assigns predefined categories; overview also describes classification-based routing (documents 82; overview 25,69)."
+        },
+        {
+          "sourceId": "ai103-content-understanding-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-046.json",
+          "retrievedAt": "2026-09-14T18:00:06.663Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The version table separates 2025-11-01 GA core extraction from 2026-06-01-preview agentic understanding and newer additions. The component table distinguishes extract, classify, generate, Markdown/JSON output, model deployments, and opt-in confidence/grounding. Generic existing layout behavior does not establish a particular extractionMode selector in GA. c: Documents recommends the mode; overview only says existing layout behavior in GA and includes newer preview additions, not a GA extractionMode contract (documents 61; overview 45-53). d: Classify assigns predefined categories; overview also describes classification-based routing (documents 82; overview 25,69)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Rely on text-only Markdown to preserve every table and section relationship. Wrong here: clean text is not a guarantee of all structural relationships, and version support is unresolved. Counterexample/context: Text-only extraction is recommended when clean Markdown is sufficient and faster processing is preferred, subject to an actually supported API mode. Evidence: The extraction-mode paragraph contrasts layout-aware structural needs with faster text-only Markdown without binding that selector to GA (59-61).",
+          "sourceIds": [
+            "ai103-content-understanding-documents"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Replace structural extraction with one generated report overview. Wrong here: an overview does not preserve the tables and nested sections needed for comparison. Counterexample/context: A generated overview is appropriate when summarization, not structure-preserving representation, is the desired output. Evidence: Generate is defined for new insights and summaries, distinct from structure analysis (52-55,83).",
+          "sourceIds": [
+            "ai103-content-understanding-documents"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "ambiguous",
+          "rationale": "Choose layout-aware extraction for tables, sections and reading order. Conditionally supported as design advice, but not verified here: the source does not establish this extraction-mode choice in the pinned GA API. Counterexample/context: Correct where the documented layout-aware mode is available and structural relationships matter; an exact supported version must be established. Evidence: Documents recommends the mode; overview only says existing layout behavior in GA and includes newer preview additions, not a GA extractionMode contract (documents 61; overview 45-53).",
+          "sourceIds": [
+            "ai103-content-understanding-documents",
+            "ai103-content-understanding-overview"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Replace document structure with one predefined category. Wrong here: a category label cannot represent the requested table and nested-section relationships. Counterexample/context: Classification is suitable for categorizing content before routing it to further processing. Evidence: Classify assigns predefined categories; overview also describes classification-based routing (documents 82; overview 25,69).",
+          "sourceIds": [
+            "ai103-content-understanding-documents",
+            "ai103-content-understanding-overview"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": false,
+        "correctOptionsSupported": false,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": false,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "33/48. Preserve technical GA-version hold independently. Do not rewrite featureStatus, API text, difficulty or hashes. Approve/read exact version evidence and re-author before restarting all passes.\nFinal independently scored rubric total: 33/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / extract-content-from-documents / Produce clean, grounded representations to use with agents and RAG by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The question chooses Content Understanding representation for a downstream agent; it is not the preview agentic-mode reasoning API.\nplan: No pricing trade-off can establish an undocumented GA selector. Faster text-only versus structure remains conceptual until the exact version is sourced.\nrole: Permissions cannot resolve the missing API availability evidence. Existing resource authorization is not under challenge.\npreconditions: The structural requirement is clear, but availability of the compared modes in 2025-11-01 is an unproven prerequisite.\nfeatureStatus: Blocking: the current document overview is mixed-version and does not pin extractionMode to GA; generic existing layout in the overview table is insufficient.\nsourceChanges: Both cited current bodies were inspected. The explicit 2026-06-01-preview agentic section and preview additions make version inference especially unsafe.\nstemSufficiency: The conceptual choice is clear but the pinned GA version overstates what its citations establish.\nexplanationBounds: The explanation avoids a correctness guarantee, but it still implies the two compared mode choices exist in the stated GA API.\nreasoningDepth: A basic structure-versus-speed trade-off could be intermediate if version support were grounded and alternatives less obvious.\nanswerClues: The key echoes tables, sections and reading order verbatim; a says necessarily every relationship and is an overstrong distractor.\nQuality warning response: Absolute and pronoun warnings inspected: necessarily every structure is an unjustified distractor guarantee; those relationships are table/section order. The GA-version evidence gap remains blocking.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: answerDefensible, correctOptionsSupported, explanationsSupported, featureStatus, prerequisitesComplete, qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence that the frozen citations do not establish the exact GA extraction-mode claim; no conclusion that the capability is absent from the service."
+    },
+    {
+      "questionId": "ai103-x-019",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "f82f4d1f3c801de48a42475dfa5065e3a4be1c6dc35d2eb4a964bfc96c3593dd",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-analyzer-definition",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/03-create-analyzer",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-content-ai-api--03-create-analyzer.json",
+          "retrievedAt": "2026-09-14T17:55:38.797Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "A document analyzer schema describes source-extracted versus generated fields and processing models. The GA REST example starts creation with PUT, receives Operation-Location and checks status with GET. The Python SDK waits through a poller. This does not make an initial creation response an analysis result or prove that every non-Running state succeeded. a: The REST section separates PUT initiation from GET against Operation-Location (102-106,127-139). b: Creation exposes a status URL; the SDK waits for completion, while content analysis is a separate operation (definition 59,96-106; execution 17-19). c: The creation header is a callback URL, while analysis results contain fields and OCR layout (definition 106; execution 117-128). d: The separate lessons define creation-status GET and analyzer-targeted content analysis (definition 106; execution 17-19)."
+        },
+        {
+          "sourceId": "ai103-analyzer-execution",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/04-analyze",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-content-ai-api--04-analyze.json",
+          "retrievedAt": "2026-09-14T17:55:41.381Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Analysis targets an existing analyzer and submits an accessible URL or direct file data. The GA REST lesson explicitly directs direct binary input to analyzeBinary, with asynchronous result retrieval. Its field and OCR examples separate typed values, confidence, source locations, and spans; source positions do not prove semantic correctness. b: Creation exposes a status URL; the SDK waits for completion, while content analysis is a separate operation (definition 59,96-106; execution 17-19). c: The creation header is a callback URL, while analysis results contain fields and OCR layout (definition 106; execution 117-128). d: The separate lessons define creation-status GET and analyzer-targeted content analysis (definition 106; execution 17-19)."
+        },
+        {
+          "sourceId": "ai103-content-understanding-overview",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-046.json",
+          "retrievedAt": "2026-09-14T18:00:06.663Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The version table separates 2025-11-01 GA core extraction from 2026-06-01-preview agentic understanding and newer additions. The component table distinguishes extract, classify, generate, Markdown/JSON output, model deployments, and opt-in confidence/grounding. Generic existing layout behavior does not establish a particular extractionMode selector in GA. This citation supplies the bounded service context, not a substitute for the option-specific implementation source."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Repeatedly create the analyzer instead of polling creation status. Wrong here: resubmitting PUT is not the documented status check for the already started operation. Counterexample/context: PUT is appropriate to initiate creation from a schema; it is not a substitute for checking the returned operation. Evidence: The REST section separates PUT initiation from GET against Operation-Location (102-106,127-139).",
+          "sourceIds": [
+            "ai103-analyzer-definition"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "GET the returned operation URL and wait for successful creation. Not incorrect here: dependent analysis must not mistake accepted creation for completion. Counterexample/context: Correct when asynchronous creation has returned an operation location and later work depends on the analyzer existing successfully. Evidence: Creation exposes a status URL; the SDK waits for completion, while content analysis is a separate operation (definition 59,96-106; execution 17-19).",
+          "sourceIds": [
+            "ai103-analyzer-definition",
+            "ai103-analyzer-execution"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Interpret Operation-Location as extracted field values. Wrong here: the header contains a status URL for creation, not content-analysis fields. Counterexample/context: Extracted values are appropriate to consume from a completed analysis result after content submission; no source makes this creation header the values. Evidence: The creation header is a callback URL, while analysis results contain fields and OCR layout (definition 106; execution 117-128).",
+          "sourceIds": [
+            "ai103-analyzer-definition",
+            "ai103-analyzer-execution"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Use content analysis as the creation-status probe. Wrong here: analyzing content is not the documented GET status check for creation. Counterexample/context: Submit analysis when a usable analyzer is selected and the goal is extracting content from an input file. Evidence: The separate lessons define creation-status GET and analyzer-targeted content analysis (definition 106; execution 17-19).",
+          "sourceIds": [
+            "ai103-analyzer-definition",
+            "ai103-analyzer-execution"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "42/48. Preserve technical quality hold. Successful completion gating is correct, but invented alternative status mechanisms and elementary control flow undermine the advanced label.\nIndependent audit comparison: The complete Sora question resumes a saved queued render ID after worker restart, gates download on completion, and rejects remix/new-job operations. x-019 follows a newly returned analyzer-creation Operation-Location before dependent analysis. The state object, follow-up operation and persisted restart constraint differ. Shared asynchronous control flow alone is not a duplicate, but x-019 still fails its independent advanced-realism assessment. This is not a technical review of the Sora API.\nFinal independently scored rubric total: 42/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / extract-content-from-documents / Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: Creation and analysis are separate asynchronous lifecycles for the same analyzer, not one combined result payload.\nplan: No retry interval or timeout policy is inferred. The candidate does not reproduce the sample incomplete nonterminal-state loop.\nrole: The valid PUT and returned operation imply accepted authenticated initiation; polling must still use authorized access.\npreconditions: The operation location is supplied and the analyzer is not yet proven ready, making status gating necessary.\nfeatureStatus: The actual creation REST example pins 2025-11-01; the general overview distinguishes that GA version from preview.\nsourceChanges: I read the sample loop and avoid endorsing its assumption that leaving Running implies success. The answer explicitly requires successful completion.\nstemSufficiency: The stem already identifies premature completion, so polling is an obvious single repair.\nexplanationBounds: No exhaustive status list or fixed polling interval is invented; Operation-Location is not treated as an analysis payload.\nreasoningDepth: Basic asynchronous control flow does not become advanced merely by naming a REST header.\nanswerClues: The key is the only option checking status; two distractors confuse operation types so starkly that they lack advanced plausibility.\nQuality warning response: Pronoun warning inspected: that response is the initial PUT response. Correct success gating does not require adopting the sample incomplete polling-state logic.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in asynchronous creation/analysis separation; inadequate advanced difficulty authenticity."
+    },
+    {
+      "questionId": "ai103-x-020",
+      "authorId": "copilot-ai103-extraction-pass1-20260914",
+      "reviewerId": "ai103-adversary-extraction",
+      "questionFingerprint": "4db358b0e9ca9e491520c5ad22aadfb975bece29cea408efc46ea12e05bbd084",
+      "reviewedAt": "2026-09-14T19:40:07.844Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-analyzer-execution",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/04-analyze",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-content-ai-api--04-analyze.json",
+          "retrievedAt": "2026-09-14T17:55:41.381Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Analysis targets an existing analyzer and submits an accessible URL or direct file data. The GA REST lesson explicitly directs direct binary input to analyzeBinary, with asynchronous result retrieval. Its field and OCR examples separate typed values, confidence, source locations, and spans; source positions do not prove semantic correctness. a: The lesson requires an Internet-accessible URL; migration restricts analyze to URL inputs (execution 17; migration 134-139). d: The execution lesson explicitly directs direct file data to analyzeBinary; migration supplies the GA contract distinction (execution 115; migration 134)."
+        },
+        {
+          "sourceId": "ai103-content-understanding-migration",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/how-to/migration-preview-to-ga",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-053.json",
+          "retrievedAt": "2026-09-14T18:00:17.944Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The GA migration identifies 2025-11-01 and separates public preview. Confidence/grounding are absent by default and enabled by estimateFieldSourceAndConfidence. analyze takes URL inputs; inline-input clients migrate to analyzeBinary. Model-deployment examples have changed, and field method is optional; these are not licenses to assume preview behavior in GA. a: The lesson requires an Internet-accessible URL; migration restricts analyze to URL inputs (execution 17; migration 134-139). b: The migration says clients previously using inline analyze must instead use analyzeBinary (134). d: The execution lesson explicitly directs direct file data to analyzeBinary; migration supplies the GA contract distinction (execution 115; migration 134)."
+        },
+        {
+          "sourceId": "ai103-analyzer-definition",
+          "url": "https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/03-create-analyzer",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\analyze-content-ai-api--03-create-analyzer.json",
+          "retrievedAt": "2026-09-14T17:55:38.797Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "A document analyzer schema describes source-extracted versus generated fields and processing models. The GA REST example starts creation with PUT, receives Operation-Location and checks status with GET. The Python SDK waits through a poller. This does not make an initial creation response an analysis result or prove that every non-Running state succeeded. c: Analyzer creation submits a schema definition through PUT; the source describes fields and configuration, not input-file analysis (19-55,102-108)."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Analyze a URL the service cannot access. Wrong here: this input has no service-accessible URL, which analyze requires. Counterexample/context: Use analyze with an inputs URL when the file is hosted at a location accessible to the service. Evidence: The lesson requires an Internet-accessible URL; migration restricts analyze to URL inputs (execution 17; migration 134-139).",
+          "sourceIds": [
+            "ai103-analyzer-execution",
+            "ai103-content-understanding-migration"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Keep submitting inline file content through the older analyze contract. Wrong here: the GA migration explicitly moves inline-file clients to analyzeBinary. Counterexample/context: This represents an older preview client pattern identified in migration, not the valid 2025-11-01 request contract. Evidence: The migration says clients previously using inline analyze must instead use analyzeBinary (134).",
+          "sourceIds": [
+            "ai103-content-understanding-migration"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Create an analyzer by using the input file as its schema. Wrong here: the existing analyzer needs content analysis, not another analyzer definition. Counterexample/context: Create an analyzer when defining desired fields and processing settings with a valid schema JSON, not when submitting its input document. Evidence: Analyzer creation submits a schema definition through PUT; the source describes fields and configuration, not input-file analysis (19-55,102-108).",
+          "sourceIds": [
+            "ai103-analyzer-definition"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Submit the held file directly with analyzeBinary. Not incorrect here: this is the documented direct-file operation for the GA migration. Counterexample/context: Correct when analyzing file content already held by the client without providing a URL to the service. Evidence: The execution lesson explicitly directs direct file data to analyzeBinary; migration supplies the GA contract distinction (execution 115; migration 134).",
+          "sourceIds": [
+            "ai103-analyzer-execution",
+            "ai103-content-understanding-migration"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "46/48. The operation choice survives the URL-access and old-preview counterexamples. Do not turn the limited operation decision into unsupported wire-format guidance.\nFinal independently scored rubric total: 46/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / extract-content-from-documents / Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: Input transport is selected for an existing analyzer, not analyzer creation, field-schema design or a batch workflow.\nplan: Only one input is specified, consistent with the GA single-item URL-array note; no throughput entitlement is claimed.\nrole: The choice does not bypass authentication. Inaccessible input location is distinct from authorization to call the analyzer.\npreconditions: The client holds the file, the analyzer exists, and no accessible URL can be supplied, making direct submission relevant.\nfeatureStatus: The exact migration explicitly binds the changed analyze/analyzeBinary contract to GA 2025-11-01. Older preview behavior is a distractor, not current guidance.\nsourceChanges: The migration describes base64 while the lesson speaks of binary file data. The candidate wisely selects the operation without claiming a wire encoding or content type.\nstemSufficiency: Transport constraints and the pinned migration version distinguish the correct operation from URL and creation alternatives.\nexplanationBounds: No unsupported SDK signature, encoding, file-size limit or complete polling protocol is invented.\nreasoningDepth: A defensible intermediate migration decision: the old contract is plausible, and the inaccessible URL removes a common valid alternative.\nanswerClues: analyzeBinary is suggestive by name, but distinguishing a changed API contract from a schema operation still requires service knowledge; alternatives remain parallel actions.\nQuality warning response: Pronoun warning inspected: its input is the file held by the client. No unsupported wire-format inference is needed for the operation choice.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nChecks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "confidenceReason": "High confidence in direct-file operation selection from both actual GA migration and execution lesson."
+    }
+  ]
+}

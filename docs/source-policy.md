@@ -1,11 +1,13 @@
 # Authoritative sources and evidence
 
-## GH strict guide-linked packages
+## Strict guide-linked packages
 
 Packages declaring `reviewPolicy.version: "three-pass-v1"` additionally require
 `source-registry.json`. This is an opt-in stricter policy; credential identity
 metadata and legacy DP-700/Microsoft/GitHub packages do not acquire new technical
-source permissions. See [the complete workflow](gh-three-pass-workflow.md).
+source permissions. See the [GH workflow](gh-three-pass-workflow.md) or
+[AI-103/AI-200 workflow](ai-three-pass-workflow.md). The same engine/profile
+applies; there is no separate AI source validator.
 Catalog `requiredReviewPolicy` can independently require that same profile.
 The matching package declaration is mandatory, not a switch an edited package
 can remove to bypass provenance or either independent review stage.
@@ -31,15 +33,34 @@ branch. Malformed registry headers or unidentifiable records remain global
 failures; no verified descendant can inherit a quarantined ancestor's approval.
 
 Allowed technical provenance is exclusively: **A** the current official Learn
-study guide; **B** official Learn self-paced paths/modules linked by the guide or
-credential; **C** official Learn or `docs.github.com` documentation directly
-linked or clearly referenced by A/B. Registry training module child units may
-follow a finite training-parent chain. A documentation parent must immediately
-be guide/training, never an unbounded doc-to-doc chain. Cycles fail.
-Only HTTPS `learn.microsoft.com` and `docs.github.com` technical evidence is
-allowed. Blogs, videos, forums, quizzes, knowledge checks, practice assessments,
-dumps, internal materials, Trust Center and other resources are not allowed,
-even when another legacy credential's host allowlist accepts them.
+study guide; **B** official Learn self-paced paths/modules linked or explicitly
+referenced by the guide or credential, including the current-course bridge below;
+**C** official documentation directly linked or clearly referenced by
+A/B and approved by the selected credential's technical allowlist.
+For strict GitHub packages C may use HTTPS `learn.microsoft.com` or
+`docs.github.com` under that credential's explicit rules. For AI-103/AI-200,
+all technical evidence is direct English HTTPS `learn.microsoft.com` material;
+GitHub Docs is not permitted. A shared strict profile or another credential's
+allowlist cannot widen these approvals.
+Registry training module child units may follow a finite training-parent chain.
+A documentation parent must immediately be a guide or self-paced training source,
+never a course overview or an unbounded doc-to-doc chain. Cycles fail. Every
+ancestor must satisfy its credential/objective bindings, approved source class,
+dates and genuine link/reference evidence.
+Blogs, videos, forums, quizzes, knowledge checks, practice assessments, dumps,
+internal materials, Trust Center and other resources are not allowed, even when
+another legacy credential's host allowlist accepts them.
+
+The current course is an **ancestry-only bridge**, not technical evidence.
+A Learn `/en-us/training/courses/` record may use `sourceClass: "training"` only
+when its canonical URL exactly matches `credential.officialUrls.training` and
+its parent is the current guide or exact `credential.officialUrls.credential`.
+Where the credential references a course UID and the course HTML references path
+UIDs, preserve those observed `explicit-reference` receipts and the complete
+credential -> course -> path -> module -> unit graph. Do not replace this with
+an invented credential -> path direct link. A course never contributes technical
+`validatedSupportingSourceIds` and cannot directly parent a `doc`; documentation
+still requires an actual guide/self-paced-training link or reference.
 
 Each source stores sourceId, canonicalUrl, title, retrievedAt, lastValidatedAt,
 examCode, objectiveIds, sourceClass (`guide|training|doc`), contentRelevance and
@@ -66,6 +87,15 @@ Microsoft credentials use Microsoft Learn MCP retrieval and direct English
 Learn articles. DP-700 retains its strict HTTPS `learn.microsoft.com` contract:
 approved product/training/credential paths, no search pages, assessments, unsafe
 encoding, credentials, ports or stored query strings.
+
+AI-103 and AI-200 approvals are independent even when they cite the same URL.
+Retrieve each credential's own current guide and linked preparation material;
+preserve its root-to-source provenance, actual retrieval/review dates and
+objective relevance. Approve only the bounded paths or exact URLs actually
+needed for that credential. The guide/credential can establish identity or
+scope, but cannot replace implementation evidence for an answer or distractor.
+A source retrieval failure withholds dependent candidates; it never licenses
+an unapproved fallback. This does not change legacy DP-700 source or review rules.
 
 GitHub credentials use official GitHub competency and product documentation.
 `officialSourceUrlSchema` recognizes potential official source shapes; it is
@@ -115,6 +145,12 @@ that bounded article shape when the credential explicitly approves it, while
 search endpoints, query strings, directory roots and assessments remain rejected.
 The legacy DP-700 `learnUrlSchema` retains its original restriction.
 
+The narrow textual Content Understanding article exception permits only HTTPS
+`learn.microsoft.com` URLs with paths matching
+`/en-us/azure/ai-services/content-understanding/video/[a-z0-9-]+`.
+Credential allowlisting and full provenance remain mandatory; videos, shows,
+media and search pages stay barred. This does not expand DP-700 permissions.
+
 ## Retrieval versus availability versus review
 
 Actual retrieval timestamps and source titles/URLs are preserved in the
@@ -136,8 +172,14 @@ use its official `text/markdown` representation at the same approved URL; a
 document heading is required, error pages are rejected, and the existing 2 MB
 cap still applies. This avoids treating a large HTML navigation shell as missing
 evidence without increasing or disabling the bound. Every redirect remains
-inside that credential's allowlist. Only the existing canonical Learn Kusto and
-T-SQL view redirects are accepted; stored citations remain unchanged/query-free.
+inside that credential's allowlist. Canonical Learn Kusto and T-SQL view redirects
+retain their existing narrow exceptions; the additional AI-103 layout exception
+is specified below. Stored citations remain unchanged/query-free.
+Expected-versus-resolved document comparisons ignore client-side URL fragments
+and the specifically recorded AI-103 layout selector. Other scheme, host, port,
+path and query differences still fail. Recorded fragment receipts remain
+unchanged. This does not relax credential allowlists,
+redirect validation, the 2 MB cap, MIME checks or timeouts.
 URL availability is not a semantic review and does not update source review
 dates or promote encounters.
 
@@ -145,6 +187,15 @@ Identity/competency-only `learn.github.com` entries in a source manifest are
 checked against the narrow provider-aware identity URL policy offline. The online implementation
 document checker explicitly skips and counts those entries; their availability
 belongs to the separate credential-discovery workflow and captured API receipts.
+
+AI-103 also accepts the observed redirect to the exact layout article's
+`view=doc-intel-4.0.0` moniker during online checks only. That v4.0 GA section
+was already present in the frozen MCP evidence; other Document Intelligence
+versions, paths and extra query parameters remain rejected. Stored citations
+remain query-free. Exact recorded or observed intermediate Foundry redirect
+URLs are transport-only allowlist entries, not new technical source approvals.
+The checker separately reports retained citation snapshots whose supporting
+registration has been withdrawn.
 
 The browser makes no documentation-proxy or generation requests and has no API
 keys. It opens safe official links to the unchanged cited document. Keep raw

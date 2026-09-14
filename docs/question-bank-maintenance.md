@@ -25,13 +25,24 @@ the latest cited source retrieval; validation matches the factual question
 snapshot. Each option's summary and source IDs match its genuine independent
 ledger rationale. Do not rewrite facts merely to add metadata.
 
-A separate reviewer scores ten realism criteria 0–2: alignment, accuracy,
-scenario completeness, distractor plausibility, answer uniqueness, documentation
-strength, difficulty authenticity, explanation quality, originality, and
-clarity/accessibility. Passing requires >=18/20, no zero, and 2 for accuracy,
+For legacy packages, a separate reviewer scores ten realism criteria 0–2:
+alignment, accuracy, scenario completeness, distractor plausibility, answer
+uniqueness, documentation strength, difficulty authenticity, explanation quality,
+originality, and clarity/accessibility. Passing requires >=18/20, no zero, and 2 for accuracy,
 uniqueness and documentation strength. Store actual reviewer identity/date and
 question-specific notes. Null, incomplete, stale or failing rubrics do not play.
 Structural tests and fingerprints are not semantic reviews.
+
+GH-300, GH-600, AI-103 and AI-200 use the existing catalog-bound
+`three-pass-v1` profile instead: three distinct author/technical/adversarial
+contexts and the independently scored version-2 twelve-criterion 0–4 rubric.
+Its minimum is 44/48 with all mandated critical scores; no legacy score
+conversion or inherited approval. Use the [GH workflow](gh-three-pass-workflow.md)
+or [AI workflow](ai-three-pass-workflow.md), including credential-scoped source
+approvals and all three exact content/objective bindings. The existing
+`generate-gh-three-pass`, `verify-gh-technical` and `verify-gh-adversarial` prompt
+filenames remain the compatible shared strict templates. DP-700 and other
+packages without a strict policy retain the unchanged legacy rules below.
 
 Every rubric additionally requires the independently reviewed `objectiveVersion`
 and `objectiveFingerprint` (64 lowercase hexadecimal SHA-256 characters).
@@ -98,7 +109,10 @@ Copy-Item src\content\exams\dp-700\sources.json .grounding\batch-001\manifest.js
 
 Add genuinely reviewed supporting records to the candidate manifest; do not silently overwrite existing source evidence. Raw responses remain local. Commit original short summaries, citations, reviewed questions, and final manifests—not retrieved article bodies.
 
-## Two distinct passes
+## Two distinct passes for legacy packages
+
+This section remains the DP-700/legacy workflow, not an alternative to a
+credential's required three-pass policy.
 
 **Pass 1 — authoring grounding:** derive original stems, code, alternatives, and explanations from retrieved implementation documentation. Map each question to exactly one current domain/skill/subskill; assign a stable `conceptId` for the technical fact/decision. Questions about the same fact share that ID, even when reworded.
 
@@ -141,6 +155,11 @@ For authoring, an explicit `--questions` without `--reviews` intentionally runs 
 - No arbitrary calendar expiry is imposed. “Fresh” means consistent with the currently checked-in evidence, not “always up to date.” Re-fetch when the guide, behavior, source availability, prerequisites, or feature status changes. Review relevant records on every content update. Updating taxonomy objectives requires checking all mappings.
 
 `validateContent` validates schemas, mappings, citations, chronology, and blocking duplicates. Its `questions` array contains only playable verified records; `allQuestions` retains schema-valid candidates with effective stale status. `inspectContent` collects per-question errors for reports. `isPlayableQuestion` is the final status/metadata guard for selection, including retries. These are structural safeguards, not semantic proof.
+
+Credential availability is a separate gate. Beta, pending/unverified, unknown
+and future-map-only records stay sealed regardless of review counts or exam
+scheduling. Freshly verified beta identity can update the visible status and
+sealed warnings, but it does not make a credential active/GA or authorize gameplay.
 
 ## Duplicate and quality review
 

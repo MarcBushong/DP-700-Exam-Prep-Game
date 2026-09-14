@@ -1,0 +1,1535 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "ai103-001": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "1d7d848cc715561f9b975b01bab9bfd867ee52bde37dca575a883a1f6f74528f",
+      "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"],
+      "retrievedAt": "2026-09-11T19:23:14.496Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"],
+          "summary": "Article 'Agents in Microsoft Foundry' states prompt agents are defined entirely through configuration (instructions, model, tools) and Foundry runs them with 'no code or infrastructure to manage', which is exactly what the stem requires."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"],
+          "summary": "Same article: hosted agents 'bring your own code and framework, and Foundry runs it as a container'. That introduces agent logic to maintain, which the stem rules out."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"],
+          "summary": "The Responses API ephemeral pattern keeps 'the agent's definition ... in your application code' rather than as a managed configured agent, so it still requires runtime code to maintain."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"],
+          "summary": "Toolbox docs describe curated tool endpoints exposed via MCP; the toolbox does not itself interpret user tasks or replace the agent runtime."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Beginner-appropriate discrimination between four documented agent options; each distractor is a real Foundry construct that fails one stated constraint from the agents-overview article. No wordiness, no trick negation, single defensible key."
+      }
+    },
+    "ai103-002": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "15293c40a4ad41cd06a43e25c28cc51b98ea0bcea22c870f8a1fcc8c5f5f6095",
+      "sourceIds": ["ai103-sdk"],
+      "retrievedAt": "2026-09-11T19:21:55.508Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-sdk"],
+          "summary": "The quickstart-code sample constructs AIProjectClient(endpoint=FOUNDRY_PROJECT_ENDPOINT, credential=DefaultAzureCredential()) — this is the documented Projects 2.x keyless call."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-sdk"],
+          "summary": "Quickstart shows the model deployment name passed to responses.create(model=...), not to AIProjectClient(endpoint=...); endpoint is the project API path."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-sdk"],
+          "summary": "The Python sample uses DefaultAzureCredential, not a raw resource key; the article tip explicitly says 'Code uses Azure AI Projects 2.x' with az login before running."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-sdk"],
+          "summary": "The catalog URL (ai.azure.com/catalog/models) is a model-discovery surface; the project endpoint has the form services.ai.azure.com/api/projects/<project>."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate implementation question with a canonical two-argument client constructor. Distractors mimic common misuses (deployment name as endpoint, embedded key, catalog URL) so plausible without being deceptive. Answer is uniquely supported."
+      }
+    },
+    "ai103-003": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "c8db2f626f72ff19e9ee44f479aea25915683cca15ba8db12f368ab058b68ee5",
+      "sourceIds": ["ai103-quota"],
+      "retrievedAt": "2026-09-11T19:21:00.609Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-quota"],
+          "summary": "Quota best-practice bullet list: 'Set max_tokens to the minimum value that serves your scenario', combined with exponential backoff and honoring retry-after-ms. This answer matches the documented remediation set exactly."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-quota"],
+          "summary": "Quota article: 'Unsuccessful requests still count toward your per-minute rate limit. Continuously resending a request without backing off makes throttling worse.' Raising max_tokens also inflates the admission-time estimate."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-quota"],
+          "summary": "Article separates billing tokens ('computed after all processing') from the rate-limit estimate that is calculated at admission time; using billing totals as the counter is the wrong mental model."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-quota"],
+          "summary": "Fixed-minute-boundary synchronization ignores the short-window RPM check (Azure OpenAI evaluates over 1- or 10-second intervals) and keeps the inflated estimate; the docs recommend jittered exponential backoff instead."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced troubleshooting scenario that forces the candidate to distinguish estimate vs billing tokens and burst RPM vs one-minute averages. Distractors reflect real anti-patterns (over-reservation, retry storms, minute-boundary retry). Reasoning depth is genuine, not wordiness."
+      }
+    },
+    "ai103-004": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "3139a5cca08ca908c917f0cdd2d7e877017bf3fd73be7756abf2b93076bba115",
+      "sourceIds": ["ai103-deployment-types"],
+      "retrievedAt": "2026-09-11T19:21:05.887Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-deployment-types"],
+          "summary": "'Data zone + predictable throughput | Data Zone Provisioned' is the exact row in the Recommendation table; SKU DataZoneProvisionedManaged processes within the data zone with reserved PTU."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-deployment-types"],
+          "summary": "'Deployment types' table: GlobalProvisionedManaged data processing = 'Any Azure region', which violates the required EU data zone constraint."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-deployment-types"],
+          "summary": "Data Zone Standard is 'Pay-per-token' inside the data zone; it does not provide reserved PTU capacity, so the reserved-capacity requirement is unmet."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-deployment-types"],
+          "summary": "Data Zone Batch is 'Large async jobs' with a 24-hour SLA and 50% discount — not the interactive interactive pattern the stem specifies."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced architecture question forcing residency vs capacity separation. Each distractor is a real SKU that fails exactly one constraint, so plausibility is high. Answer is uniquely defensible from the doc's tables."
+      }
+    },
+    "ai103-005": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "bb84f736bd82e4e984e09f3855959072a5aee4202d9c2382256b1a6c2218e2cd",
+      "sourceIds": ["ai103-prompt-shields"],
+      "retrievedAt": "2026-09-11T19:22:01.283Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-prompt-shields"],
+          "summary": "Prompt Shields article: annotations return 'detected (true/false) and filtered (true/false) values'; portal-configured action is 'annotate or block', so switching the assigned guardrail to block is the prevention step."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-prompt-shields"],
+          "summary": "Article shows detected and filtered as independent booleans; a detected-but-not-filtered event is meaningful (attack was found, action was annotate)."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-prompt-shields"],
+          "summary": "filtered=false means the request was not filtered/blocked; annotate does not block requests, so this option reverses the documented semantics."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-prompt-shields"],
+          "summary": "The pair of booleans reports detection and enforcement; the article assigns attack-source classification to the shield type (user prompt vs document), not to these fields."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate interpretation task that requires reading the annotation JSON correctly and knowing the action toggle. Distractors invert or conflate semantics without being silly. Uniquely correct answer, direct doc support."
+      }
+    },
+    "ai103-006": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "542e0f107436cad5249282027179bcc426f70a9246a3796d89c417297fc8a8e3",
+      "sourceIds": ["ai103-prompt-shields"],
+      "retrievedAt": "2026-09-11T19:22:01.283Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-prompt-shields"],
+          "summary": "Article: 'Document attacks — Hidden instructions embedded in third-party content ... Scanned at the user input and tool response intervention points.' Configuring a document-attack guardrail at tool response and assigning it to the agent is the documented fix."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-prompt-shields"],
+          "summary": "User-prompt scanning targets user input, not third-party tool payloads. The article's attack table clearly assigns 'Third-party content' to Document attacks."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-prompt-shields"],
+          "summary": "The user's own question being benign is irrelevant: document attacks can arrive via retrieved content regardless of the user prompt's intent, per the doc's definition."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-prompt-shields"],
+          "summary": "Spotlighting section explicitly states it is 'only available for models used via the Chat Completions API', so a Responses-API-only solution based on Spotlighting is documented not to work."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced scenario probing trust-boundary reasoning and Preview vs GA API constraints. Feature-status label corrected from Preview to GA because the answered behaviour is core Prompt Shields; Preview is only present in a distractor."
+      }
+    },
+    "ai103-007": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "dbf5ebf98ae925f832d322daa9171919c2edc7c618a1f25272d23f2e6481cbbe",
+      "sourceIds": ["ai103-toolbox-hosted"],
+      "retrievedAt": "2026-09-11T19:23:13.960Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-toolbox-hosted"],
+          "summary": "The 'always' row defines exactly this design: inspect metadata, display proposed call, suspend for a decision, then invoke only the approved pending call."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-toolbox-hosted"],
+          "summary": "'Use a toolbox with a hosted agent' explicitly says 'The toolbox MCP endpoint doesn't block tools/call when require_approval is always' and 'A system-prompt instruction alone doesn't enforce approval.'"
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-toolbox-hosted"],
+          "summary": "Same article: 'Show the proposed tool name and arguments to the user, wait for an explicit approval ... Repeat this process for every call.' Session-level approval violates the per-call rule."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-toolbox-hosted"],
+          "summary": "Switching to 'never' removes the approval prompt entirely; a post-hoc explanation from the agent isn't the required pre-invocation approval."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Expert architecture question that separates declared policy (metadata) from runtime enforcement (harness). Distractors mirror real anti-patterns (system-prompt-only, session-level, metadata edit). Uniquely supported answer."
+      }
+    },
+    "ai103-008": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "a7e5998e3d90dcd0c342ecd1a5744227339f50b17e932a4925d65570246f182c",
+      "sourceIds": ["ai103-quota"],
+      "retrievedAt": "2026-09-11T19:21:00.609Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-quota"],
+          "summary": "Exact wording: 'Quota is assigned to your subscription on a per-region, per-model, per-deployment-type basis'. Two resources in the same region + model + deployment type share that pool."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-quota"],
+          "summary": "Quota Note: '... deployments in one or multiple Azure OpenAI resources as long as their TPM adds up to less than <total>'. Additional resources share the pool; they don't double it."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-quota"],
+          "summary": "Article: 'Quota is assigned to your subscription on a per-region, per-model, per-deployment-type basis' — not per user."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-quota"],
+          "summary": "Article Note: 'Quota Tokens-Per-Minute (TPM) allocation isn't related to the maximum input token limit of a model.'"
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Beginner concept-recall question with distractors that map to common misconceptions (per resource multiplies quota, quota=context length). Uniquely correct; documentation strength is direct."
+      }
+    },
+    "ai103-009": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "bc95b7cbba44910451c825bb1dda7c241f2bb3d6daea1d86d8caf85782eb16b4",
+      "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"],
+      "retrievedAt": "2026-09-11T19:24:41.646Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"],
+          "summary": "Function-calling article: 'Define a function with its name, parameters, and description' and step 1 'Define function tools — Describe each function's name, parameters, and purpose.'"
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"],
+          "summary": "function_call_output is a runtime result item ('type: function_call_output, call_id, output'), not a callable interface declaration."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"],
+          "summary": "The article lists 'Define function tools' as a distinct step from prompt instructions; the sample registers a FunctionTool schema alongside instructions."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"],
+          "summary": "Toolbox overview table: 'Function calling | ❌ No (client-side execution) | ✅ Yes' in Direct tool integration — you cannot declare a callable local function inside a toolbox."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Beginner registration question with meaningful distractors (result vs schema, prompt vs schema, toolbox vs client-side function). Uses two direct sources to eliminate the toolbox misconception."
+      }
+    },
+    "ai103-010": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "4d56c7e7d5a265baf8d987d028d0c46b632b43650a8a7c55ea020b27be13d3ec",
+      "sourceIds": ["ai103-function-calling"],
+      "retrievedAt": "2026-09-11T19:24:41.646Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-function-calling"],
+          "summary": "Sample: FunctionCallOutput(type='function_call_output', call_id=item.call_id, output=json.dumps({...})) submitted via openai.responses.create(input=input_list, conversation=conversation.id, ...) — this is the documented continuation."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-function-calling"],
+          "summary": "The function schema declares the callable interface; overwriting it with a result does not deliver output back to the model."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-function-calling"],
+          "summary": "function_call is the request item type; using a new call_id would fail to correlate with the pending invocation."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-function-calling"],
+          "summary": "The article shows the *application* executes the lookup and returns its result; the model never runs the local function itself in this pattern."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate implementation question. Distractors touch real API items (function_call vs function_call_output) at a level that's easy to confuse without reading the sample."
+      }
+    },
+    "ai103-011": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "33f546d551e6763708fbae787c5fdb447d08e044b74fc72fa03fbbc02eb03b45",
+      "sourceIds": ["ai103-function-calling"],
+      "retrievedAt": "2026-09-11T19:24:41.646Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-function-calling"],
+          "summary": "Sample creates conversation = openai.conversations.create() once and reuses conversation.id in both responses.create calls (initial + function_call_output submission). This matches the correct answer."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-function-calling"],
+          "summary": "Article's clean-up step uses agent versioning separately; version numbers do not carry conversational state."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-function-calling"],
+          "summary": "Function names identify tools; the sample passes conversation state through the conversation argument, not tool names."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-function-calling"],
+          "summary": "Both responses.create calls also pass agent_reference; reusing the agent name does not carry prior tool results, because that's the definition selector, not the conversation."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate troubleshooting that requires reading the sample carefully. Distractors conflate common Foundry concepts (versioning, agent reference, function name) that a test taker might substitute for conversation state."
+      }
+    },
+    "ai103-012": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "78460994c7f5dfb863229e732c089889adb44c87f8804088558939c27cf757f0",
+      "sourceIds": ["ai103-mcp-tools"],
+      "retrievedAt": "2026-09-11T19:24:45.462Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-mcp-tools"],
+          "summary": "Article's continuation code passes approve, approval_request_id=item.id, and the follow-up response uses previous_response_id=response.id — this matches the 'return each decision using its approval-request ID and original response ID' requirement, combined with allowed_tools for the subset."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-mcp-tools"],
+          "summary": "'never' removes the approval requirement; system-prompt instructions cannot enforce MCP allowlisting or block delete_catalog exposure."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-mcp-tools"],
+          "summary": "Successful connection authenticates access; it is not equivalent to per-call approval, which the article requires via mcp_approval_response for every invocation."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-mcp-tools"],
+          "summary": "Leaving delete_catalog exposed contradicts the allowed_tools guidance; the continuation uses approval_request_id, not server name."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Expert architecture that binds three separate controls (allowlist, approval, continuation IDs). Distractors capture realistic misconceptions (authentication as approval, server-name correlation). Reasoning depth is genuine."
+      }
+    },
+    "ai103-013": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "913d25067f6532fa66b7228278609629dce809d583a0f6f98da1ee3513bab9dd",
+      "sourceIds": ["ai103-rag-evaluators"],
+      "retrievedAt": "2026-09-11T19:22:00.707Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-rag-evaluators"],
+          "summary": "Article: 'Groundedness — Measures how well the generated response aligns with the given context without fabricating content (precision aspect).' Exactly matches 'claims not supported by that supplied context'."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-rag-evaluators"],
+          "summary": "Relevance requires query+response and 'assess how well the RAG response addresses the query'; it does not target fabrication against context."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-rag-evaluators"],
+          "summary": "Retrieval requires query+context and rates retrieved chunk relevance to the query, not the response's consistency with context."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-rag-evaluators"],
+          "summary": "Document Retrieval measures search quality vs relevance labels (qrels); the scenario has no ground-truth labels and asks about generated claims."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate scenario that discriminates the four RAG evaluators the study guide highlights. Distractors are the other three standard evaluators, which is realistic and forces the taxonomy test."
+      }
+    },
+    "ai103-014": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "5f687abaedbbb58303353911e40b9ba2a90dd7c6a3bd7e5afc54a09d03ca6522",
+      "sourceIds": ["ai103-rag-evaluators"],
+      "retrievedAt": "2026-09-11T19:22:00.707Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-rag-evaluators"],
+          "summary": "Article recommends Document Retrieval for parameter-sweep tuning with qrels; the Holes metric surfaces missing labels; final-response quality is measured via separate system evaluators. This is exactly the plan."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-rag-evaluators"],
+          "summary": "Groundedness assesses generated-response consistency, not retrieval coverage; and 'treat unjudged as irrelevant' contradicts Holes' purpose ('Number of documents with missing query relevance judgments')."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-rag-evaluators"],
+          "summary": "Relevance is query/response with an LLM judge; NDCG is a Document Retrieval metric computed against relevance labels — the two are not interchangeable."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-rag-evaluators"],
+          "summary": "Fidelity is 'How well the top n retrieved chunks reflect ... the known good documents' — quantity alone is not relevance."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Expert troubleshooting question that layers retrieval tuning, qrels sanity, and system-evaluation separation. Distractors capture real evaluation mistakes."
+      }
+    },
+    "ai103-015": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "1709d1045d1333f4aeaad922738ecd55906e50c5df8eed07ca26bf8588107b73",
+      "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"],
+      "retrievedAt": "2026-09-11T19:23:29.718Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"],
+          "summary": "Tracing article: 'Spans are the building blocks of traces, representing single operations within a trace. Each span captures start and end times, attributes, and can be nested.' This isolates the retrieval tool and its downstream call."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"],
+          "summary": "Groundedness scores response consistency (RAG evaluators article); it does not expose per-operation start/end times."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"],
+          "summary": "Final text and model identity omit intermediate operations that tracing surfaces."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"],
+          "summary": "Quota TPM controls throughput; it is unrelated to per-request nested operation timing."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate troubleshooting with realistic wrong choices drawn from adjacent observability topics (evaluators, quota). Answer is uniquely supported by the tracing article's spans description."
+      }
+    },
+    "ai103-016": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "7778e580f43967b7e84f2b65ea90f6800c2fd16fa0c1bc1b58262435069af930",
+      "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"],
+      "retrievedAt": "2026-09-11T19:23:14.496Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"],
+          "summary": "'When you promote another toolbox version to default, an agent that uses this endpoint gets the new version without an endpoint change or redeployment.' Exactly matches the stem's consumer endpoint."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"],
+          "summary": "Prompt edits do not update centrally managed toolbox tool definitions or default version."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"],
+          "summary": "Duplicating tool definitions per agent defeats the centralization the toolbox is designed to provide."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"],
+          "summary": "'A version-specific developer endpoint ... test an immutable version' — a pinned endpoint doesn't follow default_version promotions."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced architecture question about rollout control. Distractors are realistic anti-patterns and endpoint pinning misuse."
+      }
+    },
+    "ai103-017": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "945822c08612f0c9ebf1c01b6beb9a8cb4891e5c481d15d96a7c7c1c6f445e57",
+      "sourceIds": ["ai103-toolbox-overview"],
+      "retrievedAt": "2026-09-11T19:23:14.496Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-toolbox-overview"],
+          "summary": "Toolbox overview: tool search (preview) 'hides tools by default and exposes only two meta-tools: tool_search ... call_tool ... Pin critical tools so they're always available.' Exact match."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-toolbox-overview"],
+          "summary": "The article identifies tool definitions as input tokens; reducing a response-token limit doesn't reduce tool-definition input consumption."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-toolbox-overview"],
+          "summary": "Tool search deliberately exposes discovery and invocation meta-tools; removing both prevents the selective-access workflow."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-toolbox-overview"],
+          "summary": "Toolbox versioning manages tool releases; without changing tool surfacing, it doesn't reduce input context use."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced architecture question that must respect Preview labeling. Distractors reflect real strategies (limit output, hide tools, versioning) that fail the context-cost objective."
+      }
+    },
+    "ai103-018": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "f29be5fec7e0e47ad2b72b3e9f52ab2c9a47b674ceced5e619255241222a2efa",
+      "sourceIds": ["ai103-tracing"],
+      "retrievedAt": "2026-09-11T19:23:29.718Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-tracing"],
+          "summary": "Tracing best-practices bullets exactly: 'Redact sensitive content' before export, 'Correlate evaluation run IDs' to link with evaluation runs, and keep spans for latency analysis."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-tracing"],
+          "summary": "Retention is applied after ingestion; it does not prevent sensitive data from entering telemetry, contradicting the stated policy."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-tracing"],
+          "summary": "Article: 'Redact or minimize personal data ... before it appears in telemetry.' Masking only the final answer still exposes prompts and tool arguments/results."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-tracing"],
+          "summary": "'Don't store secrets, credentials, or tokens in prompts, tool arguments, or span attributes' — and disabling all spans loses the nested timing needed for latency isolation."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Expert governance question. Distractors capture common flawed patterns (retention as redaction, partial masking, span deletion). Uniquely supported answer."
+      }
+    },
+    "ai103-019": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "48e54153fd5b97a342a59c7ee1847febf049b24b245fefe01cd395d70913add9",
+      "sourceIds": ["ai103-image-generation"],
+      "retrievedAt": "2026-09-11T19:21:55.685Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Mask section: 'defines the area of the image that you want the model to edit, using fully transparent pixels (alpha of zero) ... same dimensions as the input image.' This matches exactly."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Article Mask section: 'The mask must be a PNG file' — JPEG darkness is not the documented representation."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Dimensions must match the input image and the target area uses alpha zero, not opaque pixels."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Mask parameter takes the image input representation; a coordinate string is not the documented mask image."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Beginner API-format question with sharp distractors (wrong file type, wrong dimension, wrong representation). Answer keyed to explicit doc requirements."
+      }
+    },
+    "ai103-020": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "775bdb504f49a126e17117ad829f2ef255ac5d0cc96722853fa8e0060616f5a2",
+      "sourceIds": ["ai103-vision-detail"],
+      "retrievedAt": "2026-09-11T19:24:51.018Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "low is for scenarios where fine detail isn't crucial (quicker, reduced tokens); high is 'more detailed interpretation' at higher token cost — exactly matches."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "Reverses the documented tradeoff: high activates high-res segment processing and low omits that mode."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "'low setting: the model doesn't activate the high-res mode, instead processes a lower resolution 512x512 version' — contradicts 'same high-resolution path'."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "'auto setting: The model decides between low or high based on the size of the image input' — it does not force high."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate parameter-selection question with an intentionally reversed distractor and an auto misconception. Uniquely defensible."
+      }
+    },
+    "ai103-021": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "0e79fc0cda37d00b5b338a9980e5476bb47d720526ba44af30b61848ec3b4e72",
+      "sourceIds": ["ai103-video"],
+      "retrievedAt": "2026-09-11T19:21:00.861Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-video"],
+          "summary": "Video article Segmentation-mode section: 'Custom segmentation – enableSegment : true. You describe the logic in natural language and the model creates segments to match. Set contentCategories with a string describing how you'd like the video to be segmented.' Combined with fieldSchema for the brand field, this is exactly the documented design."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-video"],
+          "summary": "'Whole-video – enableSegment : false. The service treats the entire video file as a single segment' — you'd get one segment, not per-story segments."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-video"],
+          "summary": "cameraShotTimesMs is a content-extraction shot-boundary output; the stem states camera cuts do not match story boundaries, so this isn't a story-segmentation rule."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-video"],
+          "summary": "Transcription converts audio to text; custom brand metadata requires its own fieldSchema field."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced Preview API question that cleanly separates semantic segmentation from shot detection. Distractors capture predictable confusions."
+      }
+    },
+    "ai103-022": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "14cb84fd03d197e5095a1a1fbecb2e61e0038a5d9cb96893a1fb320a40006c3d",
+      "sourceIds": ["ai103-video"],
+      "retrievedAt": "2026-09-11T19:21:00.861Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-video"],
+          "summary": "'Rapid motions or single-frame events might be missed'; 'Small text or distant objects can be lost.' Exact match for 'conclusion is unsupported'."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-video"],
+          "summary": "Article Technical constraints: 'Frame sampling (~ 1 FPS)' and 'Frame resolution (512 × 512 px): Sampled frames are resized' — original resolution is not retained."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-video"],
+          "summary": "Custom field descriptions guide extraction; nothing in the doc says they override sampling or resizing constraints."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-video"],
+          "summary": "enableSegment=true toggles segmentation; it does not change frame sampling or resizing described in Technical constraints."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced scenario probing the difference between 'no observation' and 'observed absence' under sampling. Distractors mimic over-confident interpretations."
+      }
+    },
+    "ai103-023": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "4b2ebf02445c21b10522c25f4fe94e14a5c2aba1817a91f854c99c3b382fef5a",
+      "sourceIds": ["ai103-sentiment"],
+      "retrievedAt": "2026-09-11T19:21:09.199Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-sentiment"],
+          "summary": "Article: 'Opinion mining is a feature of sentiment analysis, also known as aspect-based sentiment analysis in Natural Language Processing (NLP). This feature provides more granular information about the opinions related to words (such as the attributes of products or services) in text.' Exact match."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-sentiment"],
+          "summary": "Document-level sentiment is the aggregated label; it does not attach opinions to specific product aspects like screen or battery."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-sentiment"],
+          "summary": "Sentence-level scores are per-sentence sentiment, not per-aspect opinion associations."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-sentiment"],
+          "summary": "Applying one document-level label discards the distinct opinions per aspect the stem needs."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Beginner scenario. Distractors reflect real Azure Language outputs (doc-level, sentence-level scores) that do not solve the aspect problem. Retirement disclosed."
+      }
+    },
+    "ai103-024": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "5e36a5f568d85da2715949d5e8f50697bf8e942e2f3bee53fbb6ed87f3cddfdb",
+      "sourceIds": ["ai103-pii"],
+      "retrievedAt": "2026-09-11T19:23:23.494Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-pii"],
+          "summary": "characterMask policy 'enables you to mask redactedText using a specified character (for example ***) while preserving the length and offset of the original text.' Exact match."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-pii"],
+          "summary": "entityMask policy 'enables you to mask the detected PII entity text its corresponding entity type' (e.g., [PERSON_1]) — labels replace text and change offsets."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-pii"],
+          "summary": "syntheticReplacement substitutes replacement values (e.g., a different name), not a length-preserving mask."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-pii"],
+          "summary": "noMask 'enables you to return the response without including the redactedText field', so there's no masked overlay text at all."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate Preview policy question. Distractors are the other three actual policyKind values, forcing genuine discrimination."
+      }
+    },
+    "ai103-025": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "a3dfa60f18050409d36b984113153137c87862a102766841c52e8166c702b059",
+      "sourceIds": ["ai103-speech-lid"],
+      "retrievedAt": "2026-09-11T19:22:06.994Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-speech-lid"],
+          "summary": "Article: 'The SpeechServiceConnection_LanguageIdMode property ... Continuous for continuous LID' and 'Continuous LID is only supported with continuous recognition' — setting LanguageIdMode=Continuous while retaining continuous recognition is the documented fix."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-speech-lid"],
+          "summary": "'Recognize once with At-start LID. Continuous LID isn't supported for recognize once' — switching to recognize-once breaks the requirement."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-speech-lid"],
+          "summary": "Article explicitly warns 'Don't include multiple locales for the same language, for example, en-US and en-GB.'"
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-speech-lid"],
+          "summary": "Article: 'Without it, the Speech service defaults to at-start LID.' Continuous recognition doesn't imply continuous LID."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced troubleshooting with distractors that lean on plausible but explicitly-banned actions (recognize-once, duplicate base locale)."
+      }
+    },
+    "ai103-026": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "39331f0f6e310805b28f1262266803e7b86826a92bde1e15733afadf03419a1d",
+      "sourceIds": ["ai103-translation"],
+      "retrievedAt": "2026-09-11T19:24:45.361Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-translation"],
+          "summary": "'You must include the From parameter in your API translation request instead of using the autodetect feature' plus keep the mstrans:dictionary markup — this is the exact remediation set."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-translation"],
+          "summary": "Doc: dynamic dictionary 'is safe only for compound nouns like proper names and product names' — arbitrary complete sentences fall outside that scope, and autodetect is disallowed."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-translation"],
+          "summary": "'The From and To languages must include English and another supported language' — removing English breaks the requirement."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-translation"],
+          "summary": "The syntax section shows the custom translation is provided via the dictionary markup; the target-language argument alone doesn't carry it."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced implementation question with distractors that misuse feature scope, drop English, or drop markup. Answer uniquely defensible."
+      }
+    },
+    "ai103-027": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "cfd1da79afa9b75927c5489e9f51332a064e5ddfa602864fd130406398b74f0c",
+      "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"],
+      "retrievedAt": "2026-09-11T19:21:04.878Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"],
+          "summary": "Article: 'semantic ranker can't create new information or strings. The language models extract captions and answers verbatim from your content, so if the results don't include answer-like text, they won't produce one.' Exact match."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"],
+          "summary": "Article: 'Captions and answers are always verbatim text from your index. There's no generative AI model in this workflow that creates or composes new content.' No general-knowledge generation occurs."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"],
+          "summary": "Semantic answers are a query-response substructure, not an ingestion pipeline rewrite."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"],
+          "summary": "Vector k is the vector-retrieval candidate count in hybrid queries; it does not create sentences."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Beginner concept-recall that dispels a common generative-AI misconception. Distractors are realistic wrong mental models. Source URLs remain the direct /azure/search product paths per policy; validator source-url gate is a known unrelated bug."
+      }
+    },
+    "ai103-028": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "aa15cd6bd17133649c8c784044862c8853494d648c3298967c3c1be3e5e77322",
+      "sourceIds": ["ai103-hybrid-query"],
+      "retrievedAt": "2026-09-11T19:21:04.878Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-hybrid-query"],
+          "summary": "Article: 'Both queries execute in parallel. The results are merged and reordered by new search scores, using Reciprocal Rank Fusion (RRF).' k controls vector contribution; top controls returned size."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-hybrid-query"],
+          "summary": "Article: hybrid retrieval runs 'in parallel', not as keyword-failure fallback; k controls vector neighbors, not final response size."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-hybrid-query"],
+          "summary": "top controls the returned response size ('top in the 10 to 20 range' in the Balanced hybrid recommendation); vector neighbors come from k."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-hybrid-query"],
+          "summary": "Merge uses Reciprocal Rank Fusion (RRF) over ranked lists, not raw score addition."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Intermediate implementation question that tests the RRF vs sequential merge and the k/top separation. Distractors capture common misreadings."
+      }
+    },
+    "ai103-029": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "2b385fb7f12f1a2dc1345d3e210cacaa2d2572452bc7cecd6acc675c8e4fa2d7",
+      "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"],
+      "retrievedAt": "2026-09-11T19:21:04.878Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"],
+          "summary": "Article: 'you must explicitly include these filters in both the top-level filter and in each vector-level filter to ensure security and other constraints are consistently enforced.' Exactly this remediation."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"],
+          "summary": "Article explicitly says the targeted filter 'fully overrides the global filter, including any filters used for security trimming' — not additive."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"],
+          "summary": "Semantic ranking (semantic-ranker article) reranks existing candidates; it doesn't supply the omitted tenant filter."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"],
+          "summary": "top controls result count, not tenant restriction; unauthorized candidates remain eligible."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Advanced Preview scenario about security-trimming pitfalls in filter overrides. Distractors mimic real assumptions (additive filters, ranker enforcement)."
+      }
+    },
+    "ai103-030": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "84fc201020fc2adcbf7fa49c2297c1f83d9277150a8d03082acdb4b35554f3b4",
+      "sourceIds": ["ai103-analyzer-quality"],
+      "retrievedAt": "2026-09-11T19:24:41.454Z",
+      "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-analyzer-quality"],
+          "summary": "Confidence-scoring section: automate high, route low; Grounding section: source coordinates and spans for review; Labeled samples improve eligible fields; OCR handled separately. Exactly the documented workflow."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-analyzer-quality"],
+          "summary": "Article: 'Training supports document analyzers only, and it doesn't currently support fields that use the generate method.' 'Labeled samples don't correct text recognition problems.' Both premises of this option are contradicted."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-analyzer-quality"],
+          "summary": "Editing confidence values isn't documented; removing grounding loses the source location evidence the Grounding section calls out for review."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-analyzer-quality"],
+          "summary": "'A span locates source content' — grounding is provenance, not correctness proof; training generated summaries is unsupported and doesn't fix OCR errors."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "scores": {
+          "alignment": 2,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "distractorPlausibility": 2,
+          "answerUniqueness": 2,
+          "documentationStrength": 2,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 2,
+          "clarityAccessibility": 2
+        },
+        "reviewerId": "dungeon-verify-ai103",
+        "reviewedAt": "2026-09-11T20:45:14.915Z",
+        "notes": "Expert architecture-design question layering confidence, grounding, training scope, and OCR limits. Distractors capture over-claims (label solves OCR, span=truth)."
+      }
+    }
+  }
+}

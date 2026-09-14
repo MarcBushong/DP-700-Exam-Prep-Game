@@ -1,0 +1,988 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "ai200-i-018": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "e4bf586cdde482f4214a0db9c9ab459c7efab3be81100d8f55711c1f9184e4de",
+      "sourceIds": [
+        "ai200-20260914-doc-eventgrid-delivery"
+      ],
+      "retrievedAt": "2026-09-14T18:02:36.757Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ],
+          "summary": "This is not incorrect here: the policy check occurs at age 40 minutes, beyond the explicitly configured 30-minute lifetime. Four unused attempts cannot revive an expired event. Counterexample/context: This answer also holds whenever a configured TTL is exhausted before the attempt ceiling at the next delivery check; a working dead-letter destination then supplies the stated retention path. Evidence: Retry policy says first to expire; Dead-letter events says TTL is checked only at the next scheduled delivery attempt. The question supplies that precise checkpoint."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ],
+          "summary": "Remaining attempts are only an upper budget, not an entitlement. The expired TTL has already ended eligibility at this check. Counterexample/context: An attempt ceiling governs when it is reached while the TTL is still live. Further attempts can be eligible only before either limit expires; even then the documented schedule is best effort. Evidence: The article explicitly stops on either limit and permits skipped retry opportunities. It never promises consumption of the entire attempts budget."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ],
+          "summary": "A default cannot displace the stated custom 30-minute TTL. The event's unused attempts have no documented resetting effect. Counterexample/context: A subscription actually using the default 1440-minute TTL would use that lifetime, subject independently to its delivery-attempt limit. Evidence: Retry policy identifies 1440 minutes as the default and allows custom values from 1 to 1440. It treats attempt count as a separate bound."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "The independent first-limit challenge remains resolved by the explicit Basic push model, configured TTL and scheduled check. Four unused attempts cannot override expiry, and no immediate Blob write is promised. The advanced label receives difficulty 3 because this is compact policy application, not deep computation. The actual observed-state evaluation nevertheless supports troubleshooting. Originality remains 3 for resemblance to the documentation's illustrative TTL comparison. The completed audit identifies no assigned duplicate for this fact; local comparison separates HTTP error classification and retention configuration. Authored complexity troubleshooting: supported. The candidate diagnoses which policy boundary explains the failure state using supplied runtime observations. This supports troubleshooting independently of the scenario format. Actual reasoning: Compare observed age and attempts used with two independently configured policy bounds, then apply expiry at the stated scheduled checkpoint rather than promise an immediate write. Counterfactual test: If the event were still younger than its TTL but had exhausted its attempt budget, the governing boundary would change. The numeric and scheduled-check premises therefore do actual decision work. Difficulty assessed separately: The rule and arithmetic are compact, so advanced is ambitious and difficultyAuthenticity remains 3. That ease does not remove the actual policy-state evaluation. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-019": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "32d2c788a01688714b0887225cd2089c3675214331736e6a360e18b03a3e9f75",
+      "sourceIds": [
+        "ai200-20260914-doc-eventgrid-delivery"
+      ],
+      "retrievedAt": "2026-09-14T18:02:36.757Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ],
+          "summary": "The key is supported for the documented Basic-topic delivery model, but the stem only says Event Grid push. The cited article does not establish that exact configuration for every push-capable model; I cannot independently make the unspoken Basic assumption. Counterexample/context: For a traditional topic/system-topic push event subscription with an existing reachable container and suitable access, explicitly configuring dead-lettering supplies the investigation path. Evidence: Dead-letter events requires a storage account and container and says the feature is disabled by default. Its traditional subscription examples do not substantiate an unrestricted namespace-model claim."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ],
+          "summary": "This extends opportunities to deliver but does not create a destination from which abandoned payloads can be investigated. Counterexample/context: On the documented topic push model, raising a valid attempts budget could help a transient outage recover while TTL remains live, if more deliveries rather than post-exhaustion retention were wanted. Evidence: Retry policy configures attempt count separately from Dead-letter events' explicit storage destination. The latter section, not an attempts increase, supplies retained payloads."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-delivery"
+          ],
+          "summary": "A longer eligibility period still ends. It does not establish any separate post-exhaustion store for the team to query. Counterexample/context: For the documented topic subscription, extending a supported TTL can make events eligible for a later retry when a recoverable outage lasts beyond the previous TTL. Evidence: Retry policy describes a configurable minute-based lifetime; the distinct Dead-letter events section describes what is needed to save payloads once delivery limits end."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "The intended traditional-topic Blob retention answer is documented, but Event Grid push does not supply the missing Basic/topic delivery-model bound. The only cited article does not establish this configuration and GA implication for every push-capable resource model. The exact-hash technical stage also remains manual-review-required, so final verification is prohibited independently of this third-context finding. The retention-versus-retry configuration distinction is genuinely applied; that separate complexity assessment does not cure the missing scope. No relevant duplicate was identified by the completed audit. Any authored clarification restarts all three passes. Authored complexity technical-implementation: supported. The task chooses a concrete configuration action by its effect after retry exhaustion, rather than just naming Event Grid or recalling a destination word. This supports a limited implementation classification. Actual reasoning: Distinguish increasing delivery eligibility from adding a post-exhaustion payload destination, and select the configuration that addresses the required lifecycle phase. Counterfactual test: Changing the goal to recover delivery during a transient outage would make attempts or TTL configuration relevant; those are real alternate actions whose suitability depends on the retention requirement. Difficulty assessed separately: The retention-versus-retry distinction is an easy intermediate application; the missing delivery-model scope is ambiguity, not difficulty. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 3,
+          "scenarioCompleteness": 2,
+          "answerUniqueness": 3,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 3,
+          "documentationStrength": 3,
+          "citationSpecificity": 3,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 3,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-020": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "4d48953b1559ea7683e77156fce01ac09f1a276e0c30f98cb1686c710a557b26",
+      "sourceIds": [
+        "ai200-20260914-doc-eventgrid-entra"
+      ],
+      "retrievedAt": "2026-09-14T18:02:39.048Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-entra"
+          ],
+          "summary": "This is not incorrect: the principal already obtains a token but lacks send authorization, and topic scope confines this assignment to the required target. Counterexample/context: This is also correct for another principal publishing only to one designated topic; broader scopes are not inherently invalid, merely excessive for this requirement. Evidence: Security principals requires Microsoft.EventGrid/events/send/action after token validation, and Assign permission lists a specific Event Grid topic as a supported assignment scope."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-entra"
+          ],
+          "summary": "The subscription contains other topics, so this grants a broader boundary than the one-topic requirement. Counterexample/context: It is a documented valid role-assignment scope when the publisher is intentionally authorized across the subscription rather than confined to one topic. Evidence: The permission-assignment section permits an Azure subscription scope as well as narrower resource scopes; the stem explicitly rules out broad publication authority."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-eventgrid-entra"
+          ],
+          "summary": "Other topics share that resource group. This reduces scope relative to a subscription but still fails the stated one-topic boundary. Counterexample/context: Resource-group scope is appropriate when the entire group is the intended authorization boundary and its relevant topics are legitimate publishing targets. Evidence: The same section names resource groups and specific topics as separate scope choices. Only the latter matches the stated exclusions."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "Independently rejected token possession as sufficient send authority and rejected both broader scopes as least privileged because other topics explicitly exist there. All three scopes are real; the target set determines which assignment is appropriate. This is a simple but genuine configuration application, separate from its modest intermediate difficulty. Preview disable-local-auth examples do not support the answer. The completed semantic audit has no relevant exclusion; the outbound Event Grid scope fact differs from inbound key authentication and the Service Bus binding-prefix/receiver pair. Authored complexity technical-implementation: supported. The candidate selects a concrete RBAC assignment boundary using the required target set and other resources in each enclosing scope. That is configuration reasoning, not simple role-name recognition. Actual reasoning: Apply least privilege to the stated topic topology after separating token acquisition from missing send authorization; choose between three genuinely valid assignment scopes. Counterfactual test: An intended target set spanning a group or subscription would change the appropriate scope. The explicit additional topics and one-target exclusion decide among otherwise supported choices. Difficulty assessed separately: Nested scopes make this an easy intermediate choice; difficultyAuthenticity remains 3. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-021": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "70710de162b5bb7bb79d3e469d2627712718febaca384072d2fe5a019e03d627",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-bindings"
+      ],
+      "retrievedAt": "2026-09-14T18:02:43.880Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "This is not incorrect: timing is the invocation requirement, while the stated Blob read and Cosmos write are data flow after invocation. Counterexample/context: A timer also fits other scheduled handlers regardless of which supported optional data bindings they use; a service event would require a different trigger. Evidence: The source defines exactly one trigger and gives the identical service-role combination as a conceptual example, not an exam question."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "Reading Blob data is an input-binding action during execution, not the requested event that starts it. A Blob trigger would replace the stipulated schedule with a blob event. Counterexample/context: A Blob trigger is suitable when a blob event is the required invocation source rather than when a scheduled handler merely reads existing Blob data. Evidence: The opening table explicitly separates Timer in its Trigger column from Blob Storage in its Input binding column, and the matrix confirms Blob trigger support."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "The database receives the result after invocation. Selecting its trigger would not implement the requested schedule. Counterexample/context: A Cosmos DB trigger is a supported choice when database events should start the function instead of a timer schedule. Evidence: The documented scheduled-job row places Cosmos DB in Output binding, not Trigger; the supported matrix separately lists Cosmos DB trigger capability."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "The schedule is the invocation source; Blob input and Cosmos output do not replace it with additional triggers. The fact is directly supported by the actual conceptual example, not an assessment. Originality remains 3 because the same illustrative service combination is familiar. The beginner and concept-recall classifications are honest: the scenario wrapper does not count as applied reasoning. The completed audit identifies no relevant duplicate and does not authorize counting this item toward the applied share. Authored complexity concept-recall: supported. The scheduled-job wrapper does not elevate the item beyond concept recall. The checked-in concept-recall classification is already honest. Actual reasoning: Map the explicitly named schedule to Timer while recognizing the other named services as data bindings. Counterfactual test: Removing the Blob/Cosmos story leaves the same schedule-to-timer question. Those details illustrate the rule rather than create a substantial applied decision. Difficulty assessed separately: Beginner accurately describes this direct trigger-concept recognition. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-022": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "fdeb113c3fa0f355c84d9c6b82b28699a0be3cc1f94b79bebdeee00e23744ec9",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-python",
+        "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns"
+      ],
+      "retrievedAt": "2026-09-14T18:02:41.582Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "This is not incorrect: jobs/{job_id} binds J42 in the path and the requested replacement reads precisely that collection using the matching key. Counterexample/context: The same method fits any Python v2 route-template capture; the dictionary key must match that route's placeholder rather than an invented extra handler parameter. Evidence: Reading route parameters demonstrates req.route_params.get with a matching placeholder and explicitly tells Python v2 handlers to read the request collection."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "The stem excludes a query string, so the original params lookup cannot obtain J42 merely because it appears in the route path. Counterexample/context: req.params.get would retrieve job_id when the caller provides a query parameter such as ?job_id=J42 rather than only the path capture. Evidence: The HTTP key concepts describe params as the query-parameter collection, separately from the route-parameter section."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns",
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "No request body is supplied. JSON parsing is a different input operation and cannot extract a URL path component. Counterexample/context: This expression is appropriate for a request carrying a valid JSON object with a job_id member; it is not a path parser. Evidence: The training's HTTP example parses a POST JSON payload with req.get_json. The Python reference puts path captures in route_params instead."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "Independently traced jobs/{job_id}, the J42 path and the faulty params lookup; route_params is the supported fix, while query and JSON require different supplied inputs. A header key is consistent with the authorized request and empty query string. not-found is the returned body, not an asserted HTTP 404. Python AST validation covers the original and all replacement expressions, with no deployed runtime test claimed. Troubleshooting follows from actual request/data-flow diagnosis, not code formatting. The completed audit identifies no relevant request-contract duplicate. Authored complexity troubleshooting: supported. Troubleshooting is justified by the actual data-flow diagnosis, not by the presence of Python code. The handler's symptom is resolved by evaluating which input collection was used. Actual reasoning: Trace the exact request path through the decorator template and the faulty handler lookup, then select the request collection that contains the observed identifier. Counterfactual test: If the identifier were supplied only in the query or in a valid JSON object, another offered expression could be appropriate. The concrete request and route shape distinguish the fix. Difficulty assessed separately: Intermediate is defensible because route, query and JSON expressions are all real input operations and the reader must reconcile them with the supplied request and failure. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-023": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "2b56476b2341788c07eb9a182377cdebb4ef0d04a9971d27e28885549cc0a834",
+      "sourceIds": [
+        "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns",
+        "ai200-20260914-doc-functions-bindings"
+      ],
+      "retrievedAt": "2026-09-14T18:02:43.880Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns",
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "This is not incorrect: the existing queue already contains the work and message arrival, not another client request, is the specified start condition. Counterexample/context: This trigger fits asynchronous job consumption whenever a function should react to messages on a properly configured Service Bus queue. Evidence: Create Service Bus triggers says queue triggers start a function when a message arrives; the binding matrix confirms trigger support."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns"
+          ],
+          "summary": "The client has already returned from ingestion and is not to issue another request. An HTTP invocation source would leave the queue arrival disconnected from this worker. Counterexample/context: HTTP is suitable for the front-door ingestion function or a worker that is deliberately called by a client or another HTTP publisher. Evidence: The training separates the HTTP function that validates and queues work from a different Service Bus-triggered function that processes it."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings",
+            "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns"
+          ],
+          "summary": "The requirement excludes a polling schedule. A scheduled handler could inspect a queue, but that is a different invocation policy from the requested queue trigger. Counterexample/context: Timer is suitable when batch processing must begin on a deliberate schedule, even if the handler then accesses other services. Evidence: The binding example table uses Timer for scheduled work, whereas the training uses Service Bus for the separate arrival-driven worker."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "The Service Bus trigger key is correct, but the authored scenario-based complexity is unsupported. The premise names the queue and explicitly excludes HTTP and timer before asking which trigger to use, leaving trigger vocabulary recall under a two-stage story. Numeric rubric 45 and a technical approval do not override that classification hold. The completed audit has no relevant duplicate finding; this is a distinct quality reason for exclusion. No authored relabel or hash change was made. Authored complexity scenario-based: overstated; repair required. The current decision reduces to trigger vocabulary recall. The two-stage ingestion narrative adds no unresolved delivery, batching, settlement or implementation choice; HTTP and timer are explicitly excluded before the question. Actual reasoning: Recognize that a named Service Bus queue uses a Service Bus queue trigger; the premise already excludes the other two trigger categories by name and invocation style. Counterfactual test: Removing the document-ingestion narrative leaves 'which trigger responds to a Service Bus queue, not HTTP or timer?' and the same answer. The story is not doing genuine scenario reasoning. Difficulty assessed separately: The prior difficulty score acknowledged an easy item, but that is insufficient: the scenario wrapping does not make the classification applied. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-024": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "3cb809ed7dec6ef90e2c2b591fab526ea8963da09a92b0f1d7e5f9655be33138",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-reference",
+        "ai200-20260914-doc-functions-bindings"
+      ],
+      "retrievedAt": "2026-09-14T18:02:46.589Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-reference",
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "This is not incorrect: the operation is explicitly supported by the service SDK and excluded from the installed binding, which is the exact documented reason for direct SDK use. Counterexample/context: Direct SDK clients also fit services without a suitable binding; callers must create, manage and authorize their own client rather than borrow the extension's hidden one. Evidence: The developer guide says to independently create and manage client instances when the needed underlying SDK functionality is unsupported by an extension."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-reference",
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "The stem explicitly states that neither the installed extension nor its parameters exposes the needed operation. Restricting integration to that same surface cannot add it. Counterexample/context: Using only an existing output binding is sensible when the requested operation is among the binding's supported data transfers and its configuration suffices. Evidence: Bindings simplify supported transfers, while Client SDKs names unsupported underlying-SDK functionality as the reason to use a separate client."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "A separate client is the documented path for functionality outside an ordinary binding, and richer preview SDK types do not invalidate that bounded answer. However, the binary options simply repeat incapable binding versus explicitly capable SDK. Rubric 41 fails the threshold, and technical-implementation complexity is independently overstated because no concrete operation or client implementation decision is evaluated. The completed audit does not supply a duplicate blocker or cure either quality failure. Authored repair requires all three passes. Authored complexity technical-implementation: overstated; repair required. No service, operation, client lifecycle, SDK limitation or authentication decision is supplied to evaluate. Selecting the explicitly capable alternative is not an implementation exercise. Actual reasoning: Repeat that the only available operation surface is the SDK after the premise says the operation is absent from the binding. Counterfactual test: The generic words binding and SDK can be replaced by incapable interface and capable interface without changing the reasoning. The question does not test an implementation-specific inference. Difficulty assessed separately: Intermediate remains overstated; difficultyAuthenticity 2 and the below-threshold rubric already reflect the binary restatement. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 3,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-i-025": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "9559f58d81036331d70d348b24b27518f136b99694764a53d90cd1cb4141918c",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-python",
+        "ai200-20260914-doc-functions-bindings",
+        "ai200-20260914-doc-functions-hosting"
+      ],
+      "retrievedAt": "2026-09-14T18:02:48.813Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "This is not incorrect: the project explicitly selects v2 and wants declarations with Python code, matching the decorator model. Counterexample/context: Decorators are also used when functions are organized in registered blueprint modules rather than kept entirely in function_app.py. Evidence: Both the programming-model table and the Python v2 binding tab define triggers and bindings directly with decorators."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "That is the alternative Python v1 programming model, not the v2 model in the premise. Counterexample/context: A Python v1 project declares bindings in function.json, with handler code in its corresponding module. Evidence: The reference and binding tabs explicitly label the function.json route as Python version 1 and the decorator route as version 2."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-hosting"
+          ],
+          "summary": "The host configuration file controls global runtime behavior, not the individual trigger/binding definitions beside these handlers. Counterexample/context: host.json is the documented place to configure app-wide host behavior such as functionTimeout. Evidence: Folder structure calls host.json global configuration, and Function app timeout duration gives a concrete supported host setting."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "The v2 decorator answer and v1/function.json contrast are fully documented, but the question asks a programming-model definition rather than technical implementation. Difficulty 2 records the easy recall issue; the separate authored-complexity hold is mandatory even at total 44. The completed audit identifies no relevant duplicate. The label and content remain unchanged and excluded rather than silently converted to recall. Authored complexity technical-implementation: overstated; repair required. This asks for the programming model's definition, not how to implement or diagnose a particular trigger or binding. Project-story wording does not turn version-specific recall into applied reasoning. Actual reasoning: Recall Python v2 equals decorator declarations rather than v1 function.json or global host.json. Counterfactual test: Removing the team's project description leaves 'where does Python v2 declare triggers and bindings?' with the same answer and no additional constraints to analyze. Difficulty assessed separately: The independent difficultyAuthenticity score was already 2. Reaching exactly 44 overall does not certify the separate complexity classification. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-026": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "a46143a57e55c6ee35ffe643eff372d1bda5fc4b74f685a7e5b8626ce1a3868b",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-python"
+      ],
+      "retrievedAt": "2026-09-14T18:02:41.582Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "This is not incorrect: the blueprint is imported but not registered, and the documented second stage is precisely app.register_functions(bp). Counterexample/context: The same call is appropriate for any separately defined blueprint whose functions must be registered with the main app, using the actual imported blueprint object. Evidence: Organizing with blueprints shows the two separate steps and the exact register_functions call after importing bp."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "The documented blueprint setup requires registration in addition to import, and the premise explicitly states that registration has not happened. Counterexample/context: An ordinary helper module with no function definitions may be imported for its helper code without any FunctionApp registration. Evidence: The blueprint section explicitly registers bp; Folder structure separately labels shared as pure helper code with no triggers or bindings."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "The documented blueprint registration call is correct, with ordinary helper import as a real different context. Nonetheless, not registered in the stem points directly to register_functions in a binary choice. Rubric 41 and a separately unsupported technical-implementation classification both require exclusion. No relevant semantic-audit pair changes that judgment. Code-shaped identifiers are not proof of applied reasoning. Authored complexity technical-implementation: overstated; repair required. This is a missing-method name lookup, not a substantive implementation diagnosis. There is no unresolved module binding, actual failure trace or competing registration strategy to evaluate. Actual reasoning: Select register_functions immediately after the premise announces that the functions are not registered. Counterfactual test: The question is answerable from unregistered/register_functions even without understanding blueprint discovery. Code-shaped option text therefore does not demonstrate applied reasoning. Difficulty assessed separately: The exact lexical cue and binary choice justify the existing low difficulty score independently of code-like identifiers. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 3,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-i-027": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "f1a5b14bd3e1261b431bce82a1dc9fc31ce6cfac2ff5f059e45493008dfa0102",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-bindings"
+      ],
+      "retrievedAt": "2026-09-14T18:02:43.880Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "This is not incorrect: the Blob row contains an Input checkmark and can supply an additional declarative read without replacing the HTTP trigger. Counterexample/context: Blob input also fits a scheduled function that reads a blob during execution, as the article's Timer example demonstrates. Evidence: The supported matrix marks Blob Input under the supported runtime, and the opening scheduled-job example uses Blob input independently of Timer."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "Its trigger can provide message data, but the requested extra input column is blank. Replacing HTTP with a Service Bus trigger would change the invocation source. Counterexample/context: Service Bus is appropriate as the function's trigger or as an output binding when sending messages is required. Evidence: The Service Bus row marks Trigger and Output, not Input. The article separately defines a trigger as a special input source."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "Event Grid offers event invocation and event publication, but its standalone Input cell is blank. Neither capability satisfies the specified extra declarative read. Counterexample/context: Event Grid fits a trigger-driven event handler or an output binding that publishes an event from a function. Evidence: The Event Grid row marks Trigger and Output only; the HTTP-triggered premise excludes selecting another invocation trigger."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "The 4.x matrix clearly gives Blob a standalone Input binding and leaves Service Bus/Event Grid Input blank. This supports the answer but not technical-implementation classification: the question explicitly asks for a matrix capability lookup, with HTTP only clarifying the terminology. No binding configuration or observed implementation behavior must be resolved. Hold despite rubric 46 and no relevant semantic-audit exclusion. Authored relabeling would require a fresh sequence. Authored complexity technical-implementation: overstated; repair required. The requested answer is explicitly a binding-matrix capability fact. No resource selection, binding expression, handler contract or configuration outcome must be implemented or diagnosed. Actual reasoning: Recall or look up which of three rows has a checkmark in the documented standalone Input column. Counterfactual test: Removing the existing HTTP function story leaves the same question about which listed service has standalone input support. HTTP only disambiguates the term; it does not create an implementation task. Difficulty assessed separately: Understanding trigger input versus standalone input is a useful concept distinction, but the prior difficulty score does not itself establish applied implementation. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-028": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "948f95ecd46064cd66747499a70ae54329ee0245fe32d65e17abc474a1c33580",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-reference",
+        "ai200-20260914-doc-functions-python"
+      ],
+      "retrievedAt": "2026-09-14T18:02:46.589Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-reference"
+          ],
+          "summary": "This is not incorrect: the documented unit for both management and deployment is the app, so splitting that unit separates the two groups' lifecycles. Counterexample/context: Separate apps also fit other groups that intentionally need distinct app-level deployment or runtime configuration; this need not imply separate billing plans. Evidence: Deployment identifies an app as the execution and management context and states all its functions share runtime version and deployment method."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-reference"
+          ],
+          "summary": "Blueprints register into the same main app and remain inside its shared deployment/runtime boundary. File modularity alone does not satisfy either requirement. Counterexample/context: Blueprints are appropriate when the goal is to organize reusable or feature-grouped functions without separating their Azure app lifecycle. Evidence: The blueprint section registers modules with one FunctionApp, while Deployment places runtime and deployment management at the app resource."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "Separate apps do provide the documented deployment/runtime boundary and blueprints do not. However, the two requirements restate that same management-unit definition; the binary alternative does not require a substantive architectural trade-off. Architecture-design complexity is therefore overstated despite rubric 46. The completed audit offers no duplicate exclusion for this record, and absence of duplication does not establish applied architecture reasoning. No scaling generalization or label repair was introduced. Authored complexity architecture-design: overstated; repair required. The two requirements restate properties of the same documented management unit. There is no competing viable architecture, interaction among constraints, or trade-off to evaluate beyond that definition. Actual reasoning: Recall that the function app is the shared deployment/runtime management unit and choose it over a code-organization construct. Counterfactual test: Removing the two-owner narrative leaves 'what is the deployment and runtime-management unit, an app or a blueprint?' The answer is the same single boundary fact. Difficulty assessed separately: The prior easy-intermediate score is not enough to justify architecture-design. Binary alternative quality and semantic classification are separate concerns. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-029": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "a07470d1b18260e627a488bd3503aa32341c7da19a1e74894ebe378cb04c91ac",
+      "sourceIds": [
+        "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+        "ai200-20260914-doc-functions-python",
+        "ai200-20260914-doc-functions-hosting"
+      ],
+      "retrievedAt": "2026-09-14T18:02:48.813Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "This is not incorrect: the unchanged code reads os.environ and the deployment uses the Azure-managed setting, not the edited developer file. Counterexample/context: This is also the right surface for other per-app nonsecret values read from environment variables in hosted functions; shared-provider configuration would require a different application design. Evidence: Application settings are injected as environment variables, and Environment variables explicitly names the Function App configuration page for Azure."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "Only the local execution changed, exactly as expected. This edit does not write the hosted app's configuration store. Counterexample/context: Values.MODEL_ID is appropriate for changing the developer's local environment value when running with local.settings.json. Evidence: Both sources explicitly separate local settings from Azure application settings; the training says deployed code reads the Azure-managed store."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-hosting"
+          ],
+          "summary": "The requested change is an application value read by os.environ, not a change to Functions host behavior. Counterexample/context: host.json is appropriate when changing a documented host setting such as functionTimeout for function execution. Evidence: Folder structure describes global host configuration and the hosting reference demonstrates functionTimeout, whereas environment variables are configured separately."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "Accepted SEM-019 after reading both full exact-hash questions, not merely the audit summary. ai200-c-020 and this record select the same hosted app-setting-to-unchanged-Python-environment mapping. local.settings.json and host.json change the distractor context, but they do not establish a different core production-configuration fact. The earlier provisional keep-distinct inclination is superseded. The local/hosted symptom still supports modest troubleshooting in isolation; applied complexity does not excuse semantic duplication. Originality is independently reduced to 1 for original prose around a duplicated decision. Reject this new record and leave c-020 and all existing/history records untouched; no approval of c-020 is implied. Authored complexity troubleshooting: supported. The root cause is inferred from a changed local result and unchanged hosted result, rather than announced as the answer. The reader must distinguish code behavior, local configuration and the active production store. Actual reasoning: Use the observed local-versus-deployed discrepancy and the unchanged environment lookup to locate the configuration store that was not updated. Counterfactual test: If only local execution were intended, local.settings.json would be correct; if host behavior rather than MODEL_ID were being changed, host.json could be relevant. The observed environment and unchanged code decide the action. Difficulty assessed separately: This is a modest but defensible intermediate diagnosis; common filenames do not make it advanced. Semantic audit: I reread both complete records, including every choice and explanation. Both require setting the hosted app's unprefixed environment variable through an application setting while leaving Python lookup unchanged. The container record adds reusable-image and CUSTOMCONNSTR_ alternatives; the Functions record instead adds an ineffective local edit and host.json. Those are different distractor wrappers around the same decisive production-setting/environment mapping. The Functions local/hosted discrepancy does supply modest troubleshooting in isolation, so its complexity can be honestly supported, but that does not make its core fact distinct. The earlier provisional keep-distinct inclination is superseded by this explicit comparison, not silently ignored.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 1,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-030": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "c7624087fb668f002f82798facd9502b6314b84c98c25792725e411195802372",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-python",
+        "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+        "ai200-20260914-doc-functions-hosting"
+      ],
+      "retrievedAt": "2026-09-14T18:02:48.813Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "This is not incorrect: the project uses remote build, the local environment is excluded, and the dependency declaration is explicitly missing. Counterexample/context: This is the documented package-management route for other remote-built Python apps; deploying locally prebuilt dependencies is a different supported build approach. Evidence: Folder structure identifies requirements.txt as dependencies installed during publish with remote build, and Package management requires third-party packages in that file."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "Values holds local configuration, not the remote build's dependency list. The premise does not contain application code that interprets such a value as a dependency instruction. Counterexample/context: Storing a package-name string could only be an application configuration value read by deliberately written code, not package installation. The source supports the general configuration use, not a dependency-resolving behavior. Evidence: The configuration training limits Values to local app settings; the Python reference separately assigns package installation declarations to requirements.txt."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-hosting",
+            "ai200-20260914-doc-functions-python"
+          ],
+          "summary": "No cited evidence defines such a host setting or links it to Python dependency installation. This is not a documented alternative remote-build mechanism. Counterexample/context: No defensible sourced context makes this exact arbitrary package-name action correct. Changing a real host.json property such as functionTimeout is valid, but that is a different action and cannot rescue this distractor. Evidence: The hosting reference identifies functionTimeout as a real setting; the Python project reference uses requirements.txt for dependencies. Neither authorizes inventing a host.json package setting."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "requirements.txt is correct for the stipulated remote build. The exact arbitrary package-name host.json action has no defensible sourced correct-elsewhere context, giving distractorEvidence 2 and total 39. Troubleshooting is separately overstated because the missing requirements entry is disclosed before its repair is requested. The completed audit identifies no relevant duplicate; both original holds remain. Neither changing labels nor substituting a real distractor can inherit these review hashes. Authored complexity troubleshooting: overstated; repair required. Unlike 029, the precise missing declaration is stated before asking for its repair. The reader only recalls the named remote-build dependency mechanism; no build symptom or competing dependency source must be traced. Actual reasoning: Add the dependency to the exact file that the premise says is missing its entry, with remote build and excluded .venv already stipulated. Counterfactual test: The item remains answerable as 'a dependency is absent from requirements.txt; where should it be declared?' after stripping the story. The two other files are not credible installation mechanisms. Difficulty assessed separately: The difficulty score remains low because the cause is supplied, not diagnosed. A local-versus-remote story is insufficient by itself. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 3,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-i-031": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "6f8fd51810215f6b2bb7f0a5b566eab5d31d130f10487172c355793d95bc200a",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-bindings",
+        "ai200-20260914-doc-functions-reference"
+      ],
+      "retrievedAt": "2026-09-14T18:02:46.589Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-reference"
+          ],
+          "summary": "This is not incorrect for the Azure function app context: selecting Cosmos DB SDK writes does not remove the documented account used internally by the host. Counterexample/context: The same host/application distinction applies to Azure function apps whose business results go to other services without application Blob or Table bindings. Evidence: Default host storage expressly requires an account when creating an app and identifies internal host/extension use, separately from the Client SDKs section."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "The premise expressly says no Blob bindings and identifies Cosmos DB SDK writes as business output, so this particular application dependency is absent. Counterexample/context: An app that deliberately writes business data through a Blob output binding would require access to the selected Blob storage resource. Evidence: The Blob row includes output support and the opening binding definition connects output bindings to writing external data."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings"
+          ],
+          "summary": "The premise expressly excludes Table bindings. This option therefore cannot explain a dependency that remains without any such application read. Counterexample/context: An app that reads Azure Table data through a configured Table input binding would need the associated storage connection. Evidence: The Table Storage row explicitly marks Input support; this is an optional application integration, unlike default host storage."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "The Azure Functions host storage dependency is directly documented and distinct from business Cosmos SDK writes. Yet the premise explicitly denies both optional bindings offered as distractors, allowing elimination without the tested platform knowledge. Rubric 41 fails and technical-implementation classification is unsupported because the task identifies a dependency rather than configuring or diagnosing it. No relevant duplicate is listed in the completed audit. Retain the record as reportable but excluded. Authored complexity technical-implementation: overstated; repair required. The question asks which dependency exists, not how to implement its connection, permissions or lifecycle. Textual elimination and platform-dependency recall are sufficient. Actual reasoning: Identify the host's default storage requirement after the premise explicitly rules out both optional binding dependencies offered as distractors. Counterfactual test: Even without knowing the Functions storage requirement, the stated absence of Blob/Table bindings cancels a and b. The implementation classification therefore cannot be grounded in the task actually required. Difficulty assessed separately: The original low realism score remains appropriate; the intermediate label is not supported by a substantive action or diagnosis. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 1,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-i-032": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "98cfedf404fd21ba6016811a0aca870a4e72789f95ecd4c4ac4033168626ff08",
+      "sourceIds": [
+        "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access",
+        "ai200-20260914-doc-functions-reference"
+      ],
+      "retrievedAt": "2026-09-14T18:02:46.589Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ],
+          "summary": "This is not incorrect: connection=\"Jobs\" selects that prefix, no replacement Jobs settings exist, and the identity-enabled binding needs this endpoint property. Counterexample/context: The same suffix pattern works for another supported Service Bus identity connection when its prefix exactly matches the binding's connection name. Evidence: The Service Bus example replaces the connection string with <prefix>__fullyQualifiedNamespace and a namespace host ending in servicebus.windows.net."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access",
+            "ai200-20260914-doc-functions-reference"
+          ],
+          "summary": "This is not incorrect: the enabled identity has no Service Bus data role, and namespace Data Receiver supplies the documented receiving permission. Counterexample/context: That role is appropriate for supported Service Bus trigger consumption; namespace scope is sufficient here, without claiming it is always the narrowest possible scope. Evidence: The training instructs assigning Data Receiver on the Service Bus namespace, and the reference states the system-assigned identity is the hosted default."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ],
+          "summary": "This operation consumes messages, so send-only authorization does not meet the required receiving role. No Service Bus output binding is being configured. Counterexample/context: Data Sender is the documented role for a Service Bus output binding that publishes messages. Evidence: The unit explicitly contrasts Data Receiver for the trigger with Data Sender for output bindings."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access",
+            "ai200-20260914-doc-functions-reference"
+          ],
+          "summary": "Host storage already works and uses a different configuration prefix and resource. This action supplies neither the Service Bus endpoint nor receive permission. Counterexample/context: AzureWebJobsStorage__accountName is relevant when intentionally replacing the host's storage connection with its documented identity-based configuration and required storage roles. Evidence: The unit places that setting under the runtime storage dependency; the Service Bus section independently configures fullyQualifiedNamespace."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "Independently derived the complete a+d set: Jobs__fullyQualifiedNamespace supplies the named Service Bus endpoint and Data Receiver supplies consumption authorization. Sender serves a different operation and AzureWebJobsStorage changes an already working separate dependency. The deployed system identity and supporting extension are stated, avoiding local-identity and preview-SDK-type assumptions. Actual prefix/endpoint/role construction supports technical implementation independently of multiselect or advanced labeling. The completed audit identifies no relevant duplicate; this is not the Event Grid least-privilege scope fact or the intrinsic host-storage fact. Authored complexity technical-implementation: supported. Implementation is demonstrated by constructing the required configuration/permission pair from actual supplied state. Neither a code-shaped setting nor select-two alone supplies that classification. Actual reasoning: Resolve the binding's exact Jobs configuration prefix and combine the missing endpoint setting with receive authorization, while excluding send authorization and an already working host-storage connection. Counterfactual test: A different connection prefix changes the required setting name, a send operation changes the data role, and a broken host connection changes which dependency needs repair. The explicit premises select a precise combination. Difficulty assessed separately: The two-control combination is real implementation reasoning but compact; difficultyAuthenticity remains 3 rather than being raised for multiselect format. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-033": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "acd74e89196b347bbb0e1e2f52c6ef1b12400c7a8a3f50b6c664f46269adbea0",
+      "sourceIds": [
+        "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+      ],
+      "retrievedAt": "2026-09-14T17:58:17.631Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ],
+          "summary": "This is not incorrect: it verifies Entra callers rather than merely accepting a shared key, and required authentication is explicitly part of the choice. Counterexample/context: Easy Auth is also suitable for other function endpoints that need the documented Entra identity integration; existing function-key rules can remain a separate access barrier. Evidence: The final paragraph recommends App Service Authentication on top of access keys and states that Easy Auth integrates Microsoft Entra ID with the app."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ],
+          "summary": "It remains a shared invocation secret. Expanding its scope to the app does not identify which Entra principal is calling. Counterexample/context: A host key is appropriate for a trusted administrative or monitoring caller intentionally invoking multiple functions in one app when shared-key access is acceptable. Evidence: The unit gives host keys app-wide HTTP invocation scope while explicitly denying that access keys verify caller identity."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ],
+          "summary": "A more powerful shared secret still does not establish caller identity and is inappropriate to distribute as a substitute identity mechanism. Counterexample/context: The admin authorization level is documented for genuinely sensitive administrative operations using the master key, not ordinary callers needing identity verification. Evidence: The unit says admin requires the master key, reserves it for administrative operations and warns against embedding that key in client applications."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "Required Easy Auth with Entra is technically supported, and broader host/master keys do not verify callers. Nevertheless, the policy story reduces to matching the explicit Entra identity requirement to the sole Entra option, not an applied scenario analysis. The authored scenario-based classification is unsupported even at rubric 46. The completed audit gives no relevant duplicate; that does not remove the independent complexity hold. Existing key requirements and all authored fields are preserved. Authored complexity scenario-based: overstated; repair required. The policy narrative leaves no unresolved caller flow, token validation, provider configuration or interaction between access layers to reason through. It restates the conceptual rule that keys are not identity. Actual reasoning: Match an explicit Microsoft Entra caller-identity requirement to the only Entra-authentication option instead of either shared-key option. Counterfactual test: Removing the existing endpoint story leaves 'which control verifies Entra identity: a host key, Entra authentication, or the master key?' The answer can be recognized without scenario analysis. Difficulty assessed separately: The identity-versus-key distinction is technically important, but the easy-intermediate score does not make the item applied. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-034": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "c112dacb89efae18c8fc07a14d4dad38d976d4a6418bebd63446e6dfa107d3ee",
+      "sourceIds": [
+        "ai200-20260914-doc-functions-hosting"
+      ],
+      "retrievedAt": "2026-09-14T18:02:48.813Z",
+      "lastValidatedAt": "2026-09-14T18:40:20.020Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-hosting"
+          ],
+          "summary": "This is not incorrect: the warm handler starts immediately, six-minute work fits inside ten minutes, and the response fails near the documented shorter HTTP boundary. Counterexample/context: The same distinction matters for other direct HTTP-triggered requests that outlast the response ceiling even while their configured execution duration is sufficient. Evidence: Function app timeout duration footnote 1 says 230 seconds regardless of the app timeout and recommends asynchronous work or an immediate response for longer processing."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-hosting"
+          ],
+          "summary": "The instance is warm and execution starts immediately, so startup provisioning cannot explain the later 230-second loss. Counterexample/context: Always-ready Premium capacity is relevant when a request is delayed while instances start after inactivity, rather than after a warm invocation is underway. Evidence: Cold start behavior says Premium always-ready instances avoid cold starts; the HTTP ceiling is separately listed under timeout duration."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-hosting"
+          ],
+          "summary": "Six minutes does not exceed the stated ten-minute limit, and the client loses its response even earlier at about 230 seconds. Counterexample/context: functionTimeout explains a timeout when execution itself exceeds the configured duration, with the documented worker or host restart consequences. Evidence: The section defines functionTimeout for executions exceeding its duration, and footnote 1 separately limits HTTP response time regardless of that value."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-integration-b",
+        "reviewedAt": "2026-09-14T19:37:57.233Z",
+        "notes": "Compared 360-second work with the 600-second configured execution limit and the separate approximately 230-second direct HTTP ceiling. Warm immediate startup defeats the cold-start explanation, while completion within the configured duration defeats execution expiry. This is real troubleshooting from separate observations, although difficulty stays 3 for a familiar footnote. Premium GA is explicit; unrelated legacy-plan status text, preview streaming and unlimited HTTP responses are not asserted. The completed audit identifies no relevant timing duplicate. Authored complexity troubleshooting: supported. The task distinguishes three actual failure mechanisms using different timing observations. Troubleshooting is supported independently of the long stem or numeric timeout clue. Actual reasoning: Reconcile immediate warm startup, backend completion within the configured execution timeout and earlier direct-client response loss to identify a different boundary. Counterfactual test: A startup delay or execution beyond ten minutes would make the other mechanisms relevant. Here each is eliminated by a separate observation, while the shorter response ceiling fits the failure. Difficulty assessed separately: The familiar 230-second fact limits the advanced depth, so difficultyAuthenticity remains 3. Recognition of that fact alone is not the full supplied comparison. Semantic audit: The independent audit at 2026-09-14T19:28:50.155Z included this exact question and objective fingerprint. Its 299-candidate/556-reference semantic reading identifies no high-confidence exclusion involving this record. This is a bounded finding, not an invented exhaustive pairwise uniqueness proof. Existing local concept comparisons were also considered.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    }
+  }
+}

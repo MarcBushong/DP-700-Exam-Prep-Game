@@ -1,0 +1,1689 @@
+{
+  "schemaVersion": 1,
+  "candidates": [
+    {
+      "questionId": "ai103-002",
+      "status": "rejected",
+      "questionFingerprint": "fa4acb31f341e462e73c0222e1688feecd147b629efddb766cc86d3b80a9436d",
+      "reason": "The Python 2.x key is technically sound, but strict adversarial quality fails. A raw model key with the project endpoint has no documented valid AIProjectClient context. Moving the key to OpenAI v1 repairs the option rather than supplies a counterexample. SEM-001 retains this stable ID over g-014/g-015; retention does not override this rejection.",
+      "review": {
+        "questionId": "ai103-002",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "fa4acb31f341e462e73c0222e1688feecd147b629efddb766cc86d3b80a9436d",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-sdk",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/sdk-overview",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-001.txt",
+            "retrievedAt": "2026-09-14T17:59:13.537Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The endpoint table assigns native project operations to the project route and maximum OpenAI compatibility, including embeddings, to resource /openai/v1. Python 2.x is stable. Its AIProjectClient example takes the project endpoint and DefaultAzureCredential. API-key support on /openai/v1 does not establish raw-key support on AIProjectClient. The OpenAI SDK tip additionally states the project endpoint does not currently route embedding requests; its Python sample derives an Entra bearer provider for resource v1. Application to ai103-002: The endpoint table and authentication note support Entra-backed OpenAI inference but the Python project example uses the project path. Authentication documents keys on /openai/v1 only. The absence of a defensible valid-context pairing fails the strict distractor test. The stable 2.x table and AIProjectClient example jointly bind client version, project endpoint and credential object."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "Entra authentication does not change the endpoint into the project API expected by AIProjectClient. Context check: OpenAI inference can use Entra-derived tokens on /openai/v1 with its compatible client, not this project client. Evidence: The endpoint table and authentication note support Entra-backed OpenAI inference but the Python project example uses the project path.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "The documented project example takes DefaultAzureCredential and the request explicitly removes service keys. Context check: No sourced context validates this exact project-client/raw-key pairing; a key on OpenAI v1 would be a different option. Evidence: Authentication documents keys on /openai/v1 only. The absence of a defensible valid-context pairing fails the strict distractor test.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "Not incorrect: this matches the Python project-client example and the supplied authorized identity. Context check: For a current project with azure-ai-projects 2.x and an Entra identity authorized for its intended operations. Evidence: The stable 2.x table and AIProjectClient example jointly bind client version, project endpoint and credential object.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "The Python 2.x key is technically sound, but strict adversarial quality fails. A raw model key with the project endpoint has no documented valid AIProjectClient context. Moving the key to OpenAI v1 repairs the option rather than supplies a counterexample. SEM-001 retains this stable ID over g-014/g-015; retention does not override this rejection.",
+        "confidenceReason": "High in the key and in the unsupported exact distractor pairing; no evidence establishes project-client API-key initialization."
+      }
+    },
+    {
+      "questionId": "ai103-005",
+      "status": "rejected",
+      "questionFingerprint": "72974f6100b59425f5d52d7dac23fc8a7490da44e0d6aa9faafdf04b3185accb",
+      "reason": "The detection/enforcement interpretation is correct, but the exact alternatives are not sourced valid actions in another context: annotate does not continue blocking, and detected=true is not failed detection. Recreating the same assigned configuration has no documented remedial effect. The two booleans make both rivals internally false rather than contextually plausible.",
+      "review": {
+        "questionId": "ai103-005",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "72974f6100b59425f5d52d7dac23fc8a7490da44e0d6aa9faafdf04b3185accb",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-prompt-shields",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-prompt-shields",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\prompt-shields-current.txt",
+            "retrievedAt": "2026-09-14T18:04:04.000Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "User attacks are scanned at user input; third-party document attacks can be scanned at input or tool response. The annotate action logs without filtering, while block enforces prevention for detections. Assignment and entry point matter. Spotlighting is separately preview and Chat-Completions-only, and is not required by either assigned guardrail question. Application to ai103-005: Troubleshooting asks reviewers to verify assignment and inspect detected versus filtered; it does not equate a true detection with failure. Configuration offers annotate or block; false-positive guidance expressly defines annotate as logging without filtering. The article's annotate-versus-block distinction rules out the exact alternative, leaving no defensible contextual counterexample."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "detected=true establishes detection; recreating the already assigned annotate policy would not enable blocking. Context check: No documented context supports this entire interpretation and remedy; missing-assignment diagnosis requires different observations and configuration. Evidence: Troubleshooting asks reviewers to verify assignment and inspect detected versus filtered; it does not equate a true detection with failure.",
+            "sourceIds": [
+              "ai103-prompt-shields"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "supported",
+            "rationale": "Not incorrect: annotate explains filtered=false and block implements the approved enforcement change. Context check: When an assigned rule detects the desired attack and policy moves from observation to blocking. Evidence: Configuration offers annotate or block; false-positive guidance expressly defines annotate as logging without filtering.",
+            "sourceIds": [
+              "ai103-prompt-shields"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "filtered=false and annotate both contradict the asserted blocking behavior. Context check: No sourced circumstance makes annotate itself a blocking action; another separate blocker would not validate this claim. Evidence: The article's annotate-versus-block distinction rules out the exact alternative, leaving no defensible contextual counterexample.",
+            "sourceIds": [
+              "ai103-prompt-shields"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "The detection/enforcement interpretation is correct, but the exact alternatives are not sourced valid actions in another context: annotate does not continue blocking, and detected=true is not failed detection. Recreating the same assigned configuration has no documented remedial effect. The two booleans make both rivals internally false rather than contextually plausible.",
+        "confidenceReason": "High: the frozen article explicitly says annotate logs without filtering, which disproves both alternative interpretations."
+      }
+    },
+    {
+      "questionId": "ai103-g-002",
+      "status": "rejected",
+      "questionFingerprint": "c3e2d8ba925e9f01d37a623164ec0e17bd9f41cc50df7e980483f247e40a6ef0",
+      "reason": "Independent pass 3; exact authored fields unchanged. 42/48. I accept SEM-002 after comparing p-001’s full question: both test checking modalities/capabilities rather than provider, price or general quality. Additional tool calling introduces no actual model/version decision. This reverses pass 2’s kept-distinct judgment on evidence, not on concept-name similarity. Originality is 1; duplicate and quality checks fail. Retain existing facts unchanged. Prior technical verdict: verified. Nonverified statuses remain excluded; credential availability remains separately sealed.",
+      "review": {
+        "questionId": "ai103-g-002",
+        "authorId": "copilot-ai103-agents-pass1-20260914",
+        "reviewerId": "ai103-adversary-agents-a",
+        "questionFingerprint": "c3e2d8ba925e9f01d37a623164ec0e17bd9f41cc50df7e980483f247e40a6ef0",
+        "reviewedAt": "2026-09-14T19:51:54.496Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-model-selection",
+            "url": "https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/2-explore-model-catalog",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\model-catalog-evaluate--2-explore-model-catalog.json",
+            "retrievedAt": "2026-09-14T17:53:23.437Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Catalog cards separate modalities and tool-calling capability from provider, price, inference task and benchmark information. A model-family name or commercial category is not evidence of an individual deployment capability."
+          },
+          {
+            "sourceId": "ai103-deployment-planning",
+            "url": "https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/4-deploy-models",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\model-catalog-evaluate--4-deploy-models.json",
+            "retrievedAt": "2026-09-14T17:53:26.099Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Deployment support varies by model and environment. The configured deployment name routes the model parameter, while endpoint and credentials serve different purposes. Successful provisioning and playground testing are not complete application evaluation."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "Those commercial attributes do not state whether the specific model accepts images and requests tools. Counterexample/context: They are appropriate for a commercial or licensing shortlist once functional suitability is separately known. Evidence: Model-catalog lines 19-30 separate commercial categories from capability information on the card.",
+            "sourceIds": [
+              "ai103-model-selection"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Text-generation performance and tuning support do not establish image input plus callable-tool support. Counterexample/context: Those fields are relevant when evaluating text-task quality or a supported fine-tuning approach rather than proving the two requested capabilities. Evidence: Lines 34-40 list capabilities, inference tasks and fine-tuning as distinct filter dimensions.",
+            "sourceIds": [
+              "ai103-model-selection"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "Not incorrect here: the two new functional requirements must be established before a deployment is substituted. Counterexample/context: This evidence selection is appropriate before consuming a model whose capabilities and deployment support have not been confirmed. Evidence: Catalog lines 30-37 expose the relevant capabilities; deployment lines 35 and 52-53 make support model-specific.",
+            "sourceIds": [
+              "ai103-model-selection",
+              "ai103-deployment-planning"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": false,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Independent pass 3; exact authored fields unchanged. 42/48. I accept SEM-002 after comparing p-001’s full question: both test checking modalities/capabilities rather than provider, price or general quality. Additional tool calling introduces no actual model/version decision. This reverses pass 2’s kept-distinct judgment on evidence, not on concept-name similarity. Originality is 1; duplicate and quality checks fail. Retain existing facts unchanged. Prior technical verdict: verified. Nonverified statuses remain excluded; credential availability remains separately sealed.",
+        "confidenceReason": "High in the technical key and semantic duplication; rejecting this new candidate does not reject or verify the comparison record."
+      }
+    },
+    {
+      "questionId": "ai103-g-003",
+      "status": "rejected",
+      "questionFingerprint": "1b80e44c5e534f53ba143c66a456048b2063e2bba746ff62301e128273b4b1b2",
+      "reason": "Independent pass 3; exact authored fields unchanged. 42/48. SEM-003 and pass 2 correctly identify the same fact as p-015’s support-draft parameter. The extra successful test is not new reasoning. Originality is 1; duplicate/quality checks are false. Endpoint/project identifiers have documented roles but not valid alternative model-parameter meanings. Prior technical verdict: rejected. Nonverified statuses remain excluded; credential availability remains separately sealed.",
+      "review": {
+        "questionId": "ai103-g-003",
+        "authorId": "copilot-ai103-agents-pass1-20260914",
+        "reviewerId": "ai103-adversary-agents-a",
+        "questionFingerprint": "1b80e44c5e534f53ba143c66a456048b2063e2bba746ff62301e128273b4b1b2",
+        "reviewedAt": "2026-09-14T19:51:54.496Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-deployment-planning",
+            "url": "https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/4-deploy-models",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\model-catalog-evaluate--4-deploy-models.json",
+            "retrievedAt": "2026-09-14T17:53:26.099Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Deployment support varies by model and environment. The configured deployment name routes the model parameter, while endpoint and credentials serve different purposes. Successful provisioning and playground testing are not complete application evaluation."
+          },
+          {
+            "sourceId": "ai103-sdk",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/sdk-overview",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-001.json",
+            "retrievedAt": "2026-09-14T17:59:13.537Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The current SDK article separates project-native operations and project-routed OpenAI-compatible Responses from resource OpenAI v1 and Anthropic endpoints. Python 2.x/new and 1.x/classic are both stable. AIProjectClient uses a project endpoint and an authorized Entra credential; identity construction does not grant RBAC."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "Not incorrect here: the application is addressing the wrong identifier while its endpoint and authentication already work. Counterexample/context: A custom deployment name is the correct model value when it names the intended deployed instance. Evidence: Deployment lesson lines 52 and 107 explicitly assign the configured deployment name to model; SDK line 103 says to use a changed deployed name.",
+            "sourceIds": [
+              "ai103-deployment-planning",
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "A project groups APIs/assets but does not identify which of its model deployments should serve this request. Counterexample/context: The project name is correct in the project endpoint path, not in this deployment-routing field. Evidence: SDK lines 109-111 show the project path, while deployment lesson 107 separately specifies the model parameter.",
+            "sourceIds": [
+              "ai103-deployment-planning",
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "The host selects the resource, not the deployed model instance required by the request. Counterexample/context: The resource name correctly identifies the host portion of an endpoint; no cited rule substitutes it for the deployed model name. Evidence: SDK lines 91 and 103 independently identify endpoint shape and the deployed name used in code.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": false,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Independent pass 3; exact authored fields unchanged. 42/48. SEM-003 and pass 2 correctly identify the same fact as p-015’s support-draft parameter. The extra successful test is not new reasoning. Originality is 1; duplicate/quality checks are false. Endpoint/project identifiers have documented roles but not valid alternative model-parameter meanings. Prior technical verdict: rejected. Nonverified statuses remain excluded; credential availability remains separately sealed.",
+        "confidenceReason": "High duplicate and technical confidence after comparing the full routing questions; no existing p-015 record or concept ID was altered."
+      }
+    },
+    {
+      "questionId": "ai103-g-014",
+      "status": "rejected",
+      "questionFingerprint": "41c5d2f0fc192afab2413f64696217cad88cc8bd98170dc223dbbcf3f77e5d35",
+      "reason": "Independent pass 3; exact authored fields unchanged. 45/48 but originality=1 and duplicatesReviewed/qualityReviewed=false. I agree with SEM-001 after comparing retained 002: it already contrasts project versus OpenAI v1 endpoints in the same Python project connection. Merely writing the literal project URL and an Anthropic distractor adds no new operation. This is an evidenced disagreement with pass 2’s independent-coverage claim. Prior technical verdict: verified. Nonverified statuses remain excluded; credential availability remains separately sealed.",
+      "review": {
+        "questionId": "ai103-g-014",
+        "authorId": "copilot-ai103-agents-pass1-20260914",
+        "reviewerId": "ai103-adversary-agents-a",
+        "questionFingerprint": "41c5d2f0fc192afab2413f64696217cad88cc8bd98170dc223dbbcf3f77e5d35",
+        "reviewedAt": "2026-09-14T19:51:54.496Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-sdk",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/sdk-overview",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-001.json",
+            "retrievedAt": "2026-09-14T17:59:13.537Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The current SDK article separates project-native operations and project-routed OpenAI-compatible Responses from resource OpenAI v1 and Anthropic endpoints. Python 2.x/new and 1.x/classic are both stable. AIProjectClient uses a project endpoint and an authorized Entra credential; identity construction does not grant RBAC."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "That endpoint serves an OpenAI API surface rather than the project route required by AIProjectClient. Counterexample/context: It is correct for a resource OpenAI SDK client using compatible model APIs, not this project client. Evidence: SDK endpoint table line 11 and project endpoint lines 109-111 establish the difference.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "supported",
+            "rationale": "Not incorrect here: the supplied resource and project placeholders occupy their documented endpoint components. Counterexample/context: The shape is correct when dispatch is the actual project in the named Foundry resource and the caller is authorized. Evidence: SDK lines 9, 91 and 240-247 repeatedly show the project endpoint shape.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "The anthropic route belongs to the Anthropic SDK, not the Foundry project API surface. Counterexample/context: That endpoint is appropriate when using an Anthropic client with deployed Claude models. Evidence: The SDK table line 12 assigns the anthropic path its separate purpose.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": false,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Independent pass 3; exact authored fields unchanged. 45/48 but originality=1 and duplicatesReviewed/qualityReviewed=false. I agree with SEM-001 after comparing retained 002: it already contrasts project versus OpenAI v1 endpoints in the same Python project connection. Merely writing the literal project URL and an Anthropic distractor adds no new operation. This is an evidenced disagreement with pass 2’s independent-coverage claim. Prior technical verdict: verified. Nonverified statuses remain excluded; credential availability remains separately sealed.",
+        "confidenceReason": "High technical and duplication confidence; the rejection preserves retained 002 rather than editing or reassigning its stable fact."
+      }
+    },
+    {
+      "questionId": "ai103-g-015",
+      "status": "rejected",
+      "questionFingerprint": "2e507ecff66cdbf1bbae370ce410b2ede4a51c3e4840a1c4ada714b9a09081c7",
+      "reason": "Independent pass 3; exact authored fields unchanged. 44/48 with originality=1 and failed duplicate/quality checks. Agree with pass 2 and SEM-001: retained 002 already tests the same endpoint plus DefaultAzureCredential choice under 2.x and a ready role. The 3.10 precondition and alternate distractors are not a distinct fact. No reviewer status was upgraded. Prior technical verdict: rejected. Nonverified statuses remain excluded; credential availability remains separately sealed.",
+      "review": {
+        "questionId": "ai103-g-015",
+        "authorId": "copilot-ai103-agents-pass1-20260914",
+        "reviewerId": "ai103-adversary-agents-a",
+        "questionFingerprint": "2e507ecff66cdbf1bbae370ce410b2ede4a51c3e4840a1c4ada714b9a09081c7",
+        "reviewedAt": "2026-09-14T19:51:54.496Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-sdk",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/sdk-overview",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-001.json",
+            "retrievedAt": "2026-09-14T17:59:13.537Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The current SDK article separates project-native operations and project-routed OpenAI-compatible Responses from resource OpenAI v1 and Anthropic endpoints. Python 2.x/new and 1.x/classic are both stable. AIProjectClient uses a project endpoint and an authorized Entra credential; identity construction does not grant RBAC."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "Not incorrect here: Python 3.10+, SDK 2.x, a current project and required identity role are explicitly supplied. Counterexample/context: This matches the documented keyless project-client initialization when the credential resolves to the authorized development identity. Evidence: SDK lines 69, 127 and 236-247 state runtime/version prerequisites and the initialization.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Keyless authentication alone does not make the resource inference client a project-native AIProjectClient. Counterexample/context: An Entra token provider is valid for compatible resource OpenAI operations, but that is a different requested API surface. Evidence: SDK line 27 documents Entra samples and lines 11, 229-232 separate resource and project operations.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "The alternative targets inference rather than the project API and violates the explicit no-stored-key policy. Counterexample/context: API-key OpenAI v1 access is documented when that API surface and key-based authentication are permitted. Evidence: SDK line 27 explicitly allows API keys on openai/v1; the Python project sample instead uses DefaultAzureCredential.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": false,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Independent pass 3; exact authored fields unchanged. 44/48 with originality=1 and failed duplicate/quality checks. Agree with pass 2 and SEM-001: retained 002 already tests the same endpoint plus DefaultAzureCredential choice under 2.x and a ready role. The 3.10 precondition and alternate distractors are not a distinct fact. No reviewer status was upgraded. Prior technical verdict: rejected. Nonverified statuses remain excluded; credential availability remains separately sealed.",
+        "confidenceReason": "High on exact initialization and its semantic repetition; no new ID or source approval was invented to preserve a target count."
+      }
+    },
+    {
+      "questionId": "ai103-g-020",
+      "status": "rejected",
+      "questionFingerprint": "db52ddc12b14fb8b988f195b1dbc272caa4c6e656db96eea7766719627a25d7d",
+      "reason": "Rejected as the same tested fact as ai103-p-010 after reading both complete stems, choices and explanations plus SEM-004. p-010 already identifies the stored-credential project connection and exact project_connection_id reference. Assuming connection creation is finished narrows the task but supplies no new authentication decision. Preserve the technical rejection; any replacement restarts all three passes.",
+      "review": {
+        "questionId": "ai103-g-020",
+        "authorId": "copilot-ai103-agents-pass1-20260914",
+        "reviewerId": "ai103-adversary-agents-b",
+        "questionFingerprint": "db52ddc12b14fb8b988f195b1dbc272caa4c6e656db96eea7766719627a25d7d",
+        "reviewedAt": "2026-09-14T19:50:21.161Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-mcp-tools",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-020.txt",
+            "retrievedAt": "2026-09-14T17:59:38.500Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The Python MCPTool example independently configures server_label, project_connection_id and approval behavior. Authentication uses a stored project connection; creation needs Project Manager privileges beyond agent use. The best-practice section treats remote tool results as untrusted despite authenticated transport and separates allowlists from explicit approvals. Question-specific evidence: Authentication guidance and the Python declaration independently identify project_connection_id. The sample sets server_label and project_connection_id separately and displays the server label during approval. The best-practice list explicitly prescribes allowed_tools independently of connection permissions. The connect/approve route sets approval behavior and the connection reference as independent properties."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "The literal field matches the protected connection reference; rejection is for duplication, not a wrong key.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "A server label is useful identification metadata but is not the authentication reference.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "Use the allowlist to limit available operations, not to identify authentication details.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "Approval policy can be essential while still leaving the authentication field unanswered.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": false,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Rejected as the same tested fact as ai103-p-010 after reading both complete stems, choices and explanations plus SEM-004. p-010 already identifies the stored-credential project connection and exact project_connection_id reference. Assuming connection creation is finished narrows the task but supplies no new authentication decision. Preserve the technical rejection; any replacement restarts all three passes.",
+        "confidenceReason": "High confidence in the Python field and in the semantic duplication; exact hash is unchanged and the technical stage also rejects this record."
+      }
+    },
+    {
+      "questionId": "ai103-g-036",
+      "status": "rejected",
+      "questionFingerprint": "e43d3f0b66d52802ad8281e3f08ba51af2257e57ac375dda661eb19ea0761037",
+      "reason": "Rejected after independently reading SEM-011 and both g-036 and p-024. Both ask to preserve a representative baseline when assessing a changed system rather than selecting only easy/repaired cases. Prompt repair versus mitigation changes narrative, not the tested regression-comparison decision. This overturns pass-2’s keep judgment without changing its record. Advanced difficulty and weak happy-path-only distractors are additional issues. The exact mapped self-critique/reflection subskill is also not directly exercised by a system-message regression test; general optimization relevance does not establish that subskill.",
+      "review": {
+        "questionId": "ai103-g-036",
+        "authorId": "copilot-ai103-agents-pass1-20260914",
+        "reviewerId": "ai103-adversary-agents-b",
+        "questionFingerprint": "e43d3f0b66d52802ad8281e3f08ba51af2257e57ac375dda661eb19ea0761037",
+        "reviewedAt": "2026-09-14T19:50:21.161Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-system-message",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-010.txt",
+            "retrievedAt": "2026-09-14T17:59:29.989Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "System-message instructions influence rather than guarantee behavior. The design checklist warns that messages can overfit examples and prescribes realistic and adversarial testing with iteration. It does not document a statistical causal guarantee or authorize discarding difficult regression cases. Question-specific evidence: The checklist warns of overfitting to examples and prescribes realistic and adversarial testing. The source requires both realistic and adversarial prompts rather than only tailored favorable examples. The actual testing checklist identifies overfitting, edge failures and iteration based on realistic/adversarial results."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "A single repaired case can confirm that example’s behavior, not the absence of regressions elsewhere.",
+            "sourceIds": [
+              "ai103-system-message"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "The deliberately narrow set omits precisely the failure modes the team wants to expose.",
+            "sourceIds": [
+              "ai103-system-message"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "The key preserves broad comparison, though the same decision is already covered by p-024.",
+            "sourceIds": [
+              "ai103-system-message"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": false,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Rejected after independently reading SEM-011 and both g-036 and p-024. Both ask to preserve a representative baseline when assessing a changed system rather than selecting only easy/repaired cases. Prompt repair versus mitigation changes narrative, not the tested regression-comparison decision. This overturns pass-2’s keep judgment without changing its record. Advanced difficulty and weak happy-path-only distractors are additional issues. The exact mapped self-critique/reflection subskill is also not directly exercised by a system-message regression test; general optimization relevance does not establish that subskill.",
+        "confidenceReason": "High confidence in the regression key and same-fact overlap; the audited comparator p-024 has the sharper stable-scenario/severity constraint."
+      }
+    },
+    {
+      "questionId": "ai103-g-041",
+      "status": "rejected",
+      "questionFingerprint": "e8fbf2d009405807af4578c0e6f48a90fa5303918aa6b2e677b252e8a9147732",
+      "reason": "Rejected after independent comparison with ai103-t-010 and SEM-012. Both assign changing facts to retrieval, style to fine-tuning and request guidance to prompts; already-evaluated style versus a measured style defect changes adoption timing, not the tested fact. The Expert label also fails: the source’s all-three list nearly supplies the answer and every distractor discards an explicit requirement. Preserve the technical manual hold and reject this duplicate hash.",
+      "review": {
+        "questionId": "ai103-g-041",
+        "authorId": "copilot-ai103-agents-pass1-20260914",
+        "reviewerId": "ai103-adversary-agents-b",
+        "questionFingerprint": "e8fbf2d009405807af4578c0e6f48a90fa5303918aa6b2e677b252e8a9147732",
+        "reviewedAt": "2026-09-14T19:50:21.161Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-optimization-combinations",
+            "url": "https://learn.microsoft.com/en-us/training/modules/optimize-generative-ai-model-performance/5-compare-combine-strategies",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\optimize-generative-ai-model-performance--5-compare-combine-strategies.txt",
+            "retrievedAt": "2026-09-14T17:53:39.883Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The comparison assigns dynamic factual context to query-time retrieval, stable style to evaluated fine-tuning and conversation preferences to prompts. It recommends adding complexity after measured need. The three-layer example is a direct responsibility allocation, not evidence of Expert-level architectural reasoning. Question-specific evidence: The comparison assigns dynamic facts to RAG and per-conversation context to prompt engineering, reserving tuning for behavior. The all-three example and prompt-plus-tuning section assign exactly these distinct concerns. The optimization spectrum separates context accuracy from trained behavior and says not every app needs all three. RAG is recommended for dynamic/frequently changing data while tuning may need retraining as requirements change."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "Model training is useful for stable behavior, not a substitute for these two runtime context mechanisms.",
+            "sourceIds": [
+              "ai103-optimization-combinations"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "supported",
+            "rationale": "The combination is technically defensible but repeats t-010’s responsibility allocation and does not justify Expert difficulty.",
+            "sourceIds": [
+              "ai103-optimization-combinations"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "Dropping the validated style mechanism and explicit preference loses requirements the stem asks to preserve.",
+            "sourceIds": [
+              "ai103-optimization-combinations"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "The source-backed purpose of the training set does not make its original facts current indefinitely.",
+            "sourceIds": [
+              "ai103-optimization-combinations"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": false,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Rejected after independent comparison with ai103-t-010 and SEM-012. Both assign changing facts to retrieval, style to fine-tuning and request guidance to prompts; already-evaluated style versus a measured style defect changes adoption timing, not the tested fact. The Expert label also fails: the source’s all-three list nearly supplies the answer and every distractor discards an explicit requirement. Preserve the technical manual hold and reject this duplicate hash.",
+        "confidenceReason": "High confidence in the factual composition and same-fact duplication; no Expert depth or new semantic decision is established by session-category wording."
+      }
+    },
+    {
+      "questionId": "ai103-p-002",
+      "status": "rejected",
+      "questionFingerprint": "4138d91ecc7351e9f816510ca32d2b988921d29b1d4d196057e413d3b8ab4880",
+      "reason": "The efficient SLM-plus-task-testing recommendation is supported. Reject the alternatives as strict distractors: model size alone cannot prove accuracy, and calling the task routine cannot justify accepting an untested model. The only option containing evaluation is visibly cautious and correct; there is no documented alternate context for either absolute shortcut.",
+      "review": {
+        "questionId": "ai103-p-002",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "4138d91ecc7351e9f816510ca32d2b988921d29b1d4d196057e413d3b8ab4880",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-model-selection",
+            "url": "https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/2-explore-model-catalog",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\model-catalog-evaluate--2-explore-model-catalog.txt",
+            "retrievedAt": "2026-09-14T17:53:23.437Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Catalog capabilities, inference tasks and model-card modality details establish task fit. Collections identify grouping and providers, not modality. The model-types section contrasts resource-intensive LLM reasoning with efficient SLMs on lower-end devices; embeddings provide numerical representations, not a document index. Application to ai103-p-002: LLMs need more compute, while the overview requires application-context evaluations even for reviewed models. The SLM section supports edge efficiency and the overview independently requires evaluation in the application's context. SLM suitability is a starting category, not proof of task quality; the overview explicitly retains customer evaluation responsibility."
+          },
+          {
+            "sourceId": "ai103-model-deployment-options",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/foundry-models-overview",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-028.txt",
+            "retrievedAt": "2026-09-14T17:59:44.618Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Provider-selected deployment support constrains the choice. Managed compute places weights on dedicated VMs, needs the classic hub-based project, and requires subscription VM quota unless temporary shared testing quota applies. Serverless APIs use a different hosting and billing arrangement. Model selection still requires application-context evaluation. Application to ai103-p-002: LLMs need more compute, while the overview requires application-context evaluations even for reviewed models. The SLM section supports edge efficiency and the overview independently requires evaluation in the application's context. SLM suitability is a starting category, not proof of task quality; the overview explicitly retains customer evaluation responsibility."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "The workload prioritizes constrained resources, and size alone is not application-quality evidence. Context check: No cited passage validates the exact size-proves-accuracy claim; choosing an LLM for complex reasoning would remove its false justification. Evidence: LLMs need more compute, while the overview requires application-context evaluations even for reviewed models.",
+            "sourceIds": [
+              "ai103-model-selection",
+              "ai103-model-deployment-options"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "supported",
+            "rationale": "Not incorrect: this respects hardware priorities without assuming acceptable task quality. Context check: For resource-constrained common language tasks where empirical tests can determine whether an SLM meets requirements. Evidence: The SLM section supports edge efficiency and the overview independently requires evaluation in the application's context.",
+            "sourceIds": [
+              "ai103-model-selection",
+              "ai103-model-deployment-options"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "Efficiency and task category do not establish accuracy on the representative cases. Context check: No documented counterexample supports the whole assertion; an already validated model would contradict the without-testing premise. Evidence: SLM suitability is a starting category, not proof of task quality; the overview explicitly retains customer evaluation responsibility.",
+            "sourceIds": [
+              "ai103-model-selection",
+              "ai103-model-deployment-options"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "The efficient SLM-plus-task-testing recommendation is supported. Reject the alternatives as strict distractors: model size alone cannot prove accuracy, and calling the task routine cannot justify accepting an untested model. The only option containing evaluation is visibly cautious and correct; there is no documented alternate context for either absolute shortcut.",
+        "confidenceReason": "High in the recommendation and in the lack of a valid sourced context for bypassing application evaluation."
+      }
+    },
+    {
+      "questionId": "ai103-p-007",
+      "status": "rejected",
+      "questionFingerprint": "69c32ef4ecca865ff7b33c009bcc370db824856c8a8992c8c3600416ec90ecca",
+      "reason": "Push is correct and SEM-009 appropriately retains this fact over x-002. Strict distractor evidence nevertheless fails: an indexer pulling directly from an explicitly unsupported source has no documented valid context, and ingestion via search queries cannot become correct by renaming querying as writing. Replacing unsupported with supported would be a repair, not a sourced counterexample to this exact authored option.",
+      "review": {
+        "questionId": "ai103-p-007",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "69c32ef4ecca865ff7b33c009bcc370db824856c8a8992c8c3600416ec90ecca",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-search-architecture",
+            "url": "https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-021.txt",
+            "retrievedAt": "2026-09-14T17:59:39.528Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Classic search stores an index and returns ranked documents, including keyword/vector combinations. Indexing writes JSON; querying reads populated searchable content. The checklist chooses push for unsupported sources or real-time synchronization. Core classic search is GA; the separately named Serverless Developer tier remains preview. Application to ai103-p-007: The ingestion checklist distinguishes supported-source pull from unsupported-source push; it directly excludes this exact alternative. The indexing/querying sections separate read-write ingestion from read-only query handling; the proposed use has no documented valid ingestion context. The checklist names both unsupported data sources and real-time synchronization as push requirements; indexing accepts JSON."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "The source has no supported pull path and the application already owns serialization. Context check: No documented context makes direct pulling from an unsupported source valid; a supported connector would change the authored condition. Evidence: The ingestion checklist distinguishes supported-source pull from unsupported-source push; it directly excludes this exact alternative.",
+            "sourceIds": [
+              "ai103-search-architecture"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Queries read populated indexed content and do not insert the prepared documents. Context check: Search requests are valid for retrieving already indexed content, but no cited context turns this document-sending ingestion claim into a query write. Evidence: The indexing/querying sections separate read-write ingestion from read-only query handling; the proposed use has no documented valid ingestion context.",
+            "sourceIds": [
+              "ai103-search-architecture"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "Not incorrect: application-owned serialization, unsupported sources and real-time changes are explicit push cases. Context check: When the application has valid index-shaped JSON and must synchronize changes without a supported source-reading connector. Evidence: The checklist names both unsupported data sources and real-time synchronization as push requirements; indexing accepts JSON.",
+            "sourceIds": [
+              "ai103-search-architecture"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Push is correct and SEM-009 appropriately retains this fact over x-002. Strict distractor evidence nevertheless fails: an indexer pulling directly from an explicitly unsupported source has no documented valid context, and ingestion via search queries cannot become correct by renaming querying as writing. Replacing unsupported with supported would be a repair, not a sourced counterexample to this exact authored option.",
+        "confidenceReason": "High on push ownership and on the absence of a defensible valid-context reading of the exact unsupported-source distractor."
+      }
+    },
+    {
+      "questionId": "ai103-p-008",
+      "status": "rejected",
+      "questionFingerprint": "a45fb230c253497ae14d98c50fd0173a67d2f617b67d8fc8343ece45d7c631c9",
+      "reason": "The two-mechanism key is supported, but option b calls the manual never-uploaded while the stem calls it uploaded and never part of the conversation. Chaining cannot supply absent content, so no actual cited context validates that whole alternative. This is both a distracting contradiction and an impossible counterexample, not merely harmless absolute wording.",
+      "review": {
+        "questionId": "ai103-p-008",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "a45fb230c253497ae14d98c50fd0173a67d2f617b67d8fc8343ece45d7c631c9",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-responses-state",
+            "url": "https://learn.microsoft.com/en-us/training/modules/foundry-sdk/04-responses-api",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\foundry-sdk--04-responses-api.txt",
+            "retrievedAt": "2026-09-14T17:53:28.900Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The project Responses client supports conversational state. previous_response_id chains a later request to a preceding response; manually supplied history is another approach. This is conversation context, not ingestion of a manual never included in those turns. Application to ai103-p-008: previous_response_id supplies preceding conversational context; file search uploads/indexes files and injects retrieved chunks. Responses chaining carries existing history, while file-search preparation explicitly uploads documents to a vector store. The sources separately demonstrate standalone generation/file retrieval and additional previous_response_id or manual history for multi-turn context."
+          },
+          {
+            "sourceId": "ai103-file-search",
+            "url": "https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/05-file-search",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\use-generative-ai-tools--05-file-search.txt",
+            "retrievedAt": "2026-09-14T17:53:33.053Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "File search retrieves relevant chunks from uploaded, indexed vector-store files and supplies those passages to generation. The example uploads and polls before querying. Retrieval is useful for manuals but does not execute Python, preserve unrelated conversational turns, or manufacture absent document content. Application to ai103-p-008: previous_response_id supplies preceding conversational context; file search uploads/indexes files and injects retrieved chunks. Responses chaining carries existing history, while file-search preparation explicitly uploads documents to a vector store. The sources separately demonstrate standalone generation/file retrieval and additional previous_response_id or manual history for multi-turn context."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "Not incorrect: it explicitly serves both conversation and document context requirements. Context check: For a project Responses app with chained history and a manual uploaded/indexed in a referenced vector store. Evidence: previous_response_id supplies preceding conversational context; file search uploads/indexes files and injects retrieved chunks.",
+            "sourceIds": [
+              "ai103-responses-state",
+              "ai103-file-search"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "A previous response cannot ingest absent content; never-uploaded also changes the stem's uploaded-manual condition. Context check: No sourced context validates the whole absent-manual claim; including manual text in history would remove its defining absence. Evidence: Responses chaining carries existing history, while file-search preparation explicitly uploads documents to a vector store.",
+            "sourceIds": [
+              "ai103-responses-state",
+              "ai103-file-search"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "Manual retrieval can work, but the preceding user question is then not preserved as required. Context check: For independent one-shot document questions where earlier conversational turns are intentionally irrelevant. Evidence: The sources separately demonstrate standalone generation/file retrieval and additional previous_response_id or manual history for multi-turn context.",
+            "sourceIds": [
+              "ai103-responses-state",
+              "ai103-file-search"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "The two-mechanism key is supported, but option b calls the manual never-uploaded while the stem calls it uploaded and never part of the conversation. Chaining cannot supply absent content, so no actual cited context validates that whole alternative. This is both a distracting contradiction and an impossible counterexample, not merely harmless absolute wording.",
+        "confidenceReason": "High in the conversation-versus-corpus separation; high in the literal uploaded/never-uploaded mismatch that prevents strict approval."
+      }
+    },
+    {
+      "questionId": "ai103-p-010",
+      "status": "rejected",
+      "questionFingerprint": "d65b1f58f2c7305b4f9c26dfafd8f7a2c0dd50f9bdc4f8f4a7e071613639dfcc",
+      "reason": "Stored credentials plus project_connection_id is technically correct, and SEM-004 identifies the matching g-020 fact. Reject strict quality: embedding a bearer credential in system instructions is not a documented credential configuration in any context. A trusted-but-auth-required server does not become unauthenticated. The only secure answer is telegraphed by the stem's prohibition; this retain decision cannot cure absent distractor counterexamples.",
+      "review": {
+        "questionId": "ai103-p-010",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "d65b1f58f2c7305b4f9c26dfafd8f7a2c0dd50f9bdc4f8f4a7e071613639dfcc",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-mcp-tools",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-020.txt",
+            "retrievedAt": "2026-09-14T17:59:38.500Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The connection setup names project_connection_id as the stored authentication reference, distinct from server_url, labels, tool restrictions and approval. Public no-auth servers and authenticated servers are different cases. Project Manager is required to create connections; private networking and preview long-running tasks are separate features. Application to ai103-p-010: The setup identifies project_connection_id as stored authentication and provides real connection auth modes, not instruction-based secrets. The article lists no-auth and custom-key/OAuth connections separately; the server's required method determines configuration. Prerequisites require Project Manager for connections; connection setup defines project_connection_id as authentication and connection details."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "Agent prose is not the documented connection credential store and the requirement explicitly prohibits it. Context check: No approved passage makes system instructions a legitimate MCP bearer-credential configuration; dummy explanatory text would not authenticate. Evidence: The setup identifies project_connection_id as stored authentication and provides real connection auth modes, not instruction-based secrets.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Trust approval does not meet the server's required bearer authentication. Context check: A genuinely no-auth public server is documented, but that changes the auth requirement; approval alone never establishes no-auth behavior. Evidence: The article lists no-auth and custom-key/OAuth connections separately; the server's required method determines configuration.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "supported",
+            "rationale": "Not incorrect: it separates protected connection details from authored instructions and application source. Context check: For a remote authenticated MCP endpoint with a matching connection auth type and authorized project connection manager. Evidence: Prerequisites require Project Manager for connections; connection setup defines project_connection_id as authentication and connection details.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Stored credentials plus project_connection_id is technically correct, and SEM-004 identifies the matching g-020 fact. Reject strict quality: embedding a bearer credential in system instructions is not a documented credential configuration in any context. A trusted-but-auth-required server does not become unauthenticated. The only secure answer is telegraphed by the stem's prohibition; this retain decision cannot cure absent distractor counterexamples.",
+        "confidenceReason": "High for connection storage and role requirements; no documented legitimate secret-in-instructions authentication context was found."
+      }
+    },
+    {
+      "questionId": "ai103-p-011",
+      "status": "rejected",
+      "questionFingerprint": "b16df8a3f3fbdf8dfffa2ea1e355a2467b54497ebf7d22426ec4f112bed473be",
+      "reason": "The current resource-to-project ownership fact is correct and foundational. Both rivals are universal topology falsehoods under the cited architecture: one project cannot have two owners and the default designation does not impose a one-project limit. Choosing to create separate resources would not make the claimed limit true. Withhold rather than invent an alternate valid ownership contract.",
+      "review": {
+        "questionId": "ai103-p-011",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "b16df8a3f3fbdf8dfffa2ea1e355a2467b54497ebf7d22426ec4f112bed473be",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-project-organization",
+            "url": "https://learn.microsoft.com/en-us/training/modules/prepare-azure-ai-development/4-azure-ai-foundry",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\prepare-azure-ai-development--4-azure-ai-foundry.txt",
+            "retrievedAt": "2026-09-14T17:53:19.416Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Each current project belongs to one Foundry resource, while a resource can own multiple child projects with one default. Projects organize connections, data and code. The final note explicitly distinguishes the older hub architecture; it does not claim child projects are independent security guarantees. Application to ai103-p-011: The projects section states each project belongs to a single Foundry resource, directly excluding shared ownership. The training explicitly permits one or more child projects and designates one default among them. Projects hold connections, data and code, and a resource can support multiple child projects."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "The documented current architecture gives each project exactly one owning resource. Context check: No cited current-architecture context permits this ownership; sharing assets or access would not create two resource parents. Evidence: The projects section states each project belongs to a single Foundry resource, directly excluding shared ownership.",
+            "sourceIds": [
+              "ai103-project-organization"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "A resource supports multiple child projects; default is a designation, not a count limit. Context check: No documented context validates the asserted limit; separate resources may be chosen for other reasons but that would change the rationale. Evidence: The training explicitly permits one or more child projects and designates one default among them.",
+            "sourceIds": [
+              "ai103-project-organization"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "Not incorrect: each project has one resource parent and the resource may have multiple projects. Context check: When separate solution assets should be organized under one common Foundry resource. Evidence: Projects hold connections, data and code, and a resource can support multiple child projects.",
+            "sourceIds": [
+              "ai103-project-organization"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "The current resource-to-project ownership fact is correct and foundational. Both rivals are universal topology falsehoods under the cited architecture: one project cannot have two owners and the default designation does not impose a one-project limit. Choosing to create separate resources would not make the claimed limit true. Withhold rather than invent an alternate valid ownership contract.",
+        "confidenceReason": "High: the cited lesson states both ownership cardinalities explicitly and distinguishes classic projects."
+      }
+    },
+    {
+      "questionId": "ai103-p-013",
+      "status": "rejected",
+      "questionFingerprint": "41645a4b9a0e41792df6ab16d5b896451331d7dca3f62fb1c40da2328c5df531",
+      "reason": "The project-native connections/OpenAI-v1 embeddings split is correct and genuinely distinct from g-001's project-bound Responses client. Strict quality still fails because both rival arrangements place native project connection management on OpenAI v1. Neither has a sourced whole-option valid context; swapping operations or replacing connection management with inference is a repair, not a counterexample.",
+      "review": {
+        "questionId": "ai103-p-013",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "41645a4b9a0e41792df6ab16d5b896451331d7dca3f62fb1c40da2328c5df531",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-sdk",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/sdk-overview",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-001.txt",
+            "retrievedAt": "2026-09-14T17:59:13.537Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The endpoint table assigns native project operations to the project route and maximum OpenAI compatibility, including embeddings, to resource /openai/v1. Python 2.x is stable. Its AIProjectClient example takes the project endpoint and DefaultAzureCredential. API-key support on /openai/v1 does not establish raw-key support on AIProjectClient. The OpenAI SDK tip additionally states the project endpoint does not currently route embedding requests; its Python sample derives an Entra bearer provider for resource v1. Application to ai103-p-013: The SDK lists connections as a native project operation and explicitly recommends OpenAI v1 for embeddings/maximum compatibility. The native client example includes listing connections; the endpoint table assigns embeddings and maximum OpenAI compatibility to /openai/v1. The article says a resource exposes multiple endpoints and reserves native project operations for the project client."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "It reverses the documented native-project and compatibility-first resource endpoint assignment. Context check: No sourced context supports the entire reversed arrangement; replacing connection management with model inference changes the option. Evidence: The SDK lists connections as a native project operation and explicitly recommends OpenAI v1 for embeddings/maximum compatibility.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "supported",
+            "rationale": "Not incorrect: each operation is assigned to its documented endpoint responsibility. Context check: When one client manages Foundry-native configuration and another prioritizes the OpenAI-compatible embeddings surface. Evidence: The native client example includes listing connections; the endpoint table assigns embeddings and maximum OpenAI compatibility to /openai/v1.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "A shared host resource does not expose project connection APIs through OpenAI v1. Context check: No valid context is documented for this pair of operations on v1; two inference-only clients would be a different question. Evidence: The article says a resource exposes multiple endpoints and reserves native project operations for the project client.",
+            "sourceIds": [
+              "ai103-sdk"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "The project-native connections/OpenAI-v1 embeddings split is correct and genuinely distinct from g-001's project-bound Responses client. Strict quality still fails because both rival arrangements place native project connection management on OpenAI v1. Neither has a sourced whole-option valid context; swapping operations or replacing connection management with inference is a repair, not a counterexample.",
+        "confidenceReason": "High: the SDK endpoint table and client responsibility section explicitly identify the two API surfaces."
+      }
+    },
+    {
+      "questionId": "ai103-p-015",
+      "status": "rejected",
+      "questionFingerprint": "b4d2b5a264f397e96ccf7b11de6beaaddbf127918071900bf6f8970743122a28",
+      "reason": "The support-draft routing answer is accurate and foundational. SEM-003 retains this representative over the smoke-test reskin g-003, but the exact catalog-name-regardless-of-deployment distractor has no valid context. A default deployment name matching a catalog name would remove the decisive regardless qualification; inventing accidental name equality is not sourced counterexample evidence. Technical-implementation complexity is weak for a single identifier recall.",
+      "review": {
+        "questionId": "ai103-p-015",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-a",
+        "questionFingerprint": "b4d2b5a264f397e96ccf7b11de6beaaddbf127918071900bf6f8970743122a28",
+        "reviewedAt": "2026-09-14T19:50:23.384Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-deployment-planning",
+            "url": "https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/4-deploy-models",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\model-catalog-evaluate--4-deploy-models.txt",
+            "retrievedAt": "2026-09-14T17:53:26.099Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The deployment list separately specifies geography and capacity: data-zone provisioned reserves PTUs, global provisioned can process globally, and data-zone standard is pay-per-token. Global Batch is the asynchronous discounted alternative. The deployment name, including a custom name, is used in inference model routing. Application to ai103-p-015: The lesson distinguishes endpoint URL from deployment name and assigns the latter to the model parameter. Deployment settings allow a custom name and state that code uses that deployment name to route requests. Both deployment configuration and programmatic access sections specify the deployment name in model."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "The project name identifies another service scope rather than the named model deployment. Context check: Project names identify project endpoints, but no cited context makes that name the model parameter merely because it contains a deployment. Evidence: The lesson distinguishes endpoint URL from deployment name and assigns the latter to the model parameter.",
+            "sourceIds": [
+              "ai103-deployment-planning"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "The documentation explicitly says inference uses the deployment name, which here differs. Context check: No supported context validates regardless of deployment name; accepting the default name is a narrower, different assertion. Evidence: Deployment settings allow a custom name and state that code uses that deployment name to route requests.",
+            "sourceIds": [
+              "ai103-deployment-planning"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "Not incorrect: this is the deployment's explicitly configured name. Context check: When calling the configured support-draft deployment through its already working endpoint and authentication. Evidence: Both deployment configuration and programmatic access sections specify the deployment name in model.",
+            "sourceIds": [
+              "ai103-deployment-planning"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "The support-draft routing answer is accurate and foundational. SEM-003 retains this representative over the smoke-test reskin g-003, but the exact catalog-name-regardless-of-deployment distractor has no valid context. A default deployment name matching a catalog name would remove the decisive regardless qualification; inventing accidental name equality is not sourced counterexample evidence. Technical-implementation complexity is weak for a single identifier recall.",
+        "confidenceReason": "High on deployment-name routing; no cited evidence supports overriding a custom name with the catalog label."
+      }
+    },
+    {
+      "questionId": "ai103-p-020",
+      "status": "rejected",
+      "questionFingerprint": "20c32433fe8dc93a77670494f6ad74674627922ca10a1de589616a7ed1041ba5",
+      "reason": "Reject the current record as a repeated recovery-plan fact (SEM-017), independently confirmed against the complete gh600-a-020 prompt/options/explanation. The citation supports rollback preparation, but not the bound Foundry CI/CD integration subskill. Pass 2's manual objective/depth concerns are preserved, not promoted. Existing comparison records remain unchanged.",
+      "review": {
+        "questionId": "ai103-p-020",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-b",
+        "questionFingerprint": "20c32433fe8dc93a77670494f6ad74674627922ca10a1de589616a7ed1041ba5",
+        "reviewedAt": "2026-09-14T19:55:02.305Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-responsible-operations",
+            "url": "https://learn.microsoft.com/en-us/training/modules/responsible-ai-studio/6-operate-responsibly",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\responsible-ai-studio--6-operate-responsibly.json",
+            "retrievedAt": "2026-09-14T17:53:44.714Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Manage a responsible generative AI solution. Read raw\\responsible-ai-studio--6-operate-responsibly.txt, lines 1-40. The release checklist separately asks for phased rollout, incident response, rollback and user feedback. Its rollback definition supports the answer but documents no pipeline integration mechanism."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "A larger pilot changes exposure, not the ability to restore a working version. Countercontext: A phased plan can eventually expand an initially restricted audience after feedback. The cited checklist does not support omitting recovery planning as a substitute. Evidence: Phased delivery and rollback are separate bullets in the prerelease guidance; neither replaces the other.",
+            "sourceIds": [
+              "ai103-responsible-operations"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Feedback may reveal an incident but does not define restoration steps before that incident. Countercontext: Feedback categories are useful for issue reporting when that reporting capability is needed. No cited condition justifies deferring a required recovery plan until failure. Evidence: The source lists feedback categories independently of the rollback and incident-response plans.",
+            "sourceIds": [
+              "ai103-responsible-operations"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "supported",
+            "rationale": "It is not incorrect: the missing preparation is exactly the rollback plan described by the source. Countercontext: A team is preparing release and needs defined recovery steps before an incident, regardless of whether the platform automates them. Evidence: The source calls for a rollback plan defining how to revert the solution to a previous state.",
+            "sourceIds": [
+              "ai103-responsible-operations"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Reject the current record as a repeated recovery-plan fact (SEM-017), independently confirmed against the complete gh600-a-020 prompt/options/explanation. The citation supports rollback preparation, but not the bound Foundry CI/CD integration subskill. Pass 2's manual objective/depth concerns are preserved, not promoted. Existing comparison records remain unchanged.",
+        "confidenceReason": "High confidence in the rollback fact, the duplicate discriminator and the objective mismatch. Rejection concerns admission of this exact record, not the value of rollback planning."
+      }
+    },
+    {
+      "questionId": "ai103-p-025",
+      "status": "rejected",
+      "questionFingerprint": "8ac0cd03eb28a996db8b3dbee5d49ffd787621fe7d2332e06e69901ffa303a39",
+      "reason": "Reject as SEM-005's composite duplicate of ai103-013. I read that record's complete options and explanation: the same unsupported-context claim selects Groundedness over Relevance and Retrieval. Pairing another failure with it does not create a distinct required decision. The technical key b is supported by the current base evaluator reference; rejection is not a wrong-answer allegation.",
+      "review": {
+        "questionId": "ai103-p-025",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-b",
+        "questionFingerprint": "8ac0cd03eb28a996db8b3dbee5d49ffd787621fe7d2332e06e69901ffa303a39",
+        "reviewedAt": "2026-09-14T19:55:02.305Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-rag-evaluators",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\rag-evaluators-current.json",
+            "retrievedAt": "2026-09-14T18:04:07.368Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Retrieval-Augmented Generation (RAG) evaluators. Read raw\\rag-evaluators-current.txt, lines 1-81, 153-232. The reference defines Groundedness as response-to-context fidelity and Relevance as response-to-query adequacy. Retrieval instead evaluates query/context chunks. These base modes are distinct from Preview Groundedness Pro and Response Completeness."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "X already addresses the query but invents context; Y stays within context but answers the wrong query. This reverses their primary failures. Countercontext: The pairing would fit an X that misses the query and a Y that fabricates beyond its context. Those are the opposite failure descriptions from this stem. Evidence: The system-evaluation table explicitly distinguishes generated response alignment with context from relevance to the user's query.",
+            "sourceIds": [
+              "ai103-rag-evaluators"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "supported",
+            "rationale": "It is not incorrect: the two measures target precisely the independent faults described. Countercontext: Response X extends beyond its supplied context and response Y is context-faithful but not responsive to the actual query. Evidence: Groundedness measures nonfabrication relative to context; Relevance measures accuracy/completeness/direct relevance to the query.",
+            "sourceIds": [
+              "ai103-rag-evaluators"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "Retrieval scores query-to-context relevance, not how the generated final answer used that context. Countercontext: The team is evaluating the textual relevance of retrieved chunks before generation and lacks qrels, not evaluating final responses. Evidence: The process-evaluation table gives Retrieval query/context inputs; Groundedness and Relevance are system/final-response evaluators.",
+            "sourceIds": [
+              "ai103-rag-evaluators"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Reject as SEM-005's composite duplicate of ai103-013. I read that record's complete options and explanation: the same unsupported-context claim selects Groundedness over Relevance and Retrieval. Pairing another failure with it does not create a distinct required decision. The technical key b is supported by the current base evaluator reference; rejection is not a wrong-answer allegation.",
+        "confidenceReason": "High confidence in the base evaluator distinctions and the decisive same-fact overlap. No authored field or historical record is changed."
+      }
+    },
+    {
+      "questionId": "ai103-p-026",
+      "status": "rejected",
+      "questionFingerprint": "1d35250362ecf4fd9294ea9941542c2f65671d397b22b126279b904ba9019342",
+      "reason": "Reject as SEM-006's repeated qrels/Holes interpretation from ai103-014, independently read in full. The technical table does define Holes and NDCG correctly, but the frozen registry's explicit-reference approval is confined to named evaluation capabilities: its parent names Groundedness/Relevance, not Document Retrieval/qrels. Do not silently extend that claim scope. The deletion and token-latency distractors have no sourced favorable contexts as written.",
+      "review": {
+        "questionId": "ai103-p-026",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-b",
+        "questionFingerprint": "1d35250362ecf4fd9294ea9941542c2f65671d397b22b126279b904ba9019342",
+        "reviewedAt": "2026-09-14T19:55:02.305Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-rag-evaluators",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\rag-evaluators-current.json",
+            "retrievedAt": "2026-09-14T18:04:07.368Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Retrieval-Augmented Generation (RAG) evaluators. Read raw\\rag-evaluators-current.txt, lines 1-81, 153-232. The Document Retrieval table states NDCG concerns ideal rank order and Holes counts documents missing relevance judgments. Its actual parent training reference establishes named Groundedness/Relevance capabilities but does not name this qrels evaluator."
+          },
+          {
+            "sourceId": "ai103-model-benchmarks",
+            "url": "https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/3-select-models-benchmarks",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\model-catalog-evaluate--3-select-models-benchmarks.json",
+            "retrievedAt": "2026-09-14T17:53:23.401Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Select models using benchmarks. Read raw\\model-catalog-evaluate--3-select-models-benchmarks.txt, lines 1-115. The benchmark unit's generated-token throughput and streaming latency definitions show why an output-timing interpretation is unrelated to retrieval NDCG; it supplies no NDCG-to-latency conversion."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "It is not technically incorrect: unjudged retrieved documents are not evidence that those documents were deleted from the index. Countercontext: A qrels-based evaluation retrieves unlabeled documents and compares rank quality against judged data, as described. Evidence: Document Retrieval lines 159-166 distinguish NDCG rank quality from Holes label sanity; the claim's recorded ancestry restriction remains a separate admission concern.",
+            "sourceIds": [
+              "ai103-rag-evaluators"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Holes counts missing relevance judgments, not missing indexed records; a returned document can lack a human judgment. Countercontext: Index completeness would need independent index evidence. The cited evaluator has no mode in which Holes itself proves deletion, so this exact alternative has no defensible favorable context. Evidence: The metric table expressly calls Holes Search Label Sanity and defines it using missing ground truth.",
+            "sourceIds": [
+              "ai103-rag-evaluators"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "NDCG ranks retrieved documents; it is neither a time measurement nor a generated-token metric. Countercontext: Streaming tuning can be motivated by TTFT or generated-token throughput. Neither cited source gives NDCG an output-latency interpretation in any context. Evidence: The evaluator table defines ranking quality; the benchmark unit names the distinct metrics for model latency and generated tokens.",
+            "sourceIds": [
+              "ai103-rag-evaluators",
+              "ai103-model-benchmarks"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": false,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Reject as SEM-006's repeated qrels/Holes interpretation from ai103-014, independently read in full. The technical table does define Holes and NDCG correctly, but the frozen registry's explicit-reference approval is confined to named evaluation capabilities: its parent names Groundedness/Relevance, not Document Retrieval/qrels. Do not silently extend that claim scope. The deletion and token-latency distractors have no sourced favorable contexts as written.",
+        "confidenceReason": "High on the article's metric meanings and duplicate decision; provenance support for this particular Document Retrieval claim remains insufficient under the recorded named-capability restriction."
+      }
+    },
+    {
+      "questionId": "ai103-p-034",
+      "status": "rejected",
+      "questionFingerprint": "4741c64504968821c18add3bc3ef97e33004562b1ec6741019201dc262cd0e46",
+      "reason": "Reject as SEM-007's broader composite of ai103-018, whose complete trace-ingestion boundary and supplementing access/retention explanation were independently read. Both keyed controls are technically supported. Separately, the frozen ancestry uses an Application Insights monitoring sentence as an explicit reference to this exact tracing article; that sentence does not name tracing or this page, leaving a topical-versus-specific provenance concern. No source or prior review is rewritten to hide it.",
+      "review": {
+        "questionId": "ai103-p-034",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-b",
+        "questionFingerprint": "4741c64504968821c18add3bc3ef97e33004562b1ec6741019201dc262cd0e46",
+        "reviewedAt": "2026-09-14T19:55:02.305Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-tracing",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\tracing-current.json",
+            "retrievedAt": "2026-09-14T18:04:04.274Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Agent tracing overview. Read raw\\tracing-current.txt, lines 1-119. The article explicitly requires pretelemetry secret removal/personal-data minimization and production access/retention controls. It also identifies prompts, arguments, results and attributes as sensitive capture points. The actual parent receipt mentions Application Insights monitoring but does not specifically identify this trace article."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "It is not incorrect: customer messages and authenticated tool data are potential sensitive inputs that must not be unnecessarily exported. Countercontext: A traced agent may carry secrets or personal information in messages, arguments, results or attributes, as this prompt agent does. Evidence: Best practices and Security and privacy require removing or masking sensitive values before telemetry.",
+            "sourceIds": [
+              "ai103-tracing"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Every retained sample can still expose credentials or unnecessary personal information; sampling is not content sanitization. Countercontext: Sampling can manage telemetry volume after sensitive fields are already absent or minimized. The unredacted-sensitive-payload clause is not justified by sampling. Evidence: The article ties sampling to Application Insights configuration and separately requires pretelemetry minimization; neither substitutes for the other.",
+            "sourceIds": [
+              "ai103-tracing"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "Tool arguments and attributes can contain the very credentials and customer data that the stem must protect. Countercontext: If only the final answer actually contains sensitive content, that is where redaction is needed; this does not justify exempting other fields regardless of their contents. Evidence: The security section explicitly includes prompts, tool arguments and span attributes in the no-secrets rule.",
+            "sourceIds": [
+              "ai103-tracing"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "supported",
+            "rationale": "It is not incorrect: traces remain production telemetry even after minimizing their content. Countercontext: An organization retains execution traces and must govern who can read them and how long they remain, alongside pre-export controls. Evidence: Security and privacy explicitly says trace data must use the same access controls and retention policies as production logs and metrics.",
+            "sourceIds": [
+              "ai103-tracing"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": false,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Reject as SEM-007's broader composite of ai103-018, whose complete trace-ingestion boundary and supplementing access/retention explanation were independently read. Both keyed controls are technically supported. Separately, the frozen ancestry uses an Application Insights monitoring sentence as an explicit reference to this exact tracing article; that sentence does not name tracing or this page, leaving a topical-versus-specific provenance concern. No source or prior review is rewritten to hide it.",
+        "confidenceReason": "High confidence on the two trace safeguards and the repeated discriminator. Insufficient confidence that the recorded generic monitoring passage alone approves the exact tracing documentation under strict source policy."
+      }
+    },
+    {
+      "questionId": "ai103-p-037",
+      "status": "rejected",
+      "questionFingerprint": "5fbf9ed7cdb4b09c0795facddd42edf366daaa9aa950b341cfc382e9e806a3fa",
+      "reason": "Reject as SEM-008's subset duplicate of ai103-012, independently read with its full allowlist/approval/correlation alternatives. p037 isolates the same exposure discriminator without a new configuration mode or condition. Its technical key is correct: allowed_tools restricts availability while approvals govern proposed calls. No semantic identity, authored field or earlier record is rebound.",
+      "review": {
+        "questionId": "ai103-p-037",
+        "authorId": "copilot-ai103-planning-pass1-20260914",
+        "reviewerId": "ai103-adversary-planning-b",
+        "questionFingerprint": "5fbf9ed7cdb4b09c0795facddd42edf366daaa9aa950b341cfc382e9e806a3fa",
+        "reviewedAt": "2026-09-14T19:55:02.305Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-mcp-tools",
+            "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-020.json",
+            "retrievedAt": "2026-09-14T17:59:38.500Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Connect agents to Model Context Protocol servers. Read raw\\doc-020.txt, lines 1-64, 201-356, 1356-1418, 1616-1645. Set up the MCP connection defines allowed_tools as the optional accessible subset and says omission exposes all tools. require_approval has its own always/never/list settings; instructions may influence use but do not change the offered set."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "It is not incorrect: the server has a broader tool set and the agent's exposed subset must be restricted independently of approval handling. Countercontext: Only selected server tool names are authorized to be offered to this agent, with the list matching names actually exposed by the server. Evidence: The connection reference defines allowed_tools as the optional list of tools the agent can access/use; omission includes all tools.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Approval decisions apply to the still-available tools; omitting the allowlist offers the write tools too. Countercontext: Every server tool may be offered but each proposed call needs human approval. That policy differs from forbidding write-tool exposure. Evidence: allowed_tools and require_approval are separate fields with separately documented defaults and purposes.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "Instructions may influence tool choice but do not alter the documented all-tools default when allowed_tools is absent. Countercontext: The full server set is permitted and instructions merely guide which tools the model should prefer. The troubleshooting section treats instructions as usage guidance, not the availability list. Evidence: The connection reference specifies the omitted-list default, while troubleshooting separately checks agent instructions and allowed_tools values.",
+            "sourceIds": [
+              "ai103-mcp-tools"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Reject as SEM-008's subset duplicate of ai103-012, independently read with its full allowlist/approval/correlation alternatives. p037 isolates the same exposure discriminator without a new configuration mode or condition. Its technical key is correct: allowed_tools restricts availability while approvals govern proposed calls. No semantic identity, authored field or earlier record is rebound.",
+        "confidenceReason": "High confidence in tool exposure versus approval and in the same-fact duplicate. The source explicitly defines omitted allowed_tools as all server tools."
+      }
+    },
+    {
+      "questionId": "ai103-t-018",
+      "status": "rejected",
+      "questionFingerprint": "001a79a385014a8fe9e422e749106346cdbd894942495f346e314ba97740366a",
+      "reason": "Rejected after incorporating SEM-013 and independently reading ai103-v-011: both test non-document Generate versus Classify/document-only Extract. Audio is only a substituted input because preprocessing is already supplied. Retain the more discriminating paired-method vision candidate, not both. Affirmative lifecycle support is sufficient, but advanced difficulty and originality each score 1. Pass 2 remains unchanged manual; any repair restarts all passes. Explicit complexity/difficulty review: Authored complexity technical-implementation: Overstated: the stem describes the Generate definition and explicitly rules out literal Extract and fixed Classify. It supplies audio preprocessing and all deployments, leaving no analyzer implementation or modality-specific problem. SEM-013 independently finds the same non-document field-method discriminator in v-011. Separately, authored difficulty advanced: Advanced is overstated separately from complexity; difficulty and originality each remain scored 1. Disposition: rejected. Retain rejection for the duplicate and inflated difficulty/complexity. A genuinely different fact and applied task requires new authoring plus all three passes, not a label or hash repair. Feature review: Unlike t-017, this question actually cites the overview with affirmative GA 2025-11-01 core multimodal support; no preview agentic document reasoning is used. Semantic review: SEM-013 exclusion accepted after reading v-011. Same non-document field-method discriminator; reject this less demanding variant. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+      "review": {
+        "questionId": "ai103-t-018",
+        "authorId": "ai103-language-pass1-author-20260914",
+        "reviewerId": "ai103-adversary-language",
+        "questionFingerprint": "001a79a385014a8fe9e422e749106346cdbd894942495f346e314ba97740366a",
+        "reviewedAt": "2026-09-14T19:47:28.972Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-content-understanding-overview",
+            "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-046.txt",
+            "retrievedAt": "2026-09-14T18:00:06.663Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "Lines 41–74 explicitly separate GA 2025-11-01 core multimodal processing from 2026-06-01-preview additions. An analyzer configures fields and model deployments; normalized Markdown is distinct from schema-matched JSON. Extract is literal/document-only, Classify chooses predefined categories, and Generate includes audio summaries. Document-specific confidence/grounding controls must not be exported to audio. This is affirmative lifecycle evidence for the two questions actually citing this article."
+          },
+          {
+            "sourceId": "ai103-content-understanding-audio",
+            "url": "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/audio/overview",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-050.txt",
+            "retrievedAt": "2026-09-14T18:00:12.197Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The content-extraction section distinguishes spoken-word transcription, speaker attribution, optional role labels and language selection. Generated summaries/sentiment are downstream fields. Examples carry apiVersion 2025-11-01 but the article itself never calls that version GA; an example version is not affirmative lifecycle evidence. Some sample Markdown labels every turn alike while transcriptPhrases distinguish speakers, so the question correctly depends on the documented capability, not sample accuracy."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "Extract is the method for newly composing a summary from audio. The method is documented for literal input values in documents only, and the desired field is a new audio-derived account. Alternate context: Extract fits dates, item details or other literal values appearing in document input rather than an original summary of an audio conversation. Evidence: The Field extraction row limits Extract to documents and gives literal-value examples.",
+            "sourceIds": [
+              "ai103-content-understanding-overview"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "A fixed billing/delivery/other class is the requested account of an unresolved issue. A category label cannot provide the requested concise descriptive account and the stem explicitly rejects fixed categories. Alternate context: Classify fits a call-routing or analytics field whose complete output is one of a predefined set of categories. Evidence: The overview describes predefined Classify outputs and the audio page supports configurable structured call fields.",
+            "sourceIds": [
+              "ai103-content-understanding-overview",
+              "ai103-content-understanding-audio"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "Generate composes the requested grounded audio-summary field. Not incorrect here: the overview explicitly uses summarizing an audio conversation as a Generate example, and the stem supplies preprocessing context. Alternate context: It is correct for a free-form summary field described in an analyzer using supported deployments and audio-derived context; the content still needs evaluation. Evidence: The Generate method example and audio contextual preprocessing/field-schema sections directly support this choice.",
+            "sourceIds": [
+              "ai103-content-understanding-overview",
+              "ai103-content-understanding-audio"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": false,
+          "duplicatesReviewed": true,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "Rejected after incorporating SEM-013 and independently reading ai103-v-011: both test non-document Generate versus Classify/document-only Extract. Audio is only a substituted input because preprocessing is already supplied. Retain the more discriminating paired-method vision candidate, not both. Affirmative lifecycle support is sufficient, but advanced difficulty and originality each score 1. Pass 2 remains unchanged manual; any repair restarts all passes. Explicit complexity/difficulty review: Authored complexity technical-implementation: Overstated: the stem describes the Generate definition and explicitly rules out literal Extract and fixed Classify. It supplies audio preprocessing and all deployments, leaving no analyzer implementation or modality-specific problem. SEM-013 independently finds the same non-document field-method discriminator in v-011. Separately, authored difficulty advanced: Advanced is overstated separately from complexity; difficulty and originality each remain scored 1. Disposition: rejected. Retain rejection for the duplicate and inflated difficulty/complexity. A genuinely different fact and applied task requires new authoring plus all three passes, not a label or hash repair. Feature review: Unlike t-017, this question actually cites the overview with affirmative GA 2025-11-01 core multimodal support; no preview agentic document reasoning is used. Semantic review: SEM-013 exclusion accepted after reading v-011. Same non-document field-method discriminator; reject this less demanding variant. All authored fields, citations and earlier stages remain unchanged. Repaired authored fields require fresh generation and both independent reviews.",
+        "confidenceReason": "The method key is supported, but an exact current cross-audit duplicate and inflated difficulty justify rejection rather than promotion; retained counterpart status is not an approval."
+      }
+    },
+    {
+      "questionId": "ai103-x-002",
+      "status": "rejected",
+      "questionFingerprint": "47aecb2584bfe47aef5da31de5f761d74e869a5775cd8fcbc613dd708d6ac0c9",
+      "reason": "Push is defensible, but the counterexample for d must remain supported pull serialization, never a fictitious non-JSON push contract. This limits distractor evidence and plausibility scores.\nI read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.\nIndependent audit comparison: I read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.\nFinal independently scored rubric total: 42/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Ingest and index content, such as documents, images, audio, and video; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The stem explicitly limits this to classic index-bound ingestion, excluding remote knowledge-source retrieval.\nplan: No tier-dependent connector entitlement is assumed: absence of a supported connector is supplied rather than guessed.\nrole: Upload still needs authorized service access; no option claims JSON conversion creates permission. Permission is not the defect under test.\npreconditions: Schema-compatible JSON and application-side conversion make push feasible without adding a serialization or connector requirement.\nfeatureStatus: Classic-search GA is explicit in the architecture comparison; Serverless preview and agentic status are irrelevant to choosing push.\nsourceChanges: Read the current architecture indexing section and unsupported-source checklist, not the broader marketing description of multi-source access.\nstemSufficiency: Unsupported pull plus prepared JSON identifies a concrete integration boundary. The alternatives cannot satisfy both facts.\nexplanationBounds: The explanation correctly distinguishes write ingestion from read querying; it does not claim every non-JSON source is intrinsically unsupported.\nreasoningDepth: Moderate application of two supplied constraints. The unsupported-source sentence largely reveals the branch, so difficulty earns 3 rather than 4. Authored complexity assessed separately: scenario-based; classification supported: true; applied reasoning demonstrated: true. The actual decision allocates ingestion ownership using two established conditions: unsupported pull source and already serialized JSON. Application-owned conversion makes push feasible while a query cannot write. This is modest scenario application, not merely a named pipeline, but SEM-009 independently excludes the repeated decision. Separate difficulty assessment: Intermediate depth is modest and was scored down; genuine application does not remove the independently established duplicate.\nanswerClues: The distractor explicitly saying unsupported source is easy to eliminate; non-JSON automatic conversion is plausible only under supported pull. No unique grammar clue.\nQuality warning response: Pronoun warning inspected: those records are the already converted records. The actual blocking problem is the independently confirmed SEM-009 duplicate.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nBoth semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.\nChecks not passed: originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "review": {
+        "questionId": "ai103-x-002",
+        "authorId": "copilot-ai103-extraction-pass1-20260914",
+        "reviewerId": "ai103-adversary-extraction",
+        "questionFingerprint": "47aecb2584bfe47aef5da31de5f761d74e869a5775cd8fcbc613dd708d6ac0c9",
+        "reviewedAt": "2026-09-14T19:46:51.326Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-search-architecture",
+            "url": "https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-021.json",
+            "retrievedAt": "2026-09-14T17:59:39.528Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The classic-search indexing section requires JSON and separates push upload from supported-source pull serialization. The choose-your-path checklist requires push for an unsupported source. Query requests read the populated index. Serverless preview and agentic capabilities are separate from this classic contract. a: Classic indexing and querying are separate workloads; the latter targets already searchable content (54-68). b: The ingestion checklist makes push the option when there is no supported source (109). c: The indexing section describes direct JSON upload and the checklist covers unsupported sources (55,109). d: The source says only JSON can be indexed, while pull retrieves and serializes original data (55)."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "Load source records by making a full-text query. Wrong here: a query reads the populated index and does not load prepared records. Counterexample/context: Use full-text requests after ingestion when finding indexed documents by textual criteria. Evidence: Classic indexing and querying are separate workloads; the latter targets already searchable content (54-68).",
+            "sourceIds": [
+              "ai103-search-architecture"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Pull directly from a source without a supported connector. Wrong here: the required supported-source prerequisite is expressly absent. Counterexample/context: Choose pull when a supported source can be retrieved and serialized into JSON by the documented ingestion mechanism. Evidence: The ingestion checklist makes push the option when there is no supported source (109).",
+            "sourceIds": [
+              "ai103-search-architecture"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "Push application-prepared, schema-compatible JSON into the index. Not incorrect here: the application has completed conversion and does not need a pull connector. Counterexample/context: Correct for an unsupported source or real-time index synchronization when application code supplies the JSON documents. Evidence: The indexing section describes direct JSON upload and the checklist covers unsupported sources (55,109).",
+            "sourceIds": [
+              "ai103-search-architecture"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "Have automatic indexing consume the original non-JSON representation directly. Wrong here: direct push requires JSON, and this source has no supported pull serializer. Counterexample/context: The related automatic-conversion approach is appropriate for supported pull sources; it is not permission to push a non-JSON body directly. Evidence: The source says only JSON can be indexed, while pull retrieves and serializes original data (55).",
+            "sourceIds": [
+              "ai103-search-architecture"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": false,
+          "duplicatesReviewed": false,
+          "qualityReviewed": true
+        },
+        "verificationNotes": "Push is defensible, but the counterexample for d must remain supported pull serialization, never a fictitious non-JSON push contract. This limits distractor evidence and plausibility scores.\nI read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.\nIndependent audit comparison: I read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.\nFinal independently scored rubric total: 42/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Ingest and index content, such as documents, images, audio, and video; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: The stem explicitly limits this to classic index-bound ingestion, excluding remote knowledge-source retrieval.\nplan: No tier-dependent connector entitlement is assumed: absence of a supported connector is supplied rather than guessed.\nrole: Upload still needs authorized service access; no option claims JSON conversion creates permission. Permission is not the defect under test.\npreconditions: Schema-compatible JSON and application-side conversion make push feasible without adding a serialization or connector requirement.\nfeatureStatus: Classic-search GA is explicit in the architecture comparison; Serverless preview and agentic status are irrelevant to choosing push.\nsourceChanges: Read the current architecture indexing section and unsupported-source checklist, not the broader marketing description of multi-source access.\nstemSufficiency: Unsupported pull plus prepared JSON identifies a concrete integration boundary. The alternatives cannot satisfy both facts.\nexplanationBounds: The explanation correctly distinguishes write ingestion from read querying; it does not claim every non-JSON source is intrinsically unsupported.\nreasoningDepth: Moderate application of two supplied constraints. The unsupported-source sentence largely reveals the branch, so difficulty earns 3 rather than 4. Authored complexity assessed separately: scenario-based; classification supported: true; applied reasoning demonstrated: true. The actual decision allocates ingestion ownership using two established conditions: unsupported pull source and already serialized JSON. Application-owned conversion makes push feasible while a query cannot write. This is modest scenario application, not merely a named pipeline, but SEM-009 independently excludes the repeated decision. Separate difficulty assessment: Intermediate depth is modest and was scored down; genuine application does not remove the independently established duplicate.\nanswerClues: The distractor explicitly saying unsupported source is easy to eliminate; non-JSON automatic conversion is plausible only under supported pull. No unique grammar clue.\nQuality warning response: Pronoun warning inspected: those records are the already converted records. The actual blocking problem is the independently confirmed SEM-009 duplicate.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nBoth semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.\nChecks not passed: originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+        "confidenceReason": "High technical confidence in the ingestion boundary; only moderate difficulty authenticity."
+      }
+    },
+    {
+      "questionId": "ai103-x-007",
+      "status": "rejected",
+      "questionFingerprint": "05e7febf34f7276bc89b1fea3f5c716c8ab2124840cc1171946cf0e794aaa2e8",
+      "reason": "41/48. The key is technically strong but positional or identifier-free modes cannot be invented to satisfy a counterexample field. Preserve technical quality hold and require fresh authored repair.\nI independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.\nIndependent audit comparison: I independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.\nFinal independently scored rubric total: 38/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: Correlation is within a custom-skill batch, not persistent index keys or workflow run identifiers.\nplan: The error is independent of batch size limits, timeout and hosting tier; no retry guarantee is assumed.\nrole: Authorization already succeeded because the skill returned values; changing identity permissions cannot repair record correlation.\npreconditions: Two distinct known input IDs and reversed completion eliminate a single-record or stable-order exception.\nfeatureStatus: The required record envelope is documented without preview scope. No special parallel-execution feature is needed.\nsourceChanges: The actual a1/b5 output reversal was inspected, not merely the technical reviewer summary.\nstemSufficiency: The stem exposes the exact defect, leaving a one-step original-ID repair rather than substantial diagnosis.\nexplanationBounds: Correct values are not sufficient without identity. The explanation makes no claim about callback order or transport retry semantics.\nreasoningDepth: Advanced is inflated: one invariant is recalled and applied directly. It needs a genuinely interacting error case to earn that label. Authored complexity assessed separately: troubleshooting; classification supported: true; applied reasoning demonstrated: true. The failure is output/input association despite successful enrichment values, and the repair preserves identity rather than completion order or algorithm output. That is a narrow real fault-boundary repair and supports troubleshooting at a basic level. It is nevertheless the same correlation decision as p-027 and has weak alternatives, so no applied coverage is admitted. Separate difficulty assessment: Troubleshooting is a task category, not a synonym for advanced. The advanced label fails independently, and SEM-010 is additionally blocking.\nanswerClues: Three alternatives deliberately violate required identity. Two have no valid alternate mode in this API, weakening sourced distractor plausibility.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nBoth semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.\nChecks not passed: qualityReviewed, originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+      "review": {
+        "questionId": "ai103-x-007",
+        "authorId": "copilot-ai103-extraction-pass1-20260914",
+        "reviewerId": "ai103-adversary-extraction",
+        "questionFingerprint": "05e7febf34f7276bc89b1fea3f5c716c8ab2124840cc1171946cf0e794aaa2e8",
+        "reviewedAt": "2026-09-14T19:46:51.326Z",
+        "verdict": "rejected",
+        "sourceReviews": [
+          {
+            "sourceId": "ai103-search-custom-skill",
+            "url": "https://learn.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface",
+            "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-068.json",
+            "retrievedAt": "2026-09-14T18:00:30.996Z",
+            "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+            "supportingSummary": "The custom-skill interface requires HTTPS, a managed-identity caller, Entra-enabled application and authResourceId bound to that application. Each batched output preserves the input recordId; the response example reverses two results while retaining their identifiers. Data bags alone are not the record envelope. a: The input contract requires recordId for correlation and the output example reverses a1/b5 while preserving their IDs (49-52,92-119). b: The interface requires the original recordId, not order; its deliberately reordered response defeats positional matching (51,96-106). c: Each recordId uniquely identifies a record and each output must preserve that identity (49-52,90). d: The output is explicitly a set of records containing recordId and a property bag (88-90)."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "Return each enrichment result with the same input recordId. Not incorrect here: preserving R-17 and R-24 restores identity correlation despite reversed completion. Counterexample/context: Correct for every batch where results must be associated with their original records rather than result order. Evidence: The input contract requires recordId for correlation and the output example reverses a1/b5 while preserving their IDs (49-52,92-119).",
+            "sourceIds": [
+              "ai103-search-custom-skill"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Generate output-position IDs and rely on array order. Wrong here: newly assigned IDs do not identify R-17 and R-24. Counterexample/context: No documented positional-correlation mode exists. Sequential-looking IDs are valid only when they equal each corresponding input ID; that is not this proposed algorithm. Evidence: The interface requires the original recordId, not order; its deliberately reordered response defeats positional matching (51,96-106).",
+            "sourceIds": [
+              "ai103-search-custom-skill"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "Reuse the first input ID for all results. Wrong here: the two distinct inputs require distinct identities. Counterexample/context: A one-record batch could return its sole input ID once; repeating that ID for multiple distinct inputs is not supported. Evidence: Each recordId uniquely identifies a record and each output must preserve that identity (49-52,90).",
+            "sourceIds": [
+              "ai103-search-custom-skill"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "Return only output data bags without recordId. Wrong here: this omits a required response-envelope identifier. Counterexample/context: Data bags are valid output fields inside a record that also contains recordId. No source supports an identifier-free Web API skill response. Evidence: The output is explicitly a set of records containing recordId and a property bag (88-90).",
+            "sourceIds": [
+              "ai103-search-custom-skill"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": false,
+          "duplicatesReviewed": false,
+          "qualityReviewed": false
+        },
+        "verificationNotes": "41/48. The key is technically strong but positional or identifier-free modes cannot be invented to satisfy a counterexample field. Preserve technical quality hold and require fresh authored repair.\nI independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.\nIndependent audit comparison: I independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.\nFinal independently scored rubric total: 38/48. No score converted from a prior review.\nCurrent objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.\nscope: Correlation is within a custom-skill batch, not persistent index keys or workflow run identifiers.\nplan: The error is independent of batch size limits, timeout and hosting tier; no retry guarantee is assumed.\nrole: Authorization already succeeded because the skill returned values; changing identity permissions cannot repair record correlation.\npreconditions: Two distinct known input IDs and reversed completion eliminate a single-record or stable-order exception.\nfeatureStatus: The required record envelope is documented without preview scope. No special parallel-execution feature is needed.\nsourceChanges: The actual a1/b5 output reversal was inspected, not merely the technical reviewer summary.\nstemSufficiency: The stem exposes the exact defect, leaving a one-step original-ID repair rather than substantial diagnosis.\nexplanationBounds: Correct values are not sufficient without identity. The explanation makes no claim about callback order or transport retry semantics.\nreasoningDepth: Advanced is inflated: one invariant is recalled and applied directly. It needs a genuinely interacting error case to earn that label. Authored complexity assessed separately: troubleshooting; classification supported: true; applied reasoning demonstrated: true. The failure is output/input association despite successful enrichment values, and the repair preserves identity rather than completion order or algorithm output. That is a narrow real fault-boundary repair and supports troubleshooting at a basic level. It is nevertheless the same correlation decision as p-027 and has weak alternatives, so no applied coverage is admitted. Separate difficulty assessment: Troubleshooting is a task category, not a synonym for advanced. The advanced label fails independently, and SEM-010 is additionally blocking.\nanswerClues: Three alternatives deliberately violate required identity. Two have no valid alternate mode in this API, weakening sourced distractor plausibility.\nNo lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.\nGlobal 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.\nBoth semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.\nChecks not passed: qualityReviewed, originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.\nCredential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date.",
+        "confidenceReason": "High confidence in original-ID correlation; low confidence that the alternatives constitute an advanced exam-realistic challenge."
+      }
+    }
+  ]
+}

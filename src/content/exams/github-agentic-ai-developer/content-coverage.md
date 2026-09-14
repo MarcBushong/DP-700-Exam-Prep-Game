@@ -2,7 +2,7 @@
 
 Unofficial study aid. Deterministic checks validate structure and recorded attestations, not answer semantics, independent reviewer identity, or current feature behavior.
 
-Report created: 2026-09-14T16:34:58.280Z. This is not a retrieval or verification timestamp.
+Report created: 2026-09-14T21:45:39.841Z. This is not a retrieval or verification timestamp.
 
 - Total candidate records: **149**; malformed: **0**.
 - Playable verified questions: **0**. Playable coverage below counts only these questions.
@@ -10,9 +10,9 @@ Report created: 2026-09-14T16:34:58.280Z. This is not a retrieval or verificatio
 - Three-pass target: 150 verified; shortfall 14. Rubric minimum 44/48; no automatic conversion from legacy scores.
 - Source provenance violations: 0. Source meaning and reviewer independence are not proven by receipts.
 - Playable coverage shortfall: 150; playable Advanced/Expert share: 0.0% (target >=40%). This is not an authored-content count.
-- Recorded credential status: **unverified**; Study Run **locked**; Boss Gauntlet **locked**.
+- Recorded credential status: **beta**; Study Run **locked**; Boss Gauntlet **locked**.
 - Fully reviewed content target: 150; reviewed shortfall: 14; reviewed but unavailable: 136.
-- Availability: Reviewed content is available for maintainers, but current general availability is not established by the permitted official Learn evidence. The prior beta concern is unresolved; both gameplay modes remain sealed.
+- Availability: GH-600 is verified as a beta exam. The official GitHub catalog reports available_to_take=false; Torchlight Run and Boss Gauntlet remain sealed. Reviewed encounters do not establish general availability.
 - Availability: The catalog marks this dungeon unavailable.
 - Taxonomy: 6 domains, 19 skills, 65 subskills.
 - Study guide effective date: **Undated published outline; retrieved 2026-09-11T19:14:33.450Z; SHA-256 e6271beb5921467a0c1037f1add3a5400dbf80be5a58bcb74b7cf0e8e118a9ed**; retrieved: 2026-09-14T13:04:00.402Z.
@@ -26,391 +26,391 @@ Report created: 2026-09-14T16:34:58.280Z. This is not a retrieval or verificatio
 
 ## Verification status (effective, schema-valid candidates)
 
-| Category               | Questions |
-| ---------------------- | --------: |
-| candidate              |         0 |
-| verified               |       136 |
-| manual-review-required |         0 |
-| rejected               |        13 |
-| stale                  |         0 |
+| Category | Questions |
+| --- | ---: |
+| candidate | 0 |
+| verified | 136 |
+| manual-review-required | 0 |
+| rejected | 13 |
+| stale | 0 |
 
 ## Playable domain counts
 
-| Category                                       | Questions |
-| ---------------------------------------------- | --------: |
-| prepare-agent-architecture-and-sdlc-processes  |         0 |
-| implement-tool-use-and-environment-interaction |         0 |
-| manage-memory-state-and-execution              |         0 |
-| perform-evaluation-error-analysis-and-tuning   |         0 |
-| orchestrate-multi-agent-coordination           |         0 |
-| implement-guardrails-and-accountability        |         0 |
+| Category | Questions |
+| --- | ---: |
+| prepare-agent-architecture-and-sdlc-processes | 0 |
+| implement-tool-use-and-environment-interaction | 0 |
+| manage-memory-state-and-execution | 0 |
+| perform-evaluation-error-analysis-and-tuning | 0 |
+| orchestrate-multi-agent-coordination | 0 |
+| implement-guardrails-and-accountability | 0 |
 
 ## Playable skill counts
 
-| Category                                                                                         | Questions |
-| ------------------------------------------------------------------------------------------------ | --------: |
-| integrate-agents-into-the-software-development-lifecycle-sdlc                                    |         0 |
-| define-boundaries-between-planning-reasoning-and-action                                          |         0 |
-| configure-observability-and-control-for-autonomous-agents                                        |         0 |
-| select-and-configure-agent-tools                                                                 |         0 |
-| configure-mcp-servers                                                                            |         0 |
-| integrate-agents-within-development-environments                                                 |         0 |
-| operate-agents-with-safe-execution-paths-and-robust-error-handling                               |         0 |
-| implement-agent-memory-strategies                                                                |         0 |
-| persist-agent-state-and-manage-context-drift                                                     |         0 |
-| ensure-continuity-of-agent-memory-and-state-across-tools-and-environments                        |         0 |
-| define-success-criteria-and-evaluation-signals-for-agent-tasks                                   |         0 |
-| analyze-agent-failures-and-identify-root-causes                                                  |         0 |
-| tune-agent-behavior-based-on-evaluation-results                                                  |         0 |
-| operate-and-manage-multi-agent-workflows                                                         |         0 |
-| configure-observability-for-multi-agent-behavior-by-using-logs-artifacts-and-operational-signals |         0 |
-| detect-and-respond-to-multi-agent-failures-and-degraded-behavior                                 |         0 |
-| manage-the-lifecycle-of-agents-within-multi-agent-workflows                                      |         0 |
-| define-autonomy-levels                                                                           |         0 |
-| implement-guardrails-and-human-in-the-loop-workflows                                             |         0 |
+| Category | Questions |
+| --- | ---: |
+| integrate-agents-into-the-software-development-lifecycle-sdlc | 0 |
+| define-boundaries-between-planning-reasoning-and-action | 0 |
+| configure-observability-and-control-for-autonomous-agents | 0 |
+| select-and-configure-agent-tools | 0 |
+| configure-mcp-servers | 0 |
+| integrate-agents-within-development-environments | 0 |
+| operate-agents-with-safe-execution-paths-and-robust-error-handling | 0 |
+| implement-agent-memory-strategies | 0 |
+| persist-agent-state-and-manage-context-drift | 0 |
+| ensure-continuity-of-agent-memory-and-state-across-tools-and-environments | 0 |
+| define-success-criteria-and-evaluation-signals-for-agent-tasks | 0 |
+| analyze-agent-failures-and-identify-root-causes | 0 |
+| tune-agent-behavior-based-on-evaluation-results | 0 |
+| operate-and-manage-multi-agent-workflows | 0 |
+| configure-observability-for-multi-agent-behavior-by-using-logs-artifacts-and-operational-signals | 0 |
+| detect-and-respond-to-multi-agent-failures-and-degraded-behavior | 0 |
+| manage-the-lifecycle-of-agents-within-multi-agent-workflows | 0 |
+| define-autonomy-levels | 0 |
+| implement-guardrails-and-human-in-the-loop-workflows | 0 |
 
 ## Playable subskill counts
 
-| Category                                                                                                                              | Questions |
-| ------------------------------------------------------------------------------------------------------------------------------------- | --------: |
-| Identify steps for agents to perform                                                                                                  |         0 |
-| Identify and mitigate common anti-patterns in agents                                                                                  |         0 |
-| Define inputs, outputs, and success criteria for agents                                                                               |         0 |
-| Configure agent planning to be distinct from agent execution                                                                          |         0 |
-| Configure an agent to output a structured plan                                                                                        |         0 |
-| Validate agent plans                                                                                                                  |         0 |
-| Prevent agent action until the agent checked and approved                                                                             |         0 |
-| Plan and implement the degree of agent autonomy, including guardrails                                                                 |         0 |
-| Configure agent to produce inspectable artifacts within standard development tooling                                                  |         0 |
-| Configure human intervention for autonomous agents without slowing delivery                                                           |         0 |
-| Identify required tools                                                                                                               |         0 |
-| Configure agent tools                                                                                                                 |         0 |
-| Configure agent tool permissions                                                                                                      |         0 |
-| Add an MCP server as a tool to an agent                                                                                               |         0 |
-| Configure a GitHub remote MCP server                                                                                                  |         0 |
-| Configure the MCP registries                                                                                                          |         0 |
-| Configure MCP allow lists                                                                                                             |         0 |
-| Evaluate the execution context for an agent                                                                                           |         0 |
-| Configure an agent's scope to a specific repository                                                                                   |         0 |
-| Configure an agent to be invoked in a CI workflow                                                                                     |         0 |
-| Configure an agent to use branch-based scope                                                                                          |         0 |
-| Enable an agent to perform autonomous actions, including creating branches and pull requests                                          |         0 |
-| Configure an agent to handle environment-specific constraints                                                                         |         0 |
-| Implement error handling                                                                                                              |         0 |
-| Implement retries                                                                                                                     |         0 |
-| Implement rollbacks                                                                                                                   |         0 |
-| Implement escalation paths                                                                                                            |         0 |
-| Implement traceability and accountability for agent actions                                                                           |         0 |
-| Choose between short-term, long-term, and external memory                                                                             |         0 |
-| Scope agent memory to task-relevant information                                                                                       |         0 |
-| Define memory expiration, pruning, and reset rules                                                                                    |         0 |
-| Capture task progress and decisions as durable artifacts                                                                              |         0 |
-| Resume agent work without repeating steps or diverging from prior decisions                                                           |         0 |
-| Detect and correct drift during extended agent execution                                                                              |         0 |
-| Share agent state                                                                                                                     |         0 |
-| Prevent conflicting context                                                                                                           |         0 |
-| Prevent stale context                                                                                                                 |         0 |
-| Specify expected outcomes and operational constraints for agent tasks                                                                 |         0 |
-| Identify qualitative and quantitative evaluation signals to evaluate agents                                                           |         0 |
-| Align evaluation criteria with development intent                                                                                     |         0 |
-| Generate evaluation signals by using automated scanning tools                                                                         |         0 |
-| Identify failures by using logs, plans, traces, outputs, and workflow artifacts                                                       |         0 |
-| Classify root causes, including reasoning errors, tool misuse, and context or environment issues                                      |         0 |
-| Revise instructions, workflows, or constraints                                                                                        |         0 |
-| Refine memory usage                                                                                                                   |         0 |
-| Refine tool usage and tool access                                                                                                     |         0 |
-| Apply an orchestration pattern to coordinate multiple agents                                                                          |         0 |
-| Configure agent isolation for parallel execution                                                                                      |         0 |
-| Detect and resolve agent conflicts, including overlapping code changes, duplicated effort, and contradictory outputs                  |         0 |
-| Configure multi-agent workflows to produce artifacts suitable for review and audit                                                    |         0 |
-| Document key decisions, handoffs, and outcomes across agents                                                                          |         0 |
-| Perform post-hoc analysis of multi-agent behavior                                                                                     |         0 |
-| Identify failed, partial, or stalled agent executions                                                                                 |         0 |
-| Respond to degraded behavior or coordination across agents                                                                            |         0 |
-| Implement multi-agent recovery patterns, including rollback and human-in-the-loop                                                     |         0 |
-| Add agents to existing multi-agent workflows                                                                                          |         0 |
-| Update, reconfigure, or replace agents without disrupting active workflows                                                            |         0 |
-| Retire agents while preserving auditability and workflow continuity                                                                   |         0 |
-| Classify agent actions by operational, security, and compliance risk to right-size human interventions                                |         0 |
-| Assign autonomy levels to maximize delivery speed while remaining compliant with organizational security and Responsible AI standards |         0 |
-| Identify the subset of actions that require human judgment                                                                            |         0 |
-| Block actions that violate defined security, compliance, or Responsible AI policies                                                   |         0 |
-| Scope permissions and execution contexts to enforce least-privilege access                                                            |         0 |
-| Require explicit authorization or controlled paths for irreversible or compliance-sensitive changes                                   |         0 |
-| Preserve execution velocity by minimizing approvals that do not materially reduce risk                                                |         0 |
+| Category | Questions |
+| --- | ---: |
+| Identify steps for agents to perform | 0 |
+| Identify and mitigate common anti-patterns in agents | 0 |
+| Define inputs, outputs, and success criteria for agents | 0 |
+| Configure agent planning to be distinct from agent execution | 0 |
+| Configure an agent to output a structured plan | 0 |
+| Validate agent plans | 0 |
+| Prevent agent action until the agent checked and approved | 0 |
+| Plan and implement the degree of agent autonomy, including guardrails | 0 |
+| Configure agent to produce inspectable artifacts within standard development tooling | 0 |
+| Configure human intervention for autonomous agents without slowing delivery | 0 |
+| Identify required tools | 0 |
+| Configure agent tools | 0 |
+| Configure agent tool permissions | 0 |
+| Add an MCP server as a tool to an agent | 0 |
+| Configure a GitHub remote MCP server | 0 |
+| Configure the MCP registries | 0 |
+| Configure MCP allow lists | 0 |
+| Evaluate the execution context for an agent | 0 |
+| Configure an agent's scope to a specific repository | 0 |
+| Configure an agent to be invoked in a CI workflow | 0 |
+| Configure an agent to use branch-based scope | 0 |
+| Enable an agent to perform autonomous actions, including creating branches and pull requests | 0 |
+| Configure an agent to handle environment-specific constraints | 0 |
+| Implement error handling | 0 |
+| Implement retries | 0 |
+| Implement rollbacks | 0 |
+| Implement escalation paths | 0 |
+| Implement traceability and accountability for agent actions | 0 |
+| Choose between short-term, long-term, and external memory | 0 |
+| Scope agent memory to task-relevant information | 0 |
+| Define memory expiration, pruning, and reset rules | 0 |
+| Capture task progress and decisions as durable artifacts | 0 |
+| Resume agent work without repeating steps or diverging from prior decisions | 0 |
+| Detect and correct drift during extended agent execution | 0 |
+| Share agent state | 0 |
+| Prevent conflicting context | 0 |
+| Prevent stale context | 0 |
+| Specify expected outcomes and operational constraints for agent tasks | 0 |
+| Identify qualitative and quantitative evaluation signals to evaluate agents | 0 |
+| Align evaluation criteria with development intent | 0 |
+| Generate evaluation signals by using automated scanning tools | 0 |
+| Identify failures by using logs, plans, traces, outputs, and workflow artifacts | 0 |
+| Classify root causes, including reasoning errors, tool misuse, and context or environment issues | 0 |
+| Revise instructions, workflows, or constraints | 0 |
+| Refine memory usage | 0 |
+| Refine tool usage and tool access | 0 |
+| Apply an orchestration pattern to coordinate multiple agents | 0 |
+| Configure agent isolation for parallel execution | 0 |
+| Detect and resolve agent conflicts, including overlapping code changes, duplicated effort, and contradictory outputs | 0 |
+| Configure multi-agent workflows to produce artifacts suitable for review and audit | 0 |
+| Document key decisions, handoffs, and outcomes across agents | 0 |
+| Perform post-hoc analysis of multi-agent behavior | 0 |
+| Identify failed, partial, or stalled agent executions | 0 |
+| Respond to degraded behavior or coordination across agents | 0 |
+| Implement multi-agent recovery patterns, including rollback and human-in-the-loop | 0 |
+| Add agents to existing multi-agent workflows | 0 |
+| Update, reconfigure, or replace agents without disrupting active workflows | 0 |
+| Retire agents while preserving auditability and workflow continuity | 0 |
+| Classify agent actions by operational, security, and compliance risk to right-size human interventions | 0 |
+| Assign autonomy levels to maximize delivery speed while remaining compliant with organizational security and Responsible AI standards | 0 |
+| Identify the subset of actions that require human judgment | 0 |
+| Block actions that violate defined security, compliance, or Responsible AI policies | 0 |
+| Scope permissions and execution contexts to enforce least-privilege access | 0 |
+| Require explicit authorization or controlled paths for irreversible or compliance-sensitive changes | 0 |
+| Preserve execution velocity by minimizing approvals that do not materially reduce risk | 0 |
 
 ## Playable difficulty counts
 
-| Category     | Questions |
-| ------------ | --------: |
-| beginner     |         0 |
-| intermediate |         0 |
-| advanced     |         0 |
-| expert       |         0 |
+| Category | Questions |
+| --- | ---: |
+| beginner | 0 |
+| intermediate | 0 |
+| advanced | 0 |
+| expert | 0 |
 
 ## Playable complexity counts
 
-| Category                 | Questions |
-| ------------------------ | --------: |
-| concept-recall           |         0 |
-| technical-implementation |         0 |
-| scenario-based           |         0 |
-| troubleshooting          |         0 |
-| architecture-design      |         0 |
+| Category | Questions |
+| --- | ---: |
+| concept-recall | 0 |
+| technical-implementation | 0 |
+| scenario-based | 0 |
+| troubleshooting | 0 |
+| architecture-design | 0 |
 
 ## Playable type counts
 
-| Category      | Questions |
-| ------------- | --------: |
-| single-select |         0 |
-| multi-select  |         0 |
-| true-false    |         0 |
-| scenario      |         0 |
-| code          |         0 |
+| Category | Questions |
+| --- | ---: |
+| single-select | 0 |
+| multi-select | 0 |
+| true-false | 0 |
+| scenario | 0 |
+| code | 0 |
 
 ## Playable source counts
 
-| Category                                                                       | Questions |
-| ------------------------------------------------------------------------------ | --------: |
-| gh600-20260914-guide                                                           |         0 |
-| gh600-20260914-foundations-module                                              |         0 |
-| gh600-20260914-architecture-module                                             |         0 |
-| gh600-20260914-tooling-module                                                  |         0 |
-| gh600-20260914-foundations-1-introduction                                      |         0 |
-| gh600-20260914-foundations-2-define-agentic-ai                                 |         0 |
-| gh600-20260914-foundations-3-explain-agent-lifecycle-plan-act-evaluate         |         0 |
-| gh600-20260914-foundations-4-describe-github-system-record-control-plane       |         0 |
-| gh600-20260914-foundations-5-identify-risks-traceability                       |         0 |
-| gh600-20260914-foundations-6-apply-contributor-model-agent-generated-work      |         0 |
-| gh600-20260914-foundations-8-summary                                           |         0 |
-| gh600-20260914-architecture-1-introduction                                     |         0 |
-| gh600-20260914-architecture-2-agent-responsibilities                           |         0 |
-| gh600-20260914-architecture-3-inputs-outputs-success-criteria                  |         0 |
-| gh600-20260914-architecture-4-plan-reason-execution                            |         0 |
-| gh600-20260914-architecture-5-pull-request-governance-controls                 |         0 |
-| gh600-20260914-architecture-6-reliable-workflows                               |         0 |
-| gh600-20260914-architecture-7-agent-operations-controls                        |         0 |
-| gh600-20260914-architecture-9-summary                                          |         0 |
-| gh600-20260914-tooling-1-introduction                                          |         0 |
-| gh600-20260914-tooling-2-interact-github-apis-workflows                        |         0 |
-| gh600-20260914-tooling-3-model-context-protocol-servers-registries-allow-lists |         0 |
-| gh600-20260914-tooling-4-execution-context-boundaries                          |         0 |
-| gh600-20260914-tooling-5-agent-execution-limits-protections                    |         0 |
-| gh600-20260914-tooling-exercise                                                |         0 |
-| gh600-20260914-tooling-7-summary                                               |         0 |
-| gh600-20260914-prepare-custom-agents                                           |         0 |
-| gh600-20260914-sdk-custom-agents                                               |         0 |
-| gh600-20260914-memory                                                          |         0 |
-| gh600-20260914-planner                                                         |         0 |
-| gh600-20260914-training-doc-02                                                 |         0 |
-| gh600-20260914-training-doc-05                                                 |         0 |
-| gh600-20260914-training-doc-07                                                 |         0 |
-| gh600-20260914-training-doc-08                                                 |         0 |
-| gh600-20260914-training-doc-09                                                 |         0 |
-| gh600-20260914-training-doc-10                                                 |         0 |
-| gh600-20260914-training-doc-11                                                 |         0 |
-| gh600-20260914-training-doc-12                                                 |         0 |
-| gh600-20260914-training-doc-13                                                 |         0 |
-| gh600-20260914-training-doc-14                                                 |         0 |
-| gh600-20260914-training-doc-15                                                 |         0 |
-| gh600-20260914-training-doc-17                                                 |         0 |
-| gh600-20260914-training-doc-18                                                 |         0 |
-| gh600-20260914-training-doc-19                                                 |         0 |
-| gh600-20260914-training-doc-20                                                 |         0 |
-| gh600-20260914-training-doc-21                                                 |         0 |
-| gh600-20260914-training-doc-22                                                 |         0 |
-| gh600-20260914-training-doc-25                                                 |         0 |
-| gh600-20260914-training-doc-26                                                 |         0 |
-| gh600-20260914-training-doc-27                                                 |         0 |
+| Category | Questions |
+| --- | ---: |
+| gh600-20260914-guide | 0 |
+| gh600-20260914-foundations-module | 0 |
+| gh600-20260914-architecture-module | 0 |
+| gh600-20260914-tooling-module | 0 |
+| gh600-20260914-foundations-1-introduction | 0 |
+| gh600-20260914-foundations-2-define-agentic-ai | 0 |
+| gh600-20260914-foundations-3-explain-agent-lifecycle-plan-act-evaluate | 0 |
+| gh600-20260914-foundations-4-describe-github-system-record-control-plane | 0 |
+| gh600-20260914-foundations-5-identify-risks-traceability | 0 |
+| gh600-20260914-foundations-6-apply-contributor-model-agent-generated-work | 0 |
+| gh600-20260914-foundations-8-summary | 0 |
+| gh600-20260914-architecture-1-introduction | 0 |
+| gh600-20260914-architecture-2-agent-responsibilities | 0 |
+| gh600-20260914-architecture-3-inputs-outputs-success-criteria | 0 |
+| gh600-20260914-architecture-4-plan-reason-execution | 0 |
+| gh600-20260914-architecture-5-pull-request-governance-controls | 0 |
+| gh600-20260914-architecture-6-reliable-workflows | 0 |
+| gh600-20260914-architecture-7-agent-operations-controls | 0 |
+| gh600-20260914-architecture-9-summary | 0 |
+| gh600-20260914-tooling-1-introduction | 0 |
+| gh600-20260914-tooling-2-interact-github-apis-workflows | 0 |
+| gh600-20260914-tooling-3-model-context-protocol-servers-registries-allow-lists | 0 |
+| gh600-20260914-tooling-4-execution-context-boundaries | 0 |
+| gh600-20260914-tooling-5-agent-execution-limits-protections | 0 |
+| gh600-20260914-tooling-exercise | 0 |
+| gh600-20260914-tooling-7-summary | 0 |
+| gh600-20260914-prepare-custom-agents | 0 |
+| gh600-20260914-sdk-custom-agents | 0 |
+| gh600-20260914-memory | 0 |
+| gh600-20260914-planner | 0 |
+| gh600-20260914-training-doc-02 | 0 |
+| gh600-20260914-training-doc-05 | 0 |
+| gh600-20260914-training-doc-07 | 0 |
+| gh600-20260914-training-doc-08 | 0 |
+| gh600-20260914-training-doc-09 | 0 |
+| gh600-20260914-training-doc-10 | 0 |
+| gh600-20260914-training-doc-11 | 0 |
+| gh600-20260914-training-doc-12 | 0 |
+| gh600-20260914-training-doc-13 | 0 |
+| gh600-20260914-training-doc-14 | 0 |
+| gh600-20260914-training-doc-15 | 0 |
+| gh600-20260914-training-doc-17 | 0 |
+| gh600-20260914-training-doc-18 | 0 |
+| gh600-20260914-training-doc-19 | 0 |
+| gh600-20260914-training-doc-20 | 0 |
+| gh600-20260914-training-doc-21 | 0 |
+| gh600-20260914-training-doc-22 | 0 |
+| gh600-20260914-training-doc-25 | 0 |
+| gh600-20260914-training-doc-26 | 0 |
+| gh600-20260914-training-doc-27 | 0 |
 
 ## Reviewed domain counts (not a claim of availability)
 
-| Category                                       | Questions |
-| ---------------------------------------------- | --------: |
-| prepare-agent-architecture-and-sdlc-processes  |        16 |
-| implement-tool-use-and-environment-interaction |        34 |
-| manage-memory-state-and-execution              |        23 |
-| perform-evaluation-error-analysis-and-tuning   |        22 |
-| orchestrate-multi-agent-coordination           |        21 |
-| implement-guardrails-and-accountability        |        20 |
+| Category | Questions |
+| --- | ---: |
+| prepare-agent-architecture-and-sdlc-processes | 16 |
+| implement-tool-use-and-environment-interaction | 34 |
+| manage-memory-state-and-execution | 23 |
+| perform-evaluation-error-analysis-and-tuning | 22 |
+| orchestrate-multi-agent-coordination | 21 |
+| implement-guardrails-and-accountability | 20 |
 
 ## Reviewed skill counts (not a claim of availability)
 
-| Category                                                                                         | Questions |
-| ------------------------------------------------------------------------------------------------ | --------: |
-| integrate-agents-into-the-software-development-lifecycle-sdlc                                    |         4 |
-| define-boundaries-between-planning-reasoning-and-action                                          |         4 |
-| configure-observability-and-control-for-autonomous-agents                                        |         8 |
-| select-and-configure-agent-tools                                                                 |         9 |
-| configure-mcp-servers                                                                            |         7 |
-| integrate-agents-within-development-environments                                                 |         9 |
-| operate-agents-with-safe-execution-paths-and-robust-error-handling                               |         9 |
-| implement-agent-memory-strategies                                                                |        10 |
-| persist-agent-state-and-manage-context-drift                                                     |         5 |
-| ensure-continuity-of-agent-memory-and-state-across-tools-and-environments                        |         8 |
-| define-success-criteria-and-evaluation-signals-for-agent-tasks                                   |         6 |
-| analyze-agent-failures-and-identify-root-causes                                                  |         9 |
-| tune-agent-behavior-based-on-evaluation-results                                                  |         7 |
-| operate-and-manage-multi-agent-workflows                                                         |         9 |
-| configure-observability-for-multi-agent-behavior-by-using-logs-artifacts-and-operational-signals |         5 |
-| detect-and-respond-to-multi-agent-failures-and-degraded-behavior                                 |         5 |
-| manage-the-lifecycle-of-agents-within-multi-agent-workflows                                      |         2 |
-| define-autonomy-levels                                                                           |         2 |
-| implement-guardrails-and-human-in-the-loop-workflows                                             |        18 |
+| Category | Questions |
+| --- | ---: |
+| integrate-agents-into-the-software-development-lifecycle-sdlc | 4 |
+| define-boundaries-between-planning-reasoning-and-action | 4 |
+| configure-observability-and-control-for-autonomous-agents | 8 |
+| select-and-configure-agent-tools | 9 |
+| configure-mcp-servers | 7 |
+| integrate-agents-within-development-environments | 9 |
+| operate-agents-with-safe-execution-paths-and-robust-error-handling | 9 |
+| implement-agent-memory-strategies | 10 |
+| persist-agent-state-and-manage-context-drift | 5 |
+| ensure-continuity-of-agent-memory-and-state-across-tools-and-environments | 8 |
+| define-success-criteria-and-evaluation-signals-for-agent-tasks | 6 |
+| analyze-agent-failures-and-identify-root-causes | 9 |
+| tune-agent-behavior-based-on-evaluation-results | 7 |
+| operate-and-manage-multi-agent-workflows | 9 |
+| configure-observability-for-multi-agent-behavior-by-using-logs-artifacts-and-operational-signals | 5 |
+| detect-and-respond-to-multi-agent-failures-and-degraded-behavior | 5 |
+| manage-the-lifecycle-of-agents-within-multi-agent-workflows | 2 |
+| define-autonomy-levels | 2 |
+| implement-guardrails-and-human-in-the-loop-workflows | 18 |
 
 ## Reviewed subskill counts (not a claim of availability)
 
-| Category                                                                                                                              | Questions |
-| ------------------------------------------------------------------------------------------------------------------------------------- | --------: |
-| Identify steps for agents to perform                                                                                                  |         1 |
-| Identify and mitigate common anti-patterns in agents                                                                                  |         1 |
-| Define inputs, outputs, and success criteria for agents                                                                               |         2 |
-| Configure agent planning to be distinct from agent execution                                                                          |         1 |
-| Configure an agent to output a structured plan                                                                                        |         2 |
-| Validate agent plans                                                                                                                  |         1 |
-| Prevent agent action until the agent checked and approved                                                                             |         0 |
-| Plan and implement the degree of agent autonomy, including guardrails                                                                 |         3 |
-| Configure agent to produce inspectable artifacts within standard development tooling                                                  |         2 |
-| Configure human intervention for autonomous agents without slowing delivery                                                           |         3 |
-| Identify required tools                                                                                                               |         2 |
-| Configure agent tools                                                                                                                 |         1 |
-| Configure agent tool permissions                                                                                                      |         6 |
-| Add an MCP server as a tool to an agent                                                                                               |         1 |
-| Configure a GitHub remote MCP server                                                                                                  |         1 |
-| Configure the MCP registries                                                                                                          |         3 |
-| Configure MCP allow lists                                                                                                             |         2 |
-| Evaluate the execution context for an agent                                                                                           |         1 |
-| Configure an agent's scope to a specific repository                                                                                   |         1 |
-| Configure an agent to be invoked in a CI workflow                                                                                     |         2 |
-| Configure an agent to use branch-based scope                                                                                          |         2 |
-| Enable an agent to perform autonomous actions, including creating branches and pull requests                                          |         1 |
-| Configure an agent to handle environment-specific constraints                                                                         |         2 |
-| Implement error handling                                                                                                              |         4 |
-| Implement retries                                                                                                                     |         1 |
-| Implement rollbacks                                                                                                                   |         2 |
-| Implement escalation paths                                                                                                            |         1 |
-| Implement traceability and accountability for agent actions                                                                           |         1 |
-| Choose between short-term, long-term, and external memory                                                                             |         2 |
-| Scope agent memory to task-relevant information                                                                                       |         4 |
-| Define memory expiration, pruning, and reset rules                                                                                    |         4 |
-| Capture task progress and decisions as durable artifacts                                                                              |         1 |
-| Resume agent work without repeating steps or diverging from prior decisions                                                           |         2 |
-| Detect and correct drift during extended agent execution                                                                              |         2 |
-| Share agent state                                                                                                                     |         3 |
-| Prevent conflicting context                                                                                                           |         3 |
-| Prevent stale context                                                                                                                 |         2 |
-| Specify expected outcomes and operational constraints for agent tasks                                                                 |         0 |
-| Identify qualitative and quantitative evaluation signals to evaluate agents                                                           |         3 |
-| Align evaluation criteria with development intent                                                                                     |         1 |
-| Generate evaluation signals by using automated scanning tools                                                                         |         2 |
-| Identify failures by using logs, plans, traces, outputs, and workflow artifacts                                                       |         5 |
-| Classify root causes, including reasoning errors, tool misuse, and context or environment issues                                      |         4 |
-| Revise instructions, workflows, or constraints                                                                                        |         4 |
-| Refine memory usage                                                                                                                   |         1 |
-| Refine tool usage and tool access                                                                                                     |         2 |
-| Apply an orchestration pattern to coordinate multiple agents                                                                          |         5 |
-| Configure agent isolation for parallel execution                                                                                      |         2 |
-| Detect and resolve agent conflicts, including overlapping code changes, duplicated effort, and contradictory outputs                  |         2 |
-| Configure multi-agent workflows to produce artifacts suitable for review and audit                                                    |         1 |
-| Document key decisions, handoffs, and outcomes across agents                                                                          |         2 |
-| Perform post-hoc analysis of multi-agent behavior                                                                                     |         2 |
-| Identify failed, partial, or stalled agent executions                                                                                 |         2 |
-| Respond to degraded behavior or coordination across agents                                                                            |         3 |
-| Implement multi-agent recovery patterns, including rollback and human-in-the-loop                                                     |         0 |
-| Add agents to existing multi-agent workflows                                                                                          |         2 |
-| Update, reconfigure, or replace agents without disrupting active workflows                                                            |         0 |
-| Retire agents while preserving auditability and workflow continuity                                                                   |         0 |
-| Classify agent actions by operational, security, and compliance risk to right-size human interventions                                |         1 |
-| Assign autonomy levels to maximize delivery speed while remaining compliant with organizational security and Responsible AI standards |         1 |
-| Identify the subset of actions that require human judgment                                                                            |         4 |
-| Block actions that violate defined security, compliance, or Responsible AI policies                                                   |         4 |
-| Scope permissions and execution contexts to enforce least-privilege access                                                            |         4 |
-| Require explicit authorization or controlled paths for irreversible or compliance-sensitive changes                                   |         6 |
-| Preserve execution velocity by minimizing approvals that do not materially reduce risk                                                |         0 |
+| Category | Questions |
+| --- | ---: |
+| Identify steps for agents to perform | 1 |
+| Identify and mitigate common anti-patterns in agents | 1 |
+| Define inputs, outputs, and success criteria for agents | 2 |
+| Configure agent planning to be distinct from agent execution | 1 |
+| Configure an agent to output a structured plan | 2 |
+| Validate agent plans | 1 |
+| Prevent agent action until the agent checked and approved | 0 |
+| Plan and implement the degree of agent autonomy, including guardrails | 3 |
+| Configure agent to produce inspectable artifacts within standard development tooling | 2 |
+| Configure human intervention for autonomous agents without slowing delivery | 3 |
+| Identify required tools | 2 |
+| Configure agent tools | 1 |
+| Configure agent tool permissions | 6 |
+| Add an MCP server as a tool to an agent | 1 |
+| Configure a GitHub remote MCP server | 1 |
+| Configure the MCP registries | 3 |
+| Configure MCP allow lists | 2 |
+| Evaluate the execution context for an agent | 1 |
+| Configure an agent's scope to a specific repository | 1 |
+| Configure an agent to be invoked in a CI workflow | 2 |
+| Configure an agent to use branch-based scope | 2 |
+| Enable an agent to perform autonomous actions, including creating branches and pull requests | 1 |
+| Configure an agent to handle environment-specific constraints | 2 |
+| Implement error handling | 4 |
+| Implement retries | 1 |
+| Implement rollbacks | 2 |
+| Implement escalation paths | 1 |
+| Implement traceability and accountability for agent actions | 1 |
+| Choose between short-term, long-term, and external memory | 2 |
+| Scope agent memory to task-relevant information | 4 |
+| Define memory expiration, pruning, and reset rules | 4 |
+| Capture task progress and decisions as durable artifacts | 1 |
+| Resume agent work without repeating steps or diverging from prior decisions | 2 |
+| Detect and correct drift during extended agent execution | 2 |
+| Share agent state | 3 |
+| Prevent conflicting context | 3 |
+| Prevent stale context | 2 |
+| Specify expected outcomes and operational constraints for agent tasks | 0 |
+| Identify qualitative and quantitative evaluation signals to evaluate agents | 3 |
+| Align evaluation criteria with development intent | 1 |
+| Generate evaluation signals by using automated scanning tools | 2 |
+| Identify failures by using logs, plans, traces, outputs, and workflow artifacts | 5 |
+| Classify root causes, including reasoning errors, tool misuse, and context or environment issues | 4 |
+| Revise instructions, workflows, or constraints | 4 |
+| Refine memory usage | 1 |
+| Refine tool usage and tool access | 2 |
+| Apply an orchestration pattern to coordinate multiple agents | 5 |
+| Configure agent isolation for parallel execution | 2 |
+| Detect and resolve agent conflicts, including overlapping code changes, duplicated effort, and contradictory outputs | 2 |
+| Configure multi-agent workflows to produce artifacts suitable for review and audit | 1 |
+| Document key decisions, handoffs, and outcomes across agents | 2 |
+| Perform post-hoc analysis of multi-agent behavior | 2 |
+| Identify failed, partial, or stalled agent executions | 2 |
+| Respond to degraded behavior or coordination across agents | 3 |
+| Implement multi-agent recovery patterns, including rollback and human-in-the-loop | 0 |
+| Add agents to existing multi-agent workflows | 2 |
+| Update, reconfigure, or replace agents without disrupting active workflows | 0 |
+| Retire agents while preserving auditability and workflow continuity | 0 |
+| Classify agent actions by operational, security, and compliance risk to right-size human interventions | 1 |
+| Assign autonomy levels to maximize delivery speed while remaining compliant with organizational security and Responsible AI standards | 1 |
+| Identify the subset of actions that require human judgment | 4 |
+| Block actions that violate defined security, compliance, or Responsible AI policies | 4 |
+| Scope permissions and execution contexts to enforce least-privilege access | 4 |
+| Require explicit authorization or controlled paths for irreversible or compliance-sensitive changes | 6 |
+| Preserve execution velocity by minimizing approvals that do not materially reduce risk | 0 |
 
 ## Reviewed difficulty counts (not a claim of availability)
 
-| Category     | Questions |
-| ------------ | --------: |
-| beginner     |        19 |
-| intermediate |        61 |
-| advanced     |        53 |
-| expert       |         3 |
+| Category | Questions |
+| --- | ---: |
+| beginner | 19 |
+| intermediate | 61 |
+| advanced | 53 |
+| expert | 3 |
 
 ## Reviewed complexity counts (not a claim of availability)
 
-| Category                 | Questions |
-| ------------------------ | --------: |
-| concept-recall           |         6 |
-| technical-implementation |        18 |
-| scenario-based           |        51 |
-| troubleshooting          |        36 |
-| architecture-design      |        25 |
+| Category | Questions |
+| --- | ---: |
+| concept-recall | 6 |
+| technical-implementation | 18 |
+| scenario-based | 51 |
+| troubleshooting | 36 |
+| architecture-design | 25 |
 
 ## Reviewed type counts (not a claim of availability)
 
-| Category      | Questions |
-| ------------- | --------: |
-| single-select |        16 |
-| multi-select  |         3 |
-| true-false    |         0 |
-| scenario      |       117 |
-| code          |         0 |
+| Category | Questions |
+| --- | ---: |
+| single-select | 16 |
+| multi-select | 3 |
+| true-false | 0 |
+| scenario | 117 |
+| code | 0 |
 
 ## Reviewed source counts (not a claim of availability)
 
-| Category                                                                       | Questions |
-| ------------------------------------------------------------------------------ | --------: |
-| gh600-20260914-guide                                                           |         0 |
-| gh600-20260914-foundations-module                                              |         0 |
-| gh600-20260914-architecture-module                                             |         0 |
-| gh600-20260914-tooling-module                                                  |         0 |
-| gh600-20260914-foundations-1-introduction                                      |         0 |
-| gh600-20260914-foundations-2-define-agentic-ai                                 |         0 |
-| gh600-20260914-foundations-3-explain-agent-lifecycle-plan-act-evaluate         |         0 |
-| gh600-20260914-foundations-4-describe-github-system-record-control-plane       |         1 |
-| gh600-20260914-foundations-5-identify-risks-traceability                       |         1 |
-| gh600-20260914-foundations-6-apply-contributor-model-agent-generated-work      |         2 |
-| gh600-20260914-foundations-8-summary                                           |         0 |
-| gh600-20260914-architecture-1-introduction                                     |         0 |
-| gh600-20260914-architecture-2-agent-responsibilities                           |         3 |
-| gh600-20260914-architecture-3-inputs-outputs-success-criteria                  |         5 |
-| gh600-20260914-architecture-4-plan-reason-execution                            |         2 |
-| gh600-20260914-architecture-5-pull-request-governance-controls                 |         0 |
-| gh600-20260914-architecture-6-reliable-workflows                               |         9 |
-| gh600-20260914-architecture-7-agent-operations-controls                        |        12 |
-| gh600-20260914-architecture-9-summary                                          |         0 |
-| gh600-20260914-tooling-1-introduction                                          |         0 |
-| gh600-20260914-tooling-2-interact-github-apis-workflows                        |         1 |
-| gh600-20260914-tooling-3-model-context-protocol-servers-registries-allow-lists |         4 |
-| gh600-20260914-tooling-4-execution-context-boundaries                          |         1 |
-| gh600-20260914-tooling-5-agent-execution-limits-protections                    |         4 |
-| gh600-20260914-tooling-exercise                                                |         0 |
-| gh600-20260914-tooling-7-summary                                               |         0 |
-| gh600-20260914-prepare-custom-agents                                           |         0 |
-| gh600-20260914-sdk-custom-agents                                               |        20 |
-| gh600-20260914-memory                                                          |        10 |
-| gh600-20260914-planner                                                         |         3 |
-| gh600-20260914-training-doc-02                                                 |         2 |
-| gh600-20260914-training-doc-05                                                 |         3 |
-| gh600-20260914-training-doc-07                                                 |         5 |
-| gh600-20260914-training-doc-08                                                 |        13 |
-| gh600-20260914-training-doc-09                                                 |         4 |
-| gh600-20260914-training-doc-10                                                 |         1 |
-| gh600-20260914-training-doc-11                                                 |         6 |
-| gh600-20260914-training-doc-12                                                 |         8 |
-| gh600-20260914-training-doc-13                                                 |         4 |
-| gh600-20260914-training-doc-14                                                 |         2 |
-| gh600-20260914-training-doc-15                                                 |         2 |
-| gh600-20260914-training-doc-17                                                 |         7 |
-| gh600-20260914-training-doc-18                                                 |         0 |
-| gh600-20260914-training-doc-19                                                 |         8 |
-| gh600-20260914-training-doc-20                                                 |         7 |
-| gh600-20260914-training-doc-21                                                 |         7 |
-| gh600-20260914-training-doc-22                                                 |         2 |
-| gh600-20260914-training-doc-25                                                 |         4 |
-| gh600-20260914-training-doc-26                                                 |         4 |
-| gh600-20260914-training-doc-27                                                 |         4 |
+| Category | Questions |
+| --- | ---: |
+| gh600-20260914-guide | 0 |
+| gh600-20260914-foundations-module | 0 |
+| gh600-20260914-architecture-module | 0 |
+| gh600-20260914-tooling-module | 0 |
+| gh600-20260914-foundations-1-introduction | 0 |
+| gh600-20260914-foundations-2-define-agentic-ai | 0 |
+| gh600-20260914-foundations-3-explain-agent-lifecycle-plan-act-evaluate | 0 |
+| gh600-20260914-foundations-4-describe-github-system-record-control-plane | 1 |
+| gh600-20260914-foundations-5-identify-risks-traceability | 1 |
+| gh600-20260914-foundations-6-apply-contributor-model-agent-generated-work | 2 |
+| gh600-20260914-foundations-8-summary | 0 |
+| gh600-20260914-architecture-1-introduction | 0 |
+| gh600-20260914-architecture-2-agent-responsibilities | 3 |
+| gh600-20260914-architecture-3-inputs-outputs-success-criteria | 5 |
+| gh600-20260914-architecture-4-plan-reason-execution | 2 |
+| gh600-20260914-architecture-5-pull-request-governance-controls | 0 |
+| gh600-20260914-architecture-6-reliable-workflows | 9 |
+| gh600-20260914-architecture-7-agent-operations-controls | 12 |
+| gh600-20260914-architecture-9-summary | 0 |
+| gh600-20260914-tooling-1-introduction | 0 |
+| gh600-20260914-tooling-2-interact-github-apis-workflows | 1 |
+| gh600-20260914-tooling-3-model-context-protocol-servers-registries-allow-lists | 4 |
+| gh600-20260914-tooling-4-execution-context-boundaries | 1 |
+| gh600-20260914-tooling-5-agent-execution-limits-protections | 4 |
+| gh600-20260914-tooling-exercise | 0 |
+| gh600-20260914-tooling-7-summary | 0 |
+| gh600-20260914-prepare-custom-agents | 0 |
+| gh600-20260914-sdk-custom-agents | 20 |
+| gh600-20260914-memory | 10 |
+| gh600-20260914-planner | 3 |
+| gh600-20260914-training-doc-02 | 2 |
+| gh600-20260914-training-doc-05 | 3 |
+| gh600-20260914-training-doc-07 | 5 |
+| gh600-20260914-training-doc-08 | 13 |
+| gh600-20260914-training-doc-09 | 4 |
+| gh600-20260914-training-doc-10 | 1 |
+| gh600-20260914-training-doc-11 | 6 |
+| gh600-20260914-training-doc-12 | 8 |
+| gh600-20260914-training-doc-13 | 4 |
+| gh600-20260914-training-doc-14 | 2 |
+| gh600-20260914-training-doc-15 | 2 |
+| gh600-20260914-training-doc-17 | 7 |
+| gh600-20260914-training-doc-18 | 0 |
+| gh600-20260914-training-doc-19 | 8 |
+| gh600-20260914-training-doc-20 | 7 |
+| gh600-20260914-training-doc-21 | 7 |
+| gh600-20260914-training-doc-22 | 2 |
+| gh600-20260914-training-doc-25 | 4 |
+| gh600-20260914-training-doc-26 | 4 |
+| gh600-20260914-training-doc-27 | 4 |
 
 ## Published domain weighting
 
@@ -424,7 +424,7 @@ Report created: 2026-09-14T16:34:58.280Z. This is not a retrieval or verificatio
 ## Correct-answer positions (before gameplay shuffling; each multi-select key counted)
 
 | Category | Questions |
-| -------- | --------: |
+| --- | ---: |
 
 ## Uncovered subskills (playable coverage only)
 
@@ -639,7 +639,6 @@ Report created: 2026-09-14T16:34:58.280Z. This is not a retrieval or verificatio
 ## Review queue
 
 Verified entries marked credential-or-mode-gate are reviewed but unavailable, not missing authored content.
-
 - **gh600-a-001** (verified; credential-or-mode-gate): pronoun-review. Review notes: Independent Pass 3 challenged every option against fresh copies of the exact approved URLs. The keyed set remains uniquely supported under the stated scope, role, plan, and prerequisite conditions; no material source change or blocking semantic duplicate was found..
 - **gh600-a-002** (verified; credential-or-mode-gate): no content finding. Review notes: Independent Pass 3 challenged every option against fresh copies of the exact approved URLs. The keyed set remains uniquely supported under the stated scope, role, plan, and prerequisite conditions; no material source change or blocking semantic duplicate was found..
 - **gh600-a-003** (verified; credential-or-mode-gate): no content finding. Review notes: Independent Pass 3 challenged every option against fresh copies of the exact approved URLs. The keyed set remains uniquely supported under the stated scope, role, plan, and prerequisite conditions; no material source change or blocking semantic duplicate was found..
@@ -792,58 +791,58 @@ Verified entries marked credential-or-mode-gate are reviewed but unavailable, no
 
 ## Sources and actual evidence dates
 
-| Source                                                                                                                                                                                                                                                                                                   | Playable / reviewed / candidates | Retrieved                | Reviewed                 | Supporting summary                                                                                                                                                                                                                                                                                                                                                                         |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------: | ------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| gh600-20260914-guide: [Study guide for Exam GH-600: Developing in Agentic AI Systems](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-600)                                                                                                                        |                        0 / 0 / 0 | 2026-09-14T13:04:00.402Z | 2026-09-14T13:24:06.056Z | Current undated GH-600 study guide: six published weighted areas, 19 skills, and 65 verbatim subskills. Identity, competency scope, and official study-resource links only; not sufficient evidence for product behavior.                                                                                                                                                                  |
-| gh600-20260914-foundations-module: [Foundations of Agentic AI in GitHub](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/)                                                                                                                                                     |                        0 / 0 / 0 | 2026-09-14T13:08:25.185Z | 2026-09-14T13:24:06.061Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model.                                                                                                                                                                                                                  |
-| gh600-20260914-architecture-module: [Designing Agent Architecture and SDLC Integration](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/)                                                                                                                       |                        0 / 0 / 0 | 2026-09-14T13:08:26.986Z | 2026-09-14T13:24:06.064Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json.                                                                                                                                          |
-| gh600-20260914-tooling-module: [Tooling, MCP, and Agent Execution Environments](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/)                                                                                                                            |                        0 / 0 / 0 | 2026-09-14T13:08:28.977Z | 2026-09-14T13:24:06.066Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded.                                                                                  |
-| gh600-20260914-foundations-1-introduction: [Introduction](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/1-introduction)                                                                                                                                                      |                        0 / 0 / 0 | 2026-09-14T13:09:48.530Z | 2026-09-14T13:24:06.068Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Introduction.                                                                                                                                                                                         |
-| gh600-20260914-foundations-2-define-agentic-ai: [Define agentic AI in the SDLC](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/2-define-agentic-ai)                                                                                                                           |                        0 / 0 / 0 | 2026-09-14T13:09:48.418Z | 2026-09-14T13:24:06.069Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Define agentic AI in the SDLC.                                                                                                                                                                        |
-| gh600-20260914-foundations-3-explain-agent-lifecycle-plan-act-evaluate: [Explain the agent lifecycle - plan, act, evaluate](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/3-explain-agent-lifecycle-plan-act-evaluate)                                                       |                        0 / 0 / 0 | 2026-09-14T13:09:48.896Z | 2026-09-14T13:24:06.070Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Explain the agent lifecycle - plan, act, evaluate.                                                                                                                                                    |
-| gh600-20260914-foundations-4-describe-github-system-record-control-plane: [Describe GitHub as the system of record and control plane](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/4-describe-github-system-record-control-plane)                                           |                        0 / 1 / 1 | 2026-09-14T13:09:49.662Z | 2026-09-14T13:24:06.071Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Describe GitHub as the system of record and control plane.                                                                                                                                            |
-| gh600-20260914-foundations-5-identify-risks-traceability: [Identify responsibilities, risks, anti-patterns, and traceability needs](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/5-identify-risks-traceability)                                                             |                        0 / 1 / 1 | 2026-09-14T13:09:49.913Z | 2026-09-14T13:24:06.072Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Identify responsibilities, risks, anti-patterns, and traceability needs.                                                                                                                              |
-| gh600-20260914-foundations-6-apply-contributor-model-agent-generated-work: [Apply the contributor model to agent-generated work](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/6-apply-contributor-model-agent-generated-work)                                               |                        0 / 2 / 2 | 2026-09-14T13:09:50.228Z | 2026-09-14T13:24:06.073Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Apply the contributor model to agent-generated work.                                                                                                                                                  |
-| gh600-20260914-foundations-8-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/8-summary)                                                                                                                                                                     |                        0 / 0 / 0 | 2026-09-14T13:09:50.908Z | 2026-09-14T13:24:06.075Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Summary.                                                                                                                                                                                              |
-| gh600-20260914-architecture-1-introduction: [Introduction](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/1-introduction)                                                                                                                                      |                        0 / 0 / 0 | 2026-09-14T13:09:51.163Z | 2026-09-14T13:24:06.077Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Introduction.                                                                                                                 |
-| gh600-20260914-architecture-2-agent-responsibilities: [Map agent responsibilities to the SDLC](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/2-agent-responsibilities)                                                                                        |                        0 / 3 / 3 | 2026-09-14T13:09:52.376Z | 2026-09-14T13:24:06.078Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Map agent responsibilities to the SDLC.                                                                                       |
-| gh600-20260914-architecture-3-inputs-outputs-success-criteria: [Define inputs, outputs, and success criteria](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/3-inputs-outputs-success-criteria)                                                                |                        0 / 5 / 6 | 2026-09-14T13:09:53.070Z | 2026-09-14T13:24:06.080Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Define inputs, outputs, and success criteria.                                                                                 |
-| gh600-20260914-architecture-4-plan-reason-execution: [Separate planning, reasoning, and execution](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/4-plan-reason-execution)                                                                                     |                        0 / 2 / 2 | 2026-09-14T13:09:52.783Z | 2026-09-14T13:24:06.081Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Separate planning, reasoning, and execution.                                                                                  |
-| gh600-20260914-architecture-5-pull-request-governance-controls: [Examples of implementing PR governance with templates, checks, CODEOWNERS, rules, and environment gates](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/5-pull-request-governance-controls)   |                        0 / 0 / 0 | 2026-09-14T13:09:53.881Z | 2026-09-14T13:24:06.082Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Examples of implementing PR governance with templates, checks, CODEOWNERS, rules, and environment gates.                      |
-| gh600-20260914-architecture-6-reliable-workflows: [Build reliable workflows - outputs, contexts, triggers, and cross-job handoffs](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/6-reliable-workflows)                                                        |                       0 / 9 / 10 | 2026-09-14T13:09:54.213Z | 2026-09-14T13:24:06.083Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Build reliable workflows - outputs, contexts, triggers, and cross-job handoffs.                                               |
-| gh600-20260914-architecture-7-agent-operations-controls: [Control and operate agents - observability, tools, MCP, secrets, hooks, and reliability](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/7-agent-operations-controls)                                 |                      0 / 12 / 13 | 2026-09-14T13:09:54.261Z | 2026-09-14T13:24:06.084Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Control and operate agents - observability, tools, MCP, secrets, hooks, and reliability.                                      |
-| gh600-20260914-architecture-9-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/9-summary)                                                                                                                                                     |                        0 / 0 / 0 | 2026-09-14T13:09:55.228Z | 2026-09-14T13:24:06.085Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Summary.                                                                                                                      |
-| gh600-20260914-tooling-1-introduction: [Introduction](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/1-introduction)                                                                                                                                        |                        0 / 0 / 0 | 2026-09-14T13:09:55.504Z | 2026-09-14T13:24:06.086Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Introduction.                                                         |
-| gh600-20260914-tooling-2-interact-github-apis-workflows: [How agents interact with GitHub APIs and workflows](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/2-interact-github-apis-workflows)                                                              |                        0 / 1 / 1 | 2026-09-14T13:09:55.491Z | 2026-09-14T13:24:06.087Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: How agents interact with GitHub APIs and workflows.                   |
-| gh600-20260914-tooling-3-model-context-protocol-servers-registries-allow-lists: [Model Context Protocol (MCP) servers, registries, and allow lists](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/3-model-context-protocol-servers-registries-allow-lists) |                        0 / 4 / 4 | 2026-09-14T13:09:56.779Z | 2026-09-14T13:24:06.088Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Model Context Protocol (MCP) servers, registries, and allow lists.    |
-| gh600-20260914-tooling-4-execution-context-boundaries: [Execution context and boundaries](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/4-execution-context-boundaries)                                                                                    |                        0 / 1 / 1 | 2026-09-14T13:09:56.995Z | 2026-09-14T13:24:06.089Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Execution context and boundaries.                                     |
-| gh600-20260914-tooling-5-agent-execution-limits-protections: [Agent execution limits and protections](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/5-agent-execution-limits-protections)                                                                  |                        0 / 4 / 4 | 2026-09-14T13:09:57.069Z | 2026-09-14T13:24:06.090Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Agent execution limits and protections.                               |
-| gh600-20260914-tooling-exercise: [Exercise - Automate repository updates with GitHub Agentic Workflows](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/exercise)                                                                                            |                        0 / 0 / 0 | 2026-09-14T13:09:58.379Z | 2026-09-14T13:24:06.091Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Exercise - Automate repository updates with GitHub Agentic Workflows. |
-| gh600-20260914-tooling-7-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/7-summary)                                                                                                                                                       |                        0 / 0 / 0 | 2026-09-14T13:09:58.505Z | 2026-09-14T13:24:06.093Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Summary.                                                              |
-| gh600-20260914-prepare-custom-agents: [Preparing to use custom agents in your organization](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/prepare-for-custom-agents)                                                                                             |                        0 / 0 / 0 | 2026-09-14T13:09:48.161Z | 2026-09-14T13:24:06.097Z | Organization owners prepare a .github or .github-private repository with an /agents directory. Member access to agents differs from direct repository access; enterprise rulesets may restrict creation.                                                                                                                                                                                   |
-| gh600-20260914-sdk-custom-agents: [Custom agents and sub-agent orchestration](https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/custom-agents)                                                                                                                                             |                      0 / 20 / 21 | 2026-09-14T13:09:49.492Z | 2026-09-14T13:24:06.100Z | Copilot SDK custom-agent configuration, scoped tools, optional MCP servers, intent-based delegation, per-agent skills and models, event correlation, and parent-only versus session-wide tool exclusions. No blanket SDK availability or GA claim is made.                                                                                                                                 |
-| gh600-20260914-memory: [About GitHub Copilot Memory](https://docs.github.com/en/copilot/concepts/agents/copilot-memory)                                                                                                                                                                                  |                      0 / 10 / 10 | 2026-09-14T13:09:50.833Z | 2026-09-14T13:24:06.103Z | Copilot Memory distinguishes repository facts from user preferences, validates citations, scopes access, and expires unused memories after 28 days. Paid-plan and managed-policy requirements apply.                                                                                                                                                                                       |
-| gh600-20260914-planner: [Implementation planner](https://docs.github.com/en/copilot/tutorials/customization-library/custom-agents/implementation-planner)                                                                                                                                                |                        0 / 3 / 3 | 2026-09-14T13:09:52.534Z | 2026-09-14T13:24:06.106Z | Official implementation-planning profile illustrates structured scope, success criteria, phases, dependencies, risks, and exclusions. This sample includes edit and is not a read-only enforcement template. Community examples are excluded.                                                                                                                                              |
-| gh600-20260914-training-doc-02: [Managing rulesets for a repository](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/managing-rulesets-for-a-repository)                                                                                    |                        0 / 2 / 2 | 2026-09-14T13:11:36.805Z | 2026-09-14T13:24:06.114Z | Ruleset administration permissions, enforceability, rule insights, and pass/fail/bypass evidence. Availability depends on plan and repository visibility; no universal Evaluate-mode entitlement is inferred.                                                                                                                                                                              |
-| gh600-20260914-training-doc-05: [Use GITHUB_TOKEN for authentication in workflows](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token)                                                                                                                                          |                        0 / 3 / 4 | 2026-09-14T13:11:41.227Z | 2026-09-14T13:24:06.118Z | GITHUB_TOKEN access through secrets or github.token, workflow/job permission limits, and alternate authentication when required permissions are unavailable. Token examples are not proof that GITHUB_TOKEN authenticates Copilot CLI.                                                                                                                                                     |
-| gh600-20260914-training-doc-07: [Managing environments for deployment](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments)                                                                                                                           |                        0 / 5 / 5 | 2026-09-14T13:11:44.923Z | 2026-09-14T13:24:06.121Z | Environment protection gates, required reviewers, self-review prevention, secret access timing, allowed deployment refs, and plan/visibility limitations.                                                                                                                                                                                                                                  |
-| gh600-20260914-training-doc-08: [Store and share data with workflow artifacts](https://docs.github.com/en/actions/tutorials/store-and-share-data)                                                                                                                                                        |                      0 / 13 / 14 | 2026-09-14T13:11:46.415Z | 2026-09-14T13:24:06.126Z | Workflow artifacts preserve files after jobs finish and support dependent-job handoffs, named downloads, retention limits, and immutable v4 artifacts.                                                                                                                                                                                                                                     |
-| gh600-20260914-training-doc-09: [Uploading a SARIF file to GitHub](https://docs.github.com/en/code-security/how-tos/find-and-fix-code-vulnerabilities/integrate-with-existing-tools/upload-sarif-file)                                                                                                   |                        0 / 4 / 4 | 2026-09-14T13:11:45.917Z | 2026-09-14T13:24:06.131Z | SARIF upload methods, repository eligibility, security-events permission, category separation for multiple analyses, and partial-fingerprint conditions.                                                                                                                                                                                                                                   |
-| gh600-20260914-training-doc-10: [Push protection](https://docs.github.com/en/code-security/concepts/secret-security/push-protection)                                                                                                                                                                     |                        0 / 1 / 1 | 2026-09-14T13:11:53.438Z | 2026-09-14T13:24:06.134Z | Push protection blocks detected secrets before upload. Repository and user protection differ in enablement, scope, bypass alerts, and auditability; GitHub MCP coverage is public-repository-specific.                                                                                                                                                                                     |
-| gh600-20260914-training-doc-11: [Customize agent workflows with hooks](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/use-hooks)                                                                                                                   |                        0 / 6 / 7 | 2026-09-14T13:11:54.031Z | 2026-09-14T13:24:06.138Z | Repository hooks use version 1 JSON in .github/hooks on the default branch, camelCase event keys, operating-system-specific commands, timeouts, and compact JSON output. Training pseudocode is not the hook schema.                                                                                                                                                                       |
-| gh600-20260914-training-doc-12: [Managing agent sessions](https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents)                                                                                                                                       |                        0 / 8 / 9 | 2026-09-14T13:11:54.071Z | 2026-09-14T13:24:06.143Z | Session logs correlate commits and decisions; steering, stopping, archiving, sharing, and context handoff have distinct semantics. Stopping preserves pushed commits; no hot replacement guarantee is documented.                                                                                                                                                                          |
-| gh600-20260914-training-doc-13: [Customizing or disabling the firewall for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-the-firewall)                                                                                                        |                        0 / 4 / 6 | 2026-09-14T13:11:57.480Z | 2026-09-14T13:24:06.148Z | Cloud-agent and code-review firewall controls support organization/repository settings and domain or path-restricted URLs. Blocked-address warnings support failure diagnosis. Scope excludes MCP servers and setup-step processes; the firewall is not a complete exfiltration defense.                                                                                                   |
-| gh600-20260914-training-doc-14: [Review output from Copilot](https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/review-copilot-output)                                                                                                                                      |                        0 / 2 / 2 | 2026-09-14T13:11:57.866Z | 2026-09-14T13:24:06.151Z | Copilot output needs human review, required-approval independence, and by-default approval before privileged Actions runs; current documentation allows administrators to configure automatic runs.                                                                                                                                                                                        |
-| gh600-20260914-training-doc-15: [Creating rulesets for a repository](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository)                                                                                    |                        0 / 2 / 3 | 2026-09-14T13:11:57.485Z | 2026-09-14T13:24:06.154Z | Ruleset creation, targeting, permission requirements, active/disabled enforcement, and pull-request-only bypass paths establish repository governance boundaries.                                                                                                                                                                                                                          |
-| gh600-20260914-training-doc-17: [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)                                                                                                               |                        0 / 7 / 9 | 2026-09-14T13:12:02.187Z | 2026-09-14T13:24:06.160Z | CODEOWNERS review routing, explicit write access, base-branch selection, file precedence, last-match behavior, and required-review configuration.                                                                                                                                                                                                                                          |
-| gh600-20260914-training-doc-18: [Audit log for an enterprise](https://docs.github.com/en/enterprise-cloud@latest/admin/concepts/security-and-compliance/audit-log-for-an-enterprise)                                                                                                                     |                        0 / 0 / 0 | 2026-09-14T13:12:02.117Z | 2026-09-14T13:24:06.164Z | Enterprise Cloud audit logs identify actors and actions and support time-bounded retention, searching, exports, and streaming for enterprise owners.                                                                                                                                                                                                                                       |
-| gh600-20260914-training-doc-19: [About GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent)                                                                                                                                                     |                        0 / 8 / 8 | 2026-09-14T13:12:05.798Z | 2026-09-14T13:24:06.168Z | Cloud-agent execution environments, entrypoint-dependent PR creation, scope, concurrency limits, timeouts, metrics, and paid-plan/policy eligibility. The page mixes established features with explicitly Preview integrations and Memory; only those subfeatures should be labeled Preview in claims.                                                                                     |
-| gh600-20260914-training-doc-20: [Application card: GitHub Copilot Agents](https://docs.github.com/en/copilot/responsible-use/agents)                                                                                                                                                                     |                        0 / 7 / 7 | 2026-09-14T13:12:06.538Z | 2026-09-14T13:24:06.172Z | Official application card describes agent, CLI, and SDK capabilities, limitations, human accountability, and evaluation signals. Limitations are experience-specific; do not generalize CLI permission prompts or cloud repository-context access beyond dedicated current documentation.                                                                                                  |
-| gh600-20260914-training-doc-21: [Workflow syntax for GitHub Actions](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax)                                                                                                                                                 |                        0 / 7 / 7 | 2026-09-14T13:12:06.566Z | 2026-09-14T13:24:06.179Z | Bounded review of workflow/job permissions and concurrency: unspecified scopes become none; commit statuses have their own scope; concurrency groups serialize work and have explicit cancellation/queue semantics. Other sections are not blanket-approved by this registry.                                                                                                              |
-| gh600-20260914-training-doc-22: [Events that trigger workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows)                                                                                                                                        |                        0 / 2 / 2 | 2026-09-14T13:12:09.439Z | 2026-09-14T13:24:06.183Z | Bounded review of GITHUB_TOKEN-generated events: pull_request opened/synchronize/reopened can create approval-required runs; workflow_dispatch and repository_dispatch are exceptions to suppression of other token-generated workflow events. Do not repeat older blanket no-trigger claims.                                                                                              |
-| gh600-20260914-training-doc-25: [Using the GitHub MCP Server in your IDE](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server)                                                                                                                      |                        0 / 4 / 4 | 2026-09-14T13:12:12.779Z | 2026-09-14T13:24:06.189Z | GitHub MCP in supported IDEs, inherited feature licensing, managed MCP policy, tool permissions, and authorization/log troubleshooting.                                                                                                                                                                                                                                                    |
-| gh600-20260914-training-doc-26: [Configure an MCP registry for your organization or enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry)                                                                                                   |                        0 / 4 / 4 | 2026-09-14T13:12:12.680Z | 2026-09-14T13:24:06.195Z | Preview registry configuration requires v0.1 HTTPS endpoints, CORS, and correct local-server IDs; Azure API Center needs anonymous discovery. The page states a separate managed-settings allowlist is GA but its deeper page is not independently admitted by this registry.                                                                                                              |
-| gh600-20260914-training-doc-27: [Restrict MCP server access to a custom registry](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/restrict-based-on-registry)                                                                                                             |                        0 / 4 / 4 | 2026-09-14T13:12:13.429Z | 2026-09-14T13:24:06.199Z | Preview registry-based allowlisting uses enterprise/organization policies, Allow all or Registry only, and API Center workspace base URLs without the automatically appended v0.1 suffix.                                                                                                                                                                                                  |
+| Source | Playable / reviewed / candidates | Retrieved | Reviewed | Supporting summary |
+| --- | ---: | --- | --- | --- |
+| gh600-20260914-guide: [Study guide for Exam GH-600: Developing in Agentic AI Systems](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/gh-600) | 0 / 0 / 0 | 2026-09-14T13:04:00.402Z | 2026-09-14T13:24:06.056Z | Current undated GH-600 study guide: six published weighted areas, 19 skills, and 65 verbatim subskills. Identity, competency scope, and official study-resource links only; not sufficient evidence for product behavior. |
+| gh600-20260914-foundations-module: [Foundations of Agentic AI in GitHub](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/) | 0 / 0 / 0 | 2026-09-14T13:08:25.185Z | 2026-09-14T13:24:06.061Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. |
+| gh600-20260914-architecture-module: [Designing Agent Architecture and SDLC Integration](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/) | 0 / 0 / 0 | 2026-09-14T13:08:26.986Z | 2026-09-14T13:24:06.064Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. |
+| gh600-20260914-tooling-module: [Tooling, MCP, and Agent Execution Environments](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/) | 0 / 0 / 0 | 2026-09-14T13:08:28.977Z | 2026-09-14T13:24:06.066Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. |
+| gh600-20260914-foundations-1-introduction: [Introduction](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/1-introduction) | 0 / 0 / 0 | 2026-09-14T13:09:48.530Z | 2026-09-14T13:24:06.068Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Introduction. |
+| gh600-20260914-foundations-2-define-agentic-ai: [Define agentic AI in the SDLC](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/2-define-agentic-ai) | 0 / 0 / 0 | 2026-09-14T13:09:48.418Z | 2026-09-14T13:24:06.069Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Define agentic AI in the SDLC. |
+| gh600-20260914-foundations-3-explain-agent-lifecycle-plan-act-evaluate: [Explain the agent lifecycle - plan, act, evaluate](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/3-explain-agent-lifecycle-plan-act-evaluate) | 0 / 0 / 0 | 2026-09-14T13:09:48.896Z | 2026-09-14T13:24:06.070Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Explain the agent lifecycle - plan, act, evaluate. |
+| gh600-20260914-foundations-4-describe-github-system-record-control-plane: [Describe GitHub as the system of record and control plane](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/4-describe-github-system-record-control-plane) | 0 / 1 / 1 | 2026-09-14T13:09:49.662Z | 2026-09-14T13:24:06.071Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Describe GitHub as the system of record and control plane. |
+| gh600-20260914-foundations-5-identify-risks-traceability: [Identify responsibilities, risks, anti-patterns, and traceability needs](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/5-identify-risks-traceability) | 0 / 1 / 1 | 2026-09-14T13:09:49.913Z | 2026-09-14T13:24:06.072Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Identify responsibilities, risks, anti-patterns, and traceability needs. |
+| gh600-20260914-foundations-6-apply-contributor-model-agent-generated-work: [Apply the contributor model to agent-generated work](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/6-apply-contributor-model-agent-generated-work) | 0 / 2 / 2 | 2026-09-14T13:09:50.228Z | 2026-09-14T13:24:06.073Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Apply the contributor model to agent-generated work. |
+| gh600-20260914-foundations-8-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/foundations-agentic-ai/8-summary) | 0 / 0 / 0 | 2026-09-14T13:09:50.908Z | 2026-09-14T13:24:06.075Z | Official guide-linked learning material covering agent versus assistant behavior, lifecycle evidence, GitHub control surfaces, responsibility, and the contributor model. This unit: Summary. |
+| gh600-20260914-architecture-1-introduction: [Introduction](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/1-introduction) | 0 / 0 / 0 | 2026-09-14T13:09:51.163Z | 2026-09-14T13:24:06.077Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Introduction. |
+| gh600-20260914-architecture-2-agent-responsibilities: [Map agent responsibilities to the SDLC](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/2-agent-responsibilities) | 0 / 3 / 3 | 2026-09-14T13:09:52.376Z | 2026-09-14T13:24:06.078Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Map agent responsibilities to the SDLC. |
+| gh600-20260914-architecture-3-inputs-outputs-success-criteria: [Define inputs, outputs, and success criteria](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/3-inputs-outputs-success-criteria) | 0 / 5 / 6 | 2026-09-14T13:09:53.070Z | 2026-09-14T13:24:06.080Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Define inputs, outputs, and success criteria. |
+| gh600-20260914-architecture-4-plan-reason-execution: [Separate planning, reasoning, and execution](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/4-plan-reason-execution) | 0 / 2 / 2 | 2026-09-14T13:09:52.783Z | 2026-09-14T13:24:06.081Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Separate planning, reasoning, and execution. |
+| gh600-20260914-architecture-5-pull-request-governance-controls: [Examples of implementing PR governance with templates, checks, CODEOWNERS, rules, and environment gates](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/5-pull-request-governance-controls) | 0 / 0 / 0 | 2026-09-14T13:09:53.881Z | 2026-09-14T13:24:06.082Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Examples of implementing PR governance with templates, checks, CODEOWNERS, rules, and environment gates. |
+| gh600-20260914-architecture-6-reliable-workflows: [Build reliable workflows - outputs, contexts, triggers, and cross-job handoffs](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/6-reliable-workflows) | 0 / 9 / 10 | 2026-09-14T13:09:54.213Z | 2026-09-14T13:24:06.083Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Build reliable workflows - outputs, contexts, triggers, and cross-job handoffs. |
+| gh600-20260914-architecture-7-agent-operations-controls: [Control and operate agents - observability, tools, MCP, secrets, hooks, and reliability](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/7-agent-operations-controls) | 0 / 12 / 13 | 2026-09-14T13:09:54.261Z | 2026-09-14T13:24:06.084Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Control and operate agents - observability, tools, MCP, secrets, hooks, and reliability. |
+| gh600-20260914-architecture-9-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/design-agent-architecture-integration/9-summary) | 0 / 0 / 0 | 2026-09-14T13:09:55.228Z | 2026-09-14T13:24:06.085Z | Official guide-linked learning material covering task contracts, planning boundaries, PR governance, explicit workflow handoffs, observability, least privilege, and recovery. Several illustrative snippets are excluded in review-caveats.json. This unit: Summary. |
+| gh600-20260914-tooling-1-introduction: [Introduction](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/1-introduction) | 0 / 0 / 0 | 2026-09-14T13:09:55.504Z | 2026-09-14T13:24:06.086Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Introduction. |
+| gh600-20260914-tooling-2-interact-github-apis-workflows: [How agents interact with GitHub APIs and workflows](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/2-interact-github-apis-workflows) | 0 / 1 / 1 | 2026-09-14T13:09:55.491Z | 2026-09-14T13:24:06.087Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: How agents interact with GitHub APIs and workflows. |
+| gh600-20260914-tooling-3-model-context-protocol-servers-registries-allow-lists: [Model Context Protocol (MCP) servers, registries, and allow lists](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/3-model-context-protocol-servers-registries-allow-lists) | 0 / 4 / 4 | 2026-09-14T13:09:56.779Z | 2026-09-14T13:24:06.088Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Model Context Protocol (MCP) servers, registries, and allow lists. |
+| gh600-20260914-tooling-4-execution-context-boundaries: [Execution context and boundaries](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/4-execution-context-boundaries) | 0 / 1 / 1 | 2026-09-14T13:09:56.995Z | 2026-09-14T13:24:06.089Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Execution context and boundaries. |
+| gh600-20260914-tooling-5-agent-execution-limits-protections: [Agent execution limits and protections](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/5-agent-execution-limits-protections) | 0 / 4 / 4 | 2026-09-14T13:09:57.069Z | 2026-09-14T13:24:06.090Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Agent execution limits and protections. |
+| gh600-20260914-tooling-exercise: [Exercise - Automate repository updates with GitHub Agentic Workflows](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/exercise) | 0 / 0 / 0 | 2026-09-14T13:09:58.379Z | 2026-09-14T13:24:06.091Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Exercise - Automate repository updates with GitHub Agentic Workflows. |
+| gh600-20260914-tooling-7-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/agent-tooling-mcp-execution-environments/7-summary) | 0 / 0 / 0 | 2026-09-14T13:09:58.505Z | 2026-09-14T13:24:06.093Z | Official guide-linked learning material covering tools, MCP server discovery and policy, execution context, CI boundaries, error handling, and protected execution. Product syntax, entrypoint behavior, and feature status require the current linked product documents; excluded snippets are recorded. This unit: Summary. |
+| gh600-20260914-prepare-custom-agents: [Preparing to use custom agents in your organization](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-organization/prepare-for-custom-agents) | 0 / 0 / 0 | 2026-09-14T13:09:48.161Z | 2026-09-14T13:24:06.097Z | Organization owners prepare a .github or .github-private repository with an /agents directory. Member access to agents differs from direct repository access; enterprise rulesets may restrict creation. |
+| gh600-20260914-sdk-custom-agents: [Custom agents and sub-agent orchestration](https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/custom-agents) | 0 / 20 / 21 | 2026-09-14T13:09:49.492Z | 2026-09-14T13:24:06.100Z | Copilot SDK custom-agent configuration, scoped tools, optional MCP servers, intent-based delegation, per-agent skills and models, event correlation, and parent-only versus session-wide tool exclusions. No blanket SDK availability or GA claim is made. |
+| gh600-20260914-memory: [About GitHub Copilot Memory](https://docs.github.com/en/copilot/concepts/agents/copilot-memory) | 0 / 10 / 10 | 2026-09-14T13:09:50.833Z | 2026-09-14T13:24:06.103Z | Copilot Memory distinguishes repository facts from user preferences, validates citations, scopes access, and expires unused memories after 28 days. Paid-plan and managed-policy requirements apply. |
+| gh600-20260914-planner: [Implementation planner](https://docs.github.com/en/copilot/tutorials/customization-library/custom-agents/implementation-planner) | 0 / 3 / 3 | 2026-09-14T13:09:52.534Z | 2026-09-14T13:24:06.106Z | Official implementation-planning profile illustrates structured scope, success criteria, phases, dependencies, risks, and exclusions. This sample includes edit and is not a read-only enforcement template. Community examples are excluded. |
+| gh600-20260914-training-doc-02: [Managing rulesets for a repository](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/managing-rulesets-for-a-repository) | 0 / 2 / 2 | 2026-09-14T13:11:36.805Z | 2026-09-14T13:24:06.114Z | Ruleset administration permissions, enforceability, rule insights, and pass/fail/bypass evidence. Availability depends on plan and repository visibility; no universal Evaluate-mode entitlement is inferred. |
+| gh600-20260914-training-doc-05: [Use GITHUB_TOKEN for authentication in workflows](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token) | 0 / 3 / 4 | 2026-09-14T13:11:41.227Z | 2026-09-14T13:24:06.118Z | GITHUB_TOKEN access through secrets or github.token, workflow/job permission limits, and alternate authentication when required permissions are unavailable. Token examples are not proof that GITHUB_TOKEN authenticates Copilot CLI. |
+| gh600-20260914-training-doc-07: [Managing environments for deployment](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments) | 0 / 5 / 5 | 2026-09-14T13:11:44.923Z | 2026-09-14T13:24:06.121Z | Environment protection gates, required reviewers, self-review prevention, secret access timing, allowed deployment refs, and plan/visibility limitations. |
+| gh600-20260914-training-doc-08: [Store and share data with workflow artifacts](https://docs.github.com/en/actions/tutorials/store-and-share-data) | 0 / 13 / 14 | 2026-09-14T13:11:46.415Z | 2026-09-14T13:24:06.126Z | Workflow artifacts preserve files after jobs finish and support dependent-job handoffs, named downloads, retention limits, and immutable v4 artifacts. |
+| gh600-20260914-training-doc-09: [Uploading a SARIF file to GitHub](https://docs.github.com/en/code-security/how-tos/find-and-fix-code-vulnerabilities/integrate-with-existing-tools/upload-sarif-file) | 0 / 4 / 4 | 2026-09-14T13:11:45.917Z | 2026-09-14T13:24:06.131Z | SARIF upload methods, repository eligibility, security-events permission, category separation for multiple analyses, and partial-fingerprint conditions. |
+| gh600-20260914-training-doc-10: [Push protection](https://docs.github.com/en/code-security/concepts/secret-security/push-protection) | 0 / 1 / 1 | 2026-09-14T13:11:53.438Z | 2026-09-14T13:24:06.134Z | Push protection blocks detected secrets before upload. Repository and user protection differ in enablement, scope, bypass alerts, and auditability; GitHub MCP coverage is public-repository-specific. |
+| gh600-20260914-training-doc-11: [Customize agent workflows with hooks](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/use-hooks) | 0 / 6 / 7 | 2026-09-14T13:11:54.031Z | 2026-09-14T13:24:06.138Z | Repository hooks use version 1 JSON in .github/hooks on the default branch, camelCase event keys, operating-system-specific commands, timeouts, and compact JSON output. Training pseudocode is not the hook schema. |
+| gh600-20260914-training-doc-12: [Managing agent sessions](https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/manage-and-track-agents) | 0 / 8 / 9 | 2026-09-14T13:11:54.071Z | 2026-09-14T13:24:06.143Z | Session logs correlate commits and decisions; steering, stopping, archiving, sharing, and context handoff have distinct semantics. Stopping preserves pushed commits; no hot replacement guarantee is documented. |
+| gh600-20260914-training-doc-13: [Customizing or disabling the firewall for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-the-firewall) | 0 / 4 / 6 | 2026-09-14T13:11:57.480Z | 2026-09-14T13:24:06.148Z | Cloud-agent and code-review firewall controls support organization/repository settings and domain or path-restricted URLs. Blocked-address warnings support failure diagnosis. Scope excludes MCP servers and setup-step processes; the firewall is not a complete exfiltration defense. |
+| gh600-20260914-training-doc-14: [Review output from Copilot](https://docs.github.com/en/copilot/how-tos/copilot-on-github/use-copilot-agents/review-copilot-output) | 0 / 2 / 2 | 2026-09-14T13:11:57.866Z | 2026-09-14T13:24:06.151Z | Copilot output needs human review, required-approval independence, and by-default approval before privileged Actions runs; current documentation allows administrators to configure automatic runs. |
+| gh600-20260914-training-doc-15: [Creating rulesets for a repository](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/creating-rulesets-for-a-repository) | 0 / 2 / 3 | 2026-09-14T13:11:57.485Z | 2026-09-14T13:24:06.154Z | Ruleset creation, targeting, permission requirements, active/disabled enforcement, and pull-request-only bypass paths establish repository governance boundaries. |
+| gh600-20260914-training-doc-17: [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners) | 0 / 7 / 9 | 2026-09-14T13:12:02.187Z | 2026-09-14T13:24:06.160Z | CODEOWNERS review routing, explicit write access, base-branch selection, file precedence, last-match behavior, and required-review configuration. |
+| gh600-20260914-training-doc-18: [Audit log for an enterprise](https://docs.github.com/en/enterprise-cloud@latest/admin/concepts/security-and-compliance/audit-log-for-an-enterprise) | 0 / 0 / 0 | 2026-09-14T13:12:02.117Z | 2026-09-14T13:24:06.164Z | Enterprise Cloud audit logs identify actors and actions and support time-bounded retention, searching, exports, and streaming for enterprise owners. |
+| gh600-20260914-training-doc-19: [About GitHub Copilot cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) | 0 / 8 / 8 | 2026-09-14T13:12:05.798Z | 2026-09-14T13:24:06.168Z | Cloud-agent execution environments, entrypoint-dependent PR creation, scope, concurrency limits, timeouts, metrics, and paid-plan/policy eligibility. The page mixes established features with explicitly Preview integrations and Memory; only those subfeatures should be labeled Preview in claims. |
+| gh600-20260914-training-doc-20: [Application card: GitHub Copilot Agents](https://docs.github.com/en/copilot/responsible-use/agents) | 0 / 7 / 7 | 2026-09-14T13:12:06.538Z | 2026-09-14T13:24:06.172Z | Official application card describes agent, CLI, and SDK capabilities, limitations, human accountability, and evaluation signals. Limitations are experience-specific; do not generalize CLI permission prompts or cloud repository-context access beyond dedicated current documentation. |
+| gh600-20260914-training-doc-21: [Workflow syntax for GitHub Actions](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax) | 0 / 7 / 7 | 2026-09-14T13:12:06.566Z | 2026-09-14T13:24:06.179Z | Bounded review of workflow/job permissions and concurrency: unspecified scopes become none; commit statuses have their own scope; concurrency groups serialize work and have explicit cancellation/queue semantics. Other sections are not blanket-approved by this registry. |
+| gh600-20260914-training-doc-22: [Events that trigger workflows](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows) | 0 / 2 / 2 | 2026-09-14T13:12:09.439Z | 2026-09-14T13:24:06.183Z | Bounded review of GITHUB_TOKEN-generated events: pull_request opened/synchronize/reopened can create approval-required runs; workflow_dispatch and repository_dispatch are exceptions to suppression of other token-generated workflow events. Do not repeat older blanket no-trigger claims. |
+| gh600-20260914-training-doc-25: [Using the GitHub MCP Server in your IDE](https://docs.github.com/en/copilot/how-tos/provide-context/use-mcp-in-your-ide/use-the-github-mcp-server) | 0 / 4 / 4 | 2026-09-14T13:12:12.779Z | 2026-09-14T13:24:06.189Z | GitHub MCP in supported IDEs, inherited feature licensing, managed MCP policy, tool permissions, and authorization/log troubleshooting. |
+| gh600-20260914-training-doc-26: [Configure an MCP registry for your organization or enterprise](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/configure-mcp-registry) | 0 / 4 / 4 | 2026-09-14T13:12:12.680Z | 2026-09-14T13:24:06.195Z | Preview registry configuration requires v0.1 HTTPS endpoints, CORS, and correct local-server IDs; Azure API Center needs anonymous discovery. The page states a separate managed-settings allowlist is GA but its deeper page is not independently admitted by this registry. |
+| gh600-20260914-training-doc-27: [Restrict MCP server access to a custom registry](https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-mcp-usage/restrict-based-on-registry) | 0 / 4 / 4 | 2026-09-14T13:12:13.429Z | 2026-09-14T13:24:06.199Z | Preview registry-based allowlisting uses enterprise/organization policies, Allow all or Registry only, and API Center workspace base URLs without the automatically appended v0.1 suffix. |
 
 ## Freshness and review limitations
 

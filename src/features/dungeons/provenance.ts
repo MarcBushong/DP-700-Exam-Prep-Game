@@ -9,7 +9,7 @@ import {
 } from '../grounding/schema';
 import type { ContentFinding } from '../grounding/quality';
 import type { Credential } from './schema';
-import { isAllowedSourceUrl } from './sourcePolicy';
+import { isAllowedSourceUrl, isAzureSearchArticle } from './sourcePolicy';
 
 /** This allowlist is necessary, never sufficient: declared ancestry is checked separately. */
 export const strictEvidenceUrlSchema = z.string().refine((value) => {
@@ -26,7 +26,14 @@ export const strictEvidenceUrlSchema = z.string().refine((value) => {
         url.pathname.startsWith('/en-us/')) ||
         (url.hostname === 'docs.github.com' &&
           url.pathname.startsWith('/en/'))) &&
-      !/(?:^|\/)(?:search|answers|assessments?|knowledge-check|practice-tests?|exam-sandbox|shows|videos?|blogs?|forums?|community)(?:\/|$)/i.test(
+      (!/(?:^|\/)search(?:\/|$)/i.test(url.pathname) ||
+        isAzureSearchArticle(url)) &&
+      (!/(?:^|\/)videos?(?:\/|$)/i.test(url.pathname) ||
+        (url.hostname === 'learn.microsoft.com' &&
+          /^\/en-us\/azure\/ai-services\/content-understanding\/video\/[a-z0-9-]+\/?$/.test(
+            url.pathname,
+          ))) &&
+      !/(?:^|\/)(?:answers|assessments?|knowledge-check|practice-tests?|exam-sandbox|shows|blogs?|forums?|community)(?:\/|$)/i.test(
         url.pathname,
       ) &&
       !/(?:knowledge-check|practice-test|exam-dump)/i.test(url.pathname)
@@ -38,6 +45,8 @@ export const strictEvidenceUrlSchema = z.string().refine((value) => {
 
 const text = z.string().trim().min(1);
 const summary = text.min(20);
+const isCourseOverview = (url: string) =>
+  new URL(url).pathname.startsWith('/en-us/training/courses/');
 export const sourceParentSchema = z
   .object({
     sourceId: text.optional(),
@@ -242,15 +251,29 @@ function inspectSourceProvenance(
           id,
         );
     } else {
+      if (!isAllowedSourceUrl(source.canonicalUrl, credential))
+        fail(
+          'Registered training/doc source or ancestor is outside the credential technical allowlist, regardless of feature-status applicability.',
+          id,
+        );
       if (!source.parents.length)
         fail('Training and documentation require approved ancestry.', id);
       if (
         source.sourceClass === 'training' &&
         (url.hostname !== 'learn.microsoft.com' ||
-          !/^\/en-us\/training\/(?:paths|modules)\//.test(url.pathname))
+          !/^\/en-us\/training\/(?:paths|modules|courses)\//.test(url.pathname))
       )
         fail(
-          'Training must be a Learn self-paced path, module, or module unit.',
+          'Training must be a Learn self-paced path, module, unit, or the current course ancestry overview.',
+          id,
+        );
+      if (
+        isCourseOverview(source.canonicalUrl) &&
+        (source.sourceClass !== 'training' ||
+          source.canonicalUrl !== credential.officialUrls.training)
+      )
+        fail(
+          'A course overview is ancestry-only training bound to the exact current catalog preparation URL.',
           id,
         );
     }
@@ -280,6 +303,17 @@ function inspectSourceProvenance(
             'Immediate parent must be a registered guide or training source, never doc-to-doc.',
             id,
           );
+        if (
+          ancestor &&
+          ((isCourseOverview(source.canonicalUrl) &&
+            ancestor.sourceClass !== 'guide') ||
+            (source.sourceClass === 'doc' &&
+              isCourseOverview(ancestor.canonicalUrl)))
+        )
+          fail(
+            'Course ancestry must descend directly from the current guide or credential; documentation needs a guide or self-paced training parent, not a course overview.',
+            id,
+          );
       }
     }
   }
@@ -292,14 +326,6 @@ function inspectSourceProvenance(
       );
       continue;
     }
-    if (
-      registered.sourceClass !== 'guide' &&
-      !isAllowedSourceUrl(source.url, credential)
-    )
-      fail(
-        'Registered training/doc source is outside the credential technical allowlist, regardless of feature-status applicability.',
-        source.sourceId,
-      );
     if (
       registered.canonicalUrl !== source.url ||
       registered.title !== source.title ||
