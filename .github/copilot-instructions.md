@@ -17,9 +17,10 @@
   materials through Learn MCP. GitHub credentials require official GitHub
   competency and product documentation with credential-scoped source policies.
 - A credential record is not playable content. Verify identity/status and the
-  current objective map separately; keep unknown, beta, pending/unverified,
-  retiring, and insufficiently reviewed dungeons sealed. Verified beta identity
-  does not authorize gameplay. Never infer a future outline is current.
+  current objective map separately; keep unknown, pending/unverified, retiring,
+  and insufficiently reviewed dungeons sealed. Beta is sealed by default;
+  GH-600 has explicit catalog authorization for beta study access without
+  bypassing content review. Never infer a future outline is current.
 - Keep facts, answers, code, explanations, and citations separate from fantasy
   narration. Classes are generic discovery filters, never internal role bundles.
 - Refresh the grounding and objective manifests when documentation changes.
@@ -47,8 +48,8 @@
 - Every strict option needs a sourced counterexample/context analysis; the
   independently scored 12-criterion 0-4 rubric requires at least 44/48 and the
   mandated critical scores. A repaired authored field restarts all three passes.
-- Do not equate an exam scheduling link with proof of GA. A reviewed GH-600
-  bank remains sealed while its current status is unverified or beta.
+- Do not equate an exam scheduling link with proof of GA. GH-600 retains its
+  beta status during authorized beta gameplay; unverified status remains sealed.
 - Assign stable fact-level `conceptId` values. Resolve blocking duplicates,
   inspect quality warnings, and preserve honest review notes and dates.
 - Only complete, verified, nonstale records enter gameplay. Keep pending,

@@ -207,6 +207,7 @@ export function SetupPage() {
         <BetaAvailabilityNotice
           key={credential.credentialId}
           credential={credential}
+          readiness={getDungeonPackage(credential.credentialId)?.readiness}
         />
       ))}
       <Link className="text-link setup-map-link" to="/">

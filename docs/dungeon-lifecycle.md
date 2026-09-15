@@ -5,8 +5,11 @@ Freshness is relative to checked-in evidence, never “always current.”
 source and rubric review dates describe separate acts. Report creation is not
 grounding or verification.
 
-Only verified **active** credentials can enter a run. Announced, beta, retiring,
-retired, replaced and unverified entries remain visible but sealed. An active
+Verified **active** credentials and explicitly authorized verified **beta**
+credentials can enter a run after content-readiness checks. Beta defaults to
+sealed; only GH-600 currently has `allowBetaPlay: true` in the catalog. The flag
+does not change provider status or bypass question review. Announced, retiring,
+retired, replaced and unverified entries remain visible but sealed. An eligible
 credential without a sufficiently reviewed bank is also sealed or Study-only.
 Do not silently rename a historical exam record as its replacement.
 

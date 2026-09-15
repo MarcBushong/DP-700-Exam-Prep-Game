@@ -2,6 +2,7 @@ import catalogData from '../../content/credentials/credentials.json';
 import classData from '../../content/credentials/hero-classes.json';
 import { credentialSchema, heroClassSchema, type Credential } from './schema';
 import { isAllowedIdentityUrl } from './sourcePolicy';
+import { hasPlayableIdentity } from './availability';
 
 export type { Credential, HeroClass } from './schema';
 export const credentials = credentialSchema.array().parse(catalogData);
@@ -65,17 +66,17 @@ export function validateCatalog(data: unknown, classes: unknown): string[] {
           `${id}: verified identity requires authoritative name, type, status, identity URLs, dates, and evidence.`,
         );
       if (
-        credential.status === 'active' &&
+        hasPlayableIdentity(credential) &&
         (!credential.objectiveVersion ||
           !credential.officialUrls.studyGuide ||
           !credential.officialUrls.training)
       )
         problems.push(
-          `${id}: verified active identity additionally requires the current objective version, study guide and preparation URL.`,
+          `${id}: playable identity additionally requires the current objective version, study guide and preparation URL.`,
         );
       const requiredEvidenceUrls = [
         credential.officialUrls.credential ?? credential.officialUrls.exam,
-        ...(credential.status === 'active'
+        ...(hasPlayableIdentity(credential)
           ? [
               credential.officialUrls.studyGuide,
               credential.officialUrls.training,
@@ -128,11 +129,11 @@ export function validateCatalog(data: unknown, classes: unknown): string[] {
     )
       problems.push(`${id}: validation cannot predate grounding.`);
     if (
-      credential.status !== 'active' &&
+      !hasPlayableIdentity(credential) &&
       ['ready', 'limited'].includes(credential.contentReadiness)
     )
       problems.push(
-        `${id}: only active verified credentials can advertise playable readiness.`,
+        `${id}: only verified active or explicitly enabled beta credentials can advertise playable readiness.`,
       );
     for (const evidence of credential.verificationEvidence) {
       if (!isAllowedIdentityUrl(evidence.url, credential))
@@ -167,10 +168,7 @@ export function filterCredentials(
   const query = filters.query?.trim().toLowerCase() ?? '';
   return catalog.filter((credential) => {
     if (filters.heroClassId && !heroClass) return false;
-    if (
-      heroClass?.id === 'wanderer' &&
-      (!credential.isVerified || credential.status !== 'active')
-    )
+    if (heroClass?.id === 'wanderer' && !hasPlayableIdentity(credential))
       return false;
     if (
       heroClass &&

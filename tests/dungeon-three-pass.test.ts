@@ -230,7 +230,7 @@ describe('strict opt-in three-pass review', () => {
     },
   );
 
-  it('distinguishes reviewed from playable for beta and exposes all rubric criteria', () => {
+  it('distinguishes reviewed from playable for beta without authorization and exposes all rubric criteria', () => {
     const { credential, raw } = strictFixture(25);
     credential.status = 'beta';
     const dungeon = validateDungeonPackage(credential, raw);
@@ -245,6 +245,18 @@ describe('strict opt-in three-pass review', () => {
     expect(
       report.threePass?.stages.every((stage) => !stage.failures.length),
     ).toBe(true);
+  });
+
+  it('never bypasses three-pass review when beta gameplay is enabled', () => {
+    const { credential, raw } = strictFixture(25);
+    credential.status = 'beta';
+    credential.allowBetaPlay = true;
+    expect(validateDungeonPackage(credential, raw).questions).toHaveLength(25);
+    delete raw.validationMetadata.encounters[raw.questions[0].id].technical;
+    const blocked = validateDungeonPackage(credential, raw);
+    expect(blocked.questions).toEqual([]);
+    expect(blocked.readiness).toMatchObject({ study: false, gauntlet: false });
+    expect(blocked.reviewedQuestions).toHaveLength(24);
   });
 
   it.each([

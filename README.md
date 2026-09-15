@@ -58,7 +58,9 @@ one large bank dominate, and preserve each encounter's source and floor scores.
 A catalog entry is not an open dungeon. By default, Study Runs require at least
 25 verified encounters and every major floor; Gauntlets require at least 75,
 skill breadth, boss-tier content, and no blocking failures. Sealed, stale,
-retiring, beta, and insufficiently reviewed content stays out of play.
+retiring, and insufficiently reviewed content stays out of play. Beta credentials
+are sealed by default; GH-600 explicitly enables beta study access while retaining
+its beta status and all normal content-review gates.
 
 The map represents all 18 requested identifiers. AZ-800 is explicitly retiring;
 GH-600 is beta; DP-420 is sealed because its captured objective outline is
@@ -76,12 +78,13 @@ package remain sealed even when their identity and current outline are verified.
 | AI-103: The AI Workshop         |                            0 | Sealed: availability unverified   |
 | AI-200: The Application Forge   |                            0 | Sealed: availability and coverage |
 | GH-300: The Copilot Spire       |                          149 | Study and Boss Gauntlet           |
-| GH-600: The Agentic Workshop    |                            0 | Sealed: beta                      |
+| GH-600: The Agentic Workshop    |                          136 | Beta Study and Boss Gauntlet      |
 
-**371 playable verified encounters**. GH-300 retains three rejected duplicates
+**507 playable verified encounters**. GH-300 retains three rejected duplicates
 and three manual-review records outside gameplay. GH-600 has **136 fully
-three-pass-reviewed questions** and 13 rejected candidates, but remains sealed
-with an explicit Beta warning. Beta gameplay was not opened.
+three-pass-reviewed questions** available for beta study and 13 rejected
+candidates outside gameplay. Its card, setup, and question metadata retain the
+Beta designation; opening this unofficial study bank does not assert exam GA.
 
 The strict AI review produced **29 verified / 96 manual / 24 rejected** AI-103
 records and **30 verified / 85 manual / 35 rejected** AI-200 records. The target
@@ -350,7 +353,8 @@ an attestation, score, rationale, or date.
 
 Only `verified` questions with complete, current review metadata enter gameplay.
 `candidate`, `manual-review-required`, `rejected`, and `stale` questions remain excluded.
-The credential must also be verified active, its current objectives must match
+The credential must also have verified active identity or explicit catalog
+authorization for verified beta study access. Its current objectives must match
 the encounter envelope, and the realism/readiness gates must pass.
 Newer source-review timestamps make affected questions stale until re-reviewed.
 Freshness is change-driven, not a guarantee that a fixed-age question is correct:
