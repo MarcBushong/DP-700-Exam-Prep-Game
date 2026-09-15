@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The literal replacement is the original WITH (sku nvarchar(20)). The document has uppercase SKU and no lowercase sku, so default case-sensitive mapping still leaves the projected sku as SQL NULL. The database's case-insensitive collation does not override OPENJSON property matching. The primary article's WITH and colName definitions support that failure. Literal positive countercontext: with @payload = N'{\"sku\":\"R-84\",\"category\":\"spare\"}', SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20)); returns R-84 in the sku column. Here the producer really supplies the lowercase key; the clause itself is valid and unchanged. This is a source-derived outcome, not a SQL execution result.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "The optional column_path is syntactically legitimate, but '$.SKU[0]' requests element zero of an array at SKU. The shown value is the scalar string R-84, not an array and not a container whose first character can be selected with a JSON array step. It therefore does not identify the required scalar path; default lax projection yields SQL NULL rather than R-84. The primary OPENJSON column_path/lax contract and its inspected training parent's explicit zero-based array-path example establish the distinction. Literal positive countercontext: for @payload = N'{\"SKU\":[\"R-84\",\"S-12\"],\"category\":\"spare\"}', SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.SKU[0]'); returns R-84. The array actually exists in that alternative, and the first string fits the declared length.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "c",
         "assessment": "supported",
         "rationale": "The explicit '$.SKU' column path matches the actual uppercase property while the independent colName remains lowercase sku. Without AS JSON, the existing string is extracted as the scalar R-84, which fits nvarchar(20). Neither the output name nor the input is changed. The primary article explicitly permits a column_path override when output-column and property names differ and specifies BIN2 matching of that path. Literal confirming alternative: with @payload = N'{\"SKU\":\"S-12\",\"category\":\"adapter\"}', SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.SKU'); returns S-12 under the same output name. Thus the key is based on documented mapping semantics, not an assumed database-collation coercion.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "The explicit '$.category' path exists and contains the scalar spare. The query is valid, but it returns spare in the column named sku, not the identifier R-84. An output-column name does not change which property an explicit path selects; the colName/column_path definitions establish that separation. Literal positive countercontext: when the required result is the category text, SELECT sku AS category FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.category'); returns the desired category value spare for the original input. The exact proposed WITH clause remains intact; only the surrounding task and selected output label differ. This legitimate use cannot satisfy the original product-identifier requirement.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       }
     ],
     "checks": {

@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "supported",
         "rationale": "Ordering within JSON_ARRAYAGG by the distinct Position values gives the row sequence 10, 20, 30. NULL ON NULL keeps the middle SQL NULL Label as a JSON null element instead of discarding its position. The documentation-derived output is exactly [\"z\",null,\"a\"]. Both clauses are needed for the stated contract; this conclusion does not rely on the VALUES constructor's textual row order or an outer SELECT ordering. A is the only offered combination meeting the required order and three-slot shape.",
-        "sourceIds": [
-          "dp800-d1-json-arrayagg"
-        ]
+        "sourceIds": ["dp800-d1-json-arrayagg"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "The local ascending Position order is suitable, but ABSENT ON NULL omits the middle null-valued element. B therefore has [\"z\",\"a\"] as its documented result, losing the required null slot. Positive countercontext: this exact aggregate over the same rows is correct for an export that requires only nonnull labels in increasing Position order, with [\"z\",\"a\"] as its expected array. The source explicitly supports null-element omission and aggregate-local ordering for that alternative contract.",
-        "sourceIds": [
-          "dp800-d1-json-arrayagg"
-        ]
+        "sourceIds": ["dp800-d1-json-arrayagg"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "NULL ON NULL retains the middle slot, but descending Position orders the rows 30, 20, 10 and gives [\"a\",null,\"z\"], not the requested ascending-position array. Positive countercontext: retain this exact expression when the same export must run from highest Position to lowest while preserving null gaps, explicitly requiring [\"a\",null,\"z\"]. The documented local order clause controls the row sequence independently of the null policy, supporting that reversed-order contract.",
-        "sourceIds": [
-          "dp800-d1-json-arrayagg"
-        ]
+        "sourceIds": ["dp800-d1-json-arrayagg"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "This combination reverses Position order and drops the SQL NULL Label. The documentation-derived array is [\"a\",\"z\"], so it satisfies neither the required ascending label order nor the retained null position. Positive countercontext: the exact aggregate is appropriate for a compact, nonnull-only list in descending Position order, with [\"a\",\"z\"] as the requested output from the same rows. Both the descending order and omission policy then serve the changed contract; neither is correct for the actual target array.",
-        "sourceIds": [
-          "dp800-d1-json-arrayagg"
-        ]
+        "sourceIds": ["dp800-d1-json-arrayagg"]
       }
     ],
     "checks": {

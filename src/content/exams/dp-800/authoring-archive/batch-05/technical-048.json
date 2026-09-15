@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "Changing the query metric to cosine would make it match the existing cosine index on Embedding, but it would break the explicit requirement to continue measuring Euclidean distance. Arguments > METRIC lists the metrics separately and requires query/index agreement; it does not make them interchangeable. Sourced countercontext: this literal change is appropriate when cosine is acceptable or required for the workload and the existing index matches that searched column. Even then, compatibility alone is not an optimizer-use guarantee.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "The source permits a Euclidean VECTOR_SEARCH query without a compatible ANN index to run using kNN, so this option can preserve the metric and execute. It does not supply the missing ANN compatibility prerequisite requested by the stem. Sourced countercontext: deliberately retaining this exact approach is a valid decision if the requirement is Euclidean exact/kNN execution and the workload accepts the documented scan instead of needing an ANN-compatible index. Execution capability and ANN-index compatibility are distinct claims.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "Arguments > METRIC requires a matching index on the same column, not merely an index somewhere in the table using the requested metric. A Euclidean index on another vector column leaves the Embedding query without that match. Sourced countercontext: the literal creation would supply the corresponding compatibility prerequisite for a workload that actually searches that other column with Euclidean distance. It would not help the unchanged Embedding target in this question.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       },
       {
         "choiceId": "d",
         "assessment": "supported",
         "rationale": "The query must keep Euclidean distance and keep Embedding as its target. Applying the source's two-part same-column/same-metric condition independently identifies an applicable Euclidean vector index on Embedding as the sole offered compatibility change. Context boundary: this is a prerequisite-level answer, not a claim that two vector indexes can coexist on the column, that creation bypasses DDL requirements, or that the optimizer must subsequently choose ANN. The latest optimizer's documented option to use kNN remains intact.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       }
     ],
     "checks": {

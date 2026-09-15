@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
   strictEvidenceUrlSchema,
+  validatedSupportingSourceIds,
   validateSourceProvenance,
+  type SourceRegistry,
 } from '../src/features/dungeons/provenance';
 import { strictFixture } from './dungeon-three-pass-fixtures';
 import { dungeonFixture } from './dungeon-fixtures';
@@ -20,6 +22,34 @@ describe('guide-linked official source provenance', () => {
   it('binds actual metadata fields and a bounded direct guide link', () => {
     expect(inspect(strictFixture())).toEqual([]);
   });
+  it.each([
+    'https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview',
+    'https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview',
+  ])(
+    'admits product documentation %s only with approved ancestry and credential permission',
+    (url) => {
+      const fixture = strictFixture();
+      expect(strictEvidenceUrlSchema.safeParse(url).success).toBe(true);
+      const source = fixture.raw.manifest.sources[0];
+      source.url = url;
+      const record = fixture.raw.sourceRegistry.sources[1];
+      record.canonicalUrl = url;
+      record.parents[0].targetUrl = url;
+      record.parents[0].canonicalUrl = url;
+      expect(inspect(fixture)).toEqual([]);
+      fixture.credential.sourceAllowlist = [];
+      expect(inspect(fixture).some((f) => /allowlist/.test(f.message))).toBe(
+        true,
+      );
+      fixture.credential.sourceAllowlist = [
+        { host: 'learn.microsoft.com', pathPrefixes: [], exactUrls: [url] },
+      ];
+      record.parents = [];
+      expect(inspect(fixture).some((f) => /ancestry/.test(f.message))).toBe(
+        true,
+      );
+    },
+  );
   it('records mixed Learn MCP and GitHub retrieval without waiving strict provenance', () => {
     const fixture = strictFixture(25);
     fixture.raw.manifest.retrievalMethod =
@@ -53,6 +83,19 @@ describe('guide-linked official source provenance', () => {
     'https://learn.microsoft.com/en-us/answers/questions/1/',
     'https://learn.microsoft.com/en-us/shows/example/',
     'https://learn.microsoft.com/en-us/search/',
+    'https://learn.microsoft.com/en-us/azure/search/',
+    'https://learn.microsoft.com/en-us/azure/search/hybrid-search-overview?terms=search',
+    'https://learn.microsoft.com/en-us/azure/search/assessment',
+    'https://learn.microsoft.com/en-us/azure/search/knowledge-check',
+    'https://learn.microsoft.com/en-us/azure/search/nested/results',
+    'https://learn.microsoft.com/en-us/private/search/results',
+    'https://docs.github.com/en/search/results',
+    'https://learn.microsoft.com/en-us/videos/overview',
+    'https://learn.microsoft.com/en-us/training/modules/example/video',
+    'https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/',
+    'https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview?video=1',
+    'https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/private/overview',
+    'https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/assessment',
     'https://user:password@docs.github.com/en/copilot/overview',
     'https://docs.github.com/en/copilot/overview?redirect=https://evil.test',
   ])('rejects unsafe or disallowed evidence %s', (url) => {
@@ -214,5 +257,102 @@ describe('guide-linked official source provenance', () => {
     source.parents[0].relation = 'direct-link';
     source.sourceClass = 'doc';
     expect(inspect(fixture).length).toBeGreaterThan(0);
+  });
+  it('preserves an exact credential-course-path bridge without granting course technical evidence', () => {
+    const fixture = strictFixture();
+    const records = fixture.raw.sourceRegistry.sources;
+    const doc = records[1];
+    const courseUrl =
+      'https://learn.microsoft.com/en-us/training/courses/ai-200t00';
+    const pathUrl = 'https://learn.microsoft.com/en-us/training/paths/example/';
+    fixture.credential.officialUrls.training = courseUrl;
+    const course: SourceRegistry['sources'][number] = {
+      ...structuredClone(doc),
+      sourceId: 'course',
+      sourceClass: 'training' as const,
+      canonicalUrl: courseUrl,
+      parents: [
+        {
+          ...doc.parents[0],
+          sourceId: undefined,
+          credentialUrl: fixture.credential.officialUrls.credential!,
+          targetUrl: courseUrl,
+          canonicalUrl: courseUrl,
+        },
+      ],
+    };
+    const path = {
+      ...structuredClone(doc),
+      sourceId: 'path',
+      sourceClass: 'training' as const,
+      canonicalUrl: pathUrl,
+      parents: [
+        {
+          ...doc.parents[0],
+          sourceId: 'course',
+          relation: 'explicit-reference' as const,
+          targetUrl: pathUrl,
+          canonicalUrl: pathUrl,
+        },
+      ],
+    };
+    records.push(course, path);
+    doc.parents[0].sourceId = 'path';
+    fixture.raw.manifest.sources.push({
+      ...structuredClone(fixture.raw.manifest.sources[0]),
+      sourceId: course.sourceId,
+      url: courseUrl,
+      featureStatus: 'Not applicable',
+    });
+    expect(inspect(fixture)).toEqual([]);
+    expect(
+      validatedSupportingSourceIds(
+        fixture.credential,
+        fixture.raw.taxonomy,
+        fixture.raw.manifest,
+        fixture.raw.sourceRegistry,
+      ),
+    ).toEqual([doc.sourceId]);
+
+    const allowlist = fixture.credential.sourceAllowlist;
+    fixture.credential.sourceAllowlist = [
+      {
+        host: 'learn.microsoft.com',
+        pathPrefixes: [],
+        exactUrls: [doc.canonicalUrl, courseUrl],
+      },
+    ];
+    expect(
+      inspect(fixture).some(
+        (f) =>
+          /ancestor.*allowlist/.test(f.message) &&
+          f.questionIds.includes(fixture.raw.questions[0].id),
+      ),
+    ).toBe(true);
+    expect(
+      validatedSupportingSourceIds(
+        fixture.credential,
+        fixture.raw.taxonomy,
+        fixture.raw.manifest,
+        fixture.raw.sourceRegistry,
+      ),
+    ).toEqual([]);
+    fixture.credential.sourceAllowlist = allowlist;
+    fixture.credential.officialUrls.training = `${courseUrl}-unrelated`;
+    expect(inspect(fixture).some((f) => /exact current/.test(f.message))).toBe(
+      true,
+    );
+    fixture.credential.officialUrls.training = courseUrl;
+    doc.parents[0].sourceId = 'course';
+    expect(
+      inspect(fixture).some((f) => /not a course overview/.test(f.message)),
+    ).toBe(true);
+    doc.parents[0].sourceId = 'path';
+    course.parents[0] = {
+      ...course.parents[0],
+      credentialUrl: undefined,
+      sourceId: 'path',
+    };
+    expect(inspect(fixture).some((f) => /directly/.test(f.message))).toBe(true);
   });
 });

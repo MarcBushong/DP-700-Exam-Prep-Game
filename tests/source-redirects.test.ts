@@ -23,7 +23,7 @@ describe('DP-800 observed SQL moniker redirects', () => {
       {
         host: 'learn.microsoft.com',
         pathPrefixes: [],
-        exactUrls: [article, other, countUrl],
+        exactUrls: [article, `${article}#permissions`, other, countUrl],
       },
     ],
   };
@@ -49,6 +49,13 @@ describe('DP-800 observed SQL moniker redirects', () => {
         credential,
       ),
     ).toBe(true);
+    expect(() =>
+      matchesRecordedSourceTarget(
+        `${article}?view=sql-server-ver17`,
+        `${article}#unapproved-section`,
+        credential,
+      ),
+    ).toThrow();
     expect(
       matchesRecordedSourceTarget(canonicalCount, countUrl, credential),
     ).toBe(true);
@@ -59,6 +66,13 @@ describe('DP-800 observed SQL moniker redirects', () => {
         credential,
       ),
     ).toBe(false);
+    expect(
+      matchesRecordedSourceTarget(
+        `${article}?view=sql-server-ver17`,
+        `${article}#permissions`,
+        credential,
+      ),
+    ).toBe(true);
   });
 
   it.each([

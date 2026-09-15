@@ -8,9 +8,7 @@
         "claimRepresented": "This option proposes SELECT JSON_VALUE(@document, 'strict $.message');",
         "whyIncorrectInContext": "Strict JSON_VALUE raises an error for a scalar over 4,000 characters instead of returning the required complete text.",
         "couldBeCorrectWhen": "A required scalar fits the limit and a missing, non-scalar or overlength value should fail rather than become NULL.",
-        "sourceIds": [
-          "dp800-d1-json-value"
-        ],
+        "sourceIds": ["dp800-d1-json-value"],
         "evidenceSummary": "Strict JSON_VALUE raises an error for a scalar over 4,000 characters instead of returning the required complete text."
       },
       {
@@ -18,10 +16,7 @@
         "claimRepresented": "This option proposes SELECT message FROM OPENJSON(@document) WITH (message nvarchar(max) '$.message');",
         "whyIncorrectInContext": "Not incorrect in this context. The product article recommends OPENJSON for scalars longer than 4,000 characters; its explicit nvarchar(max) projection returns the requested string without the JSON wrapper.",
         "couldBeCorrectWhen": "A scalar string must be returned intact beyond JSON_VALUE's non-RETURNING length limit.",
-        "sourceIds": [
-          "dp800-d1-json-value",
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-json-value", "dp800-d1-openjson"],
         "evidenceSummary": "The product article recommends OPENJSON for scalars longer than 4,000 characters; its explicit nvarchar(max) projection returns the requested string without the JSON wrapper."
       },
       {
@@ -29,9 +24,7 @@
         "claimRepresented": "This option proposes SELECT JSON_QUERY(@document, '$.message');",
         "whyIncorrectInContext": "JSON_QUERY extracts an object or array, not this scalar string; in lax mode it returns NULL for that scalar.",
         "couldBeCorrectWhen": "The message property contains an object or array that must remain a JSON fragment.",
-        "sourceIds": [
-          "dp800-d1-json-query"
-        ],
+        "sourceIds": ["dp800-d1-json-query"],
         "evidenceSummary": "JSON_QUERY extracts an object or array, not this scalar string; in lax mode it returns NULL for that scalar."
       },
       {
@@ -39,9 +32,7 @@
         "claimRepresented": "This option proposes SELECT JSON_QUERY(@document);",
         "whyIncorrectInContext": "Omitting the path returns the whole JSON object, not the required scalar message text.",
         "couldBeCorrectWhen": "The complete input JSON object should be returned as a valid JSON fragment.",
-        "sourceIds": [
-          "dp800-d1-json-query"
-        ],
+        "sourceIds": ["dp800-d1-json-query"],
         "evidenceSummary": "Omitting the path returns the whole JSON object, not the required scalar message text."
       }
     ]
@@ -55,9 +46,7 @@
         "claimRepresented": "This option proposes WITH (sku nvarchar(20))",
         "whyIncorrectInContext": "Default mapping selects lowercase sku, which is absent; case-insensitive database collation does not change the BIN2 property comparison.",
         "couldBeCorrectWhen": "The JSON producer uses the exact lowercase property name sku.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "Default mapping selects lowercase sku, which is absent; case-insensitive database collation does not change the BIN2 property comparison."
       },
       {
@@ -65,9 +54,7 @@
         "claimRepresented": "This option proposes WITH (sku nvarchar(20) '$.SKU[0]')",
         "whyIncorrectInContext": "This requests an array element, but the actual uppercase SKU property contains a scalar string rather than an array.",
         "couldBeCorrectWhen": "The SKU property is an array and its first element is the identifier to extract.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "This requests an array element, but the actual uppercase SKU property contains a scalar string rather than an array."
       },
       {
@@ -75,9 +62,7 @@
         "claimRepresented": "This option proposes WITH (sku nvarchar(20) '$.SKU')",
         "whyIncorrectInContext": "Not incorrect in this context. An explicit column path can preserve the SQL alias while matching the actual uppercase JSON key exactly.",
         "couldBeCorrectWhen": "The JSON property is uppercase SKU but the SQL output alias must remain lowercase sku.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "An explicit column path can preserve the SQL alias while matching the actual uppercase JSON key exactly."
       },
       {
@@ -85,9 +70,7 @@
         "claimRepresented": "This option proposes WITH (sku nvarchar(20) '$.category')",
         "whyIncorrectInContext": "This returns the existing category text spare, not the product identifier.",
         "couldBeCorrectWhen": "The intended result is the category property under the chosen SQL output alias.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "This returns the existing category text spare, not the product identifier."
       }
     ]
@@ -101,9 +84,7 @@
         "claimRepresented": "This option proposes detail nvarchar(max) '$.detail' AS JSON",
         "whyIncorrectInContext": "Not incorrect in this context. AS JSON selects the nested object as a JSON fragment and requires the nvarchar(max) output type.",
         "couldBeCorrectWhen": "An inner object or array must be preserved as JSON in an explicit OPENJSON schema.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "AS JSON selects the nested object as a JSON fragment and requires the nvarchar(max) output type."
       },
       {
@@ -111,9 +92,7 @@
         "claimRepresented": "This option proposes detail nvarchar(max) '$.detail'",
         "whyIncorrectInContext": "Without AS JSON the projection expects a scalar; this object yields NULL in the default lax mode.",
         "couldBeCorrectWhen": "The detail property is a scalar string rather than an object.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "Without AS JSON the projection expects a scalar; this object yields NULL in the default lax mode."
       },
       {
@@ -121,9 +100,7 @@
         "claimRepresented": "This option proposes detail int '$.detail.items'",
         "whyIncorrectInContext": "This extracts only the numeric items field and returns an integer, losing the required object.",
         "couldBeCorrectWhen": "Only the item's numeric count is required as a typed SQL column.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "This extracts only the numeric items field and returns an integer, losing the required object."
       },
       {
@@ -131,9 +108,7 @@
         "claimRepresented": "This option proposes detail nvarchar(max) '$.detail.memo'",
         "whyIncorrectInContext": "This extracts only the scalar memo text, not the complete object.",
         "couldBeCorrectWhen": "Only the memo field is required as SQL text.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "This extracts only the scalar memo text, not the complete object."
       }
     ]
@@ -147,9 +122,7 @@
         "claimRepresented": "This option proposes B2",
         "whyIncorrectInContext": "A dotted SQL column name is matched literally; it does not imply the nested path $.billing.code.",
         "couldBeCorrectWhen": "The WITH column supplies the explicit path '$.billing.code' for this document.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "A dotted SQL column name is matched literally; it does not imply the nested path $.billing.code."
       },
       {
@@ -157,9 +130,7 @@
         "claimRepresented": "This option proposes SQL NULL",
         "whyIncorrectInContext": "The exact literal billing.code key exists and contains a scalar, so the default mapping finds A7.",
         "couldBeCorrectWhen": "Only the nested billing object exists and the literal dotted key is absent under the default lax mapping.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "The exact literal billing.code key exists and contains a scalar, so the default mapping finds A7."
       },
       {
@@ -167,9 +138,7 @@
         "claimRepresented": "This option proposes {\"code\":\"B2\"}",
         "whyIncorrectInContext": "The column has neither a path to billing nor AS JSON, so it does not return that nested object.",
         "couldBeCorrectWhen": "A nvarchar(max) AS JSON column explicitly selects '$.billing'.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "The column has neither a path to billing nor AS JSON, so it does not return that nested object."
       },
       {
@@ -177,9 +146,7 @@
         "claimRepresented": "This option proposes A7",
         "whyIncorrectInContext": "Not incorrect in this context. With no column_path override, OPENJSON matches the WITH column name billing.code against the exact top-level key of that name.",
         "couldBeCorrectWhen": "The input has that literal dotted key and the explicit schema uses the same column name without a path override.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "With no column_path override, OPENJSON matches the WITH column name billing.code against the exact top-level key of that name."
       }
     ]
@@ -193,9 +160,7 @@
         "claimRepresented": "This option proposes WHERE [type] = 1",
         "whyIncorrectInContext": "Default-schema type 1 identifies JSON strings, including the quoted value in label.",
         "couldBeCorrectWhen": "The validator should select string tokens rather than numbers.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "Default-schema type 1 identifies JSON strings, including the quoted value in label."
       },
       {
@@ -203,9 +168,7 @@
         "claimRepresented": "This option proposes WHERE [type] = 2",
         "whyIncorrectInContext": "Not incorrect in this context. Default-schema type 2 identifies numeric JSON values such as count, independently of the returned value column being text.",
         "couldBeCorrectWhen": "The validator must distinguish JSON numbers from numeric-looking strings.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "Default-schema type 2 identifies numeric JSON values such as count, independently of the returned value column being text."
       },
       {
@@ -213,9 +176,7 @@
         "claimRepresented": "This option proposes WHERE [type] = 3",
         "whyIncorrectInContext": "Type 3 identifies JSON true/false tokens, not numbers.",
         "couldBeCorrectWhen": "The validator should select boolean tokens.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "Type 3 identifies JSON true/false tokens, not numbers."
       },
       {
@@ -223,9 +184,7 @@
         "claimRepresented": "This option proposes WHERE [type] = 0",
         "whyIncorrectInContext": "Type 0 identifies JSON null values, not numbers.",
         "couldBeCorrectWhen": "The validator should select explicitly null-valued properties.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ],
+        "sourceIds": ["dp800-d1-openjson"],
         "evidenceSummary": "Type 0 identifies JSON null values, not numbers."
       }
     ]
@@ -239,9 +198,7 @@
         "claimRepresented": "This option proposes @detail",
         "whyIncorrectInContext": "A plain text expression is not marked as a JSON fragment; the cited JSON_QUERY guidance requires wrapping preformatted JSON for FOR JSON output.",
         "couldBeCorrectWhen": "The response should contain the document as a JSON string rather than embed its structure.",
-        "sourceIds": [
-          "dp800-d1-json-query"
-        ],
+        "sourceIds": ["dp800-d1-json-query"],
         "evidenceSummary": "A plain text expression is not marked as a JSON fragment; the cited JSON_QUERY guidance requires wrapping preformatted JSON for FOR JSON output."
       },
       {
@@ -249,9 +206,7 @@
         "claimRepresented": "This option proposes JSON_VALUE(@detail, '$.code')",
         "whyIncorrectInContext": "This extracts only the scalar code, losing the required object and units field.",
         "couldBeCorrectWhen": "The detail field should contain only the scalar code text.",
-        "sourceIds": [
-          "dp800-d1-json-value"
-        ],
+        "sourceIds": ["dp800-d1-json-value"],
         "evidenceSummary": "This extracts only the scalar code, losing the required object and units field."
       },
       {
@@ -259,9 +214,7 @@
         "claimRepresented": "This option proposes JSON_QUERY(@detail)",
         "whyIncorrectInContext": "Not incorrect in this context. With no path it returns the entire object as a valid JSON fragment; FOR JSON does not escape a JSON_QUERY fragment as plain text.",
         "couldBeCorrectWhen": "A validated existing JSON object or array must be nested in FOR JSON output.",
-        "sourceIds": [
-          "dp800-d1-json-query"
-        ],
+        "sourceIds": ["dp800-d1-json-query"],
         "evidenceSummary": "With no path it returns the entire object as a valid JSON fragment; FOR JSON does not escape a JSON_QUERY fragment as plain text."
       },
       {
@@ -269,9 +222,7 @@
         "claimRepresented": "This option proposes JSON_VALUE(@detail, '$.units')",
         "whyIncorrectInContext": "This extracts only the scalar units value as text, not the full structured detail object.",
         "couldBeCorrectWhen": "Only the units scalar is needed as the field value.",
-        "sourceIds": [
-          "dp800-d1-json-value"
-        ],
+        "sourceIds": ["dp800-d1-json-value"],
         "evidenceSummary": "This extracts only the scalar units value as text, not the full structured detail object."
       }
     ]
@@ -285,9 +236,7 @@
         "claimRepresented": "This option proposes JSON_MODIFY(@payload, 'strict $.contact', NULL)",
         "whyIncorrectInContext": "Not incorrect in this context. For an existing path, strict mode with SQL NULL sets the existing property's value to JSON null.",
         "couldBeCorrectWhen": "An existing property must remain present with a JSON null value.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "For an existing path, strict mode with SQL NULL sets the existing property's value to JSON null."
       },
       {
@@ -295,9 +244,7 @@
         "claimRepresented": "This option proposes JSON_MODIFY(@payload, 'lax $.contact', NULL)",
         "whyIncorrectInContext": "For an existing key, lax mode with SQL NULL deletes the property rather than retaining it.",
         "couldBeCorrectWhen": "The patch should remove the contact property entirely.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "For an existing key, lax mode with SQL NULL deletes the property rather than retaining it."
       },
       {
@@ -305,9 +252,7 @@
         "claimRepresented": "This option proposes JSON_MODIFY(@payload, '$.contact', N'null')",
         "whyIncorrectInContext": "The nvarchar new value is text, so this stores the JSON string \"null\", not the JSON null token.",
         "couldBeCorrectWhen": "The literal word null is intentionally stored as a string.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "The nvarchar new value is text, so this stores the JSON string \"null\", not the JSON null token."
       },
       {
@@ -315,9 +260,7 @@
         "claimRepresented": "This option proposes JSON_MODIFY(@payload, '$.contact', N'')",
         "whyIncorrectInContext": "This stores an empty JSON string, not a null value.",
         "couldBeCorrectWhen": "The API contract distinguishes an empty string from null and requires the empty string.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "This stores an empty JSON string, not a null value."
       }
     ]
@@ -331,9 +274,7 @@
         "claimRepresented": "This option proposes An attempt property with the JSON number 3",
         "whyIncorrectInContext": "The supplied new value is nvarchar, so it is stored as text rather than automatically treated as a JSON number.",
         "couldBeCorrectWhen": "The newValue argument is a numeric SQL value, such as an explicit integer cast of the parameter.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "The supplied new value is nvarchar, so it is stored as text rather than automatically treated as a JSON number."
       },
       {
@@ -341,9 +282,7 @@
         "claimRepresented": "This option proposes An attempt property with the JSON number 2",
         "whyIncorrectInContext": "The existing path is updated with a nonnull new value; the old numeric value is not retained.",
         "couldBeCorrectWhen": "The supplied replacement is the numeric SQL value 2.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "The existing path is updated with a nonnull new value; the old numeric value is not retained."
       },
       {
@@ -351,9 +290,7 @@
         "claimRepresented": "This option proposes No attempt property, leaving an empty object",
         "whyIncorrectInContext": "The new value is nonnull text; lax-mode deletion applies to a SQL NULL new value instead.",
         "couldBeCorrectWhen": "The call supplies SQL NULL in lax mode to delete this existing key.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "The new value is nonnull text; lax-mode deletion applies to a SQL NULL new value instead."
       },
       {
@@ -361,9 +298,7 @@
         "claimRepresented": "This option proposes An attempt property with the JSON string \"3\"",
         "whyIncorrectInContext": "Not incorrect in this context. The product contract and numeric-cast example establish that a text-typed new value is surrounded by JSON string quotes.",
         "couldBeCorrectWhen": "The caller supplies the nvarchar text 3, as in this code.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "The product contract and numeric-cast example establish that a text-typed new value is surrounded by JSON string quotes."
       }
     ]
@@ -377,9 +312,7 @@
         "claimRepresented": "This option proposes JSON_MODIFY(@payload, '$.stages', N'verify')",
         "whyIncorrectInContext": "This replaces the entire stages value with one string rather than appending to its array.",
         "couldBeCorrectWhen": "The document contract replaces the stages array with a single scalar stage.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "This replaces the entire stages value with one string rather than appending to its array."
       },
       {
@@ -387,9 +320,7 @@
         "claimRepresented": "This option proposes JSON_MODIFY(@payload, 'append $.stages', N'verify')",
         "whyIncorrectInContext": "Not incorrect in this context. The append modifier adds the supplied value to the referenced existing array while preserving its existing elements.",
         "couldBeCorrectWhen": "A new stage should be appended to the known array.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "The append modifier adds the supplied value to the referenced existing array while preserving its existing elements."
       },
       {
@@ -397,9 +328,7 @@
         "claimRepresented": "This option proposes JSON_MODIFY(@payload, 'strict $.stages', NULL)",
         "whyIncorrectInContext": "Strict mode with SQL NULL replaces the existing array value with JSON null.",
         "couldBeCorrectWhen": "The stages key must stay present but its value should become JSON null.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "Strict mode with SQL NULL replaces the existing array value with JSON null."
       },
       {
@@ -407,9 +336,7 @@
         "claimRepresented": "This option proposes JSON_MODIFY(@payload, 'lax $.stages', NULL)",
         "whyIncorrectInContext": "Lax mode with SQL NULL removes the existing stages property.",
         "couldBeCorrectWhen": "The stages property should be removed from the document.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ],
+        "sourceIds": ["dp800-d1-json-modify"],
         "evidenceSummary": "Lax mode with SQL NULL removes the existing stages property."
       }
     ]
@@ -423,9 +350,7 @@
         "claimRepresented": "This option proposes JSON_OBJECT('code':@code, 'retry':@retry, 'comment':@comment NULL ON NULL)",
         "whyIncorrectInContext": "This retains comment with a JSON null value, which differs from the required omission.",
         "couldBeCorrectWhen": "The API requires the optional key to remain explicitly present with JSON null.",
-        "sourceIds": [
-          "dp800-d1-json-object"
-        ],
+        "sourceIds": ["dp800-d1-json-object"],
         "evidenceSummary": "This retains comment with a JSON null value, which differs from the required omission."
       },
       {
@@ -433,9 +358,7 @@
         "claimRepresented": "This option proposes JSON_OBJECT('code':@code, 'retry':@retry, 'comment':@comment)",
         "whyIncorrectInContext": "JSON_OBJECT defaults to NULL ON NULL, so omitting the clause still retains comment as JSON null.",
         "couldBeCorrectWhen": "Default explicit-null construction matches the consumer's contract.",
-        "sourceIds": [
-          "dp800-d1-json-object"
-        ],
+        "sourceIds": ["dp800-d1-json-object"],
         "evidenceSummary": "JSON_OBJECT defaults to NULL ON NULL, so omitting the clause still retains comment as JSON null."
       },
       {
@@ -443,9 +366,7 @@
         "claimRepresented": "This option proposes JSON_OBJECT('code':@code, 'retry':@retry, 'comment':@comment ABSENT ON NULL)",
         "whyIncorrectInContext": "Not incorrect in this context. This omits the entire key only when its SQL value is NULL; code and numeric zero are nonnull and remain.",
         "couldBeCorrectWhen": "Only null-valued optional keys should be absent from the constructed object.",
-        "sourceIds": [
-          "dp800-d1-json-object"
-        ],
+        "sourceIds": ["dp800-d1-json-object"],
         "evidenceSummary": "This omits the entire key only when its SQL value is NULL; code and numeric zero are nonnull and remain."
       },
       {
@@ -453,9 +374,7 @@
         "claimRepresented": "This option proposes JSON_OBJECT('code':@code, 'retry':@retry, 'comment':N'' ABSENT ON NULL)",
         "whyIncorrectInContext": "The supplied empty string is nonnull, so this retains comment as an empty JSON string instead of omitting the key.",
         "couldBeCorrectWhen": "An empty comment string should be explicitly included in the result.",
-        "sourceIds": [
-          "dp800-d1-json-object"
-        ],
+        "sourceIds": ["dp800-d1-json-object"],
         "evidenceSummary": "The supplied empty string is nonnull, so this retains comment as an empty JSON string instead of omitting the key."
       }
     ]
@@ -469,9 +388,7 @@
         "claimRepresented": "This option proposes JSON_ARRAYAGG(Label ORDER BY Position NULL ON NULL)",
         "whyIncorrectInContext": "Not incorrect in this context. Aggregate-local ordering uses Position, and NULL ON NULL keeps the missing label as a JSON null element.",
         "couldBeCorrectWhen": "Positional order and a placeholder for each SQL NULL must both be preserved.",
-        "sourceIds": [
-          "dp800-d1-json-arrayagg"
-        ],
+        "sourceIds": ["dp800-d1-json-arrayagg"],
         "evidenceSummary": "Aggregate-local ordering uses Position, and NULL ON NULL keeps the missing label as a JSON null element."
       },
       {
@@ -479,9 +396,7 @@
         "claimRepresented": "This option proposes JSON_ARRAYAGG(Label ORDER BY Position ABSENT ON NULL)",
         "whyIncorrectInContext": "Ordering is correct but ABSENT ON NULL removes the middle element, producing only the two strings.",
         "couldBeCorrectWhen": "The export should retain positional ordering but omit missing labels.",
-        "sourceIds": [
-          "dp800-d1-json-arrayagg"
-        ],
+        "sourceIds": ["dp800-d1-json-arrayagg"],
         "evidenceSummary": "Ordering is correct but ABSENT ON NULL removes the middle element, producing only the two strings."
       },
       {
@@ -489,9 +404,7 @@
         "claimRepresented": "This option proposes JSON_ARRAYAGG(Label ORDER BY Position DESC NULL ON NULL)",
         "whyIncorrectInContext": "The null slot remains, but descending Position reverses the two labels and does not produce the requested array.",
         "couldBeCorrectWhen": "The consumer requests reverse positional order while retaining null elements.",
-        "sourceIds": [
-          "dp800-d1-json-arrayagg"
-        ],
+        "sourceIds": ["dp800-d1-json-arrayagg"],
         "evidenceSummary": "The null slot remains, but descending Position reverses the two labels and does not produce the requested array."
       },
       {
@@ -499,9 +412,7 @@
         "claimRepresented": "This option proposes JSON_ARRAYAGG(Label ORDER BY Position DESC ABSENT ON NULL)",
         "whyIncorrectInContext": "This both reverses the positional order and removes the null element.",
         "couldBeCorrectWhen": "The consumer requires descending positional order and omission of SQL NULL labels.",
-        "sourceIds": [
-          "dp800-d1-json-arrayagg"
-        ],
+        "sourceIds": ["dp800-d1-json-arrayagg"],
         "evidenceSummary": "This both reverses the positional order and removes the null element."
       }
     ]

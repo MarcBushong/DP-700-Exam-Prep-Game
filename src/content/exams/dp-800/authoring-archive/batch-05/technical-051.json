@@ -31,33 +31,25 @@
         "choiceId": "a",
         "assessment": "supported",
         "rationale": "The exact argument contract applies the whole-number percentage to the character-count chunk size: 200*25/100=50. The configured integers are valid, and the stem asks what adjacent full-sized chunks request rather than how a first/short final chunk behaves. Literal confirming context: the displayed SOURCE=@body, CHUNK_TYPE=FIXED, CHUNK_SIZE=200, OVERLAP=25 call with sufficiently long ASCII character text requests 50 preceding characters. A second valid configuration, CHUNK_SIZE=100 and OVERLAP=50, would also request the literal 50-character answer, but is not needed to derive the key. This is documentary arithmetic, not observed SQL output or a token-count assertion.",
-        "sourceIds": [
-          "dp800-d3-generate-chunks"
-        ]
+        "sourceIds": ["dp800-d3-generate-chunks"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "OVERLAP=25 is a percentage, not an absolute character count. Applied to the stated 200 characters, it requests 50 rather than 25. A valid literal positive countercontext is SOURCE=@body, CHUNK_TYPE=FIXED, CHUNK_SIZE=100, OVERLAP=25 with sufficiently long character text: 100*25/100=25, so the unchanged answer '25 characters from the preceding text' is correct there. Both numeric arguments are documented valid integers, and 25 is inside the permitted percentage range. That different chunk size is excluded by the frozen code.",
-        "sourceIds": [
-          "dp800-d3-generate-chunks"
-        ]
+        "sourceIds": ["dp800-d3-generate-chunks"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "One hundred preceding characters would be half of a 200-character chunk, not the configured quarter. A valid literal positive countercontext keeps SOURCE=@body, CHUNK_TYPE=FIXED and CHUNK_SIZE=200 but sets OVERLAP=50: 200*50/100=100. Fifty is explicitly the inclusive maximum allowed percentage, so this alternative does not require an invalid OVERLAP=100 or a token interpretation. It validates the exact 100-character choice only for the different configuration, not the candidate's OVERLAP=25.",
-        "sourceIds": [
-          "dp800-d3-generate-chunks"
-        ]
+        "sourceIds": ["dp800-d3-generate-chunks"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "The code explicitly requests a positive overlap, so the documented zero-overlap default does not apply to the adjacent full-sized chunks asked about. A valid literal positive countercontext uses SOURCE=@body, CHUNK_TYPE=FIXED, CHUNK_SIZE=200 and OVERLAP=0, or omits OVERLAP entirely. The documented default and the inclusive lower bound then request no preceding characters. The first chunk's lack of preceding text is not an alternate answer to the stated adjacent-chunk configuration question, and no NULL or negative argument is proposed as a valid substitute.",
-        "sourceIds": [
-          "dp800-d3-generate-chunks"
-        ]
+        "sourceIds": ["dp800-d3-generate-chunks"]
       }
     ],
     "checks": {

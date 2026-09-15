@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { readRawPackage } from '../scripts/content-files';
 import prospective from '../docs/dp-420-prospective-objectives.json';
 import groundingStatus from '../docs/dp-420-grounding-status.json';
+import authoringArchive from '../src/content/exams/dp-800/authoring-archive/index.json';
 import {
   credentials,
   filterCredentials,
@@ -184,13 +185,40 @@ describe('DP credential integration and prospective-map separation', () => {
       ).toContain('dp-800');
     expect(getDungeonPackage('dp-700')?.questions).toHaveLength(162);
     expect(getDungeonPackage('github-copilot')?.questions).toHaveLength(149);
-    expect(getDungeonPackage('github-agentic-ai-developer')?.questions).toEqual(
-      [],
-    );
+    expect(
+      getDungeonPackage('github-agentic-ai-developer')?.questions,
+    ).toHaveLength(136);
   });
 });
 
 describe('DP-800 reviewed production content and shared runtime', () => {
+  it('keeps frozen unfinished authoring outside the gameplay package', () => {
+    const dungeon = dp800();
+    expect(authoringArchive.uniqueAuthoredQuestionIds).toBe(102);
+    expect(dungeon.allQuestions).toHaveLength(
+      authoringArchive.installedRecords,
+    );
+    expect(dungeon.questions).toHaveLength(authoringArchive.verified);
+    expect(
+      dungeon.allQuestions.filter(
+        (question) => question.verificationStatus === 'manual-review-required',
+      ),
+    ).toHaveLength(authoringArchive.manualReviewRequired);
+    const installedIds = new Set(
+      dungeon.allQuestions.map((question) => question.id),
+    );
+    const deferredIds = new Set(
+      authoringArchive.records
+        .filter((record) => !installedIds.has(record.questionId))
+        .map((record) => record.questionId),
+    );
+    expect(deferredIds.size).toBe(authoringArchive.outsideGameplayPackage);
+    expect(
+      dungeon.questions.some((question) => deferredIds.has(question.id)),
+    ).toBe(false);
+    expect(dungeon.readiness.gauntlet).toBe(false);
+  });
+
   it('opens Study only with genuine three-pass content and complete major-floor coverage', () => {
     const dungeon = dp800();
     expect(dungeon.readiness.study).toBe(true);

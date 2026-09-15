@@ -21,9 +21,7 @@
         "text": "Include the seed INSERT statements as ordinary compiled schema-object files"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Use an idempotent, versioned post-deployment data script.",
     "deepExplanation": "Both conditions matter: the table must exist before seeding, and subsequent executions must handle rows already present. The answer describes the required behavior, not a guarantee that any arbitrary MERGE implementation is safe.",
     "whyOtherAnswersAreWrong": {
@@ -36,9 +34,7 @@
     "subskill": "Create and manage reference/static data in source control",
     "difficulty": "advanced",
     "complexity": "scenario-based",
-    "sourceIds": [
-      "dp800-d2-reference-data"
-    ],
+    "sourceIds": ["dp800-d2-reference-data"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/implement-cicd-sql-database-projects/03-configure-source-control-manage-reference-data"
     ],
@@ -48,11 +44,7 @@
     "generatedAt": "2026-09-14T23:49:44.600Z",
     "lastValidatedAt": "2026-09-14T23:49:44.600Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-database-projects",
-      "reference-data",
-      "postdeployment"
-    ],
+    "tags": ["sql-database-projects", "reference-data", "postdeployment"],
     "conceptId": "sql-project-postdeployment-reference-data-idempotence",
     "verificationStatus": "manual-review-required",
     "verifiedAgainstSourceIds": [],
@@ -83,33 +75,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The target table is created by the deployment plan and is absent when the proposed predeployment seed runs. Predeployment preparation of existing data is a legitimate different use, not a rescue of this literal choice. dp800-d2-reference-data, decoded lines 75-78.",
-        "sourceIds": [
-          "dp800-d2-reference-data"
-        ]
+        "sourceIds": ["dp800-d2-reference-data"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "Repeated unconditional insertion of the same retained primary keys does not reconcile rows and is explicitly documented to fail on the next deployment. dp800-d2-reference-data, decoded lines 114-132.",
-        "sourceIds": [
-          "dp800-d2-reference-data"
-        ]
+        "sourceIds": ["dp800-d2-reference-data"]
       },
       {
         "choiceId": "c",
         "assessment": "supported",
         "rationale": "Post-deployment execution waits for schema creation, and updating matched keys while inserting missing keys handles repeat deployments. The abstract behavior is correct without endorsing arbitrary concurrent MERGE implementations. dp800-d2-reference-data, decoded lines 73-89 and 114-132.",
-        "sourceIds": [
-          "dp800-d2-reference-data"
-        ]
+        "sourceIds": ["dp800-d2-reference-data"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "The source explicitly states that included seed files must be removed from normal schema compilation or the build fails. Declarative schema files are valid for object definitions, not bare reference-data INSERT scripts. dp800-d2-reference-data, decoded lines 73-75 and 95-110.",
-        "sourceIds": [
-          "dp800-d2-reference-data"
-        ]
+        "sourceIds": ["dp800-d2-reference-data"]
       }
     ],
     "checks": {
@@ -133,40 +117,30 @@
     "credentialId": "dp-800",
     "objectiveVersion": "March 12, 2026",
     "questionFingerprint": "6cb97ba2c6a420b6ee2a8963a5b547f06374e65911af60cc951743812bb5c8a8",
-    "sourceIds": [
-      "dp800-d2-reference-data"
-    ],
+    "sourceIds": ["dp800-d2-reference-data"],
     "retrievedAt": "2026-09-14T22:31:52.055Z",
     "lastValidatedAt": "2026-09-14T23:49:44.600Z",
     "answerEvidence": [
       {
         "choiceId": "c",
-        "sourceIds": [
-          "dp800-d2-reference-data"
-        ],
+        "sourceIds": ["dp800-d2-reference-data"],
         "summary": "Post-deployment execution waits for schema creation, and updating matched keys while inserting missing keys handles repeat deployments. The abstract behavior is correct without endorsing arbitrary concurrent MERGE implementations. dp800-d2-reference-data, decoded lines 73-89 and 114-132."
       }
     ],
     "distractorEvidence": [
       {
         "choiceId": "a",
-        "sourceIds": [
-          "dp800-d2-reference-data"
-        ],
+        "sourceIds": ["dp800-d2-reference-data"],
         "summary": "The target table is created by the deployment plan and is absent when the proposed predeployment seed runs. Predeployment preparation of existing data is a legitimate different use, not a rescue of this literal choice. dp800-d2-reference-data, decoded lines 75-78."
       },
       {
         "choiceId": "b",
-        "sourceIds": [
-          "dp800-d2-reference-data"
-        ],
+        "sourceIds": ["dp800-d2-reference-data"],
         "summary": "Repeated unconditional insertion of the same retained primary keys does not reconcile rows and is explicitly documented to fail on the next deployment. dp800-d2-reference-data, decoded lines 114-132."
       },
       {
         "choiceId": "d",
-        "sourceIds": [
-          "dp800-d2-reference-data"
-        ],
+        "sourceIds": ["dp800-d2-reference-data"],
         "summary": "The source explicitly states that included seed files must be removed from normal schema compilation or the build fails. Declarative schema files are valid for object definitions, not bare reference-data INSERT scripts. dp800-d2-reference-data, decoded lines 73-75 and 95-110."
       }
     ],
@@ -203,30 +177,22 @@
       "claims": [
         {
           "choiceId": "a",
-          "sourceIds": [
-            "dp800-d2-reference-data"
-          ],
+          "sourceIds": ["dp800-d2-reference-data"],
           "summary": "Predeployment scripts run before schema deployment, so the lookup table does not yet exist in the stated initial deployment."
         },
         {
           "choiceId": "b",
-          "sourceIds": [
-            "dp800-d2-reference-data"
-          ],
+          "sourceIds": ["dp800-d2-reference-data"],
           "summary": "Repeated inserts of stable existing primary keys can fail on subsequent deployments; the script is not idempotent."
         },
         {
           "choiceId": "c",
-          "sourceIds": [
-            "dp800-d2-reference-data"
-          ],
+          "sourceIds": ["dp800-d2-reference-data"],
           "summary": "Post-deployment runs after the table is created, and matching existing keys while inserting missing ones provides the required repeatable reference-data reconciliation."
         },
         {
           "choiceId": "d",
-          "sourceIds": [
-            "dp800-d2-reference-data"
-          ],
+          "sourceIds": ["dp800-d2-reference-data"],
           "summary": "Reference-data scripts sit outside the compiled schema model; treating the seed DML as a normal schema object does not implement the post-deployment data lifecycle."
         }
       ]
@@ -256,33 +222,25 @@
             "choiceId": "a",
             "assessment": "contradicted",
             "rationale": "Predeployment executes before schema changes create the lookup table on the first deployment. Seeding that not-yet-created table therefore has the wrong ordering. dp800-d2-reference-data, decoded lines 75-78.",
-            "sourceIds": [
-              "dp800-d2-reference-data"
-            ]
+            "sourceIds": ["dp800-d2-reference-data"]
           },
           {
             "choiceId": "b",
             "assessment": "contradicted",
             "rationale": "Post-deployment scripts run again on subsequent deployments. Repeating unconditional INSERTs for retained primary keys causes duplicate-key violations instead of reconciliation. dp800-d2-reference-data, decoded lines 114-132.",
-            "sourceIds": [
-              "dp800-d2-reference-data"
-            ]
+            "sourceIds": ["dp800-d2-reference-data"]
           },
           {
             "choiceId": "c",
             "assessment": "supported",
             "rationale": "A versioned post-deployment script runs after table creation and reconciles stable keys by updating existing rows and inserting missing ones. This satisfies both initial deployment and rerun behavior. dp800-d2-reference-data, decoded lines 73-89 and 114-132.",
-            "sourceIds": [
-              "dp800-d2-reference-data"
-            ]
+            "sourceIds": ["dp800-d2-reference-data"]
           },
           {
             "choiceId": "d",
             "assessment": "contradicted",
             "rationale": "Reference-data DML belongs in deployment scripts outside the compiled schema model. SDK-included data files must be excluded from normal schema compilation, not treated as ordinary schema objects. dp800-d2-reference-data, decoded lines 75 and 95-110.",
-            "sourceIds": [
-              "dp800-d2-reference-data"
-            ]
+            "sourceIds": ["dp800-d2-reference-data"]
           }
         ],
         "checks": {
@@ -316,9 +274,7 @@
           "claimRepresented": "A seed script against a not-yet-created table can run before the deployment plan creates that table.",
           "whyIncorrectInContext": "The required target does not exist at the proposed time. This is an ordering failure, not merely a less-preferred deployment convention.",
           "couldBeCorrectWhen": "Predeployment scripts legitimately migrate existing data or drop constraints before schema changes. That documented alternate does not validate this literal choice, which embeds seeding a not-yet-created table. Making it valid requires changing that claim, not merely supplying another ordinary deployment context.",
-          "sourceIds": [
-            "dp800-d2-reference-data"
-          ],
+          "sourceIds": ["dp800-d2-reference-data"],
           "evidenceSummary": "dp800-d2-reference-data, decoded lines 75-78, documents pre/post execution order and legitimate predeployment preparation. It does not supply a valid context for seeding a nonexistent target."
         },
         {
@@ -326,9 +282,7 @@
           "claimRepresented": "Unconditional INSERTs of the same stable keys can safely reconcile retained reference rows after every deployment.",
           "whyIncorrectInContext": "After the initial seed, retained primary keys already exist. Repeating those INSERTs causes duplicate-key violations rather than updating the existing reference rows.",
           "couldBeCorrectWhen": "Plain INSERT is appropriate for initial population when the target keys are absent. It is not an evidenced repeatable strategy for the retained-table lifecycle stated here; a fresh-target-only lifecycle would change that premise.",
-          "sourceIds": [
-            "dp800-d2-reference-data"
-          ],
+          "sourceIds": ["dp800-d2-reference-data"],
           "evidenceSummary": "dp800-d2-reference-data, decoded lines 114-132, explicitly contrasts the second-deployment duplicate-key failure with updating matched keys and inserting missing ones."
         },
         {
@@ -336,9 +290,7 @@
           "claimRepresented": "A versioned post-deployment script can reconcile existing and missing reference keys after the schema exists.",
           "whyIncorrectInContext": "NOT incorrect: post-deployment timing addresses first creation, while update-existing/insert-missing behavior addresses subsequent retained rows. Both requirements are met.",
           "couldBeCorrectWhen": "It is correct for the specified sequential deployment lifecycle with stable keys and compatible reference data. It does not guarantee that arbitrary MERGE code, triggers or concurrent deployments are globally race-free or side-effect-free.",
-          "sourceIds": [
-            "dp800-d2-reference-data"
-          ],
+          "sourceIds": ["dp800-d2-reference-data"],
           "evidenceSummary": "dp800-d2-reference-data, decoded lines 73-89 and 114-132, directly supports versioned deployment data, post-deployment ordering and key-based reconciliation."
         },
         {
@@ -346,9 +298,7 @@
           "claimRepresented": "Bare seed INSERT statements belong in ordinary compiled SQL schema-object files.",
           "whyIncorrectInContext": "The source explicitly places deployment data scripts outside the compiled schema model and says compilation of included seed files fails unless they are excluded.",
           "couldBeCorrectWhen": "Ordinary compiled files are appropriate for declarative table, view or stored-procedure definitions. That is a legitimate adjacent use of the compiled model, but not a context in which this literal bare-seed-DML choice becomes correct. No such supported alternate was found in the frozen evidence.",
-          "sourceIds": [
-            "dp800-d2-reference-data"
-          ],
+          "sourceIds": ["dp800-d2-reference-data"],
           "evidenceSummary": "dp800-d2-reference-data, decoded lines 73-75 and 95-110, distinguishes schema objects from deployment scripts and explicitly requires Build Remove for included seed files."
         }
       ],

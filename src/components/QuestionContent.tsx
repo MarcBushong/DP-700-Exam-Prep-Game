@@ -11,6 +11,14 @@ import { HostReaction } from '../features/personality/HostReaction';
 import { useReaction } from '../features/personality/useReaction';
 import type { Reaction } from '../features/personality/reactions';
 
+const authoringTags = new Set([
+  'original-grounded-candidate',
+  'original-pass1',
+  'pass-1-candidate',
+  'pass1-candidate',
+  'pass1-only',
+]);
+
 export function QuestionMetadata({
   question,
   taxonomySnapshot,
@@ -44,7 +52,10 @@ export function QuestionMetadata({
   return (
     <div className="question-metadata">
       <div className="dungeon-origin" data-dungeon-id={id}>
-        <span>{credential?.examCode ?? id}</span>
+        <span>
+          {credential?.examCode ?? id}
+          {credential?.status === 'beta' ? ' · BETA' : ''}
+        </span>
         {!neutral && (
           <span>· {credential?.dungeonName ?? 'Historical dungeon'}</span>
         )}
@@ -69,11 +80,13 @@ export function QuestionMetadata({
         {question.featureStatus === 'Preview' && (
           <li className="preview-tag">Preview feature</li>
         )}
-        {question.tags.map((tag) => (
-          <li className="topic-tag" key={tag}>
-            {tag}
-          </li>
-        ))}
+        {question.tags
+          .filter((tag) => !authoringTags.has(tag))
+          .map((tag) => (
+            <li className="topic-tag" key={tag}>
+              {tag}
+            </li>
+          ))}
       </ul>
     </div>
   );

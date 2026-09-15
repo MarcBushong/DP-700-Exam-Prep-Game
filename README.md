@@ -58,7 +58,9 @@ one large bank dominate, and preserve each encounter's source and floor scores.
 A catalog entry is not an open dungeon. By default, Study Runs require at least
 25 verified encounters and every major floor; Gauntlets require at least 75,
 skill breadth, boss-tier content, and no blocking failures. Sealed, stale,
-retiring, beta, and insufficiently reviewed content stays out of play.
+retiring, and insufficiently reviewed content stays out of play. Beta credentials
+are sealed by default; GH-600 explicitly enables beta study access while retaining
+its beta status and all normal content-review gates.
 
 The map represents all 18 requested identifiers. AZ-800 is explicitly retiring;
 GH-600 is beta; DP-420 is sealed because a complete currently effective objective
@@ -68,46 +70,61 @@ package remain sealed even when their identity and current outline are verified.
 
 ### Playable content in this revision
 
-| Dungeon                         | Playable verified encounters | Modes                           |
-| ------------------------------- | ---------------------------: | ------------------------------- |
-| DP-700: The Fabric Depths       |                          162 | Study and Boss Gauntlet         |
-| DP-800: The Database Deeps      |                           27 | Study                           |
-| AZ-104: The Infrastructure Keep |                           30 | Study                           |
-| SC-200: The Sentinel Watch      |                           30 | Study                           |
-| AI-103: The AI Workshop         |                           30 | Study                           |
-| GH-300: The Copilot Spire       |                          149 | Study and Boss Gauntlet         |
-| GH-600: The Agentic Workshop    |                            0 | Sealed: availability unverified |
+| Dungeon                         | Playable verified encounters | Modes                             |
+| ------------------------------- | ---------------------------: | --------------------------------- |
+| DP-700: The Fabric Depths       |                          162 | Study and Boss Gauntlet           |
+| DP-800: The Database Deeps      |                           39 | Study                             |
+| AZ-104: The Infrastructure Keep |                           30 | Study                             |
+| SC-200: The Sentinel Watch      |                           30 | Study                             |
+| AI-103: The AI Workshop         |                            0 | Sealed: availability unverified   |
+| AI-200: The Application Forge   |                            0 | Sealed: availability and coverage |
+| GH-300: The Copilot Spire       |                          149 | Study and Boss Gauntlet           |
+| GH-600: The Agentic Workshop    |                          136 | Beta Study and Boss Gauntlet      |
 
-**428 playable verified encounters**. GH-300 retains three rejected duplicates
+**546 playable verified encounters**. GH-300 retains three rejected duplicates
 and three manual-review records outside gameplay. GH-600 has **136 fully
-three-pass-reviewed questions** and 13 rejected candidates, but none can enter
-gameplay until its availability gate is resolved. All major floors are sampled;
-the smaller AZ-104, SC-200, and AI-103 banks deliberately retain subskill gaps
-and keep their gauntlets locked. GH-600 remains sealed while its current
-availability cannot be verified from the permitted evidence. The other
-unready catalog entries also remain sealed. See the
-[GitHub expansion report](docs/github-expansion-report.md) for the current
-three-pass results, source evidence, exact coverage, and remaining gaps. The
+three-pass-reviewed questions** available for beta study and 13 rejected
+candidates outside gameplay. Its card, setup, and question metadata retain the
+Beta designation; opening this unofficial study bank does not assert exam GA.
+
+The strict AI review produced **29 verified / 96 manual / 24 rejected** AI-103
+records and **30 verified / 85 manual / 35 rejected** AI-200 records. The target
+of 150 verified questions **each was not achieved**; 29 is not a numeric increase
+over AI-103's earlier 30-record legacy bank. Those original records and completed
+local history are preserved. Both AI credentials remain sealed because current
+exam availability is unverified; additional count/breadth gaps remain. Source
+withdrawals and classification repairs are fully audited rather than waived.
+See the [AI expansion outcome](docs/ai-expansion-report.md) and
+[GH-600 beta evidence](docs/gh600-beta-availability.md) for exact current results
+and limitations. The [earlier GitHub expansion report](docs/github-expansion-report.md)
+preserves its original review snapshot. The
 [initial dungeon implementation report](docs/dungeon-implementation-report.md)
 records the earlier platform baseline.
 
-### DP-800 / DP-420 work on this branch
+### DP-800 limited Study release
 
-**DP-800 Study is open with 27 independently verified original encounters.**
-All 27 completed separate generation, technical verification and adversarial
+**DP-800 Study is open with 39 independently verified original encounters.**
+All 39 completed separate generation, technical verification and adversarial
 review, meet the unchanged 44/48 rubric gate, and cover all three major objective
 areas. The effective map is **March 12, 2026**; the source manifest's latest
-retrieval is **September 14, 2026, 23:41:04 UTC**, and the latest independent
-question review is **September 15, 2026, 04:27:57 UTC**. This is a limited,
+retrieval is **September 15, 2026, 06:42:29 UTC**, and the latest independent
+question review is **September 15, 2026, 15:38:13 UTC**. This is a limited,
 build-time-grounded bank, not an always-current assessment.
 
-The **150-question target is still in progress**. Boss remains locked below its
-75-question minimum. The reviewed Advanced pool currently has four distinct
-questions, so a five-question Advanced request is visibly capped at four.
+The **150-question target is not met: 111 verified questions remain**. At the
+requested DP-800-first delivery cutoff, 102 unique original questions were
+saved: 39 verified, two current manual-review records excluded from play, and
+61 outside the gameplay package without completed final approval.
+Their immutable authoring snapshots and actual partial reviews are retained in
+[`authoring-archive`](src/content/exams/dp-800/authoring-archive/).
+The cutoff is a delivery-priority decision, not a claim that official sources
+cannot support more content. Boss stays locked below the unchanged 75-question
+minimum; filtered runs are visibly capped to their real eligible pool.
 Earlier rejected and manual-review versions remain archived; their authored
 repairs restarted all three passes rather than inheriting approval.
 
-DP-420 retains a null current objective version. Its retrieved **October 6,
+**DP-420 content is deferred.** It retains a null current objective version.
+Its retrieved **October 6,
 2026** outline is prospective and stored outside gameplay; both modes remain
 locked. This is an unresolved current-map/content gap, not a claim that the
 credential itself is future-only.
@@ -115,11 +132,10 @@ credential itself is future-only.
 See the [expansion progress and historical blocked report](docs/dp-expansion-report.md) for exact
 counts, executed checks, outstanding acceptance gates and source evidence, and
 [DP content maintenance](docs/dp-content-maintenance.md) for the resume workflow.
-Local checkpoints preserve the original failing gates and subsequent genuine
-Study release. Target expansion and final acceptance are not complete; nothing
-has been pushed.
+The report distinguishes this limited Study release, unfulfilled content goals,
+historical failures, and actual final acceptance evidence.
 
-![The Certification Dungeon map with original castle artwork, hero-class selection, and five open dungeons](docs/screenshots/dungeon-map.png)
+![Earlier dungeon-map layout illustrating original castle artwork and hero-class selection; current availability is listed above](docs/screenshots/dungeon-map.png)
 
 ## Features
 
@@ -372,7 +388,8 @@ an attestation, score, rationale, or date.
 
 Only `verified` questions with complete, current review metadata enter gameplay.
 `candidate`, `manual-review-required`, `rejected`, and `stale` questions remain excluded.
-The credential must also be verified active, its current objectives must match
+The credential must also have verified active identity or explicit catalog
+authorization for verified beta study access. Its current objectives must match
 the encounter envelope, and the realism/readiness gates must pass.
 Newer source-review timestamps make affected questions stale until re-reviewed.
 Freshness is change-driven, not a guarantee that a fixed-age question is correct:

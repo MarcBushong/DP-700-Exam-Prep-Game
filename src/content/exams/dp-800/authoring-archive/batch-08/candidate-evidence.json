@@ -8,9 +8,7 @@
         "claimRepresented": "This option proposes dbo.ScaleValue(7)",
         "whyIncorrectInContext": "It passes the current numeric value explicitly instead of referencing the declared default.",
         "couldBeCorrectWhen": "The caller must always use the fixed factor 7 even if the function's default changes.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "It passes the current numeric value explicitly instead of referencing the declared default."
       },
       {
@@ -18,9 +16,7 @@
         "claimRepresented": "This option proposes dbo.ScaleValue(DEFAULT)",
         "whyIncorrectInContext": "Not incorrect in this context. SELECT-call function syntax requires DEFAULT to request a parameter's declared default.",
         "couldBeCorrectWhen": "The caller intentionally follows the function's declared default.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "SELECT-call function syntax requires DEFAULT to request a parameter's declared default."
       },
       {
@@ -28,9 +24,7 @@
         "claimRepresented": "This option proposes dbo.ScaleValue(NULL)",
         "whyIncorrectInContext": "It supplies SQL NULL rather than selecting the declared default.",
         "couldBeCorrectWhen": "The caller intentionally passes NULL and relies on the function's NULL-input behavior.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "It supplies SQL NULL rather than selecting the declared default."
       }
     ]
@@ -44,9 +38,7 @@
         "claimRepresented": "This option proposes A scalar user-defined function.",
         "whyIncorrectInContext": "It returns one scalar value rather than the required composable table.",
         "couldBeCorrectWhen": "The reusable calculation should return a single scalar.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "It returns one scalar value rather than the required composable table."
       },
       {
@@ -54,9 +46,7 @@
         "claimRepresented": "This option proposes A multistatement table-valued function with a declared return table.",
         "whyIncorrectInContext": "That form explicitly declares and populates a return table instead of using the requested inferred single-SELECT form.",
         "couldBeCorrectWhen": "Several permitted statements must populate an explicitly declared return-table variable.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "That form explicitly declares and populates a return table instead of using the requested inferred single-SELECT form."
       },
       {
@@ -64,10 +54,7 @@
         "claimRepresented": "This option proposes A stored procedure returning a result set.",
         "whyIncorrectInContext": "It can return results but is not the requested function usable directly as a joined table expression.",
         "couldBeCorrectWhen": "The caller executes a procedure to obtain a result set instead of composing a table-valued function in FROM.",
-        "sourceIds": [
-          "dp800-d1-procedures-unit",
-          "dp800-d1-tvf-unit"
-        ],
+        "sourceIds": ["dp800-d1-procedures-unit", "dp800-d1-tvf-unit"],
         "evidenceSummary": "It can return results but is not the requested function usable directly as a joined table expression."
       },
       {
@@ -75,9 +62,7 @@
         "claimRepresented": "This option proposes An inline table-valued function.",
         "whyIncorrectInContext": "Not incorrect in this context. Its single SELECT defines the TABLE return value without an associated return-table variable.",
         "couldBeCorrectWhen": "A parameterized, composable rowset is defined by one SELECT.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "Its single SELECT defines the TABLE return value without an associated return-table variable."
       }
     ]
@@ -91,9 +76,7 @@
         "claimRepresented": "This option proposes OUTER APPLY",
         "whyIncorrectInContext": "Not incorrect in this context. It evaluates the right source per left row and preserves a left row when the right result is empty.",
         "couldBeCorrectWhen": "The report must retain customers without function results.",
-        "sourceIds": [
-          "dp800-d1-from-apply"
-        ],
+        "sourceIds": ["dp800-d1-from-apply"],
         "evidenceSummary": "It evaluates the right source per left row and preserves a left row when the right result is empty."
       },
       {
@@ -101,9 +84,7 @@
         "claimRepresented": "This option proposes CROSS APPLY",
         "whyIncorrectInContext": "It drops the left row when its corresponding right result is empty.",
         "couldBeCorrectWhen": "Only customers with at least one returned order should remain.",
-        "sourceIds": [
-          "dp800-d1-from-apply"
-        ],
+        "sourceIds": ["dp800-d1-from-apply"],
         "evidenceSummary": "It drops the left row when its corresponding right result is empty."
       },
       {
@@ -111,9 +92,7 @@
         "claimRepresented": "This option proposes CROSS JOIN with an independent order set.",
         "whyIncorrectInContext": "An independent cross product does not perform the required per-customer correlation.",
         "couldBeCorrectWhen": "Every left row should be paired with every row of an independent right set.",
-        "sourceIds": [
-          "dp800-d1-from-apply"
-        ],
+        "sourceIds": ["dp800-d1-from-apply"],
         "evidenceSummary": "An independent cross product does not perform the required per-customer correlation."
       }
     ]
@@ -127,9 +106,7 @@
         "claimRepresented": "This option proposes EXEC @value = dbo.ReadMarker @marker = @status OUTPUT;",
         "whyIncorrectInContext": "This places the integer return status into @value and the marker into @status, reversing the required destinations.",
         "couldBeCorrectWhen": "@value is intentionally the return-status variable and @status is intentionally the marker-output variable.",
-        "sourceIds": [
-          "dp800-d1-procedures-unit"
-        ],
+        "sourceIds": ["dp800-d1-procedures-unit"],
         "evidenceSummary": "This places the integer return status into @value and the marker into @status, reversing the required destinations."
       },
       {
@@ -137,9 +114,7 @@
         "claimRepresented": "This option proposes EXEC dbo.ReadMarker @marker = @value OUTPUT;",
         "whyIncorrectInContext": "The output marker is captured but the procedure's return status is not assigned to @status.",
         "couldBeCorrectWhen": "Only the output value is needed.",
-        "sourceIds": [
-          "dp800-d1-procedures-unit"
-        ],
+        "sourceIds": ["dp800-d1-procedures-unit"],
         "evidenceSummary": "The output marker is captured but the procedure's return status is not assigned to @status."
       },
       {
@@ -147,9 +122,7 @@
         "claimRepresented": "This option proposes EXEC @status = dbo.ReadMarker @marker = @value OUTPUT;",
         "whyIncorrectInContext": "Not incorrect in this context. The assignment before the procedure captures the return status, and OUTPUT on the parameter captures the marker.",
         "couldBeCorrectWhen": "Both channels must reach the named variables as stated.",
-        "sourceIds": [
-          "dp800-d1-procedures-unit"
-        ],
+        "sourceIds": ["dp800-d1-procedures-unit"],
         "evidenceSummary": "The assignment before the procedure captures the return status, and OUTPUT on the parameter captures the marker."
       }
     ]
@@ -163,10 +136,7 @@
         "claimRepresented": "This option proposes INSERT an order into a persistent business table.",
         "whyIncorrectInContext": "User-defined functions cannot perform actions that modify database state; the procedure unit separately demonstrates persistent order insertion.",
         "couldBeCorrectWhen": "An authorized stored procedure performs a business-data insertion rather than a UDF.",
-        "sourceIds": [
-          "dp800-d1-create-function",
-          "dp800-d1-procedures-unit"
-        ],
+        "sourceIds": ["dp800-d1-create-function", "dp800-d1-procedures-unit"],
         "evidenceSummary": "User-defined functions cannot perform actions that modify database state; the procedure unit separately demonstrates persistent order insertion."
       },
       {
@@ -174,9 +144,7 @@
         "claimRepresented": "This option proposes INSERT rows into the function's local return-table variable.",
         "whyIncorrectInContext": "Not incorrect in this context. The reference explicitly permits INSERT, UPDATE and DELETE on local table variables, and MSTVFs populate a TABLE return variable.",
         "couldBeCorrectWhen": "The function needs to construct its returned rowset locally.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "The reference explicitly permits INSERT, UPDATE and DELETE on local table variables, and MSTVFs populate a TABLE return variable."
       },
       {
@@ -184,10 +152,7 @@
         "claimRepresented": "This option proposes Use TRY...CATCH to wrap the function body.",
         "whyIncorrectInContext": "CREATE FUNCTION excludes TRY...CATCH from allowed control-of-flow statements; the procedure unit separately demonstrates that construct.",
         "couldBeCorrectWhen": "A stored procedure needs the documented structured error handling.",
-        "sourceIds": [
-          "dp800-d1-create-function",
-          "dp800-d1-procedures-unit"
-        ],
+        "sourceIds": ["dp800-d1-create-function", "dp800-d1-procedures-unit"],
         "evidenceSummary": "CREATE FUNCTION excludes TRY...CATCH from allowed control-of-flow statements; the procedure unit separately demonstrates that construct."
       }
     ]
@@ -201,9 +166,7 @@
         "claimRepresented": "This option proposes Leave the schema-bound definition unchanged and alter an unrelated table instead.",
         "whyIncorrectInContext": "That does not remove the actual conflicting dependency.",
         "couldBeCorrectWhen": "Only an unrelated object needs a change that does not affect the function.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "That does not remove the actual conflicting dependency."
       },
       {
@@ -211,9 +174,7 @@
         "claimRepresented": "This option proposes Change only a default argument value unrelated to the referenced column.",
         "whyIncorrectInContext": "An unrelated parameter change does not remove the binding on the table column.",
         "couldBeCorrectWhen": "The required change concerns that default argument rather than the base-table dependency.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "An unrelated parameter change does not remove the binding on the table column."
       },
       {
@@ -221,9 +182,7 @@
         "claimRepresented": "This option proposes Read the function's definition without changing it.",
         "whyIncorrectInContext": "Inspection can identify dependencies but does not remove them.",
         "couldBeCorrectWhen": "The current task is reviewing the definition, not applying the conflicting alteration.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "Inspection can identify dependencies but does not remove them."
       },
       {
@@ -231,9 +190,7 @@
         "claimRepresented": "This option proposes Modify or drop the function to remove the conflicting dependency first.",
         "whyIncorrectInContext": "Not incorrect in this context. The schema-binding section says base objects cannot be modified in a way affecting the function until that dependency is removed.",
         "couldBeCorrectWhen": "The proposed base-object alteration conflicts with the bound definition.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "The schema-binding section says base objects cannot be modified in a way affecting the function until that dependency is removed."
       }
     ]
@@ -247,9 +204,7 @@
         "claimRepresented": "This option proposes An error because INLINE = ON was requested for a non-inlineable UDF.",
         "whyIncorrectInContext": "Not incorrect in this context. The reference explicitly says this combination throws an error.",
         "couldBeCorrectWhen": "The definition is non-inlineable and the explicit option is ON.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "The reference explicitly says this combination throws an error."
       },
       {
@@ -257,9 +212,7 @@
         "claimRepresented": "This option proposes Automatic ON/OFF selection based on inlineability because no option was supplied.",
         "whyIncorrectInContext": "That is the documented omitted-option behavior, but the scenario supplies ON.",
         "couldBeCorrectWhen": "The INLINE clause is omitted.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "That is the documented omitted-option behavior, but the scenario supplies ON."
       },
       {
@@ -267,9 +220,7 @@
         "claimRepresented": "This option proposes A declared INLINE = OFF setting.",
         "whyIncorrectInContext": "That is a different explicit request, not the result of the submitted ON definition.",
         "couldBeCorrectWhen": "The developer deliberately specifies OFF.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "That is a different explicit request, not the result of the submitted ON definition."
       }
     ]
@@ -283,9 +234,7 @@
         "claimRepresented": "This option proposes SCHEMABINDING",
         "whyIncorrectInContext": "That is a function-level dependency option, not the required table-parameter modifier.",
         "couldBeCorrectWhen": "A function definition should bind valid referenced objects.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "That is a function-level dependency option, not the required table-parameter modifier."
       },
       {
@@ -293,9 +242,7 @@
         "claimRepresented": "This option proposes INLINE = ON",
         "whyIncorrectInContext": "That is a scalar-UDF inlining option and does not declare a table parameter's access mode.",
         "couldBeCorrectWhen": "An inlineable scalar UDF is intentionally required to be inlineable.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "That is a scalar-UDF inlining option and does not declare a table parameter's access mode."
       },
       {
@@ -303,9 +250,7 @@
         "claimRepresented": "This option proposes READONLY",
         "whyIncorrectInContext": "Not incorrect in this context. The reference explicitly requires READONLY for user-defined table type parameters and disallows it for other parameter types.",
         "couldBeCorrectWhen": "The parameter is a user-defined table type.",
-        "sourceIds": [
-          "dp800-d1-create-function"
-        ],
+        "sourceIds": ["dp800-d1-create-function"],
         "evidenceSummary": "The reference explicitly requires READONLY for user-defined table type parameters and disallows it for other parameter types."
       }
     ]
@@ -319,9 +264,7 @@
         "claimRepresented": "This option proposes db_datareader membership for the whole database.",
         "whyIncorrectInContext": "That role reads all user tables/views rather than only the Reports schema.",
         "couldBeCorrectWhen": "Read access across the database's user schemas is required.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "That role reads all user tables/views rather than only the Reports schema."
       },
       {
@@ -329,9 +272,7 @@
         "claimRepresented": "This option proposes SELECT ON SCHEMA::Reports.",
         "whyIncorrectInContext": "Not incorrect in this context. The training unit states that schema SELECT applies to current and future tables/views within that schema.",
         "couldBeCorrectWhen": "The desired boundary is all readable objects in this one schema.",
-        "sourceIds": [
-          "dp800-d2-permissions-unit"
-        ],
+        "sourceIds": ["dp800-d2-permissions-unit"],
         "evidenceSummary": "The training unit states that schema SELECT applies to current and future tables/views within that schema."
       },
       {
@@ -339,9 +280,7 @@
         "claimRepresented": "This option proposes SELECT only on today's individual Reports tables.",
         "whyIncorrectInContext": "Individual current-object grants do not express the requested future-object schema grant.",
         "couldBeCorrectWhen": "Only a fixed reviewed list of current objects should be readable.",
-        "sourceIds": [
-          "dp800-d2-permissions-unit"
-        ],
+        "sourceIds": ["dp800-d2-permissions-unit"],
         "evidenceSummary": "Individual current-object grants do not express the requested future-object schema grant."
       }
     ]
@@ -355,10 +294,7 @@
         "claimRepresented": "This option proposes No SELECT, because the user's only grant was removed.",
         "whyIncorrectInContext": "The user still has the independent role grant stated in the scenario.",
         "couldBeCorrectWhen": "The direct grant was the only effective permission source.",
-        "sourceIds": [
-          "dp800-d2-permissions-unit",
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-permissions-unit", "dp800-d2-revoke"],
         "evidenceSummary": "The user still has the independent role grant stated in the scenario."
       },
       {
@@ -366,10 +302,7 @@
         "claimRepresented": "This option proposes No SELECT because an explicit table DENY blocks role inheritance.",
         "whyIncorrectInContext": "The administrator used REVOKE and the scenario excludes any DENY.",
         "couldBeCorrectWhen": "An applicable DENY exists for this ordinary non-owner user, with no column exception.",
-        "sourceIds": [
-          "dp800-d2-permissions-unit",
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-permissions-unit", "dp800-d2-revoke"],
         "evidenceSummary": "The administrator used REVOKE and the scenario excludes any DENY."
       },
       {
@@ -377,10 +310,7 @@
         "claimRepresented": "This option proposes SELECT only through a still-existing direct grant.",
         "whyIncorrectInContext": "The direct grant was removed; the surviving source is role membership.",
         "couldBeCorrectWhen": "The role grant is removed while a direct grant remains.",
-        "sourceIds": [
-          "dp800-d2-permissions-unit",
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-permissions-unit", "dp800-d2-revoke"],
         "evidenceSummary": "The direct grant was removed; the surviving source is role membership."
       },
       {
@@ -388,10 +318,7 @@
         "claimRepresented": "This option proposes SELECT through the unchanged custom role grant.",
         "whyIncorrectInContext": "Not incorrect in this context. REVOKE removes the specified grant without blocking independent grants through other sources.",
         "couldBeCorrectWhen": "The role-based grant remains effective as stated.",
-        "sourceIds": [
-          "dp800-d2-permissions-unit",
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-permissions-unit", "dp800-d2-revoke"],
         "evidenceSummary": "REVOKE removes the specified grant without blocking independent grants through other sources."
       }
     ]
@@ -405,10 +332,7 @@
         "claimRepresented": "This option proposes The column-level GRANT can prevail over the table-level DENY for PublicName.",
         "whyIncorrectInContext": "Not incorrect in this context. Both references explicitly preserve the table-DENY versus column-GRANT exception.",
         "couldBeCorrectWhen": "This exact table-denial/column-grant combination applies.",
-        "sourceIds": [
-          "dp800-d2-deny",
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-deny", "dp800-d2-revoke"],
         "evidenceSummary": "Both references explicitly preserve the table-DENY versus column-GRANT exception."
       },
       {
@@ -416,10 +340,7 @@
         "claimRepresented": "This option proposes A same-scope column DENY overrides the column grant.",
         "whyIncorrectInContext": "No column DENY is present in the scenario.",
         "couldBeCorrectWhen": "An applicable column-level DENY exists rather than only the table-level denial.",
-        "sourceIds": [
-          "dp800-d2-deny",
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-deny", "dp800-d2-revoke"],
         "evidenceSummary": "No column DENY is present in the scenario."
       },
       {
@@ -427,10 +348,7 @@
         "claimRepresented": "This option proposes The user's sysadmin membership bypasses the denial.",
         "whyIncorrectInContext": "The user is explicitly not sysadmin.",
         "couldBeCorrectWhen": "The principal actually belongs to the sysadmin fixed server role.",
-        "sourceIds": [
-          "dp800-d2-deny",
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-deny", "dp800-d2-revoke"],
         "evidenceSummary": "The user is explicitly not sysadmin."
       },
       {
@@ -438,10 +356,7 @@
         "claimRepresented": "This option proposes REVOKE removed the specific column grant.",
         "whyIncorrectInContext": "The grant remains in the stated permission set.",
         "couldBeCorrectWhen": "An administrator actually revokes that column grant and no other allowing source remains.",
-        "sourceIds": [
-          "dp800-d2-deny",
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-deny", "dp800-d2-revoke"],
         "evidenceSummary": "The grant remains in the stated permission set."
       }
     ]
@@ -455,9 +370,7 @@
         "claimRepresented": "This option proposes db_owner",
         "whyIncorrectInContext": "It grants broad database configuration and maintenance authority beyond the missing read capability.",
         "couldBeCorrectWhen": "The principal is intentionally a database owner/administrator.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "It grants broad database configuration and maintenance authority beyond the missing read capability."
       },
       {
@@ -465,9 +378,7 @@
         "claimRepresented": "This option proposes db_ddladmin",
         "whyIncorrectInContext": "It authorizes DDL rather than providing the specifically requested fixed read-data role.",
         "couldBeCorrectWhen": "The principal needs documented database DDL authority.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "It authorizes DDL rather than providing the specifically requested fixed read-data role."
       },
       {
@@ -475,9 +386,7 @@
         "claimRepresented": "This option proposes db_datareader",
         "whyIncorrectInContext": "Not incorrect in this context. The role reads all user tables/views, and the article notes that it is commonly combined with db_datawriter.",
         "couldBeCorrectWhen": "A datawriter also needs the separate broad user-data read capability.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "The role reads all user tables/views, and the article notes that it is commonly combined with db_datawriter."
       },
       {
@@ -485,9 +394,7 @@
         "claimRepresented": "This option proposes db_backupoperator",
         "whyIncorrectInContext": "It supplies backup capability, not the missing data-reader role.",
         "couldBeCorrectWhen": "The principal should perform database backups on SQL Server.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "It supplies backup capability, not the missing data-reader role."
       }
     ]
@@ -501,9 +408,7 @@
         "claimRepresented": "This option proposes DENY SELECT on dbo.Reference to the user.",
         "whyIncorrectInContext": "That denies use rather than preserving the existing SELECT capability.",
         "couldBeCorrectWhen": "The ordinary user must be denied that permission instead of merely losing delegation.",
-        "sourceIds": [
-          "dp800-d2-deny"
-        ],
+        "sourceIds": ["dp800-d2-deny"],
         "evidenceSummary": "That denies use rather than preserving the existing SELECT capability."
       },
       {
@@ -511,9 +416,7 @@
         "claimRepresented": "This option proposes REVOKE GRANT OPTION FOR SELECT on dbo.Reference from the user.",
         "whyIncorrectInContext": "Not incorrect in this context. The original grant explicitly includes the option; this removes the ability to grant the permission while targeting the requested delegation state.",
         "couldBeCorrectWhen": "Only delegation from an existing WITH GRANT OPTION grant should be removed and there are no onward grants.",
-        "sourceIds": [
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-revoke"],
         "evidenceSummary": "The original grant explicitly includes the option; this removes the ability to grant the permission while targeting the requested delegation state."
       },
       {
@@ -521,9 +424,7 @@
         "claimRepresented": "This option proposes REVOKE SELECT on dbo.Reference from the user.",
         "whyIncorrectInContext": "It removes the grant itself instead of specifically retaining use while removing delegation.",
         "couldBeCorrectWhen": "The direct SELECT grant itself must be removed.",
-        "sourceIds": [
-          "dp800-d2-revoke"
-        ],
+        "sourceIds": ["dp800-d2-revoke"],
         "evidenceSummary": "It removes the grant itself instead of specifically retaining use while removing delegation."
       }
     ]
@@ -537,9 +438,7 @@
         "claimRepresented": "This option proposes The SQL Server Audit object.",
         "whyIncorrectInContext": "It defines the instance-level audit and destination; a database specification selects the stated action scope.",
         "couldBeCorrectWhen": "The task is defining or enabling the audit destination.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "It defines the instance-level audit and destination; a database specification selects the stated action scope."
       },
       {
@@ -547,9 +446,7 @@
         "claimRepresented": "This option proposes Windows Event Viewer.",
         "whyIncorrectInContext": "It reads recorded Windows event-log entries rather than selecting database actions.",
         "couldBeCorrectWhen": "The task is inspecting events already written to a Windows audit target.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "It reads recorded Windows event-log entries rather than selecting database actions."
       },
       {
@@ -557,9 +454,7 @@
         "claimRepresented": "This option proposes A server audit specification.",
         "whyIncorrectInContext": "It collects server-level action groups rather than the requested database-level actions.",
         "couldBeCorrectWhen": "The requested event scope is server-level action groups.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "It collects server-level action groups rather than the requested database-level actions."
       },
       {
@@ -567,9 +462,7 @@
         "claimRepresented": "This option proposes A database audit specification.",
         "whyIncorrectInContext": "Not incorrect in this context. It selects database audit actions or action groups and associates them with a server audit.",
         "couldBeCorrectWhen": "The stated database-level actions must be selected for the audit.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "It selects database audit actions or action groups and associates them with a server audit."
       }
     ]
@@ -583,9 +476,7 @@
         "claimRepresented": "This option proposes Enable the server audit object.",
         "whyIncorrectInContext": "Not incorrect in this context. A newly created audit is disabled; the workflow separately enables the specification and the audit.",
         "couldBeCorrectWhen": "The specification is ready but the audit object remains in its initial disabled state.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "A newly created audit is disabled; the workflow separately enables the specification and the audit."
       },
       {
@@ -593,9 +484,7 @@
         "claimRepresented": "This option proposes Enable the already-enabled database audit specification again.",
         "whyIncorrectInContext": "That does not change the disabled audit object's state.",
         "couldBeCorrectWhen": "The specification is actually disabled while the audit is enabled.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "That does not change the disabled audit object's state."
       },
       {
@@ -603,9 +492,7 @@
         "claimRepresented": "This option proposes Use Event Viewer to read a Windows event-log target.",
         "whyIncorrectInContext": "The configured target is a file and the audit has not produced records; changing the reader does not enable collection.",
         "couldBeCorrectWhen": "An enabled audit writes to a Windows event log that the operator wants to inspect.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "The configured target is a file and the audit has not produced records; changing the reader does not enable collection."
       },
       {
@@ -613,9 +500,7 @@
         "claimRepresented": "This option proposes Read existing audit files using fn_get_audit_file.",
         "whyIncorrectInContext": "Reading existing files does not enable the collection process.",
         "couldBeCorrectWhen": "The audit is writing and the task is querying recorded file events.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "Reading existing files does not enable the collection process."
       }
     ]
@@ -629,9 +514,7 @@
         "claimRepresented": "This option proposes The specification's actions are merely waiting for a new file reader.",
         "whyIncorrectInContext": "A reader cannot supply the missing audit GUID association.",
         "couldBeCorrectWhen": "The audit is correctly associated and recording, but an operator has not yet read its output.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "A reader cannot supply the missing audit GUID association."
       },
       {
@@ -639,9 +522,7 @@
         "claimRepresented": "This option proposes The target file should be archived because retention has filled its storage.",
         "whyIncorrectInContext": "The scenario identifies a missing audit association, not a full file target.",
         "couldBeCorrectWhen": "An operational audit target needs archival or space management.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "The scenario identifies a missing audit association, not a full file target."
       },
       {
@@ -649,9 +530,7 @@
         "claimRepresented": "This option proposes The specification is orphaned and needs a matching audit association.",
         "whyIncorrectInContext": "Not incorrect in this context. The article explicitly describes the missing-GUID attach case and recommends reconnecting it to an existing audit or creating a matching-GUID audit.",
         "couldBeCorrectWhen": "The attached specification references a server audit GUID absent on the new instance.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "The article explicitly describes the missing-GUID attach case and recommends reconnecting it to an existing audit or creating a matching-GUID audit."
       },
       {
@@ -659,9 +538,7 @@
         "claimRepresented": "This option proposes The administrator should switch from database actions to server actions.",
         "whyIncorrectInContext": "Changing event scope does not restore the specification's missing association.",
         "couldBeCorrectWhen": "The auditing requirement genuinely changes to server-level action groups.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "Changing event scope does not restore the specification's missing association."
       }
     ]
@@ -675,9 +552,7 @@
         "claimRepresented": "This option proposes CONTROL SERVER",
         "whyIncorrectInContext": "It can authorize access but is broader than the requested read-only audit capability.",
         "couldBeCorrectWhen": "The principal is intentionally granted broad server control.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "It can authorize access but is broader than the requested read-only audit capability."
       },
       {
@@ -685,9 +560,7 @@
         "claimRepresented": "This option proposes VIEW SERVER SECURITY AUDIT",
         "whyIncorrectInContext": "Not incorrect in this context. The article explicitly identifies this permission as sufficient for fn_get_audit_file in SQL Server 2022 and later.",
         "couldBeCorrectWhen": "A SQL Server 2022 analyst needs the documented audit-file read capability.",
-        "sourceIds": [
-          "dp800-d2-sql-audit"
-        ],
+        "sourceIds": ["dp800-d2-sql-audit"],
         "evidenceSummary": "The article explicitly identifies this permission as sufficient for fn_get_audit_file in SQL Server 2022 and later."
       },
       {
@@ -695,9 +568,7 @@
         "claimRepresented": "This option proposes db_backupoperator membership",
         "whyIncorrectInContext": "That database role supplies backup operations, not the stated server audit-file read permission.",
         "couldBeCorrectWhen": "A database principal needs to perform SQL Server database backups.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "That database role supplies backup operations, not the stated server audit-file read permission."
       }
     ]
@@ -711,9 +582,7 @@
         "claimRepresented": "This option proposes Membership in db_owner.",
         "whyIncorrectInContext": "It grants database administration beyond the two-table data task.",
         "couldBeCorrectWhen": "The principal is intentionally a database administrator.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "It grants database administration beyond the two-table data task."
       },
       {
@@ -721,9 +590,7 @@
         "claimRepresented": "This option proposes Membership in db_datareader and db_datawriter.",
         "whyIncorrectInContext": "Those roles apply across user tables rather than only the two named objects.",
         "couldBeCorrectWhen": "The principal needs broad user-data reading and modification.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "Those roles apply across user tables rather than only the two named objects."
       },
       {
@@ -731,9 +598,7 @@
         "claimRepresented": "This option proposes Membership in db_ddladmin.",
         "whyIncorrectInContext": "It supplies DDL authority rather than the narrowly defined data permissions.",
         "couldBeCorrectWhen": "The principal needs documented database schema-change authority.",
-        "sourceIds": [
-          "dp800-d2-database-roles"
-        ],
+        "sourceIds": ["dp800-d2-database-roles"],
         "evidenceSummary": "It supplies DDL authority rather than the narrowly defined data permissions."
       },
       {
@@ -741,10 +606,7 @@
         "claimRepresented": "This option proposes A user-defined database role with the specific object grants.",
         "whyIncorrectInContext": "Not incorrect in this context. Custom-role permissions can be tailored with GRANT, DENY and REVOKE; the training shows granting specific operations on named tables.",
         "couldBeCorrectWhen": "The permission boundary is the named operations on two objects.",
-        "sourceIds": [
-          "dp800-d2-database-roles",
-          "dp800-d2-permissions-unit"
-        ],
+        "sourceIds": ["dp800-d2-database-roles", "dp800-d2-permissions-unit"],
         "evidenceSummary": "Custom-role permissions can be tailored with GRANT, DENY and REVOKE; the training shows granting specific operations on named tables."
       }
     ]

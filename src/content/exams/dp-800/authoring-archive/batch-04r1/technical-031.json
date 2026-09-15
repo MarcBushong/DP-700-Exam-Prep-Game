@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "B2 is the scalar inside the nested billing object, but the query never supplies the navigating column path '$.billing.code'. Its bracketed WITH name is the literal identifier billing.code and matches the existing top-level key whose value is A7. The primary Remarks gives the exact analogous [Address.Country] distinction. Literal positive countercontext using the original input: SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10) '$.billing.code'); returns B2. This adds the actual documented path override; it is not claimed to be the behavior of the unchanged candidate query.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "SQL NULL is not the result for the supplied object because the exact literal billing.code key exists, matches the WITH name and holds the short scalar A7. There is no missing-key or nonscalar condition at that default mapping. Literal positive countercontext: set @payload = N'{\"billing\":{\"code\":\"B2\"}}' and run the unchanged SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10));. The root still is an object, but the literal dotted key is absent, so the explicit-schema column is SQL NULL in default lax mode. The article's literal-name and missing-path contracts support this result without inventing recursive name matching.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "The nested object {\"code\":\"B2\"} is located at $.billing, not at the matched literal billing.code key. The candidate also lacks AS JSON and declares nvarchar(10), so it is not a valid fragment projection of that object. Literal positive countercontext with the original input: SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(max) '$.billing' AS JSON); returns {\"code\":\"B2\"}. Both the path and the fragment projection are explicitly changed, and the column is widened to the documented mandatory nvarchar(max). Merely appending AS JSON to nvarchar(10) is not offered as a valid example. The primary AS JSON, type and column_path definitions support this complete alternative.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "d",
         "assessment": "supported",
         "rationale": "A7 is the scalar on the exact top-level billing.code key. With no column_path override, [billing.code] is a single SQL output identifier, not a request to traverse two JSON properties. The primary article explicitly documents this literal-dot matching rule; A7 also fits nvarchar(10), and no AS JSON flag is needed for a scalar string. Literal confirming alternative: with @payload = N'{\"billing.code\":\"A7\"}', the unchanged SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10)); still returns A7 even though no nested billing object exists. That shows why the competing nested value in the original input does not control the result.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       }
     ],
     "checks": {

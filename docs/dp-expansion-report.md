@@ -1,6 +1,124 @@
 # DP-800 / DP-420 expansion progress
 
-## Verified Study checkpoint, September 15, 2026
+## DP-800-first closeout: browser acceptance blocked
+
+The prioritized deliverable is a **limited DP-800 Study bank**, not completion
+of the original approximately 150-question target. New authoring stopped at
+**102 unique original question IDs**. The frozen gameplay package contains
+**39 verified, playable questions and 2 excluded manual-review records**.
+The other **61 candidates are outside the gameplay package**. Their original
+snapshots and the actual partial technical/adversarial outputs are committed
+under [`authoring-archive`](../src/content/exams/dp-800/authoring-archive/).
+Missing reviews are not approvals or rejection verdicts.
+
+The **111-question verified shortfall is the requested delivery-priority
+cutoff**, not a claimed lack of official documentation. Study is open; Boss
+remains sealed under the unchanged 75-question minimum and quality/breadth
+gates. **DP-420 content and further research are deferred**: its null current
+objective version and October 6 prospective evidence remain separate, and both
+modes stay locked. This contribution does not deliver a DP-420 question bank.
+
+### Frozen content and evidence
+
+| Measure                             | Actual result                                                                                         |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| DP-800 current objective map        | March 12, 2026; 3 domains, 11 skills, 73 subskills                                                    |
+| Verified domain counts              | Design 19; security/optimization/deployment 10; AI 10                                                 |
+| Sampled verified coverage           | 3/3 domains, 11/11 skills, 28/73 subskills                                                            |
+| Difficulty                          | 10 beginner, 25 intermediate, 4 advanced, 0 expert                                                    |
+| Complexity                          | 10 recall, 18 implementation, 7 scenario, 3 troubleshooting, 1 architecture                           |
+| Applied reasoning                   | 29/39, 74.36%; Advanced/Expert 4/39, 10.26%                                                           |
+| Formats                             | 17 scenario, 13 code, 7 single-select, 1 true/false, 1 multi-select                                   |
+| Correct-choice ID occurrences       | a 12, b 9, c 10, d 9; 40 occurrences because one item has two correct choices                         |
+| Verified rubric totals              | 44: 4 items; 45: 14; 46: 13; 47: 8; no threshold changes                                              |
+| Source registry                     | 76 canonical sources with credential-scoped provenance                                                |
+| Latest source retrieval             | 2026-09-15T06:42:29.174Z                                                                              |
+| Latest independent final review     | 2026-09-15T15:38:13.797Z                                                                              |
+| Online source availability          | All 79 URLs passed at 2026-09-15T16:24:41.831Z: 76 sources plus 3 exactly bound training targets      |
+| Cross-bank deterministic duplicates | No warnings or blocking findings against all latest-upstream banks                                    |
+| Current manual-review records       | 036: 43/48, weak append construction; 049: 43/48, inflated difficulty and repetitive SQL presentation |
+
+The bank does not meet the desired 15/35/35/15 difficulty mix or mature-bank
+weighting/depth goals. Domain coverage is not exhaustive subskill coverage or an
+official exam-readiness guarantee. Independent reviewers performed bounded
+source and semantic-overlap analysis; deterministic duplicate checks are not
+represented as a new semantic model review of the entire corpus.
+
+Earlier reviewed failures remain immutable in `review-history`: two rejected
+versions and five manual-review versions subsequently replaced only after fresh
+generation and both independent passes. The authoring archive separately retains
+the failed doc-to-doc provenance generation, two technical manual-review
+outcomes, and the actual technical rejection of malformed DAB configuration
+item 056. These are distinct from the current package's two final manual items.
+Raw Microsoft Learn article bodies stay local; committed artifacts contain
+original questions, paraphrased evidence, exact source metadata and real reviews.
+
+### Latest upstream and parity
+
+The original baseline was `d9a1e39dbc755448f38584ecca692b9e20e35eb6`.
+The latest fetched default branch is
+**`4d44febf7364122913f280fe6004ff5893e43ff7`**. Its AI-bank and explicit GH-600
+beta-access changes are preserved, not overwritten to match the older baseline.
+The seven actual merge conflicts were resolved by retaining both source-policy
+behaviors and both sets of real evidence.
+
+The integrated ledger has **866 attestations: all 825 upstream records
+unchanged plus 41 DP-800 records**. The parity check at
+**2026-09-15T17:11:20.453Z** found no additional baseline-record changes
+introduced by this work. Upstream itself replaced the 30 original AI-103
+attestations during its audited three-pass migration; those changes are not
+misreported as a DP-800 regression. The other original 526 attestations remain
+unchanged. No existing upstream credential package has a content diff, including
+DP-700's 162 playable questions. Scoring, storage keys and completed history
+formats are unchanged.
+
+### Actual closeout checks
+
+| Command                                                                                                                                    | Result                                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| `npm run credentials:validate`                                                                                                             | Passed                                                                                                                |
+| `npm run content:validate-all`                                                                                                             | Passed; all eight installed packages and consolidated ledger                                                          |
+| `npm run content:status`                                                                                                                   | Passed                                                                                                                |
+| `npm run questions:validate -- --exam dp-800`                                                                                              | Passed: 41 records, 39 playable, 2 excluded                                                                           |
+| `npm run questions:verify -- --exam dp-800`                                                                                                | Passed exact real attestation bindings                                                                                |
+| `npm run sources:validate -- --exam dp-800 --online`                                                                                       | Passed all 79 allowed URLs; not claim review                                                                          |
+| `npm run questions:duplicates -- --exam dp-800 --cross-exam dp-700,github-copilot,github-agentic-ai-developer,az-104,sc-200,ai-103,ai-200` | Passed; no cross-exam warning                                                                                         |
+| `npm run questions:coverage -- --exam dp-800`                                                                                              | Passed, retaining the gaps above                                                                                      |
+| `npm run questions:report -- --exam dp-800 --write`                                                                                        | Passed                                                                                                                |
+| Default DP-700 `questions:validate`, `validate:sources`, `questions:verify`                                                                | Passed                                                                                                                |
+| `npm run lint`                                                                                                                             | Passed                                                                                                                |
+| `npm run typecheck`                                                                                                                        | Passed                                                                                                                |
+| `npm run test`                                                                                                                             | 713/713 passed after correcting two new exact-allowlist test fixtures; first merged attempt was 711 passed / 2 failed |
+| `npm run test:coverage`                                                                                                                    | Passed                                                                                                                |
+| `npm run build`                                                                                                                            | Passed; existing Zod annotation and large-bundle warnings remain                                                      |
+| Final independent code review                                                                                                              | No significant issues; question facts were not part of this code review                                               |
+| `npm run test:e2e` first post-merge run                                                                                                    | 74 passed / 4 failed                                                                                                  |
+| Affected stock-configured browser journeys after the upstream GH-600 setup-locator correction                                              | 8/8 passed                                                                                                            |
+| Latest complete `npm run test:e2e`                                                                                                         | **72 passed / 6 failed; acceptance blocked**                                                                          |
+
+The latest six failures are desktop `/about` accessibility, imported beta
+study/exam, imported beta raid/immediate, the original challenge journey, the
+DP-800 Boss lock, and the DP-420 lock journey. Their snapshots show the
+application startup status instead of ready content within the existing
+five-second assertions. All traces and exact logs are retained locally. This is
+not claimed to be purely environmental: some App requests remained incomplete
+at the deadline, while others completed and initialization was still pending.
+
+An instrumented earlier run of the existing harness passed 6/6 and recorded 57
+HTTP requests; its slowest App response took 1,514 ms. Post-merge profiling of the
+exact 17.1 MB App bundle in four two-context starts measured ready times of
+2,651-2,910 ms. Those bounded diagnostics did not reproduce the failing delay
+and do not establish full-suite readiness. No speculative startup rewrite,
+timeout increase, skipped assertion, reduced axe coverage or runner-default
+change was used. The actual GH map-to-setup strict-locator races were corrected
+with route waits and setup-form scoping, including the newly merged beta entry.
+
+**Remote delivery is blocked by full-browser acceptance.** A prepared PR
+description is not a claim that the branch passes all gates. No deployment or
+merge to main is authorized. The historical baseline failures and intermediate
+results below remain part of the audit trail, not current success claims.
+
+## Historical verified Study checkpoint, September 15, 2026
 
 **DP-800 Study is genuinely open with 27 verified original questions. Target
 expansion and final delivery are still in progress; nothing has been pushed.**

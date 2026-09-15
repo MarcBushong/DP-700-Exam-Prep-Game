@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "supported",
         "rationale": "The source's earlier-version post-filtering section describes precisely this sequence: select the fixed TOP_N nearest pool, then apply WHERE. Here each of the five selected rows fails Approved=1, so the output is empty even though qualifying rows exist elsewhere. The question's successful completion and matching index preserve this explanation. Context boundary: this literal after-selection behavior must not be generalized to latest indexes, whose iterative filtering applies predicates during search and continues looking for qualifying neighbors.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "Arguments > METRIC documents warning and kNN fallback only when there is no compatible ANN index on the same column with the requested metric. The stem explicitly says a valid query uses a matching index, ruling out that condition. Sourced countercontext for the literal option: if the only index on the searched column used cosine while the query requested Euclidean, with no other matching index, the documented metric incompatibility would cause warning and kNN fallback. That is not this already-matching earlier-index post-filter case.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "Return result set explains that a base-table distance column and VECTOR_SEARCH's generated distance require aliases when a reference would otherwise be ambiguous; failure to disambiguate raises an error. The stem instead establishes successful execution returning an empty set. Sourced countercontext: this exact diagnosis would fit a table that also has a distance column and a query using an ambiguous, unqualified distance reference. It cannot explain a successfully completed result whose five candidates all fail the filter.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "Arguments > TABLE requires a base table and explicitly excludes views. A view supplied as the target would violate the documented input contract, contrary to the stem's valid query and successful completion. Sourced countercontext: the option would correctly diagnose an invalid call whose TABLE argument actually names a view instead of the required base table. The presence of approved rows outside this valid query's fixed candidate pool is a filtering issue, not evidence of an unsupported target.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       }
     ],
     "checks": {

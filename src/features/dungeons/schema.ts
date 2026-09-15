@@ -66,6 +66,7 @@ export const credentialSchema = z.object({
   personas: z.array(text),
   level: text.nullable(),
   status: z.enum(credentialStatuses),
+  allowBetaPlay: z.boolean().optional(),
   officialUrls: z.object({
     credential: officialSourceUrlSchema.nullable(),
     exam: officialSourceUrlSchema.nullable(),

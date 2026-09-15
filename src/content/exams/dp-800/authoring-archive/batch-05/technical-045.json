@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "Casting the selected vector to nvarchar(max) explicitly asks SQL to return its text representation. It cannot supply the requested native driver SqlVector value, regardless of whether the client can parse the text. Literal positive countercontext: an export or consumer intentionally wants the JSON-array string for an existing native vector without changing its stored type. Casting the selected value to nvarchar(max) before returning it is then a documented conversion. The source's introduction expressly allows vector-to-nvarchar conversion; this is a representation choice, not a driver-capability upgrade. No CAST was executed in this review.",
-        "sourceIds": [
-          "dp800-d3-vector-type"
-        ]
+        "sourceIds": ["dp800-d3-vector-type"]
       },
       {
         "choiceId": "b",
         "assessment": "supported",
         "rationale": "Microsoft.Data.SqlClient 6.1.0 introduces the native SqlVector support documented for .NET, and the .NET section requires that version or later. The stem already supplies SQL Server 2025, TDS 7.4 and float32 vectors, so an updated supporting driver addresses the missing client capability. Literal confirming context: use that driver with the stated supported connection and its native read API, as the source demonstrates with reader.GetSqlVector<float> and SqlVector<float>. This does not promise that every old getter, ORM metadata path or manually serialized projection becomes native automatically; it identifies the documented driver capability the team wants.",
-        "sourceIds": [
-          "dp800-d3-vector-type"
-        ]
+        "sourceIds": ["dp800-d3-vector-type"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "Keeping the older client and parsing its returned JSON array uses the backward-compatible text path rather than obtaining a native SqlVector value through the driver. Literal positive countercontext: a legacy .NET application must keep its older client and is content to receive JSON-array strings and deserialize them into ordinary application float arrays. The actual source explicitly recommends this compatibility approach and demonstrates JsonSerializer.Deserialize<float[]> on a returned string. That is valid interoperability, but it does not meet the current requirement for the newer native vector driver API.",
-        "sourceIds": [
-          "dp800-d3-vector-type"
-        ]
+        "sourceIds": ["dp800-d3-vector-type"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "Replacing the VECTOR column with an nvarchar(max) JSON-text column changes the database representation to text; it does not add native vector support to the old driver and removes the native storage contract. Literal positive countercontext: a deliberate schema/interoperability migration requires persisted serialized JSON arrays and no longer requires native vector storage. Replacing the vector column with a text column containing the converted arrays can satisfy that different representation contract. The source explicitly documents optimized binary native storage, JSON-array representation and conversion to nvarchar, which substantiate that distinction. This is not a claim that one particular ALTER COLUMN statement is supported, that native vector capabilities survive the replacement, or that such a migration was executed.",
-        "sourceIds": [
-          "dp800-d3-vector-type"
-        ]
+        "sourceIds": ["dp800-d3-vector-type"]
       }
     ],
     "checks": {

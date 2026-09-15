@@ -15,6 +15,16 @@ import {
   sourceRegistrySchema,
 } from '../src/features/dungeons/provenance';
 
+function isRecordedLayoutView(url: URL, credential?: SourcePolicyContext) {
+  return (
+    credential?.credentialId === 'ai-103' &&
+    url.hostname === 'learn.microsoft.com' &&
+    url.pathname ===
+      '/en-us/azure/ai-services/document-intelligence/prebuilt/layout' &&
+    url.search === '?view=doc-intel-4.0.0'
+  );
+}
+
 function documentIdentityUrl(
   url: URL,
   allowCanonicalView: boolean,
@@ -31,10 +41,26 @@ function documentIdentityUrl(
     allowCanonicalView &&
     ((url.pathname.startsWith('/en-us/kusto/') &&
       url.search === '?view=microsoft-fabric') ||
-      (approvedSqlFamily && url.search === '?view=sql-server-ver17'))
+      (approvedSqlFamily && url.search === '?view=sql-server-ver17') ||
+      isRecordedLayoutView(url, credential))
   )
     identity.search = '';
   return identity;
+}
+
+export function sameCanonicalDocument(
+  expected: string,
+  actual: string,
+  credential?: SourcePolicyContext,
+): boolean {
+  const expectedUrl = new URL(expected);
+  const actualUrl = new URL(actual);
+  // Fragments select a section in the client, not a different HTTP document.
+  expectedUrl.hash = '';
+  actualUrl.hash = '';
+  if (!expectedUrl.search && isRecordedLayoutView(actualUrl, credential))
+    actualUrl.search = '';
+  return expectedUrl.href === actualUrl.href;
 }
 
 export function safeSourceUrl(
@@ -76,7 +102,11 @@ export function matchesRecordedSourceTarget(
 ): boolean {
   const resolved = safeSourceUrl(actual, true, credential);
   const recorded = safeSourceUrl(expected, false, credential);
-  return documentIdentityUrl(resolved, true, credential).href === recorded.href;
+  return sameCanonicalDocument(
+    recorded.href,
+    documentIdentityUrl(resolved, true, credential).href,
+    credential,
+  );
 }
 
 function safeTrainingLinkTarget(
@@ -294,12 +324,24 @@ if (isMain(import.meta.url)) {
       } else safeSourceUrl(url, false, credential);
     });
     console.log(
-      `Offline structural source checks passed: ${manifest.sources.length} records, ${urls.length} credential-approved official URLs.`,
+      `Offline structural source checks passed: ${manifest.sources.length} records, ${urls.length} allowlisted official URLs.`,
     );
     if (trainingTargets.size)
       console.log(
         `${trainingTargets.size} checked URLs are recorded training-link targets, not additional canonical evidence sources.`,
       );
+    if (registry) {
+      const withdrawn = manifest.sources.filter(
+        (source) =>
+          !registry.sources.some(
+            (record) => record.sourceId === source.sourceId,
+          ),
+      );
+      if (withdrawn.length)
+        console.warn(
+          `Quarantined citation snapshots without current supporting approval: ${withdrawn.map((source) => source.sourceId).join(', ')}. URL availability does not restore their approval.`,
+        );
+    }
     if (process.argv.includes('--online')) {
       const failures: string[] = [];
       for (const url of identityContextUrls)

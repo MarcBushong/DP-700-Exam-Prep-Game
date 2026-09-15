@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "WHERE [type] = 1 selects the label property, whose JSON value is the quoted string \"8\". That row's returned value is text 8, but its original token is a string, explicitly excluded by the stem. The primary default-schema type table assigns 1 to string, not number. Literal positive countercontext using the same input: when a validator needs string-valued properties, SELECT [key], [value] FROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}') WHERE [type] = 1; returns the desired label/8 row. The proposed filter is valid and useful for that different classification requirement.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "b",
         "assessment": "supported",
         "rationale": "The default-schema type column is an integer discriminator, and documented code 2 denotes a JSON number. WHERE [type] = 2 therefore selects only count, whose token is the unquoted number 8, while excluding label even though its returned value text also looks like 8. Literal confirming alternative: SELECT [key], [value] FROM OPENJSON(N'{\"count\":9,\"label\":\"9\"}') WHERE [type] = 2; selects count/9 and not label/9. The primary type table and numeric rows in its jsonExpression example support this distinction independently of the value column's nvarchar(max) SQL type.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "WHERE [type] = 3 selects enabled, which contains JSON true, rather than the numeric count property. The source assigns 3 to true/false; it does not classify JSON Boolean tokens as numbers just because another language might convert booleans to 0 or 1. Literal positive countercontext: for a Boolean-token validator, SELECT [key], [value] FROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}') WHERE [type] = 3; returns the intended enabled/true row. The primary article's type table and separate BooleanTrue/BooleanFalse result rows directly support that legitimate alternative.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "WHERE [type] = 0 selects the existing property named missing, whose JSON value is explicitly null, not the count number. The returned value for that row is SQL NULL, but the row exists and its discriminator is 0. Literal positive countercontext: when the goal is to enumerate explicitly null-valued properties, SELECT [key], [value] FROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}') WHERE [type] = 0; returns missing/SQL NULL. The documented type table and Null_value example support this use. It is not a test for absent properties, which have no corresponding first-level row.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       }
     ],
     "checks": {

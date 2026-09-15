@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The actual @next declaration is nvarchar(10), with the nonnull text N'3'. The product contract uses the SQL argument type for JSON_MODIFY's new value; numeric-looking text is not automatically converted to a JSON number. Positive countercontext: with the shown valid text parameter, JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', CAST(@next AS int)) would produce {\"attempt\":3} by supplying an int new value. That hypothetical numeric conversion is supported by the documented numeric-cast distinction but is absent from the frozen statement. It is not an executed result or an authored repair.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "The existing $.attempt path is present, and the new argument is nonnull. The documented update row therefore replaces the old value; the original JSON number 2 is not retained by the shown invocation. Positive countercontext: JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', 2) supplies a numeric SQL value equal to the original and has {\"attempt\":2} as the expected document. This is a successful numeric replacement with the same value, not evidence that the current update using N'3' is ignored.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "Deletion in the default lax mode requires SQL NULL as the new value. The declared N'3' is nonnull text, so the existing attempt member is not deleted. Positive countercontext: JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', NULL) uses the documented lax deletion rule and would yield {} because attempt is the sole member. This literal SQL NULL call supports the empty-object answer only under the changed new-value condition, not under the actual declaration.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "d",
         "assessment": "supported",
         "rationale": "The supplied @next remains nvarchar after assignment; its characters do not confer numeric SQL type. JSON_MODIFY updates the existing member with that text-typed value, so the documentation-derived result is {\"attempt\":\"3\"}. The original numeric 2 is replaced, not incremented or used to infer a target type. The product's explicit explanation about adding numeric casts is directly applicable to why D, rather than A, represents this unchanged expression.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       }
     ],
     "checks": {

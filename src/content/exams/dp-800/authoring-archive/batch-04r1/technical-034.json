@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "supported",
         "rationale": "The input explicitly contains contact, so strict path existence succeeds. The new argument is SQL NULL, not the string N'null'. The documented NULL/existing-path/strict combination sets contact's value to JSON null while retaining that member. Only $.contact is targeted, so the documentation-derived result is {\"contact\":null,\"revision\":6}. A missing contact property would instead make strict mode fail, but that countercondition is excluded by the supplied input. A is the only offered expression producing the required document state.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "Lax mode with a SQL NULL new value deletes an existing property. With this input B therefore produces {\"revision\":6}, not an object retaining contact. Positive countercontext: this exact expression is correct if a patch intentionally removes the contact member entirely while preserving revision, and the requested result is {\"revision\":6}. The source's NULL/existing-path/lax table row directly supports that deletion contract; it is not interchangeable with storing a JSON null value.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "N'null' is a nonnull nvarchar value. The source's text-value treatment means it becomes the JSON string \"null\", giving {\"contact\":\"null\",\"revision\":6}, rather than the JSON null token. Positive countercontext: keep this exact expression when a downstream protocol deliberately uses the literal four-character text null as its contact sentinel and requires {\"contact\":\"null\",\"revision\":6}. That is a valid text replacement under the documented nvarchar contract, but a different state from the current requirement.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "N'' is an empty but nonnull SQL string. The existing contact value is therefore replaced with a JSON empty string, yielding {\"contact\":\"\",\"revision\":6}; neither deletion nor a JSON null assignment is requested by this argument. Positive countercontext: the exact expression is correct for a patch that must retain contact but clear it to an empty text field, with {\"contact\":\"\",\"revision\":6} as the contract. The documented nonnull update and text handling support that positive case.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       }
     ],
     "checks": {

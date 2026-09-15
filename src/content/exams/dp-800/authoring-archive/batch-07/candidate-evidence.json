@@ -8,9 +8,7 @@
         "claimRepresented": "This option proposes Add both columns to the nonclustered index key.",
         "whyIncorrectInContext": "This changes the key, contrary to the stated requirement.",
         "couldBeCorrectWhen": "The additional columns genuinely belong in the index's ordered search key.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "This changes the key, contrary to the stated requirement."
       },
       {
@@ -18,9 +16,7 @@
         "claimRepresented": "This option proposes Keep the narrow index and obtain the extra columns from the base table.",
         "whyIncorrectInContext": "The extra values would not be available within this index alone.",
         "couldBeCorrectWhen": "A base-row lookup is acceptable and the index should remain smaller.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "The extra values would not be available within this index alone."
       },
       {
@@ -28,9 +24,7 @@
         "claimRepresented": "This option proposes Add both columns as nonkey included columns at the leaf level.",
         "whyIncorrectInContext": "Not incorrect in this context. The article explicitly supports included nonkey leaf columns for covered queries without extending the key.",
         "couldBeCorrectWhen": "Output columns must be present in the index but are not key columns.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "The article explicitly supports included nonkey leaf columns for covered queries without extending the key."
       },
       {
@@ -38,9 +32,7 @@
         "claimRepresented": "This option proposes Remove the nonclustered index and use a table scan.",
         "whyIncorrectInContext": "This does not make the values available in the stated narrow index.",
         "couldBeCorrectWhen": "The optimizer's workload is better served by scans and that index is no longer needed.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "This does not make the values available in the stated narrow index."
       }
     ]
@@ -54,9 +46,7 @@
         "claimRepresented": "This option proposes The base table's clustered RecordId key.",
         "whyIncorrectInContext": "Not incorrect in this context. For a clustered table, a nonclustered row locator is the clustered index key.",
         "couldBeCorrectWhen": "The base table is clustered on RecordId, as stated.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "For a clustered table, a nonclustered row locator is the clustered index key."
       },
       {
@@ -64,9 +54,7 @@
         "claimRepresented": "This option proposes A pointer to a row in an unordered heap.",
         "whyIncorrectInContext": "That describes the locator for a heap, not the newly clustered base table.",
         "couldBeCorrectWhen": "The base table remains a heap.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "That describes the locator for a heap, not the newly clustered base table."
       },
       {
@@ -74,9 +62,7 @@
         "claimRepresented": "This option proposes The Category key value.",
         "whyIncorrectInContext": "Category is not the base table's clustered key in this design, so it is not the specified locator.",
         "couldBeCorrectWhen": "Category is instead the base table's unique clustered key.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "Category is not the base table's clustered key in this design, so it is not the specified locator."
       }
     ]
@@ -90,9 +76,7 @@
         "claimRepresented": "This option proposes A unique nonclustered index on Region.",
         "whyIncorrectInContext": "It would reject duplicate Region key values that the scenario explicitly permits.",
         "couldBeCorrectWhen": "Region values must be unique and a separate nonclustered structure is required.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "It would reject duplicate Region key values that the scenario explicitly permits."
       },
       {
@@ -100,9 +84,7 @@
         "claimRepresented": "This option proposes A clustered index on Region replacing the current clustered index.",
         "whyIncorrectInContext": "It changes the clustered layout that must be preserved.",
         "couldBeCorrectWhen": "The team intentionally chooses Region as the table's clustered layout.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "It changes the clustered layout that must be preserved."
       },
       {
@@ -110,9 +92,7 @@
         "claimRepresented": "This option proposes No Region index; retain only the existing clustered index.",
         "whyIncorrectInContext": "It preserves current behavior but does not supply the requested separate Region access structure.",
         "couldBeCorrectWhen": "The workload does not justify another index and existing access is acceptable.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "It preserves current behavior but does not supply the requested separate Region access structure."
       },
       {
@@ -120,9 +100,7 @@
         "claimRepresented": "This option proposes A nonunique nonclustered index on Region.",
         "whyIncorrectInContext": "Not incorrect in this context. It provides a separate structure and allows multiple rows to share the key value.",
         "couldBeCorrectWhen": "Duplicate Region values are valid and the current clustered layout must remain.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "It provides a separate structure and allows multiple rows to share the key value."
       }
     ]
@@ -136,9 +114,7 @@
         "claimRepresented": "This option proposes A clustered index on Id.",
         "whyIncorrectInContext": "The documented existing-clustered-index case uses a nonclustered supporting index instead of replacing the layout.",
         "couldBeCorrectWhen": "A table has no clustered index and an ordinary primary key uses its clustered default.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "The documented existing-clustered-index case uses a nonclustered supporting index instead of replacing the layout."
       },
       {
@@ -146,9 +122,7 @@
         "claimRepresented": "This option proposes A nonclustered index enforcing the Id primary key.",
         "whyIncorrectInContext": "Not incorrect in this context. The article explicitly says a primary key added when a clustered index already exists is enforced using a nonclustered index.",
         "couldBeCorrectWhen": "The existing clustered structure is present and the primary-key type is not overridden.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "The article explicitly says a primary key added when a clustered index already exists is enforced using a nonclustered index."
       },
       {
@@ -156,9 +130,7 @@
         "claimRepresented": "This option proposes A nonunique nonclustered index on Id.",
         "whyIncorrectInContext": "A primary key must enforce uniqueness, not allow duplicate Ids.",
         "couldBeCorrectWhen": "An ordinary nonunique index is intended on a column where duplicates are valid, rather than a primary key.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "A primary key must enforce uniqueness, not allow duplicate Ids."
       }
     ]
@@ -172,9 +144,7 @@
         "claimRepresented": "This option proposes 10:03 for the first row and 10:07 for the second.",
         "whyIncorrectInContext": "Temporal periods use transaction begin time, not each statement's execution time.",
         "couldBeCorrectWhen": "The updates occur in separate transactions beginning at those respective times.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "Temporal periods use transaction begin time, not each statement's execution time."
       },
       {
@@ -182,9 +152,7 @@
         "claimRepresented": "This option proposes 10:09 for both rows.",
         "whyIncorrectInContext": "The commit timestamp is not the documented temporal period start.",
         "couldBeCorrectWhen": "A different transaction that performs the changes begins at 10:09.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The commit timestamp is not the documented temporal period start."
       },
       {
@@ -192,9 +160,7 @@
         "claimRepresented": "This option proposes 10:00 for both rows.",
         "whyIncorrectInContext": "Not incorrect in this context. The system records the transaction begin time in UTC for the new row versions.",
         "couldBeCorrectWhen": "Both updates belong to the transaction beginning at 10:00.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The system records the transaction begin time in UTC for the new row versions."
       },
       {
@@ -202,9 +168,7 @@
         "claimRepresented": "This option proposes The maximum datetime2 value for both rows.",
         "whyIncorrectInContext": "The maximum marks the open period end of a current row, not its start.",
         "couldBeCorrectWhen": "The question asks for the current versions' open-ended ValidTo value.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The maximum marks the open period end of a current row, not its start."
       }
     ]
@@ -218,9 +182,7 @@
         "claimRepresented": "This option proposes The replacement beginning at 10:00.",
         "whyIncorrectInContext": "Not incorrect in this context. AS OF includes ValidFrom <= instant and requires ValidTo > instant, so the ending version is excluded and the replacement is included.",
         "couldBeCorrectWhen": "The queried instant equals the replacement's period start.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "AS OF includes ValidFrom <= instant and requires ValidTo > instant, so the ending version is excluded and the replacement is included."
       },
       {
@@ -228,9 +190,7 @@
         "claimRepresented": "This option proposes The old version ending at 10:00.",
         "whyIncorrectInContext": "Its ValidTo equals the instant and fails the strictly-greater end test.",
         "couldBeCorrectWhen": "The queried instant is inside the old period, such as 09:30.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "Its ValidTo equals the instant and fails the strictly-greater end test."
       },
       {
@@ -238,9 +198,7 @@
         "claimRepresented": "This option proposes Both versions for the key.",
         "whyIncorrectInContext": "The half-open boundary does not overlap these two adjacent periods.",
         "couldBeCorrectWhen": "A range query spans time on both sides of 10:00 rather than using AS OF at one instant.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The half-open boundary does not overlap these two adjacent periods."
       },
       {
@@ -248,9 +206,7 @@
         "claimRepresented": "This option proposes Neither version.",
         "whyIncorrectInContext": "The replacement is valid at its start, so one version qualifies.",
         "couldBeCorrectWhen": "The queried instant falls before either version's start or into an actual gap.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The replacement is valid at its start, so one version qualifies."
       }
     ]
@@ -264,9 +220,7 @@
         "claimRepresented": "This option proposes BETWEEN @start AND @end",
         "whyIncorrectInContext": "BETWEEN also admits versions beginning exactly at the upper boundary, which must be excluded here.",
         "couldBeCorrectWhen": "The range should include versions that start exactly at @end.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "BETWEEN also admits versions beginning exactly at the upper boundary, which must be excluded here."
       },
       {
@@ -274,9 +228,7 @@
         "claimRepresented": "This option proposes CONTAINED IN (@start, @end)",
         "whyIncorrectInContext": "It requires both period endpoints inside the bounds and would exclude the spanning 08:00-11:00 version.",
         "couldBeCorrectWhen": "Only versions opened and closed within the given interval should qualify.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "It requires both period endpoints inside the bounds and would exclude the spanning 08:00-11:00 version."
       },
       {
@@ -284,9 +236,7 @@
         "claimRepresented": "This option proposes AS OF @end",
         "whyIncorrectInContext": "A point-in-time query at 10:00 includes versions beginning then and does not represent the earlier interval.",
         "couldBeCorrectWhen": "The requirement is the state exactly at @end.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "A point-in-time query at 10:00 includes versions beginning then and does not represent the earlier interval."
       },
       {
@@ -294,9 +244,7 @@
         "claimRepresented": "This option proposes FROM @start TO @end",
         "whyIncorrectInContext": "Not incorrect in this context. This includes overlapping versions using ValidFrom < @end and ValidTo > @start, excluding upper-boundary starts.",
         "couldBeCorrectWhen": "The requested interval has these open-boundary overlap semantics.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "This includes overlapping versions using ValidFrom < @end and ValidTo > @start, excluding upper-boundary starts."
       }
     ]
@@ -310,9 +258,7 @@
         "claimRepresented": "This option proposes FOR SYSTEM_TIME ALL",
         "whyIncorrectInContext": "It includes current and historical versions without the required interval containment filter.",
         "couldBeCorrectWhen": "The analysis needs the complete union of temporal and history data.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "It includes current and historical versions without the required interval containment filter."
       },
       {
@@ -320,9 +266,7 @@
         "claimRepresented": "This option proposes FOR SYSTEM_TIME CONTAINED IN (@start, @end)",
         "whyIncorrectInContext": "Not incorrect in this context. The documented predicate requires ValidFrom >= @start and ValidTo <= @end, including both stated boundaries.",
         "couldBeCorrectWhen": "Both version endpoints must fit inside the reporting interval.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The documented predicate requires ValidFrom >= @start and ValidTo <= @end, including both stated boundaries."
       },
       {
@@ -330,9 +274,7 @@
         "claimRepresented": "This option proposes FOR SYSTEM_TIME AS OF @start",
         "whyIncorrectInContext": "It describes one instant rather than versions opened and closed across an interval.",
         "couldBeCorrectWhen": "The requirement is the state at the interval's start.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "It describes one instant rather than versions opened and closed across an interval."
       },
       {
@@ -340,9 +282,7 @@
         "claimRepresented": "This option proposes FOR SYSTEM_TIME FROM @start TO @end",
         "whyIncorrectInContext": "Overlap can admit a version extending outside the interval, contrary to the requirement.",
         "couldBeCorrectWhen": "Any version active during part of the interval should qualify.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "Overlap can admit a version extending outside the interval, contrary to the requirement."
       }
     ]
@@ -356,9 +296,7 @@
         "claimRepresented": "This option proposes Query only the current table without FOR SYSTEM_TIME.",
         "whyIncorrectInContext": "The current table does not contain those intermediate historical versions.",
         "couldBeCorrectWhen": "Only each key's current value is required.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The current table does not contain those intermediate historical versions."
       },
       {
@@ -366,9 +304,7 @@
         "claimRepresented": "This option proposes Use AS OF at the transaction begin time.",
         "whyIncorrectInContext": "Temporal clauses filter out zero-duration periods, so selecting that instant does not expose them.",
         "couldBeCorrectWhen": "The analysis needs the valid nonzero-duration state at that instant.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "Temporal clauses filter out zero-duration periods, so selecting that instant does not expose them."
       },
       {
@@ -376,9 +312,7 @@
         "claimRepresented": "This option proposes Query the history table directly.",
         "whyIncorrectInContext": "Not incorrect in this context. The article explicitly directs users to the history table to include zero-duration versions.",
         "couldBeCorrectWhen": "Intermediate zero-duration history rows must be inspected.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The article explicitly directs users to the history table to include zero-duration versions."
       },
       {
@@ -386,9 +320,7 @@
         "claimRepresented": "This option proposes Use CONTAINED IN around the transaction time.",
         "whyIncorrectInContext": "Changing the temporal subclause does not remove the documented zero-duration exclusion.",
         "couldBeCorrectWhen": "The analysis needs nonzero-duration versions contained inside an interval.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "Changing the temporal subclause does not remove the documented zero-duration exclusion."
       }
     ]
@@ -402,9 +334,7 @@
         "claimRepresented": "This option proposes Name the hidden period columns explicitly in SELECT.",
         "whyIncorrectInContext": "Not incorrect in this context. HIDDEN excludes them from wildcard projection but the article says explicitly referenced hidden columns are returned.",
         "couldBeCorrectWhen": "A diagnostic needs period values while legacy wildcard clients remain unchanged.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "HIDDEN excludes them from wildcard projection but the article says explicitly referenced hidden columns are returned."
       },
       {
@@ -412,9 +342,7 @@
         "claimRepresented": "This option proposes Continue using SELECT * and expect the period columns to appear.",
         "whyIncorrectInContext": "The HIDDEN setting specifically excludes them from that wildcard result.",
         "couldBeCorrectWhen": "The table's period columns are not hidden.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "The HIDDEN setting specifically excludes them from that wildcard result."
       },
       {
@@ -422,9 +350,7 @@
         "claimRepresented": "This option proposes Read only business columns from the current table.",
         "whyIncorrectInContext": "That projection does not supply the period values required by the diagnostic.",
         "couldBeCorrectWhen": "Only current business values are needed.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "That projection does not supply the period values required by the diagnostic."
       },
       {
@@ -432,9 +358,7 @@
         "claimRepresented": "This option proposes Remove the period columns from the diagnostic's explicit projection.",
         "whyIncorrectInContext": "Omitting them does not retrieve the requested values.",
         "couldBeCorrectWhen": "The diagnostic must deliberately match the legacy business-column-only shape.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "Omitting them does not retrieve the requested values."
       }
     ]
@@ -448,9 +372,7 @@
         "claimRepresented": "This option proposes An updatable ledger table.",
         "whyIncorrectInContext": "It provides ledger history but permits updates and deletions through its supported interface.",
         "couldBeCorrectWhen": "A system-of-record workload must update or delete rows while retaining ledger evidence.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "It provides ledger history but permits updates and deletions through its supported interface."
       },
       {
@@ -458,9 +380,7 @@
         "claimRepresented": "This option proposes A regular system-versioned temporal table.",
         "whyIncorrectInContext": "It maintains previous row versions but is not the specified ledger insert-only contract.",
         "couldBeCorrectWhen": "The goal is ordinary temporal point-in-time analysis rather than ledger tamper evidence.",
-        "sourceIds": [
-          "dp800-d1-temporal"
-        ],
+        "sourceIds": ["dp800-d1-temporal"],
         "evidenceSummary": "It maintains previous row versions but is not the specified ledger insert-only contract."
       },
       {
@@ -468,9 +388,7 @@
         "claimRepresented": "This option proposes A nondurable memory-optimized table.",
         "whyIncorrectInContext": "Its data can be lost on restart and it does not supply the required ledger form.",
         "couldBeCorrectWhen": "Transient data can be regenerated and does not need persistence.",
-        "sourceIds": [
-          "dp800-d1-memory-tables"
-        ],
+        "sourceIds": ["dp800-d1-memory-tables"],
         "evidenceSummary": "Its data can be lost on restart and it does not supply the required ledger form."
       },
       {
@@ -478,9 +396,7 @@
         "claimRepresented": "This option proposes An append-only ledger table.",
         "whyIncorrectInContext": "Not incorrect in this context. It provides tamper evidence while blocking UPDATE and DELETE at the API level.",
         "couldBeCorrectWhen": "The workload is an insert-only journal with the stated ledger requirements.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "It provides tamper evidence while blocking UPDATE and DELETE at the API level."
       }
     ]
@@ -494,9 +410,7 @@
         "claimRepresented": "This option proposes Keep only freshly recomputed hashes derived from the database being checked.",
         "whyIncorrectInContext": "An attacker could regenerate those after tampering; they are not independent prior evidence.",
         "couldBeCorrectWhen": "Freshly computed hashes are one side of a verification comparison against separately protected prior digests.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "An attacker could regenerate those after tampering; they are not independent prior evidence."
       },
       {
@@ -504,9 +418,7 @@
         "claimRepresented": "This option proposes Store prior digests outside the database in tamper-protected storage.",
         "whyIncorrectInContext": "Not incorrect in this context. The article explicitly requires protected external digests so an attacker cannot modify data and replace the trusted reference together.",
         "couldBeCorrectWhen": "Independent historical digest integrity must survive the stated database-file threat.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "The article explicitly requires protected external digests so an attacker cannot modify data and replace the trusted reference together."
       },
       {
@@ -514,9 +426,7 @@
         "claimRepresented": "This option proposes Query the ledger view without retaining external digest evidence.",
         "whyIncorrectInContext": "A relational history query is not the documented comparison against protected prior digests.",
         "couldBeCorrectWhen": "The task is querying ledger transaction history rather than cryptographic verification.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "A relational history query is not the documented comparison against protected prior digests."
       },
       {
@@ -524,9 +434,7 @@
         "claimRepresented": "This option proposes Use an updatable ledger table but omit digest verification.",
         "whyIncorrectInContext": "Changing the ledger form does not establish the required independent verification reference.",
         "couldBeCorrectWhen": "The application needs updatable ledger history and verification is a separate scheduled workflow.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "Changing the ledger form does not establish the required independent verification reference."
       }
     ]
@@ -540,9 +448,7 @@
         "claimRepresented": "This option proposes Use an ordinary database with only non-ledger tables.",
         "whyIncorrectInContext": "It preserves ordinary tables but omits the selected ledger protection that is also required.",
         "couldBeCorrectWhen": "None of the database's tables needs ledger capabilities.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "It preserves ordinary tables but omits the selected ledger protection that is also required."
       },
       {
@@ -550,9 +456,7 @@
         "claimRepresented": "This option proposes Create a ledger database and use append-only rather than updatable tables everywhere.",
         "whyIncorrectInContext": "Both forms are ledger tables, so this still excludes ordinary tables.",
         "couldBeCorrectWhen": "Every table must be ledger-protected and insert-only semantics are appropriate.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "Both forms are ledger tables, so this still excludes ordinary tables."
       },
       {
@@ -560,9 +464,7 @@
         "claimRepresented": "This option proposes Use an ordinary database and choose ledger behavior at the selected-table scope.",
         "whyIncorrectInContext": "Not incorrect in this context. The database-wide ledger form can contain only ledger tables; table-scoped ledger forms provide the needed narrower choice.",
         "couldBeCorrectWhen": "Only selected tables need ledger protection while ordinary tables must also exist.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "The database-wide ledger form can contain only ledger tables; table-scoped ledger forms provide the needed narrower choice."
       },
       {
@@ -570,9 +472,7 @@
         "claimRepresented": "This option proposes Create a ledger database and accept its default updatable ledger tables.",
         "whyIncorrectInContext": "Its table defaults still do not permit non-ledger tables.",
         "couldBeCorrectWhen": "All database tables require ledger integrity and updatable behavior.",
-        "sourceIds": [
-          "dp800-d1-ledger"
-        ],
+        "sourceIds": ["dp800-d1-ledger"],
         "evidenceSummary": "Its table defaults still do not permit non-ledger tables."
       }
     ]
@@ -586,9 +486,7 @@
         "claimRepresented": "This option proposes The default fully durable memory-optimized table and fully durable transactions.",
         "whyIncorrectInContext": "Not incorrect in this context. The reference states that memory-optimized tables are fully durable by default with a disk copy for recovery.",
         "couldBeCorrectWhen": "Committed data must survive restart without the delayed-durability tradeoff.",
-        "sourceIds": [
-          "dp800-d1-memory-tables"
-        ],
+        "sourceIds": ["dp800-d1-memory-tables"],
         "evidenceSummary": "The reference states that memory-optimized tables are fully durable by default with a disk copy for recovery."
       },
       {
@@ -596,9 +494,7 @@
         "claimRepresented": "This option proposes A nondurable memory-optimized table.",
         "whyIncorrectInContext": "The table's data is not persisted and can be lost on crash or failover.",
         "couldBeCorrectWhen": "The data is transient and can be regenerated.",
-        "sourceIds": [
-          "dp800-d1-memory-tables"
-        ],
+        "sourceIds": ["dp800-d1-memory-tables"],
         "evidenceSummary": "The table's data is not persisted and can be lost on crash or failover."
       },
       {
@@ -606,9 +502,7 @@
         "claimRepresented": "This option proposes A durable table with delayed-durable transactions.",
         "whyIncorrectInContext": "Control may return before logging reaches disk, so acknowledged commits can be lost on crash.",
         "couldBeCorrectWhen": "The workload explicitly accepts delayed-durability data-loss risk for its performance tradeoff.",
-        "sourceIds": [
-          "dp800-d1-memory-tables"
-        ],
+        "sourceIds": ["dp800-d1-memory-tables"],
         "evidenceSummary": "Control may return before logging reaches disk, so acknowledged commits can be lost on crash."
       }
     ]
@@ -622,9 +516,7 @@
         "claimRepresented": "This option proposes 100 <= value < 200",
         "whyIncorrectInContext": "RANGE RIGHT places boundary 200 on its right, not in the preceding interval.",
         "couldBeCorrectWhen": "The input is 150 under this same function.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "RANGE RIGHT places boundary 200 on its right, not in the preceding interval."
       },
       {
@@ -632,9 +524,7 @@
         "claimRepresented": "This option proposes 200 <= value < 300",
         "whyIncorrectInContext": "Not incorrect in this context. The right-side interval includes its lower boundary 200.",
         "couldBeCorrectWhen": "The input equals 200, as stated.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "The right-side interval includes its lower boundary 200."
       },
       {
@@ -642,9 +532,7 @@
         "claimRepresented": "This option proposes value < 100",
         "whyIncorrectInContext": "200 is not below the first boundary.",
         "couldBeCorrectWhen": "The input is 50 under the same function.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "200 is not below the first boundary."
       },
       {
@@ -652,9 +540,7 @@
         "claimRepresented": "This option proposes value >= 300",
         "whyIncorrectInContext": "200 is below the final boundary.",
         "couldBeCorrectWhen": "The input is 300 or greater under the same function.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "200 is below the final boundary."
       }
     ]
@@ -668,9 +554,7 @@
         "claimRepresented": "This option proposes The partition function's RANGE boundary values.",
         "whyIncorrectInContext": "The function determines row-to-partition boundaries, not partition-to-filegroup placement.",
         "couldBeCorrectWhen": "The monthly boundaries or number of partitions must change.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "The function determines row-to-partition boundaries, not partition-to-filegroup placement."
       },
       {
@@ -678,9 +562,7 @@
         "claimRepresented": "This option proposes The table's partitioning-column values.",
         "whyIncorrectInContext": "Values are inputs to the function; they do not define filegroup mapping.",
         "couldBeCorrectWhen": "The goal is determining which partition a particular row belongs to.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "Values are inputs to the function; they do not define filegroup mapping."
       },
       {
@@ -688,9 +570,7 @@
         "claimRepresented": "This option proposes The partition scheme.",
         "whyIncorrectInContext": "Not incorrect in this context. The article defines the scheme as mapping the function's partitions to one or more filegroups.",
         "couldBeCorrectWhen": "The row boundaries remain fixed while filegroup placement is the design concern.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "The article defines the scheme as mapping the function's partitions to one or more filegroups."
       },
       {
@@ -698,9 +578,7 @@
         "claimRepresented": "This option proposes The query predicate used for partition elimination.",
         "whyIncorrectInContext": "A predicate can allow partitions to be skipped but does not define their storage placement.",
         "couldBeCorrectWhen": "The task is narrowing which partitions a query may need to read.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "A predicate can allow partitions to be skipped but does not define their storage placement."
       }
     ]
@@ -714,9 +592,7 @@
         "claimRepresented": "This option proposes Keep uniqueness on EventId using an appropriate nonaligned index design.",
         "whyIncorrectInContext": "Not incorrect in this context. The reference names preservation of a unique key lacking the table's partitioning column as a reason for a nonaligned index.",
         "couldBeCorrectWhen": "Global EventId uniqueness is more important than index alignment.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "The reference names preservation of a unique key lacking the table's partitioning column as a reason for a nonaligned index."
       },
       {
@@ -724,10 +600,7 @@
         "claimRepresented": "This option proposes Use the unique aligned composite key (EventId, EventDate).",
         "whyIncorrectInContext": "That enforces uniqueness of the pair rather than EventId alone, changing the business rule.",
         "couldBeCorrectWhen": "EventId may legitimately repeat on different dates and only the pair must be unique.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes",
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes", "dp800-d1-partitions"],
         "evidenceSummary": "That enforces uniqueness of the pair rather than EventId alone, changing the business rule."
       },
       {
@@ -735,9 +608,7 @@
         "claimRepresented": "This option proposes Replace the unique index with a nonunique aligned index.",
         "whyIncorrectInContext": "It removes enforcement of global uniqueness.",
         "couldBeCorrectWhen": "Duplicate keys are legitimate and uniqueness enforcement is not required.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "It removes enforcement of global uniqueness."
       },
       {
@@ -745,9 +616,7 @@
         "claimRepresented": "This option proposes Use no uniqueness constraint or unique index.",
         "whyIncorrectInContext": "It does not enforce the required business rule.",
         "couldBeCorrectWhen": "The database intentionally permits duplicates for that key.",
-        "sourceIds": [
-          "dp800-d1-rowstore-indexes"
-        ],
+        "sourceIds": ["dp800-d1-rowstore-indexes"],
         "evidenceSummary": "It does not enforce the required business rule."
       }
     ]
@@ -761,9 +630,7 @@
         "claimRepresented": "This option proposes Different partition boundary values.",
         "whyIncorrectInContext": "Equivalent definitions must have the same boundary values.",
         "couldBeCorrectWhen": "The design intentionally uses a nonaligned index partitioned on different boundaries.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "Equivalent definitions must have the same boundary values."
       },
       {
@@ -771,9 +638,7 @@
         "claimRepresented": "This option proposes Different partition counts.",
         "whyIncorrectInContext": "The reference requires the same number of partitions.",
         "couldBeCorrectWhen": "Different partition schemes are intentional and alignment is not required.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "The reference requires the same number of partitions."
       },
       {
@@ -781,9 +646,7 @@
         "claimRepresented": "This option proposes Different partition-function argument data types.",
         "whyIncorrectInContext": "The documented equivalence test requires matching argument types.",
         "couldBeCorrectWhen": "The functions serve separate table designs rather than a required aligned pair.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "The documented equivalence test requires matching argument types."
       },
       {
@@ -791,9 +654,7 @@
         "claimRepresented": "This option proposes Different function names with matching types, counts and boundaries.",
         "whyIncorrectInContext": "Not incorrect in this context. The index need not use the same function object when these definition properties match.",
         "couldBeCorrectWhen": "Distinct functions are deliberately created with equivalent definitions.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "The index need not use the same function object when these definition properties match."
       }
     ]
@@ -807,9 +668,7 @@
         "claimRepresented": "This option proposes Assign each month to a new user-created filegroup.",
         "whyIncorrectInContext": "Azure SQL Database provides only PRIMARY for this partition placement.",
         "couldBeCorrectWhen": "A supported SQL Server or Managed Instance deployment deliberately uses multiple filegroups.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "Azure SQL Database provides only PRIMARY for this partition placement."
       },
       {
@@ -817,9 +676,7 @@
         "claimRepresented": "This option proposes Place all monthly partitions on PRIMARY.",
         "whyIncorrectInContext": "Not incorrect in this context. The reference explicitly requires Azure SQL Database partitions to use PRIMARY while partitioning remains supported.",
         "couldBeCorrectWhen": "The target is Azure SQL Database as stated.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "The reference explicitly requires Azure SQL Database partitions to use PRIMARY while partitioning remains supported."
       },
       {
@@ -827,9 +684,7 @@
         "claimRepresented": "This option proposes Replace the partitions with one unpartitioned table.",
         "whyIncorrectInContext": "It abandons the required monthly partition structure even though single-filegroup partitioning is supported.",
         "couldBeCorrectWhen": "The workload no longer needs partition-level organization or maintenance.",
-        "sourceIds": [
-          "dp800-d1-partitions"
-        ],
+        "sourceIds": ["dp800-d1-partitions"],
         "evidenceSummary": "It abandons the required monthly partition structure even though single-filegroup partitioning is supported."
       }
     ]

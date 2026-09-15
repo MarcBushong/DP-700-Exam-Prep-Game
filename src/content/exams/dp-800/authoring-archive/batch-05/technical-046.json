@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The literal pair is [-3/7,4/7], rounded to six decimal places. Arguments > norm_type defines norm1 as the sum of absolute components: abs(-3)+abs(4)=7. Its Euclidean length is 5/7, not 1, so it cannot be the stated norm2 result. Sourced countercontext: this exact pair would be correct if the same [-3,4] input were passed to VECTOR_NORMALIZE with 'norm1' instead. No change of vector direction or component signs is needed for that countercontext.",
-        "sourceIds": [
-          "dp800-d3-vector-normalize"
-        ]
+        "sourceIds": ["dp800-d3-vector-normalize"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "The literal pair is [-3/4,4/4]. Arguments > norm_type defines norminf as the maximum absolute component, here 4. The pair has Euclidean length 1.25, so it does not meet the requested norm2 unit-length contract. Sourced countercontext: VECTOR_NORMALIZE applied to this same input with 'norminf' would return approximately [-0.75,1.0]. That supported alternative norm is not the norm selected by the immutable SQL.",
-        "sourceIds": [
-          "dp800-d3-vector-normalize"
-        ]
+        "sourceIds": ["dp800-d3-vector-normalize"]
       },
       {
         "choiceId": "c",
         "assessment": "supported",
         "rationale": "Independently applying the documented norm2 definition gives sqrt((-3)^2+4^2)=sqrt(25)=5. Dividing each component by 5 gives [-0.6,0.8], whose squared Euclidean length is 0.36+0.64=1 and whose direction and signs match the input. This is the sole supported option. Context boundary: the same numeric answer would not be the norm1 or norminf normalization of this input; the function's explicitly supplied 'norm2' argument determines the denominator.",
-        "sourceIds": [
-          "dp800-d3-vector-normalize"
-        ]
+        "sourceIds": ["dp800-d3-vector-normalize"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "The literal pair is the input value, not a unit vector: sqrt(9+16)=5. The source's Return value contract requires a length of 1 in the requested norm, so this pair is not a successful norm2 output. Sourced countercontext: it correctly describes the value assigned to @v before normalization, if the task were to report the original vector rather than the function result; the declaration-then-normalize separation is illustrated in Example 2. No normalized input is invented that could make this length-5 pair a norm2 unit-vector result.",
-        "sourceIds": [
-          "dp800-d3-vector-normalize"
-        ]
+        "sourceIds": ["dp800-d3-vector-normalize"]
       }
     ],
     "checks": {

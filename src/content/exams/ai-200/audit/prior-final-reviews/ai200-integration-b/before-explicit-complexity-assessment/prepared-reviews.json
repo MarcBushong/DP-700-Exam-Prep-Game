@@ -1,0 +1,1068 @@
+{
+  "schemaVersion": 1,
+  "requestId": "ai200-integration-b-prepared-pending-cross-audit",
+  "reviews": [
+    {
+      "questionId": "ai200-i-018",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "e4bf586cdde482f4214a0db9c9ab459c7efab3be81100d8f55711c1f9184e4de",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-eventgrid-delivery",
+          "url": "https://learn.microsoft.com/en-us/azure/event-grid/delivery-and-retry",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-eventgrid-delivery.json",
+          "retrievedAt": "2026-09-14T18:02:36.757Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Retry policy gives independent maximum-attempt and minute-based TTL limits, with the first exhausted limit ending delivery. Dead-letter events qualifies expiry checking as occurring at the next scheduled attempt and describes delayed, fallible Blob writes. The configured Basic push scenario stays within these passages."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This is not incorrect here: the policy check occurs at age 40 minutes, beyond the explicitly configured 30-minute lifetime. Four unused attempts cannot revive an expired event. Counterexample/context: This answer also holds whenever a configured TTL is exhausted before the attempt ceiling at the next delivery check; a working dead-letter destination then supplies the stated retention path. Evidence: Retry policy says first to expire; Dead-letter events says TTL is checked only at the next scheduled delivery attempt. The question supplies that precise checkpoint.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Remaining attempts are only an upper budget, not an entitlement. The expired TTL has already ended eligibility at this check. Counterexample/context: An attempt ceiling governs when it is reached while the TTL is still live. Further attempts can be eligible only before either limit expires; even then the documented schedule is best effort. Evidence: The article explicitly stops on either limit and permits skipped retry opportunities. It never promises consumption of the entire attempts budget.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A default cannot displace the stated custom 30-minute TTL. The event's unused attempts have no documented resetting effect. Counterexample/context: A subscription actually using the default 1440-minute TTL would use that lifetime, subject independently to its delivery-attempt limit. Evidence: Retry policy identifies 1440 minutes as the default and allows custom values from 1 to 1440. It treats attempt count as a separate bound.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Independently challenged unused-attempt precedence and immediate-expiry timing. Both challenges fail under the stated scheduled check. The advanced item remains a modest one-rule application, and it resembles the documentation's illustrative TTL comparison without copying an assessment. Local comparison distinguishes 017 error classification and 019 adding retention from this first-limit decision. Cross-bank semantic clearance remains mandatory.",
+      "confidenceReason": "Strong support for the bounded Basic policy and the exact numeric outcome; no claim of observed Azure execution or instantaneous dead-letter writing. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-019",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "32d2c788a01688714b0887225cd2089c3675214331736e6a360e18b03a3e9f75",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-eventgrid-delivery",
+          "url": "https://learn.microsoft.com/en-us/azure/event-grid/delivery-and-retry",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-eventgrid-delivery.json",
+          "retrievedAt": "2026-09-14T18:02:36.757Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Dead-letter events documents optional storage-account/container retention after delivery limits, the default disabled state, destination availability and access requirements. The examples establish traditional topic/system-topic push delivery, not every Event Grid resource that can push."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "This extends opportunities to deliver but does not create a destination from which abandoned payloads can be investigated. Counterexample/context: On the documented topic push model, raising a valid attempts budget could help a transient outage recover while TTL remains live, if more deliveries rather than post-exhaustion retention were wanted. Evidence: Retry policy configures attempt count separately from Dead-letter events' explicit storage destination. The latter section, not an attempts increase, supplies retained payloads.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "ambiguous",
+          "rationale": "The key is supported for the documented Basic-topic delivery model, but the stem only says Event Grid push. The cited article does not establish that exact configuration for every push-capable model; I cannot independently make the unspoken Basic assumption. Counterexample/context: For a traditional topic/system-topic push event subscription with an existing reachable container and suitable access, explicitly configuring dead-lettering supplies the investigation path. Evidence: Dead-letter events requires a storage account and container and says the feature is disabled by default. Its traditional subscription examples do not substantiate an unrestricted namespace-model claim.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A longer eligibility period still ends. It does not establish any separate post-exhaustion store for the team to query. Counterexample/context: For the documented topic subscription, extending a supported TTL can make events eligible for a later retry when a recoverable outage lasts beyond the previous TTL. Evidence: Retry policy describes a configurable minute-based lifetime; the distinct Dead-letter events section describes what is needed to save payloads once delivery limits end.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": false,
+        "correctOptionsSupported": false,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": true,
+        "featureStatus": false,
+        "currentTerminology": true,
+        "prerequisitesComplete": false,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: manual-review-required. Independently withheld approval because Event Grid push is not a sufficient resource-model bound for the single cited delivery article. This agrees with, but does not borrow, the technical hold: exact-hash technical approval is absent in any case. Local neighboring questions use dead-lettering to resolve an error or limit; this asks to add a retention path. Any authored clarification requires new generation and both new reviews, not a metadata-only approval.",
+      "confidenceReason": "High confidence in the traditional-model retention distinction; insufficient evidence to attest the authored unqualified scope or its GA implication. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-020",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "4d48953b1559ea7683e77156fce01ac09f1a276e0c30f98cb1686c710a557b26",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-eventgrid-entra",
+          "url": "https://learn.microsoft.com/en-us/azure/event-grid/authenticate-with-microsoft-entra-id",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-eventgrid-entra.json",
+          "retrievedAt": "2026-09-14T18:02:39.048Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Security principals separates an Event Grid audience token from events/send/action permission. Assign permission to a security principal explicitly lists subscription, resource-group and individual-topic role scopes. The disable-local-auth examples are separate and do not support this question."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The subscription contains other topics, so this grants a broader boundary than the one-topic requirement. Counterexample/context: It is a documented valid role-assignment scope when the publisher is intentionally authorized across the subscription rather than confined to one topic. Evidence: The permission-assignment section permits an Azure subscription scope as well as narrower resource scopes; the stem explicitly rules out broad publication authority.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-entra"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Other topics share that resource group. This reduces scope relative to a subscription but still fails the stated one-topic boundary. Counterexample/context: Resource-group scope is appropriate when the entire group is the intended authorization boundary and its relevant topics are legitimate publishing targets. Evidence: The same section names resource groups and specific topics as separate scope choices. Only the latter matches the stated exclusions.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-entra"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the principal already obtains a token but lacks send authorization, and topic scope confines this assignment to the required target. Counterexample/context: This is also correct for another principal publishing only to one designated topic; broader scopes are not inherently invalid, merely excessive for this requirement. Evidence: Security principals requires Microsoft.EventGrid/events/send/action after token validation, and Assign permission lists a specific Event Grid topic as a supported assignment scope.",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-entra"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Tried the counterexample that token acquisition suffices and the counterexample that a broader scope is equally least privileged. The article rejects the former and the stem's other-topic exclusions reject the latter. This outbound Event Grid resource-scope decision differs from 033 inbound identity and 032 Service Bus receiver configuration. Cross-bank role/scope reuse still needs the independent audit.",
+      "confidenceReason": "The single direct article expressly documents the permission and all three scope alternatives, so no invented role or scope is needed. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-021",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "70710de162b5bb7bb79d3e469d2627712718febaca384072d2fe5a019e03d627",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-bindings",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-bindings.json",
+          "retrievedAt": "2026-09-14T18:02:43.880Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The opening trigger definition distinguishes invocation from optional data bindings. The example table expressly pairs Timer invocation with Blob input and Cosmos DB output; the supported matrix independently lists the three trigger families."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Reading Blob data is an input-binding action during execution, not the requested event that starts it. A Blob trigger would replace the stipulated schedule with a blob event. Counterexample/context: A Blob trigger is suitable when a blob event is the required invocation source rather than when a scheduled handler merely reads existing Blob data. Evidence: The opening table explicitly separates Timer in its Trigger column from Blob Storage in its Input binding column, and the matrix confirms Blob trigger support.",
+          "sourceIds": ["ai200-20260914-doc-functions-bindings"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The database receives the result after invocation. Selecting its trigger would not implement the requested schedule. Counterexample/context: A Cosmos DB trigger is a supported choice when database events should start the function instead of a timer schedule. Evidence: The documented scheduled-job row places Cosmos DB in Output binding, not Trigger; the supported matrix separately lists Cosmos DB trigger capability.",
+          "sourceIds": ["ai200-20260914-doc-functions-bindings"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: timing is the invocation requirement, while the stated Blob read and Cosmos write are data flow after invocation. Counterexample/context: A timer also fits other scheduled handlers regardless of which supported optional data bindings they use; a service event would require a different trigger. Evidence: The source defines exactly one trigger and gives the identical service-role combination as a conceptual example, not an exam question.",
+          "sourceIds": ["ai200-20260914-doc-functions-bindings"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. The source's illustrative service combination is closely reused, reducing originality despite original question wording and no assessment copying. Attempting to treat either data binding as the start event fails the explicit schedule. Unlike 023, this tests trigger versus input/output role rather than a queued asynchronous worker; unlike 027 it does not ask whether a service exposes standalone input.",
+      "confidenceReason": "The actual conceptual example directly establishes the answer; limitations concern familiarity and originality, not technical correctness. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-022",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "fdeb113c3fa0f355c84d9c6b82b28699a0be3cc1f94b79bebdeee00e23744ec9",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-python",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-python.json",
+          "retrievedAt": "2026-09-14T18:02:41.582Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Reading route parameters shows a route template captured through HttpRequest.route_params and forbids extra route handler arguments in Python v2. The neighboring request example uses params for query data. These passages distinguish path capture from the failing lookup."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-backends-azure-functions/4-create-triggers-bindings-ai-patterns",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns.json",
+          "retrievedAt": "2026-09-14T17:58:14.008Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Create HTTP triggers shows a Python v2 route, typed HttpRequest/HttpResponse and req.get_json for a supplied JSON body. Its key-authorization description permits an x-functions-key header, so an authorized request need not carry a query string."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: jobs/{job_id} binds J42 in the path and the requested replacement reads precisely that collection using the matching key. Counterexample/context: The same method fits any Python v2 route-template capture; the dictionary key must match that route's placeholder rather than an invented extra handler parameter. Evidence: Reading route parameters demonstrates req.route_params.get with a matching placeholder and explicitly tells Python v2 handlers to read the request collection.",
+          "sourceIds": ["ai200-20260914-doc-functions-python"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The stem excludes a query string, so the original params lookup cannot obtain J42 merely because it appears in the route path. Counterexample/context: req.params.get would retrieve job_id when the caller provides a query parameter such as ?job_id=J42 rather than only the path capture. Evidence: The HTTP key concepts describe params as the query-parameter collection, separately from the route-parameter section.",
+          "sourceIds": ["ai200-20260914-doc-functions-python"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "No request body is supplied. JSON parsing is a different input operation and cannot extract a URL path component. Counterexample/context: This expression is appropriate for a request carrying a valid JSON object with a job_id member; it is not a path parser. Evidence: The training's HTTP example parses a POST JSON payload with req.get_json. The Python reference puts path captures in route_params instead.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns",
+            "ai200-20260914-doc-functions-python"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Independently checked constructor auth scope, GET route, placeholder identity, return text, and each competing input API. A header key resolves the apparent no-query/auth contradiction. The original faulty line and repaired expression are syntactically valid Python; no installed azure-functions runtime or Azure deployment test is claimed. Locally distinct from model declaration and blueprint registration questions; awaiting cross-bank semantic clearance.",
+      "confidenceReason": "The exact path/query/body distinction is directly illustrated in the two approved sources and the stem eliminates competing input locations. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-023",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "2b56476b2341788c07eb9a182377cdebb4ef0d04a9971d27e28885549cc0a834",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-backends-azure-functions/4-create-triggers-bindings-ai-patterns",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns.json",
+          "retrievedAt": "2026-09-14T17:58:14.008Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Create Service Bus triggers describes a queue-message-driven function and the two-stage HTTP-ingestion/queued-worker pattern. It shows that the second function uses service_bus_queue_trigger and still needs a queue connection."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-bindings",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-bindings.json",
+          "retrievedAt": "2026-09-14T18:02:43.880Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The trigger definition makes the trigger the invocation event. The supported matrix lists HTTP, Timer and Service Bus as trigger types rather than interchangeable schedules or additional input bindings."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The client has already returned from ingestion and is not to issue another request. An HTTP invocation source would leave the queue arrival disconnected from this worker. Counterexample/context: HTTP is suitable for the front-door ingestion function or a worker that is deliberately called by a client or another HTTP publisher. Evidence: The training separates the HTTP function that validates and queues work from a different Service Bus-triggered function that processes it.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the existing queue already contains the work and message arrival, not another client request, is the specified start condition. Counterexample/context: This trigger fits asynchronous job consumption whenever a function should react to messages on a properly configured Service Bus queue. Evidence: Create Service Bus triggers says queue triggers start a function when a message arrives; the binding matrix confirms trigger support.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns",
+            "ai200-20260914-doc-functions-bindings"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The requirement excludes a polling schedule. A scheduled handler could inspect a queue, but that is a different invocation policy from the requested queue trigger. Counterexample/context: Timer is suitable when batch processing must begin on a deliberate schedule, even if the handler then accesses other services. Evidence: The binding example table uses Timer for scheduled work, whereas the training uses Service Bus for the separate arrival-driven worker.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-bindings",
+            "ai200-20260914-unit-build-backends-azure-functions-4-create-triggers-bindings-ai-patterns"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Tried substituting a timer-driven queue poll and an HTTP worker call; both are possible designs elsewhere, but both violate the explicit invocation requirement. The question closely follows the approved training's two-stage pattern, which reduces novelty. Its trigger selection is not the broker competing-consumer decision in 001 or the scheduled data-flow role in 021.",
+      "confidenceReason": "Direct training explicitly documents the requested worker pattern, and the alternatives have real but excluded invocation contexts. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-024",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "3cb809ed7dec6ef90e2c2b591fab526ea8963da09a92b0f1d7e5f9655be33138",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-reference",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-reference.json",
+          "retrievedAt": "2026-09-14T18:02:46.589Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Client SDKs specifically recommends a separately created and managed client when functionality is absent from a binding extension and denies access to ordinary binding extensions' internal clients."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-bindings",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-bindings.json",
+          "retrievedAt": "2026-09-14T18:02:43.880Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The introductory SDK tip allows direct SDK access instead of input/output data-transfer bindings. Its SDK-type section is a separate richer binding surface, not a promise that ordinary output parameters expose every service operation."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The stem explicitly states that neither the installed extension nor its parameters exposes the needed operation. Restricting integration to that same surface cannot add it. Counterexample/context: Using only an existing output binding is sensible when the requested operation is among the binding's supported data transfers and its configuration suffices. Evidence: Bindings simplify supported transfers, while Client SDKs names unsupported underlying-SDK functionality as the reason to use a separate client.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-reference",
+            "ai200-20260914-doc-functions-bindings"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the operation is explicitly supported by the service SDK and excluded from the installed binding, which is the exact documented reason for direct SDK use. Counterexample/context: Direct SDK clients also fit services without a suitable binding; callers must create, manage and authorize their own client rather than borrow the extension's hidden one. Evidence: The developer guide says to independently create and manage client instances when the needed underlying SDK functionality is unsupported by an extension.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-reference",
+            "ai200-20260914-doc-functions-bindings"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: manual-review-required. The key is technically correct, but the independent rubric is below the required 44: only two alternatives are offered and the sole distractor is directly ruled out in the premise. This fails the intended intermediate implementation realism rather than source support. It needs a fresh authored scenario and full new review sequence; technical approval is not enough to promote it.",
+      "confidenceReason": "High confidence in direct-client guidance; equally high confidence that the authored binary restatement does not satisfy the strict realism threshold. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-025",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "9559f58d81036331d70d348b24b27518f136b99694764a53d90cd1cb4141918c",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-python",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-python.json",
+          "retrievedAt": "2026-09-14T18:02:41.582Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Programming model and the decorator-model examples distinguish Python 2.x declarations in function_app.py or a referenced blueprint from 1.x function.json declarations. Folder structure identifies host.json as global configuration."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-bindings",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-bindings.json",
+          "retrievedAt": "2026-09-14T18:02:43.880Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The Python v2/v1 tabs directly contrast decorators with function.json for otherwise comparable HTTP/output bindings."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-hosting",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-hosting.json",
+          "retrievedAt": "2026-09-14T18:02:48.813Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Function app timeout duration places functionTimeout in host.json and describes host execution behavior, supporting the meaningful alternative use of that file."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the project explicitly selects v2 and wants declarations with Python code, matching the decorator model. Counterexample/context: Decorators are also used when functions are organized in registered blueprint modules rather than kept entirely in function_app.py. Evidence: Both the programming-model table and the Python v2 binding tab define triggers and bindings directly with decorators.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-bindings"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "That is the alternative Python v1 programming model, not the v2 model in the premise. Counterexample/context: A Python v1 project declares bindings in function.json, with handler code in its corresponding module. Evidence: The reference and binding tabs explicitly label the function.json route as Python version 1 and the decorator route as version 2.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-bindings"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The host configuration file controls global runtime behavior, not the individual trigger/binding definitions beside these handlers. Counterexample/context: host.json is the documented place to configure app-wide host behavior such as functionTimeout. Evidence: Folder structure calls host.json global configuration, and Function app timeout duration gives a concrete supported host setting.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-hosting"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. The independent total reaches the configured minimum without pretending the item is deep: difficulty 2 and originality 3 explicitly retain the recall warning. The v1 alternative is a real version-specific contrast, so this is more defensible than an invented configuration action. Local distinctions from 026 registration, 028 app isolation and 029 settings location remain subject to the cross-bank semantic audit.",
+      "confidenceReason": "Unambiguous and directly documented programming-model distinction; borderline difficulty quality is visible in the actual rubric rather than hidden by a label change. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-026",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "a46143a57e55c6ee35ffe643eff372d1bda5fc4b74f685a7e5b8626ce1a3868b",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-python",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-python.json",
+          "retrievedAt": "2026-09-14T18:02:41.582Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Organizing with blueprints explicitly shows importing bp and then calling app.register_functions(bp). Folder structure separately describes shared helper code without triggers or bindings; mere import is valid for that different purpose."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the blueprint is imported but not registered, and the documented second stage is precisely app.register_functions(bp). Counterexample/context: The same call is appropriate for any separately defined blueprint whose functions must be registered with the main app, using the actual imported blueprint object. Evidence: Organizing with blueprints shows the two separate steps and the exact register_functions call after importing bp.",
+          "sourceIds": ["ai200-20260914-doc-functions-python"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The documented blueprint setup requires registration in addition to import, and the premise explicitly states that registration has not happened. Counterexample/context: An ordinary helper module with no function definitions may be imported for its helper code without any FunctionApp registration. Evidence: The blueprint section explicitly registers bp; Folder structure separately labels shared as pure helper code with no triggers or bindings.",
+          "sourceIds": ["ai200-20260914-doc-functions-python"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: manual-review-required. The API is correct and the helper-module counterexample is genuine, but the independent strict score is below 44. The exact missing registration operation is exposed by a binary lexical clue rather than an authentic implementation diagnosis. This is a quality hold, not an invented technical failure. Fixing the authored stem/options requires all three passes again.",
+      "confidenceReason": "Strong source support for the method name and distinction; insufficient scenario challenge for the recorded intermediate label and strict rubric. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-027",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "f1a5b14bd3e1261b431bce82a1dc9fc31ce6cfac2ff5f059e45493008dfa0102",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-bindings",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-bindings.json",
+          "retrievedAt": "2026-09-14T18:02:43.880Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The supported-binding table has independent Trigger, Input and Output columns: Blob is checked in all three, Service Bus and Event Grid only in Trigger and Output. The opening definition explains why trigger-provided input is not an additional standalone input binding."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Its trigger can provide message data, but the requested extra input column is blank. Replacing HTTP with a Service Bus trigger would change the invocation source. Counterexample/context: Service Bus is appropriate as the function's trigger or as an output binding when sending messages is required. Evidence: The Service Bus row marks Trigger and Output, not Input. The article separately defines a trigger as a special input source.",
+          "sourceIds": ["ai200-20260914-doc-functions-bindings"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Event Grid offers event invocation and event publication, but its standalone Input cell is blank. Neither capability satisfies the specified extra declarative read. Counterexample/context: Event Grid fits a trigger-driven event handler or an output binding that publishes an event from a function. Evidence: The Event Grid row marks Trigger and Output only; the HTTP-triggered premise excludes selecting another invocation trigger.",
+          "sourceIds": ["ai200-20260914-doc-functions-bindings"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the Blob row contains an Input checkmark and can supply an additional declarative read without replacing the HTTP trigger. Counterexample/context: Blob input also fits a scheduled function that reads a blob during execution, as the article's Timer example demonstrates. Evidence: The supported matrix marks Blob Input under the supported runtime, and the opening scheduled-job example uses Blob input independently of Timer.",
+          "sourceIds": ["ai200-20260914-doc-functions-bindings"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Tried treating trigger-carried data as proof of an Input binding; the distinct matrix columns and existing HTTP trigger defeat that counterexample. Unlike 021, the input service is not preselected, and unlike 023, invocation is already fixed. The item tests capability direction rather than the common one-trigger fact alone.",
+      "confidenceReason": "All three option distinctions are directly visible in the same current binding matrix; no outside SDK assumptions are required. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-028",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "948f95ecd46064cd66747499a70ae54329ee0245fe32d65e17abc474a1c33580",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-reference",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-reference.json",
+          "retrievedAt": "2026-09-14T18:02:46.589Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Deployment defines the function app as the unit of deployment and management and expressly says its functions share a deployment method and runtime version."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-python",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-python.json",
+          "retrievedAt": "2026-09-14T18:02:41.582Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Organizing with blueprints describes modular files registered into the main app. It does not give those modules separate Azure function-app resources or host-runtime lifecycles."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the documented unit for both management and deployment is the app, so splitting that unit separates the two groups' lifecycles. Counterexample/context: Separate apps also fit other groups that intentionally need distinct app-level deployment or runtime configuration; this need not imply separate billing plans. Evidence: Deployment identifies an app as the execution and management context and states all its functions share runtime version and deployment method.",
+          "sourceIds": ["ai200-20260914-doc-functions-reference"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Blueprints register into the same main app and remain inside its shared deployment/runtime boundary. File modularity alone does not satisfy either requirement. Counterexample/context: Blueprints are appropriate when the goal is to organize reusable or feature-grouped functions without separating their Azure app lifecycle. Evidence: The blueprint section registers modules with one FunctionApp, while Deployment places runtime and deployment management at the app resource.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-reference"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Challenged the key with blueprints and with plan-specific scaling exceptions. Blueprints do not cross the app resource boundary, and scaling is deliberately not the question. This tests lifecycle isolation rather than 026's registration call; shared blueprint terminology is not by itself a duplicate fact.",
+      "confidenceReason": "Two independently read passages directly separate modular code organization from app-level runtime and deployment ownership. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-029",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "a07470d1b18260e627a488bd3503aa32341c7da19a1e74894ebe378cb04c91ac",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-backends-azure-functions/5-manage-secrets-configuration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-backends-azure-functions-5-manage-secrets-configuration.json",
+          "retrievedAt": "2026-09-14T17:58:15.585Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Use application settings and the local workflow explicitly distinguish Values in local.settings.json from the Azure-managed production configuration store, both exposed to Python as environment variables."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-python",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-python.json",
+          "retrievedAt": "2026-09-14T18:02:41.582Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Environment variables specifies local.settings.json locally and Application Settings in Azure. Folder structure identifies host.json as global app configuration rather than the local or hosted application-variable store."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-hosting",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-hosting.json",
+          "retrievedAt": "2026-09-14T18:02:48.813Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Function app timeout duration supplies a concrete legitimate use of host.json: functionTimeout changes the host's execution limit, not the arbitrary MODEL_ID environment variable."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Only the local execution changed, exactly as expected. This edit does not write the hosted app's configuration store. Counterexample/context: Values.MODEL_ID is appropriate for changing the developer's local environment value when running with local.settings.json. Evidence: Both sources explicitly separate local settings from Azure application settings; the training says deployed code reads the Azure-managed store.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+            "ai200-20260914-doc-functions-python"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the unchanged code reads os.environ and the deployment uses the Azure-managed setting, not the edited developer file. Counterexample/context: This is also the right surface for other per-app nonsecret values read from environment variables in hosted functions; shared-provider configuration would require a different application design. Evidence: Application settings are injected as environment variables, and Environment variables explicitly names the Function App configuration page for Azure.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+            "ai200-20260914-doc-functions-python"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The requested change is an application value read by os.environ, not a change to Functions host behavior. Counterexample/context: host.json is appropriate when changing a documented host setting such as functionTimeout for function execution. Evidence: Folder structure describes global host configuration and the hosting reference demonstrates functionTimeout, whereas environment variables are configured separately.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-python",
+            "ai200-20260914-doc-functions-hosting"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Tried a settings-upload counterexample: a deliberate upload would update hosted settings but is not the described local file edit. The discriminatory fact is the Functions local/hosted configuration boundary, not merely environment-variable injection. 030 concerns dependency installation rather than app values; cross-bank App Service configuration similarities require audit.",
+      "confidenceReason": "Two sources expressly describe the observed split, and the host.json alternative has a documented different role. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-030",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "c7624087fb668f002f82798facd9502b6314b84c98c25792725e411195802372",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-python",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-python.json",
+          "retrievedAt": "2026-09-14T18:02:41.582Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Decorator-model project layout describes .venv as excluded and requirements.txt as the remote-build dependency list. Package management reinforces package declarations there and notes local prebuilt-dependency deployment as a distinct option."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-backends-azure-functions/5-manage-secrets-configuration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-backends-azure-functions-5-manage-secrets-configuration.json",
+          "retrievedAt": "2026-09-14T17:58:15.585Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Values in local.settings.json is a local application-configuration surface, not a remote pip dependency list. It can store application values but supplies no evidence that merely listing a package installs it."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-hosting",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-hosting.json",
+          "retrievedAt": "2026-09-14T18:02:48.813Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "functionTimeout is a documented host.json property. The article supplies no supported arbitrary package-name property in host.json, so a favorable counterexample for that exact option cannot be invented."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the project uses remote build, the local environment is excluded, and the dependency declaration is explicitly missing. Counterexample/context: This is the documented package-management route for other remote-built Python apps; deploying locally prebuilt dependencies is a different supported build approach. Evidence: Folder structure identifies requirements.txt as dependencies installed during publish with remote build, and Package management requires third-party packages in that file.",
+          "sourceIds": ["ai200-20260914-doc-functions-python"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Values holds local configuration, not the remote build's dependency list. The premise does not contain application code that interprets such a value as a dependency instruction. Counterexample/context: Storing a package-name string could only be an application configuration value read by deliberately written code, not package installation. The source supports the general configuration use, not a dependency-resolving behavior. Evidence: The configuration training limits Values to local app settings; the Python reference separately assigns package installation declarations to requirements.txt.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-5-manage-secrets-configuration",
+            "ai200-20260914-doc-functions-python"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "No cited evidence defines such a host setting or links it to Python dependency installation. This is not a documented alternative remote-build mechanism. Counterexample/context: No defensible sourced context makes this exact arbitrary package-name action correct. Changing a real host.json property such as functionTimeout is valid, but that is a different action and cannot rescue this distractor. Evidence: The hosting reference identifies functionTimeout as a real setting; the Python project reference uses requirements.txt for dependencies. Neither authorizes inventing a host.json package setting.",
+          "sourceIds": [
+            "ai200-20260914-doc-functions-hosting",
+            "ai200-20260914-doc-functions-python"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: manual-review-required. Withheld despite a correct key: the exact new package-name host.json action has no defensible sourced correct-elsewhere context, so distractorEvidence is 2 and the total is below 44. Replacing that action with a real alternative and reducing the direct missing-manifest clue would be authored repairs requiring a fresh three-pass sequence. Do not mistake general host.json validity for evidence supporting this option.",
+      "confidenceReason": "Strong support for requirements.txt, but no support for a valid counterexample to the arbitrary host.json property action; strict distractor requirements fail. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-031",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "6f8fd51810215f6b2bb7f0a5b566eab5d31d130f10487172c355793d95bc200a",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-bindings",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-bindings.json",
+          "retrievedAt": "2026-09-14T18:02:43.880Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "The supported matrix lists Blob output and Table input as genuine application data bindings, but neither is implied by the host's internal storage dependency."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-reference",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-reference.json",
+          "retrievedAt": "2026-09-14T18:02:46.589Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Default host storage states that creating an Azure function app requires an Azure Storage account used internally by the host and some extensions, distinct from SDK access to application services."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The premise expressly says no Blob bindings and identifies Cosmos DB SDK writes as business output, so this particular application dependency is absent. Counterexample/context: An app that deliberately writes business data through a Blob output binding would require access to the selected Blob storage resource. Evidence: The Blob row includes output support and the opening binding definition connects output bindings to writing external data.",
+          "sourceIds": ["ai200-20260914-doc-functions-bindings"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The premise expressly excludes Table bindings. This option therefore cannot explain a dependency that remains without any such application read. Counterexample/context: An app that reads Azure Table data through a configured Table input binding would need the associated storage connection. Evidence: The Table Storage row explicitly marks Input support; this is an optional application integration, unlike default host storage.",
+          "sourceIds": ["ai200-20260914-doc-functions-bindings"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "This is not incorrect for the Azure function app context: selecting Cosmos DB SDK writes does not remove the documented account used internally by the host. Counterexample/context: The same host/application distinction applies to Azure function apps whose business results go to other services without application Blob or Table bindings. Evidence: Default host storage expressly requires an account when creating an app and identifies internal host/extension use, separately from the Client SDKs section.",
+          "sourceIds": ["ai200-20260914-doc-functions-reference"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: manual-review-required. Technically sound Azure-host fact, independently held for a below-threshold realism score. The two distractors are expressly denied before the question is asked, so the item is answerable without the tested platform knowledge. The host storage idea is distinct from 032's named Service Bus connection, but a fresh authoring pass is needed to make this intermediate encounter credible.",
+      "confidenceReason": "Direct source support for the dependency and real alternate binding contexts; the failure is shallow clue-driven assessment design, not fabricated technical uncertainty. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-032",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "98cfedf404fd21ba6016811a0aca870a4e72789f95ecd4c4ac4033168626ff08",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-backends-azure-functions/6-configure-identity-access",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-backends-azure-functions-6-configure-identity-access.json",
+          "retrievedAt": "2026-09-14T17:58:17.631Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Use identity-based connections explicitly maps a Service Bus connection prefix to __fullyQualifiedNamespace and assigns Data Receiver for triggers versus Data Sender for outputs. Its separate host-storage example uses AzureWebJobsStorage__accountName."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-functions-reference",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-reference.json",
+          "retrievedAt": "2026-09-14T18:02:46.589Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Common properties states that the system-assigned identity is used by default and distinguishes hosted identity from local developer identity. Default host storage is a separate connection concern."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: connection=\"Jobs\" selects that prefix, no replacement Jobs settings exist, and the identity-enabled binding needs this endpoint property. Counterexample/context: The same suffix pattern works for another supported Service Bus identity connection when its prefix exactly matches the binding's connection name. Evidence: The Service Bus example replaces the connection string with <prefix>__fullyQualifiedNamespace and a namespace host ending in servicebus.windows.net.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "This operation consumes messages, so send-only authorization does not meet the required receiving role. No Service Bus output binding is being configured. Counterexample/context: Data Sender is the documented role for a Service Bus output binding that publishes messages. Evidence: The unit explicitly contrasts Data Receiver for the trigger with Data Sender for output bindings.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Host storage already works and uses a different configuration prefix and resource. This action supplies neither the Service Bus endpoint nor receive permission. Counterexample/context: AzureWebJobsStorage__accountName is relevant when intentionally replacing the host's storage connection with its documented identity-based configuration and required storage roles. Evidence: The unit places that setting under the runtime storage dependency; the Service Bus section independently configures fullyQualifiedNamespace.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access",
+            "ai200-20260914-doc-functions-reference"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the enabled identity has no Service Bus data role, and namespace Data Receiver supplies the documented receiving permission. Counterexample/context: That role is appropriate for supported Service Bus trigger consumption; namespace scope is sufficient here, without claiming it is always the narrowest possible scope. Evidence: The training instructs assigning Data Receiver on the Service Bus namespace, and the reference states the system-assigned identity is the hosted default.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access",
+            "ai200-20260914-doc-functions-reference"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Re-derived both a and d without using the supplied key: endpoint discovery and receiving authorization are separate missing controls. Tested Sender, working host storage, local developer identity and user-assigned identity counterexamples; each differs from an explicit premise. This is not a composite duplicate of 020 sender scope or 031 host dependency because the decisive facts are Jobs prefix resolution and receiver authorization.",
+      "confidenceReason": "The exact setting syntax and both role alternatives are documented together, while the second source validates the hosted identity assumption. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-033",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "acd74e89196b347bbb0e1e2f52c6ef1b12400c7a8a3f50b6c664f46269adbea0",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access",
+          "url": "https://learn.microsoft.com/en-us/training/modules/build-backends-azure-functions/6-configure-identity-access",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-build-backends-azure-functions-6-configure-identity-access.json",
+          "retrievedAt": "2026-09-14T17:58:17.631Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Secure HTTP endpoints distinguishes function, host and master keys, says keys do not verify caller identity, and explicitly recommends layering Easy Auth integrating Microsoft Entra ID when caller identity verification is required."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "It remains a shared invocation secret. Expanding its scope to the app does not identify which Entra principal is calling. Counterexample/context: A host key is appropriate for a trusted administrative or monitoring caller intentionally invoking multiple functions in one app when shared-key access is acceptable. Evidence: The unit gives host keys app-wide HTTP invocation scope while explicitly denying that access keys verify caller identity.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: it verifies Entra callers rather than merely accepting a shared key, and required authentication is explicitly part of the choice. Counterexample/context: Easy Auth is also suitable for other function endpoints that need the documented Entra identity integration; existing function-key rules can remain a separate access barrier. Evidence: The final paragraph recommends App Service Authentication on top of access keys and states that Easy Auth integrates Microsoft Entra ID with the app.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A more powerful shared secret still does not establish caller identity and is inappropriate to distribute as a substitute identity mechanism. Counterexample/context: The admin authorization level is documented for genuinely sensitive administrative operations using the master key, not ordinary callers needing identity verification. Evidence: The unit says admin requires the master key, reserves it for administrative operations and warns against embedding that key in client applications.",
+          "sourceIds": [
+            "ai200-20260914-unit-build-backends-azure-functions-6-configure-identity-access"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Challenged whether an app-wide or administrative key supplies stronger identity; the source expressly limits these to secret-based access and separate scopes. Requiring Easy Auth is important: optional authentication would not meet the requirement. This differs from outbound managed identity and role-scope questions, but the independent cross-bank audit must assess identity-concept repetition.",
+      "confidenceReason": "The single approved unit explicitly contrasts all three mechanisms and their intended contexts; no external identity-policy assumption supplies the key. Cross-bank semantic clearance remains unperformed."
+    },
+    {
+      "questionId": "ai200-i-034",
+      "authorId": "copilot-ai200-integration-pass1-20260914",
+      "reviewerId": "ai200-adversary-integration-b",
+      "questionFingerprint": "c112dacb89efae18c8fc07a14d4dad38d976d4a6418bebd63446e6dfa107d3ee",
+      "reviewedAt": "2026-09-14T19:21:43.282Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-functions-hosting",
+          "url": "https://learn.microsoft.com/en-us/azure/azure-functions/functions-scale",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-functions-hosting.json",
+          "retrievedAt": "2026-09-14T18:02:48.813Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Function app timeout duration footnote 1 independently limits an HTTP response to 230 seconds regardless of functionTimeout. The Premium table permits the stated execution duration, and Cold start behavior identifies always-ready workers as a startup-latency control."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This is not incorrect: the warm handler starts immediately, six-minute work fits inside ten minutes, and the response fails near the documented shorter HTTP boundary. Counterexample/context: The same distinction matters for other direct HTTP-triggered requests that outlast the response ceiling even while their configured execution duration is sufficient. Evidence: Function app timeout duration footnote 1 says 230 seconds regardless of the app timeout and recommends asynchronous work or an immediate response for longer processing.",
+          "sourceIds": ["ai200-20260914-doc-functions-hosting"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The instance is warm and execution starts immediately, so startup provisioning cannot explain the later 230-second loss. Counterexample/context: Always-ready Premium capacity is relevant when a request is delayed while instances start after inactivity, rather than after a warm invocation is underway. Evidence: Cold start behavior says Premium always-ready instances avoid cold starts; the HTTP ceiling is separately listed under timeout duration.",
+          "sourceIds": ["ai200-20260914-doc-functions-hosting"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Six minutes does not exceed the stated ten-minute limit, and the client loses its response even earlier at about 230 seconds. Counterexample/context: functionTimeout explains a timeout when execution itself exceeds the configured duration, with the documented worker or host restart consequences. Evidence: The section defines functionTimeout for executions exceeding its duration, and footnote 1 separately limits HTTP response time regardless of that value.",
+          "sourceIds": ["ai200-20260914-doc-functions-hosting"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "PREPARED ONLY: the required cross-bank semantic audit was absent at the post-review gate. This is a schema-valid manual hold, not final approval or a final post-audit review clock. All candidate gameplay remains withheld. Independent content recommendation before audit: verified. Independently compared 360 seconds of work with the 600-second configured limit and the separate 230-second response ceiling. The warm-instance premise rules out startup mitigation, not legitimate execution timeouts elsewhere. This differs from 025/029/030 host.json file-purpose distractors; the exact cross-bank timeout concept still needs the semantic audit.",
+      "confidenceReason": "The same approved article directly substantiates Premium status, all three timing mechanisms and the reason a larger execution timeout does not retain the direct response. Cross-bank semantic clearance remains unperformed."
+    }
+  ]
+}

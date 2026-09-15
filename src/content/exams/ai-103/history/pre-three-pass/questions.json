@@ -1,0 +1,1807 @@
+[
+  {
+    "id": "ai103-001",
+    "question": "A team needs a Foundry agent whose behavior can be expressed entirely as instructions, model selection, and tool configuration. It does not need custom orchestration code and wants no container code to maintain. Which development path matches these constraints?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Create a prompt agent."
+      },
+      {
+        "id": "b",
+        "text": "Package the logic as a hosted agent."
+      },
+      {
+        "id": "c",
+        "text": "Run an ephemeral agent in an application-owned process."
+      },
+      {
+        "id": "d",
+        "text": "Create a toolbox without an agent."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "A prompt agent is defined through configuration, and Foundry runs its runtime without application code or containers for the team to maintain.",
+    "deepExplanation": "The distinction is who supplies and maintains the agent logic. Hosted agents accommodate custom code, while an ephemeral agent keeps its definition in application code. A toolbox supplies reusable tools rather than replacing the agent that selects and uses them.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Hosted agents are appropriate when bringing custom code or orchestration; that introduces agent code to maintain, contrary to this requirement.",
+      "c": "The ephemeral pattern keeps the definition and runtime logic in the application's process rather than using a configuration-only managed agent.",
+      "d": "A toolbox exposes a curated set of tools through an MCP endpoint; it is not the prompt-agent runtime that interprets the user's task."
+    },
+    "objectiveDomain": "plan-and-manage-an-azure-ai-solution",
+    "skill": "choose-the-appropriate-foundry-services-for-generative-ai-and-agents",
+    "subskill": "Choose the appropriate Foundry services for generative tasks, grounding, vector search, agent workflows, or multimodal processing",
+    "difficulty": "beginner",
+    "complexity": "scenario-based",
+    "sourceIds": ["ai103-agents-overview", "ai103-toolbox-overview"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview"
+    ],
+    "documentationTitles": [
+      "Agents in Microsoft Foundry",
+      "What is Toolbox in Foundry?"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-prompt-agent-configuration-managed-runtime",
+      "beginner"
+    ],
+    "conceptId": "foundry-prompt-agent-configuration-managed-runtime",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "ai103-agents-overview",
+      "ai103-toolbox-overview"
+    ],
+    "verificationNotes": "Confirmed against raw 'Agents in Microsoft Foundry' text: prompt agents run managed with no code/containers; hosted agents own runtime code; ephemeral Responses agents live in app code; toolboxes are tool endpoints, not agents.",
+    "requiresManualReview": false,
+    "confidenceReason": "Direct textual match to Compare-agent-types table and 'Runtime code to maintain: None' for prompt agents leaves one defensible answer.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-002",
+    "question": "A Python application uses Azure AI Projects 2.x with Foundry projects (new). Its signed-in developer already has the required project permissions. Which connection configuration follows the documented keyless quickstart rather than supplying a model resource key?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Pass a model deployment name as the project endpoint and use DefaultAzureCredential."
+      },
+      {
+        "id": "b",
+        "text": "Pass the Foundry project endpoint and use DefaultAzureCredential."
+      },
+      {
+        "id": "c",
+        "text": "Pass the Foundry project endpoint and put the resource key into the credential argument."
+      },
+      {
+        "id": "d",
+        "text": "Pass the model catalog page URL as the project endpoint and use DefaultAzureCredential."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "The quickstart constructs AIProjectClient with the project endpoint and DefaultAzureCredential from azure-identity.",
+    "deepExplanation": "The project endpoint identifies the project API, including its project path. The model deployment name is supplied when making a model request, not in place of the project endpoint. The documented Python 2.x pattern obtains an Entra credential instead of embedding a service key.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The model deployment name selects the deployed model for inference; it is not the project API endpoint.",
+      "c": "A raw resource key is not the DefaultAzureCredential-based keyless configuration shown for the Projects 2.x client.",
+      "d": "The catalog is a model-discovery surface, not the project API endpoint required by AIProjectClient."
+    },
+    "objectiveDomain": "plan-and-manage-an-azure-ai-solution",
+    "skill": "manage-monitor-and-secure-ai-systems",
+    "subskill": "Configure security, including managed identity, private networking, keyless credentials, and role policies",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["ai103-sdk"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/quickstarts/get-started-code"
+    ],
+    "documentationTitles": [
+      "Quickstart: Get started with Microsoft Foundry SDK"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-project-sdk-v2-project-endpoint-entra-credential",
+      "intermediate"
+    ],
+    "conceptId": "foundry-project-sdk-v2-project-endpoint-entra-credential",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-sdk"],
+    "verificationNotes": "Verified against the raw Foundry SDK quickstart sample block: AIProjectClient takes endpoint (project path) and DefaultAzureCredential for keyless auth; model name is a separate deployment argument on responses.create.",
+    "requiresManualReview": false,
+    "confidenceReason": "Sample code and the '# Format: https://<...>services.ai.azure.com/api/projects/...' comment eliminate every other choice unambiguously.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-003",
+    "question": "A Standard Azure OpenAI deployment returns HTTP 429 during short bursts. Completed responses are usually about 180 tokens, but requests allow 4,000 output tokens. The team's billing-token total and minute-wide request average both appear below the limits. Which change best addresses the documented mechanisms?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Increase the output-token allowance and immediately retry each rejected request."
+      },
+      {
+        "id": "b",
+        "text": "Treat billing-token totals as the rate-limit counter and retry until that total reaches its limit."
+      },
+      {
+        "id": "c",
+        "text": "Set an output allowance appropriate to the task, smooth request bursts, and honor retry-after-ms or use bounded backoff with jitter."
+      },
+      {
+        "id": "d",
+        "text": "Keep the oversized output allowance and retry throttled requests together at the next fixed one-minute boundary."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Standard rate limiting uses an estimated maximum processed-token count, including the requested output allowance, and evaluates request flow over short intervals. Reduce unnecessary reservation, spread requests, and back off on throttling.",
+    "deepExplanation": "Billing tokens are calculated after processing and are not the same as the admission estimate. A minute-wide average can also conceal a burst that exceeds the short-window RPM check. Retrying immediately adds pressure because unsuccessful requests still count toward the rate limit.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Increasing the allowance increases the estimated token burden; immediate repeated retries can worsen throttling.",
+      "b": "The admission estimate differs from billing-token accounting, so this uses the wrong counter and ignores burst rate checks.",
+      "d": "Synchronized retries preserve the short-window burst problem, and retaining the oversized allowance leaves the inflated token estimate unchanged; the documented guidance spreads requests and uses jitter."
+    },
+    "objectiveDomain": "plan-and-manage-an-azure-ai-solution",
+    "skill": "manage-monitor-and-secure-ai-systems",
+    "subskill": "Manage quotas, scaling, rate limits, and cost footprints for model and agent workloads",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["ai103-quota"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota"
+    ],
+    "documentationTitles": [
+      "Manage Azure OpenAI in Microsoft Foundry Models quota"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-openai-standard-rate-limit-estimate-and-burst-recovery",
+      "advanced"
+    ],
+    "conceptId": "azure-openai-standard-rate-limit-estimate-and-burst-recovery",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-quota"],
+    "verificationNotes": "Cross-checked quota 'Rate limit best practices' subsections: max_tokens sizing, best_of=1, and jittered exponential backoff with retry-after-ms are the documented burst recovery pattern; retry counts against the limit.",
+    "requiresManualReview": false,
+    "confidenceReason": "The article explicitly labels every distractor's behaviour as counterproductive, leaving one defensible remediation.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-004",
+    "question": "An interactive application requires processing within Microsoft's defined EU data zone and reserved capacity with lower latency variability at sustained high load. Processing need not stay in one Azure geography. The selected model is available for all four deployment types below. Which type meets both requirements?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Global Provisioned"
+      },
+      {
+        "id": "b",
+        "text": "Data Zone Standard"
+      },
+      {
+        "id": "c",
+        "text": "Data Zone Batch"
+      },
+      {
+        "id": "d",
+        "text": "Data Zone Provisioned"
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Data Zone Provisioned combines processing inside the Microsoft-defined data zone with reserved model-processing capacity.",
+    "deepExplanation": "Residency and capacity are separate decisions. Global Provisioned reserves capacity but can process outside the required zone. Data Zone Standard provides the zone boundary without the reserved-throughput model. Batch is asynchronous rather than the required interactive deployment pattern.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Global Provisioned reserves capacity but permits processing in any supported Azure region, not only the EU data zone.",
+      "b": "Data Zone Standard satisfies the processing boundary but uses pay-per-token Standard capacity rather than reserved PTUs.",
+      "c": "Data Zone Batch is designed for asynchronous jobs; its target turnaround is not an interactive response commitment."
+    },
+    "objectiveDomain": "plan-and-manage-an-azure-ai-solution",
+    "skill": "set-up-ai-solutions-in-foundry",
+    "subskill": "Choose appropriate deployment options",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["ai103-deployment-types"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types"
+    ],
+    "documentationTitles": ["Deployment types for Microsoft Foundry Models"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-data-zone-provisioned-residency-reserved-throughput",
+      "advanced"
+    ],
+    "conceptId": "foundry-data-zone-provisioned-residency-reserved-throughput",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-deployment-types"],
+    "verificationNotes": "Verified against the Deployment types comparison table and the 'Choose the right deployment type' quick-recommendation table; Data Zone Provisioned uniquely combines data-zone residency with reserved throughput.",
+    "requiresManualReview": false,
+    "confidenceReason": "Two independent tables in the same article pin exactly one type to this pair of requirements.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-005",
+    "question": "A Foundry Prompt Shields rollout intentionally logs suspected user-prompt attacks while the team studies false positives. An annotation reports detected=true and filtered=false. What is the appropriate interpretation and next configuration step if the team later decides to prevent these requests?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Detection occurred without filtering; change the relevant assigned guardrail action from annotate to block."
+      },
+      {
+        "id": "b",
+        "text": "Detection failed; the filtered field must be true before detected has meaning."
+      },
+      {
+        "id": "c",
+        "text": "The request was blocked; change the guardrail to annotate to let it through."
+      },
+      {
+        "id": "d",
+        "text": "The values identify a document attack, so user-prompt guardrail settings cannot affect the result."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Prompt Shields reports detection and filtering separately. Annotate can record a detected attack without blocking it; block is the action to configure when prevention is required.",
+    "deepExplanation": "The feature's troubleshooting guidance distinguishes finding an attack from filtering the request. Intervention point, assignment, and action matter; the two booleans alone do not identify whether the content originated from a user or a document.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The annotation explicitly separates detected from filtered, so a detected-but-not-filtered event is meaningful.",
+      "c": "filtered=false does not indicate a blocked request; this reverses the action's meaning.",
+      "d": "The detected and filtered booleans express detection and enforcement, not the attack's entry-point classification."
+    },
+    "objectiveDomain": "plan-and-manage-an-azure-ai-solution",
+    "skill": "implement-responsible-ai-across-generative-ai-and-agentic-systems",
+    "subskill": "Configure safety filters, guardrails, risk detection, and content moderation",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["ai103-prompt-shields"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/content-filter-prompt-shields"
+    ],
+    "documentationTitles": ["Prompt Shields in Microsoft Foundry"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-prompt-shield-annotate-versus-block",
+      "intermediate"
+    ],
+    "conceptId": "foundry-prompt-shield-annotate-versus-block",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-prompt-shields"],
+    "verificationNotes": "Confirmed with raw prompt-shields example response body and Configure section: choose intervention points AND action (annotate/block); annotate logs, block enforces.",
+    "requiresManualReview": false,
+    "confidenceReason": "The article's Troubleshooting section explicitly describes the annotate→block toggle as the false-positive-to-enforcement pathway.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-006",
+    "question": "A retrieval agent receives an ordinary user question. A retrieved web page contains hidden instructions telling the agent to replace its answer with unrelated material. The current guardrail scans only user-prompt attacks at user input. Which targeted change covers the attack's documented entry path?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Enable only user-prompt attack scanning on the agent's final output."
+      },
+      {
+        "id": "b",
+        "text": "Enable document-attack controls at the tool-response intervention point and assign them to the agent."
+      },
+      {
+        "id": "c",
+        "text": "Keep the guardrail unchanged because the user's question was not adversarial."
+      },
+      {
+        "id": "d",
+        "text": "Enable Spotlighting for a Responses API workflow as the sole document-attack control."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Instructions embedded in retrieved third-party content are document attacks. Prompt Shields supports document-attack scanning at tool response as well as user input.",
+    "deepExplanation": "The trust boundary is the retrieved material, not the top-level user question. Configure the control where that material enters the workflow. Spotlighting is a separate preview defense with a documented Chat Completions API limitation; it is not a substitute for the specified Responses API control.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The current attack arrives as third-party tool content; user-prompt scanning at final output does not target that documented intervention point.",
+      "c": "Document attacks can originate from third parties even when the user's own request is legitimate.",
+      "d": "Spotlighting is documented only for models used through Chat Completions, so the stated Responses API-only solution does not meet its constraint."
+    },
+    "objectiveDomain": "plan-and-manage-an-azure-ai-solution",
+    "skill": "implement-responsible-ai-across-generative-ai-and-agentic-systems",
+    "subskill": "Configure safety filters, guardrails, risk detection, and content moderation",
+    "difficulty": "advanced",
+    "complexity": "scenario-based",
+    "sourceIds": ["ai103-prompt-shields"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/content-filter-prompt-shields"
+    ],
+    "documentationTitles": ["Prompt Shields in Microsoft Foundry"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-document-injection-tool-response-intervention",
+      "advanced"
+    ],
+    "conceptId": "foundry-document-injection-tool-response-intervention",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-prompt-shields"],
+    "verificationNotes": "Verified against the 'Types of input attacks' table, the 'Prompt Shields for documents' section, and the Spotlighting cost-and-limitations subsection: tool-response document scanning is the correct intervention path; Spotlighting is Chat-Completions only.",
+    "requiresManualReview": false,
+    "confidenceReason": "Two-paragraph direct match for the correct answer plus an explicit Chat-Completions limitation for the tempting Spotlighting distractor.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-007",
+    "question": "A custom hosted agent consumes a Foundry toolbox. Its runtime invokes MCP tools/call directly. A tool's tools/list metadata sets require_approval to always, but a test shows the endpoint accepts the call without a user decision. The runtime must support approval, rejection, and later resumption of the exact proposed action. Which design satisfies that policy?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Rely on the toolbox flag and add a stronger system instruction; the endpoint will reject unapproved calls after a retry."
+      },
+      {
+        "id": "b",
+        "text": "Prompt once when the session starts, then reuse that approval for subsequent calls to the same tool."
+      },
+      {
+        "id": "c",
+        "text": "Have the runtime inspect each call's approval metadata, show its tool name and arguments, suspend execution for a decision, and invoke only the approved pending call."
+      },
+      {
+        "id": "d",
+        "text": "Change the metadata to never and treat the agent's final explanation as the approval record."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "For a hosted runtime directly consuming a toolbox, require_approval is a runtime enforcement responsibility. The toolbox endpoint does not block tools/call merely because the metadata says always.",
+    "deepExplanation": "The documented behavior separates declared policy from enforcement. The harness must pause before invocation, collect an explicit decision for the proposed name and arguments, and resume or reject that exact call. The always setting requires repeating this process for every invocation, not merely once per session.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The toolbox-hosted-agent article explicitly says the endpoint does not block the call and a system-prompt instruction alone does not enforce approval.",
+      "b": "always requires an explicit approval for every call, including its proposed arguments; session-level approval does not implement that behavior.",
+      "d": "never removes the approval prompt requirement, and an explanation after execution is not the required pre-invocation approval."
+    },
+    "objectiveDomain": "plan-and-manage-an-azure-ai-solution",
+    "skill": "implement-responsible-ai-across-generative-ai-and-agentic-systems",
+    "subskill": "Govern agent behavior with oversight modes, constraints, and tool-access controls",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["ai103-toolbox-hosted"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/use-toolbox-hosted-agent"
+    ],
+    "documentationTitles": ["Use a toolbox with a hosted agent"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-toolbox-hosted-runtime-enforces-per-call-approval",
+      "expert"
+    ],
+    "conceptId": "foundry-toolbox-hosted-runtime-enforces-per-call-approval",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-toolbox-hosted"],
+    "verificationNotes": "Confirmed via the require_approval table and the 'Use require_approval: never unless your runtime can pause the pending tool call, collect the user's decision, and resume or reject that exact call.' guidance.",
+    "requiresManualReview": false,
+    "confidenceReason": "Text explicitly enumerates every step of the correct design and identifies each other option as non-conformant.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-008",
+    "question": "Two Azure OpenAI resources in the same subscription and region deploy the same model using the same deployment type. A maintainer is assigning TPM to the deployments. Which statement correctly describes the quota pool?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Each resource receives a separate full quota merely because its resource name differs."
+      },
+      {
+        "id": "b",
+        "text": "The pool is assigned per individual user who created the deployment."
+      },
+      {
+        "id": "c",
+        "text": "Increasing TPM also increases the model's maximum input context length."
+      },
+      {
+        "id": "d",
+        "text": "The deployments draw from the subscription's quota for that region, model, and deployment type."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Azure OpenAI quota is allocated on a subscription, region, model, and deployment-type basis and can be distributed across deployments in multiple resources.",
+    "deepExplanation": "Resource boundaries do not independently multiply the supplied pool. TPM allocation governs request throughput and is separate from the model's input-token limit.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documentation permits sharing quota across one or multiple resources in the region; a second resource does not create a second full pool.",
+      "b": "Quota is assigned to the subscription and the documented model/region/type dimensions, not the deployment creator.",
+      "c": "The quota article explicitly states that TPM allocation does not change a model's maximum input-token limit."
+    },
+    "objectiveDomain": "plan-and-manage-an-azure-ai-solution",
+    "skill": "manage-monitor-and-secure-ai-systems",
+    "subskill": "Manage quotas, scaling, rate limits, and cost footprints for model and agent workloads",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["ai103-quota"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota"
+    ],
+    "documentationTitles": [
+      "Manage Azure OpenAI in Microsoft Foundry Models quota"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-openai-quota-pool-subscription-region-model-deployment-type",
+      "beginner"
+    ],
+    "conceptId": "azure-openai-quota-pool-subscription-region-model-deployment-type",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-quota"],
+    "verificationNotes": "Confirmed from the 'Introduction to quota' paragraph and the per-region distribution Note; both explicitly rule out per-user, per-resource, and TPM=context-length claims.",
+    "requiresManualReview": false,
+    "confidenceReason": "Single-sentence direct quote from the quota article covers the correct answer and invalidates each distractor.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-009",
+    "question": "A Foundry agent must request a local inventory lookup implemented by the application. What should the developer register so the model can identify the callable capability and the arguments it accepts?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A function tool with a name, purpose description, and parameter schema."
+      },
+      {
+        "id": "b",
+        "text": "A prior function_call_output item containing an example inventory result."
+      },
+      {
+        "id": "c",
+        "text": "Agent instructions mentioning inventory access, with no function tool registered."
+      },
+      {
+        "id": "d",
+        "text": "A toolbox definition containing the local function's name but no remotely callable tool."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "A function tool describes its name, purpose, and accepted parameters so the model can request that capability.",
+    "deepExplanation": "A definition supplies the callable interface; a result is returned after the application executes a requested call. Agent instructions guide behavior but do not replace function registration. Toolboxes expose remote tools; local function calling uses direct integration and client-side execution.",
+    "whyOtherAnswersAreWrong": {
+      "b": "A prior output is data from an invocation; it does not declare the callable interface required for a new function tool.",
+      "c": "The documented pattern registers function definitions in addition to instructions; mentioning a capability does not supply its callable parameter interface.",
+      "d": "The toolbox support table excludes client-side function calling; declaring a local name there does not provide the direct function-tool integration required by this scenario."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "build-agents-by-using-foundry",
+    "subskill": "Define agent roles, goals, conversation-tracking approach, and tool schemas",
+    "difficulty": "beginner",
+    "complexity": "technical-implementation",
+    "sourceIds": ["ai103-function-calling", "ai103-toolbox-overview"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling",
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview"
+    ],
+    "documentationTitles": [
+      "Use function calling with Microsoft Foundry agents",
+      "What is Toolbox in Foundry?"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-function-tool-schema-describes-callable-capability",
+      "beginner"
+    ],
+    "conceptId": "foundry-function-tool-schema-describes-callable-capability",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "ai103-function-calling",
+      "ai103-toolbox-overview"
+    ],
+    "verificationNotes": "Cross-checked function-calling FunctionTool example (name/parameters/description/strict) and the toolbox-overview supported-tools table that excludes function calling from toolbox-side integration.",
+    "requiresManualReview": false,
+    "confidenceReason": "Two direct citations from separate articles converge on the same defensible answer.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-010",
+    "question": "A Foundry prompt agent returns a function_call output item requesting an inventory lookup. The application executes the lookup successfully. In the documented Responses API function-calling loop, how should it return that result so the agent can continue?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Replace the function schema with the lookup's return value."
+      },
+      {
+        "id": "b",
+        "text": "Send a function_call_output item with the original call_id and the result, continuing the same conversation."
+      },
+      {
+        "id": "c",
+        "text": "Send the result as a new function_call item with an unrelated call_id."
+      },
+      {
+        "id": "d",
+        "text": "Wait for the model to execute the application's local function before submitting anything."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "The function result is submitted as function_call_output correlated with the requested call_id, and the example continues the same conversation.",
+    "deepExplanation": "The model requests the operation; the application performs it. Returning the correlated result supplies the data the agent needs for its final response. The function schema remains the capability definition rather than becoming a storage location for results.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Changing the schema does not provide the documented correlated output item for the pending function invocation.",
+      "c": "function_call is the request item; a result uses function_call_output and preserves the pending call's identifier.",
+      "d": "For this pattern, the application—not the model—executes the local function, so waiting for model-side execution omits the required step."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "build-agents-by-using-foundry",
+    "subskill": "Build agents that integrate retrieval, function-calling, and conversation memory",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["ai103-function-calling"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling"
+    ],
+    "documentationTitles": [
+      "Use function calling with Microsoft Foundry agents"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-function-call-output-correlates-call-id",
+      "intermediate"
+    ],
+    "conceptId": "foundry-function-call-output-correlates-call-id",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-function-calling"],
+    "verificationNotes": "Verified against the prompt-agents Python sample: correlation via call_id, submission via function_call_output on the same conversation.",
+    "requiresManualReview": false,
+    "confidenceReason": "Direct code block quoted in the article names the exact item type and correlation key.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-011",
+    "question": "A Python application following the Foundry prompt-agent sample creates a new conversation before every user turn. It supplies the same agent reference each time, but follow-up questions lose earlier tool results. Which change follows the sample's conversation-tracking pattern?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Create a new agent version for every follow-up instead of retaining conversation state."
+      },
+      {
+        "id": "b",
+        "text": "Put the old conversation ID into the function's name."
+      },
+      {
+        "id": "c",
+        "text": "Retain the conversation ID for that interaction and use it for later responses and tool-result submissions."
+      },
+      {
+        "id": "d",
+        "text": "Keep creating new conversations and rely on the unchanged agent name to carry prior turn results."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "The sample creates a conversation once and uses its ID across the initial response and subsequent function-output submission.",
+    "deepExplanation": "The agent reference selects the agent definition, whereas the conversation identifies interaction state. Reusing an agent reference is not the same as continuing the conversation that contains previous messages and tool results.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Agent versioning changes the definition; it does not implement the sample's reuse of the interaction's conversation ID.",
+      "b": "Function names identify callable operations; conversation state is passed through the conversation argument.",
+      "d": "The documented sample passes both agent_reference and conversation, treating definition selection and conversational state as distinct."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "build-agents-by-using-foundry",
+    "subskill": "Define agent roles, goals, conversation-tracking approach, and tool schemas",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["ai103-function-calling"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling"
+    ],
+    "documentationTitles": [
+      "Use function calling with Microsoft Foundry agents"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-conversation-id-versus-agent-reference",
+      "intermediate"
+    ],
+    "conceptId": "foundry-conversation-id-versus-agent-reference",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-function-calling"],
+    "verificationNotes": "Confirmed from the Python sample: the same conversation.id is used for the initial user turn and the follow-up function_call_output submission, distinct from the agent_reference/agent_name argument.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article explicitly separates agent identity from conversation state in the sample.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-012",
+    "question": "An agent uses Foundry's managed MCP tool integration. Its authenticated project connection works. The remote server exposes read_catalog, reserve_stock, and delete_catalog. The agent may use only the first two, and every permitted invocation must require explicit approval. Which configuration and continuation design meets all three constraints?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Keep all tools exposed, set require_approval to never, and tell the model not to delete records."
+      },
+      {
+        "id": "b",
+        "text": "Allowlist the two permitted tools, set require_approval to never, and interpret a successful connection as user approval."
+      },
+      {
+        "id": "c",
+        "text": "Keep all tools exposed, require approval, and return approval responses correlated only by server name."
+      },
+      {
+        "id": "d",
+        "text": "Allowlist read_catalog and reserve_stock, require approval for every call, and return each decision using its approval-request ID and original response ID."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Tool exposure, authentication, and call approval are distinct controls. allowed_tools restricts the callable subset, require_approval=always requests per-call approval, and the continuation must identify both the approval request and its originating response.",
+    "deepExplanation": "An authenticated connection enables access but does not represent approval of a particular action. The managed integration emits mcp_approval_request items containing the tool and arguments. The application returns mcp_approval_response using that item's ID and continues with the original response ID.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Instructions do not implement the documented allowed_tools restriction, and never removes the required approval step.",
+      "b": "The allowlist is appropriate, but successful authentication is not a decision about the proposed invocation; never violates the per-call approval requirement.",
+      "c": "Approval alone leaves delete_catalog exposed, and server name does not replace the required approval request ID and previous_response_id correlation."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "build-agents-by-using-foundry",
+    "subskill": "Build autonomous or semiautonomous workflows with safeguards and approval flow controls",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["ai103-mcp-tools"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol"
+    ],
+    "documentationTitles": ["Connect agents to Model Context Protocol servers"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-mcp-allowlist-approval-and-connection-separation",
+      "expert"
+    ],
+    "conceptId": "foundry-mcp-allowlist-approval-and-connection-separation",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-mcp-tools"],
+    "verificationNotes": "Verified against the Python MCP sample: McpApprovalResponse populated with approval_request_id, and the follow-up openai.responses.create call using previous_response_id=response.id; best-practices bullet 'Use an allow list of tools by using allowed_tools.'",
+    "requiresManualReview": false,
+    "confidenceReason": "Exact three-argument continuation (allowed_tools + approval + previous_response_id) appears only in one answer choice.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-013",
+    "question": "A RAG evaluation dataset contains each user's query, the context supplied to the model, and the generated response. The team wants to detect responses that introduce claims not supported by that supplied context. Which standard evaluator targets this dimension most directly?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Groundedness"
+      },
+      {
+        "id": "b",
+        "text": "Relevance"
+      },
+      {
+        "id": "c",
+        "text": "Retrieval"
+      },
+      {
+        "id": "d",
+        "text": "Document Retrieval"
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Groundedness evaluates whether a generated response aligns with its grounding context without fabricating content.",
+    "deepExplanation": "This asks about response-to-context consistency, not whether the response addresses the query or whether search found the best documents. The standard Groundedness evaluator can use a supplied judge deployment and the available response/context data.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Relevance focuses on how the response addresses the query; it is not the direct response-to-context fabrication check.",
+      "c": "Retrieval evaluates the relevance of retrieved context to the query, rather than the generated response's consistency with that context.",
+      "d": "Document Retrieval compares retrieved documents with relevance judgments to assess search quality; it does not directly judge generated claims."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "build-generative-applications-by-using-foundry",
+    "subskill": "Evaluate models and apps, including detecting fabrications, relevance, quality, and safety",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["ai103-rag-evaluators"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators"
+    ],
+    "documentationTitles": ["Retrieval-Augmented Generation (RAG) evaluators"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-groundedness-evaluator-context-consistency",
+      "intermediate"
+    ],
+    "conceptId": "foundry-groundedness-evaluator-context-consistency",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-rag-evaluators"],
+    "verificationNotes": "Cross-checked the RAG evaluators table's 'Purpose' cells and 'Required inputs' columns; only Groundedness matches response-vs-context fabrication.",
+    "requiresManualReview": false,
+    "confidenceReason": "The article uses the word 'fabrication' in the Groundedness row and nowhere else.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-014",
+    "question": "A RAG team compares two retrieval configurations while holding the generator constant. Both produce responses consistent with their supplied context, but users still miss important material. The team has human relevance judgments for many, but not all, retrieved documents. It needs to tune retrieval and identify incomplete labeling without confusing those issues with unsupported response claims. Which plan is best supported?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Rank configurations by Groundedness alone and treat unjudged documents as irrelevant."
+      },
+      {
+        "id": "b",
+        "text": "Compare Document Retrieval metrics against the relevance judgments, inspect Holes for missing labels, and assess final-response quality separately."
+      },
+      {
+        "id": "c",
+        "text": "Use Relevance on final responses as a replacement for document judgments, and report its score as NDCG."
+      },
+      {
+        "id": "d",
+        "text": "Choose the configuration with the largest context and count every retrieved document as a known relevant document."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Document Retrieval measures search quality against human relevance judgments and reports Holes for documents missing judgments. System-response evaluation remains a separate stage.",
+    "deepExplanation": "A response can be grounded in an incomplete or poorly retrieved context. Holding the generator constant helps isolate the retrieval comparison, but incomplete qrels must remain visible rather than being silently recoded as irrelevance. Retrieval parameter sweeps can then be compared using documented search metrics, followed by response-level checks.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Groundedness assesses response consistency, not coverage of the relevant corpus; Holes exists to expose missing judgments rather than treating them as negative labels.",
+      "c": "Relevance evaluates query/response quality with a judge; NDCG is a distinct Document Retrieval metric based on relevance judgments.",
+      "d": "Returned quantity is not known relevance. Fidelity and ranking metrics compare retrieved documents against judged relevant documents, not a blanket assumption that all results are useful."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "build-generative-applications-by-using-foundry",
+    "subskill": "Evaluate models and apps, including detecting fabrications, relevance, quality, and safety",
+    "difficulty": "expert",
+    "complexity": "troubleshooting",
+    "sourceIds": ["ai103-rag-evaluators"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators"
+    ],
+    "documentationTitles": ["Retrieval-Augmented Generation (RAG) evaluators"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-rag-search-tuning-qrels-holes-and-system-evaluation",
+      "expert"
+    ],
+    "conceptId": "foundry-rag-search-tuning-qrels-holes-and-system-evaluation",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-rag-evaluators"],
+    "verificationNotes": "Verified from the 'Document retrieval' section metrics table (Fidelity/NDCG/XDCG/Max Relevance/Holes) and the parameter-sweep guidance; system evaluation section keeps response quality separate.",
+    "requiresManualReview": false,
+    "confidenceReason": "The article explicitly names Holes as label-sanity, decoupling it from irrelevance.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-015",
+    "question": "A deployed Foundry prompt agent is slow only when it invokes a retrieval tool that itself calls another service. The team needs to identify which operation introduces the delay rather than compare only total request duration. Which telemetry structure directly supports this investigation?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "One final groundedness score per response, without intermediate execution details."
+      },
+      {
+        "id": "b",
+        "text": "Only the agent's final answer text and model name."
+      },
+      {
+        "id": "c",
+        "text": "A trace containing timed spans and nested child spans for the operations."
+      },
+      {
+        "id": "d",
+        "text": "Only the deployment's configured TPM quota."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Timed, nested spans expose individual operations and their relationships within the request trace.",
+    "deepExplanation": "Foundry tracing captures tool calls, outputs, retries, and latency. The span hierarchy helps distinguish the retrieval tool from a downstream operation instead of attributing all elapsed time to the model or top-level agent.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Groundedness measures response-to-context alignment; it does not provide the start/end times and nested call sequence needed for latency isolation.",
+      "b": "Final text and model identity omit intermediate operation timing and nesting.",
+      "d": "Configured throughput limits do not identify which nested operation caused a particular request's delay."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "optimize-and-operationalize-generative-ai-systems",
+    "subskill": "Set up observability by implementing tracing, token analytics, safety signals, and latency breakdowns",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["ai103-tracing", "ai103-rag-evaluators", "ai103-quota"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept",
+      "https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators",
+      "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/quota"
+    ],
+    "documentationTitles": [
+      "Agent tracing overview",
+      "Retrieval-Augmented Generation (RAG) evaluators",
+      "Manage Azure OpenAI in Microsoft Foundry Models quota"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-trace-nested-spans-locate-latency",
+      "intermediate"
+    ],
+    "conceptId": "foundry-trace-nested-spans-locate-latency",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "ai103-tracing",
+      "ai103-rag-evaluators",
+      "ai103-quota"
+    ],
+    "verificationNotes": "Verified against tracing 'Trace key concepts' table (Spans + nested spans), RAG evaluators (Groundedness scope), and quota (TPM meaning) — each cited source contradicts the wrong choice it supports.",
+    "requiresManualReview": false,
+    "confidenceReason": "Only spans-with-nesting match the stem's isolation requirement across three sources.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-016",
+    "question": "Several MCP-compatible agents use one Foundry toolbox consumer endpoint that follows default_version. The tool team must test a revised tool configuration before releasing it, then make it available without editing every agent. Which release approach matches the documented toolbox model?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Change each agent's prompt to describe the new tool, leaving the toolbox configuration unchanged."
+      },
+      {
+        "id": "b",
+        "text": "Give every agent its own copy of the tool definitions and credentials before testing."
+      },
+      {
+        "id": "c",
+        "text": "Pin each consumer to the old immutable version endpoint and expect a default-version promotion to replace that pin."
+      },
+      {
+        "id": "d",
+        "text": "Create and test a new toolbox version, then promote it to the default used by the consumer endpoint."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Toolboxes centralize versioning. Consumers following the default endpoint pick up a tested version when it is promoted to default.",
+    "deepExplanation": "The deployment contract matters: the stem specifies the consumer endpoint that follows default_version, not a version-pinned endpoint. Centralized promotion avoids rebuilding each agent's tool configuration while retaining a separate version to test.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Prompt text does not update the centrally managed toolbox definitions or its default version.",
+      "b": "Duplicating tools and credentials reintroduces the operational problem toolbox centralization is designed to solve.",
+      "c": "A version-specific endpoint selects that version; it is not the documented consumer endpoint that follows default_version."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "build-agents-by-using-foundry",
+    "subskill": "Integrate agent tools, including APIs, knowledge stores, search, content understanding, and custom functions",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["ai103-toolbox-overview", "ai103-toolbox-hosted"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview",
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/use-toolbox-hosted-agent"
+    ],
+    "documentationTitles": [
+      "What is Toolbox in Foundry?",
+      "Use a toolbox with a hosted agent"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-toolbox-default-version-promotion",
+      "advanced"
+    ],
+    "conceptId": "foundry-toolbox-default-version-promotion",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "ai103-toolbox-overview",
+      "ai103-toolbox-hosted"
+    ],
+    "verificationNotes": "Confirmed against 'Choose the toolbox endpoint' and toolbox-overview versioning guarantee; consumer endpoint follows default, developer endpoint pins to a version.",
+    "requiresManualReview": false,
+    "confidenceReason": "Two article passages state the same versioning contract that only answer d honors.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-017",
+    "question": "A Foundry toolbox has grown to hundreds of tools. Sending every definition uses excessive context, yet one critical escalation tool must remain immediately available. The team accepts preview features. Which documented tool-search design addresses both constraints?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use tool search to expose discovery/invocation meta-tools and pin the critical escalation tool."
+      },
+      {
+        "id": "b",
+        "text": "Send all definitions on every request and rely on a smaller response-token limit to reduce their input size."
+      },
+      {
+        "id": "c",
+        "text": "Hide every tool permanently and remove discovery because the model has previously seen their names."
+      },
+      {
+        "id": "d",
+        "text": "Replace tool search with an unchanged toolbox version so context use is reduced without changing which definitions are surfaced."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Tool search (preview) hides tools by default and supplies tool_search and call_tool for discovery and invocation. Critical tools can be pinned so they remain available.",
+    "deepExplanation": "Tool definitions consume input context even when they are not used. Selective discovery changes what is presented to the model, while pinning preserves immediate availability for critical operations. Versioning and output limits serve different purposes.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The documentation identifies tool definitions as input tokens; reducing a response limit does not remove those definitions from the request.",
+      "c": "Tool search deliberately provides discovery and invocation meta-tools; removing both prevents the documented selective-access workflow.",
+      "d": "Versioning manages tool releases. Without changing tool surfacing, it does not implement the documented context-reduction mechanism."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "build-agents-by-using-foundry",
+    "subskill": "Integrate agent tools, including APIs, knowledge stores, search, content understanding, and custom functions",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": ["ai103-toolbox-overview"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/toolbox-overview"
+    ],
+    "documentationTitles": ["What is Toolbox in Foundry?"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "Preview",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-tool-search-preview-selective-tool-discovery",
+      "advanced"
+    ],
+    "conceptId": "foundry-tool-search-preview-selective-tool-discovery",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-toolbox-overview"],
+    "verificationNotes": "Verified via the 'Tool search (preview)' subsection and the supported-tools table showing Tool search is Toolbox-only. Preview labeling preserved.",
+    "requiresManualReview": false,
+    "confidenceReason": "Bullet list in the article names both meta-tools and the pinning capability that answer a describes.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-018",
+    "question": "A hosted agent's prompts and tool results may contain customer identifiers. A custom tool also receives a credential. The team needs nested latency analysis and links to evaluation runs, but policy prohibits those sensitive values from entering telemetry. Which design preserves the required observability without relying on post-storage cleanup?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Export full prompt, tool-argument, and tool-result payloads, then shorten telemetry retention."
+      },
+      {
+        "id": "b",
+        "text": "Mask the final answer but export original prompts and tool arguments so the trace remains complete."
+      },
+      {
+        "id": "c",
+        "text": "Remove or redact sensitive values before telemetry export, retain timings and safe correlation metadata, and link traces to evaluation run IDs."
+      },
+      {
+        "id": "d",
+        "text": "Disable all trace spans, retain the tool credential as an evaluation label, and use that label to correlate failures."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Foundry guidance calls for minimizing or redacting personal data, secrets, and credentials before they appear in telemetry, while retaining useful trace structure and correlating evaluation run IDs.",
+    "deepExplanation": "Sensitive data can enter at several stages, not just the final response. Access controls and retention apply to stored telemetry but cannot satisfy a requirement that prohibited values never reach it. Timing, parent-child operation relationships, and non-sensitive correlation identifiers can support diagnosis without retaining those values.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Retention reduces storage duration after ingestion; it does not satisfy the requirement to remove sensitive values before telemetry receives them.",
+      "b": "Prompts and tool arguments/results are themselves possible leak paths, so final-output masking leaves prohibited values in the trace.",
+      "d": "The documentation says not to store credentials in span attributes, and removing all spans discards the nested timing needed for this investigation."
+    },
+    "objectiveDomain": "implement-generative-ai-and-agentic-solutions",
+    "skill": "optimize-and-operationalize-generative-ai-systems",
+    "subskill": "Set up observability by implementing tracing, token analytics, safety signals, and latency breakdowns",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["ai103-tracing"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept"
+    ],
+    "documentationTitles": ["Agent tracing overview"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "foundry-trace-sensitive-content-preexport-redaction",
+      "expert"
+    ],
+    "conceptId": "foundry-trace-sensitive-content-preexport-redaction",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-tracing"],
+    "verificationNotes": "Verified against tracing article Best-practices and Security-and-privacy sections; both mandate pre-export redaction and retention-of-timings-only for the sensitive path.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article uses the phrase 'before they reach telemetry' explicitly for redaction.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-019",
+    "question": "An application uses a deployed GPT-Image-2 model to edit a selected region of an existing image. Which mask representation follows the documented image-edit API requirements?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A JPEG mask whose darkest pixels mark the requested edit region."
+      },
+      {
+        "id": "b",
+        "text": "A PNG mask with the input image's dimensions and fully transparent pixels over the requested edit region."
+      },
+      {
+        "id": "c",
+        "text": "A PNG mask at any dimensions, with an opaque region marking the requested edit area."
+      },
+      {
+        "id": "d",
+        "text": "A text-only list of coordinates supplied as the mask image."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "The mask is a PNG with the same dimensions as the input, and fully transparent pixels identify areas the model should edit.",
+    "deepExplanation": "The mask expresses the requested edit area through alpha transparency, not a dark color or a different-sized coordinate canvas. These are request-format requirements; they are not a guarantee of pixel-perfect output.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documented mask format is PNG and identifies edit areas with alpha zero, not JPEG darkness.",
+      "c": "The dimensions must match the input image, and edit areas use transparent rather than opaque pixels.",
+      "d": "The mask parameter uses an image input representation; a coordinate string is not the documented mask image."
+    },
+    "objectiveDomain": "implement-computer-vision-solutions",
+    "skill": "design-and-implement-image-and-video-generation-solutions",
+    "subskill": "Configure image-editing workflows, including inpainting, mask‑based edits, and prompt‑driven modifications",
+    "difficulty": "beginner",
+    "complexity": "technical-implementation",
+    "sourceIds": ["ai103-image-generation"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/dall-e"
+    ],
+    "documentationTitles": ["Azure OpenAI image generation models"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-openai-image-edit-mask-transparent-target-region",
+      "beginner"
+    ],
+    "conceptId": "azure-openai-image-edit-mask-transparent-target-region",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-image-generation"],
+    "verificationNotes": "Verified against the image-generation Mask subsection under Image Edit API; explicit PNG + same dimensions + fully transparent pixels wording.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article lists three concrete mask requirements that eliminate every other choice.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-020",
+    "question": "A vision-enabled Chat Completions application first generates broad descriptions of scene images where fine detail is unimportant. A second workflow needs a more detailed interpretation and accepts a higher token cost. Which explicit detail settings match these goals?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use high for the broad-description workflow and low for the detailed workflow."
+      },
+      {
+        "id": "b",
+        "text": "Use low for both because it retains the same high-resolution processing path."
+      },
+      {
+        "id": "c",
+        "text": "Use auto for both because it forces high-resolution processing regardless of image size."
+      },
+      {
+        "id": "d",
+        "text": "Use low for broad descriptions and high for the detailed workflow."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "low processes a reduced-resolution representation without high-resolution mode; high uses detailed image segments and a larger token budget.",
+    "deepExplanation": "The article ties low detail to quicker responses and reduced token consumption when fine detail is unnecessary. high enables more detailed interpretation. auto chooses based on the input image and is not an explicit guarantee of either path.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This reverses the documented tradeoff: high activates detailed segment processing and low omits that high-resolution mode.",
+      "b": "low uses a 512-by-512 reduced-resolution representation, rather than retaining the high-resolution path.",
+      "c": "auto lets the model select low or high based on input size; it does not force high in all cases."
+    },
+    "objectiveDomain": "implement-computer-vision-solutions",
+    "skill": "design-and-implement-multimodal-understanding-workflows",
+    "subskill": "Build a solution that analyzes visual context by using multimodal models",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["ai103-vision-detail"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/gpt-with-vision"
+    ],
+    "documentationTitles": ["Use vision-enabled chat models"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-openai-vision-detail-low-high-image-resolution",
+      "intermediate"
+    ],
+    "conceptId": "azure-openai-vision-detail-low-high-image-resolution",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-vision-detail"],
+    "verificationNotes": "Confirmed via the 'Configure image detail level' section listing all three values with their token/detail semantics.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article's per-value bullet list gives explicit descriptions that only answer d reflects.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-021",
+    "question": "Using Content Understanding API 2026-06-01-preview, a team needs separate news-story segments from a broadcast and a custom brand field for each segment. Camera cuts do not reliably match story boundaries. Which analyzer design meets the semantic segmentation requirement?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Enable segmentation, describe story boundaries through contentCategories, and define the brand in fieldSchema."
+      },
+      {
+        "id": "b",
+        "text": "Disable segmentation and define only the brand field, expecting one output segment per news story."
+      },
+      {
+        "id": "c",
+        "text": "Use cameraShotTimesMs as the complete story segmentation rule without semantic categories."
+      },
+      {
+        "id": "d",
+        "text": "Enable segmentation but omit the brand field because transcription automatically supplies every custom field."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Custom segmentation uses enableSegment and a natural-language contentCategories description; fieldSchema defines custom metadata to fill for segments.",
+    "deepExplanation": "Shot detection belongs to foundational content extraction, while semantic segmentation and custom fields use the generative field-extraction stage. A camera shot boundary is not necessarily a news-story boundary, and defining a custom field is separate from generating a transcript.",
+    "whyOtherAnswersAreWrong": {
+      "b": "With enableSegment=false, the service treats the entire video as one segment rather than splitting it by news-story meaning.",
+      "c": "cameraShotTimesMs records shot boundaries; the supplied scenario says these do not reliably represent story boundaries.",
+      "d": "Transcription converts spoken content to text; custom brand metadata requires its own field definition."
+    },
+    "objectiveDomain": "implement-computer-vision-solutions",
+    "skill": "design-and-implement-multimodal-understanding-workflows",
+    "subskill": "Implement video analysis workflows to process and interpret video segments",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["ai103-video"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview"
+    ],
+    "documentationTitles": [
+      "Azure Content Understanding in Foundry Tools video solutions"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "Preview",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "content-understanding-video-custom-semantic-segmentation",
+      "advanced"
+    ],
+    "conceptId": "content-understanding-video-custom-semantic-segmentation",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-video"],
+    "verificationNotes": "Confirmed against 'Segmentation mode' and 'Custom fields' sections plus the doc's example JSON with contentCategories.news-story and analyzerId.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article's own worked example ('Break a news broadcast up into stories') mirrors this question.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-022",
+    "question": "A Content Understanding video analyzer using API 2026-06-01-preview reports no occurrence of a tiny label that can appear for a single frame. The compliance team wants to conclude that the label never appeared. Which interpretation respects the documented processing limits?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Absence from the output proves absence from every frame because all frames retain their original resolution."
+      },
+      {
+        "id": "b",
+        "text": "A custom field description removes sampling and resolution limits without changing the analysis path."
+      },
+      {
+        "id": "c",
+        "text": "The conclusion is unsupported: approximately one-frame-per-second sampling and resized frames can miss brief or small visual details."
+      },
+      {
+        "id": "d",
+        "text": "Enabling whole-video segmentation makes the analyzer inspect every source frame at its original resolution."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "The video documentation warns that approximately 1 FPS sampling can miss rapid or single-frame events, and resized frames can lose small text or distant objects.",
+    "deepExplanation": "The observed output is negative evidence from a sampling-based analysis, not an exhaustive proof about every frame. The team must not make a stronger assurance than the documented temporal and spatial coverage supports.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The service does not retain every frame at original resolution in the documented analysis path; both premises conflict with its constraints.",
+      "b": "Custom field descriptions guide extraction but do not remove the documented sampling and resolution limits.",
+      "d": "Whole-video segmentation changes whether the file is treated as one segment; it does not change the stated frame-sampling or resizing constraints."
+    },
+    "objectiveDomain": "implement-computer-vision-solutions",
+    "skill": "design-and-implement-multimodal-understanding-workflows",
+    "subskill": "Implement solutions that identify objects, components, or regions within images or video",
+    "difficulty": "advanced",
+    "complexity": "scenario-based",
+    "sourceIds": ["ai103-video"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview"
+    ],
+    "documentationTitles": [
+      "Azure Content Understanding in Foundry Tools video solutions"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "Preview",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "content-understanding-video-sampling-negative-evidence-limits",
+      "advanced"
+    ],
+    "conceptId": "content-understanding-video-sampling-negative-evidence-limits",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-video"],
+    "verificationNotes": "Verified against Technical constraints section which explicitly lists ~1 FPS sampling and 512x512 resize with the missed-events warning.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article warns 'might be missed' in the same paragraph the stem alludes to.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-023",
+    "question": "An existing Azure Language sentiment-analysis application must distinguish praise for a device's screen from criticism of its battery within the same review. Which capability provides sentiment associated with those particular product aspects rather than only overall labels?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use only the document-level sentiment label."
+      },
+      {
+        "id": "b",
+        "text": "Enable opinion mining."
+      },
+      {
+        "id": "c",
+        "text": "Use only sentence-level positive, neutral, and negative confidence scores."
+      },
+      {
+        "id": "d",
+        "text": "Treat every aspect as having the sentiment with the highest document-level confidence."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Opinion mining provides aspect-based sentiment information, linking opinions to attributes such as particular product features.",
+    "deepExplanation": "Ordinary sentiment analysis returns sentence-level and document-level labels and scores. Those aggregate outputs are not the same as associating different opinions with the screen and battery. The source announces retirement of these Azure Language features on March 31, 2029 and directs new projects toward Foundry; this scenario concerns an existing integration.",
+    "whyOtherAnswersAreWrong": {
+      "a": "A document-level label aggregates the review and does not supply the requested aspect associations.",
+      "c": "Sentence scores alone describe sentence sentiment rather than the opinion-mining associations between opinions and product aspects.",
+      "d": "Applying one document label to every aspect discards the distinct opinions the scenario needs."
+    },
+    "objectiveDomain": "implement-text-analysis-solutions",
+    "skill": "apply-language-model-text-analysis",
+    "subskill": "Configure detection of sentiment, tone, safety issues, and sensitive content",
+    "difficulty": "beginner",
+    "complexity": "scenario-based",
+    "sourceIds": ["ai103-sentiment"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-services/language-service/sentiment-opinion-mining/overview"
+    ],
+    "documentationTitles": ["What are sentiment analysis and opinion mining?"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-language-opinion-mining-aspect-sentiment",
+      "beginner"
+    ],
+    "conceptId": "azure-language-opinion-mining-aspect-sentiment",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-sentiment"],
+    "verificationNotes": "Confirmed against Sentiment analysis and Opinion mining sections; retirement note (March 31, 2029) preserved in candidate explanation.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article names 'aspect-based sentiment analysis' only under Opinion mining.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-024",
+    "question": "A text-processing prototype uses Azure Language PII API 2025-11-15-preview. It must mask detected identifiers in redactedText while preserving the original text's length and offsets for an annotation overlay. Which redaction policy matches that requirement?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "entityMask"
+      },
+      {
+        "id": "b",
+        "text": "syntheticReplacement"
+      },
+      {
+        "id": "c",
+        "text": "noMask"
+      },
+      {
+        "id": "d",
+        "text": "characterMask"
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "characterMask replaces detected PII with a chosen masking character while preserving text length and offsets.",
+    "deepExplanation": "The required output is a masked string that remains positionally aligned with the original. Entity labels and synthetic values serve different purposes, and noMask does not return redactedText. The question intentionally targets the documented preview policy interface.",
+    "whyOtherAnswersAreWrong": {
+      "a": "entityMask replaces values with entity-type labels such as numbered person labels, rather than the documented length-preserving character mask.",
+      "b": "syntheticReplacement substitutes selected replacement values; it is not the documented policy for preserving original length and offsets.",
+      "c": "noMask returns the response without the redactedText field, so it cannot provide the required masked overlay text."
+    },
+    "objectiveDomain": "implement-text-analysis-solutions",
+    "skill": "apply-language-model-text-analysis",
+    "subskill": "Configure detection of sentiment, tone, safety issues, and sensitive content",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["ai103-pii"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-services/language-service/personally-identifiable-information/how-to/redact-text-pii"
+    ],
+    "documentationTitles": [
+      "Detect and redact Personally Identifiable Information in text"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "Preview",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-language-pii-character-mask-offset-preservation",
+      "intermediate"
+    ],
+    "conceptId": "azure-language-pii-character-mask-offset-preservation",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-pii"],
+    "verificationNotes": "Verified via PII 2025-11-15-preview redactionPolicies enumeration; only characterMask keeps length and offsets.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article uses exact phrase 'preserving the length and offset' for characterMask only.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-025",
+    "question": "A Python Speech SDK application transcribes a long recording whose speakers switch between English and German between sentences. It already uses continuous recognition, but language identification remains fixed near the beginning. Candidate locales are en-US and de-DE. What should change?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Configure LanguageIdMode as Continuous while retaining continuous recognition."
+      },
+      {
+        "id": "b",
+        "text": "Switch to recognize-once while leaving language identification at its default."
+      },
+      {
+        "id": "c",
+        "text": "Add en-GB as a second English candidate so at-start identification becomes continuous."
+      },
+      {
+        "id": "d",
+        "text": "Keep the current mode because continuous recognition automatically implies continuous language identification."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Continuous recognition and continuous language identification are separate settings. Without the continuous language-ID property, language identification defaults to at-start.",
+    "deepExplanation": "The documented continuous LID mode supports language changes during audio when used with continuous recognition. The scenario places changes between sentences because the feature does not identify language changes word by word within one sentence.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Continuous language identification is not supported with recognize-once, so this removes the required recognition pattern.",
+      "c": "The documentation permits only one locale per base language in the candidate list; adding another English locale does not change LID mode.",
+      "d": "The article explicitly warns not to confuse recognition with identification and documents continuous recognition with either LID mode."
+    },
+    "objectiveDomain": "implement-text-analysis-solutions",
+    "skill": "implement-speech-solutions",
+    "subskill": "Implement workflows to convert speech to text and text to speech for agentic interactions",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["ai103-speech-lid"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-services/speech-service/language-identification"
+    ],
+    "documentationTitles": ["Implement language identification"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-speech-continuous-lid-versus-continuous-recognition",
+      "advanced"
+    ],
+    "conceptId": "azure-speech-continuous-lid-versus-continuous-recognition",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-speech-lid"],
+    "verificationNotes": "Verified via the 'Recognize once or continuous' section — LID mode is a separate property from recognition mode; base-language rule holds.",
+    "requiresManualReview": false,
+    "confidenceReason": "Two-property separation is stated verbatim in the article.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-026",
+    "question": "A service translates English product notices into German and must use a supplied rendering for a particular product name. The team selects Translator's dynamic dictionary and inserts the documented term markup, but currently relies on automatic source-language detection. Which adjustment meets the feature's documented constraints?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Keep source detection automatic and apply dictionary markup to arbitrary complete sentences instead of the product name."
+      },
+      {
+        "id": "b",
+        "text": "Remove the English language from the pair while leaving source detection automatic."
+      },
+      {
+        "id": "c",
+        "text": "Specify English explicitly in From and retain the marked product-name translation."
+      },
+      {
+        "id": "d",
+        "text": "Remove the translation markup because the dynamic dictionary uses only the target-language setting."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Dynamic dictionary requires an explicit From parameter, an English-to-supported-language or supported-language-to-English pair, and is safe for compound nouns such as proper or product names.",
+    "deepExplanation": "The selected English/German pair and product-name use fit the feature, but autodetection does not. The supplied dictionary markup communicates the desired term translation; the target-language setting alone does not encode it.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The feature requires explicit From rather than autodetection, and its documented safe scope is compound nouns rather than arbitrary complete sentences.",
+      "b": "The language pair must include English, and explicit From is still required.",
+      "d": "The custom translation is supplied in dictionary markup; a target-language selection by itself does not carry the desired product-name rendering."
+    },
+    "objectiveDomain": "implement-text-analysis-solutions",
+    "skill": "apply-language-model-text-analysis",
+    "subskill": "Build solutions that translate text by using Azure Translator in Foundry Tools or LLM‑powered translation flows",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["ai103-translation"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-services/translator/text-translation/how-to/use-dynamic-dictionary"
+    ],
+    "documentationTitles": [
+      "Azure Translator in Foundry Tools dynamic dictionary"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-translator-dynamic-dictionary-explicit-source-english-pair",
+      "advanced"
+    ],
+    "conceptId": "azure-translator-dynamic-dictionary-explicit-source-english-pair",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-translation"],
+    "verificationNotes": "Verified against Requirements list and Syntax section; two constraints (explicit From, English-inclusive pair) plus safe scope of compound nouns.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article's requirements list identifies both changes only answer c makes.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-027",
+    "question": "An Azure AI Search application enables semantic answers. A teammate expects the feature to compose a new answer by combining facts that are not stated as an answer-like passage in any retrieved document. What behavior should the team expect instead?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The feature generates missing explanations from the ranker's general knowledge."
+      },
+      {
+        "id": "b",
+        "text": "Semantic answers extract verbatim answer-like text from indexed content; they do not compose new answers."
+      },
+      {
+        "id": "c",
+        "text": "The feature rewrites every indexed document into a generated summary before storing it."
+      },
+      {
+        "id": "d",
+        "text": "Semantic answers use a larger vector k value to create new factual sentences."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Semantic captions and answers are verbatim text extracted from the index. This workflow does not use a generative model to compose new content.",
+    "deepExplanation": "Semantic ranking can identify and promote useful passages. If the returned content lacks an answer-like passage, semantic answers do not invent one. Generative response construction is a different part of a RAG application.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The semantic-answer workflow does not create new content from general model knowledge.",
+      "c": "Semantic answers operate in the query response; they do not rewrite stored documents as a new ingestion operation.",
+      "d": "Vector k controls candidate count for vector retrieval, not generation of new sentences."
+    },
+    "objectiveDomain": "implement-information-extraction-solutions",
+    "skill": "build-retrieval-and-grounding-pipelines",
+    "subskill": "Configure semantic search, hybrid search, and vector search for grounding",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["ai103-semantic-ranking", "ai103-hybrid-query"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/search/semantic-search-overview",
+      "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query"
+    ],
+    "documentationTitles": [
+      "Semantic ranking in Azure AI Search",
+      "Create a hybrid query in Azure AI Search"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-search-semantic-answers-extractive-not-generative",
+      "beginner"
+    ],
+    "conceptId": "azure-search-semantic-answers-extractive-not-generative",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "ai103-semantic-ranking",
+      "ai103-hybrid-query"
+    ],
+    "verificationNotes": "Cross-checked semantic-ranking overview + capabilities/limitations and the hybrid-query article's k-vs-top wording; extractive-only claim is stated directly.",
+    "requiresManualReview": false,
+    "confidenceReason": "The word 'verbatim' appears twice in the article, unique to semantic answers.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-028",
+    "question": "An Azure AI Search hybrid request contains a keyword query and one vector query. The vector query uses k=40, while top=8 is set for the response. Assume enough matches exist. How should the team interpret these settings and the merge?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The vector query runs only after keyword retrieval fails, and k limits the final response to 40."
+      },
+      {
+        "id": "b",
+        "text": "top=8 limits the vector retrieval stage to eight neighbors before it reaches the merge."
+      },
+      {
+        "id": "c",
+        "text": "The query adds raw keyword and vector similarity scores without rank fusion."
+      },
+      {
+        "id": "d",
+        "text": "Keyword and vector retrieval run in parallel; up to 40 vector neighbors feed RRF, while top limits the returned merged results to eight."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Hybrid search runs keyword and vector retrieval in parallel and merges their ranked results with Reciprocal Rank Fusion. k controls the vector contribution, while top controls the final response size.",
+    "deepExplanation": "Candidate collection and response truncation are different stages. The vector query can contribute more candidates for fusion than the response ultimately returns, allowing keyword and vector evidence to influence the merged ranking.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Hybrid retrieval is parallel, not a keyword-failure fallback sequence, and k is not the overall response-size setting.",
+      "b": "top controls the returned results all-up; the vector neighbor count is governed by k.",
+      "c": "The documented merge uses RRF over ranked lists rather than simply adding incomparable raw scores."
+    },
+    "objectiveDomain": "implement-information-extraction-solutions",
+    "skill": "build-retrieval-and-grounding-pipelines",
+    "subskill": "Configure semantic search, hybrid search, and vector search for grounding",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["ai103-hybrid-query"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query"
+    ],
+    "documentationTitles": ["Create a hybrid query in Azure AI Search"],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-search-hybrid-parallel-rrf-k-top",
+      "intermediate"
+    ],
+    "conceptId": "azure-search-hybrid-parallel-rrf-k-top",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-hybrid-query"],
+    "verificationNotes": "Verified against the introduction paragraph and the Workable-hybrid-patterns bullets ('Balanced hybrid (default): Start with k in the 30 to 50 range, top in the 10 to 20 range').",
+    "requiresManualReview": false,
+    "confidenceReason": "Article names RRF and separates k/top responsibilities in adjacent paragraphs.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-029",
+    "question": "A hybrid Azure AI Search query using REST API 2026-08-01-preview has a top-level tenant filter. A developer adds vectorQueries.filterOverride containing only a category filter, expecting it to be combined automatically with the tenant filter. The vector results now include another tenant's documents. Which correction follows the documented override semantics?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Include the tenant constraint explicitly in every vector-level override as well as keeping it in the top-level filter."
+      },
+      {
+        "id": "b",
+        "text": "Keep only the top-level tenant filter because filterOverride is additive by definition."
+      },
+      {
+        "id": "c",
+        "text": "Remove the top-level tenant filter and rely on semantic ranking to enforce tenant permissions."
+      },
+      {
+        "id": "d",
+        "text": "Lower top so unauthorized documents are less likely to appear, without changing either filter."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "A targeted vector filter fully overrides the global filter for that vector query, including security-trimming conditions. Required restrictions must be included explicitly in each override.",
+    "deepExplanation": "The query has two retrieval paths. Retaining the top-level filter protects the path to which it applies, while each vector override must repeat mandatory restrictions alongside its vector-specific category condition. Ranking and smaller result counts are not replacements for those filters.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The article explicitly says the targeted filter fully overrides the global filter, rather than automatically intersecting with it.",
+      "c": "Semantic ranking reranks existing candidates by relevance; it does not supply the omitted tenant-filter condition.",
+      "d": "top controls result count, not the required tenant restriction, so unauthorized candidates remain eligible."
+    },
+    "objectiveDomain": "implement-information-extraction-solutions",
+    "skill": "build-retrieval-and-grounding-pipelines",
+    "subskill": "Configure semantic search, hybrid search, and vector search for grounding",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["ai103-hybrid-query", "ai103-semantic-ranking"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/search/hybrid-search-how-to-query",
+      "https://learn.microsoft.com/en-us/azure/search/semantic-search-overview"
+    ],
+    "documentationTitles": [
+      "Create a hybrid query in Azure AI Search",
+      "Semantic ranking in Azure AI Search"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "Preview",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "azure-search-preview-vector-filter-override-security-trimming",
+      "advanced"
+    ],
+    "conceptId": "azure-search-preview-vector-filter-override-security-trimming",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": [
+      "ai103-hybrid-query",
+      "ai103-semantic-ranking"
+    ],
+    "verificationNotes": "Verified against the 'Hybrid search with filters targeting vector subqueries (preview)' section and REST API version tag; correction requires per-vector filter inclusion.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article uses the exact phrase 'fully overrides the global filter, including any filters used for security trimming'.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  },
+  {
+    "id": "ai103-030",
+    "question": "A Content Understanding document analyzer using GA API 2025-11-01 extracts amounts, classifies document types, and generates narrative summaries. New invoice layouts yield low-confidence amounts, while some scans misrecognize a letter as a digit. The team needs traceable human review and an evidence-based improvement plan. Which approach respects the documented capabilities and limits?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Train all extract, classify, and generate fields with labels, then treat high confidence as proof that OCR errors are fixed."
+      },
+      {
+        "id": "b",
+        "text": "Raise every amount's confidence value in post-processing and omit source coordinates to simplify approval."
+      },
+      {
+        "id": "c",
+        "text": "Enable field confidence and source estimates, route low-confidence amounts with their grounding to review, improve eligible fields with representative corrected samples, and address OCR errors separately."
+      },
+      {
+        "id": "d",
+        "text": "Use the presence of a source span as a correctness guarantee and retrain only generated summaries to repair amount recognition."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Confidence can guide review and grounding locates supporting document content. Corrected representative labels can improve supported document fields, but training does not support generate fields and labeled examples do not correct OCR recognition problems.",
+    "deepExplanation": "The workflow separates uncertainty routing, provenance, semantic extraction adaptation, and text-recognition failure. Source locations help reviewers inspect a low-confidence amount; they are not independent proof of correctness. Evaluate results before and after training rather than assuming a label change repairs every stage.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Training currently excludes generate-method fields, and labeled samples do not fix text-recognition errors. Confidence is analyzer certainty, not proof that OCR is correct.",
+      "b": "Editing confidence values does not improve extraction; removing grounding loses the source-location evidence needed for traceable review.",
+      "d": "A span locates source content rather than proving correctness. Training generated summaries is unsupported and does not address the documented OCR limitation."
+    },
+    "objectiveDomain": "implement-information-extraction-solutions",
+    "skill": "extract-content-from-documents",
+    "subskill": "Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction",
+    "difficulty": "expert",
+    "complexity": "architecture-design",
+    "sourceIds": ["ai103-analyzer-quality"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/analyzer-improvement"
+    ],
+    "documentationTitles": [
+      "Validate document analyzer quality with confidence, grounding, and labeled samples"
+    ],
+    "generatedAt": "2026-09-11T19:34:44.047Z",
+    "lastValidatedAt": "2026-09-11T19:34:44.047Z",
+    "featureStatus": "GA",
+    "tags": [
+      "ai-103",
+      "original-first-pass",
+      "content-understanding-extraction-quality-confidence-grounding-training-limits",
+      "expert"
+    ],
+    "conceptId": "content-understanding-extraction-quality-confidence-grounding-training-limits",
+    "verificationStatus": "verified",
+    "verifiedAgainstSourceIds": ["ai103-analyzer-quality"],
+    "verificationNotes": "Verified from Confidence-scoring, Grounding, Improve-analyzer-training, and Limitations sections; boundary between fixes and OCR is stated verbatim.",
+    "requiresManualReview": false,
+    "confidenceReason": "Article explicitly lists the three feature roles in the same table answer c reflects.",
+    "verifiedAt": "2026-09-11T20:11:23.540Z",
+    "sourceLastReviewedAt": "2026-09-11T20:11:23.540Z"
+  }
+]

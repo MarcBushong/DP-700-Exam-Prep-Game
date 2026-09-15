@@ -39,34 +39,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "For the stated existing 5,100-character string, strict JSON_VALUE raises an error; strict mode changes the overlength failure from NULL to an error rather than increasing the non-RETURNING 4,000-character capacity. It therefore cannot return the required complete text. Literal positive countercontext, using this exact SELECT unchanged: if @document instead contains N'{\"message\":\"OK\"}', SELECT JSON_VALUE(@document, 'strict $.message'); returns the scalar text N'OK'. This is a suitable strict extraction when a required scalar is present and within the limit. The saved JSON_VALUE lax/strict table independently shows existing short scalars succeeding in strict mode and absent/nonscalar paths failing; the Return value contract supplies the overlength failure. These are documentary predictions, not reported SQL executions.",
-        "sourceIds": [
-          "dp800-d1-json-value"
-        ]
+        "sourceIds": ["dp800-d1-json-value"]
       },
       {
         "choiceId": "b",
         "assessment": "supported",
         "rationale": "OPENJSON reads the supplied root object, and WITH maps its existing message string to one message column of type nvarchar(max). The explicit '$.message' path identifies the stated property exactly; omitting AS JSON requests the scalar text rather than a fragment. This is the documented OPENJSON remedy for JSON_VALUE's over-4,000-character scalar limit, so the SELECT returns the complete 5,100-character value rather than NULL, an exception, or its enclosing object. Compatibility 160 satisfies OPENJSON's minimum of 130. Literal confirming context with the same SELECT: @document = N'{\"message\":\"OK\"}' produces one row whose message value is N'OK'; the explicit max-length projection also accommodates the longer string stipulated by the stem. This derives from the JSON_VALUE length guidance and OPENJSON's typed-schema/scalar contract, not from an executed SQL test.",
-        "sourceIds": [
-          "dp800-d1-json-value",
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-json-value", "dp800-d1-openjson"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "The selected message is a scalar string, not an object or array. Ordinary JSON_QUERY therefore returns SQL NULL in default lax mode even though its return type is nvarchar(max); that larger return type does not make scalar extraction valid. Literal positive countercontext, with the exact SELECT unchanged: if @document instead contains N'{\"message\":{\"level\":\"info\"}}' and the requirement is to preserve the message object, SELECT JSON_QUERY(@document, '$.message'); returns the JSON fragment {\"level\":\"info\"}. The saved JSON_QUERY Return value section and object/array rows of the lax/strict table support this different input-and-output requirement. It is excluded by the candidate's explicitly scalar property.",
-        "sourceIds": [
-          "dp800-d1-json-query"
-        ]
+        "sourceIds": ["dp800-d1-json-query"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "Without a path, JSON_QUERY uses $ and returns the complete input object, including the message property name and JSON structure. Preserving that object does not satisfy the requested scalar text, even though the object contains the full message. Literal positive countercontext with the exact SELECT: for @document = N'{\"message\":\"OK\"}', SELECT JSON_QUERY(@document); returns {\"message\":\"OK\"}. That is correct when the application wants the whole JSON object as a fragment, rather than the scalar N'OK'. The saved article explicitly documents the default $ path and its entire-JSON-text result; no undocumented wrapper-removal behavior is assumed.",
-        "sourceIds": [
-          "dp800-d1-json-query"
-        ]
+        "sourceIds": ["dp800-d1-json-query"]
       }
     ],
     "checks": {

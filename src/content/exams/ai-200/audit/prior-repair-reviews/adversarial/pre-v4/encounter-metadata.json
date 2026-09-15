@@ -1,0 +1,529 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "ai200-i-002": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "15e46036d86c7e14403885b80f2a3715c87ee73b711de01603a34ae9de63b23a",
+      "sourceIds": [
+        "ai200-20260914-unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions"
+      ],
+      "retrievedAt": "2026-09-14T17:57:45.148Z",
+      "lastValidatedAt": "2026-09-14T19:59:37.076Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions"
+          ],
+          "summary": "Both subscriptions already match every event. The documented independent virtual queues let notification consume its copy while the unavailable audit consumer's separate backlog remains."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions"
+          ],
+          "summary": "A subscription is a virtual queue: sharing it is useful for distributing one processing responsibility among competing workers, not for giving audit and notification an independent copy each."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-3-choose-queues-topics-subscriptions"
+          ],
+          "summary": "FalseFilter rejects all incoming matches. It can suppress traffic intentionally, but would stop retaining new audit events rather than preserving the audit service's work."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "The key is correct, but mandatory fresh semantic report SEM-R001 identifies the same fact in i-001. I read that entire peer: its rejected topic choice explicitly describes independent per-service copies, directly answering i-002. The unavailable audit consumer supplies no new recovery mechanism. Originality is 0, not a score backfilled to retain this candidate. Fresh semantic audit: SEM-R001 is incorporated: reverse-direction copy allocation duplicates i-001; originality 0 and duplicate/quality checks fail.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 0,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-006": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "c074eac1b649451d8d261984da5694bedc7d4534a5a0572dda1dc49c5a0cb9dd",
+      "sourceIds": [
+        "ai200-20260914-unit-queue-process-operations-service-bus-5-process-messages-reliably"
+      ],
+      "retrievedAt": "2026-09-14T17:57:49.204Z",
+      "lastValidatedAt": "2026-09-14T19:59:37.076Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-5-process-messages-reliably"
+          ],
+          "summary": "Defer retains the message but removes it from regular delivery; the unit requires the sequence number for receive_deferred_messages and explicitly gives unavailable dependencies as a use case."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-5-process-messages-reliably"
+          ],
+          "summary": "Abandon releases the lock and makes the message immediately available to ordinary receives. That contradicts removing this job from ordinary delivery until the prerequisite arrives."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-5-process-messages-reliably"
+          ],
+          "summary": "The documented dead-letter reprocessing path repairs a rejected message and sends a new message. It is not explicit deferred retrieval of this valid job after its prerequisite becomes available."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "The pronoun warning was inspected: it and this job refer to the single valid message. No hidden lock timeout or rejection policy changes the required behavior. Intermediate has only modest depth; concept-recall earns no applied coverage despite the scenario format. Fresh semantic audit: The fresh audit distinguishes ordinary Abandon redelivery in i-005 from identifier-based deferred retrieval. Agree; the same source supports genuinely different operations.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-009": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "45296a036dfb27da260f571b4fb48fd704aed96e61143dcc6472ee763f9bfd87",
+      "sourceIds": [
+        "ai200-20260914-unit-queue-process-operations-service-bus-4-structure-messages-ai-workloads",
+        "ai200-20260914-doc-servicebus-deadletter"
+      ],
+      "retrievedAt": "2026-09-14T18:02:26.404Z",
+      "lastValidatedAt": "2026-09-14T19:59:37.076Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-4-structure-messages-ai-workloads"
+          ],
+          "summary": "The approved unit explicitly makes expiration routing conditional on enabling dead-lettering on message expiration. Keeping TTL unchanged preserves the validity requirement."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "ai200-20260914-unit-queue-process-operations-service-bus-4-structure-messages-ai-workloads"
+          ],
+          "summary": "A longer TTL changes the required short validity window and still leaves expiry retention disabled. The approved unit supports longer TTL only for work with relaxed latency tolerance."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai200-20260914-doc-servicebus-deadletter"],
+          "summary": "Maximum delivery count controls repeated failed deliveries, not expiry before processing. That technical distinction is present in the cited article, but the audit invalidates its provenance and therefore withholds approved evidence for this distractor."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "Manual review is required for an actual provenance failure, not a wrong key. The unwithdrawn unit can support the setting choice but cannot replace every missing claim from the other cited source. No silent citation removal or source-role reassignment was made. Fresh semantic audit: Expiration retention differs from closed-receiver settlement and Event Grid external dead-letter storage. Agree on distinctness; the independent article-provenance failure still blocks this record.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 2,
+          "documentationStrength": 2,
+          "citationSpecificity": 2,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 3,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-013": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "38c233586407c0ad6b37694e749daa75095cb69776ac8957d48f27c3d99788b7",
+      "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
+      "retrievedAt": "2026-09-14T18:02:29.351Z",
+      "lastValidatedAt": "2026-09-14T19:59:37.076Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
+          "summary": "CloudEvents output is the documented compatible delivery for this CloudEvents input. The capable subscriber and preserved extension attributes remove any need to transform the publisher."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
+          "summary": "The article's transformation table excludes Event Grid output for CloudEvents input because the proprietary output schema cannot represent CloudEvents extension attributes."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "A two-option protocol compatibility item has limited assessment depth. The evidence still makes the alternative genuinely correct for a different documented input contract. Pronouns refer to the explicitly named extension attributes. No applied credit is awarded for the scenario wrapper. Fresh semantic audit: CloudEvents output compatibility differs from custom-versus-system topic ownership in i-012. Agree; no separate API contract is inferred from merely similar names.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-014": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "cfddaf4dc34c9cc59ff323ad8999ec78efd95b37c8760bd92b1c4c100abe8ce2",
+      "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
+      "retrievedAt": "2026-09-14T18:02:32.943Z",
+      "lastValidatedAt": "2026-09-14T19:59:37.076Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
+          "summary": "The article explicitly identifies ResourceWriteSuccess for resource updates rather than deletions and uses includedEventTypes to declare the selected kinds."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
+          "summary": "Subject prefixes select locations. Both stated operations share the same subject path, so the common prefix cannot isolate successful writes."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
+          "summary": "All explicitly preserves all source event kinds, including deletions, and therefore cannot meet a request for only ResourceWriteSuccess."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "Technical accuracy does not establish strict quality. I independently score 43/48: the echoed event name, obviously overbroad All option and retained intermediate rating weaken this property-association item. The current authored record is withheld rather than silently changing difficulty or backfilling scores. Fresh semantic audit: The operation-kind field differs from prefix collisions and typed advanced-filter Boolean evaluation. Agree on distinctness, but my independent rubric is 43/48 and still blocks this candidate.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-i-017": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "825e35a3c8b4ab06071837fe07013dba5cc0d20cbc47977ae7c440b409eea80f",
+      "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
+      "retrievedAt": "2026-09-14T18:02:36.757Z",
+      "lastValidatedAt": "2026-09-14T19:59:37.076Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
+          "summary": "The read article directly combines no retry for webhook 401 with dropping such events when no dead-lettering is configured. Its factual support is clear, but the exact source has failed strict provenance and cannot approve the record."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
+          "summary": "The captured article expressly excludes webhook 401 from retry, although its retry schedule applies to transient failures outside that table. This technical distinction is read but cannot be treated as approved evidence after the source-edge audit."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
+          "summary": "The subscription expressly has no dead-letter destination, so it cannot retain the event in configured dead-letter storage. The article documents preservation only when a usable destination is configured."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "The endpoint-specific rule is technically determinate, but all three options rely on a source the independent audit cannot approve. Zero documentation/distractor-evidence credit records that failure honestly; a true statement and earlier technical approval cannot authorize gameplay. Fresh semantic audit: Endpoint-specific nonretryable 401 differs from TTL versus retry budgets and configuring a Blob destination. Agree on distinctness; the selected-source reference remains unsupported.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 0,
+          "documentationStrength": 0,
+          "citationSpecificity": 0,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 3,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-013": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "4511bb98b092a22a7a2facb382bf276b1276b68855bc57834ccfdd7962254681",
+      "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
+      "retrievedAt": "2026-09-14T18:04:12.123Z",
+      "lastValidatedAt": "2026-09-14T19:56:40.224Z",
+      "answerEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
+          "summary": "The .NET Dynamic scaling section explicitly lists these three configuration conditions for distributing leases among instances of one deployment unit. The article's invalid reference edge blocks strict source approval despite the exact technical match."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
+          "summary": "Different processor names identify separate deployment units with independent state and business flows. Sharing a physical lease container does not turn them into one load-balanced workload."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
+          "summary": "Different lease stores cannot supply the shared ownership state required here. Reusing instance names also fails the stated distinct-name condition within the intended single deployment."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "The revised foundational classification is valid. The exact option-C repeated-name countercontext is not affirmatively documented, and all evidence comes from the independently rejected source edge. The record is quarantined without changing its authored fields or borrowing technical approval. Fresh semantic audit: Processor/lease/workload identity differs from Service Bus allocation, language support and initialized starting positions. Agree on distinctness; the sole citation remains provenance-blocked.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 0,
+          "documentationStrength": 0,
+          "citationSpecificity": 0,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 3,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-014": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "a3fd07e95c6fba2321d2ff3b45c5dc42dcfcc7179657cc08b1a938995f9d7be4",
+      "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
+      "retrievedAt": "2026-09-14T18:04:12.123Z",
+      "lastValidatedAt": "2026-09-14T19:56:40.224Z",
+      "answerEvidence": [
+        {
+          "choiceId": "C",
+          "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
+          "summary": "The processor-library supported-SDK table identifies .NET and Java. Standalone hosting and the explicit exclusion of a Functions trigger prevent confusing hosted trigger language support with library availability."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
+          "summary": "The supported-SDK table excludes both Python and Node.js from the processor library, while the stem requires library-managed distributed leases and checkpoints rather than pull readers."
+        },
+        {
+          "choiceId": "B",
+          "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
+          "summary": "Java is supported, but Python is not. A pair must meet the requested library contract for both languages, so partial membership is insufficient."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "The no-Functions condition and pair semantics were checked rather than treating the negative-wording warning as an error. Factual clarity cannot overcome the failed sole-source provenance. All raw article observations remain reportable, not approvals. Fresh semantic audit: Processor language availability differs from configuring an already-selected .NET deployment. Agree on distinctness; semantic retention cannot repair the failed source edge.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 0,
+          "documentationStrength": 0,
+          "citationSpecificity": 0,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 3,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-018": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "47d0609220448b8336e384dc8cb92250db7c1ff13231049a5b67a082ba06fba7",
+      "sourceIds": [
+        "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+      ],
+      "retrievedAt": "2026-09-14T17:56:47.326Z",
+      "lastValidatedAt": "2026-09-14T19:56:40.224Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ],
+          "summary": "The unit's Entra flow explicitly says to use the access token as the PostgreSQL password, and its Python example says to use token.token in the connection string."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ],
+          "summary": "The configured identity is using Entra token authentication, not another database user's native credentials. The unit separates the two authentication paths."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-3-connect-to-postgresql"
+          ],
+          "summary": "The unit requires the issued token, not an identifier, in the password field. However, its text never establishes the authored claim that a managed-identity client identifier selects the identity, so the required sourced countercontext is incomplete."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "I can disprove identifier-as-password from the token flow but cannot source the exact identifier's alternative purpose from this sole citation. The strict workflow explicitly requires a sourced correct-elsewhere context for every distractor; I mark the gap rather than invent evidence or silently add a source. Fresh semantic audit: An issued PostgreSQL token in a password field differs from supplying a credential provider to a project client. Agree on distinctness, but option C's exact sourced alternative-use claim remains missing.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 3,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 1,
+          "documentationStrength": 3,
+          "citationSpecificity": 2,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 3,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-021": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "790c8e03a1a84c514264dd988f293ad69a1f936cdb027f780a675992c2adbf98",
+      "sourceIds": [
+        "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+      ],
+      "retrievedAt": "2026-09-14T17:56:49.866Z",
+      "lastValidatedAt": "2026-09-14T19:56:40.224Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ],
+          "summary": "The unit explicitly recommends JSONB for varying nested objects and arrays queried with JSON operators, and its table example keeps required fields typed alongside metadata."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ],
+          "summary": "BYTEA stores a byte array, so the proposed serialized binary value does not directly expose its nested keys to the requested JSON operators."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-4-create-manage-schemas"
+          ],
+          "summary": "A formatted character-string summary is not the retained nested metadata object. It can hold text, but the proposed summary loses the structure needed for the stated field queries."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-repair-adversary",
+        "reviewedAt": "2026-09-14T20:34:40.653Z",
+        "notes": "Every option has a documented storage purpose and a specific contextual mismatch. The item remains simple type recall even with a schema scenario. Typed stable fields plus flexible optional metadata make the explanation bounded; no invented indexing or performance guarantee is credited. Fresh semantic audit: JSONB metadata representation differs from constraints, Redis vector representations and KQL dynamic-string parsing. Agree; no cross-platform topical similarity is substituted for an actual duplicated decision.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    }
+  }
+}

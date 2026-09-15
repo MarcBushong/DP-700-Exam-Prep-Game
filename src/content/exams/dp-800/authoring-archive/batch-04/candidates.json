@@ -21,9 +21,7 @@
         "text": "SELECT JSON_QUERY(@document);"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Use an explicit nvarchar(max) column in OPENJSON to extract the entire message.",
     "deepExplanation": "The NULL does not imply that the key is absent. JSON_VALUE without RETURNING has a 4,000-character result limit; strict mode changes the failure behavior, not that limit. The SQL Server 2022 scope excludes newer native-json RETURNING syntax.",
     "whyOtherAnswersAreWrong": {
@@ -54,11 +52,7 @@
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json",
-      "scalar-length"
-    ],
+    "tags": ["sql-server-2022", "json", "scalar-length"],
     "conceptId": "sql-json-value-overlength-scalar-openjson-max-projection",
     "verificationStatus": "candidate",
     "verifiedAgainstSourceIds": [],
@@ -88,9 +82,7 @@
         "text": "WITH (sku nvarchar(20) '$.category')"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Map the SQL output column explicitly to '$.SKU'.",
     "deepExplanation": "OPENJSON's matching of JSON path steps and default WITH column names is case-sensitive and collation-unaware. Output alias spelling and property-path spelling are separate choices.",
     "whyOtherAnswersAreWrong": {
@@ -103,23 +95,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "sourceIds": ["dp800-d1-openjson"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
     ],
-    "documentationTitles": [
-      "OPENJSON (Transact-SQL)"
-    ],
+    "documentationTitles": ["OPENJSON (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "openjson",
-      "case-sensitive-path"
-    ],
+    "tags": ["sql-server-2022", "openjson", "case-sensitive-path"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"SKU\":\"R-84\",\"category\":\"spare\"}';\nSELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20));",
     "conceptId": "sql-openjson-case-sensitive-property-mapping-independent-collation",
@@ -151,9 +135,7 @@
         "text": "detail nvarchar(max) '$.detail.memo'"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Use nvarchar(max) with AS JSON for the nested object.",
     "deepExplanation": "The explicit schema distinguishes scalar extraction from fragment extraction. Increasing the text column length alone does not make a scalar projection return an object.",
     "whyOtherAnswersAreWrong": {
@@ -166,23 +148,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "sourceIds": ["dp800-d1-openjson"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
     ],
-    "documentationTitles": [
-      "OPENJSON (Transact-SQL)"
-    ],
+    "documentationTitles": ["OPENJSON (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "openjson",
-      "nested-json"
-    ],
+    "tags": ["sql-server-2022", "openjson", "nested-json"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"detail\":{\"items\":2,\"memo\":\"ship\"}}';\nSELECT detail FROM OPENJSON(@payload)\nWITH (/* column definition */);",
     "conceptId": "sql-openjson-as-json-nested-fragment-typed-projection",
@@ -214,9 +188,7 @@
         "text": "A7"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "The result is A7 from the literal top-level key billing.code.",
     "deepExplanation": "Brackets delimit the SQL column name; they do not turn its dot into a JSON path separator. An explicit '$.billing.code' column path would select the different nested value.",
     "whyOtherAnswersAreWrong": {
@@ -229,23 +201,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "sourceIds": ["dp800-d1-openjson"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
     ],
-    "documentationTitles": [
-      "OPENJSON (Transact-SQL)"
-    ],
+    "documentationTitles": ["OPENJSON (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "openjson",
-      "literal-json-key"
-    ],
+    "tags": ["sql-server-2022", "openjson", "literal-json-key"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"billing.code\":\"A7\",\"billing\":{\"code\":\"B2\"}}';\nSELECT [billing.code]\nFROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10));",
     "conceptId": "sql-openjson-dotted-column-name-literal-key-versus-nested-path",
@@ -277,9 +241,7 @@
         "text": "WHERE [type] = 0"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Filter the default-schema type column for 2.",
     "deepExplanation": "The value column is nvarchar(max), so its SQL type alone does not establish the original JSON token type. OPENJSON exposes the discriminator only with the default schema, not with a WITH projection.",
     "whyOtherAnswersAreWrong": {
@@ -292,23 +254,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "sourceIds": ["dp800-d1-openjson"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
     ],
-    "documentationTitles": [
-      "OPENJSON (Transact-SQL)"
-    ],
+    "documentationTitles": ["OPENJSON (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "openjson",
-      "json-token-types"
-    ],
+    "tags": ["sql-server-2022", "openjson", "json-token-types"],
     "codeLanguage": "sql",
     "codeSnippet": "SELECT [key], [value]\nFROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}')\n/* filter */;",
     "conceptId": "sql-openjson-default-type-discriminator-number-versus-numeric-string",
@@ -340,9 +294,7 @@
         "text": "JSON_VALUE(@detail, '$.units')"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Project JSON_QUERY(@detail) so FOR JSON embeds the existing object.",
     "deepExplanation": "The object is already valid JSON. The remaining issue is preserving its structural meaning across serialization, not removing escaping from arbitrary unvalidated text.",
     "whyOtherAnswersAreWrong": {
@@ -355,10 +307,7 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-json-query",
-      "dp800-d1-json-value"
-    ],
+    "sourceIds": ["dp800-d1-json-query", "dp800-d1-json-value"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-query-transact-sql",
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-value-transact-sql"
@@ -370,11 +319,7 @@
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json-fragment",
-      "serialization"
-    ],
+    "tags": ["sql-server-2022", "json-fragment", "serialization"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @detail nvarchar(max) = N'{\"code\":\"N8\",\"units\":3}';\nSELECT /* expression */ AS detail FOR JSON PATH;",
     "conceptId": "sql-json-query-marks-existing-fragment-for-for-json-output",
@@ -406,9 +351,7 @@
         "text": "JSON_MODIFY(@payload, '$.contact', N'')"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Use strict mode with SQL NULL on the existing contact path.",
     "deepExplanation": "Deletion, JSON null, the string \"null\", and an empty string are different document states. The path's known existence removes the separate strict-mode missing-property error case.",
     "whyOtherAnswersAreWrong": {
@@ -421,23 +364,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-json-modify"
-    ],
+    "sourceIds": ["dp800-d1-json-modify"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_MODIFY (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_MODIFY (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json-modify",
-      "null-versus-absence"
-    ],
+    "tags": ["sql-server-2022", "json-modify", "null-versus-absence"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"contact\":\"ops\",\"revision\":6}';",
     "conceptId": "sql-json-modify-strict-null-keeps-existing-key",
@@ -469,9 +404,7 @@
         "text": "An attempt property with the JSON string \"3\""
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "The new property value is the JSON string \"3\".",
     "deepExplanation": "A numeric-looking string is still a text-typed SQL argument. If the contract requires a JSON number, validate and convert the value to the intended numeric SQL type before passing it.",
     "whyOtherAnswersAreWrong": {
@@ -484,23 +417,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-json-modify"
-    ],
+    "sourceIds": ["dp800-d1-json-modify"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_MODIFY (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_MODIFY (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json-modify",
-      "sql-value-type"
-    ],
+    "tags": ["sql-server-2022", "json-modify", "sql-value-type"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @next nvarchar(10) = N'3';\nSELECT JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', @next);",
     "conceptId": "sql-json-modify-sql-input-type-determines-json-number-or-string",
@@ -532,9 +457,7 @@
         "text": "JSON_MODIFY(@payload, 'lax $.stages', NULL)"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Use the append modifier on the existing stages array.",
     "deepExplanation": "The input explicitly supplies an array. A normal property update replaces its value; append is the documented operation for extending that array.",
     "whyOtherAnswersAreWrong": {
@@ -547,23 +470,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-json-modify"
-    ],
+    "sourceIds": ["dp800-d1-json-modify"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_MODIFY (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_MODIFY (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json-array",
-      "append"
-    ],
+    "tags": ["sql-server-2022", "json-array", "append"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"stages\":[\"receive\",\"validate\"]}';",
     "conceptId": "sql-json-modify-append-preserves-existing-array-elements",
@@ -595,9 +510,7 @@
         "text": "JSON_OBJECT('code':@code, 'retry':@retry, 'comment':N'' ABSENT ON NULL)"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Specify ABSENT ON NULL.",
     "deepExplanation": "The null policy concerns SQL NULL values, not numeric zero or empty strings. JSON_OBJECT's default is explicit null inclusion; ABSENT ON NULL must be specified when omission is the intended contract.",
     "whyOtherAnswersAreWrong": {
@@ -610,23 +523,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-json-object"
-    ],
+    "sourceIds": ["dp800-d1-json-object"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-object-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_OBJECT (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_OBJECT (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "azure-sql-database",
-      "json-object",
-      "optional-properties"
-    ],
+    "tags": ["azure-sql-database", "json-object", "optional-properties"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @code nvarchar(10) = N'R9', @retry int = 0, @comment nvarchar(100) = NULL;\nSELECT /* constructor */;",
     "conceptId": "sql-json-object-absent-on-null-omits-only-null-valued-keys",
@@ -658,9 +563,7 @@
         "text": "JSON_ARRAYAGG(Label ORDER BY Position DESC ABSENT ON NULL)"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Order inside JSON_ARRAYAGG by Position and specify NULL ON NULL.",
     "deepExplanation": "The two clauses control different parts of the contract. ABSENT ON NULL is the aggregate's default, so preserving positional gaps must be explicit. The documented feature is GA for the stated Azure SQL Database scope; SQL Server 2025 availability is separately labeled Preview.",
     "whyOtherAnswersAreWrong": {
@@ -673,23 +576,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-json-arrayagg"
-    ],
+    "sourceIds": ["dp800-d1-json-arrayagg"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-arrayagg-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_ARRAYAGG (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_ARRAYAGG (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:03:09.711Z",
     "lastValidatedAt": "2026-09-15T06:03:09.711Z",
     "featureStatus": "GA",
-    "tags": [
-      "azure-sql-database",
-      "json-arrayagg",
-      "ordered-export"
-    ],
+    "tags": ["azure-sql-database", "json-arrayagg", "ordered-export"],
     "codeLanguage": "sql",
     "codeSnippet": "SELECT /* aggregate expression */\nFROM (VALUES (10, N'z'), (20, NULL), (30, N'a')) AS Input(Position, Label);",
     "conceptId": "azure-sql-json-arrayagg-aggregate-order-and-null-position-preservation",

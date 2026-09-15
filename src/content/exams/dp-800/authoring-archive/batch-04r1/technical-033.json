@@ -31,33 +31,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The declaration makes @detail an nvarchar(max) variable. Merely knowing that its characters form a valid object does not give the plain expression the JSON_QUERY fragment treatment documented for FOR JSON. Projecting @detail therefore fails the requirement for a nested detail object. Positive countercontext: retain this exact expression and input if the API deliberately requires detail to be a JSON string whose string contents are {\"code\":\"N8\",\"units\":3}, rather than an object with independently addressable code and units properties. The raw JSON_QUERY guidance distinguishes preformatted text from a recognized fragment. This assessment does not endorse the stem's unsupported wording that braces themselves are escaped.",
-        "sourceIds": [
-          "dp800-d1-json-query"
-        ]
+        "sourceIds": ["dp800-d1-json-query"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "JSON_VALUE follows $.code and returns the scalar text N8. It cannot preserve the units member or the surrounding object, so it does not satisfy this response contract. Positive countercontext: with the same @detail and SELECT placeholder, this exact expression is appropriate if the intended response is [{\"detail\":\"N8\"}], containing only the code as a string. The JSON_VALUE scalar contract and scalar-path examples support that narrower projection; it is a different requested result, not a second answer to the current question.",
-        "sourceIds": [
-          "dp800-d1-json-value"
-        ]
+        "sourceIds": ["dp800-d1-json-value"]
       },
       {
         "choiceId": "c",
         "assessment": "supported",
         "rationale": "The omitted path defaults to $, so JSON_QUERY(@detail) selects the entire known-valid root object. Its recognized JSON-fragment return is then embedded by FOR JSON PATH under the detail alias. The documentation-derived shape is [{\"detail\":{\"code\":\"N8\",\"units\":3}}]. Both the object members and their JSON value types remain within that fragment. This is the unique supported expression for the stated structural requirement. The option's correctness does not resolve the separate unsupported brace-escaping phrase in the authored stem.",
-        "sourceIds": [
-          "dp800-d1-json-query"
-        ]
+        "sourceIds": ["dp800-d1-json-query"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "JSON_VALUE at $.units extracts only the numeric property's scalar text representation, N'3', under SQL Server 2022's non-RETURNING contract. It does not return the complete detail object or preserve code. Positive countercontext: the exact expression is appropriate when the same SELECT must return only the units scalar as text under the detail alias, with the shape [{\"detail\":\"3\"}]. A contract requiring an actual JSON numeric scalar would require an additional numeric conversion, which is not present in this option. The source's scalar return contract supports the text-only countercontext.",
-        "sourceIds": [
-          "dp800-d1-json-value"
-        ]
+        "sourceIds": ["dp800-d1-json-value"]
       }
     ],
     "checks": {

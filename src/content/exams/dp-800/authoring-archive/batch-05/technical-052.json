@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "chunk_set_id supplies the requested source group, but chunk_offset is the source character position, not the one-based ordinal incremented once per chunk. The exact Return types table gives those fields different meanings, and the multi-row example distinguishes chunk_order from offsets. A valid literal positive countercontext retains the displayed ENABLE_CHUNK_SET_ID=1 query and changes the diagnostic requirement to source grouping plus the starting position of each chunk in its document. The unchanged pair chunk_set_id and chunk_offset then supplies precisely those two metadata values. That requirement is explicitly not the candidate's ordinal requirement.",
-        "sourceIds": [
-          "dp800-d3-generate-chunks"
-        ]
+        "sourceIds": ["dp800-d3-generate-chunks"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "chunk_length is an int character count of the returned chunk, not its ordinal. Full-sized rows can share the same length while their order numbers differ, so a length does not identify the requested place in the per-source sequence. A valid literal positive countercontext is a diagnostic using the same enabled grouping column to report which source each chunk belongs to and how many characters that returned chunk contains. The unchanged chunk_set_id and chunk_length pair is then correct. Neither that alternate task nor the documented length contract converts length into chunk_order for this stem.",
-        "sourceIds": [
-          "dp800-d3-generate-chunks"
-        ]
+        "sourceIds": ["dp800-d3-generate-chunks"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "chunk_order and chunk_offset describe within-source ordinal and source position, respectively; neither is the optional source-group label. The multi-row remarks explicitly reset both values for a new source, so the pair cannot be relabeled as grouping metadata for the candidate's multiple documents. A valid literal positive countercontext is inspecting a single already-known document and needing its chunk ordinal together with the source starting position. The unchanged pair then answers that different diagnostic task without needing a generated group label. This does not assume that the two fields are globally unique or physically sort the SELECT result.",
-        "sourceIds": [
-          "dp800-d3-generate-chunks"
-        ]
+        "sourceIds": ["dp800-d3-generate-chunks"]
       },
       {
         "choiceId": "d",
         "assessment": "supported",
         "rationale": "The code explicitly sets ENABLE_CHUNK_SET_ID=1, making chunk_set_id available to c.*. Its documented role is to group chunks of the same source; chunk_order is the bigint sequence starting at 1 and incrementing by 1 within that source. The remarks and multi-row example show new source groups and reset ordinals, which directly matches the two requested values. Literal confirming context is the stated multiple-document CROSS APPLY diagnostic with grouping enabled and character source text. If the flag were omitted or 0, this same projected group-column requirement would not be satisfied because chunk_set_id would not be returned; the frozen code rules out that countercase. No durable ID or display-order guarantee is required.",
-        "sourceIds": [
-          "dp800-d3-generate-chunks"
-        ]
+        "sourceIds": ["dp800-d3-generate-chunks"]
       }
     ],
     "checks": {

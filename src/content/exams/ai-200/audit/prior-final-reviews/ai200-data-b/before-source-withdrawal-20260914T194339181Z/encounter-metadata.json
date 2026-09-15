@@ -1,0 +1,1244 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "ai200-d-023": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "d99bb02036604408a0e9941f506cffc9133d2a23a597c878597cb7ad107f9003",
+      "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+      "retrievedAt": "2026-09-14T18:04:13.737Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "C",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "This is not incorrect: ranking the same eligible vectors without an ANN access path provides the exhaustive reference requested. Countercontext: Use it when exhaustive recall is required and slower full distance evaluation is acceptable, precisely the baseline conditions here. Evidence: Indexing explicitly says absence of indexes gives exact search with perfect recall at a performance cost."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "It is not safely refuted without knowing lists. For multiple lists it omits other lists, but the stem leaves the documented all-lists special case open. Countercontext: When the index has a single list, probes=1 equals lists; the article says this becomes exact and the planner does not use the index. This exposes, rather than repairs, the authored ambiguity. Evidence: IVFFlat explicitly defines exact search when probes equals lists and one-probe search as selecting one list."
+        },
+        {
+          "choiceId": "B",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "Graph traversal is documented as approximate; default search settings supply no exhaustive ranking guarantee. Countercontext: HNSW itself is documented for latency-sensitive approximate retrieval. No sourced context makes its default setting a guaranteed exact algorithm, so this complete assertion fails the strict countercontext requirement. Evidence: Indexing and HNSW sections trade recall for performance and expose ef_search as a candidate-list control."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: manual-review-required. Original independently written option-review findings (historical pending-audit wording is superseded below): The exact-search key is sensible, but the saved explanation makes one probe universally nonexhaustive. The cited product article supplies the counterexample: lists=1 and probes=1 searches all lists, with the planner not using the index. No list count is given. HNSW's 'guaranteed exact' wording is also an unsupported absolute rather than a sound alternate-context choice. Preserve the technical manual hold; a changed distractor or list count requires all three fresh passes. Completed cross-bank consideration: I accept SEM-021 after reading d-010, d-023 and d-044 actual stems, choices and explanations. Each requires exhaustive rather than approximate baseline search; changing the engine does not create a new discriminator. d-010 adds the quantizedFlat distinction. d-023 is withheld for semantic duplication in addition to the existing one-probe ambiguity and overstated architecture label. I make no approval of d-010. Follow-up after reading the serialized semantic decisions and actual compared questions: Both keys are selected by the demand for exhaustive rather than approximate baseline retrieval. d-023 supplies no actual PostgreSQL plan, list count or index-control problem that would demand a separate decision. d-010 adds the compressed-versus-original-vector distinction. The d-023 final status remains manual-review-required to preserve its independent technical ambiguity hold; this is not disagreement with duplicate withholding, and the record remains explicitly ineligible for promotion. Complexity and difficulty: Authored complexity architecture-design: overstated. Choosing exhaustive rather than approximate search is one algorithm-definition lookup. The baseline story adds no architectural dependency or competing design; the missing IVFFlat list count is a defect, not depth. Separate difficulty assessment (intermediate): The nominal baseline application could be intermediate, but this choice is closer to conceptual recognition and its ambiguity prevents a sound challenge. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: The team/baseline pronouns are identifiable; the real ambiguity is the unstated IVFFlat list count, not a pronoun. Semantic duplication and architecture-label inflation remain blocking. Originality drops to 1 after the accepted exact-baseline semantic duplicate; difficulty drops to 2 because the choice is mostly algorithm recognition, independently of its architectural-label defect. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 2,
+          "scenarioCompleteness": 2,
+          "answerUniqueness": 2,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 2,
+          "originality": 1,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-024": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "aa78260c08a0bf40070d021fd797de95381e0ca55ee7ae7e50c57020d7cc2854",
+      "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+      "retrievedAt": "2026-09-14T18:04:13.737Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "It is not incorrect: empty-table construction is explicitly supported and the stem accepts its build time and memory cost. Countercontext: An initially empty corpus needing an ANN index before representative samples is the documented HNSW context. Evidence: The HNSW section names no training step, empty-table creation and the build-resource tradeoff."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "Its k-means training is the very prerequisite absent from the empty-table scenario. Countercontext: IVFFlat can be chosen after representative data exists for faster/lower-memory construction. That supports the method, not this option's claim of training independence; no sourced context validates the complete sentence. Evidence: The IVFFlat clustering phases and HNSW comparison explicitly distinguish their training requirements."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "No-index searching does not establish the required ANN index, and HNSW contradicts the asserted exclusivity. Countercontext: Unindexed exact search is appropriate for perfect-recall work accepting its cost. No sourced condition makes it the only empty-table-capable approach while HNSW remains supported. Evidence: Indexing supports exact search without indexes; the HNSW paragraph independently permits an empty table."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): HNSW is the supported answer, but neither rival survives the mandated sourced countercontext test as written. A falsely denies IVFFlat's training dependence and C falsely says exact search is the only empty-table option. The longest answer uniquely supplies a valid causal explanation. This is a recipe-recognition item mislabeled advanced, not a difficult comparison of viable tradeoffs. Reject the unchanged strict candidate rather than invent favorable contexts for false premises. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity architecture-design: overstated. An empty table plus no training selects the sole named no-training algorithm. Resource costs are explicitly accepted rather than traded off; no architecture must be derived. Separate difficulty assessment (advanced): Advanced is overstated independently of the architecture label: two absolute false premises leave a direct HNSW fact lookup. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: The team and its accepted resource costs have clear antecedents. The apparent scope clarity does not cure false training/exclusivity alternatives or the inflated design/difficulty labels. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-025": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "edb3cb5e5fdcf1e041db60f37ecf943f5b5c6a575fe93323143dcf091de173d7",
+      "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+      "retrievedAt": "2026-09-14T18:04:13.737Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "This is not incorrect: <=> expresses cosine distance and matches the existing vector_cosine_ops index. Countercontext: It is the documented pair when the application requires cosine distance, as explicitly retained after the regression. Evidence: Selecting the index access function pairs cosine_ops with <=> and shows a compatible index scan."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "More probes cannot turn <-> into cosine distance or make it match a cosine index. Countercontext: Raising probes is a documented recall-versus-latency adjustment when the intended metric and index already match, for example an L2 query with a suitable L2 IVFFlat index. Those conditions differ from this cosine requirement. Evidence: The IVFFlat probes section changes list coverage; the L2 section fixes <-> semantics independently of probes."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "This repairs an operator pairing but changes the requested cosine semantics, so it does not solve this application requirement. Countercontext: It is correct for an application intentionally seeking Euclidean distance with <->, using vector_l2_ops. Evidence: The L2 access-function section documents exactly this class/operator pair, distinct from cosine."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: verified. Original independently written option-review findings (historical pending-audit wording is superseded below): The required cosine metric excludes a technically valid L2 rebuild. Increasing probes addresses search depth, not the metric mismatch. I accept the three distinct decision contexts while withholding final duplicate clearance. The scenario earns applied rather than expert difficulty credit; matching a metric to an operator remains partly recall. No guarantee of planner index selection is implied. Completed cross-bank consideration: I accept the audit's d-025/d-031 keep-distinct finding after comparing both actual queries and choices: cosine operator/operator-class compatibility differs from maximum-distance eligibility. I also inspected related candidate/reference records; no new same-decision overlap was established. This is bounded originality clearance, not proof that no conceivable duplicate exists. Follow-up after reading the serialized semantic decisions and actual compared questions: d-025 must preserve cosine meaning while restoring the actual operator/index pairing, excluding both a recall-only knob and a valid L2 rebuild. d-031 must implement absolute eligibility separately from a count cap. The complete alternatives confirm different decisions. d-025 remains verified with independently supported troubleshooting complexity; d-031 retains its separate countercontext hold. Complexity and difficulty: Authored complexity troubleshooting: supported. The solver must connect the observed operator regression to the stored operator class, reject a recall-knob change that cannot fix meaning, and reject an index-compatible L2 rebuild because cosine semantics must survive. Those are two distinct correctness constraints, not just code-shaped text. Separate difficulty assessment (advanced): Advanced is at the lower boundary, scored 3: the actual regression repair requires semantic preservation and index compatibility, although the symbols themselves are documented facts. Classification defensible; all other quality gates still apply. Lexical warning review: The negative wording explicitly preserves cosine rather than Euclidean semantics; it is not a hidden choose-the-false-option task. The requirement that the application still needs cosine is a scoped input, not a universal mathematical assertion. Alternatives use comparable action grammar and do not give A a length cue. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 3,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-026": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "401a312522bae20819f45abd6d88f881a69f4bccc60f401da01d4c726bba8b83",
+      "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+      "retrievedAt": "2026-09-14T18:04:13.737Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "This is not incorrect: the staging query is acceptably fast, and actual plan/buffer detail is the missing evidence. Countercontext: Use this diagnostic when executing the bounded query is acceptable and actual execution rather than estimates is required. Evidence: The first Performance example is EXPLAIN (ANALYZE, VERBOSE, BUFFERS)."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "Without ANALYZE it cannot supply the observed timing and execution behavior requested. Countercontext: The article recommends dropping ANALYZE when executing a query would take too long. That makes estimated-plan inspection useful, never makes estimates actual measurements as this option states. Evidence: Performance explicitly contrasts the measured command with the faster, less-detailed non-ANALYZE alternative."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
+          "summary": "A definition cannot reveal which access path this execution selected or how much work occurred. Countercontext: A definition can identify a proposed index, but the cited article supplies no context where its existence alone proves actual use. I do not invent such a context. Evidence: Performance asks whether an index was used in the query plan, not merely whether an index exists."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): Measured EXPLAIN is correct, but A explicitly treats estimates as measurements and C equates index existence with observed use. Neither complete assertion has a sourced correct-elsewhere context. Their obvious evidentiary errors make this weaker than an applied diagnostic choice. Reject strict distractor quality without changing the accurate query command. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity troubleshooting: overstated. The stem supplies no actual plan to interpret and already says exactly which measurements are missing. Identifying EXPLAIN ANALYZE BUFFERS is diagnostic-tool recall, not diagnosis of a workload failure. Separate difficulty assessment (intermediate): Intermediate is generous: the alternatives openly confuse estimates or index existence with measurements. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: The query/team antecedents are clear and the question asks positively for a diagnostic. Its negative knowledge condition is legitimate; the invalid estimated-as-actual and existence-as-use claims still block the choices. Difficulty drops from the provisional 3 to 2: selecting the already-requested measurements is tool recall with no plan evidence to interpret. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-027": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "78155dba6360a12cf35ace0c9a2589712fc573fb50c406d0da8878c33697a6bf",
+      "sourceIds": [
+        "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-2-tune-postgresql-pgvector",
+        "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-5-scale-high-volume-workloads"
+      ],
+      "retrievedAt": "2026-09-14T17:57:15.086Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-2-tune-postgresql-pgvector",
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-5-scale-high-volume-workloads"
+          ],
+          "summary": "This is not incorrect: low CPU and repeated hot-index storage reads are consistent with cache pressure, and this proposal measures the relevant resources. Countercontext: When the hot working set exceeds cache, evaluating physical capacity and shared_buffers is the documented memory-oriented investigation. Evidence: The tuning unit defines page cache and estimate roles; scaling connects extra memory to keeping HNSW indexes cached."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-2-tune-postgresql-pgvector"
+          ],
+          "summary": "The proposal changes planner expectations, not physical memory, so it leaves the oversized hot working set unresolved. Countercontext: Changing effective_cache_size can correctly inform planner estimates of existing caches. No documented condition makes this setting allocate the named amount, so the full option has no valid countercontext. Evidence: Memory configuration explicitly says effective_cache_size does not allocate memory."
+        },
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-2-tune-postgresql-pgvector"
+          ],
+          "summary": "It budgets individual sort/hash operations, not shared cached pages, and a global increase can multiply concurrent memory demand. Countercontext: Larger work_mem can help a sufficiently budgeted sort or hash operation. That does not validate the option's persistent-shared-cache definition under any sourced conditions. Evidence: Memory configuration separates per-operation work_mem from shared_buffers and warns about concurrent multiplication."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): C correctly separates planner estimation from real memory. However A and B invent allocation/cache roles their settings never have. Raising work_mem for a sort is a valid different action, but the complete option calls it a persistent shared page cache. I cannot produce a genuine sourced correct context for either false definition. The longer qualified key and two definition errors undermine the advanced label. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity troubleshooting: supported. Low CPU, repeated hot-page reads and an oversized working set must be separated from planner estimates and per-operation memory. That evidence-to-resource distinction is applied diagnosis, even though the invalid distractor definitions separately fail quality. Separate difficulty assessment (advanced): The documented cache/estimate definitions and implausible alternatives make the advanced label weak; complexity support does not rescue the difficulty or distractors. Classification defensible; all other quality gates still apply. Lexical warning review: Its working set refers to the vector workload and its value to effective_cache_size. There is no material pronoun ambiguity; the two false memory definitions and difficulty/choice cues are separate defects. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-028": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "5fb579cdb9d7162fb90cb38ebac883920be4d0b057ea077f4bfca35bc71fac21",
+      "sourceIds": [
+        "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-5-scale-high-volume-workloads"
+      ],
+      "retrievedAt": "2026-09-14T17:57:15.086Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-5-scale-high-volume-workloads"
+          ],
+          "summary": "This is not incorrect: replicas absorb tolerant reads while the primary observes its own committed write for confirmation. Countercontext: The documented combination is a read-heavy service tolerating recommendation lag but requiring immediate preference visibility, exactly this case. Evidence: Read replicas for query distribution explicitly uses these two workloads to distinguish routing."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-5-scale-high-volume-workloads"
+          ],
+          "summary": "The just-committed preference might not yet be applied on the chosen replica, violating immediate confirmation. Countercontext: Replica routing is correct for read-only requests whose consumers accept replication lag, such as the recommendation workload alone. Evidence: The unit says asynchronously applied changes can lag and directs immediate preference reads to primary."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-5-scale-high-volume-workloads"
+          ],
+          "summary": "The documented replicas serve reads only; they are not alternate write endpoints in this architecture. Countercontext: No sourced context supports writing to a server while it remains a read replica. A promotion would create a different role and is neither stated nor cited here. Evidence: The replica section assigns both reads and writes to primary, but read queries only to replicas."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): The routing key is technically sound, and B has a legitimate tolerant-read countercontext. C proposes writes to read-only replicas; the cited unit provides no supported context where that operation is correct. Promoting a replica is not offered or sourced, and would change its role. Reject the current strict alternative set rather than silently substituting a failover scenario. Completed cross-bank consideration: I accept d-008/d-028 keep-distinct after reading both: forwarding a Cosmos partition session token between stateless clients is not routing immediate PostgreSQL reads to primary while distributing tolerant reads to asynchronous replicas. This distinction does not cure d-028's invalid replica-write distractor. Follow-up after reading the serialized semantic decisions and actual compared questions: The former must transport a partition-specific write barrier between stateless clients. The latter must separate tolerant reads from immediate confirmations across primary and asynchronous replica endpoints. The mechanisms and actions differ. This distinction does not rehabilitate d-028's unsupported proposal to write to read replicas. Complexity and difficulty: Authored complexity architecture-design: supported. Two endpoints have incompatible freshness tolerances, requiring an intentional primary/replica routing split. This is an architectural responsibility assignment rather than merely naming a consistency feature. Separate difficulty assessment (advanced): The split is a modest architectural decision and C is an obvious role violation; this does not demonstrate expert depth or strong advanced discrimination. Classification defensible; all other quality gates still apply. Lexical warning review: Immediate visibility is an explicit confirmation-endpoint requirement, not a global service promise. C's replica-write assertion is genuinely unsupported and remains rejected. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-029": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "ce806690dd50fca4c416d50117a553cc4bd18c098831f59ef266a245faaa8dbc",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-4-manage-index-lifecycle-embedding-updates"
+      ],
+      "retrievedAt": "2026-09-14T17:57:01.595Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-4-manage-index-lifecycle-embedding-updates"
+          ],
+          "summary": "This is not incorrect: it includes the exact index and retained-version consumers omitted from the original estimate. Countercontext: It is appropriate for growing, update-heavy embedding tables whose actual storage includes both indexes and row-version cleanup delays. Evidence: The unit recommends measuring current sizes for projection and explains why frequent vector updates accumulate dead tuples."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-4-manage-index-lifecycle-embedding-updates"
+          ],
+          "summary": "The workload explicitly builds indexes, which the source measures separately from table data. Countercontext: A raw-vector estimate is useful for the vector-column component alone. The claim that a built index adds no space has no support in the cited lifecycle article. Evidence: Manage storage and cleanup shows pg_relation_size, pg_indexes_size and pg_total_relation_size as distinct measurements."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-4-manage-index-lifecycle-embedding-updates"
+          ],
+          "summary": "MVCC keeps old versions until no transaction needs them and does not reclaim update space immediately. Countercontext: Sizing a compacted steady-state dataset is a different planning exercise; the source provides no condition making every overwrite immediately erase its old row version. Evidence: Reclaim space after updates explicitly describes delayed MVCC reclamation and vacuum maintenance."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): B correctly budgets index and MVCC overhead. A denies all additional index storage and C assumes immediate disappearance of old versions; neither full assertion is supported in a different documented context. The measured, qualified key is substantially longer than those false absolutes. This fails the required strict distractor evidence despite a sound storage lesson. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity architecture-design: overstated. Adding index bytes and MVCC headroom to a component estimate is storage-fact recognition. No capacity values, growth model, deployment alternatives or design tradeoff must be resolved. Separate difficulty assessment (intermediate): Intermediate component budgeting is only weakly supported because the distractors deny basic storage consumers. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: Only/no-additional-space and immediate-overwrite claims in A/C are unsupported absolutes, not warnings to waive because B is right. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-030": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "ebdeb238f1f7e1bddde376b1e08738fbe78b33171517d1513024439d4b2688f9",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-5-run-vector-similarity-search-semantic-retrieval"
+      ],
+      "retrievedAt": "2026-09-14T17:57:04.836Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-5-run-vector-similarity-search-semantic-retrieval"
+          ],
+          "summary": "This is not incorrect: the plan ranks only 60 eligible rows and already satisfies the stated latency target. Countercontext: With a highly selective filter, scanning and sorting matching rows can cost less than vector-index traversal; verify the actual plan rather than impose HNSW. Evidence: The filter section explicitly says neither path is inherently wrong and recommends EXPLAIN ANALYZE."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-5-run-vector-similarity-search-semantic-retrieval"
+          ],
+          "summary": "The observed selective metadata scan is expressly permitted and already meets latency and eligibility requirements. Countercontext: A vector-index path can dominate for low-selectivity filters over many rows. The source never makes HNSW use a correctness requirement for every nearest-neighbor query. Evidence: Combine vector search with metadata filters says either vector access or scanning a selective subset can be appropriate."
+        },
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-5-run-vector-similarity-search-semantic-retrieval"
+          ],
+          "summary": "Changing eligible documents sacrifices the request's scope merely to influence an access path. Countercontext: Searching the entire corpus without metadata restrictions is a documented vector-query pattern when no tenant restriction is required. That is not this request and still does not guarantee HNSW selection. Evidence: The unit contrasts whole-corpus similarity and metadata-constrained retrieval, with the planner considering selectivity."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): C is carefully scoped to an observed selective plan and avoids claiming all ANN queries prefilter. A nevertheless calls every non-HNSW plan incorrect, which has no defensible documented context. B removes an explicit tenant requirement rather than offering a competing cost strategy. Reject strict distractor quality; do not repair an otherwise accurate measured-plan explanation. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity troubleshooting: supported. The given selective metadata plan, current statistics and successful latency are evidence the solver must evaluate against the mistaken demand for HNSW. Correct eligible results and actual plan cost matter jointly; a supplied plan can still require applied interpretation. Separate difficulty assessment (advanced): The applied classification is defensible, but 'every query must use HNSW' and deleting tenant scope weaken the advanced difficulty independently. Classification defensible; all other quality gates still apply. Lexical warning review: The colleague's complaint and the observed plan have clear references. The 'not used' negative is the actual misconception, but A's universal HNSW demand and B's removed tenant scope remain defective choices. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-031": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "3aba823878820c12bdf25aee146030d21a14b1bd1f0f6fe0659c057edaaea532",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-5-run-vector-similarity-search-semantic-retrieval"
+      ],
+      "retrievedAt": "2026-09-14T17:57:04.836Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-5-run-vector-similarity-search-semantic-retrieval"
+          ],
+          "summary": "This is not incorrect: weak matches become ineligible while LIMIT still caps acceptable rows and allows an empty result. Countercontext: Use it when a corpus-specific evaluation has established a quality threshold and returning no weak evidence is preferable. Evidence: Implement distance thresholds combines WHERE distance below a threshold, ascending distance and LIMIT."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-5-run-vector-similarity-search-semantic-retrieval"
+          ],
+          "summary": "The nearest one can still be irrelevant, so the evaluation's maximum distance is not encoded. Countercontext: A count-only top-k query is documented when selecting the nearest N regardless of their absolute distance is acceptable. Evidence: The threshold section explicitly says LIMIT alone returns the nearest N regardless of actual similarity."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-5-run-vector-similarity-search-semantic-retrieval"
+          ],
+          "summary": "Larger distances are prioritized and no eligibility threshold is added, failing the stated nearest-relevant retrieval rule. Countercontext: Farthest-distance inspection is a conceivable mathematical task, but the cited source does not document it. Its hybrid_score DESC example is a different score and cannot validate this exact option. Evidence: The sourced maximum-distance example orders cosine distance ascending; hybrid DESC is explicitly a weighted similarity score."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: manual-review-required. Original independently written option-review findings (historical pending-audit wording is superseded below): A accurately separates quality eligibility from top-k count. B has a sourced count-only context. C's descending cosine-distance operation could mathematically inspect farthest rows, but the cited unit does not document that workflow; its DESC example ranks a hybrid similarity score, not cosine distance. I will not cite that different score as proof of this distractor's correct-elsewhere behavior. Hold for a sourced viable alternative; no authored edit is made. Completed cross-bank consideration: The audit's d-025/d-031 distinction is sound: d-031 adds an absolute relevance predicate while d-025 restores metric/index pairing. Reading the complete choices confirms separate semantics. d-031 still lacks a sourced correct-elsewhere context for descending cosine-distance retrieval. Follow-up after reading the serialized semantic decisions and actual compared questions: d-025 must preserve cosine meaning while restoring the actual operator/index pairing, excluding both a recall-only knob and a valid L2 rebuild. d-031 must implement absolute eligibility separately from a count cap. The complete alternatives confirm different decisions. d-025 remains verified with independently supported troubleshooting complexity; d-031 retains its separate countercontext hold. Complexity and difficulty: Authored complexity technical-implementation: supported. The query change must encode both relevance eligibility and an unchanged result cap while preserving ascending distance. That translates an evaluated requirement into distinct predicate/order/limit semantics without requiring an executable snippet. Separate difficulty assessment (intermediate): Intermediate query-semantics application is appropriate, although the unsupported descending-distance countercontext keeps the record excluded. Classification defensible; all other quality gates still apply. Lexical warning review: The retriever, corpus and evaluated maximum distance are clear. No pronoun introduces a second correct answer; C's unsourced favorable context remains the hold. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-032": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "53581cf5e9f9340724b41e0a3fbb1ff666b5bb54c2bdcb0fc15d825a12885b9a",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+      ],
+      "retrievedAt": "2026-09-14T17:57:07.032Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+          ],
+          "summary": "This is not incorrect: document_id relates each section to its manual, position locates neighbors and the source table stores metadata once. Countercontext: Use this design when independently ranked chunks need source citations and reconstruction of surrounding document context. Evidence: Separate documents and chunks provides the two tables and lists source tracking, reconstruction and nonduplicated metadata as benefits."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+          ],
+          "summary": "This cannot address individual sections or adjacent-section retrieval and does not match the long-manual access pattern. Countercontext: Whole-document retrieval is contrasted with chunk retrieval in the unit; it is a sensible baseline when the document itself is the desired indivisible retrieval unit and adjacent sections are not needed. Evidence: Design schemas for RAG explains why long-document chunking permits independent focused retrieval."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+          ],
+          "summary": "It discards the relation and ordering needed for neighbor retrieval and violates the single-location metadata requirement. Countercontext: Self-contained chunk retrieval is documented, but that does not justify deliberately removing document identity and duplicating all metadata. No complete supported alternate design for this option is established by this source. Evidence: The unit's source tracking and context-window queries require document_id and chunk_index; metadata efficiency comes from the source table."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): The normalized document/chunk design is accurate. Whole-document storage is a documented baseline elsewhere in the unit's architectural discussion, but C deliberately discards document identity and order while duplicating metadata. No cited use case makes that complete design a correct choice for the represented document retrieval problem. The key nearly lists the stem's requirements field by field. Reject the strict distractor set rather than pretend random unrelated chunks are a supported schema. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity architecture-design: supported. The access patterns require separate source metadata, independent embedded chunks and within-document order for neighbor access. Mapping those three requirements onto related tables is a real, if routine, schema-design decision. Separate difficulty assessment (intermediate): Intermediate is reasonable for the schema mapping; obvious destructive alternatives and copied requirement lists independently fail strict quality. Classification defensible; all other quality gates still apply. Lexical warning review: The service/manual metadata references are clear. C's discarded identity and A's missing positions conflict with the explicit access patterns, and the absolute/missing-field clues undermine plausible alternatives. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-033": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "31d5a39d0877a25e9c0c4abc163ce0ff007587ab3e72e16d3e49664607c093ff",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+      ],
+      "retrievedAt": "2026-09-14T17:57:07.032Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+          ],
+          "summary": "This is not incorrect: the database already has the locator and section/page data, and retrieval must expose it to the composer. Countercontext: It is the documented pattern when users need to verify a generated statement against its original supporting passage. Evidence: The citation section expressly returns title, URL or document ID, section heading and page when available."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+          ],
+          "summary": "Extra decimals do not identify a document or page and cannot supply the missing locator. Countercontext: The source discusses distance display as an ancillary cue alongside citations, but does not document extra decimal precision as a useful standalone remedy. That narrower display observation cannot fully ground this exact alternative. Evidence: Implement retrieval with citations calls for title, locator and passage metadata and separately mentions distance scores."
+        },
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-6-implement-retrieval-patterns-rag-pipelines"
+          ],
+          "summary": "A title names a source but omits the stored information needed to find this supporting passage. Countercontext: A title can label a retrieved document in a compact display where followable passage citations are not required; the unit includes document titles as ordinary retrieval metadata. Evidence: The source-document schema stores title, and the citation section adds URL or identity plus available section/page."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: manual-review-required. Original independently written option-review findings (historical pending-audit wording is superseded below): The provenance projection is correct and beginner difficulty is honest. The cited citation section supports displaying distance as an ancillary signal, but it does not document increasing decimal places as a meaningful alternative; title-only display is also deliberately incomplete for passage location. A sourced diagnostic context for extra precision is absent. Hold for strict distractor improvement rather than manufacture a score-precision workflow. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity scenario-based: overstated. The exact stored title, URL, section and page are already listed and must simply be selected as citation metadata. No source-tracing failure, projection ambiguity or conflicting retrieval requirement must be reasoned through. Separate difficulty assessment (beginner): Beginner is honestly labeled; that does not turn field-name recognition into applied scenario complexity. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: No lexical quality warning was reported; the independently analyzed answer/complexity constraints still apply. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-034": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "8dd2f7f3e305e1d3013ebcd98cc5e0e3b47acbb10b30cc794aefab3d3bd70e8d",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-4-manage-index-lifecycle-embedding-updates",
+        "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-2-store-query-embeddings-pgvector"
+      ],
+      "retrievedAt": "2026-09-14T17:57:01.595Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-4-manage-index-lifecycle-embedding-updates",
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-2-store-query-embeddings-pgvector"
+          ],
+          "summary": "This is not incorrect: the old serving path stays model-consistent while the new path is independently backfilled and tested. Countercontext: Use a parallel column strategy when model-space migration must coexist with serving traffic and an old-model rollback path. Evidence: Handle embedding model changes explicitly uses parallel columns, backfill, comparison, cutover and eventual old-column retirement; vector(n) supplies only dimension compatibility."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-4-manage-index-lifecycle-embedding-updates"
+          ],
+          "summary": "Rows already replaced would be ranked against a different model's query space while other rows still use the old space. Countercontext: In-place content/embedding updates are documented when using the same model; this is a different operation. No sourced context validates live cross-model mixed ranking as the option proposes. Evidence: The migration section warns of inconsistent results during replacement and distinguishes semantic relationships between models."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-4-manage-index-lifecycle-embedding-updates",
+            "ai200-20260914-unit-implement-vector-search-azure-database-postgresql-2-store-query-embeddings-pgvector"
+          ],
+          "summary": "No matching new-model search path exists, so equal length alone does not make the comparison semantically valid. Countercontext: Switching queries is documented after the new column has been populated and validated. Keeping all old stored vectors instead is not a supported countercontext for that switch. Evidence: The migration sequence switches to the new column after backfill; storage dimensions do not certify model-space equivalence."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: manual-review-required. Original independently written option-review findings (historical pending-audit wording is superseded below): Keep the technical manual hold. Equal 768 dimensions do not make distinct model spaces comparable; A preserves a parallel model-consistent path and rollback. But A restates the source's migration recipe, while B and C deliberately compare mismatched model spaces. Their claimed operating contexts cannot be made correct without removing the stated live-serving conditions. The overwhelmingly longest key and Expert label are not defensible. Any relabeling or rewrite restarts all passes. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity architecture-design: overstated. All feasibility conditions are supplied and both rivals deliberately mismatch model spaces. The key recites the source's full parallel-column recipe; the candidate does not require resolving competing viable rollout designs, live-update hazards or rollback uncertainty. Separate difficulty assessment (expert): Expert remains untenable and technically held from pass 2. Equal dimensions and the detailed rollout story do not create expert reasoning. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: No lexical quality warning was reported; the independently analyzed answer/complexity constraints still apply. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 2
+        }
+      }
+    },
+    "ai200-d-035": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "720e5fe762ac9431a4b54d1ca6bfe0fdf42e1b209cae4a10cfd8693d29f2c82d",
+      "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
+      "retrievedAt": "2026-09-14T18:04:15.346Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
+          "summary": "This is not incorrect: the server is already General Purpose, enabled and compatibility-tested, so the remaining endpoint change is the port. Countercontext: It is the documented application switch from a direct connection to built-in PgBouncer on a supported server. Evidence: The introductory endpoint description and Switching section both name the same hostname and port 6432."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
+          "summary": "The article explicitly requires changing the application port to 6432; enabling the feature does not select that endpoint for a 5432 client. Countercontext: Port 5432 remains correct when direct PostgreSQL connectivity is intended. There is no cited condition in which enabling the pooler makes this direct endpoint its automatic redirect. Evidence: Switching your application to use PgBouncer says to replace regular 5432 with 6432 while retaining the hostname."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
+          "summary": "The product limitations expressly remove built-in PgBouncer capability when moving to Burstable. Countercontext: No documented context provides built-in PgBouncer on Burstable. A self-managed alternative would change the proposed product and endpoint, and is not this option. Evidence: Limitations excludes Burstable and describes losing the capability when changing from a supported tier."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): B correctly uses the same FQDN on 6432 with the stipulated supported, enabled server. The source contradicts A's implicit redirection and C's claimed built-in pooler on Burstable in every documented context. A direct connection on 5432 is valid only after discarding A's redirection premise; a different tier workload does not make Burstable's nonexistent pooler real. Reject these complete strict alternatives, not the accurate endpoint fact. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity technical-implementation: overstated. Enabled state, supported tier and compatibility testing are all pre-resolved. The only remaining operation is recalling 6432 instead of 5432; no actual implementation or configuration conflict must be solved. Separate difficulty assessment (intermediate): This is effectively foundational endpoint recall despite the intermediate label. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: No lexical quality warning was reported; the independently analyzed answer/complexity constraints still apply. Difficulty drops from provisional 3 to 2: all prerequisites are resolved and only the port number remains. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-036": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "410dc9790d6e65c2b6fdc8819370e1421a782dece05b3c8a761712b6df84c6c6",
+      "sourceIds": [
+        "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-6-connection-optimization",
+        "ai200-20260914-doc-postgres-pgvector"
+      ],
+      "retrievedAt": "2026-09-14T18:04:13.737Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-doc-postgres-pgvector",
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-6-connection-optimization"
+          ],
+          "summary": "This is not incorrect: the transaction owns a backend while running its local setting and query, then ends the setting at commit. Countercontext: Use it for a query-specific recall setting in transaction pooling when subsequent unrelated requests must retain defaults. Evidence: The IVFFlat example shows BEGIN, SET LOCAL ivfflat.probes, search and COMMIT, followed by default probes outside that transaction."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-6-connection-optimization",
+            "ai200-20260914-doc-postgres-pgvector"
+          ],
+          "summary": "Transaction pooling can assign later transactions to another backend, so client lifetime does not guarantee the required per-transaction setting. Countercontext: Session pooling holds one backend until disconnect; a connection-wide SET is documented for searches intended to share a session setting. That differs from this transaction-only requirement. Evidence: Connection optimization defines session versus transaction ownership; the product IVFFlat example distinguishes connection-wide SET from SET LOCAL."
+        },
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-6-connection-optimization"
+          ],
+          "summary": "It deliberately affects unrelated work, violating the required isolation of this probe adjustment. Countercontext: Configuring defaults server-side is documented when all affected work should share the setting and its resource implications have been accepted. Evidence: The pooling discussion lists server-side defaults as a broad alternative; SET LOCAL is separately tied to a current transaction."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: verified. Original independently written option-review findings (historical pending-audit wording is superseded below): C aligns backend ownership with transaction-scoped probes. I separately tested the alternatives: session pooling can support startup SET and a server-side default can intentionally affect all transactions, but neither matches one transaction under transaction pooling. The source's loose claim that all session variables reset is not needed; lack of guaranteed backend reuse suffices. Query/transaction syntax is consistent with the IVFFlat example. Final originality clearance remains dependent on the cross-bank audit. Completed cross-bank consideration: The complete 299-candidate/556-reference audit contains no high-confidence exclusion for d-036 and no fabricated explicit pairwise approval. I additionally compared d-035 endpoint selection, d-037 per-request pool checkout and d-038 restart recovery. d-036 instead joins backend ownership in transaction pooling with SET LOCAL isolation, a distinct implementation decision. Related reference-index pool/session matches concern other resource types, not this GUC scope. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity technical-implementation: supported. The application client, backend session and transaction have different lifetimes. Choosing BEGIN/SET LOCAL/query/COMMIT must satisfy backend assignment and isolation from unrelated requests together; mere API spelling does not settle those ownership boundaries. Separate difficulty assessment (advanced): Advanced is modest but defensible at score 3 because the transaction-pool setting must be applied without assuming a persistent backend; no expert complexity is claimed. Classification defensible; all other quality gates still apply. Lexical warning review: Its normal setting belongs to unrelated requests; the transaction that executes the search is explicitly the one requiring probes=12. The scope distinction is clear and no unstated same-backend guarantee is imported. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-037": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "33317c92ea25008c7899bbcfc26e6070babbd8a75e399e3cb88d62b4f22b60f1",
+      "sourceIds": [
+        "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-6-connection-optimization",
+        "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+      ],
+      "retrievedAt": "2026-09-14T17:57:18.075Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-6-connection-optimization",
+            "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+          ],
+          "summary": "This is not incorrect: block exit returns the borrowed resource on success or exception, matching the requested lifecycle. Countercontext: Use it around request-scoped database work when an existing reusable psycopg_pool pool owns the connections. Evidence: Application-level connection pooling explicitly describes with pool.connection() returning connections even on exception."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-optimize-vector-search-azure-database-postgresql-6-connection-optimization",
+            "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+          ],
+          "summary": "It neither borrows from the existing process pool nor expresses a bounded checkout/return lifecycle. Countercontext: Creating a reusable application pool is documented at application scope. The sources do not support per-handler construction with retained pools as a correct resource-management pattern. Evidence: The examples create a reusable pool outside request work and use a context-managed checkout inside it."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+          ],
+          "summary": "This abandons the requested pool and permits unbounded retained connections rather than exception-safe return. Countercontext: A direct psycopg.connect context manager is documented for work that does not use a pool, but it closes the connection. No sourced context endorses this option's indefinite retention. Evidence: Connection management best practices says to close completed connections and warns that leaks exhaust resources."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): The exact context manager in A is supported, including exception cleanup. B creates per-handler pools and retains them; C creates per-query connections and retains them indefinitely. The approved sources explicitly advise reuse and cleanup, not either complete leak-prone lifecycle. Calling connection construction valid elsewhere does not justify retention indefinitely. Reject strict distractor plausibility/evidence and the inflated intermediate choice difficulty. Completed cross-bank consideration: I accept the audit's d-001/d-037 distinction after reading both: root Cosmos client cache lifetime differs from each lease returned to an existing psycopg pool. This is semantic distinctness only, not evidence that d-037's leaking alternatives or implementation label pass. Follow-up after reading the serialized semantic decisions and actual compared questions: Reusing the client object that owns Cosmos routing caches is a different ownership boundary from returning each leased connection to an already existing psycopg pool. Yet d-037 still tests recognition of a context-manager call with resource-leaking alternatives; distinctness is not proof of applied implementation complexity. Complexity and difficulty: Authored complexity technical-implementation: overstated. The existing ConnectionPool and borrow/return requirement are given, leaving recognition of with pool.connection(). There is no erroneous checkout code, exception path or interaction to repair; the two alternatives plainly leak resources. Separate difficulty assessment (intermediate): Foundational context-manager recall is more credible than intermediate implementation difficulty. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: The handler, connection and pool references are clear. The problem is leaked-resource alternatives and code-shaped API recall, not referential ambiguity. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 1,
+          "distractorEvidence": 1,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-038": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "97a2687af6a94dc867ebe972b890a112b444adfb1513030a1822db61465b6eab",
+      "sourceIds": [
+        "ai200-20260914-doc-postgres-pooling",
+        "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+      ],
+      "retrievedAt": "2026-09-14T18:04:15.346Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-doc-postgres-pooling",
+            "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+          ],
+          "summary": "This is not incorrect: the failure is an interrupted connection after a known restart, the endpoint is reachable, and there are no uncertain writes. Countercontext: This is appropriate for a transient operational connection failure on a read whose repetition is acceptable after reconnecting. Evidence: PgBouncer restart limitations require reconnection; SDK best practices prescribe backoff for transient network/restart failures."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
+          "summary": "The product limitation says restarting the server also restarts PgBouncer and requires re-establishing existing connections. Countercontext: An unchanged hostname is documented across HA failover, but that is not preservation of an existing failed connection object. No cited restart context validates the complete option. Evidence: The product HA section preserves connection strings, while Limitations separately requires existing connections to be re-established."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-build-query-azure-database-postgresql-6-integrate-sdks-apps"
+          ],
+          "summary": "Those nontransient errors require correction or deliberate handling; retrying unchanged requests is not restart recovery. Countercontext: Backoff retry is documented for transient operational failures and some transaction conflicts. The inclusion of unchanged syntax/constraint errors makes this complete policy unsupported in every cited context. Evidence: The SDK connection-management section explicitly says not to retry constraint violations or syntax errors."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): The bounded reconnect/retry of a read-only transient failure is sound. A promises preservation through restart and C retries unchanged syntax/constraint failures; both complete claims contradict the sources with no valid alternate context. Their absolutes make advanced recovery reasoning largely unnecessary. Keep the careful read-only/unknown-write-outcome explanation, but reject the unchanged strict alternatives. Completed cross-bank consideration: I read ai103-p-021 as well as d-038 and accept the audit distinction: reducing throttling retry pressure does not re-establish a failed PostgreSQL connection. The interface/failure boundaries differ, but d-038 still overstates applied troubleshooting and includes unsupported universal alternatives. Follow-up after reading the serialized semantic decisions and actual compared questions: Backoff limits retry pressure in both stories, but d-038 also requires discarding the failed connection and establishing a usable one after a restart. Throttling guidance does not supply that action. d-038 remains rejected because the diagnosis is already given and its absolute alternatives cannot be defended in their complete authored form. Complexity and difficulty: Authored complexity troubleshooting: overstated. The question already diagnoses a transient broken connection after a restart, confirms reachability and removes write ambiguity. Choosing reconnect plus backoff against universal survival/retry claims is recovery-rule recall, not investigation of an unresolved failure. Separate difficulty assessment (advanced): Advanced is overstated independently: no competing diagnosis or retry-safety uncertainty remains to resolve. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: One of those connections refers to the existing PgBouncer connections before restart. This is clear, but all diagnosis is already supplied and absolute survival/retry claims fail. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 1,
+          "distractorEvidence": 1,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai200-d-039": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "d59007bbf77a4ab4262c51519e41dfa9fbcfb1742d4b7e75b913c57f64dd62fe",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+      ],
+      "retrievedAt": "2026-09-14T17:57:33.862Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+          ],
+          "summary": "This is not incorrect: deletion removes the known stale string and the supplied miss loader fetches the updated record. Countercontext: It is the documented manual invalidation pattern after a successful source update when the application needs prompt freshness rather than waiting for TTL. Evidence: Manual invalidation updates the source and deletes related keys; cache-aside loads and stores data on the next miss."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+          ],
+          "summary": "The old record remains readable until expiry, while the request requires invalidation before requests resume. Countercontext: Time-based invalidation is documented when the application accepts cached data until its TTL expires and does not require immediate refresh on source changes. Evidence: Time-based invalidation uses TTL alone; manual invalidation is separately offered when underlying data changes."
+        },
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+          ],
+          "summary": "This preserves rather than invalidates the outdated value and removes its eventual TTL cleanup. Countercontext: PERSIST is correct when an existing key should stop expiring and the stored value remains intentionally retained, not when it must be invalidated. Evidence: Check and manage TTL explicitly shows persist removing a key's expiration."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: manual-review-required. Original independently written option-review findings (historical pending-audit wording is superseded below): C is correct for serialized strings after a confirmed source update with no concurrent refill. TTL expiry and PERSIST are both valid documented operations for other lifetime policies, but neither invalidates this stale entry now. The candidate explicitly avoids global atomicity and refill-race promises. Intermediate is slightly generous for the basic TTL/DEL distinction; the combined freshness preconditions make it useful. Duplicate clearance is still withheld until the required global audit. Completed cross-bank consideration: I accept ai200-s-008/d-039 keep-distinct after reading both: identifying SecretNewVersionCreated is a different interface decision from explicit Redis deletion versus TTL/PERSIST. This prevents a duplicate exclusion, not a complexity approval. Independently, d-039's authored scenario-based classification is overstated and therefore remains manual-review-required despite a technically correct key and prior eligible recommendation. Follow-up after reading the serialized semantic decisions and actual compared questions: One question identifies a vault event; the other distinguishes deletion from retaining or expiring an existing string value. Those interface facts are separate. d-039 nevertheless remains manual because the explicit invalidate requirement, completed write and removed refill race reduce the answer to command recognition rather than the authored applied scenario classification. Complexity and difficulty: Authored complexity scenario-based: overstated. The stem explicitly requests invalidation and supplies successful update order, no refill race and cache-aside miss behavior. Selecting deletion over waiting or PERSIST is the direct meaning of the requested operation; scenario narration is not additional applied reasoning. Separate difficulty assessment (intermediate): Intermediate is overly generous for this command/lifetime distinction. The careful race exclusion improves correctness but removes rather than adds reasoning work. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: The old cache value, confirmed database update and next cache-aside miss have clear antecedents. This boundedness helps technical correctness but leaves an invalidate-to-delete recall item rather than applied scenario reasoning. Difficulty drops from provisional 3 to 2 because direct invalidate-to-delete command recognition does not sustain intermediate discrimination. Complexity is separately found overstated, so a 44/48 total cannot authorize approval. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-040": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "3e3209f8584083af39d818d10f1d1f5f350bddf9f30a734292d4606dd1cbeba1",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-data-operations-azure-managed-redis-3-client-libraries-best-practices",
+        "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+      ],
+      "retrievedAt": "2026-09-14T17:57:33.862Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-3-client-libraries-best-practices"
+          ],
+          "summary": "This is not incorrect: the failure is diagnosed as a multi-key command spanning slots and OSS must remain selected. Countercontext: This is the documented requirement for multi-key operations under Azure Managed Redis OSS clustering. Evidence: Multi-key commands explicitly says all OSS keys must map to the same hash slot."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-3-client-libraries-best-practices",
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+          ],
+          "summary": "Expiry describes key lifetime, not distribution; the stated cross-slot MGET remains invalid under OSS. Countercontext: Matching TTLs can implement a common lifetime policy for cached records, but no cited evidence makes that sufficient for cross-slot OSS multi-key execution. The complete assertion has no valid countercontext. Evidence: The data-operations unit defines TTL expiration; the client unit independently requires same-slot placement for OSS."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-3-client-libraries-best-practices"
+          ],
+          "summary": "The evidence explicitly distinguishes Enterprise allowances from OSS's same-slot constraint. Countercontext: Cross-slot MGET is supported when the instance actually uses Enterprise clustering. The claim that this exception also applies to OSS is not true in a sourced alternate context. Evidence: The client table names MGET among Enterprise cross-slot commands, immediately after stating the OSS restriction."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): A correctly retains OSS and requires the same slot. C's Enterprise MGET capability is a real different-policy fact, but the full option explicitly transfers it to OSS; B says TTL alone is sufficient regardless of slots. Neither complete assertion is a documented valid policy. The stem already reports different slots and CROSSSLOT, so the advanced label is especially weak. Reject strict distractor quality. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity troubleshooting: overstated. CROSSSLOT, confirmed different slots and mandatory OSS already diagnose the entire cause. Restating the same-slot rule is recall rather than troubleshooting; there is no key-design or client-routing repair to derive. Separate difficulty assessment (advanced): Advanced is not justified by a named error whose cause is explicitly supplied. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: No lexical quality warning was reported; the independently analyzed answer/complexity constraints still apply. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-041": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "0d76372d7d07c84b3c3531220573673758ea8055934b87764d21b11a266db42c",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+      ],
+      "retrievedAt": "2026-09-14T17:57:33.862Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+          ],
+          "summary": "This is not incorrect: it follows the incremental enumeration pattern the job is prepared to execute. Countercontext: Use this pattern when the client can process key batches and cursor state and must avoid one blocking KEYS traversal. Evidence: The example repeatedly calls scan with match and count, processes keys and exits only at cursor zero."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+          ],
+          "summary": "Client-side batching happens after the server has already performed the prohibited blocking traversal. Countercontext: KEYS is the documented blocking counterpart to SCAN; an environment that explicitly permits a blocking one-shot traversal can use that operation. That is a different performance requirement. Evidence: Pattern-based invalidation says not to use KEYS because it blocks, establishing the relevant operational distinction."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-data-operations-azure-managed-redis-4-implement-data-operations"
+          ],
+          "summary": "MGET retrieves values for supplied string-key names; it is not the documented pattern enumerator. Countercontext: MGET is correct for known explicit string-key names. No sourced context makes wildcard matching and discovery an MGET operation, so the complete option cannot receive a valid countercontext. Evidence: Multiple key operations supplies explicit names to mget; pattern discovery uses the separate SCAN loop."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: manual-review-required. Original independently written option-review findings (historical pending-audit wording is superseded below): B matches the source's Enterprise-scoped incremental scan. KEYS has a coherent alternate context when a blocking enumeration is acceptable, but the source does not support MGET wildcard discovery. A literal key containing a wildcard character would be a value lookup, not discovery and not a valid defense of C as written. Hold the strict countercontext requirement for C; do not borrow unspecified Redis documentation or weaken the stated no-blocking requirement. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity scenario-based: overstated. Incremental batches and a cursor explicitly describe SCAN. There is no actual cursor loop, termination bug or topology question to analyze, and MGET wildcard discovery is not viable. Separate difficulty assessment (intermediate): Intermediate is weak for direct command recognition; giving an operations story does not add a reasoning layer. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: Avoiding one blocking KEYS traversal is a scoped performance requirement, not a claim that SCAN provides a stable snapshot or zero work. C's wildcard-MGET assertion still has no valid documented use. Difficulty drops from provisional 3 to 2 because batch/cursor wording already describes the sole correct command. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-042": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "ab9bb967ec6c039c2bdf601059e6578165c13c81fcb60a5858408330132378a8",
+      "sourceIds": [
+        "ai200-20260914-doc-redis-vector",
+        "ai200-20260914-doc-redis-modules"
+      ],
+      "retrievedAt": "2026-09-14T18:04:58.437Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-doc-redis-vector",
+            "ai200-20260914-doc-redis-modules"
+          ],
+          "summary": "This is not incorrect: all listed requirements match the current managed-module contract. Countercontext: It is a documented valid starting configuration for a new Managed Redis vector-search instance, with workload sizing still to be evaluated separately. Evidence: Plan an instance for vector search names supported in-memory tiers, creation-time module enablement, Enterprise and NoEviction."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-doc-redis-vector",
+            "ai200-20260914-doc-redis-modules"
+          ],
+          "summary": "RediSearch is unavailable on Flash Optimized even with otherwise correct Enterprise and NoEviction choices. Countercontext: Flash Optimized supports RedisJSON according to the module table, but that is not RediSearch. No approved context makes this exact Flash/RediSearch combination valid. Evidence: Both availability tables mark Flash Optimized RediSearch No, and the modules table separately marks RedisJSON Yes."
+        },
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-doc-redis-vector",
+            "ai200-20260914-doc-redis-modules"
+          ],
+          "summary": "Enterprise clustering is required; tier support and NoEviction do not remove this prerequisite. Countercontext: OSS can be an instance clustering policy for other workloads, but the cited RediSearch contract never allows this exact OSS/RediSearch combination. Evidence: Both product articles require Enterprise clustering when RediSearch is enabled."
+        },
+        {
+          "choiceId": "D",
+          "sourceIds": [
+            "ai200-20260914-doc-redis-vector",
+            "ai200-20260914-doc-redis-modules"
+          ],
+          "summary": "Azure Managed Redis does not permit post-creation module addition or arbitrary manual loading. Countercontext: Creating a replacement instance with the module enabled at provisioning is supported, but that is not loading it later into the existing instance. No sourced countercontext validates the exact plan. Evidence: Scope of availability and Adding modules both make creation time mandatory and disallow manual loading."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): C is the sole supported provisioning combination. Every other complete combination is explicitly impossible in the approved product evidence: Flash RediSearch, OSS RediSearch, or loading modules after creation. Correct properties within an invalid combination are not a documented correct-elsewhere option. Replacing RediSearch with RedisJSON or replacing the instance would rewrite the choice. Reject strict distractor evidence and advanced difficulty based only on a requirements table. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity architecture-design: overstated. The item tests a four-property provisioning table. Every alternative violates one unconditional requirement; no valid deployment tradeoff or design consequence must be selected among feasible configurations. Separate difficulty assessment (advanced): A composite list of prerequisites does not itself earn advanced difficulty. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: The team and new deployment are clear. Pronouns do not obscure the configuration matrix, but that matrix remains recall and its complete wrong configurations lack valid countercontexts. The other independently assigned criterion scores remain unchanged after final consideration; no threshold backfilling was performed. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-043": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "ba52b1a01cd0dc5d31a55edd205c5499c3d9af51e32a80914a3382092e249b14",
+      "sourceIds": [
+        "ai200-20260914-unit-implement-vector-storage-azure-managed-redis-4-optimize-redis-data-structure"
+      ],
+      "retrievedAt": "2026-09-14T17:57:41.547Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-storage-azure-managed-redis-4-optimize-redis-data-structure"
+          ],
+          "summary": "This is not incorrect: it matches the two source examples and the stipulated 384-dimensional FLOAT32 schemas. Countercontext: It is the documented storage distinction when both HASH and JSON collections expose vector fields under matching RediSearch schemas. Evidence: The unit's HASH example stores embedding.tobytes(); its JSON example stores embedding.tolist() and indexes a JSONPath vector field."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-storage-azure-managed-redis-4-optimize-redis-data-structure"
+          ],
+          "summary": "Text serialization does not match packed binary HASH vectors or JSON numeric-array vector properties. Countercontext: Ordinary nonvector metadata can be text, but this source does not document these encodings as indexed embeddings. Client decoding would change the specified stored representations, not defend them. Evidence: The comparison table explicitly lists Binary bytes for HASH vector storage and Numeric array for JSON vector storage."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-storage-azure-managed-redis-4-optimize-redis-data-structure"
+          ],
+          "summary": "It swaps the documented roles and provides neither the numeric JSON array nor the flat packed HASH embedding expected by the indexes. Countercontext: Nested JSON objects are documented for JSON metadata such as specs. No cited condition makes them HASH vector fields or makes raw binary bytes a JSON vector property. Evidence: Using Redis JSON shows nested metadata separately from embedding.tolist(); Using Redis Hash places tobytes in one flat field."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): A correctly distinguishes packed HASH vectors from JSON numeric arrays. B and C are not documented alternative representations for these indexed vector fields; encoded text, raw bytes as a JSON property, and nested objects as HASH vectors cannot be made correct by inventing client conversions. Ordinary metadata can have other shapes, but that is not the represented vector claim. Reject strict distractor evidence without editing the accurate key. Completed cross-bank consideration: The immutable cross-review covers all 299 new candidates and the 556-reference index. It reports no high-confidence semantic exclusion for this record and no explicit pairwise keep-distinct decision involving it. I inspected the audit's data-batch scope and residual limitations; absence of a listed pair is not an invented universal uniqueness proof. The independently documented option/quality defects still control this record's exclusion. Follow-up after reading the serialized semantic decisions and actual compared questions: No new relevant decision in semantic-decisions contradicts the previously read cross-review or the independently recorded per-item audit analysis. Absence of a named pair is not exhaustive uniqueness certification. d-036 remains distinct because it combines backend assignment, transaction-local probes and unrelated-request isolation rather than choosing a port, retaining a client or recovering a dead connection. Its technical-implementation classification was separately reconsidered and remains supported. Complexity and difficulty: Authored complexity technical-implementation: overstated. The task recalls the fixed HASH-bytes/JSON-array representation pair with all module/schema conditions supplied. There is no ingestion code, conversion failure or mixed type/dimension evidence to implement or repair. Separate difficulty assessment (intermediate): The two-representation comparison is basic API/data-shape knowledge; the malformed alternatives do not sustain intermediate applied work. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: No lexical quality warning was reported; the independently analyzed answer/complexity constraints still apply. Difficulty drops from provisional 3 to 2 for fixed representation recall; the separate technical-implementation label is also overstated. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 1,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai200-d-044": {
+      "credentialId": "ai-200",
+      "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+      "questionFingerprint": "af653d0ed0a2f9bccf1fe53efb8236b68621708a2a18d9f1db840a3b1a2d2f59",
+      "sourceIds": [
+        "ai200-20260914-doc-redis-vector",
+        "ai200-20260914-unit-implement-vector-storage-azure-managed-redis-2-index-query-vector-data"
+      ],
+      "retrievedAt": "2026-09-14T18:04:55.524Z",
+      "lastValidatedAt": "2026-09-14T18:41:22.188Z",
+      "answerEvidence": [
+        {
+          "choiceId": "B",
+          "sourceIds": [
+            "ai200-20260914-doc-redis-vector",
+            "ai200-20260914-unit-implement-vector-storage-azure-managed-redis-2-index-query-vector-data"
+          ],
+          "summary": "This is not incorrect: FLAT provides exhaustive comparison and KNN 4 expresses the requested nearest-neighbor count for the reference corpus. Countercontext: Use this combination for a small reference corpus requiring exact comparison and top-K retrieval, provided enough eligible vectors exist to return the requested count. Evidence: Index and search methods calls FLAT exact brute force and KNN top K; the training unit separately explains KNN syntax."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "A",
+          "sourceIds": ["ai200-20260914-doc-redis-vector"],
+          "summary": "KNN controls requested result count, not HNSW's approximate candidate search, so the reference-run algorithm requirement fails. Countercontext: HNSW KNN is documented for low-latency approximate retrieval when exhaustive precision is not required. No sourced condition makes KNN itself convert every underlying algorithm to exhaustive search. Evidence: The product separates FLAT exact and HNSW approximate algorithms from KNN top-K search methods."
+        },
+        {
+          "choiceId": "C",
+          "sourceIds": [
+            "ai200-20260914-unit-implement-vector-storage-azure-managed-redis-2-index-query-vector-data"
+          ],
+          "summary": "The result count depends on how many vectors fall inside the range, so it does not encode a nearest-four request. Countercontext: A range query is correct when all vectors within an evaluated distance boundary are wanted regardless of count. No sourced context makes a threshold universally return exactly four. Evidence: Range queries contrasts a threshold with KNN and explicitly illustrates counts varying from a few results to hundreds."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
+        "objectiveFingerprint": "8b8b077fe5d64a56b329ec16658c08b3b1a3cc51194c0693e0df793e47f2f42e",
+        "reviewerId": "ai200-adversary-data-b",
+        "reviewedAt": "2026-09-14T19:43:39.181Z",
+        "notes": "Final independent verdict: rejected. Original independently written option-review findings (historical pending-audit wording is superseded below): FLAT plus KNN 4 satisfies the requested exhaustive algorithm and result-count method. A falsely claims KNN makes every algorithm exhaustive; C falsely says a distance threshold always returns four. HNSW KNN and range queries are real alternatives for other goals, but their attached universal claims remain false. This also shares d-023's exact-versus-ANN baseline decision with a service-name change; the count dimension is small. Reject strict distractor construction and flag semantic overlap for audit rather than approve a composite duplicate. Completed cross-bank consideration: I accept SEM-021 after comparing d-010/d-023/d-044 actual options. FLAT/KNN naming does not change the generic exhaustive-versus-ANN baseline decision; count semantics add only a recall fact. d-044 remains rejected for semantic duplication, impossible attached guarantees and overstated architecture classification. Follow-up after reading the serialized semantic decisions and actual compared questions: The generic exact-baseline requirement determines FLAT in d-044 just as it determines flat in d-010. KNN 4 adds count recognition, not a Redis query implementation or architectural dependency. I continue to reject d-044; changing labels would neither change the discriminator nor resolve the invalid universal guarantees attached to its alternatives. Complexity and difficulty: Authored complexity architecture-design: overstated. FLAT means exhaustive and KNN means requested count; combining those definitions is not an architectural decision. The baseline story repeats d-023 and d-010 without a product-specific query or planning problem. Separate difficulty assessment (intermediate): Intermediate is generous for two joined recall facts, particularly with explicit false guarantees on both rivals. Excluded as authored. Repair/relabeling requires fresh grounded generation, technical review and adversarial review; no label/hash was changed. Lexical warning review: The small reference collection and the application's count requirement are clear. The alternatives' 'every' and 'always four' assertions are false absolutes, and SEM-021 supplies an independent duplicate exclusion. Originality drops from provisional 2 to 1 after SEM-021; difficulty drops from 3 to 2 because algorithm/count definitions are joined without a substantive new design problem. This is an encounter review only, never an assertion of credential GA or runtime admission.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 2,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 1,
+          "clarityAccessibility": 3
+        }
+      }
+    }
+  }
+}

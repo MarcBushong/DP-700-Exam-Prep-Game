@@ -34,7 +34,7 @@ async function saved(page: Page) {
   );
 }
 
-test('GH-300 three-pass study, sources, isolated progress, GH-600 gating, and DP-700 regression', async ({
+test('GH-300 three-pass study, sources, isolated progress, GH-600 beta play, and DP-700 regression', async ({
   page,
 }) => {
   await page.goto('./');
@@ -143,62 +143,33 @@ test('GH-300 three-pass study, sources, isolated progress, GH-600 gating, and DP
   await page.goto(`#/dungeons/${agenticId}`);
   const card = page.locator(`#dungeon-${agenticId}`);
   await expect(card).toBeVisible();
-  if (agentic.isVerified && agentic.status === 'active') {
-    await card.getByRole('button', { name: 'Descend', exact: true }).click();
-    await page.getByRole('button', { name: 'Descend', exact: true }).click();
-    await expect(
-      page.locator('.question-panel .dungeon-origin'),
-    ).toHaveAttribute('data-dungeon-id', agenticId);
-    await page
-      .getByRole('button', { name: 'Skip question', exact: true })
-      .click();
-    await page
-      .getByRole('button', { name: 'Finish early', exact: true })
-      .click();
-    await page
-      .getByRole('dialog')
-      .getByRole('button', { name: 'Finish & score session', exact: true })
-      .click();
-    await page.waitForURL(/\/results\//);
-    expect(
-      scoreSession((await saved(page)).history[0]).byDungeon.map(
-        (row) => row.id,
-      ),
-    ).toEqual([agenticId]);
-  } else {
-    await expect(
-      card.getByRole('button', { name: 'Sealed', exact: true }),
-    ).toBeDisabled();
-    await expect(
-      card.getByRole('button', { name: 'Boss Gauntlet', exact: true }),
-    ).toBeDisabled();
-    await page.evaluate(
-      ({ key, data, id }) => {
-        localStorage.setItem(
-          key,
-          JSON.stringify({
-            ...data,
-            selectedCredentialId: id,
-            config: {
-              ...data.config,
-              credentialId: id,
-              runMode: 'gauntlet',
-              answerMode: 'exam',
-            },
-          }),
-        );
-      },
-      { key: STORAGE_KEY, data: before, id: agenticId },
-    );
-    await page.goto('#/setup');
-    await page.reload();
-    await expect(
-      page.getByText('This expedition is sealed.', { exact: false }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole('button', { name: 'Descend', exact: true }),
-    ).toBeDisabled();
-  }
+  expect(agentic).toMatchObject({
+    isVerified: true,
+    status: 'beta',
+    allowBetaPlay: true,
+  });
+  await card.getByRole('button', { name: 'Descend', exact: true }).click();
+  await page.waitForURL(/#\/setup$/);
+  await page
+    .locator('form.setup-layout')
+    .getByRole('button', { name: 'Descend', exact: true })
+    .click();
+  await expect(page.locator('.question-panel .dungeon-origin')).toHaveAttribute(
+    'data-dungeon-id',
+    agenticId,
+  );
+  await page
+    .getByRole('button', { name: 'Skip question', exact: true })
+    .click();
+  await page.getByRole('button', { name: 'Finish early', exact: true }).click();
+  await page
+    .getByRole('dialog')
+    .getByRole('button', { name: 'Finish & score session', exact: true })
+    .click();
+  await page.waitForURL(/\/results\//);
+  expect(
+    scoreSession((await saved(page)).history[0]).byDungeon.map((row) => row.id),
+  ).toEqual([agenticId]);
   expect(
     (await saved(page)).history.find((entry) => entry.id === result.id),
   ).toEqual(result);

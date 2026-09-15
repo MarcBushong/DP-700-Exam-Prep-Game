@@ -21,9 +21,7 @@
         "text": "Begin a new transaction and repeat both UPDATE statements"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "Retry the whole transactional operation, not only the statement that reported the deadlock.",
     "deepExplanation": "Deadlock recovery differs from waiting for ordinary blocking. A bounded randomized retry can reduce repeated collision, but success is not guaranteed and external side effects would require additional application design.",
     "whyOtherAnswersAreWrong": {
@@ -36,23 +34,15 @@
     "subskill": "Identify and resolve query performance issues, including blocking and deadlocks",
     "difficulty": "intermediate",
     "complexity": "troubleshooting",
-    "sourceIds": [
-      "dp800-d2-deadlocks"
-    ],
+    "sourceIds": ["dp800-d2-deadlocks"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide"
     ],
-    "documentationTitles": [
-      "Deadlocks guide"
-    ],
+    "documentationTitles": ["Deadlocks guide"],
     "generatedAt": "2026-09-15T02:57:51.179Z",
     "lastValidatedAt": "2026-09-15T02:57:51.179Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "deadlock",
-      "retry"
-    ],
+    "tags": ["sql-server-2022", "deadlock", "retry"],
     "conceptId": "sql-deadlock-1205-retry-whole-transaction",
     "verificationStatus": "manual-review-required",
     "verifiedAgainstSourceIds": [],
@@ -83,33 +73,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The earlier UPDATE is part of the same rolled-back victim transaction. Retrying only the second therefore loses required work. A separate already-committed first transaction would change the supplied boundary. dp800-d2-deadlocks, decoded lines 82, 354-357 and 416-426.",
-        "sourceIds": [
-          "dp800-d2-deadlocks"
-        ]
+        "sourceIds": ["dp800-d2-deadlocks"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "COMMIT cannot recover changes from the original transaction after the engine rolled it back. A healthy surviving transaction is a different context, not evidence that this literal original-victim proposal can be correct. dp800-d2-deadlocks, decoded lines 82 and 336-340.",
-        "sourceIds": [
-          "dp800-d2-deadlocks"
-        ]
+        "sourceIds": ["dp800-d2-deadlocks"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "The repaired explanation is accurate: an error handler may continue, but the victim transaction cannot resume. Ordinary blocking permits continuation without this rollback, which is the documented alternate. dp800-d2-deadlocks, decoded lines 20-22 and 336-348.",
-        "sourceIds": [
-          "dp800-d2-deadlocks"
-        ]
+        "sourceIds": ["dp800-d2-deadlocks"]
       },
       {
         "choiceId": "d",
         "assessment": "supported",
         "rationale": "Starting a new transaction and repeating both updates restores the complete rolled-back unit of work under the stated safe-replay premise. Delay reduces collision probability without guaranteeing success. dp800-d2-deadlocks, decoded lines 20, 334-348 and 354-357.",
-        "sourceIds": [
-          "dp800-d2-deadlocks"
-        ]
+        "sourceIds": ["dp800-d2-deadlocks"]
       }
     ],
     "checks": {
@@ -133,40 +115,30 @@
     "credentialId": "dp-800",
     "objectiveVersion": "March 12, 2026",
     "questionFingerprint": "f6610fe7daa298cb47bf400abe4c9b2aeb6a36a9ae09cdbca0ae1b4b0e4b30a4",
-    "sourceIds": [
-      "dp800-d2-deadlocks"
-    ],
+    "sourceIds": ["dp800-d2-deadlocks"],
     "retrievedAt": "2026-09-14T23:41:04.352Z",
     "lastValidatedAt": "2026-09-15T02:57:51.179Z",
     "answerEvidence": [
       {
         "choiceId": "d",
-        "sourceIds": [
-          "dp800-d2-deadlocks"
-        ],
+        "sourceIds": ["dp800-d2-deadlocks"],
         "summary": "Starting a new transaction and repeating both updates restores the complete rolled-back unit of work under the stated safe-replay premise. Delay reduces collision probability without guaranteeing success. dp800-d2-deadlocks, decoded lines 20, 334-348 and 354-357."
       }
     ],
     "distractorEvidence": [
       {
         "choiceId": "a",
-        "sourceIds": [
-          "dp800-d2-deadlocks"
-        ],
+        "sourceIds": ["dp800-d2-deadlocks"],
         "summary": "The earlier UPDATE is part of the same rolled-back victim transaction. Retrying only the second therefore loses required work. A separate already-committed first transaction would change the supplied boundary. dp800-d2-deadlocks, decoded lines 82, 354-357 and 416-426."
       },
       {
         "choiceId": "b",
-        "sourceIds": [
-          "dp800-d2-deadlocks"
-        ],
+        "sourceIds": ["dp800-d2-deadlocks"],
         "summary": "COMMIT cannot recover changes from the original transaction after the engine rolled it back. A healthy surviving transaction is a different context, not evidence that this literal original-victim proposal can be correct. dp800-d2-deadlocks, decoded lines 82 and 336-340."
       },
       {
         "choiceId": "c",
-        "sourceIds": [
-          "dp800-d2-deadlocks"
-        ],
+        "sourceIds": ["dp800-d2-deadlocks"],
         "summary": "The repaired explanation is accurate: an error handler may continue, but the victim transaction cannot resume. Ordinary blocking permits continuation without this rollback, which is the documented alternate. dp800-d2-deadlocks, decoded lines 20-22 and 336-348."
       }
     ],
@@ -203,30 +175,22 @@
       "claims": [
         {
           "choiceId": "a",
-          "sourceIds": [
-            "dp800-d2-deadlocks"
-          ],
+          "sourceIds": ["dp800-d2-deadlocks"],
           "summary": "The engine rolls back the victim transaction, including its earlier update; retrying only the last statement loses part of the required unit of work."
         },
         {
           "choiceId": "b",
-          "sourceIds": [
-            "dp800-d2-deadlocks"
-          ],
+          "sourceIds": ["dp800-d2-deadlocks"],
           "summary": "The victim transaction has already been rolled back. COMMIT cannot restore its discarded updates."
         },
         {
           "choiceId": "c",
-          "sourceIds": [
-            "dp800-d2-deadlocks"
-          ],
+          "sourceIds": ["dp800-d2-deadlocks"],
           "summary": "Error 1205 rolls back the victim transaction. Error handling may continue in a CATCH block, but that does not restore or resume the original transaction."
         },
         {
           "choiceId": "d",
-          "sourceIds": [
-            "dp800-d2-deadlocks"
-          ],
+          "sourceIds": ["dp800-d2-deadlocks"],
           "summary": "Because the original transaction was rolled back, the complete safe unit of work must be resubmitted in a new transaction."
         }
       ]
@@ -256,33 +220,25 @@
             "choiceId": "a",
             "assessment": "contradicted",
             "rationale": "The first UPDATE belongs to the same victim transaction and is rolled back with the second. Retrying only the last statement would omit part of the required unit of work. dp800-d2-deadlocks, decoded lines 20, 82 and 336-340.",
-            "sourceIds": [
-              "dp800-d2-deadlocks"
-            ]
+            "sourceIds": ["dp800-d2-deadlocks"]
           },
           {
             "choiceId": "b",
             "assessment": "contradicted",
             "rationale": "The original transaction has already been rolled back. COMMIT cannot recover its discarded changes. dp800-d2-deadlocks, decoded lines 82 and 336-340.",
-            "sourceIds": [
-              "dp800-d2-deadlocks"
-            ]
+            "sourceIds": ["dp800-d2-deadlocks"]
           },
           {
             "choiceId": "c",
             "assessment": "contradicted",
             "rationale": "Error handling may enter a CATCH block, but the victim transaction is gone and cannot resume at its next statement. This distinguishes control-flow continuation from transaction survival. dp800-d2-deadlocks, decoded lines 336-348.",
-            "sourceIds": [
-              "dp800-d2-deadlocks"
-            ]
+            "sourceIds": ["dp800-d2-deadlocks"]
           },
           {
             "choiceId": "d",
             "assessment": "supported",
             "rationale": "Starting a new transaction and repeating both UPDATE statements retries the complete rolled-back operation. The stem establishes safe bounded retry and no external side effects; randomized delay reduces collision risk without guaranteeing success. dp800-d2-deadlocks, decoded lines 20 and 334-348.",
-            "sourceIds": [
-              "dp800-d2-deadlocks"
-            ]
+            "sourceIds": ["dp800-d2-deadlocks"]
           }
         ],
         "checks": {
@@ -316,9 +272,7 @@
           "claimRepresented": "The application can retry only the second UPDATE because the first UPDATE remains committed.",
           "whyIncorrectInContext": "Both updates belong to the same victim transaction. Rolling that transaction back discards its earlier update as well, so retrying only the second omits part of the required operation.",
           "couldBeCorrectWhen": "Retrying only the second update can be appropriate if the first already committed in a separate transaction and the second is the entire victim transaction. That explicitly changes the transaction boundaries supplied here.",
-          "sourceIds": [
-            "dp800-d2-deadlocks"
-          ],
+          "sourceIds": ["dp800-d2-deadlocks"],
           "evidenceSummary": "dp800-d2-deadlocks, decoded lines 20, 82 and 354-357, establishes victim-transaction rollback. Lines 416-426 distinguish explicit multi-statement and autocommit transaction contexts."
         },
         {
@@ -326,9 +280,7 @@
           "claimRepresented": "COMMIT alone can complete or recover the original deadlock-victim transaction.",
           "whyIncorrectInContext": "The original victim transaction has already been rolled back. COMMIT cannot restore the discarded updates or convert that terminated transaction into a completed operation.",
           "couldBeCorrectWhen": "Committing an existing healthy transaction after its work succeeds is legitimate, but that is not the literal original-victim proposal. The frozen source supplies no context in which an original SQL Server 1205 victim survives to be recovered by COMMIT alone. This required positive countercontext remains unsupported.",
-          "sourceIds": [
-            "dp800-d2-deadlocks"
-          ],
+          "sourceIds": ["dp800-d2-deadlocks"],
           "evidenceSummary": "dp800-d2-deadlocks, decoded lines 82 and 336-340, expressly establishes rollback. Lines 22 and 372 describe ordinary transactions continuing or completing, not committing a rolled-back victim."
         },
         {
@@ -336,9 +288,7 @@
           "claimRepresented": "The original transaction can resume at its next statement after error 1205.",
           "whyIncorrectInContext": "CATCH or application error handling may continue, but the original victim transaction does not survive. Continued control flow cannot recover its rolled-back work.",
           "couldBeCorrectWhen": "An ordinary blocked transaction can proceed after the blocking transaction releases its lock, complete the waiting statement and continue its remaining work. That is normal blocking, not selection as a deadlock victim.",
-          "sourceIds": [
-            "dp800-d2-deadlocks"
-          ],
+          "sourceIds": ["dp800-d2-deadlocks"],
           "evidenceSummary": "dp800-d2-deadlocks, decoded lines 20-22 and 372, distinguishes blocking from deadlock recovery. Lines 336-348 establish rollback while explicitly allowing TRY...CATCH handling."
         },
         {
@@ -346,9 +296,7 @@
           "claimRepresented": "The application should start a new transaction and repeat both updates as the complete rolled-back operation.",
           "whyIncorrectInContext": "NOT incorrect: both updates were rolled back, and the stem explicitly makes a bounded retry of the complete operation safe. A new transaction is required rather than continuation of the victim.",
           "couldBeCorrectWhen": "It is correct for this definitive 1205 rollback with safe replay and no external side effects. Randomized delay reduces repeated collision risk but does not guarantee that the next attempt succeeds.",
-          "sourceIds": [
-            "dp800-d2-deadlocks"
-          ],
+          "sourceIds": ["dp800-d2-deadlocks"],
           "evidenceSummary": "dp800-d2-deadlocks, decoded lines 20, 334-348 and 354-357, supports transaction retry, complete rollback, error handling and a short randomized pause."
         }
       ],

@@ -1,4 +1,5 @@
 import type { Credential, DungeonReadiness } from '../dungeons/schema';
+import { hasPlayableIdentity } from '../dungeons/availability';
 import {
   isPlayableQuestion,
   type GroundingManifest,
@@ -34,10 +35,10 @@ export function dungeonAccess(
     };
   const { credential, readiness } = dungeon;
   const reasons: string[] = [];
-  if (!credential.isVerified || credential.status !== 'active')
+  if (!hasPlayableIdentity(credential))
     reasons.push(
       credential.sealedReason ??
-        'Only verified active dungeons can be entered.',
+        'Only verified active dungeons or explicitly enabled beta dungeons can be entered.',
     );
   if (!['ready', 'limited'].includes(credential.contentReadiness))
     reasons.push(

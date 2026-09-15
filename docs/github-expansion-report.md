@@ -1,5 +1,10 @@
 # GH-300 and GH-600 three-pass expansion
 
+**Historical expansion snapshot.** The later
+[GH-600 beta-access release](gh600-beta-availability.md) opens its reviewed bank
+with an explicit beta designation. The original evidence and outcomes below
+are preserved.
+
 This independent learning experience is not an official GitHub or Microsoft
 exam, practice assessment, endorsement, or source of real exam questions.
 Encounters are original study questions grounded in publicly available official

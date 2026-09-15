@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "Without append, this is an ordinary replacement of the existing $.stages property with a nonnull nvarchar value. The documented result state is {\"stages\":\"verify\"}, so receive and validate no longer form an array. Positive countercontext: keep this exact expression if stages is being migrated from a list to a single current-stage string and the required document is {\"stages\":\"verify\"}. The normal existing-path update rule supports that replacement contract, but not preserving and extending the existing list.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "b",
         "assessment": "supported",
         "rationale": "The append modifier targets the known existing stages array and appends the supplied text as one new string element. The earlier receive and validate elements retain their order, giving the documentation-derived document {\"stages\":[\"receive\",\"validate\",\"verify\"]}. The product's path grammar and append examples support this exact operation. The supplied array precondition matters; this review does not generalize successful append behavior to missing, scalar, or otherwise incompatible paths.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "Because stages exists, strict mode accepts the path; SQL NULL then sets the existing member's value to JSON null. The result is {\"stages\":null}, not an extended array. Positive countercontext: this exact expression is correct if a reset operation must retain the stages member but clear its entire value to JSON null, with {\"stages\":null} as the requested state. The documented strict/NULL/existing-path row supports that literal countercontext and does not append an element.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "The lax-mode SQL NULL rule deletes the existing stages property. Since it is the input's only member, the documentation-derived result is {}. Positive countercontext: the exact call is appropriate for an operation that intentionally removes all stages metadata and requires the empty object {} from this input. The source's lax/NULL/existing-path row establishes that useful deletion behavior, which is incompatible with preserving the two existing elements and appending verify.",
-        "sourceIds": [
-          "dp800-d1-json-modify"
-        ]
+        "sourceIds": ["dp800-d1-json-modify"]
       }
     ],
     "checks": {

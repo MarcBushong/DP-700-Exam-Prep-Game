@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "supported",
         "rationale": "Inserted literally, detail nvarchar(max) '$.detail' AS JSON follows the documented order colName, type, column_path, AS JSON. The existing $.detail value is an object, so SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail' AS JSON); yields one detail column containing the object {\"items\":2,\"memo\":\"ship\"}, rather than separate child fields. nvarchar(max) is also the required type when AS JSON is specified. Literal positive alternative: with @payload = N'{\"detail\":[{\"items\":2},{\"items\":1}]}', the identical SELECT preserves the array [{\"items\":2},{\"items\":1}] as the fragment. The AS JSON argument contract explicitly permits both object and array fragments, and its worked Order projection corroborates object preservation.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "detail nvarchar(max) '$.detail' omits AS JSON, so it requests a scalar at an object-valued path. Default lax projection returns SQL NULL, not the serialized object; nvarchar(max) specifies text capacity, not fragment eligibility. The primary AS JSON section distinguishes these cases and requires the flag for a nested fragment. Literal positive countercontext: with @payload = N'{\"detail\":\"ship\"}', SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail'); returns the scalar text ship. In that alternative the exact proposed column definition is the appropriate scalar projection because detail is a JSON string, not an object.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "detail int '$.detail.items' follows the existing nested scalar path and yields the integer 2. It discards memo and the enclosing object and also violates the required nvarchar(max) output type. This is a wrong result contract, not invalid T-SQL. Literal positive countercontext with the original JSON unchanged: if a downstream step needs only the item count, SELECT detail FROM OPENJSON(@payload) WITH (detail int '$.detail.items'); returns the desired count 2 as int. The article's typed-column definition and its Quantity INT '$.Item.Quantity' example support precisely this scalar numeric projection.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "detail nvarchar(max) '$.detail.memo' extracts the string ship, not the complete detail object. Its SQL text type meets the requested type but its selected JSON value does not meet the required structure; items and the object boundary are lost. Literal positive countercontext with the original input: when the consumer requires the memo text alone, SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail.memo'); returns ship and is correct for that task. The column_path and scalar-projection contracts, illustrated by nested text columns in the article, support both this valid use and its insufficiency for the original whole-object requirement.",
-        "sourceIds": [
-          "dp800-d1-openjson"
-        ]
+        "sourceIds": ["dp800-d1-openjson"]
       }
     ],
     "checks": {

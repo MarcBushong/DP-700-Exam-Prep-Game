@@ -39,35 +39,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The literal statement supplies TOP_N=5 to VECTOR_SEARCH and omits WITH APPROXIMATE. Latest-index Syntax expressly forbids TOP_N, and Expected behaviors documents error 42274 for that legacy parameter. An outer TOP(5) does not remove the incompatible inner argument. Sourced countercontext: this exact statement is the documented earlier-index pattern with a five-row TOP_N candidate pool and outer cap, using the correct base/result aliases and ascending distance. The immutable question instead fixes a latest index, so the legacy countercontext cannot validate a here.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       },
       {
         "choiceId": "b",
         "assessment": "supported",
         "rationale": "The literal statement satisfies every documented latest-index syntax distinction: SELECT TOP(5) WITH APPROXIMATE; no TOP_N; a base TABLE argument with d as its alias; d.Id for the base column; r.distance for the search-generated column; and sole ordering by r.distance, ascending by default as in the source's valid examples. The vector variable and matching column dimensions are supplied. Context boundary: it explicitly requests approximate results with a five-row cap; it does not force an ANN physical plan, promise exactly five returned rows, or apply latest-index syntax to SQL Server 2025 or an unavailable Azure rollout.",
-        "sourceIds": [
-          "dp800-d3-vector-search",
-          "dp800-d3-vector-type"
-        ]
+        "sourceIds": ["dp800-d3-vector-search", "dp800-d3-vector-type"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "This is a documented valid exact-distance shape: VECTOR_DISTANCE('cosine', @q, d.Embedding) yields scalar exact distances, and TOP(5) ordered by its alias selects nearest results. The VECTOR_DISTANCE reference explicitly says it does not use a vector index, even when one exists. Sourced countercontext: the literal statement is appropriate when the application wants exact nearest-neighbor ranking capped at five rather than the latest approximate VECTOR_SEARCH request. Its validity as an exact query does not satisfy the stated approximate-syntax contract.",
-        "sourceIds": [
-          "dp800-d3-vector-distance",
-          "dp800-d3-vector-type"
-        ]
+        "sourceIds": ["dp800-d3-vector-distance", "dp800-d3-vector-type"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "The function arguments, aliases, WITH APPROXIMATE and distance-only ordering follow the latest syntax, but the literal outer TOP(25) requests a different cap from the required TOP(5). The documented SELECT TOP(N) WITH APPROXIMATE pattern places the requested result bound in that outer N. Sourced countercontext: this exact statement fits a caller requesting up to 25 approximate results from a supported latest-index environment. Even if a particular approximate execution returned fewer rows, the SQL does not express or enforce the required five-row cap.",
-        "sourceIds": [
-          "dp800-d3-vector-search"
-        ]
+        "sourceIds": ["dp800-d3-vector-search"]
       }
     ],
     "checks": {

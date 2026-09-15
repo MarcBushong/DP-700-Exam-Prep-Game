@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The explicitly selected NULL ON NULL policy retains comment with a JSON null value. With the declarations shown, A yields the documentation-derived state {\"code\":\"R9\",\"retry\":0,\"comment\":null}, which violates omission of the optional key. Positive countercontext: the exact constructor is appropriate if the API requires explicit presence of comment to signal a known-null value, and that three-member object is the requested payload. The source explicitly supports that SQL NULL-to-JSON-null behavior.",
-        "sourceIds": [
-          "dp800-d1-json-object"
-        ]
+        "sourceIds": ["dp800-d1-json-object"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "Removing the null clause does not request omission: JSON_OBJECT defaults to NULL ON NULL. Thus B also retains comment and has {\"code\":\"R9\",\"retry\":0,\"comment\":null} as its result state. Positive countercontext: use this exact no-clause constructor when the contract intentionally includes a JSON null member and the documented default behavior is desired. It is a valid default-based way to implement that literal three-member payload, but not the two-member payload required here.",
-        "sourceIds": [
-          "dp800-d1-json-object"
-        ]
+        "sourceIds": ["dp800-d1-json-object"]
       },
       {
         "choiceId": "c",
         "assessment": "supported",
         "rationale": "ABSENT ON NULL omits the key whose value expression is the SQL NULL @comment. The other expressions are nonnull: @code is N'R9' and @retry is the int value 0. The result is therefore {\"code\":\"R9\",\"retry\":0}. Numeric zero is not a null, and the source's numeric construction examples support a JSON number rather than the string \"0\". C alone preserves the supplied code/zero while omitting comment instead of retaining a JSON null or empty-string value.",
-        "sourceIds": [
-          "dp800-d1-json-object"
-        ]
+        "sourceIds": ["dp800-d1-json-object"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "This choice changes the comment value expression from SQL NULL to the nonnull empty string N''. ABSENT ON NULL cannot omit that value, so the documented result state is {\"code\":\"R9\",\"retry\":0,\"comment\":\"\"}. Positive countercontext: the exact constructor is appropriate when the payload must retain an explicitly empty comment string and preserve code plus the numeric zero. The null-only omission rule and character-value construction contract support that literal payload; they do not make empty strings equivalent to SQL NULL.",
-        "sourceIds": [
-          "dp800-d1-json-object"
-        ]
+        "sourceIds": ["dp800-d1-json-object"]
       }
     ],
     "checks": {

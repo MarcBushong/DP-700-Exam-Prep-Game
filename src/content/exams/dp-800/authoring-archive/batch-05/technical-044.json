@@ -31,36 +31,25 @@
         "choiceId": "a",
         "assessment": "contradicted",
         "rationale": "The exact declaration embedding VECTOR(768) creates a native float32 vector column for 768 components, not the stipulated unchanged 1536-component output. A smaller declared dimension is not an implicit reduction request. Literal positive countercontext: a pipeline instead supplies exactly 768 float32 components for each embedding and requires native vector storage. The same declaration then matches that input count and lies within the documented one-to-1998 range. This is a hypothetical input contract, not an unsupported claim about a particular named model's available output sizes. The type reference and training unit's explicit matching rule support both judgments.",
-        "sourceIds": [
-          "dp800-d3-vector-type",
-          "dp800-d3-prepare-vectors-unit"
-        ]
+        "sourceIds": ["dp800-d3-vector-type", "dp800-d3-prepare-vectors-unit"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "The exact declaration embedding VECTOR(1998) specifies 1998 dimensions. The maximum supported number is a bound on the declaration, not a variable-length capacity that infers or resizes a 1536-component value. Literal positive countercontext: the supplied data contract is exactly 1998 float32 components per embedding, with no resizing and a native-vector column requirement. The same declaration is then the documented maximum-sized matching vector type. This countercontext does not assert that any particular provider/model offers 1998-dimensional embeddings; it applies the documented legal dimension range and fixed-output matching rule to a given vector input.",
-        "sourceIds": [
-          "dp800-d3-vector-type",
-          "dp800-d3-prepare-vectors-unit"
-        ]
+        "sourceIds": ["dp800-d3-vector-type", "dp800-d3-prepare-vectors-unit"]
       },
       {
         "choiceId": "c",
         "assessment": "contradicted",
         "rationale": "embedding nvarchar(max) is a text-column declaration, not a native VECTOR declaration. It therefore fails the explicit storage-type requirement even though text can represent the complete numeric array. Literal positive countercontext: an interoperability/archive design deliberately retains embeddings as serialized JSON-array text and does not require native-vector storage. This exact nvarchar(max) declaration is then appropriate for that text representation. The product reference explicitly permits vector conversion to/from nvarchar and explains JSON-array interoperability. The candidate explicitly chooses the other representation, so text length capacity cannot make c a native-vector answer.",
-        "sourceIds": [
-          "dp800-d3-vector-type"
-        ]
+        "sourceIds": ["dp800-d3-vector-type"]
       },
       {
         "choiceId": "d",
         "assessment": "supported",
         "rationale": "The exact declaration embedding VECTOR(1536) selects the native type with the required fixed component count. Omitting the optional base type selects float32 by the product reference, and 1536 is inside the documented one-to-1998 range. The training unit explicitly says the declaration's count must match the model's output. Literal confirming context is the stated pipeline: each embedding already consists of exactly 1536 float32 components and must be stored unchanged as a native vector. No padding, reduction, float16 conversion, automatic sizing or claim about all models' default dimensions is needed.",
-        "sourceIds": [
-          "dp800-d3-vector-type",
-          "dp800-d3-prepare-vectors-unit"
-        ]
+        "sourceIds": ["dp800-d3-vector-type", "dp800-d3-prepare-vectors-unit"]
       }
     ],
     "checks": {

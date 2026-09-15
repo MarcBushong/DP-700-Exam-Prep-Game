@@ -21,9 +21,7 @@
         "text": "Keep Amount nullable and replace the CHECK with CHECK (Amount >= 0)."
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Combine NOT NULL with the existing positive-value CHECK.",
     "deepExplanation": "A CHECK rejects FALSE, not UNKNOWN. An explicit nullability constraint closes the NULL gap without introducing an unwanted uniqueness requirement. Defaults and broader numeric predicates enforce different rules.",
     "whyOtherAnswersAreWrong": {
@@ -36,10 +34,7 @@
     "subskill": "Design and implement database constraints, including PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK, and DEFAULT",
     "difficulty": "intermediate",
     "complexity": "scenario-based",
-    "sourceIds": [
-      "dp800-d1-constraints",
-      "dp800-d1-unique-check"
-    ],
+    "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-database-objects/6-design-implement-constraints",
       "https://learn.microsoft.com/en-us/sql/relational-databases/tables/unique-constraints-and-check-constraints"
@@ -51,11 +46,7 @@
     "generatedAt": "2026-09-14T23:22:42.918Z",
     "lastValidatedAt": "2026-09-14T23:22:42.918Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "constraints",
-      "null-semantics"
-    ],
+    "tags": ["sql-server-2022", "constraints", "null-semantics"],
     "conceptId": "sql-check-unknown-requires-explicit-nullability",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:12:36.732Z",
@@ -90,9 +81,7 @@
         "text": "UNIQUE (TenantId, ExternalCode, Revision)"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Constrain the business-key tuple (TenantId, ExternalCode), not its individual columns or a larger tuple.",
     "deepExplanation": "Composite uniqueness is evaluated across exactly the listed columns. Adding Revision weakens the requested pair-level rule, while using only one component imposes a broader uniqueness restriction than required.",
     "whyOtherAnswersAreWrong": {
@@ -105,29 +94,19 @@
     "subskill": "Design and implement database constraints, including PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK, and DEFAULT",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-unique-check"
-    ],
+    "sourceIds": ["dp800-d1-unique-check"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/relational-databases/tables/unique-constraints-and-check-constraints"
     ],
-    "documentationTitles": [
-      "Unique constraints and check constraints"
-    ],
+    "documentationTitles": ["Unique constraints and check constraints"],
     "generatedAt": "2026-09-14T23:22:42.918Z",
     "lastValidatedAt": "2026-09-14T23:22:42.918Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "composite-key",
-      "uniqueness"
-    ],
+    "tags": ["sql-server-2022", "composite-key", "uniqueness"],
     "conceptId": "sql-composite-unique-business-key-scope",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:12:36.732Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-unique-check"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-unique-check"],
     "verificationNotes": "Independent pass 3 derived accepted and rejected tuples for all four keys from the saved product evidence. A local mathematical sanity check confirmed the pair/triple counterexamples; it was not a SQL Server execution. The raw source's URL/time and its unit/module/preparation ancestry were checked. The NOT NULL/pronoun editorial warnings do not introduce ambiguity. Similar KQL lookup and warehouse-surrogate questions were kept distinct for their different operations. Exact current bindings match; score 47/48. No candidate or source was modified.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:22:42.902Z",
@@ -155,9 +134,7 @@
         "text": "701"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "The final call returns 701; sequence allocation is not rolled back with the transaction.",
     "deepExplanation": "A sequence generates values independently of whether a row is inserted or a transaction commits. The explicit assumptions exclude additional allocations, restart operations and cache-loss scenarios.",
     "whyOtherAnswersAreWrong": {
@@ -170,31 +147,21 @@
     "subskill": "Design and implement SEQUENCES",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-sequences"
-    ],
+    "sourceIds": ["dp800-d1-sequences"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/relational-databases/sequence-numbers/sequence-numbers"
     ],
-    "documentationTitles": [
-      "Sequence numbers"
-    ],
+    "documentationTitles": ["Sequence numbers"],
     "generatedAt": "2026-09-14T23:22:42.918Z",
     "lastValidatedAt": "2026-09-14T23:22:42.918Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "sequence",
-      "transactions"
-    ],
+    "tags": ["sql-server-2022", "sequence", "transactions"],
     "codeLanguage": "sql",
     "codeSnippet": "CREATE SEQUENCE dbo.DispatchNumber\n    AS bigint START WITH 700 INCREMENT BY 1;\nGO\nBEGIN TRANSACTION;\nDECLARE @reserved bigint = NEXT VALUE FOR dbo.DispatchNumber;\nROLLBACK TRANSACTION;\nSELECT NEXT VALUE FOR dbo.DispatchNumber AS FollowingNumber;",
     "conceptId": "sql-sequence-allocation-survives-transaction-rollback",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:12:36.732Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-sequences"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-sequences"],
     "verificationNotes": "Independently traced the exact CREATE/GO/BEGIN/DECLARE/ROLLBACK/SELECT sequence against the original saved MCP article. The code was statically reviewed, not claimed to have run on SQL Server. Tested the reasoning against extra allocations, same-statement repeated calls, restarts and shutdown gaps; none fits the stated script. The sequence source has an observed constraints-unit reference and complete preparation ancestry. Current hashes match the actual prior-pass hashes. Score 46/48; no promotion or authoring repair was performed.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:22:42.902Z",
@@ -222,9 +189,7 @@
         "text": "WITH VIEW_METADATA"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "SCHEMABINDING protects the view's referenced schema from incompatible changes.",
     "deepExplanation": "This is a dependency constraint, not an authorization boundary against an administrator who first removes the binding. The other listed attributes address writable-view criteria, definition text or client metadata.",
     "whyOtherAnswersAreWrong": {
@@ -237,29 +202,19 @@
     "subskill": "Create views",
     "difficulty": "intermediate",
     "complexity": "scenario-based",
-    "sourceIds": [
-      "dp800-d1-create-view"
-    ],
+    "sourceIds": ["dp800-d1-create-view"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-view-transact-sql"
     ],
-    "documentationTitles": [
-      "CREATE VIEW (Transact-SQL)"
-    ],
+    "documentationTitles": ["CREATE VIEW (Transact-SQL)"],
     "generatedAt": "2026-09-14T23:22:42.918Z",
     "lastValidatedAt": "2026-09-14T23:22:42.918Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "views",
-      "schema-binding"
-    ],
+    "tags": ["sql-server-2022", "views", "schema-binding"],
     "conceptId": "sql-schema-bound-view-blocks-dependent-column-drop",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:18:00.668Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-create-view"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-create-view"],
     "verificationNotes": "Independently read the SQL Server syntax and all four attribute descriptions in the raw CREATE VIEW response. Challenged the administrator-removes-binding workaround, cross-platform differences and CHECK OPTION's actual DML scope. Inline SQL labels were inspected; no complete view deployment or live SQL execution is claimed. The actual view-unit reference and upstream saved preparation receipts support source ancestry. Exact current hashes match prior stages. Score 45/48 with lower-end intermediate and conventional-presentation cautions; no content promotion occurred.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:22:42.902Z",
@@ -287,9 +242,7 @@
         "text": "SELECT i.ItemId, d.Price, i.Price FROM inserted i JOIN deleted d ON d.ItemId = i.ItemId WHERE i.Price <> d.Price"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "Treat inserted and deleted as rowsets, join by the unchanged key, and compare the values.",
     "deepExplanation": "The expression must handle every affected row, preserve each row's identity and distinguish an actual value change from a statement merely targeting the column. NOT NULL and the unchanged key make the comparison and pairing unambiguous.",
     "whyOtherAnswersAreWrong": {
@@ -302,26 +255,16 @@
     "subskill": "Create triggers",
     "difficulty": "advanced",
     "complexity": "scenario-based",
-    "sourceIds": [
-      "dp800-d1-triggers",
-      "dp800-d1-create-trigger"
-    ],
+    "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/implement-programmability-objects/6-create-triggers",
       "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-trigger-transact-sql"
     ],
-    "documentationTitles": [
-      "Create triggers",
-      "CREATE TRIGGER (Transact-SQL)"
-    ],
+    "documentationTitles": ["Create triggers", "CREATE TRIGGER (Transact-SQL)"],
     "generatedAt": "2026-09-14T23:22:42.918Z",
     "lastValidatedAt": "2026-09-14T23:22:42.918Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "triggers",
-      "multirow-update"
-    ],
+    "tags": ["sql-server-2022", "triggers", "multirow-update"],
     "conceptId": "sql-dml-trigger-pairs-old-new-rowsets-by-stable-key",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:18:00.668Z",
@@ -356,9 +299,7 @@
         "text": "SUM(Amount) OVER (PARTITION BY TenantId ORDER BY EventTime, EventId ROWS BETWEEN 1 PRECEDING AND CURRENT ROW)"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Use tenant partitioning, the complete deterministic order and an unbounded-preceding ROWS frame.",
     "deepExplanation": "Partitioning, ordering and frame boundaries answer different requirements. Satisfying only two leaves either cross-tenant aggregation, incorrect tie handling or a bounded rolling calculation.",
     "whyOtherAnswersAreWrong": {
@@ -371,29 +312,19 @@
     "subskill": "Write queries that include window functions",
     "difficulty": "advanced",
     "complexity": "scenario-based",
-    "sourceIds": [
-      "dp800-d1-over"
-    ],
+    "sourceIds": ["dp800-d1-over"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql"
     ],
-    "documentationTitles": [
-      "SELECT - OVER clause (Transact-SQL)"
-    ],
+    "documentationTitles": ["SELECT - OVER clause (Transact-SQL)"],
     "generatedAt": "2026-09-14T23:22:42.918Z",
     "lastValidatedAt": "2026-09-14T23:22:42.918Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "window-functions",
-      "running-total"
-    ],
+    "tags": ["sql-server-2022", "window-functions", "running-total"],
     "conceptId": "sql-running-window-partition-order-and-row-frame",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:18:00.668Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-over"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-over"],
     "verificationNotes": "Independent pass 3 constructed separate tenant-leakage, timestamp-peer and third-event counterexamples using the raw OVER definitions. Finite arithmetic checks confirmed cumulative 5,12,23 versus RANGE peers 12,12,23 and the two-row frame 5,12,18; these were not represented as live SQL Server results. The statement's logical-order scope, source ancestry and SQL Server 2012+ frame availability were checked. Current bindings match prior stages. Score 46/48 with conventional-pattern and inline-code readability deductions; no promotion was made.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:22:42.902Z",
@@ -421,9 +352,7 @@
         "text": "NTILE(4)"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "DENSE_RANK preserves ties without leaving rank gaps.",
     "deepExplanation": "Tie handling distinguishes dense ranking from unique row numbering and competition ranking. NTILE answers a distribution-into-groups requirement instead.",
     "whyOtherAnswersAreWrong": {
@@ -436,29 +365,19 @@
     "subskill": "Write queries that include window functions",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-window-unit"
-    ],
+    "sourceIds": ["dp800-d1-window-unit"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/write-advanced-sql-code/3-window-functions"
     ],
-    "documentationTitles": [
-      "Apply window functions for analytics"
-    ],
+    "documentationTitles": ["Apply window functions for analytics"],
     "generatedAt": "2026-09-14T23:22:42.918Z",
     "lastValidatedAt": "2026-09-14T23:22:42.918Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "ranking",
-      "ties"
-    ],
+    "tags": ["sql-server-2022", "ranking", "ties"],
     "conceptId": "sql-dense-rank-preserves-ties-without-rank-gaps",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:22:18.312Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-window-unit"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-window-unit"],
     "verificationNotes": "Independently challenged special datasets where the functions coincide, then used ties and an unequal tie-group size to distinguish their actual semantics. A finite local ranking calculation confirmed the counterexamples; it was not a SQL Server execution. The source is the original MCP teaching unit linked from the saved module and credential preparation path, not a quiz. Exact hashes and frozen source snapshots match. Foundational classification is honest; score 46/48 with conventional-pattern and NTILE-plausibility deductions. No promotion occurred.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:22:42.902Z",
@@ -486,9 +405,7 @@
         "text": ".github/copilot-instructions.md"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "Use .github/copilot-instructions.md for the shared repository instructions.",
     "deepExplanation": "Instruction files provide contextual guidance rather than an enforcement guarantee. Reusable task prompts and one-off chat prompts serve different scopes, so they do not meet the stated automatic repository-context requirement.",
     "whyOtherAnswersAreWrong": {
@@ -501,10 +418,7 @@
     "subskill": "Create and configure GitHub Copilot instruction files",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-ai-instructions",
-      "dp800-d1-ai-security"
-    ],
+    "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/6-create-configure-copilot-instruction-files",
       "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/3-interpret-security-impact"
@@ -516,11 +430,7 @@
     "generatedAt": "2026-09-14T23:22:42.918Z",
     "lastValidatedAt": "2026-09-14T23:22:42.918Z",
     "featureStatus": "GA",
-    "tags": [
-      "copilot",
-      "sql-development",
-      "repository-instructions"
-    ],
+    "tags": ["copilot", "sql-development", "repository-instructions"],
     "conceptId": "copilot-repository-instructions-versus-reusable-task-prompts",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:22:18.312Z",
@@ -555,9 +465,7 @@
         "text": "Create an ordinary non-indexed view containing the producing query and query it twice."
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Materialize the intermediate rows in a local temporary table and reuse that table.",
     "deepExplanation": "A CTE is a statement-scoped expression, not a persisted cache. Repeated definitions and ordinary views do not meet the explicit materialization requirement. This does not assert that the optimizer can never introduce an internal spool within one query.",
     "whyOtherAnswersAreWrong": {
@@ -570,10 +478,7 @@
     "subskill": "Write common table expressions (CTEs)",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-cte",
-      "dp800-d1-views"
-    ],
+    "sourceIds": ["dp800-d1-cte", "dp800-d1-views"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql",
       "https://learn.microsoft.com/en-us/training/modules/implement-programmability-objects/2-create-views"
@@ -585,18 +490,11 @@
     "generatedAt": "2026-09-15T01:46:37.116Z",
     "lastValidatedAt": "2026-09-15T01:46:37.116Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "cte",
-      "materialization"
-    ],
+    "tags": ["sql-server-2022", "cte", "materialization"],
     "conceptId": "sql-cte-statement-scope-versus-reusable-temporary-materialization",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:44:52.033Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-cte",
-      "dp800-d1-views"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-cte", "dp800-d1-views"],
     "verificationNotes": "Independent PASS 3 of repair-006-r1 only, not transferred from its earlier versions or technical verdict. Python canonical SHA-256 and repository parsed fingerprints both reproduced the exact question and March 12, 2026 objective bindings. Frozen primary/teaching receipts and preparation ancestry were inspected. Challenged session versus statement lifetime, repeated definitions, ordinary versus indexed views, name collisions and optimizer spools. The local duplicate scan covered 566 existing-bank records plus the frozen 27-item cohort, excluding same-ID lineage from comparisons; no repository duplicate finding involved this item. Closest inspected CTAS and KQL materialize items concern different mechanisms and scopes. codeReviewed is N/A: no executable snippet or SQL runtime test. Rubric 47/48 passes, but the actual candidate remains untouched. Complete result returned inline; no ledger promotion, file write, browser, installation, delegation or Study unlock.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:22:42.902Z",
@@ -624,9 +522,7 @@
         "text": "Dynamic Data Masking alone"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Deterministic Always Encrypted supports the required equality lookup without secure enclaves.",
     "deepExplanation": "The bigint type avoids character-collation prerequisites. The stated driver and parameterization conditions matter. Deterministic encryption still reveals equality patterns; the answer is not a claim that it hides every relationship between values.",
     "whyOtherAnswersAreWrong": {
@@ -657,11 +553,7 @@
     "generatedAt": "2026-09-14T23:49:44.600Z",
     "lastValidatedAt": "2026-09-14T23:49:44.600Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "always-encrypted",
-      "equality"
-    ],
+    "tags": ["sql-server-2022", "always-encrypted", "equality"],
     "conceptId": "sql-always-encrypted-deterministic-equality-without-enclaves",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:44:52.033Z",
@@ -697,9 +589,7 @@
         "text": "READ UNCOMMITTED"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Use SNAPSHOT for the consistent transaction-level versioned view.",
     "deepExplanation": "RCSI changes READ COMMITTED at statement scope; SNAPSHOT changes the consistency scope to the transaction. The scenario deliberately excludes DDL/schema-lock contention and writer update-conflict handling.",
     "whyOtherAnswersAreWrong": {
@@ -712,10 +602,7 @@
     "subskill": "Preserve data integrity and consistency by using transaction isolation levels and concurrency controls",
     "difficulty": "advanced",
     "complexity": "scenario-based",
-    "sourceIds": [
-      "dp800-d2-isolation-unit",
-      "dp800-d2-transaction-guide"
-    ],
+    "sourceIds": ["dp800-d2-isolation-unit", "dp800-d2-transaction-guide"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/optimize-database-performance/03-preserve-data-integrity-isolation-levels",
       "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-transaction-locking-and-row-versioning-guide"
@@ -727,11 +614,7 @@
     "generatedAt": "2026-09-14T23:49:44.600Z",
     "lastValidatedAt": "2026-09-14T23:49:44.600Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "snapshot",
-      "concurrency"
-    ],
+    "tags": ["sql-server-2022", "snapshot", "concurrency"],
     "conceptId": "sql-snapshot-transaction-view-versus-rcsi-statement-view",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:44:52.033Z",
@@ -766,9 +649,7 @@
         "text": "Microsoft Foundry model management alone"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Use Change Tracking as the changed-row signal for the background refresh worker.",
     "deepExplanation": "This selects the change-detection mechanism, not a complete refresh implementation. Enabling and consuming that mechanism, reading current text and updating stored embeddings remain separate implementation tasks.",
     "whyOtherAnswersAreWrong": {
@@ -781,9 +662,7 @@
     "subskill": "Choose an embedding maintenance method, including table triggers, Change Tracking, Azure Functions with SQL trigger binding, Azure Logic Apps, CDC, CES, and Microsoft Foundry",
     "difficulty": "intermediate",
     "complexity": "scenario-based",
-    "sourceIds": [
-      "dp800-d3-maintenance"
-    ],
+    "sourceIds": ["dp800-d3-maintenance"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/05-generate-maintain-embeddings-sql-database-workloads"
     ],
@@ -793,17 +672,11 @@
     "generatedAt": "2026-09-15T00:39:05.156Z",
     "lastValidatedAt": "2026-09-15T00:39:05.156Z",
     "featureStatus": "GA",
-    "tags": [
-      "embeddings",
-      "change-tracking",
-      "maintenance"
-    ],
+    "tags": ["embeddings", "change-tracking", "maintenance"],
     "conceptId": "sql-embedding-refresh-change-tracking-versus-row-image-capture",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:54:20.823Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-maintenance"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-maintenance"],
     "verificationNotes": "Independently challenged CDC as an asynchronous alternative, trigger-based marking without full images, and Foundry as one component of a larger workflow. The frozen source resolves those distinctions at the mechanism-selection level; no consumer code or native embedding function was claimed to execute. Actual AI preparation-path, module and unit receipts establish ancestry, continuing the already inspected credential DOM/redirect chain. The existing-corpus and cohort comparisons are semantically distinct. Recomputed question/objective hashes match the actual technical binding. Score 45/48; no source, candidate or gameplay status was changed.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T00:39:05.140Z",
@@ -831,9 +704,7 @@
         "text": "B, because its two contributions sum to 2/22"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "B has the highest combined score: 2/22 is greater than 1/21.",
     "deepExplanation": "RRF combines rank-based contributions rather than comparing incompatible raw relevance scores. The value of k is supplied by this problem, not asserted as a universal SQL default or optimal setting.",
     "whyOtherAnswersAreWrong": {
@@ -846,29 +717,19 @@
     "subskill": "Implement reciprocal rank fusion (RRF)",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d3-hybrid"
-    ],
+    "sourceIds": ["dp800-d3-hybrid"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-intelligent-search-with-sql/06-implement-hybrid-search-ranking"
     ],
-    "documentationTitles": [
-      "Implement hybrid search and ranking"
-    ],
+    "documentationTitles": ["Implement hybrid search and ranking"],
     "generatedAt": "2026-09-15T00:39:05.156Z",
     "lastValidatedAt": "2026-09-15T00:39:05.156Z",
     "featureStatus": "GA",
-    "tags": [
-      "hybrid-search",
-      "rrf",
-      "ranking"
-    ],
+    "tags": ["hybrid-search", "rrf", "ranking"],
     "conceptId": "sql-hybrid-rrf-sums-reciprocal-rank-contributions",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:54:20.823Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-hybrid"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-hybrid"],
     "verificationNotes": "Independently evaluated A=C=1/21 and B=2/22=1/11 and challenged single-list rank dominance, implicit source weighting and the partial A/C tie. The formula is interpreted as the stated mathematical specification; no executable T-SQL with integer division was supplied or claimed to run. The raw unit's fractional example and missing-contribution rule support that reading. Absolute-wording warnings were explicitly assessed. Existing search-limit and cohort join/rank questions are semantically distinct. Current hashes, chronology and source ancestry match. Score 45/48; no authored fields or gameplay state were changed.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T00:39:05.140Z",
@@ -896,9 +757,7 @@
         "text": "{\"items\":[{\"item\":{\"label\":\"Field kit\",\"units\":12}}]}"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "The result is an array containing one nested item object.",
     "deepExplanation": "PATH alias nesting, the default array and a named ROOT are distinct formatting controls. Correct formatting preserves structure but does not by itself guarantee a language model will stay grounded.",
     "whyOtherAnswersAreWrong": {
@@ -911,10 +770,7 @@
     "subskill": "Convert structured data to JSON for language model processing",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d3-rag-context",
-      "dp800-d3-for-json"
-    ],
+    "sourceIds": ["dp800-d3-rag-context", "dp800-d3-for-json"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-rag-with-sql/3-prepare-retrieval-context-augmentation",
       "https://learn.microsoft.com/en-us/sql/relational-databases/json/format-query-results-as-json-with-for-json-sql-server"
@@ -926,20 +782,13 @@
     "generatedAt": "2026-09-15T00:39:05.156Z",
     "lastValidatedAt": "2026-09-15T00:39:05.156Z",
     "featureStatus": "GA",
-    "tags": [
-      "rag",
-      "for-json-path",
-      "structured-context"
-    ],
+    "tags": ["rag", "for-json-path", "structured-context"],
     "codeLanguage": "sql",
     "codeSnippet": "SELECT N'Field kit' AS [item.label],\n       12 AS [item.units]\nFOR JSON PATH;",
     "conceptId": "sql-for-json-path-dot-alias-nesting-default-array",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:54:20.823Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-rag-context",
-      "dp800-d3-for-json"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-rag-context", "dp800-d3-for-json"],
     "verificationNotes": "Independently traced the literal SELECT through PATH nesting, default array output and absence of ROOT. The complete code resolves the short-stem warning; the explanation's negated model-grounding guarantee resolves the absolute-wording warning. This was static SQL/JSON reasoning against actual saved unit and product responses, not a claimed Azure SQL execution. Product-reference ancestry through the RAG summary and module was checked. Current content/objective hashes and frozen source dates match the actual technical pass. Score 47/48; no candidate, source or gameplay state was modified.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T00:39:05.140Z",
@@ -967,9 +816,7 @@
         "text": "JSON_VALUE(@response, '$.response.status.http.code')"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Use JSON_VALUE at $.result.choices[0].message.content.",
     "deepExplanation": "Both the JSON path and the extracted value's type matter. The response shape and bounded string length are given explicitly; the answer does not assume every model API uses this envelope or that JSON_VALUE returns arbitrarily long strings.",
     "whyOtherAnswersAreWrong": {
@@ -982,31 +829,21 @@
     "subskill": "Extract language model responses",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d3-rag-responses"
-    ],
+    "sourceIds": ["dp800-d3-rag-responses"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-rag-with-sql/5-generate-process-rag-responses"
     ],
-    "documentationTitles": [
-      "Generate and process RAG responses"
-    ],
+    "documentationTitles": ["Generate and process RAG responses"],
     "generatedAt": "2026-09-15T00:39:05.156Z",
     "lastValidatedAt": "2026-09-15T00:39:05.156Z",
     "featureStatus": "GA",
-    "tags": [
-      "rag",
-      "json-value",
-      "response-parsing"
-    ],
+    "tags": ["rag", "json-value", "response-parsing"],
     "codeLanguage": "json",
     "codeSnippet": "{\"response\":{\"status\":{\"http\":{\"code\":200}}},\"result\":{\"choices\":[{\"message\":{\"role\":\"assistant\",\"content\":\"The requested part is available.\"}}]}}",
     "conceptId": "sql-rag-response-envelope-scalar-json-value-path",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T02:54:20.823Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-rag-responses"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-rag-responses"],
     "verificationNotes": "Independently walked the exact JSON tree and assessed every SQL expression for target location and scalar/object suitability. Checked the alternate unwrapped-payload case, structured content and HTTP-diagnostic goal without claiming they apply to the supplied input. This was static review against the original MCP unit, not an executed SQL or model request. The short-string constraint and bounded explanation prevent extrapolating the source's complete-RAG example. Actual source ancestry, current content/objective hashes and technical chronology match. Score 46/48; only this review artifact was written.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T00:39:05.140Z",
@@ -1034,9 +871,7 @@
         "text": "Human review of the generated query text"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Use database permissions to enforce the connection principal's authorization.",
     "deepExplanation": "Model guidance, network controls and review processes serve useful but different purposes. The database principal should possess only the operations approved for its workflow; this is a control-layer distinction, not an advanced architecture claim.",
     "whyOtherAnswersAreWrong": {
@@ -1049,10 +884,7 @@
     "subskill": "Interpret security impact of using AI-assisted tools",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-ai-security",
-      "dp800-d1-ai-instructions"
-    ],
+    "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/3-interpret-security-impact",
       "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/6-create-configure-copilot-instruction-files"
@@ -1064,11 +896,7 @@
     "generatedAt": "2026-09-15T02:33:57.583Z",
     "lastValidatedAt": "2026-09-15T02:33:57.583Z",
     "featureStatus": "GA",
-    "tags": [
-      "mcp",
-      "least-privilege",
-      "ai-assisted-sql"
-    ],
+    "tags": ["mcp", "least-privilege", "ai-assisted-sql"],
     "conceptId": "sql-mcp-read-only-authorization-independent-of-model-guidance",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T03:16:56.156Z",
@@ -1103,9 +931,7 @@
         "text": "StorageKey and ModifiedAt"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Build the input from DisplayName and Description.",
     "deepExplanation": "Embedding input should reflect the stated semantic task. This is not a universal ban on identifiers or dates: the scenario explicitly identifies where the required meaning resides and which metadata is irrelevant.",
     "whyOtherAnswersAreWrong": {
@@ -1118,29 +944,19 @@
     "subskill": "Identify which columns to include in embeddings",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d3-input-design"
-    ],
+    "sourceIds": ["dp800-d3-input-design"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/04-design-embeddings-sql-database-workloads"
     ],
-    "documentationTitles": [
-      "Design embeddings for SQL database workloads"
-    ],
+    "documentationTitles": ["Design embeddings for SQL database workloads"],
     "generatedAt": "2026-09-15T02:37:51.819Z",
     "lastValidatedAt": "2026-09-15T02:37:51.819Z",
     "featureStatus": "GA",
-    "tags": [
-      "embeddings",
-      "semantic-input",
-      "sql-data"
-    ],
+    "tags": ["embeddings", "semantic-input", "sql-data"],
     "conceptId": "sql-embedding-input-semantic-fields-versus-operational-metadata",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T03:16:56.156Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-input-design"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-input-design"],
     "verificationNotes": "Fresh pass 3 on the repaired beginner/concept-recall record. Independently compared each field pair with the explicit two-field semantic contract and reread the source's qualified metadata guidance. The negative-wording/pronoun warnings are resolved by the clearly named excluded key and timestamp. No embedding generation or SQL code is supplied or claimed to run. Compared the nearest privacy-minimization, maintenance and JSON-formatting questions and retained their operational distinctions. Recomputed hash 8999f0d4ef776e66509f89e2d142c2263b9a9568baabd669b8a7c13c456d4bf7 matches the fresh generation and technical pass. Score 45/48 with substantial distractor and originality cautions; no authored fields or gameplay status were changed.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T00:39:05.140Z",
@@ -1168,9 +984,7 @@
         "text": "CROSS JOIN the lists and keep one output row for every pair"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Use a full outer join by the unique document key and fill absent contributions with zero.",
     "deepExplanation": "Candidate inclusion is separate from the scoring formula. The unique-per-list key premise matters: a many-to-many join could otherwise duplicate shared documents. This does not adopt the training sample's unordered TOP clauses.",
     "whyOtherAnswersAreWrong": {
@@ -1183,29 +997,19 @@
     "subskill": "Implement hybrid search",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d3-hybrid"
-    ],
+    "sourceIds": ["dp800-d3-hybrid"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/design-implement-intelligent-search-with-sql/06-implement-hybrid-search-ranking"
     ],
-    "documentationTitles": [
-      "Implement hybrid search and ranking"
-    ],
+    "documentationTitles": ["Implement hybrid search and ranking"],
     "generatedAt": "2026-09-15T02:37:51.819Z",
     "lastValidatedAt": "2026-09-15T02:37:51.819Z",
     "featureStatus": "GA",
-    "tags": [
-      "hybrid-search",
-      "candidate-union",
-      "sql-joins"
-    ],
+    "tags": ["hybrid-search", "candidate-union", "sql-joins"],
     "conceptId": "sql-hybrid-fusion-preserves-either-list-with-full-outer-join",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T03:16:56.156Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-hybrid"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-hybrid"],
     "verificationNotes": "Fresh pass 3 on the intermediate/technical repair. Independently evaluated the A,B versus B,C sets, shared-key uniqueness, missing-side values and empty-side case against the source's actual full-outer/coalescing fragment. The alternative-join conclusions are static relational deductions, not claimed SQL executions. The source's unordered TOP and other broad hybrid claims remain excluded. Compared one-sided enrichment, duplicate-fanout and KQL innerunique tasks and found distinct reasoning requirements. Recomputed hash 10d83102c3a03830040bcaeb4fc689aeabf74d22b184114508fa9501940ae9e6 matches the fresh generation and technical pass. Score 45/48, including a 3 for derived distractor evidence. No candidate or source was changed or promoted.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T00:39:05.140Z",
@@ -1225,9 +1029,7 @@
         "text": "False"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "The statement is true: VECTOR_DISTANCE performs exact calculation without a vector index.",
     "deepExplanation": "This is a basic function-contract check, not an implementation or performance-design problem. An approximate-search operation has separate API, platform and index prerequisites; it is not selected automatically by VECTOR_DISTANCE.",
     "whyOtherAnswersAreWrong": {
@@ -1238,29 +1040,19 @@
     "subskill": "Identify when to use vector-related types and functions for semantic searching, including VECTOR\\_NORMALIZE, VECTOR\\_DISTANCE, VECTORPROPERTY, and VECTOR\\_SEARCH",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d3-vector-distance"
-    ],
+    "sourceIds": ["dp800-d3-vector-distance"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql"
     ],
-    "documentationTitles": [
-      "VECTOR_DISTANCE (Transact-SQL)"
-    ],
+    "documentationTitles": ["VECTOR_DISTANCE (Transact-SQL)"],
     "generatedAt": "2026-09-15T03:13:13.437Z",
     "lastValidatedAt": "2026-09-15T03:13:13.437Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2025",
-      "vector-distance",
-      "exact-search"
-    ],
+    "tags": ["sql-server-2025", "vector-distance", "exact-search"],
     "conceptId": "sql-vector-distance-is-exact-and-does-not-use-vector-index",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T03:31:28.992Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-vector-distance"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-vector-distance"],
     "verificationNotes": "Fresh third-pass review of repair-023-r1 after rereading the original MCP evidence. Challenged index presence, supported metrics, invalid-argument errors, float precision and the distinction between function behavior and a complete retrieval pipeline. The new explicit beginner True/False form is appropriate for the reasoning actually required; no speculative row-count or metric-switch alternatives remain. The saved search-summary, module and credential-preparation chain provides source ancestry. Current corpus neighbors are semantically distinct, and the pronoun warning is benign. Recomputed hash ec133e12d56d031cd4118d91111a6d8337bc86245502212f2e900e00e4bd0c54 matches generation at 2026-09-15T03:13:13.437Z and the actual technical pass at 2026-09-15T03:19:49.425Z. Score 46/48. No SQL execution, new retrieval, candidate edit or promotion is claimed; the older failed attestation was not changed.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T00:39:05.140Z",
@@ -1288,10 +1080,7 @@
         "text": "ALTER ANY MASK at database scope"
       }
     ],
-    "correctAnswer": [
-      "a",
-      "c"
-    ],
+    "correctAnswer": ["a", "c"],
     "explanation": "Use table SELECT with Phone-column UNMASK.",
     "deepExplanation": "SELECT controls data access, while UNMASK controls masking presentation at its granted scope. The closed permission baseline makes the Phone-only result determinate. This does not claim that dynamic masking prevents inference or provides cryptographic secrecy.",
     "whyOtherAnswersAreWrong": {
@@ -1303,29 +1092,19 @@
     "subskill": "Design and implement Dynamic Data Masking",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d2-masking"
-    ],
+    "sourceIds": ["dp800-d2-masking"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking"
     ],
-    "documentationTitles": [
-      "Dynamic data masking"
-    ],
+    "documentationTitles": ["Dynamic data masking"],
     "generatedAt": "2026-09-15T02:08:44.225Z",
     "lastValidatedAt": "2026-09-15T02:08:44.225Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "masking",
-      "least-privilege"
-    ],
+    "tags": ["sql-server-2022", "masking", "least-privilege"],
     "conceptId": "sql-ddm-select-and-column-unmask-separate-permissions",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T03:20:54.918Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d2-masking"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d2-masking"],
     "verificationNotes": "Fresh independent PASS 3 of repair-011-r2. Python canonical SHA-256 and repository parsed functions reproduce the exact question and objective hashes. Re-derived a+c from actual raw evidence and challenged every pair, effective-authority route and masking limitation. The new b is directly documented; no VIEW DEFINITION evidence is borrowed. The prior r1 manual-review verdict remains attached to its own fingerprint. A same-ID r1 record was observed in the bank with manual-review-required and no verifiedAt; it is repair lineage, not another playable question or a new unique item. The bounded duplicate scan covered 575 bank records and the frozen 27-item cohort, excluding same-ID lineage; no different-item duplicate finding involved this item. Related DDM administration and OneLake role questions test different decisions. codeReviewed is N/A because no executable snippet is supplied. Rubric 47/48 passes. Returned inline without candidate/source edits, file writes, ledger promotion, browser use, delegation or readiness manipulation.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
@@ -1353,9 +1132,7 @@
         "text": "A BLOCK predicate AFTER INSERT"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "Use an AFTER INSERT block predicate.",
     "deepExplanation": "Filtering a row from later reads is different from refusing to create that row. The operation and the state being evaluated determine the appropriate block-predicate timing.",
     "whyOtherAnswersAreWrong": {
@@ -1368,29 +1145,19 @@
     "subskill": "Design and implement Row-Level Security (RLS)",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d2-rls"
-    ],
+    "sourceIds": ["dp800-d2-rls"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/relational-databases/security/row-level-security"
     ],
-    "documentationTitles": [
-      "Row-level security"
-    ],
+    "documentationTitles": ["Row-level security"],
     "generatedAt": "2026-09-15T02:00:26.372Z",
     "lastValidatedAt": "2026-09-15T02:00:26.372Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "rls",
-      "write-predicate"
-    ],
+    "tags": ["sql-server-2022", "rls", "write-predicate"],
     "conceptId": "sql-rls-after-insert-block-versus-existing-row-filter",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T03:20:54.918Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d2-rls"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d2-rls"],
     "verificationNotes": "Independent PASS 3 of repair-012-r1. Both bindings were reproduced with independent canonical SHA-256 and repository parsed functions. Re-derived d from actual raw source sections rather than the technical approval. Challenged filtering versus rejection, old-row versus new-value checks, policy enablement, administrator treatment and platform limits. Scored the current beginner recognition construction, not its earlier Advanced classification. The bounded comparison covered 575 bank records and the frozen 27-item cohort, excluding same-ID lineage; no different-item duplicate finding involved this item. Related OneLake and visibility questions do not test SQL Server INSERT block timing. codeReviewed is N/A: no executable snippet, policy deployment or SQL test. Rubric 46/48 passes. Complete record returned inline without file writes, candidate/source changes, ledger promotion or readiness manipulation.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
@@ -1418,9 +1185,7 @@
         "text": "$schema"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Change the data-source section for database connectivity.",
     "deepExplanation": "Connection settings, runtime API behavior, entity mappings and the validation-schema reference have separate responsibilities. This question does not rely on the teaching unit's version-specific sample flags or configuration-merging examples.",
     "whyOtherAnswersAreWrong": {
@@ -1433,29 +1198,19 @@
     "subskill": "Create configuration files for Data API builder (DAB)",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d2-dab-config"
-    ],
+    "sourceIds": ["dp800-d2-dab-config"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/integrate-sql-solutions-azure-services/2-create-configuration-files-data-api-builder"
     ],
-    "documentationTitles": [
-      "Create configuration files for data API builder"
-    ],
+    "documentationTitles": ["Create configuration files for data API builder"],
     "generatedAt": "2026-09-14T23:49:44.600Z",
     "lastValidatedAt": "2026-09-14T23:49:44.600Z",
     "featureStatus": "GA",
-    "tags": [
-      "data-api-builder",
-      "configuration",
-      "connection"
-    ],
+    "tags": ["data-api-builder", "configuration", "connection"],
     "conceptId": "dab-configuration-database-source-versus-api-runtime-entities",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T03:20:54.918Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d2-dab-config"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d2-dab-config"],
     "verificationNotes": "Independent PASS 3 for unchanged batch-02 item 019. Reproduced the question and objective fingerprints independently with canonical SHA-256 and repository parsed functions. Read the actual configuration receipt and saved module/preparation ancestry. Tested environment references, schema-version matching, runtime route ownership, entity mappings and the distinction between configuration preservation and new-target compatibility. The a key remains unique without adopting unsupported sample flags or merging behavior. The bounded comparison covered 575 bank records and the frozen 27-item cohort; no different-item duplicate finding involved this item. Item 020 shares DAB subject matter but tests a different response contract. codeReviewed is N/A because no executable configuration snippet is supplied; no credentials, connection or API behavior was changed or tested. Rubric 47/48 passes. Returned inline without file writes, candidate/source edits, promotion or readiness manipulation.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
@@ -1483,9 +1238,7 @@
         "text": "Extract"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Use SqlPackage Script to generate the proposed T-SQL without applying it.",
     "deepExplanation": "Artifact generation and deployment execution are distinct. This answer does not assume that Publish drops every target-only object; its behavior depends on the actual deployment options and differences.",
     "whyOtherAnswersAreWrong": {
@@ -1498,10 +1251,7 @@
     "subskill": "Update an SQL database project and deploy changes",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d2-drift",
-      "dp800-d2-project-build"
-    ],
+    "sourceIds": ["dp800-d2-drift", "dp800-d2-project-build"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/implement-cicd-sql-database-projects/05-detect-resolve-schema-drift",
       "https://learn.microsoft.com/en-us/training/modules/implement-cicd-sql-database-projects/02-create-build-validate-sql-database-projects"
@@ -1513,18 +1263,11 @@
     "generatedAt": "2026-09-15T02:57:51.179Z",
     "lastValidatedAt": "2026-09-15T02:57:51.179Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-database-projects",
-      "sqlpackage",
-      "deployment-review"
-    ],
+    "tags": ["sql-database-projects", "sqlpackage", "deployment-review"],
     "conceptId": "sqlpackage-script-versus-publish-extract-deployreport",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T03:36:47.505Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d2-drift",
-      "dp800-d2-project-build"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d2-drift", "dp800-d2-project-build"],
     "verificationNotes": "Fresh independent PASS 3 of repair-016-017-r1 item 017. Independently reproduced the new question and objective fingerprints with canonical SHA-256 and repository parsed functions. Read both actual raw receipts, the newly bound Publish example and the saved module-to-lesson link. Re-derived b and tested artifact format, execution effects, comparison direction, no-difference Publish cases and target drift. Source dates exactly preserve the frozen manifest, including the project-build lastReviewedAt of 2026-09-15T02:57:51.174Z. The bounded duplicate comparison covered 577 bank records and the frozen 27-item cohort, excluding same-ID lineage; no different-item duplicate finding involved this item. No old review hash or score was reused. codeReviewed is N/A because the candidate supplies no executable CLI snippet; no SqlPackage invocation, deployment or live-source retrieval was performed. Rubric 47/48 passes. Complete record returned inline without file writes, candidate/source edits, ledger promotion, browser use, nesting or readiness manipulation.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T02:57:51.174Z",
@@ -1552,9 +1295,7 @@
         "text": "MAX(avg_duration)"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Weight each recorded average by its execution count and divide by the total count.",
     "deepExplanation": "Aggregated statistics rows can represent very different numbers of executions. Averaging their averages changes the denominator and overweights small intervals. The actual teaching query uses SUM(avg_duration * count_executions) divided by SUM(count_executions); the supplied positive counts avoid a zero denominator.",
     "whyOtherAnswersAreWrong": {
@@ -1567,9 +1308,7 @@
     "subskill": "Evaluate query performance by using query execution plans, dynamic management views (DMVs), Query Store, and Query Performance Insight",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d2-store-unit"
-    ],
+    "sourceIds": ["dp800-d2-store-unit"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/optimize-database-performance/05-monitor-tune-queries-query-store"
     ],
@@ -1579,19 +1318,13 @@
     "generatedAt": "2026-09-15T03:41:14.714Z",
     "lastValidatedAt": "2026-09-15T03:41:14.714Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "query-store",
-      "weighted-aggregation"
-    ],
+    "tags": ["sql-server-2022", "query-store", "weighted-aggregation"],
     "codeLanguage": "sql",
     "codeSnippet": "SELECT interval_id, avg_duration, count_executions\nFROM (VALUES\n    (1, CAST(10 AS float), CAST(100 AS bigint)),\n    (2, CAST(1000 AS float), CAST(1 AS bigint))\n) AS Stats(interval_id, avg_duration, count_executions);",
     "conceptId": "sql-query-store-execution-weighted-duration-across-statistics",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T04:18:30.519Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d2-store-unit"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d2-store-unit"],
     "verificationNotes": "Fresh third-pass review of the new execution-weighted calculation. Independently derived A=505, B=2000/101 approximately 19.8019801980198, C=2000 and D=1000, and traced the float/bigint expression types. A local arithmetic sanity check confirmed those distinct values; it was not a SQL Server execution or an automatic grading source. Read the raw weighted Query Store teaching query, the actual performance module and secure-training path, and the saved canonical redirect continuing the credential preparation ancestry. Compared the closest existing KQL weighted-rollup item and recorded a keep-distinct decision with originality 2, not a claim of no conceptual overlap. Current hash 9bf6d8f744cc9b8fbb05335ca2889704734c00917a7ea9a3c0af8138483bb04f matches generation at 2026-09-15T03:41:14.714Z and the actual technical pass at 2026-09-15T03:59:37.577Z. Score 44/48; this attestation does not edit or renew the older manual-review snapshot, sources or candidate status.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
@@ -1619,9 +1352,7 @@
         "text": "Begin a new transaction and repeat the complete operation"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "Retry the complete rolled-back operation in a new transaction.",
     "deepExplanation": "Ordinary blocking, successful commit and deadlock-victim recovery are different states. TRY...CATCH handling can continue after 1205, but it does not restore the old transaction. The supplied safe-retry and no-external-effects premises matter.",
     "whyOtherAnswersAreWrong": {
@@ -1634,29 +1365,19 @@
     "subskill": "Identify and resolve query performance issues, including blocking and deadlocks",
     "difficulty": "intermediate",
     "complexity": "troubleshooting",
-    "sourceIds": [
-      "dp800-d2-deadlocks"
-    ],
+    "sourceIds": ["dp800-d2-deadlocks"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/relational-databases/sql-server-deadlocks-guide"
     ],
-    "documentationTitles": [
-      "Deadlocks guide"
-    ],
+    "documentationTitles": ["Deadlocks guide"],
     "generatedAt": "2026-09-15T03:50:56.570Z",
     "lastValidatedAt": "2026-09-15T03:50:56.570Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "deadlock",
-      "retry"
-    ],
+    "tags": ["sql-server-2022", "deadlock", "retry"],
     "conceptId": "sql-deadlock-1205-retry-whole-transaction",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T04:27:57.227Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d2-deadlocks"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d2-deadlocks"],
     "verificationNotes": "Fresh independent PASS 3 of repair-016-018-020-r2 item 016, generated at 2026-09-15T03:50:56.570Z. Independent canonical SHA-256 and repository parsed functions reproduced the new question and objective bindings. Re-derived d from freshly read raw source sections and tested every literal alternative against a valid other state. The former unsupported commit-original-victim claim is absent; no earlier score or verdict was relabeled. Current corpus checking covered 583 bank records and the frozen 27-item cohort, excluding same-ID lineage; no different-item duplicate finding involved this item. The current dp700-monitor-034 was read and its related recovery pattern is reflected in originality 3. Older same-ID bank content was observed as manual-review-required and remains untouched. codeReviewed is N/A: no executable snippet or SQL test. The new 46/48 rubric passes all mandatory gates. Returned inline without file writes, candidate/source edits, ledger promotion, browser use, nesting or readiness manipulation.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
@@ -1684,9 +1405,7 @@
         "text": "Deploy only the schema model without a reference-data script"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Use a versioned, repeatable post-deployment data script.",
     "deepExplanation": "The table must exist before seeding, and existing keys must be handled on reruns. Each alternative is a valid deployment strategy for another lifecycle, but only the post-deployment reconciliation strategy meets both stated conditions.",
     "whyOtherAnswersAreWrong": {
@@ -1699,9 +1418,7 @@
     "subskill": "Create and manage reference/static data in source control",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d2-reference-data"
-    ],
+    "sourceIds": ["dp800-d2-reference-data"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/implement-cicd-sql-database-projects/03-configure-source-control-manage-reference-data"
     ],
@@ -1711,17 +1428,11 @@
     "generatedAt": "2026-09-15T03:50:56.570Z",
     "lastValidatedAt": "2026-09-15T03:50:56.570Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-database-projects",
-      "reference-data",
-      "postdeployment"
-    ],
+    "tags": ["sql-database-projects", "reference-data", "postdeployment"],
     "conceptId": "sql-project-postdeployment-reference-data-idempotence",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T04:27:57.227Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d2-reference-data"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d2-reference-data"],
     "verificationNotes": "Fresh independent PASS 3 of repair-016-018-020-r2 item 018. Independently reproduced the new question and objective hashes with canonical SHA-256 and repository parsed functions. Freshly read the actual lesson and saved module link; re-derived c and checked every current literal strategy against an appropriate alternate lifecycle. The previous intrinsically invalid options are absent. Challenged first-deployment ordering, retained-key handling, schema-only deployment and the distinction between plain append and guarded INSERT-based reconciliation. The latter is recorded as a clarity qualification, not an unsupported blanket SQL-verb claim. Corpus comparison covered 583 bank records plus the frozen 27-item cohort, excluding same-ID lineage; no different-item duplicate finding involved this item. Related streaming, CDF and cancellation scenarios address different mechanisms. The new rubric is 46/48 and passes every mandatory gate. codeReviewed is N/A: no executable script, build or deployment test. Older manual snapshots remain unchanged. Complete record returned inline without file writes, candidate/source edits, promotion or readiness manipulation.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
@@ -1749,9 +1460,7 @@
         "text": "No REST method"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "POST is the documented default when rest.methods is omitted.",
     "deepExplanation": "Default behavior differs from the available explicit configurations. GET-only, both methods and disabled REST are documented alternatives, not invented API capabilities.",
     "whyOtherAnswersAreWrong": {
@@ -1764,29 +1473,19 @@
     "subskill": "Configure REST or GraphQL endpoints",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d2-dab-procedures"
-    ],
+    "sourceIds": ["dp800-d2-dab-procedures"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/azure/data-api-builder/concept/rest/stored-procedures"
     ],
-    "documentationTitles": [
-      "Stored procedures in the REST API"
-    ],
+    "documentationTitles": ["Stored procedures in the REST API"],
     "generatedAt": "2026-09-15T03:50:56.570Z",
     "lastValidatedAt": "2026-09-15T03:50:56.570Z",
     "featureStatus": "GA",
-    "tags": [
-      "data-api-builder",
-      "stored-procedures",
-      "rest-method"
-    ],
+    "tags": ["data-api-builder", "stored-procedures", "rest-method"],
     "conceptId": "dab-rest-stored-procedure-default-post-method",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T04:27:57.227Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d2-dab-procedures"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d2-dab-procedures"],
     "verificationNotes": "Fresh independent PASS 3 of repair-016-018-020-r2 item 020. Independently reproduced the new question and objective hashes and checked conceptId dab-rest-stored-procedure-default-post-method against the actual endpoint-configuration objective. Freshly read the full raw reference and saved direct parent link. Re-derived b by separating the default from explicit GET, explicit both-method selection and disabled REST. No old first-result-set reasoning or scores were reused. Current comparison covered 583 bank records plus the frozen 27-item cohort, excluding same-ID lineage; no different-item duplicate finding involved this item. Item 019 concerns configuration-section ownership, not this method default. The installed older same-ID record was still manual-review-required and retained its old conceptId; it was not edited. The new rubric is 47/48 and passes every mandatory gate. codeReviewed is N/A because no executable configuration snippet or endpoint test was supplied. Complete result returned inline without file writes, source/candidate changes, ledger promotion, browser use, nesting or readiness manipulation.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
@@ -1814,9 +1513,7 @@
         "text": "SELECT JSON_QUERY(@document);"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Use an explicit nvarchar(max) column in OPENJSON to extract the entire message.",
     "deepExplanation": "The NULL does not imply that the key is absent. JSON_VALUE without RETURNING has a 4,000-character result limit; strict mode changes the failure behavior, not that limit. The SQL Server 2022 scope excludes newer native-json RETURNING syntax.",
     "whyOtherAnswersAreWrong": {
@@ -1847,11 +1544,7 @@
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json",
-      "scalar-length"
-    ],
+    "tags": ["sql-server-2022", "json", "scalar-length"],
     "conceptId": "sql-json-value-overlength-scalar-openjson-max-projection",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T13:50:27.675Z",
@@ -1887,9 +1580,7 @@
         "text": "WITH (sku nvarchar(20) '$.category')"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Map the SQL output column explicitly to '$.SKU'.",
     "deepExplanation": "OPENJSON's matching of JSON path steps and default WITH column names is case-sensitive and collation-unaware. Output alias spelling and property-path spelling are separate choices.",
     "whyOtherAnswersAreWrong": {
@@ -1902,31 +1593,21 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "sourceIds": ["dp800-d1-openjson"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
     ],
-    "documentationTitles": [
-      "OPENJSON (Transact-SQL)"
-    ],
+    "documentationTitles": ["OPENJSON (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "openjson",
-      "case-sensitive-path"
-    ],
+    "tags": ["sql-server-2022", "openjson", "case-sensitive-path"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"SKU\":\"R-84\",\"category\":\"spare\"}';\nSELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20));",
     "conceptId": "sql-openjson-case-sensitive-property-mapping-independent-collation",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:35:08.185Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-openjson"],
     "verificationNotes": "Independent PASS3 of immutable 029 only. Read the exact candidate, matching generation output/claims, current objective map, package policy, frozen manifest, registry/index and raw MCP evidence through the credential-linked design path and JSON unit. Independently recomputed both hashes and re-derived every option before checking technical-029.json's separate reviewer/time binding. Countercontexts preserve each option literally and state changed premises. Static review only; no SQL execution, candidate/source edits, ledger writes or promotion.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
@@ -1954,9 +1635,7 @@
         "text": "detail nvarchar(max) '$.detail.memo'"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Use nvarchar(max) with AS JSON for the nested object.",
     "deepExplanation": "The explicit schema distinguishes scalar extraction from fragment extraction. Increasing the text column length alone does not make a scalar projection return an object.",
     "whyOtherAnswersAreWrong": {
@@ -1969,31 +1648,21 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "sourceIds": ["dp800-d1-openjson"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
     ],
-    "documentationTitles": [
-      "OPENJSON (Transact-SQL)"
-    ],
+    "documentationTitles": ["OPENJSON (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "openjson",
-      "nested-json"
-    ],
+    "tags": ["sql-server-2022", "openjson", "nested-json"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"detail\":{\"items\":2,\"memo\":\"ship\"}}';\nSELECT detail FROM OPENJSON(@payload)\nWITH (/* column definition */);",
     "conceptId": "sql-openjson-as-json-nested-fragment-typed-projection",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:35:08.185Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-openjson"],
     "verificationNotes": "Independent PASS3 of immutable 030 only. Exact candidate/generation, March 12 objectives, package policy, manifest, provenance registry/index and raw MCP source were inspected; the credential-linked JSON unit establishes the source's named-API ancestry. Both hashes were independently recomputed. technical-030.json was checked for binding, chronology and separate identity, not inherited reasoning. Re-derived fragment, NULL, integer and memo outcomes with explicit positive countercontexts. No SQL execution, candidate/source edits, ledger writes or promotion.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
@@ -2021,9 +1690,7 @@
         "text": "A7"
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "The result is A7 from the literal top-level key billing.code.",
     "deepExplanation": "Brackets delimit the SQL column name; they do not turn its dot into a JSON path separator. An explicit '$.billing.code' column path would select the different nested value.",
     "whyOtherAnswersAreWrong": {
@@ -2036,31 +1703,21 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "sourceIds": ["dp800-d1-openjson"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
     ],
-    "documentationTitles": [
-      "OPENJSON (Transact-SQL)"
-    ],
+    "documentationTitles": ["OPENJSON (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "openjson",
-      "literal-json-key"
-    ],
+    "tags": ["sql-server-2022", "openjson", "literal-json-key"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"billing.code\":\"A7\",\"billing\":{\"code\":\"B2\"}}';\nSELECT [billing.code]\nFROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10));",
     "conceptId": "sql-openjson-dotted-column-name-literal-key-versus-nested-path",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:35:08.185Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-openjson"],
     "verificationNotes": "Independent PASS3 of immutable 031 only. Read candidate/generation, exact current objectives, policy, frozen source manifest/registry/index and the raw MCP article, including the dotted-name Remarks and AS JSON requirements. Verified credential-linked training ancestry and independently computed both hashes. technical-031.json supplied only separately checked stage bindings, not inherited conclusions. Countercontexts identify input changes versus the different fragment query explicitly. No SQL execution, authored repair, source/ledger edits or promotion.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
@@ -2088,9 +1745,7 @@
         "text": "WHERE [type] = 0"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Filter the default-schema type column for 2.",
     "deepExplanation": "The value column is nvarchar(max), so its SQL type alone does not establish the original JSON token type. OPENJSON exposes the discriminator only with the default schema, not with a WITH projection.",
     "whyOtherAnswersAreWrong": {
@@ -2103,31 +1758,21 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "sourceIds": ["dp800-d1-openjson"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
     ],
-    "documentationTitles": [
-      "OPENJSON (Transact-SQL)"
-    ],
+    "documentationTitles": ["OPENJSON (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "openjson",
-      "json-token-types"
-    ],
+    "tags": ["sql-server-2022", "openjson", "json-token-types"],
     "codeLanguage": "sql",
     "codeSnippet": "SELECT [key], [value]\nFROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}')\n/* filter */;",
     "conceptId": "sql-openjson-default-type-discriminator-number-versus-numeric-string",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:35:08.185Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-openjson"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-openjson"],
     "verificationNotes": "Independent PASS3 of immutable 032 only. Read exact candidate/generation, current objectives, strict policy, frozen manifest/registry/index and raw MCP evidence with its credential-linked training ancestry. Recomputed both hashes and independently re-derived token codes and the four selected properties before checking technical-032.json's separate stage binding. Explicit countercontexts keep each filter literal and change only the requested token class. No SQL execution, authored/source edits, ledger writes or promotion.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
@@ -2155,9 +1800,7 @@
         "text": "JSON_MODIFY(@payload, '$.contact', N'')"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Use strict mode with SQL NULL on the existing contact path.",
     "deepExplanation": "Deletion, JSON null, the string \"null\", and an empty string are different document states. The path's known existence removes the separate strict-mode missing-property error case.",
     "whyOtherAnswersAreWrong": {
@@ -2170,31 +1813,21 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-json-modify"
-    ],
+    "sourceIds": ["dp800-d1-json-modify"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_MODIFY (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_MODIFY (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json-modify",
-      "null-versus-absence"
-    ],
+    "tags": ["sql-server-2022", "json-modify", "null-versus-absence"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"contact\":\"ops\",\"revision\":6}';",
     "conceptId": "sql-json-modify-strict-null-keeps-existing-key",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:36:40.486Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-json-modify"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-json-modify"],
     "verificationNotes": "Independently re-derived all four document states from the raw MCP reference, including literal positive countercontexts. The computed question/objective hashes match the unchanged generation and technical bindings; this review follows the distinct technical reviewer. The guide, named-API training ancestry, and frozen source dates were checked. Score 45/48. This is static review only: no SQL execution, source refresh, candidate edit, ledger write, or promotion.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
@@ -2222,9 +1855,7 @@
         "text": "An attempt property with the JSON string \"3\""
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "The new property value is the JSON string \"3\".",
     "deepExplanation": "A numeric-looking string is still a text-typed SQL argument. If the contract requires a JSON number, validate and convert the value to the intended numeric SQL type before passing it.",
     "whyOtherAnswersAreWrong": {
@@ -2237,31 +1868,21 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-json-modify"
-    ],
+    "sourceIds": ["dp800-d1-json-modify"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_MODIFY (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_MODIFY (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json-modify",
-      "sql-value-type"
-    ],
+    "tags": ["sql-server-2022", "json-modify", "sql-value-type"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @next nvarchar(10) = N'3';\nSELECT JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', @next);",
     "conceptId": "sql-json-modify-sql-input-type-determines-json-number-or-string",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:36:40.486Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-json-modify"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-json-modify"],
     "verificationNotes": "Independently derived string-valued attempt from the SQL declaration, not the existing JSON number or technical verdict. Numeric replacements and lax SQL NULL supply concrete positive alternatives for every distractor. Exact generation/objective/source bindings and review chronology were checked. Nearest type-discrimination content tests a different operation. Score 45/48 with weak fillers explicitly penalized. Static documentary review only; no SQL execution or candidate/source/ledger changes.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
@@ -2289,9 +1910,7 @@
         "text": "JSON_MODIFY(@payload, 'lax $.stages', NULL)"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Use the append modifier on the existing stages array.",
     "deepExplanation": "The input explicitly supplies an array. A normal property update replaces its value; append is the documented operation for extending that array.",
     "whyOtherAnswersAreWrong": {
@@ -2304,23 +1923,15 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "beginner",
     "complexity": "concept-recall",
-    "sourceIds": [
-      "dp800-d1-json-modify"
-    ],
+    "sourceIds": ["dp800-d1-json-modify"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_MODIFY (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_MODIFY (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2022",
-      "json-array",
-      "append"
-    ],
+    "tags": ["sql-server-2022", "json-array", "append"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"stages\":[\"receive\",\"validate\"]}';",
     "conceptId": "sql-json-modify-append-preserves-existing-array-elements",
@@ -2353,9 +1964,7 @@
         "text": "JSON_OBJECT('code':@code, 'retry':@retry, 'comment':N'' ABSENT ON NULL)"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "Specify ABSENT ON NULL.",
     "deepExplanation": "The null policy concerns SQL NULL values, not numeric zero or empty strings. JSON_OBJECT's default is explicit null inclusion; ABSENT ON NULL must be specified when omission is the intended contract.",
     "whyOtherAnswersAreWrong": {
@@ -2368,31 +1977,21 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-json-object"
-    ],
+    "sourceIds": ["dp800-d1-json-object"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-object-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_OBJECT (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_OBJECT (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "azure-sql-database",
-      "json-object",
-      "optional-properties"
-    ],
+    "tags": ["azure-sql-database", "json-object", "optional-properties"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @code nvarchar(10) = N'R9', @retry int = 0, @comment nvarchar(100) = NULL;\nSELECT /* constructor */;",
     "conceptId": "sql-json-object-absent-on-null-omits-only-null-valued-keys",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:36:40.486Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-json-object"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-json-object"],
     "verificationNotes": "Independently derived the omitted-key object and each explicit-null/empty-string alternative from the raw constructor contract. The duplicate behavior of a and b is an editorial weakness, not ambiguity in key c. Exact hashes, named-API ancestry, and unchanged source dates bind this review. Score 44/48 after actual deductions for redundancy and limited depth. Static source reasoning only; no SQL execution, authored repairs, ledger edits, or promotion.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
@@ -2420,9 +2019,7 @@
         "text": "JSON_ARRAYAGG(Label ORDER BY Position DESC ABSENT ON NULL)"
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "Order inside JSON_ARRAYAGG by Position and specify NULL ON NULL.",
     "deepExplanation": "The two clauses control different parts of the contract. ABSENT ON NULL is the aggregate's default, so preserving positional gaps must be explicit. The documented feature is GA for the stated Azure SQL Database scope; SQL Server 2025 availability is separately labeled Preview.",
     "whyOtherAnswersAreWrong": {
@@ -2435,31 +2032,21 @@
     "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d1-json-arrayagg"
-    ],
+    "sourceIds": ["dp800-d1-json-arrayagg"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-arrayagg-transact-sql"
     ],
-    "documentationTitles": [
-      "JSON_ARRAYAGG (Transact-SQL)"
-    ],
+    "documentationTitles": ["JSON_ARRAYAGG (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:30:44.841Z",
     "lastValidatedAt": "2026-09-15T06:30:44.841Z",
     "featureStatus": "GA",
-    "tags": [
-      "azure-sql-database",
-      "json-arrayagg",
-      "ordered-export"
-    ],
+    "tags": ["azure-sql-database", "json-arrayagg", "ordered-export"],
     "codeLanguage": "sql",
     "codeSnippet": "SELECT /* aggregate expression */\nFROM (VALUES (10, N'z'), (20, NULL), (30, N'a')) AS Input(Position, Label);",
     "conceptId": "azure-sql-json-arrayagg-aggregate-order-and-null-position-preservation",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:36:40.486Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d1-json-arrayagg"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d1-json-arrayagg"],
     "verificationNotes": "Independently derived all four ordered arrays, distinguishing a present SQL NULL row from absence, strings, and empty text. Product evidence establishes Azure SQL Database GA despite the immediate training unit's inaccurate SQL Server 2022 aggregate claim; SQL Server 2025 remains Preview. Exact hashes, ancestry, and frozen source dates were checked. Score 46/48. Static review only, without SQL execution, source refresh, candidate edits, ledger writes, or promotion.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
@@ -2487,9 +2074,7 @@
         "text": "Approximately [-3.0, 4.0]"
       }
     ],
-    "correctAnswer": [
-      "c"
-    ],
+    "correctAnswer": ["c"],
     "explanation": "The norm2 length is 5, so the result is approximately [-0.6, 0.8].",
     "deepExplanation": "The three supported norms use different denominators. Normalization changes scale, not direction; the norm2 calculation preserves the ratio and signs of these two components.",
     "whyOtherAnswersAreWrong": {
@@ -2502,31 +2087,21 @@
     "subskill": "Identify when to use vector-related types and functions for semantic searching, including VECTOR\\_NORMALIZE, VECTOR\\_DISTANCE, VECTORPROPERTY, and VECTOR\\_SEARCH",
     "difficulty": "intermediate",
     "complexity": "technical-implementation",
-    "sourceIds": [
-      "dp800-d3-vector-normalize"
-    ],
+    "sourceIds": ["dp800-d3-vector-normalize"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-normalize-transact-sql"
     ],
-    "documentationTitles": [
-      "VECTOR_NORMALIZE (Transact-SQL)"
-    ],
+    "documentationTitles": ["VECTOR_NORMALIZE (Transact-SQL)"],
     "generatedAt": "2026-09-15T06:57:02.666Z",
     "lastValidatedAt": "2026-09-15T06:57:02.666Z",
     "featureStatus": "GA",
-    "tags": [
-      "sql-server-2025",
-      "vector-normalize",
-      "euclidean-norm"
-    ],
+    "tags": ["sql-server-2025", "vector-normalize", "euclidean-norm"],
     "codeLanguage": "sql",
     "codeSnippet": "DECLARE @v VECTOR(2) = '[-3,4]';\nSELECT VECTOR_NORMALIZE(@v, 'norm2');",
     "conceptId": "sql-vector-normalize-euclidean-norm-calculation",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:38:13.797Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-vector-normalize"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-vector-normalize"],
     "verificationNotes": "Independently reviewed the frozen batch-05 candidate, matching generation output, generation claims, objective map, source index, and .grounding\\dp-expansion\\direct\\batch-05\\technical-046.json. Recomputed both fingerprints; read raw guide, credential, course, training ancestry, and normalization evidence. Local arithmetic confirmed denominators 7, 5, and 4, not SQL execution. Literal countercontexts and full nearby authored items were checked separately from technical conclusions. The 46/48 rubric supports this review disposition without editing or promoting the candidate.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:57:02.652Z",
@@ -2554,9 +2129,7 @@
         "text": "A view was supplied where VECTOR_SEARCH requires a base table."
       }
     ],
-    "correctAnswer": [
-      "a"
-    ],
+    "correctAnswer": ["a"],
     "explanation": "With an earlier index version, filtering happens after the TOP_N candidate selection.",
     "deepExplanation": "This is not a universal statement about current vector indexes. The latest version supports iterative filtering and a different query syntax, with regional rollout and Preview qualifications.",
     "whyOtherAnswersAreWrong": {
@@ -2569,15 +2142,11 @@
     "subskill": "Implement vector search",
     "difficulty": "intermediate",
     "complexity": "troubleshooting",
-    "sourceIds": [
-      "dp800-d3-vector-search"
-    ],
+    "sourceIds": ["dp800-d3-vector-search"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql"
     ],
-    "documentationTitles": [
-      "VECTOR_SEARCH (Transact-SQL) (Preview)"
-    ],
+    "documentationTitles": ["VECTOR_SEARCH (Transact-SQL) (Preview)"],
     "generatedAt": "2026-09-15T06:57:02.666Z",
     "lastValidatedAt": "2026-09-15T06:57:02.666Z",
     "featureStatus": "Preview",
@@ -2590,9 +2159,7 @@
     "conceptId": "sql-earlier-vector-index-top-n-pool-post-filter-empty-result",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:38:13.797Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-vector-search"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-vector-search"],
     "verificationNotes": "Read .grounding\\dp-expansion\\direct\\batch-05\\technical-047.json alongside the unchanged candidate, exact generation record, claims, current objective map, frozen source metadata/index, and actual MCP evidence. Independently checked every failure alternative and the complete credential-to-training-to-reference provenance. The current product's explicit earlier/latest distinction resolves outdated training generalizations. Duplicate diagnostics and nearby full-item comparisons found no same-fact replacement. This documentation-only review scores 44/48; no SQL execution, candidate promotion, or ledger change occurred.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:57:02.652Z",
@@ -2620,9 +2187,7 @@
         "text": "Create the applicable vector index for Embedding using Euclidean distance."
       }
     ],
-    "correctAnswer": [
-      "d"
-    ],
+    "correctAnswer": ["d"],
     "explanation": "Match the vector index to both Embedding and the Euclidean metric.",
     "deepExplanation": "A compatible index is a prerequisite, not a promise that every latest-version query plan will choose ANN. The current optimizer may choose an exact strategy based on query characteristics.",
     "whyOtherAnswersAreWrong": {
@@ -2635,15 +2200,11 @@
     "subskill": "Evaluate vector index types and metrics",
     "difficulty": "intermediate",
     "complexity": "architecture-design",
-    "sourceIds": [
-      "dp800-d3-vector-search"
-    ],
+    "sourceIds": ["dp800-d3-vector-search"],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql"
     ],
-    "documentationTitles": [
-      "VECTOR_SEARCH (Transact-SQL) (Preview)"
-    ],
+    "documentationTitles": ["VECTOR_SEARCH (Transact-SQL) (Preview)"],
     "generatedAt": "2026-09-15T06:57:02.666Z",
     "lastValidatedAt": "2026-09-15T06:57:02.666Z",
     "featureStatus": "Preview",
@@ -2656,9 +2217,7 @@
     "conceptId": "sql-ann-index-compatibility-requires-query-metric-and-column-match",
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-15T15:38:13.797Z",
-    "verifiedAgainstSourceIds": [
-      "dp800-d3-vector-search"
-    ],
+    "verifiedAgainstSourceIds": ["dp800-d3-vector-search"],
     "verificationNotes": "Re-derived d from the frozen candidate and actual METRIC contract after reading .grounding\\dp-expansion\\direct\\batch-05\\technical-048.json, generation output/claims, exact map, source index, raw MCP receipts, and provenance ancestors. Independently recomputed content/objective hashes and checked literal alternative contexts. The approval is limited to compatibility, not DDL coexistence or optimizer selection. Full neighboring items and duplicate diagnostics remain distinct. Score: 45/48; no SQL execution, source renewal, ledger write, or promotion is asserted.",
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-15T06:57:02.652Z",
@@ -2686,9 +2245,7 @@
         "text": "SELECT TOP (25) WITH APPROXIMATE d.Id, r.distance FROM VECTOR_SEARCH(TABLE = dbo.Documents AS d, COLUMN = Embedding, SIMILAR_TO = @q, METRIC = 'cosine') AS r ORDER BY r.distance;"
       }
     ],
-    "correctAnswer": [
-      "b"
-    ],
+    "correctAnswer": ["b"],
     "explanation": "Use SELECT TOP (5) WITH APPROXIMATE and omit the legacy TOP_N parameter.",
     "deepExplanation": "Index version is an answer-determining prerequisite. This does not assume latest-index support on SQL Server 2025 or in an Azure region where the feature has not rolled out, and it does not guarantee that approximate search returns exactly five rows.",
     "whyOtherAnswersAreWrong": {

@@ -7,6 +7,7 @@ import {
 } from '../src/features/dungeons/catalog';
 import { credentialSchema } from '../src/features/dungeons/schema';
 import { dungeonFixture } from './dungeon-fixtures';
+import { hasPlayableIdentity } from '../src/features/dungeons/availability';
 
 describe('data-driven credential and hero-class catalog', () => {
   it('represents all requested identifiers without treating catalog membership as active verification', () => {
@@ -65,9 +66,14 @@ describe('data-driven credential and hero-class catalog', () => {
     );
     expect(
       filterCredentials(credentials, { heroClassId: 'wanderer' }).every(
-        (entry) => entry.isVerified && entry.status === 'active',
+        hasPlayableIdentity,
       ),
     ).toBe(true);
+    expect(
+      filterCredentials(credentials, { heroClassId: 'wanderer' }).map(
+        (entry) => entry.credentialId,
+      ),
+    ).toContain('github-agentic-ai-developer');
     expect(
       filterCredentials(credentials, { heroClassId: 'unknown-class' }),
     ).toEqual([]);

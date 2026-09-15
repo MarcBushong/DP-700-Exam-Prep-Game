@@ -23,33 +23,25 @@
         "choiceId": "a",
         "assessment": "supported",
         "rationale": "The exact name https://sample-a.cognitiveservices.azure.com/ uses the same HTTPS scheme and FQDN as the call. Its root path is a more general enclosing scope, with no differing supplied deployment segment and no query string. The reference's Azure OpenAI example demonstrates this resource-root credential pattern against a deeper embeddings endpoint. Literal confirming context: a credential intentionally covers the stated embed-a call and other authorized paths beneath this same resource host. The exact root name is appropriate for that broader URL enclosure. This says only that the naming/scope rule matches, not that a root credential invents service-side authorization or proves the illustrative host exists.",
-        "sourceIds": [
-          "dp800-d3-create-external-model"
-        ]
+        "sourceIds": ["dp800-d3-create-external-model"]
       },
       {
         "choiceId": "b",
         "assessment": "contradicted",
         "rationale": "The exact name https://sample-a.cognitiveservices.azure.com/openai/deployments/embed-b shares scheme and host but supplies embed-b where the request supplies embed-a. Complete path segments must match; a sibling deployment is not an enclosing path. Literal positive countercontext: keep this credential name unchanged and call https://sample-a.cognitiveservices.azure.com/openai/deployments/embed-b/embeddings?api-version=2024-02-01 instead, with an otherwise valid allowed endpoint and authentication. The supplied segments then match and the credential is the request's parent path, satisfying the same documented rule. This is a hypothetical URL-scope comparison, not a live endpoint or API-version validation.",
-        "sourceIds": [
-          "dp800-d3-create-external-model"
-        ]
+        "sourceIds": ["dp800-d3-create-external-model"]
       },
       {
         "choiceId": "c",
         "assessment": "supported",
         "rationale": "The exact name https://sample-a.cognitiveservices.azure.com/openai/deployments/embed-a matches HTTPS, the resource FQDN, and all supplied segments openai/deployments/embed-a. It ends before the embeddings child segment, so it encloses rather than conflicts with the called endpoint. Literal confirming context: the stated embeddings request should use a credential whose URL scope is limited to the embed-a deployment rather than the whole resource root. This exact name meets that naming requirement without including the call's query string. It is a segment-parent match, not a partial-character prefix or a claim that any same-host URL is sufficient.",
-        "sourceIds": [
-          "dp800-d3-create-external-model"
-        ]
+        "sourceIds": ["dp800-d3-create-external-model"]
       },
       {
         "choiceId": "d",
         "assessment": "contradicted",
         "rationale": "The exact name https://sample-b.cognitiveservices.azure.com/openai/deployments/embed-a has a different FQDN from the call, despite matching deployment segments. The normative protocol-plus-FQDN rule therefore excludes it. Literal positive countercontext: leave this credential name unchanged and instead call https://sample-b.cognitiveservices.azure.com/openai/deployments/embed-a/embeddings?api-version=2024-02-01 with valid authentication on that allowed resource. Host and parent path then match. The product reference's malformed cross-host OpenAI example is not authority for relaxing the rule, and no actual request to either illustrative resource was made.",
-        "sourceIds": [
-          "dp800-d3-create-external-model"
-        ]
+        "sourceIds": ["dp800-d3-create-external-model"]
       }
     ],
     "checks": {
