@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "87a1bb42d35f6f73d2751be7c9d8fa71675bc5fd098ab601cb1c066e86f11204",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "Explicit NULL ON NULL could omit a SQL NULL comment key.",
+        "whyIncorrectInContext": "The constructor derives {\"code\":\"R9\",\"retry\":0,\"comment\":null}; comment remains present, violating required omission.",
+        "couldBeCorrectWhen": "The unchanged constructor fits an API requiring {\"code\":\"R9\",\"retry\":0,\"comment\":null}, with an explicit null placeholder for comment.",
+        "sourceIds": ["dp800-d1-json-object"],
+        "evidenceSummary": "JSON_OBJECT Arguments/json_null_clause specifies conversion of SQL NULL to a JSON null member under NULL ON NULL."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "Omitting the null clause could default to excluding a SQL NULL key.",
+        "whyIncorrectInContext": "The documented default is NULL ON NULL, deriving the same {\"code\":\"R9\",\"retry\":0,\"comment\":null} as option a.",
+        "couldBeCorrectWhen": "The unchanged constructor is correct when {\"code\":\"R9\",\"retry\":0,\"comment\":null} is required and the caller intentionally relies on JSON_OBJECT's default policy.",
+        "sourceIds": ["dp800-d1-json-object"],
+        "evidenceSummary": "The function's json_null_clause definition explicitly states NULL ON NULL is the default; absence of syntax is not ABSENT ON NULL."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "ABSENT ON NULL omits comment while preserving the nonnull code and int zero.",
+        "whyIncorrectInContext": "Not incorrect: only @comment is SQL NULL, so the constructor derives {\"code\":\"R9\",\"retry\":0}.",
+        "couldBeCorrectWhen": "For the shown values, an API requiring exactly {\"code\":\"R9\",\"retry\":0} and no comment member is served by this unchanged constructor.",
+        "sourceIds": ["dp800-d1-json-object"],
+        "evidenceSummary": "Arguments/json_null_clause and Example 3 omit the entire SQL-NULL-valued key. Example 2 demonstrates nonnull string and numeric members remaining in the object."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "ABSENT ON NULL could omit the explicitly supplied empty comment string.",
+        "whyIncorrectInContext": "N'' is nonnull, deriving {\"code\":\"R9\",\"retry\":0,\"comment\":\"\"}; the optional member is not omitted.",
+        "couldBeCorrectWhen": "The unchanged constructor fits a contract requiring {\"code\":\"R9\",\"retry\":0,\"comment\":\"\"}, including a deliberately blank comment.",
+        "sourceIds": ["dp800-d1-json-object"],
+        "evidenceSummary": "The null clause tests SQL NULL, not string emptiness or numeric zero. The constructor's value-expression and conversion rules preserve nonnull string values."
+      }
+    ],
+    "challenges": {
+      "scope": "The platform is Azure SQL Database and the output is constructed JSON object text. No native-json RETURNING option, existing-document mutation, or downstream API behavior is assumed.",
+      "plan": "The question selects a constructor null policy, not a service tier. No plan-dependent feature or external model subscription is invoked.",
+      "role": "The SELECT uses only declared local variables and literal key names, so no table privilege or external authorization alters the proposed output.",
+      "preconditions": "Code is N'R9', retry is int zero, and comment is SQL NULL. Keys are unique and nonnull. The required omission concerns the whole comment member.",
+      "featureStatus": "The admitted reference applies to Azure SQL Database. The candidate uses established JSON_OBJECT text construction and avoids the newer RETURNING json form.",
+      "sourceChanges": "The raw JSON_OBJECT reference and immediate json-unit construction section were read through their indexed receipts. That training body names JSON_OBJECT; exact source snapshots remain unchanged.",
+      "stemSufficiency": "All values and SQL types are supplied, and the contract distinguishes omission, JSON null, and empty text. Default-policy and explicit-policy alternatives cannot both satisfy the required omission.",
+      "explanationBounds": "The explanation correctly limits ABSENT ON NULL to SQL NULL values. It does not remove zero or empty strings, nor imply a general false-value filtering rule.",
+      "reasoningDepth": "The contract-to-policy mapping is a modest implementation task. Retaining zero is useful context but the intermediate label overstates the breadth of a largely single-clause decision.",
+      "answerClues": "Options a and b are behaviorally identical here, testing the same inclusion/default fact twice. Option d provides a real empty-string counterexample, but the repeated alternatives reduce plausibility diversity."
+    },
+    "qualityNotes": "No target duplicate was found against the installed/pending comparison set. Current 026 constructs PATH nesting and wrappers, not optional-key null policy; 034 modifies a pre-existing member rather than constructing a new object. Those are distinct decisions. Within this item, however, a and b repeat one output and one underlying policy. That redundancy and shallow intermediate demand are explicitly penalized; 44/48 is a narrow pass."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-037",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "questionFingerprint": "87a1bb42d35f6f73d2751be7c9d8fa71675bc5fd098ab601cb1c066e86f11204",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-object",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-object-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-object.json",
+        "retrievedAt": "2026-09-15T05:51:09.231Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "JSON_OBJECT (Transact-SQL), Arguments/json_null_clause, defines default NULL ON NULL and explicit ABSENT ON NULL omission of the entire SQL-NULL-valued key. Examples 2 and 3 demonstrate retained nonnull string/numeric values and omitted null-valued members. Empty strings and numeric zero are not SQL NULL; RETURNING json is outside the candidate's syntax."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: NULL ON NULL converts the SQL NULL comment value into a present JSON null member, yielding {\"code\":\"R9\",\"retry\":0,\"comment\":null}. Code and numeric zero remain, but omission of comment is not achieved. This unchanged constructor fits an API requiring a stable object shape with an explicit null placeholder. The function's json_null_clause argument directly supports that alternative rather than treating null inclusion as a syntax error.",
+        "sourceIds": ["dp800-d1-json-object"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: omitting the null clause does not request omission of null-valued keys. JSON_OBJECT defaults to NULL ON NULL, so the derived object still contains \"comment\":null alongside code and retry. This exact constructor is appropriate when {\"code\":\"R9\",\"retry\":0,\"comment\":null} is wanted without spelling out the default. It is behaviorally equivalent to option a here, an editorial redundancy rather than a second correct answer.",
+        "sourceIds": ["dp800-d1-json-object"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "Supported: ABSENT ON NULL omits a key only when its supplied SQL value is NULL. The given @comment meets that condition, while @code and the int value zero do not, producing {\"code\":\"R9\",\"retry\":0}. The source's null-clause definition and constructor examples support both omission and numeric output. This exact constructor satisfies the stated optional-key contract; it does not discard every value that another language might treat as false.",
+        "sourceIds": ["dp800-d1-json-object"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: this choice replaces @comment with the literal N'', which is nonnull text. ABSENT ON NULL therefore retains the member, deriving {\"code\":\"R9\",\"retry\":0,\"comment\":\"\"}. The unchanged constructor is useful when a consumer expects an explicit blank comment rather than an omitted key. The argument's SQL-NULL test does not classify empty strings or numeric zero as null, so its presence cannot rescue this option.",
+        "sourceIds": ["dp800-d1-json-object"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independently derived the omitted-key object and each explicit-null/empty-string alternative from the raw constructor contract. The duplicate behavior of a and b is an editorial weakness, not ambiguity in key c. Exact hashes, named-API ancestry, and unchanged source dates bind this review. Score 44/48 after actual deductions for redundancy and limited depth. Static source reasoning only; no SQL execution, authored repairs, ledger edits, or promotion.",
+    "confidenceReason": "High documentary confidence that only c omits comment while retaining code and numeric zero. Confidence in distractor diversity and intermediate realism is limited; those weaknesses remain visible in the threshold-level score rather than being hidden by technical correctness."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 2,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "44/48. Distractor plausibility is 2 because explicit and implicit NULL ON NULL repeat the same outcome. Difficulty authenticity is 3 for a mostly single-policy decision labeled intermediate; originality is 3 for another conventional null-state contract. Complete typed inputs, direct null-policy evidence, a unique key, useful zero/empty-string explanation, and clear presentation support 4 elsewhere. All critical scores and distractor evidence are 4; the narrow pass does not erase weaknesses."
+  }
+}

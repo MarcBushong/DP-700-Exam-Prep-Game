@@ -1,0 +1,338 @@
+{
+  "question": {
+    "id": "dp800-direct-015",
+    "question": "A SQL Server 2022 query slowed after a deployment. Its previous plan has been evicted from the plan cache. Query Store captured and still retains this query's plans and runtime statistics for the relevant period. Which source provides the requested historical comparison?",
+    "questionType": "single-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The retained Query Store plan and runtime history"
+      },
+      {
+        "id": "b",
+        "text": "Only the current sys.dm_exec_query_stats plan-cache entries"
+      },
+      {
+        "id": "c",
+        "text": "Only the currently running rows in sys.dm_exec_requests"
+      },
+      {
+        "id": "d",
+        "text": "An estimated execution plan generated now"
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Use Query Store's captured and retained history.",
+    "deepExplanation": "The capture and retention premises are essential: Query Store is not a guarantee that every past execution was recorded forever. Current cache/request views and a new estimated plan answer different time-scoped questions.",
+    "whyOtherAnswersAreWrong": {
+      "b": "These statistics correspond to cached plans; they do not recover the specified evicted historical plan.",
+      "c": "Current requests describe active execution, not the retained earlier plan and runtime history requested.",
+      "d": "A new estimated plan describes a current compilation without executing the query. It does not recreate the missing historical runtime evidence."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "optimize-database-performance",
+    "subskill": "Evaluate query performance by using query execution plans, dynamic management views (DMVs), Query Store, and Query Performance Insight",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["dp800-d2-query-store", "dp800-d2-plans-unit"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store",
+      "https://learn.microsoft.com/en-us/training/modules/optimize-database-performance/04-evaluate-query-performance"
+    ],
+    "documentationTitles": [
+      "Monitor performance by using the Query Store",
+      "Evaluate query performance with execution plans and DMVs"
+    ],
+    "generatedAt": "2026-09-14T23:49:44.600Z",
+    "lastValidatedAt": "2026-09-14T23:49:44.600Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "query-store", "history"],
+    "conceptId": "sql-query-store-history-survives-plan-cache-eviction",
+    "verificationStatus": "manual-review-required",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "Independent PASS 3 for dp800-direct-015. The exact candidate and objective bindings were independently reproduced using Python canonical SHA-256 and repository parsed functions. Read actual Query Store and execution-plan/DMV receipts plus saved ancestry. Every answer and countercontext is evidenced; a is uniquely correct. Nevertheless, this review does not inherit the technical reviewer's acceptance of the answer disclosure at beginner level: the stem states that Query Store holds exactly what is requested, leaving little knowledge discrimination. The independent rubric totals 43/48 and therefore fails strict promotion. Local checking covered 566 existing-bank records and the frozen 27-item cohort, excluding same-ID copies; no automatic duplicate finding involved this item. Manually read dp700-monitor-045: its Warehouse history-versus-active choice is closely related but not an exact duplicate, justifying an originality deduction rather than a copying allegation. All review checks are true because correctness, evidence and the review activities pass; qualityReviewed does not override the failed rubric. codeReviewed is N/A, with no executable snippet or runtime test. Complete result returned inline; no file write, candidate/source edit, ledger promotion, browser, delegation or Study unlock.",
+    "requiresManualReview": true,
+    "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
+    "confidenceReason": "High confidence in the factual a answer and all three sourced exclusions. The nonverified verdict is deliberate: construction quality scores 43/48, below the unchanged threshold, despite complete technical evidence. No score is increased to obtain a pass; this exact candidate remains for manual revision and re-review."
+  },
+  "review": {
+    "questionId": "dp800-direct-015",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-independent-adversarial-011",
+    "questionFingerprint": "cef30c7dd01f1c8c0ee13098e48071364aad2e7eb7798a91a71097715767de53",
+    "reviewedAt": "2026-09-15T02:44:52.033Z",
+    "verdict": "manual-review-required",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d2-query-store",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\sql-query-store.json",
+        "retrievedAt": "2026-09-14T23:41:04.402Z",
+        "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+        "supportingSummary": "Independently read the actual saved product receipt. Decoded lines 5 and 61-98 establish query/plan/runtime history, plan-cache eviction, separate persistent stores, capture limits and aggregate runtime intervals. Lines 100-110 show the historical catalog join. No claim about indefinite retention, per-execution actual plans, secondary replicas or plan-forcing guarantees is adopted."
+      },
+      {
+        "sourceId": "dp800-d2-plans-unit",
+        "url": "https://learn.microsoft.com/en-us/training/modules/optimize-database-performance/04-evaluate-query-performance",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\secure\\raw\\performance-plans.json",
+        "retrievedAt": "2026-09-14T22:11:09.914Z",
+        "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+        "supportingSummary": "Read the actual frozen unit. Decoded lines 25-32 define estimated versus runtime-bearing plans; lines 62-85 name sys.dm_exec_query_stats and cached-plan aggregates; lines 87-108 name sys.dm_exec_requests and active-request troubleshooting. These passages directly support every distractor exclusion and alternate context."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "The explicitly captured and retained Query Store records remain the correct source after the prior plan leaves the cache. The answer is technically sound even though the stem essentially states it. dp800-d2-query-store, lines 5 and 61-98.",
+        "sourceIds": ["dp800-d2-query-store"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Cached-plan aggregate statistics cannot recover the specified evicted predecessor. The DMV remains useful for identifying expensive plans still cached, a different task. dp800-d2-plans-unit, lines 62-85; dp800-d2-query-store, lines 61-65.",
+        "sourceIds": ["dp800-d2-plans-unit", "dp800-d2-query-store"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Active-request CPU, waits and blocking observations describe what runs now; they do not retain the required previous plan and its runtime history. dp800-d2-plans-unit, lines 87-108.",
+        "sourceIds": ["dp800-d2-plans-unit"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Current estimated compilation supplies planned operators and estimates, not observations from the earlier execution. Similarity to an earlier shape would not recreate missing runtime history. dp800-d2-plans-unit, lines 25-32.",
+        "sourceIds": ["dp800-d2-plans-unit"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent PASS 3 for dp800-direct-015. The exact candidate and objective bindings were independently reproduced using Python canonical SHA-256 and repository parsed functions. Read actual Query Store and execution-plan/DMV receipts plus saved ancestry. Every answer and countercontext is evidenced; a is uniquely correct. Nevertheless, this review does not inherit the technical reviewer's acceptance of the answer disclosure at beginner level: the stem states that Query Store holds exactly what is requested, leaving little knowledge discrimination. The independent rubric totals 43/48 and therefore fails strict promotion. Local checking covered 566 existing-bank records and the frozen 27-item cohort, excluding same-ID copies; no automatic duplicate finding involved this item. Manually read dp700-monitor-045: its Warehouse history-versus-active choice is closely related but not an exact duplicate, justifying an originality deduction rather than a copying allegation. All review checks are true because correctness, evidence and the review activities pass; qualityReviewed does not override the failed rubric. codeReviewed is N/A, with no executable snippet or runtime test. Complete result returned inline; no file write, candidate/source edit, ledger promotion, browser, delegation or Study unlock.",
+    "confidenceReason": "High confidence in the factual a answer and all three sourced exclusions. The nonverified verdict is deliberate: construction quality scores 43/48, below the unchanged threshold, despite complete technical evidence. No score is increased to obtain a pass; this exact candidate remains for manual revision and re-review."
+  },
+  "envelope": {
+    "credentialId": "dp-800",
+    "objectiveVersion": "March 12, 2026",
+    "questionFingerprint": "cef30c7dd01f1c8c0ee13098e48071364aad2e7eb7798a91a71097715767de53",
+    "sourceIds": ["dp800-d2-query-store", "dp800-d2-plans-unit"],
+    "retrievedAt": "2026-09-14T23:41:04.402Z",
+    "lastValidatedAt": "2026-09-14T23:49:44.600Z",
+    "answerEvidence": [
+      {
+        "choiceId": "a",
+        "sourceIds": ["dp800-d2-query-store"],
+        "summary": "The explicitly captured and retained Query Store records remain the correct source after the prior plan leaves the cache. The answer is technically sound even though the stem essentially states it. dp800-d2-query-store, lines 5 and 61-98."
+      }
+    ],
+    "distractorEvidence": [
+      {
+        "choiceId": "b",
+        "sourceIds": ["dp800-d2-plans-unit", "dp800-d2-query-store"],
+        "summary": "Cached-plan aggregate statistics cannot recover the specified evicted predecessor. The DMV remains useful for identifying expensive plans still cached, a different task. dp800-d2-plans-unit, lines 62-85; dp800-d2-query-store, lines 61-65."
+      },
+      {
+        "choiceId": "c",
+        "sourceIds": ["dp800-d2-plans-unit"],
+        "summary": "Active-request CPU, waits and blocking observations describe what runs now; they do not retain the required previous plan and its runtime history. dp800-d2-plans-unit, lines 87-108."
+      },
+      {
+        "choiceId": "d",
+        "sourceIds": ["dp800-d2-plans-unit"],
+        "summary": "Current estimated compilation supplies planned operators and estimates, not observations from the earlier execution. Similarity to an earlier shape would not recreate missing runtime history. dp800-d2-plans-unit, lines 25-32."
+      }
+    ],
+    "rubric": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-011",
+      "reviewedAt": "2026-09-15T02:44:52.033Z",
+      "notes": "Independent scores: alignment 4 for Query Store/plan/DMV analysis; accuracy 4 for the retained-history distinction; scenarioCompleteness 4 because capture, retention and eviction are explicit; answerUniqueness 4 because only a supplies both historical artifacts; distractorPlausibility 2 because the premise and time qualifiers nearly eliminate alternatives without product knowledge; distractorEvidence 4 for directly documented current-cache, current-request and estimated-plan alternates; documentationStrength 4 for genuine product and teaching evidence; citationSpecificity 4 for exact named sources and their time scopes; difficultyAuthenticity 2 because even beginner recall is largely replaced by repeating a disclosed answer; explanationQuality 4 for accurate retention and runtime bounds; originality 3 because the existing dp700-monitor-045 already tests the main historical-versus-active distinction, although SQL Server cache eviction adds distinct content; clarityAccessibility 4 because the wording is clear. Total 43/48, no zeros, all critical criteria 4. The unchanged 44-point threshold is not met.",
+      "version": 2,
+      "scores": {
+        "alignment": 4,
+        "accuracy": 4,
+        "scenarioCompleteness": 4,
+        "answerUniqueness": 4,
+        "distractorPlausibility": 2,
+        "distractorEvidence": 4,
+        "documentationStrength": 4,
+        "citationSpecificity": 4,
+        "difficultyAuthenticity": 2,
+        "explanationQuality": 4,
+        "originality": 3,
+        "clarityAccessibility": 4
+      }
+    }
+  },
+  "stages": {
+    "generation": {
+      "authorId": "copilot-dp800-direct-author",
+      "generatedAt": "2026-09-14T23:49:44.600Z",
+      "questionFingerprint": "cef30c7dd01f1c8c0ee13098e48071364aad2e7eb7798a91a71097715767de53",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "claims": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-query-store"],
+          "summary": "Query Store retains captured query plans and runtime statistics over time, independently of the transient current plan-cache contents."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-plans-unit", "dp800-d2-query-store"],
+          "summary": "These statistics correspond to cached plans; they do not recover the specified evicted historical plan."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-plans-unit"],
+          "summary": "Current requests describe active execution, not the retained earlier plan and runtime history requested."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-plans-unit"],
+          "summary": "A new estimated plan describes a current compilation without executing the query. It does not recreate the missing historical runtime evidence."
+        }
+      ]
+    },
+    "technical": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "review": {
+        "questionId": "dp800-direct-015",
+        "authorId": "copilot-dp800-direct-author",
+        "reviewerId": "dp800-independent-technical-011",
+        "questionFingerprint": "cef30c7dd01f1c8c0ee13098e48071364aad2e7eb7798a91a71097715767de53",
+        "reviewedAt": "2026-09-15T01:53:27.739Z",
+        "verdict": "verified",
+        "sourceReviews": [
+          {
+            "sourceId": "dp800-d2-query-store",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/performance/monitoring-performance-by-using-the-query-store",
+            "evidencePath": ".grounding\\dp-expansion\\direct\\sql-query-store.json",
+            "retrievedAt": "2026-09-14T23:41:04.402Z",
+            "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+            "supportingSummary": "Frozen lines 5 and 61-98 describe captured query/plan/runtime history, transient plan-cache eviction and persistent Query Store plan/runtime stores. Runtime statistics are time-window aggregates. Only captured, retained history is claimed, not indefinite retention, per-execution actual plans or plan-forcing guarantees."
+          },
+          {
+            "sourceId": "dp800-d2-plans-unit",
+            "url": "https://learn.microsoft.com/en-us/training/modules/optimize-database-performance/04-evaluate-query-performance",
+            "evidencePath": ".grounding\\dp-expansion\\authors\\secure\\raw\\performance-plans.json",
+            "retrievedAt": "2026-09-14T22:11:09.914Z",
+            "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+            "supportingSummary": "Frozen lines 25-30 describe estimated plans without execution; line 66 limits sys.dm_exec_query_stats to cached plans; lines 87-89 identify sys.dm_exec_requests as currently running requests. These distinctions support excluding all three alternatives as sources of evicted historical runtime evidence."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "Query Store retains captured plans and runtime statistics independently of transient plan-cache entries. The explicit capture-and-retention premise supplies the historical evidence required after eviction. dp800-d2-query-store, decoded lines 5 and 61-98.",
+            "sourceIds": ["dp800-d2-query-store"]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "sys.dm_exec_query_stats describes cached plans, not an archive of their evicted predecessors. Current entries cannot recover the specified missing plan/runtime history. dp800-d2-plans-unit, line 66; dp800-d2-query-store, lines 61-65.",
+            "sourceIds": ["dp800-d2-plans-unit", "dp800-d2-query-store"]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "sys.dm_exec_requests reports requests currently running. It does not retain an earlier plan and runtime history after the historical execution ends. dp800-d2-plans-unit, decoded lines 87-89.",
+            "sourceIds": ["dp800-d2-plans-unit"]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "An estimated plan generated now describes a current compilation without executing the query. It contains neither the missing historical execution observations nor their runtime comparison. dp800-d2-plans-unit, decoded lines 25-30.",
+            "sourceIds": ["dp800-d2-plans-unit"]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": true
+        },
+        "verificationNotes": "Independently derived a. The item expressly establishes prior capture and continued retention, avoiding assumptions about defaults, cleanup, unsupported capture or indefinite storage. It asks for historical comparison, not plan forcing or per-execution actual plans. Core Query Store is GA in SQL Server 2022. Beginner/concept-recall is appropriate for recognizing the historical store versus current cache, requests and compilation; naming Query Store in the premise is acceptable at that declared level. Actual frozen receipts and captured credential-to-module/unit/product links were inspected; no live retrieval or SQL execution. Exact taxonomy and source bindings match. Originality checked against supplied prose; batch exact-stem/concept checks are clear, without corpus-wide clearance. codeReviewed is N/A because no executable snippet is supplied. PASS 2 only; no promotion, rubric or adversarial approval.",
+        "confidenceReason": "High confidence: direct Query Store documentation establishes retained plan/runtime history and cache eviction, while the teaching receipt independently defines each competing time scope. No retention or plan-forcing capability beyond the stem is assumed."
+      }
+    },
+    "adversarial": {
+      "questionFingerprint": "cef30c7dd01f1c8c0ee13098e48071364aad2e7eb7798a91a71097715767de53",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-011",
+      "reviewedAt": "2026-09-15T02:44:52.033Z",
+      "verdict": "manual-review-required",
+      "optionChallenges": [
+        {
+          "choiceId": "a",
+          "claimRepresented": "Retained Query Store plans and runtime history can support the requested historical comparison after plan-cache eviction.",
+          "whyIncorrectInContext": "NOT incorrect: the premise expressly confirms that Query Store captured and still retains the relevant evidence. Losing a transient cache entry does not remove the separately retained Query Store records.",
+          "couldBeCorrectWhen": "It is correct for comparing captured, retained plans and time-window runtime statistics for this query. If capture never occurred or retention removed the records, this answer would not reconstruct that missing history.",
+          "sourceIds": ["dp800-d2-query-store"],
+          "evidenceSummary": "dp800-d2-query-store, decoded lines 5, 61-98 and 100-110, documents retained query/plan/runtime history, cache eviction, persistent stores and time-window aggregation."
+        },
+        {
+          "choiceId": "b",
+          "claimRepresented": "Current sys.dm_exec_query_stats entries alone can supply the specified evicted earlier plan and its historical performance evidence.",
+          "whyIncorrectInContext": "These are aggregate statistics for plans that remain cached. The stem expressly removes the needed earlier plan from that cache, so present cache entries cannot provide the requested lost comparison.",
+          "couldBeCorrectWhen": "Use sys.dm_exec_query_stats to rank CPU, reads or execution counts for currently cached plans and inspect their accumulated statistics. That is useful current-cache analysis, not recovery of an evicted predecessor.",
+          "sourceIds": ["dp800-d2-plans-unit", "dp800-d2-query-store"],
+          "evidenceSummary": "dp800-d2-plans-unit, decoded lines 62-85, directly names the DMV and demonstrates cached-plan analysis; dp800-d2-query-store, lines 61-65, describes the historical problem created by eviction."
+        },
+        {
+          "choiceId": "c",
+          "claimRepresented": "Currently running sys.dm_exec_requests rows alone provide the requested earlier plan and runtime history.",
+          "whyIncorrectInContext": "The view reports active requests, not a retained record of earlier completed executions. Its current CPU, wait or blocking details do not supply the missing historical comparison.",
+          "couldBeCorrectWhen": "Use sys.dm_exec_requests to investigate a query that is running now, including its waits, resource consumption or blocking session. That alternate asks about live execution rather than an evicted historical plan.",
+          "sourceIds": ["dp800-d2-plans-unit"],
+          "evidenceSummary": "dp800-d2-plans-unit, decoded lines 87-108, explicitly describes current requests, their metrics and live troubleshooting use cases."
+        },
+        {
+          "choiceId": "d",
+          "claimRepresented": "A newly generated estimated execution plan can replace historical plan and observed runtime evidence.",
+          "whyIncorrectInContext": "It is produced for a current compilation without running the query. Even if it resembles an older plan, it cannot establish that earlier execution's observed runtime statistics.",
+          "couldBeCorrectWhen": "Use an estimated plan to inspect currently proposed operators, access methods and estimated row counts without executing the query. This answers a compilation question, not a historical-performance question.",
+          "sourceIds": ["dp800-d2-plans-unit"],
+          "evidenceSummary": "dp800-d2-plans-unit, decoded lines 21-32, distinguishes estimated plans generated without execution from actual runtime information."
+        }
+      ],
+      "challenges": {
+        "scope": "The comparison requires both the prior plan and observed runtime evidence. Current cached statistics, current requests and a new estimated plan each have a different time/evidence scope. Only the retained Query Store option meets the factual requirement.",
+        "plan": "An estimated plan might coincidentally resemble the old plan, but resemblance is not historical execution evidence. Plan forcing, restoration or re-execution is not requested and cannot be inferred as an alternative source of the missing observations.",
+        "role": "Selecting the appropriate diagnostic source is not executing it or granting access. Appropriate diagnostic permissions remain necessary in practice; Azure-specific DMV permission wording in the unit is not generalized to SQL Server 2022.",
+        "preconditions": "The item explicitly establishes prior capture and continued retention for the relevant period. That closes the meaningful Query Store coverage and cleanup exceptions. It does not depend on defaults, unlimited retention or collection of every execution forever.",
+        "featureStatus": "Core Query Store is documented for SQL Server 2016 and later, including 2022. The SQL Server 2025 secondary-replica subsection and other platform-specific features are not used to support this answer.",
+        "sourceChanges": "Both actual frozen receipts and their performance-summary/module ancestry were read. The review uses history, cache and DMV definitions, not adjacent plan-forcing assertions or unrelated teaching simplifications. Hashes match; no fresh-live or reconstructed evidence is claimed.",
+        "stemSufficiency": "The factual setup is more than sufficient: it already says which named system captured and retains exactly the requested plans and runtime statistics. This closes ambiguity but also discloses the answer rather than requiring independent identification of the historical store.",
+        "explanationBounds": "The explanation accurately limits Query Store to captured and retained history. Runtime statistics are time-window aggregates, not guaranteed per-execution actual plans. Current DMVs can contain useful accumulated observations without being archives of evicted plans.",
+        "reasoningDepth": "Beginner/concept-recall is not inflated to advanced, but this construction still provides little authentic recall: the learner can select a by repeating the premise that Query Store retains the requested evidence, without knowing the feature independently.",
+        "answerClues": "The premise names Query Store and says it captured and still retains this query's plans and runtime statistics; a repeats that promise. Only/currently/now qualifiers make every distractor visibly time-incompatible. This is stronger answer disclosure than necessary prerequisite qualification."
+      },
+      "qualityNotes": "43/48; manual-review-required despite a factually correct and unique a answer. All evidence and critical correctness dimensions pass. The failure is construction quality: strong stem-to-key disclosure, weak competition after that disclosure, and limited novelty relative to the existing Warehouse history-versus-active-request item. No plagiarism or exact duplicate is alleged, and no candidate is promoted."
+    }
+  }
+}

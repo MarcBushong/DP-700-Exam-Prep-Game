@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-046",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-vector-recovery",
+    "questionFingerprint": "e656c0d57b73b4aa6014f9dfd9fad021e6eacc30686449af3606902e88d65939",
+    "reviewedAt": "2026-09-15T15:01:29.553Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-normalize",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-normalize-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-normalize.json",
+        "retrievedAt": "2026-09-15T06:34:21.491Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Read the actual indexed Microsoft Learn MCP receipt for VECTOR_NORMALIZE (Transact-SQL), including Applies to, Syntax, Arguments, Return value, and both examples. SQL Server 2025 is supported. The function scales a vector to unit length while preserving direction. norm1 sums absolute components, norm2 takes the square root of their squared sum, and norminf takes their maximum absolute value. Example 2 declares a vector variable before calling the function. These definitions independently yield denominators 7, 5, and 4 for [-3,4]; only norm2 produces [-0.6,0.8]. The question uses ordinary float32 vector normalization, not the separate Preview vector-index feature. The preserved source timestamps are not new retrieval claims."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The literal pair is [-3/7,4/7], rounded to six decimal places. Arguments > norm_type defines norm1 as the sum of absolute components: abs(-3)+abs(4)=7. Its Euclidean length is 5/7, not 1, so it cannot be the stated norm2 result. Sourced countercontext: this exact pair would be correct if the same [-3,4] input were passed to VECTOR_NORMALIZE with 'norm1' instead. No change of vector direction or component signs is needed for that countercontext.",
+        "sourceIds": ["dp800-d3-vector-normalize"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The literal pair is [-3/4,4/4]. Arguments > norm_type defines norminf as the maximum absolute component, here 4. The pair has Euclidean length 1.25, so it does not meet the requested norm2 unit-length contract. Sourced countercontext: VECTOR_NORMALIZE applied to this same input with 'norminf' would return approximately [-0.75,1.0]. That supported alternative norm is not the norm selected by the immutable SQL.",
+        "sourceIds": ["dp800-d3-vector-normalize"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "Independently applying the documented norm2 definition gives sqrt((-3)^2+4^2)=sqrt(25)=5. Dividing each component by 5 gives [-0.6,0.8], whose squared Euclidean length is 0.36+0.64=1 and whose direction and signs match the input. This is the sole supported option. Context boundary: the same numeric answer would not be the norm1 or norminf normalization of this input; the function's explicitly supplied 'norm2' argument determines the denominator.",
+        "sourceIds": ["dp800-d3-vector-normalize"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The literal pair is the input value, not a unit vector: sqrt(9+16)=5. The source's Return value contract requires a length of 1 in the requested norm, so this pair is not a successful norm2 output. Sourced countercontext: it correctly describes the value assigned to @v before normalization, if the task were to report the original vector rather than the function result; the declaration-then-normalize separation is illustrated in Example 2. No normalized input is invented that could make this length-5 pair a norm2 unit-vector result.",
+        "sourceIds": ["dp800-d3-vector-normalize"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent technical PASS2 only; re-derived answer c. Read immutable candidates.json, the matching generation-output.json candidate and author/time, validation-metadata.json generation claims, candidate-evidence.json, objectives.json, sources.json, source-registry.json and source-retrieval-index.json. Recomputed the exact question and objective fingerprints and checked generation at 2026-09-15T06:57:02.666Z follows the bound objective/source retrievals. Read the raw March 12, 2026 guide, credential and course MCP receipts, the rendered credential training link and redirect receipt, the AI training path, search module, and vector-patterns unit. The latter actually names VECTOR_NORMALIZE, establishing the registry's finite explicit-reference path to this exact product article. Its broader cross-model-normalization language is not adopted: this question only scales one nonzero vector. GA applies to this ordinary SQL Server 2025 normalization call, not Preview indexing or float16. The SQL variable declaration, two-component literal and norm token were reviewed against documentation. A local Python arithmetic calculation confirmed all three denominators and output lengths; no SQL engine, tenant, parser or runtime execution is claimed. Deterministic duplicateFindings and scenarioDuplicateFindings compared each target with all 583 installed questions and the local candidate/generation snapshots: 201 snapshot entries across 35 files consolidate to 60 additional noninstalled authored variants, including these four targets; identical snapshot copies were excluded as self-comparisons. No target exact, lexical, code-shape, choice-order or same-concept diagnostic was emitted. Separately inspected semantic neighbors: installed dp800-direct-024 combines reciprocal ranks, pending dp800-direct-051 converts a chunk-overlap percentage to characters, and pending dp800-direct-044 selects vector dimensions; none tests signed Euclidean normalization or the distinction among these three norms. This is targeted reasoning inspection, not a claim that the deterministic checker performs semantic review. The pronoun and short-scenario warnings are resolved by the displayed expression, fixed platform, nonzero numeric input and explicit norm; the intermediate calculation label is reasonable. Choices preserve signs and comparable numeric presentation without an answer-length or grammar shortcut. Source URL, dates and indexed evidence path remain frozen. This technical verdict neither promotes the candidate nor supplies adversarial review, a realism rubric, or a final ledger attestation.",
+    "confidenceReason": "The product reference explicitly defines all three relevant norms and the unit-length return contract. Independent arithmetic, rather than the author's key, uniquely selects c and supplies literal, documented alternate contexts for a, b and d. The exact source/objective/generation bindings pass existing schemas and provenance checks; SQL runtime behavior was not tested."
+  }
+}

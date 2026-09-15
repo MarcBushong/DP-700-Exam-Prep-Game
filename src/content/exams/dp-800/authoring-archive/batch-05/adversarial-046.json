@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "e656c0d57b73b4aa6014f9dfd9fad021e6eacc30686449af3606902e88d65939",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "The norm2 call returns approximately [-0.428571, 0.571429].",
+        "whyIncorrectInContext": "This pair has squared Euclidean length 25/49, not one. The requested normalization divides by five, not seven.",
+        "couldBeCorrectWhen": "The literal pair is correct for the same input with 'norm1': the sum of absolute components is seven.",
+        "sourceIds": ["dp800-d3-vector-normalize"],
+        "evidenceSummary": "VECTOR_NORMALIZE, Arguments > norm_type and Return value, distinguishes sum-of-absolutes normalization from Euclidean normalization while preserving direction."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "The norm2 call returns approximately [-0.75, 1.0].",
+        "whyIncorrectInContext": "Dividing by four gives this pair, whose Euclidean length is 1.25. It fails the requested unit-Euclidean-length contract.",
+        "couldBeCorrectWhen": "With the unchanged input and 'norminf', the maximum absolute component is four, making this literal output correct.",
+        "sourceIds": ["dp800-d3-vector-normalize"],
+        "evidenceSummary": "Arguments > norm_type explicitly defines norminf by the maximum absolute component, rather than the square root of the squared sum."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "The norm2 call returns approximately [-0.6, 0.8].",
+        "whyIncorrectInContext": "Not incorrect: sqrt(9+16)=5, and dividing both signed components by five gives this unique unit-length, same-direction pair.",
+        "couldBeCorrectWhen": "The displayed nonzero VECTOR(2) value is passed to VECTOR_NORMALIZE with the explicit 'norm2' argument, exactly as supplied.",
+        "sourceIds": ["dp800-d3-vector-normalize"],
+        "evidenceSummary": "The documented Euclidean denominator and Return value direction constraint jointly support this answer; its squared components sum to one."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "The normalization call leaves the literal [-3.0, 4.0] unchanged.",
+        "whyIncorrectInContext": "The unchanged input has Euclidean length five. Successful norm2 normalization cannot return this length-five pair as its unit-length result.",
+        "couldBeCorrectWhen": "A request to inspect @v itself, for example SELECT @v before normalization, correctly returns this original vector value.",
+        "sourceIds": ["dp800-d3-vector-normalize"],
+        "evidenceSummary": "Example 2 separates the assigned vector variable from the normalization calls; Return value requires a normalized, same-direction result."
+      }
+    ],
+    "challenges": {
+      "scope": "The scope is a scalar vector operation on SQL Server 2025. No Azure rollout, ANN index, embedding endpoint, or cross-model comparison is required.",
+      "plan": "No index or optimizer plan determines this result. Applying the specified norm to the supplied vector is sufficient; no performance inference is made.",
+      "role": "The expression uses a locally declared variable, not a protected table or external model. Endpoint credentials and specialized index-management permissions are irrelevant.",
+      "preconditions": "The literal supplies exactly two finite components for VECTOR(2), is nonnull and nonzero, and selects a documented norm. Zero-vector and invalid-token cases cannot change the answer.",
+      "featureStatus": "The admitted normalization reference covers ordinary SQL Server 2025 vector operations without a Preview gate. This does not make VECTOR_SEARCH, vector indexes, or float16 generally available.",
+      "sourceChanges": "The training unit's cross-model normalization generalization is not adopted. The current product reference supports scale and direction only, not alignment of incompatible embedding spaces.",
+      "stemSufficiency": "The pronoun 'this' refers to the displayed expression. Platform, input, dimension count, norm token, and rounding tolerance are explicit; no hidden data is needed.",
+      "explanationBounds": "The explanations correctly distinguish denominators seven, four, and five. Their direction-preservation statement does not promise semantic comparability, retrieval quality, or accelerated search.",
+      "reasoningDepth": "The learner must select the Euclidean denominator and retain signs. This is modest applied arithmetic, not advanced implementation or a multi-stage search design.",
+      "answerClues": "All four alternatives use the same approximate numeric presentation and signs. Extra digits in a reflect sevenths rather than a grammatical or length cue to c."
+    },
+    "qualityNotes": "Compared the target with 584 installed questions and 73 distinct noninstalled authored variants from 229 records in 39 snapshot files; identical self-copies were excluded. No target duplicate diagnostic appeared. Full comparisons with dp800-direct-024, 044, and 051 distinguish reciprocal-rank addition, dimension selection, and percentage overlap from signed norm calculation. The short-scenario warning is resolved by the complete expression; the textbook calculation limits originality and difficulty credit."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-046",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "questionFingerprint": "e656c0d57b73b4aa6014f9dfd9fad021e6eacc30686449af3606902e88d65939",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-normalize",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-normalize-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-normalize.json",
+        "retrievedAt": "2026-09-15T06:34:21.491Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "VECTOR_NORMALIZE (Transact-SQL), Arguments > norm_type, defines the three denominators independently of the candidate. Return value requires unit length in the selected norm while retaining direction; Example 2 demonstrates a vector variable and literal norm arguments. The actual MCP receipt supports SQL Server 2025. Its credential-linked query-patterns parent explicitly names this function, establishing provenance without adopting that parent's broader cross-model claims."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The two numbers are rounded sevenths: -3/7 and 4/7. Their Euclidean length is 5/7, so they cannot satisfy the requested norm2 return contract. Arguments > norm_type supplies a literal positive context: with the same input but 'norm1', abs(-3)+abs(4)=7 is the denominator and this option is correct. Rounding does not bridge the substantial difference between lengths 5/7 and one.",
+        "sourceIds": ["dp800-d3-vector-normalize"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "These components divide the input by four, producing Euclidean length sqrt(0.5625+1)=1.25 rather than one. The documented norminf operation provides the positive context: max(abs(-3),abs(4))=4, so this literal pair is its correct result for the same input. The immutable call instead selects norm2 explicitly. Preserving direction alone is insufficient; the result must also have unit length under the requested norm.",
+        "sourceIds": ["dp800-d3-vector-normalize"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "Using the source's norm2 definition gives sqrt((-3)^2+4^2)=5. Scaling the input by 1/5 yields [-0.6,0.8], with squared length 0.36+0.64=1 and unchanged direction. Thus the option is supported in the actual context, not merely under an alternate interpretation. Choosing norm1 or norminf would change the denominator, but neither alternative is selected by the supplied SQL. Insignificant float rounding cannot create another valid choice.",
+        "sourceIds": ["dp800-d3-vector-normalize"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The literal pair remains the assigned input and has Euclidean length five. Return value requires the function result to have length one, ruling it out without assuming implementation-specific rounding. Its valid positive context is inspection of the original variable, such as SELECT @v, rather than inspection of VECTOR_NORMALIZE's output. Example 2 supports that distinction between a variable's assigned value and a subsequent normalization expression.",
+        "sourceIds": ["dp800-d3-vector-normalize"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independently reviewed the frozen batch-05 candidate, matching generation output, generation claims, objective map, source index, and .grounding\\dp-expansion\\direct\\batch-05\\technical-046.json. Recomputed both fingerprints; read raw guide, credential, course, training ancestry, and normalization evidence. Local arithmetic confirmed denominators 7, 5, and 4, not SQL execution. Literal countercontexts and full nearby authored items were checked separately from technical conclusions. The 46/48 rubric supports this review disposition without editing or promoting the candidate.",
+    "confidenceReason": "The supported result follows from a documented mathematical definition and the explicit, nonzero input. Both alternate normalization outputs have genuine documented contexts, while the unchanged pair belongs to variable inspection. Source identity, exact retrieval/review snapshots, objective binding, and generation chronology agree. Confidence is bounded to this expression and preserved evidence, not SQL runtime testing or unrelated vector features."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 4,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "Score: 46/48. Direct norm definitions establish accuracy, uniqueness, documentation strength, and citation specificity at four. Every distractor represents a recognizable, evidenced operation. The complete expression earns full scenario and clarity credit despite its short stem. Difficulty earns three for a straightforward intermediate calculation; originality earns three because signed 3-4-5 normalization remains close to a textbook illustration, although no bank duplicate was found."
+  }
+}

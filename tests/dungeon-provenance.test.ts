@@ -215,6 +215,49 @@ describe('guide-linked official source provenance', () => {
     };
     expect(inspect(fixture).length).toBeGreaterThan(0);
   });
+  it('preserves locale-neutral credential training links without permitting locale-neutral evidence', () => {
+    const fixture = strictFixture(1, 'training');
+    const source = fixture.raw.sourceRegistry.sources[1];
+    const target = source.canonicalUrl.replace(
+      '/en-us/training/',
+      '/training/',
+    );
+    source.parents[0] = {
+      ...source.parents[0],
+      sourceId: undefined,
+      credentialUrl: fixture.credential.officialUrls.credential!,
+      targetUrl: target,
+    };
+    expect(strictEvidenceUrlSchema.safeParse(target).success).toBe(false);
+    expect(inspect(fixture)).toEqual([]);
+  });
+  it.each([
+    'http://learn.microsoft.com/training/modules/synthetic-source-role/2-principles',
+    'https://learn.microsoft.com.evil.test/training/modules/synthetic-source-role/2-principles',
+    'https://learn.microsoft.com/training/modules/different-source/2-principles',
+    'https://learn.microsoft.com/fr-fr/training/modules/synthetic-source-role/2-principles',
+    'https://learn.microsoft.com/training/modules/synthetic-source-role/knowledge-check',
+    'https://learn.microsoft.com/training/modules/synthetic-source-role/2-principles?redirect=example',
+    'https://learn.microsoft.com/training/modules/synthetic-source-role/%32-principles',
+    'https://learn.microsoft.com/azure/cosmos-db/overview',
+  ])('rejects unbound or unsafe locale-neutral receipts: %s', (targetUrl) => {
+    const fixture = strictFixture(1, 'training');
+    fixture.raw.sourceRegistry.sources[1].parents[0].targetUrl = targetUrl;
+    expect(inspect(fixture).length).toBeGreaterThan(0);
+  });
+  it('limits locale normalization to direct training receipts, never documentation or references', () => {
+    const fixture = strictFixture(1, 'training');
+    const source = fixture.raw.sourceRegistry.sources[1];
+    source.parents[0].targetUrl = source.canonicalUrl.replace(
+      '/en-us/training/',
+      '/training/',
+    );
+    source.parents[0].relation = 'explicit-reference';
+    expect(inspect(fixture).length).toBeGreaterThan(0);
+    source.parents[0].relation = 'direct-link';
+    source.sourceClass = 'doc';
+    expect(inspect(fixture).length).toBeGreaterThan(0);
+  });
   it('preserves an exact credential-course-path bridge without granting course technical evidence', () => {
     const fixture = strictFixture();
     const records = fixture.raw.sourceRegistry.sources;

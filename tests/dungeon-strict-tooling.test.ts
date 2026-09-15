@@ -63,6 +63,8 @@ describe('strict tooling without model calls or manufactured reviews', () => {
     ['gh-600', 'github-agentic-ai-developer'],
     ['GH-600', 'github-agentic-ai-developer'],
     ['dp-700', 'dp-700'],
+    ['DP-800', 'dp-800'],
+    ['DP-420', 'dp-420'],
   ])(
     'resolves %s without duplicating packages or stable storage IDs',
     (input, output) => {
@@ -115,9 +117,100 @@ describe('strict tooling without model calls or manufactured reviews', () => {
       await rm(root, { recursive: true, force: true });
     }
   });
+  it.each(['dp-800', 'dp-420'])(
+    'scaffolds credential-neutral three-pass instructions for %s without manufacturing content',
+    async (credentialId) => {
+      const root = resolve(
+        '.grounding',
+        `synthetic-dp-three-pass-${randomUUID()}`,
+      );
+      try {
+        const request = buildGenerationRequest(taxonomy, {
+          authorId: 'synthetic-dp-author',
+          requestId: 'synthetic-dp-request',
+          requestedCount: 165,
+          targetVerified: 150,
+          reviewPolicy: 'three-pass-v1',
+          credentialId,
+          provider: 'Microsoft',
+          createdAt: date,
+        });
+        await scaffoldGeneration(root, request);
+        expect((await readdir(root)).sort()).toEqual([
+          'generate-three-pass.prompt.md',
+          'request.json',
+          'source-approval-request.json',
+          'verify-adversarial.prompt.md',
+          'verify-technical.prompt.md',
+        ]);
+        for (const name of [
+          'generate-three-pass.prompt.md',
+          'verify-technical.prompt.md',
+          'verify-adversarial.prompt.md',
+        ]) {
+          const prompt = await readFile(resolve(root, name), 'utf8');
+          expect(prompt).toContain('request');
+          expect(prompt).not.toMatch(
+            /GH-300|GH-600|github-copilot|github-agentic-ai-developer/,
+          );
+        }
+        expect(
+          JSON.parse(await readFile(resolve(root, 'request.json'), 'utf8'))
+            .credentialId,
+        ).toBe(credentialId);
+      } finally {
+        await rm(root, { recursive: true, force: true });
+      }
+    },
+  );
 });
 
 describe('operator-safe cosmetic duplicate warnings and independent decisions', () => {
+  it('preserves empty-word and contained-word lexical decisions without pairwise set allocation', () => {
+    const emptyA = question('empty-a', {
+      question:
+        'The and for with that this which what from your you are can should would?',
+      conceptId: 'empty-a',
+    });
+    const emptyB = question('empty-b', {
+      question:
+        'Would should can are you your from what which this that with for and the?',
+      conceptId: 'empty-b',
+    });
+    expect(duplicateFindings([emptyA, emptyB])).toEqual([]);
+    const short = question('contained-short', {
+      question: 'Alpha beta gamma delta for the and?',
+      conceptId: 'contained-short',
+    });
+    const long = question('contained-long', {
+      question: 'Alpha beta gamma delta epsilon zeta for the?',
+      conceptId: 'contained-long',
+    });
+    expect(duplicateFindings([short, long])).toMatchObject([
+      {
+        code: 'near-identical',
+        severity: 'blocking',
+        message: expect.stringContaining('lexical overlap 0.67'),
+      },
+    ]);
+  });
+  it('normalizes each candidate once, rather than once for every comparison pair', () => {
+    let stemReads = 0;
+    const bank = Array.from({ length: 8 }, (_, index) => {
+      const candidate = question(`synthetic-cache-${index}`);
+      const stem = `Synthetic distinct condition ${index} requires a documented configuration decision.`;
+      Object.defineProperty(candidate, 'question', {
+        get() {
+          stemReads++;
+          return stem;
+        },
+        enumerable: true,
+      });
+      return Object.freeze(candidate);
+    });
+    expect(scenarioDuplicateFindings(bank)).toEqual([]);
+    expect(stemReads).toBe(bank.length);
+  });
   it.each([
     ['watermark > 100', 'watermark >= 100'],
     ['@{variables("table")}', '{variables("table")}'],

@@ -1,0 +1,913 @@
+[
+  {
+    "id": "dp800-direct-087",
+    "question": "On SQL Server 2022, the function below exists. A SELECT expression must use its declared default argument, so future changes to the default are respected. Which invocation does that?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "dbo.ScaleValue(7)"
+      },
+      {
+        "id": "b",
+        "text": "dbo.ScaleValue(DEFAULT)"
+      },
+      {
+        "id": "c",
+        "text": "dbo.ScaleValue(NULL)"
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Pass DEFAULT in the SELECT invocation.",
+    "deepExplanation": "Omitting an optional stored-procedure argument is a different calling convention. This question explicitly uses a function in SELECT, not its EXECUTE exception.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It passes the current numeric value explicitly instead of referencing the declared default.",
+      "c": "It supplies SQL NULL rather than selecting the declared default."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "implement-programmability-objects",
+    "subskill": "Create scalar functions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d1-create-function"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-function-transact-sql"
+    ],
+    "documentationTitles": ["CREATE FUNCTION (Transact-SQL)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "scalar-udf", "default-argument"],
+    "codeLanguage": "sql",
+    "codeSnippet": "CREATE FUNCTION dbo.ScaleValue(@factor int = 7)\nRETURNS int AS BEGIN RETURN @factor * 2; END;",
+    "conceptId": "sql-scalar-udf-select-call-default-keyword",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-088",
+    "question": "A SQL Server 2022 reusable function must accept a customer identifier, return a rowset that callers can join, and define that rowset with one SELECT whose columns determine the output schema. No procedural table-building steps are needed. Which object form fits?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A scalar user-defined function."
+      },
+      {
+        "id": "b",
+        "text": "A multistatement table-valued function with a declared return table."
+      },
+      {
+        "id": "c",
+        "text": "A stored procedure returning a result set."
+      },
+      {
+        "id": "d",
+        "text": "An inline table-valued function."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Use an inline table-valued function.",
+    "deepExplanation": "The choice is about output and definition shape, not a promise that an inline function is always faster than every alternative.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It returns one scalar value rather than the required composable table.",
+      "b": "That form explicitly declares and populates a return table instead of using the requested inferred single-SELECT form.",
+      "c": "It can return results but is not the requested function usable directly as a joined table expression."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "implement-programmability-objects",
+    "subskill": "Create table-valued functions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-create-function",
+      "dp800-d1-tvf-unit",
+      "dp800-d1-procedures-unit"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-function-transact-sql",
+      "https://learn.microsoft.com/en-us/training/modules/implement-programmability-objects/5-create-table-valued-functions",
+      "https://learn.microsoft.com/en-us/training/modules/implement-programmability-objects/3-create-stored-procedures"
+    ],
+    "documentationTitles": [
+      "CREATE FUNCTION (Transact-SQL)",
+      "Create table-valued functions",
+      "Create stored procedures"
+    ],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "inline-tvf", "composable-rowset"],
+    "conceptId": "sql-inline-tvf-single-select-no-return-table-variable",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-089",
+    "question": "A SQL Server 2022 query has two customer rows. A correlated TVF returns two orders for the first customer and no orders for the second. The report must show the two orders and also one row for the second customer with NULL order columns. Which operator preserves exactly that missing-order customer?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "OUTER APPLY"
+      },
+      {
+        "id": "b",
+        "text": "CROSS APPLY"
+      },
+      {
+        "id": "c",
+        "text": "CROSS JOIN with an independent order set."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Use OUTER APPLY.",
+    "deepExplanation": "The result has three rows: two matches for the first customer and one NULL-extended row for the second. No final WHERE condition removes that NULL-extended row.",
+    "whyOtherAnswersAreWrong": {
+      "b": "It drops the left row when its corresponding right result is empty.",
+      "c": "An independent cross product does not perform the required per-customer correlation."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "implement-programmability-objects",
+    "subskill": "Create table-valued functions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d1-from-apply"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql"
+    ],
+    "documentationTitles": [
+      "FROM clause plus JOIN, APPLY, PIVOT (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "outer-apply", "missing-row"],
+    "conceptId": "sql-outer-apply-preserves-left-row-when-correlated-tvf-empty",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-090",
+    "question": "The SQL Server procedure shown returns a status and an output value. A caller needs @value to receive 42 and @status to receive 0. Which invocation preserves both channels?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "EXEC @value = dbo.ReadMarker @marker = @status OUTPUT;"
+      },
+      {
+        "id": "b",
+        "text": "EXEC dbo.ReadMarker @marker = @value OUTPUT;"
+      },
+      {
+        "id": "c",
+        "text": "EXEC @status = dbo.ReadMarker @marker = @value OUTPUT;"
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Capture the return status and use OUTPUT for the marker parameter.",
+    "deepExplanation": "An output parameter, an integer RETURN status and a SELECT result set are not interchangeable ways of binding these caller variables.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This places the integer return status into @value and the marker into @status, reversing the required destinations.",
+      "b": "The output marker is captured but the procedure's return status is not assigned to @status."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "implement-programmability-objects",
+    "subskill": "Create stored procedures",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d1-procedures-unit"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/implement-programmability-objects/3-create-stored-procedures"
+    ],
+    "documentationTitles": ["Create stored procedures"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "procedure", "output-parameter"],
+    "codeLanguage": "sql",
+    "codeSnippet": "CREATE PROCEDURE dbo.ReadMarker @marker int OUTPUT\nAS BEGIN SET @marker = 42; RETURN 0; END;\nGO\nDECLARE @value int = -1, @status int;",
+    "conceptId": "sql-procedure-output-parameter-distinct-from-return-status",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-091",
+    "question": "A SQL Server 2022 multistatement TVF must construct its rowset using permitted local state, without modifying persistent database data. Which operation is documented as allowed inside the function body?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "INSERT an order into a persistent business table."
+      },
+      {
+        "id": "b",
+        "text": "INSERT rows into the function's local return-table variable."
+      },
+      {
+        "id": "c",
+        "text": "Use TRY...CATCH to wrap the function body."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Populate the local return-table variable.",
+    "deepExplanation": "Local table-variable changes are different from modifying persistent tables. This does not authorize arbitrary side effects inside a UDF.",
+    "whyOtherAnswersAreWrong": {
+      "a": "User-defined functions cannot perform actions that modify database state; the procedure unit separately demonstrates persistent order insertion.",
+      "c": "CREATE FUNCTION excludes TRY...CATCH from allowed control-of-flow statements; the procedure unit separately demonstrates that construct."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "implement-programmability-objects",
+    "subskill": "Create table-valued functions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d1-create-function", "dp800-d1-procedures-unit"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-function-transact-sql",
+      "https://learn.microsoft.com/en-us/training/modules/implement-programmability-objects/3-create-stored-procedures"
+    ],
+    "documentationTitles": [
+      "CREATE FUNCTION (Transact-SQL)",
+      "Create stored procedures"
+    ],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "multistatement-tvf", "local-state"],
+    "conceptId": "sql-multistatement-tvf-can-modify-local-return-table-not-persistent-table",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-092",
+    "question": "A SQL Server 2022 function uses SCHEMABINDING and valid references to a table. A proposed table change would invalidate that function's definition. Which dependency handling does the documentation require before the conflicting change can proceed?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Leave the schema-bound definition unchanged and alter an unrelated table instead."
+      },
+      {
+        "id": "b",
+        "text": "Change only a default argument value unrelated to the referenced column."
+      },
+      {
+        "id": "c",
+        "text": "Read the function's definition without changing it."
+      },
+      {
+        "id": "d",
+        "text": "Modify or drop the function to remove the conflicting dependency first."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Remove or revise the dependent binding before the conflicting table change.",
+    "deepExplanation": "SCHEMABINDING is a dependency constraint, not just a descriptive label. The question does not propose silently dropping production functions without a controlled migration.",
+    "whyOtherAnswersAreWrong": {
+      "a": "That does not remove the actual conflicting dependency.",
+      "b": "An unrelated parameter change does not remove the binding on the table column.",
+      "c": "Inspection can identify dependencies but does not remove them."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "implement-programmability-objects",
+    "subskill": "Create scalar functions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d1-create-function"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-function-transact-sql"
+    ],
+    "documentationTitles": ["CREATE FUNCTION (Transact-SQL)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "udf", "schemabinding"],
+    "conceptId": "sql-function-schema-binding-protects-referenced-definition",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-093",
+    "question": "On SQL Server 2022, a scalar UDF is known to be non-inlineable. Its definition explicitly requests INLINE = ON. Which documented result should the developer expect from that incompatible request?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "An error because INLINE = ON was requested for a non-inlineable UDF."
+      },
+      {
+        "id": "b",
+        "text": "Automatic ON/OFF selection based on inlineability because no option was supplied."
+      },
+      {
+        "id": "c",
+        "text": "A declared INLINE = OFF setting."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "The explicit incompatible INLINE = ON request raises an error.",
+    "deepExplanation": "The question does not enumerate inlineability rules or imply that every scalar UDF must be inlineable on SQL Server.",
+    "whyOtherAnswersAreWrong": {
+      "b": "That is the documented omitted-option behavior, but the scenario supplies ON.",
+      "c": "That is a different explicit request, not the result of the submitted ON definition."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "implement-programmability-objects",
+    "subskill": "Create scalar functions",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["dp800-d1-create-function"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-function-transact-sql"
+    ],
+    "documentationTitles": ["CREATE FUNCTION (Transact-SQL)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "udf-inlining", "explicit-option"],
+    "conceptId": "sql-scalar-udf-inline-on-rejects-noninlineable-definition",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-094",
+    "question": "A SQL Server 2022 function accepts a parameter whose type is a user-defined table type. Which parameter modifier does the CREATE FUNCTION reference require for that input?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "SCHEMABINDING"
+      },
+      {
+        "id": "b",
+        "text": "INLINE = ON"
+      },
+      {
+        "id": "c",
+        "text": "READONLY"
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Declare the table-valued parameter READONLY.",
+    "deepExplanation": "This input-table restriction is distinct from a multistatement TVF's local return-table variable, which the function can populate.",
+    "whyOtherAnswersAreWrong": {
+      "a": "That is a function-level dependency option, not the required table-parameter modifier.",
+      "b": "That is a scalar-UDF inlining option and does not declare a table parameter's access mode."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "implement-programmability-objects",
+    "subskill": "Create scalar functions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d1-create-function"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-function-transact-sql"
+    ],
+    "documentationTitles": ["CREATE FUNCTION (Transact-SQL)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "table-valued-parameter", "readonly"],
+    "conceptId": "sql-udf-table-valued-parameter-requires-readonly",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-095",
+    "question": "An ordinary SQL Server 2022 reporting role needs SELECT on all present and future tables and views in the Reports schema, but no access is requested in other schemas. No conflicting denials or ownership exceptions apply. Which grant scope matches that boundary?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "db_datareader membership for the whole database."
+      },
+      {
+        "id": "b",
+        "text": "SELECT ON SCHEMA::Reports."
+      },
+      {
+        "id": "c",
+        "text": "SELECT only on today's individual Reports tables."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Grant SELECT at Reports schema scope.",
+    "deepExplanation": "Granting at a broader scope would exceed the stated boundary; individually enumerating today's objects would not implement the requested future-object policy.",
+    "whyOtherAnswersAreWrong": {
+      "a": "That role reads all user tables/views rather than only the Reports schema.",
+      "c": "Individual current-object grants do not express the requested future-object schema grant."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Design and implement object-level permissions",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["dp800-d2-permissions-unit", "dp800-d2-database-roles"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/implement-data-security-compliance/5-design-implement-object-level-permissions",
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles"
+    ],
+    "documentationTitles": [
+      "Manage permissions and secure access",
+      "Database-level roles"
+    ],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "schema-permissions", "future-objects"],
+    "conceptId": "sql-schema-select-covers-future-objects-within-schema",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-096",
+    "question": "An ordinary SQL Server 2022 user has SELECT on dbo.Tasks through two independent sources: a direct grant and membership in a custom role with the same table grant. There are no denials, column overrides, ownership privileges or other grants. An administrator removes only the direct grant using REVOKE. Which access remains?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "No SELECT, because the user's only grant was removed."
+      },
+      {
+        "id": "b",
+        "text": "No SELECT because an explicit table DENY blocks role inheritance."
+      },
+      {
+        "id": "c",
+        "text": "SELECT only through a still-existing direct grant."
+      },
+      {
+        "id": "d",
+        "text": "SELECT through the unchanged custom role grant."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "The role-based SELECT grant remains effective.",
+    "deepExplanation": "Removing one recorded grant is not the same as an effective-permission denial. The closed initial permission set makes the surviving source explicit.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The user still has the independent role grant stated in the scenario.",
+      "b": "The administrator used REVOKE and the scenario excludes any DENY.",
+      "c": "The direct grant was removed; the surviving source is role membership."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Design and implement object-level permissions",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d2-permissions-unit", "dp800-d2-revoke"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/implement-data-security-compliance/5-design-implement-object-level-permissions",
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/revoke-transact-sql"
+    ],
+    "documentationTitles": [
+      "Manage permissions and secure access",
+      "REVOKE (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "revoke", "effective-permissions"],
+    "conceptId": "sql-revoke-direct-grant-does-not-remove-other-role-grant",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-097",
+    "question": "An ordinary non-owner, non-sysadmin SQL Server 2022 user has a table-level DENY SELECT on dbo.Profile but an explicit column-level GRANT SELECT on PublicName. No higher-scope denial or other permission affects the query. The user selects only PublicName. Which documented compatibility exception matters?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The column-level GRANT can prevail over the table-level DENY for PublicName."
+      },
+      {
+        "id": "b",
+        "text": "A same-scope column DENY overrides the column grant."
+      },
+      {
+        "id": "c",
+        "text": "The user's sysadmin membership bypasses the denial."
+      },
+      {
+        "id": "d",
+        "text": "REVOKE removed the specific column grant."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Do not apply an unconditional 'DENY always wins' rule to this documented exception.",
+    "deepExplanation": "The question is narrowly scoped to the SQL Server 2022 column/table compatibility exception, not all permission hierarchies or future behavior.",
+    "whyOtherAnswersAreWrong": {
+      "b": "No column DENY is present in the scenario.",
+      "c": "The user is explicitly not sysadmin.",
+      "d": "The grant remains in the stated permission set."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Design and implement object-level permissions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d2-deny", "dp800-d2-revoke"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/deny-transact-sql",
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/revoke-transact-sql"
+    ],
+    "documentationTitles": ["DENY (Transact-SQL)", "REVOKE (Transact-SQL)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "column-permission", "deny-exception"],
+    "conceptId": "sql-table-deny-column-grant-compatibility-exception",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-098",
+    "question": "An ordinary SQL Server 2022 service account needs to read and modify all user-table data. It has db_datawriter membership but no db_datareader membership, direct SELECT grants, ownership or administrator role. Which additional fixed role supplies the missing read capability without database-administration authority?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "db_owner"
+      },
+      {
+        "id": "b",
+        "text": "db_ddladmin"
+      },
+      {
+        "id": "c",
+        "text": "db_datareader"
+      },
+      {
+        "id": "d",
+        "text": "db_backupoperator"
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Add db_datareader for the missing read capability.",
+    "deepExplanation": "Fixed datawriter and datareader roles have distinct permissions. This scenario explicitly requests broad data access; narrower custom grants are preferable when the actual scope is smaller.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It grants broad database configuration and maintenance authority beyond the missing read capability.",
+      "b": "It authorizes DDL rather than providing the specifically requested fixed read-data role.",
+      "d": "It supplies backup capability, not the missing data-reader role."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Design and implement object-level permissions",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d2-database-roles"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles"
+    ],
+    "documentationTitles": ["Database-level roles"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "database-roles", "separate-read-write"],
+    "conceptId": "sql-database-datawriter-does-not-include-datareader",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-099",
+    "question": "A SQL Server 2022 user received SELECT on dbo.Reference WITH GRANT OPTION and has made no onward grants. The administrator wants to remove only that user's delegation ability while keeping the underlying SELECT permission. Which operation targets the grant option rather than denying use?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "DENY SELECT on dbo.Reference to the user."
+      },
+      {
+        "id": "b",
+        "text": "REVOKE GRANT OPTION FOR SELECT on dbo.Reference from the user."
+      },
+      {
+        "id": "c",
+        "text": "REVOKE SELECT on dbo.Reference from the user."
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Revoke the grant option specifically.",
+    "deepExplanation": "The reference warns that GRANT OPTION FOR behaves differently when the original permission lacks a grant option. The stem explicitly establishes the option and excludes onward grants.",
+    "whyOtherAnswersAreWrong": {
+      "a": "That denies use rather than preserving the existing SELECT capability.",
+      "c": "It removes the grant itself instead of specifically retaining use while removing delegation."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Design and implement object-level permissions",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d2-revoke", "dp800-d2-deny"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/revoke-transact-sql",
+      "https://learn.microsoft.com/en-us/sql/t-sql/statements/deny-transact-sql"
+    ],
+    "documentationTitles": ["REVOKE (Transact-SQL)", "DENY (Transact-SQL)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "grant-option", "delegation"],
+    "conceptId": "sql-revoke-grant-option-retains-use-when-original-has-delegation",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-100",
+    "question": "A SQL Server 2022 audit already has its destination configured. Which component should the administrator use to select the database-level actions that will be sent to that audit?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The SQL Server Audit object."
+      },
+      {
+        "id": "b",
+        "text": "Windows Event Viewer."
+      },
+      {
+        "id": "c",
+        "text": "A server audit specification."
+      },
+      {
+        "id": "d",
+        "text": "A database audit specification."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Use a database audit specification.",
+    "deepExplanation": "The specification and audit are separate components and both must be enabled for collection. Reading a target is a later operation.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It defines the instance-level audit and destination; a database specification selects the stated action scope.",
+      "b": "It reads recorded Windows event-log entries rather than selecting database actions.",
+      "c": "It collects server-level action groups rather than the requested database-level actions."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Implement auditing",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": ["dp800-d2-sql-audit"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-database-engine"
+    ],
+    "documentationTitles": ["SQL Server Audit (Database Engine)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "audit-components", "database-actions"],
+    "conceptId": "sql-server-audit-object-destination-versus-specification-actions",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-101",
+    "question": "A SQL Server 2022 administrator creates an audit with a valid file target and creates and enables its database audit specification. The audit object itself has never been enabled. Matching database actions occur, but no audit entries arrive. Which missing state transition is directly identified by the documented workflow?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Enable the server audit object."
+      },
+      {
+        "id": "b",
+        "text": "Enable the already-enabled database audit specification again."
+      },
+      {
+        "id": "c",
+        "text": "Use Event Viewer to read a Windows event-log target."
+      },
+      {
+        "id": "d",
+        "text": "Read existing audit files using fn_get_audit_file."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Enable the audit object as well as its specification.",
+    "deepExplanation": "Configuration, collection state and event reading are separate stages of SQL Server auditing.",
+    "whyOtherAnswersAreWrong": {
+      "b": "That does not change the disabled audit object's state.",
+      "c": "The configured target is a file and the audit has not produced records; changing the reader does not enable collection.",
+      "d": "Reading existing files does not enable the collection process."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Implement auditing",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": ["dp800-d2-sql-audit"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-database-engine"
+    ],
+    "documentationTitles": ["SQL Server Audit (Database Engine)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "audit-state", "enablement"],
+    "conceptId": "sql-new-audit-disabled-even-when-action-specification-enabled",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-102",
+    "question": "A database with an enabled database audit specification is attached to a SQL Server 2022 instance. No server audit on that instance has the GUID referenced by the specification. What documented issue must the administrator address before that specification records events?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The specification's actions are merely waiting for a new file reader."
+      },
+      {
+        "id": "b",
+        "text": "The target file should be archived because retention has filled its storage."
+      },
+      {
+        "id": "c",
+        "text": "The specification is orphaned and needs a matching audit association."
+      },
+      {
+        "id": "d",
+        "text": "The administrator should switch from database actions to server actions."
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Resolve the orphaned specification's audit GUID association.",
+    "deepExplanation": "An enabled database specification is not self-contained; it depends on the associated server audit in the destination instance.",
+    "whyOtherAnswersAreWrong": {
+      "a": "A reader cannot supply the missing audit GUID association.",
+      "b": "The scenario identifies a missing audit association, not a full file target.",
+      "d": "Changing event scope does not restore the specification's missing association."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Implement auditing",
+    "difficulty": "advanced",
+    "complexity": "troubleshooting",
+    "sourceIds": ["dp800-d2-sql-audit"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-database-engine"
+    ],
+    "documentationTitles": ["SQL Server Audit (Database Engine)"],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "audit-guid", "database-attach"],
+    "conceptId": "sql-audit-specification-orphaned-after-attach-missing-guid",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-103",
+    "question": "A SQL Server 2022 audit analyst needs to read audit files through fn_get_audit_file. The analyst has no broader server-administration role, and the server's file access is already configured. Which documented permission is sufficient for this read task without granting CONTROL SERVER?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "CONTROL SERVER"
+      },
+      {
+        "id": "b",
+        "text": "VIEW SERVER SECURITY AUDIT"
+      },
+      {
+        "id": "c",
+        "text": "db_backupoperator membership"
+      }
+    ],
+    "correctAnswer": ["b"],
+    "explanation": "Use VIEW SERVER SECURITY AUDIT for the SQL Server 2022 read capability.",
+    "deepExplanation": "This is scoped to the stated version and function. It does not equate database data-reader membership with server audit permissions.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It can authorize access but is broader than the requested read-only audit capability.",
+      "c": "That database role supplies backup operations, not the stated server audit-file read permission."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Implement auditing",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": ["dp800-d2-sql-audit", "dp800-d2-database-roles"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-database-engine",
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles"
+    ],
+    "documentationTitles": [
+      "SQL Server Audit (Database Engine)",
+      "Database-level roles"
+    ],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "audit-reader", "least-privilege"],
+    "conceptId": "sql-2022-audit-file-reader-view-server-security-audit-permission",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-104",
+    "question": "A SQL Server 2022 service needs SELECT and UPDATE on two named tables only. It must not read all user data, run arbitrary DDL or manage the database. Which role design most directly preserves that requested scope?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Membership in db_owner."
+      },
+      {
+        "id": "b",
+        "text": "Membership in db_datareader and db_datawriter."
+      },
+      {
+        "id": "c",
+        "text": "Membership in db_ddladmin."
+      },
+      {
+        "id": "d",
+        "text": "A user-defined database role with the specific object grants."
+      }
+    ],
+    "correctAnswer": ["d"],
+    "explanation": "Create a custom role with only the required object permissions.",
+    "deepExplanation": "The role remains a database-scoped security principal; it is not an internal persona bundle or a substitute for correctly authenticated database access.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It grants database administration beyond the two-table data task.",
+      "b": "Those roles apply across user tables rather than only the two named objects.",
+      "c": "It supplies DDL authority rather than the narrowly defined data permissions."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Design and implement object-level permissions",
+    "difficulty": "intermediate",
+    "complexity": "architecture-design",
+    "sourceIds": ["dp800-d2-database-roles", "dp800-d2-permissions-unit"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/database-level-roles",
+      "https://learn.microsoft.com/en-us/training/modules/implement-data-security-compliance/5-design-implement-object-level-permissions"
+    ],
+    "documentationTitles": [
+      "Database-level roles",
+      "Manage permissions and secure access"
+    ],
+    "generatedAt": "2026-09-15T16:05:21.338Z",
+    "lastValidatedAt": "2026-09-15T16:05:21.338Z",
+    "featureStatus": "GA",
+    "tags": ["sql-server-2022", "custom-role", "object-permissions"],
+    "conceptId": "sql-custom-database-role-fits-narrow-object-permissions",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  }
+]

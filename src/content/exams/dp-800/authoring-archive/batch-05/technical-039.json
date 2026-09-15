@@ -1,0 +1,89 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-039",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-models-recovery",
+    "questionFingerprint": "3ac3500dedd9aae7f5e97a7a9ecb962321ae63c5aad4f37d08080e0ee915079a",
+    "reviewedAt": "2026-09-15T15:06:17.563Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-external-models-unit",
+        "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/03-create-manage-external-model-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\external-models-unit.json",
+        "retrievedAt": "2026-09-15T06:07:09.387Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual Microsoft Learn MCP text of Create and manage external models in SQL. The What is an external model and Create an external model sections distinguish endpoint metadata from inference and explicitly say creation neither invokes the model nor generates output. The Modify section describes ALTER EXTERNAL MODEL as a metadata update; the Use section separately invokes AI_GENERATE_EMBEDDINGS for document descriptions. Reuse across queries supports retaining an already valid definition. The unit's broad assertion that external models do not run inside SQL Server is not a universal current contract: the product reference separately documents a local Preview ONNX workflow. This candidate explicitly concerns a remote endpoint, and its deep explanation preserves that exception."
+      },
+      {
+        "sourceId": "dp800-d3-create-external-model",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\create-external-model.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read CREATE EXTERNAL MODEL (Transact-SQL), including its object description, grammar, owner_name, permissions, remote examples and local-runtime section. It creates a database-unique named object containing endpoint location, authentication and purpose. AUTHORIZATION explicitly selects an existing user or role as owner; it is not an instruction to generate table data. The Azure OpenAI examples demonstrate explicit ownership independently of model invocation. The reference applies to Azure SQL Database and SQL Server 2025. The local ONNX example is Windows-specific and requires Preview configuration and additional runtime prerequisites; its existence supports the candidate's explicit refusal to generalize remote-only behavior. The unrelated inconsistent OpenAI credential hostname example and SCHEMABINDING wording are not used as evidence."
+      },
+      {
+        "sourceId": "dp800-d3-generate-embeddings",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\ai-generate-embeddings.json",
+        "retrievedAt": "2026-09-15T06:34:21.572Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read AI_GENERATE_EMBEDDINGS (Transact-SQL). Its introduction uses a precreated database model definition to generate embeddings. Example C describes generation with a table update, and the end-to-end sequence separately lists model registration, embedding generation and insertion into storage. Those distinct workflow operations support invoking the model and persisting results rather than expecting registration to backfill rows. The Return types paragraph says single-column table/JSON rows, whereas the SELECT and UPDATE examples use scalar-looking expressions. I do not resolve or conceal that inconsistency: this review approves only the documented separation of registration, inference and persistence, not the executable correctness of a particular SELECT/UPDATE form, SQL return type, conversion or transaction strategy."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Registering a replacement with another owner changes which model object exists and who owns it; it does not invoke the endpoint or write embeddings into the ordinary column. Successful registration and authentication are already given. Literal positive countercontext: an authorized deployment deliberately introduces a successor definition under an available database-unique name and requires that replacement to belong to a different existing service user or role. Registering the replacement with AUTHORIZATION for that explicit owner is then the appropriate ownership/deployment action, as the owner_name contract and Azure OpenAI example document. It remains registration, not a data-population operation. This hypothetical does not assert that merely granting CREATE executes DDL or that changing ownership secretly performs inference.",
+        "sourceIds": [
+          "dp800-d3-create-external-model",
+          "dp800-d3-external-models-unit"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "An additional named endpoint definition is still metadata. The existing valid definition is reusable, so a second registration is neither necessary nor sufficient to populate its document embeddings. Literal positive countercontext: two workloads intentionally use different remote embedding deployments and must retain both connections simultaneously. Registering the second endpoint under a different database-unique model name supplies that additional reusable definition. The training unit's reusable-definition contract and the product reference's unique-name and LOCATION arguments establish this legitimate purpose. They do not say that registering either definition processes existing rows.",
+        "sourceIds": [
+          "dp800-d3-external-models-unit",
+          "dp800-d3-create-external-model"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Changing connection metadata affects how later calls find or authenticate to an endpoint. It cannot replace the missing inference-and-write step, and the stem already establishes that the current endpoint and authentication are valid. Literal positive countercontext: the service has moved to a different valid endpoint URL while dependent queries must keep using the existing model identifier. Altering that existing model's endpoint connection metadata is then the appropriate maintenance action. The training unit's Modify an external model section explicitly describes updating endpoint, credential or configuration metadata without rewriting dependent queries. No undocumented ALTER syntax or automatic row regeneration is inferred.",
+        "sourceIds": ["dp800-d3-external-models-unit"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "The missing workflow operation is to perform inference for the document text and store the resulting embeddings. Creation establishes the callable definition but does not itself invoke it; the stated ordinary nullable column has neither a computed generation expression nor a generation trigger. Literal confirming context is the stated one: a valid remote model is registered, existing descriptions have not been embedded, and their stored values must be populated. The training unit distinguishes registration from AI-function invocation, while the function reference separately lists generation and persistence and describes a table-update use. This establishes the workflow answer without asserting that the conflicting scalar-looking examples prove a particular SQL return shape, or reporting any SQL or endpoint execution.",
+        "sourceIds": [
+          "dp800-d3-external-models-unit",
+          "dp800-d3-generate-embeddings"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Fresh independent technical PASS 2 of immutable dp800-direct-039 only; the author is copilot-dp800-direct-author and this reviewer is dp800-technical-models-recovery. I read the actual candidate, generation-output.json, its generation entry and option claims in validation-metadata.json, candidate-evidence.json, objectives.json, the cited sources.json records, source-registry.json branches and source-retrieval-index.json. The repository questionFingerprint helper freshly returned 3ac3500dedd9aae7f5e97a7a9ecb962321ae63c5aad4f37d08080e0ee915079a for the raw candidate, parsed candidate and generation-output copy, matching the generation binding. The objective helper matched both this frozen map and the installed map. The actual .grounding\\dp-expansion\\dp-800-guide.json MCP receipt, retrieved 2026-09-14T18:19:19.493Z, explicitly measures skills as of March 12, 2026 and places Create and manage external models under Design and implement models and embeddings in the 25-30% AI domain. I also re-read the captured DP-800 credential and course, not an inferred future outline.\n\nEvery sourceReviews entry preserves its exact frozen URL, retrieval time, 2026-09-15T06:57:02.652Z source-review snapshot and relative raw-receipt path. Each actual JSON receipt was decoded and its endpoint https://learn.microsoft.com/api/mcp, microsoft_docs_fetch tool, input URL, retrieval timestamp and nonempty successful text checked. CREATE EXTERNAL MODEL is directly linked by the training models-summary.json receipt at 2026-09-15T06:07:09.176Z; AI_GENERATE_EMBEDDINGS is explicitly named and demonstrated by external-models-unit.json, rather than admitted through a documentation parent. Both units descend from the actual models-module.json training index at 2026-09-14T22:06:21.049Z, which is linked by dp-800-training-ai.json at 2026-09-14T18:31:14.994Z. The saved rendered credential-link receipt at 2026-09-14T18:31:24.010Z and ai-training-redirect.json at 2026-09-14T18:57:14.033Z establish the exact locale-neutral training target and English canonical path. The catalog-scoped validateSourceProvenance call returned no findings and validatedSupportingSourceIds admitted all three cited sources. This is checked recorded ancestry plus inspection of actual parent bodies, not host/topic approval or a live availability test.\n\nI independently derived d, not from the author's key: a selects ownership for a new/replacement object, b adds another definition, c changes connection metadata, and d performs the missing inference and persistence. All alternatives have documented positive purposes without changing their literal actions. The ordinary-column and existing-NULL conditions exclude automatic generation assumptions; the valid endpoint avoids inventing a connection repair. The explanation is deliberately about this remote workflow. The training unit's universal-sounding denial of local execution is bounded by the product reference's separate Windows Preview ONNX example, which the deep explanation acknowledges. The embedding reference's table-return prose versus scalar-looking examples is a real source discrepancy but not an answer-determining claim here: no return type or executable UPDATE is tested or certified. This review is documentary; no SQL engine, browser, runtime, endpoint invocation or installation was used.\n\nDuplicate/construction comparison covered all 583 installed records (ai-103 30, az-104 30, dp-700 162, dp-800 27, github-agentic-ai-developer 149, github-copilot 155, sc-200 30) plus all 18 candidate files under .grounding\\dp-expansion, containing 114 occurrences. Grouping identical questionId/content-fingerprint copies yielded 643 distinct bound records; different authored revisions remained separate. duplicateFindings and scenarioDuplicateFindings produced no findings involving this target. I inspected full related questions: installed 022 chooses a change-detection signal for later refresh, and 021 chooses semantically useful input fields; neither tests whether registration performs inference/persistence. Pending 040 concerns object authorization, 042 request-local defaults, and 043 the server REST switch. Installed 027 and pending 038 concern JSON extraction/aggregation, not model materialization. Those reasoning differences, rather than different IDs, justify keeping this item distinct.\n\nqualityFindings on the complete pending batch produced no target warning. The options are parallel workflow actions and the valid endpoint constraint removes unnecessary repair choices without pretending they are invalid operations. Beginner/concept-recall accurately describes the registration-versus-execution distinction; it is not presented as advanced orchestration. The document-row scenario is an original application of the cited contracts, not copied assessment material. This technical verified verdict approves only PASS 2. No candidate, source, rubric, adversarial stage, ledger or gameplay status was changed; the separate third-context and strict final gates still apply.",
+    "confidenceReason": "The actual admitted training and product receipts agree on the answer-determining separation of metadata registration, inference and storage. Only d supplies the missing workflow step, and every distractor has a sourced literal positive use elsewhere. The known return-type discrepancy is explicitly outside this non-code question. Exact generation/objective/source bindings and target-specific installed/pending duplicate comparisons passed; this is documentary technical confidence, not SQL execution or final three-pass approval."
+  }
+}

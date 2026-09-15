@@ -1,0 +1,95 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-050",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-chunks-recovery",
+    "questionFingerprint": "04f572098dcd147d9d48eaa0c29828c918ac8a19d2e3dc7b994aae7eef40df0d",
+    "reviewedAt": "2026-09-15T15:07:17.369Z",
+    "verdict": "manual-review-required",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-generate-chunks",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-chunks-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\ai-generate-chunks.json",
+        "retrievedAt": "2026-09-15T06:42:29.174Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual AI_GENERATE_CHUNKS (Transact-SQL) MCP receipt, including applicability, the compatibility note, complete grammar, arguments, return schema and examples. It explicitly requires compatibility level at least 170 and says the Database Engine cannot find the function below 170. The function takes a character SOURCE and FIXED chunking arguments, not an external-model identifier. Its table-valued examples perform character chunking directly in FROM/CROSS APPLY. This is direct evidence for the stated function-resolution diagnosis, not a guarantee that a compatibility change alone fixes every possible SQL deployment. The current receipt applies to SQL Server 2025 and does not attach a Preview gate to this chunking contract."
+      },
+      {
+        "sourceId": "dp800-d3-vector-type",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-type.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the Vector data type receipt, especially Sample syntax, Feature availability, TDS compatibility and Native Driver Support. VECTOR uses float32 by default and is available under all database compatibility levels. Microsoft.Data.SqlClient 6.1.0 introduces native SqlVector support, with supported TDS transport; older clients retain JSON/varchar(max) interoperability. That client capability is not the server's chunk-function compatibility rule. The receipt expressly gates float16 under PREVIEW_FEATURES and says float16 native binary driver transport is unavailable; the candidate's explicit float32 scope avoids importing either Preview behavior or a float16 transport guarantee."
+      },
+      {
+        "sourceId": "dp800-d3-generate-embeddings",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\ai-generate-embeddings.json",
+        "retrievedAt": "2026-09-15T06:34:21.572Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read AI_GENERATE_EMBEDDINGS (Transact-SQL), including source USE MODEL model_identifier, its remote-endpoint prerequisites and the actual sp_configure 'external rest endpoint enabled', 1 command. The article requires an accessible EMBEDDINGS external model and explains that the REST option is already enabled by default on Azure SQL Database and SQL database in Fabric. These facts establish a legitimate remote-embedding configuration task, not a dependency of local AI_GENERATE_CHUNKS name resolution. I did not adopt the prerequisite prose's inconsistent procedure name, the table-return paragraph that conflicts with scalar-looking examples, or the example's c.chunk_text alias as authoritative chunk schema; the exact chunk reference supplies that schema."
+      },
+      {
+        "sourceId": "dp800-d3-create-external-model",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\create-external-model.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read CREATE EXTERNAL MODEL (Transact-SQL), including its external-model object definition, Permissions and remote versus local examples. External model grants require EXECUTE on the particular model for a principal using it in an AI function; CREATE EXTERNAL MODEL and ALTER ANY EXTERNAL MODEL govern management instead. The granted object is a model, not the name-resolution mechanism of every AI-prefixed function. The separate Windows local ONNX example requires Preview features and a local AI runtime; none of those instructions is treated as a GA chunking prerequisite. Conflicting example hosts and the broad SCHEMABINDING paragraph are outside this candidate's claims."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The literal option says the client upgrade is needed 'for SQL function resolution'. The vector reference assigns 6.1.0 to native SqlVector/client transport, while the chunk reference assigns the reported cannot-find failure to database compatibility below 170. Keeping compatibility 160 while upgrading the client does not remove that documented cause. A genuine adjacent task is upgrading an older .NET client to obtain native float32 SqlVector values over supported TDS, instead of accepting its documented JSON fallback. However, that task does NOT make this unchanged sentence true: it changes the claimed purpose from server function resolution to client vector transport. No sourced positive countercontext for the full literal claim was established. I therefore reject the author's offered couldBeCorrectWhen as a literal-option justification rather than silently rewriting the choice.",
+        "sourceIds": ["dp800-d3-vector-type", "dp800-d3-generate-chunks"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "This option explicitly makes enabling external REST a prerequisite for finding local chunk generation. The exact chunk contract instead names compatibility 170 and accepts only source text/chunk parameters; the remote embeddings contract is where the external REST setting is documented. Even with external REST configured, the documented below-170 cause of an unresolved AI_GENERATE_CHUNKS name remains. Enabling external rest endpoint enabled is a valid action in the separate context of remote HTTPS embedding invocation on a SQL Server instance where it is disabled. That does not rescue the literal words 'before local chunk generation can be found'. No admitted evidence supplies a positive context for that complete claimed dependency; the author's countercontext substitutes a different operation. This is a contextual-evidence defect, not uncertainty about the remote embedding prerequisite.",
+        "sourceIds": [
+          "dp800-d3-generate-embeddings",
+          "dp800-d3-generate-chunks"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "The AI_GENERATE_CHUNKS compatibility note directly states both parts of the diagnosis: at least 170 is required, and below 170 the engine cannot find the function. The vector article separately permits the native type at all compatibility levels. Thus working float32 VECTOR declarations at 160 do not contradict the chunk failure. Literal confirming context: on the stated supported SQL Server 2025 engine, a database still at 160 can admit a VECTOR(3) declaration while a documented SOURCE/CHUNK_TYPE/CHUNK_SIZE chunk call is below its required compatibility level. Raising compatibility through the authorized change process addresses that named prerequisite. This does not assert that changing compatibility is harmless, that other invalid inputs would succeed, or that a SQL execution was performed.",
+        "sourceIds": ["dp800-d3-generate-chunks", "dp800-d3-vector-type"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The permission in the source is EXECUTE on an external-model object when that model is used by an AI function. AI_GENERATE_CHUNKS has no USE MODEL or model-name argument, and its documented below-170 recognition failure is not cured by a model grant. A real neighboring context is a nonowner principal invoking an existing external model through AI_GENERATE_EMBEDDINGS after other endpoint/credential prerequisites are satisfied; model-specific EXECUTE is then relevant. That context changes this choice's asserted consequence: permission to invoke a model is not recognition of the chunking function name. No sourced positive context for the unchanged full sentence was found. The author's offered model-invocation context therefore cannot be counted as literal distractor-context evidence.",
+        "sourceIds": [
+          "dp800-d3-create-external-model",
+          "dp800-d3-generate-chunks",
+          "dp800-d3-generate-embeddings"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": false
+    },
+    "verificationNotes": "Independent recovery PASS 2 only for immutable dp800-direct-050 in .grounding\\dp-expansion\\direct\\batch-05. I read the actual candidate, generation-output.json entry, candidate-evidence.json, generation binding in validation-metadata.json, objectives.json, sources.json, source-registry.json, source-retrieval-index.json, curation record and current package manifest/catalog. The generation request is dp800-direct-05-models-vectors, author copilot-dp800-direct-author, generated at 2026-09-15T06:57:02.666Z. Repository questionFingerprint and objectiveFingerprint helpers matched the candidate, original generation entry, recorded generation hashes and the installed DP-800 objective map. The current map is March 12, 2026, retrieved 2026-09-14T18:19:19.493Z. Its actual .grounding\\dp-expansion\\dp-800-guide.json MCP body places Design and implement chunks for embeddings in Design and implement models and embeddings under Implement AI capabilities in database solutions (25-30%). I also read the captured credential/course roots. No objective relabeling or renewed source date is inferred from this review.\n\nEach cited source's exact URL, title and retrieval/review snapshot was checked against the frozen manifest/registry; each evidencePath comes from the frozen index and its raw receipt has endpoint https://learn.microsoft.com/api/mcp, tool microsoft_docs_fetch, matching input URL/retrievedAt and a nonempty body. validateSourceProvenance returned no findings, and validatedSupportingSourceIds admitted all four cited IDs under the current exact-URL catalog policy. This was supplemented with actual ancestry inspection, not just a graph-schema pass. AI_GENERATE_CHUNKS is explicitly named and used in .grounding\\dp-expansion\\authors\\ai\\receipts\\models-design.json (2026-09-14T22:12:36.116Z), a training unit. AI_GENERATE_EMBEDDINGS is explicitly named and used in .grounding\\dp-expansion\\direct\\expansion-docs\\external-models-unit.json (2026-09-15T06:07:09.387Z). Vector data type and CREATE EXTERNAL MODEL are directly linked by .grounding\\dp-expansion\\direct\\expansion-docs\\models-summary.json (2026-09-15T06:07:09.176Z). All three training units are actually linked in .grounding\\dp-expansion\\authors\\ai\\receipts\\models-module.json (2026-09-14T22:06:21.049Z), itself linked by .grounding\\dp-expansion\\dp-800-training-ai.json (2026-09-14T18:31:14.994Z). The credential preparation link and exact locale-neutral-to-English path receipt are .grounding\\dp-expansion\\dp-800-rendered-training-links.json (2026-09-14T18:31:24.010Z) and .grounding\\dp-expansion\\ai-training-redirect.json (2026-09-14T18:57:14.033Z). The documentation-to-documentation links visible in some source bodies were NOT used for admission. No new retrieval, live URL check or source-manifest edit is claimed.\n\nTechnical derivation supports c uniquely. SQL Server 2025, float32, compatibility 160, a correctly formed reference-following call and an actor authorized for the required database change bound the diagnosis. Server compatibility, native-client vector transport, remote REST invocation and external-model execution authority are different mechanisms. I checked the actual SOURCE/CHUNK_TYPE/CHUNK_SIZE grammar and model-specific USE MODEL/EXECUTE distinctions; no executable candidate SQL snippet exists to run. The explanation's controlled-change wording does not promise a production-safe compatibility upgrade. The float16 and local ONNX Preview branches are explicitly excluded rather than mislabeled as GA. I did not execute SQL, inspect a live engine or fabricate query/error traces; all examples and predicted distinctions are documentary.\n\nActual hold reason: the strict literal distractor-context requirement is not satisfied for a, b or d. Each complete choice asserts an incorrect causal prerequisite for SQL/chunk-function recognition. The author's proposed positive contexts establish native vector transport, remote embedding invocation or permission to use an external model, respectively, but those are different propositions from the unchanged choices. The per-choice notes above explain the valid neighboring actions and expressly refuse to call them positive evidence for the literal sentences. I found no admitted evidence making those full sentences correct in a different context. qualityReviewed is false for this unresolved source-grounded distractor/context defect; the supported key and the correctness of its explanation are not falsely marked uncertain. The result is manual-review-required, not a forced technical approval. Repairing the purpose clauses would change authored content and must restart generation and both later contexts; no repair was made here.\n\nDuplicate review covered all 583 installed records: ai-103 30, az-104 30, dp-700 162, dp-800 27, github-agentic-ai-developer 149, github-copilot 155 and sc-200 30, including nonverified records. It additionally covered 114 rows from all 18 local candidate snapshots, including current pending batches and historical repair snapshots: 87 distinct ID/fingerprint variants, or 643 combined installed/snapshot variants after removing identical copies. Pairwise duplicateFindings and scenarioDuplicateFindings produced no target findings. I inspected the nearest full questions and related fact-level concepts. Pending 045 tests native client transport, 043 enables remote REST and 040 chooses a model-specific grant; those facts appear as distractor mechanisms here, but none tests the 170-versus-all-levels engine compatibility distinction. Pending 048 concerns ANN index metric/column compatibility rather than database compatibility. The nearest GH-600 token-permission item is unrelated authorization logic. Candidates 051 and 052 instead test overlap arithmetic and returned grouping/ordinal metadata. No same-fact cosmetic duplicate was found; this is not an assertion that the whole corpus is duplicate-free.\n\nThe batch quality helper reported no heuristic warning for this target, but that does not override the literal-context defect discovered by reading the options. The 14-item batch has 13 single-select keys distributed a=3, b=3, c=3, d=4, plus one multi-select a,c; there is no dominant single-select key position. The troubleshooting distinction can support Intermediate difficulty, and the wording is original technical study content rather than an assessment extract. This file contains only a QuestionReview for PASS 2. It creates no adversarial record, rubric score, final attestation or gameplay promotion.",
+    "confidenceReason": "The exact raw compatibility and vector contracts make c the defensible technical key, with a, b and d contradicted as explanations of the stated failure. Nevertheless, their authored alternate contexts do not validate the literal choice sentences, and no valid positive literal contexts were established. The manual-review verdict records that specific strict distractor-context failure without inventing a replacement, runtime observation or approval; bindings, source ancestry and target duplicate checks otherwise passed."
+  }
+}

@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "4c1a3c22db67f8b27092fc4fe455c78f9ba52e4122580d60b6a879e4e267d840",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "Strict-mode SQL NULL retains contact while changing its value to JSON null.",
+        "whyIncorrectInContext": "Not incorrect: contact exists, so this derives {\"contact\":null,\"revision\":6}; the unrelated member remains unchanged.",
+        "couldBeCorrectWhen": "For the shown input, a consumer requiring exactly {\"contact\":null,\"revision\":6} needs this retained-key null assignment.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "JSON_MODIFY Remarks, NULL/existing-path/strict row, sets the existing value to null. The function updates the addressed property and returns the updated document."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "Lax-mode SQL NULL could preserve a present contact member as JSON null.",
+        "whyIncorrectInContext": "The existing contact member is deleted; the derived object is {\"revision\":6}, which violates required member retention.",
+        "couldBeCorrectWhen": "The unchanged expression is correct for a deletion-style patch whose required result is {\"revision\":6}.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "The Remarks NULL/existing-path/lax row explicitly deletes the property, unlike the corresponding strict-mode null assignment."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "The nvarchar literal N'null' could supply the JSON null token.",
+        "whyIncorrectInContext": "N'null' is nonnull SQL text, deriving {\"contact\":\"null\",\"revision\":6}; the contact value is a string.",
+        "couldBeCorrectWhen": "The unchanged expression is correct when the API intentionally requires {\"contact\":\"null\",\"revision\":6}, with the four-letter word stored as text.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "Arguments/newValue describes text handling for nvarchar; the numeric-cast example confirms that text replacements are enclosed in JSON string quotes."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "An empty nvarchar replacement could represent JSON null.",
+        "whyIncorrectInContext": "N'' is nonnull text, deriving {\"contact\":\"\",\"revision\":6}; an empty string is not the requested null value.",
+        "couldBeCorrectWhen": "The unchanged expression fits a contract requiring {\"contact\":\"\",\"revision\":6}, retaining an intentionally blank contact string.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "The existing-path/non-NULL update rule and newValue string handling retain the key with the supplied text; the SQL NULL deletion/assignment cases do not apply."
+      }
+    ],
+    "challenges": {
+      "scope": "The SQL Server 2022 expression operates on nvarchar(max) JSON text. It returns a patched document; it does not itself persist a row or mutate the variable.",
+      "plan": "No deployment tier or subscription-dependent behavior is part of these local-value expressions; the SQL Server 2016-and-later function contract covers the stated version.",
+      "role": "There are no table references, external identities, or permission-sensitive branches in the supplied expression. A storage-update authorization question would be a different task.",
+      "preconditions": "The literal is valid JSON with one existing contact member and an unrelated revision of 6. Missing-path strict errors, duplicate keys, and absent parent containers are not premises here.",
+      "featureStatus": "The source applies to SQL Server 2016 and later. The candidate uses established JSON_MODIFY text syntax, not a native-json method or another SQL Server 2025 feature.",
+      "sourceChanges": "The indexed raw JSON_MODIFY body and its immediate json-columns-unit training body were read. That unit explicitly calls JSON_MODIFY; all source retrieval/review dates remain the frozen snapshot dates.",
+      "stemSufficiency": "Required key presence, null token, unrelated-member preservation, and the complete input are explicit. No alternative interpretation makes a deleted, quoted-null, or empty-string member satisfy them.",
+      "explanationBounds": "The explanation correctly separates absence, JSON null, the string null, and empty text. Its existing-path qualification prevents incorrectly promising strict insertion of an absent key.",
+      "reasoningDepth": "This is a small implementation choice involving path mode and SQL replacement type, not advanced diagnosis. The intermediate label is defensible but the reasoning breadth is limited.",
+      "answerClues": "Choices use the same function and path with comparable lengths. The empty-string option is easy to eliminate; no grammar or longest-answer shortcut uniquely establishes strict SQL NULL."
+    },
+    "qualityNotes": "Screened 584 installed records plus 36 latest pending IDs, excluding 033 and redundant same-ID snapshots. Nearest full reads were dp800-direct-026/027/028, pending 030/032, and dp700-ingest-038. Their serialization, extraction, token-discrimination, and reparsing decisions differ from retained-key mutation. No target duplicate finding appeared. The standard null example, modest intermediate depth, and weak empty-string distractor justify the recorded deductions rather than a perfect score."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-034",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "questionFingerprint": "4c1a3c22db67f8b27092fc4fe455c78f9ba52e4122580d60b6a879e4e267d840",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-modify",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-modify.json",
+        "retrievedAt": "2026-09-15T05:45:14.141Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "JSON_MODIFY (Transact-SQL), Arguments/path and newValue plus the Remarks mode/value matrix, directly supports strict SQL NULL assignment versus lax deletion for an existing key. Text-typed replacements remain JSON strings. The source describes a returned updated document and separately identifies the strict missing-path error; no persistence or missing-parent success is inferred."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "Supported: the shown document already contains contact, so the Remarks matrix's existing-path/SQL-NULL/strict case applies. The returned document has contact set to JSON null and revision still equal to 6. The separate missing-property error cannot arise for this literal input. This exact expression is appropriate when the consumer requires {\"contact\":null,\"revision\":6}; the conclusion concerns the returned document, not a persisted update.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: with a present contact key, lax mode and a SQL NULL replacement remove that key. The derived result is {\"revision\":6}, not an object retaining a contact member with a null value. This is useful for a deletion-style patch whose consumer expects only the revision property. It is not interchangeable with strict-mode null assignment, even though both expressions supply the SQL token NULL.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: N'null' is a nonnull nvarchar value containing four letters, not SQL NULL and not a JSON null token. The function's newValue rules treat such input as text, giving {\"contact\":\"null\",\"revision\":6}. This unchanged option would be appropriate if an API deliberately stored the word null as a string. The existing key's former string value does not change that distinction.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: N'' is an empty but nonnull nvarchar value. Updating the existing property with it produces {\"contact\":\"\",\"revision\":6}; it neither deletes the key nor supplies JSON null. The identical expression is correct for a contract requiring a present, intentionally blank contact string. The newValue text-handling rule and existing-path/non-NULL update case support that countercontext without conflating empty text with SQL NULL.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independently re-derived all four document states from the raw MCP reference, including literal positive countercontexts. The computed question/objective hashes match the unchanged generation and technical bindings; this review follows the distinct technical reviewer. The guide, named-API training ancestry, and frozen source dates were checked. Score 45/48. This is static review only: no SQL execution, source refresh, candidate edit, ledger write, or promotion.",
+    "confidenceReason": "High documentary confidence in key a for this complete, existing-path input. Source rules directly distinguish every competing state. Confidence in instructional depth and novelty is lower than technical confidence and is reflected in the rubric."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 3,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "45/48. Alignment, accuracy, supplied-input completeness, uniqueness, source strength, option evidence, citation precision, explanation, and readability each merit 4. Distractor plausibility is 3 because empty text is readily eliminated; difficulty authenticity is 3 because intermediate implementation involves one small mode/type decision; originality is 3 because the setup follows a familiar null-mutation example. Critical dimensions remain 4; no score was raised to clear the threshold."
+  }
+}

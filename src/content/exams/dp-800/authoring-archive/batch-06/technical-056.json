@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-056",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-integration-06",
+    "questionFingerprint": "0b7f4a9f656e30359871382e89e304b35e8f39efaf5b2acd40dbb356586e1066",
+    "reviewedAt": "2026-09-15T15:55:49.263Z",
+    "verdict": "rejected",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d2-dab-cache-l1",
+        "url": "https://learn.microsoft.com/en-us/azure/data-api-builder/concept/cache/level-1",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\dab-cache-level1.json",
+        "retrievedAt": "2026-09-15T07:07:25.237Z",
+        "lastReviewedAt": "2026-09-15T15:19:19.284Z",
+        "supportingSummary": "Implement level 1 cache documents DAB 2.0+, REST-only scope, global and entity opt-in, quoted JSON property names, an entity TTL, and L1 versus L1L2. The intended values in c match its example, but every offered configuration omits required JSON key quoting. The current product article, not the contradictory training GraphQL example, supplies the behavior evidence."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "An entity with enabled false does not opt into caching, irrespective of its TTL and level. Those intended settings would describe a deliberate cache bypass, a legitimate alternative when fresh uncached reads are wanted. However, this exact offered text also has unquoted JSON keys, including ttl-seconds. No literal valid DAB configuration context exists for it without changing authored syntax; intent alone cannot pass code review.",
+        "sourceIds": ["dp800-d2-dab-cache-l1"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "L1L2 selects in-memory and distributed tiers, rather than the required in-memory-only tier. With appropriate distributed-cache setup, those values could serve a different two-tier, thirty-second caching requirement. That is a settings-level alternative, not validation of this literal text: unquoted cache, enabled, ttl-seconds and level are not JSON property names. There is no unchanged, executable DAB configuration context for this malformed fragment.",
+        "sourceIds": ["dp800-d2-dab-cache-l1"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "The intended values independently match the article: entity enablement true, TTL thirty seconds and level L1, with global caching already enabled. Nevertheless, the question offers this as a configuration, not explicitly as pseudocode. Even enclosed in an entity object it fails JSON parsing because keys are unquoted. It has no literal valid configuration context until rewritten with JSON quoting; that repair requires fresh passes.",
+        "sourceIds": ["dp800-d2-dab-cache-l1"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "A TTL of 120 seconds is not the requested thirty seconds, although enablement and the L1 tier are the intended kinds of settings. Those values suit an entity deliberately configured for a two-minute lifetime. As authored, however, the unquoted property names make the entire alternative invalid JSON. The positive settings context cannot supply a literal valid DAB fragment without an actual syntax repair.",
+        "sourceIds": ["dp800-d2-dab-cache-l1"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": false,
+      "correctOptionsSupported": false,
+      "distractorsIncorrect": true,
+      "explanationsSupported": false,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": false,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": false
+    },
+    "verificationNotes": "Reject the exact configuration alternatives, not the documented cache semantics. Each uses unquoted JSON property names; wrapping each fragment in an entity object still produced an actual JSON.parse SyntaxError. The intended c values match the current REST-only DAB 2.0 article, but silently quoting keys would repair authored content and invalidate this pass. No SQL or DAB execution occurred. Source allowlisting and the credential/path/module/entity-unit chain passed independently; the parent's conflicting GraphQL cache example was excluded. Comparison against 584 bank records and cohort metadata found no duplicate; full dp800-direct-019/020 and sibling 057 test distinct facts. Reauthor valid JSON before restarting the three-pass workflow.",
+    "confidenceReason": "High confidence that the intended c settings are documented and that every literal offered fragment is invalid JSON. Approval cannot depend on an undeclared pseudocode interpretation or an unrecorded syntax repair."
+  }
+}

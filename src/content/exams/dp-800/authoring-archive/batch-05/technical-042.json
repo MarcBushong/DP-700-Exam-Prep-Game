@@ -1,0 +1,78 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-042",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-models-recovery",
+    "questionFingerprint": "92f7eabc1ac9b094e7083482f789981805cca8881a1576c01f675ba59a521194",
+    "reviewedAt": "2026-09-15T15:11:13.672Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-generate-embeddings",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\ai-generate-embeddings.json",
+        "retrievedAt": "2026-09-15T06:34:21.572Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual AI_GENERATE_EMBEDDINGS (Transact-SQL) receipt. Syntax supplies optional PARAMETERS on an invocation. Arguments says the valid JSON parameters are appended to that call's REST request body; Optional parameters explicitly says a value overrides the matching model-definition parameter at runtime. It uses a model dimensions value of 1536 to illustrate replacement, and Example D passes a JSON dimensions value of 768 on one call. The retry_count example independently describes the same invocation-over-model precedence for another parameter. These establish request construction, not stored-model mutation. The Return types paragraph says a single-column table/JSON while SELECT and UPDATE examples appear scalar; the candidate deliberately asks only which dimension parameter is sent and asserts no return-type shape or executed result."
+      },
+      {
+        "sourceId": "dp800-d3-external-models-unit",
+        "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/03-create-manage-external-model-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\external-models-unit.json",
+        "retrievedAt": "2026-09-15T06:07:09.387Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read Create and manage external models in SQL. It identifies external-model configuration as reusable database metadata, shows PARAMETERS in the created model definition, and states that ALTER EXTERNAL MODEL updates metadata when endpoints, credentials or configuration change. Its later AI_GENERATE_EMBEDDINGS query references the existing model rather than reconfiguring it. Combined with the function reference's per-request runtime override contract, this establishes that a later independent call without PARAMETERS uses the still-stored model default. No source says an invocation itself performs an ALTER. The unit's broad remote-only description is not used to deny the separately documented local Preview runtime."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "First 1536; later 1536 gets the later default right but ignores the first invocation's explicit dimensions=768 request parameter. The product reference says the supplied value overrides a matching model parameter at runtime. Literal positive countercontext with this exact ordered pair: the stored default is 1536 and neither call supplies a dimensions override, or the first explicitly supplies dimensions=1536 and the second omits it. Then both request bodies use 1536. The candidate instead states a valid 768 override on the first call, so that positive default-preservation context does not apply.",
+        "sourceIds": ["dp800-d3-generate-embeddings"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "First 768; later 768 incorrectly treats the first request's override as persistent model configuration. PARAMETERS modifies that invocation's request body; model metadata changes are a separate ALTER operation, excluded between these calls. Literal positive countercontext with the exact ordered pair: a model's stored dimensions default is already 768, the first call explicitly requests 768 and the later call omits PARAMETERS. Both requests then use 768. Alternatively both calls could independently override to 768. Neither hypothetical says the first call mutates the default, and both differ from the stated unchanged 1536 default/later omission.",
+        "sourceIds": [
+          "dp800-d3-generate-embeddings",
+          "dp800-d3-external-models-unit"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "First 768; later 1536 follows the two distinct scopes. The first valid JSON override supplies the dimensions value for that request; the later independent call supplies no override and uses the still-stored 1536 model value. The function reference documents runtime override precedence, and the training unit distinguishes reusable metadata from explicit ALTER changes. Literal confirming context is exactly the stated sequence with a supporting endpoint and no intervening model alteration. This judgment concerns the outgoing dimension parameter only, not whether SQL exposes one vector, a table, JSON text or a particular assignable return type.",
+        "sourceIds": [
+          "dp800-d3-generate-embeddings",
+          "dp800-d3-external-models-unit"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "First 1536; later 768 reverses which invocation carries the runtime override. Nothing in the documented precedence rule defers the first call's override until a later call. Literal positive countercontext with this exact ordered pair: retain the 1536 model default, have the first invocation omit PARAMETERS, and supply dimensions=768 on the later invocation. Each call then independently follows the same documented default/override rule. The candidate explicitly specifies the opposite placement, so this sourced alternative sequence cannot defend d in the actual stem.",
+        "sourceIds": ["dp800-d3-generate-embeddings"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Fresh independent technical PASS 2 for immutable dp800-direct-042, with reviewer dp800-technical-models-recovery distinct from copilot-dp800-direct-author. I re-read the exact candidates.json and generation-output.json entries, the generation metadata and every author-only option mapping, the frozen taxonomy, source manifest, source registry and raw-retrieval index. Fresh questionFingerprint computation matched raw/parsed candidates, the generation copy and the recorded hash 92f7eabc1ac9b094e7083482f789981805cca8881a1576c01f675ba59a521194. The current objective fingerprint matched both batch and installed maps. The actual guide MCP receipt at .grounding\\dp-expansion\\dp-800-guide.json, retrieved 2026-09-14T18:19:19.493Z, explicitly measures skills as of March 12, 2026 and names Generate embeddings under Design and implement models and embeddings in the 25-30% AI domain. The captured credential and course were also re-read; no prospective map or substituted version was used.\n\nThe two source snapshots preserve their exact frozen retrieval/review times and the source-index relative raw paths. I decoded the actual JSON responses and verified microsoft_docs_fetch, https://learn.microsoft.com/api/mcp, matching input URLs/timestamps, successful envelopes and nonempty text. The AI_GENERATE_EMBEDDINGS article is admitted by explicit-reference from the actual external-models training unit, which names and demonstrates precisely that API. The unit's parent models-module.json at 2026-09-14T22:06:21.049Z directly links its unit path, and dp-800-training-ai.json at 2026-09-14T18:31:14.994Z directly links that module. The saved credential preparation-link receipt at 2026-09-14T18:31:24.010Z and ai-training-redirect.json at 2026-09-14T18:57:14.033Z preserve the exact observed locale-neutral training target and canonical English URL. Current-catalog validateSourceProvenance produced no findings and validatedSupportingSourceIds admitted both cited sources. The technical reference is not admitted through its own related-document links or a matching host/topic.\n\nI independently derived c by separating the stored model configuration from two request bodies. The source's Optional parameters rule supplies the first value; the absence of a later override and of any ALTER supplies the second. Each other exact ordered pair has a documented positive sequence with different stated default/override placement, so the alternatives are not arbitrary numbers. The stem makes both calls valid and explicitly fixes endpoint support for the sizes; this avoids inventing a particular provider's accepted-dimension set. No unsupported sticky state, delayed override, or implicit ALTER is assumed. The JSON object is valid and the PARAMETERS concept matches the documented syntax, but no executable SQL statement is supplied by the candidate or certified by this review.\n\nThe actual embedding receipt has conflicting return-type prose and scalar-looking SELECT/UPDATE examples. That discrepancy is recorded, not repaired by assertion: this item tests the dimension parameter sent to the endpoint, not the SQL return type, stored column size or successful assignment of a function result. Its deep explanation expressly preserves downstream vector-storage/comparison requirements as separate concerns. The normal remote Azure SQL Database function scope is not expanded to Preview local ONNX execution or float16 transport. No SQL, endpoint invocation, browser interaction or installation was performed.\n\nSemantic/construction comparison included every one of the 583 installed records plus 114 candidate occurrences across all 18 .grounding\\dp-expansion candidate files. Exact snapshot copies were grouped by questionId/content hash, with different authored revisions retained, yielding 643 comparison records. duplicateFindings and scenarioDuplicateFindings returned no target findings. Full comparison with pending 044 showed a distinct fixed-column dimension contract rather than invocation override lifetime; 049 fixes dimensions only as a prerequisite to latest-index query syntax. Installed ai103-029 concerns a per-vector security filter replacing a global filter within one Azure AI Search request, not persistence of an external SQL model's defaults across calls. Pending 039 concerns registration versus inference, and 043 a server REST option. Shared override or dimensions vocabulary does not supply the solution to this two-call state question.\n\nqualityFindings emitted no target warning. The four alternatives use identical First/later constructions and comparable lengths, without answer-position or grammatical clues. Intermediate/scenario-based is justified by the temporal/default distinction, not by arithmetic complexity. The additional second independent call and explicit no-ALTER condition make this an original application of the documented precedence contract rather than a copied example. This verified verdict is technical PASS 2 only; no final attestation, rubric, adversarial stage, source/candidate change or promotion was made.",
+    "confidenceReason": "The request-body override rule and the separately documented model-metadata lifecycle unambiguously yield 768 followed by the unchanged default 1536. All exact alternative pairs have sourced positive contexts excluded by this stem. The known return-type inconsistency does not affect this parameter-only claim and no SQL execution is invented. Exact objective/generation/source bindings and target-specific current-bank/pending-cohort comparisons passed; final three-pass approval remains separate."
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-047",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-vector-recovery",
+    "questionFingerprint": "0d0562375cae019deafd05de2cf6c4566a3294a2b22f9293ed44e46a2755af17",
+    "reviewedAt": "2026-09-15T15:01:29.553Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-search",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-search.json",
+        "retrievedAt": "2026-09-15T06:34:21.531Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Read the full actual indexed MCP receipt for VECTOR_SEARCH (Transact-SQL) (Preview). Version-specific behavior > Earlier vector index versions explicitly selects the TOP_N neighbors before applying predicates and gives an empty-result example when none of those neighbors qualifies. Expected behaviors contrasts this with latest-index iterative filtering. Arguments requires a base-table target and the same indexed column and metric for ANN, otherwise warning plus kNN fallback. Return result set requires aliases to disambiguate a source distance column from the generated distance. The current article labels Azure search Preview, qualifies regional/index-version rollout, and removes the earlier read-only limitation for latest indexes; none of these latest enhancements is silently attributed to the earlier index in the question."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "The source's earlier-version post-filtering section describes precisely this sequence: select the fixed TOP_N nearest pool, then apply WHERE. Here each of the five selected rows fails Approved=1, so the output is empty even though qualifying rows exist elsewhere. The question's successful completion and matching index preserve this explanation. Context boundary: this literal after-selection behavior must not be generalized to latest indexes, whose iterative filtering applies predicates during search and continues looking for qualifying neighbors.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Arguments > METRIC documents warning and kNN fallback only when there is no compatible ANN index on the same column with the requested metric. The stem explicitly says a valid query uses a matching index, ruling out that condition. Sourced countercontext for the literal option: if the only index on the searched column used cosine while the query requested Euclidean, with no other matching index, the documented metric incompatibility would cause warning and kNN fallback. That is not this already-matching earlier-index post-filter case.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Return result set explains that a base-table distance column and VECTOR_SEARCH's generated distance require aliases when a reference would otherwise be ambiguous; failure to disambiguate raises an error. The stem instead establishes successful execution returning an empty set. Sourced countercontext: this exact diagnosis would fit a table that also has a distance column and a query using an ambiguous, unqualified distance reference. It cannot explain a successfully completed result whose five candidates all fail the filter.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Arguments > TABLE requires a base table and explicitly excludes views. A view supplied as the target would violate the documented input contract, contrary to the stem's valid query and successful completion. Sourced countercontext: the option would correctly diagnose an invalid call whose TABLE argument actually names a view instead of the required base table. The presence of approved rows outside this valid query's fixed candidate pool is a filtering issue, not evidence of an unsupported target.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent technical PASS2 only; re-derived answer a from the actual fixed-pool post-filter section, not from the author's key. The complete immutable candidate, generation output, generation claims and candidate evidence were read; exact authored-content and objective hashes were recomputed. The source URL/title/retrieval/review fields and raw MCP endpoint, input URL and retrieval timestamp match the frozen manifest and index. Generation at 2026-09-15T06:57:02.666Z is correctly bound after the source and March 12, 2026 objective retrievals. Read the raw guide, credential, course, credential training-link/redirect receipts, AI path, search module and search summary. The summary's actual Additional reading link points directly to the cited VECTOR_SEARCH article. Also read the vector-patterns and preparation units: the patterns unit states post-filtering without the latest-version distinction, and the preparation unit contains older read-only/stale-index guidance. The current product receipt explicitly limits fixed-pool post-filtering to earlier indexes and describes latest iterative filtering and full DML maintenance. The question and explanation preserve that boundary and label Azure availability Preview instead of adopting either training generalization. The supplied matching-index, valid-call and successful-completion observations distinguish a from warning/fallback and error cases; five rejected candidates independently imply zero surviving rows. No literal full query is supplied; API tokens and the documented execution sequence were statically reviewed, not run on SQL or a tenant. Deterministic duplicateFindings and scenarioDuplicateFindings covered all 583 installed records plus 60 distinct noninstalled authored variants from 201 entries across 35 local candidate/generation snapshots; identical copies of a target were excluded. No target duplicate diagnostic was emitted. Separate semantic inspection distinguishes ai103-029's Azure AI Search filterOverride replacement/security-trimming rule and ai103-028's hybrid k/top/RRF stage counts from SQL earlier-index post-filter loss. Within the pending cohort, dp800-direct-048 tests incompatible metric/column prerequisites and dp800-direct-049 tests latest syntax; those are different answer-determining facts, although this item's distractors mention the adjacent failure conditions. The pronoun warning has a clear query/index referent. Intermediate troubleshooting is justified by distinguishing an empty successful result from fallback and invalid-target/alias errors; no grammar, disproportionate answer length or copied assessment was identified. Dates and evidence paths are preserved. The saved technical verdict is not candidate promotion, adversarial approval, rubric scoring, or a final ledger entry.",
+    "confidenceReason": "The admitted current product article contains an explicit earlier-version empty-result example and separately documents each alternative failure condition. The stem supplies exactly the observations that exclude those alternatives. The broader training conflicts are resolved by the question's index-version scope, not by suppressing the conflict or inferring runtime results."
+  }
+}

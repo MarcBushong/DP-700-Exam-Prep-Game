@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   sameCanonicalDocument,
+  matchesRecordedSourceTarget,
   safeSourceUrl,
 } from '../scripts/validate-sources';
 import type { SourcePolicyContext } from '../src/features/dungeons/sourcePolicy';
@@ -37,13 +38,20 @@ describe('canonical source document identity', () => {
       provider: 'Microsoft',
       strictGuideLinked: true,
       sourceAllowlist: [
-        { host: 'learn.microsoft.com', pathPrefixes: [], exactUrls: [layout] },
+        {
+          host: 'learn.microsoft.com',
+          pathPrefixes: [],
+          exactUrls: [layout, `${layout}#layout-model`],
+        },
       ],
     };
     const canonical = `${layout}?view=doc-intel-4.0.0`;
     expect(safeSourceUrl(canonical, true, policy).href).toBe(canonical);
     expect(() => safeSourceUrl(canonical, false, policy)).toThrow();
     expect(sameCanonicalDocument(layout, canonical, policy)).toBe(true);
+    expect(
+      matchesRecordedSourceTarget(canonical, `${layout}#layout-model`, policy),
+    ).toBe(true);
     expect(sameCanonicalDocument(layout, canonical)).toBe(false);
     for (const unexpected of [
       `${layout}?view=doc-intel-3.1.0`,

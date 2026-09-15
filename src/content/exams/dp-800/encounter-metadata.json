@@ -1,0 +1,2227 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "dp800-direct-011": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "68ea073122f12d7bede04c8c6fff40f7c3bf79ec2a04187d7b2743639d483c79",
+      "sourceIds": ["dp800-d2-masking"],
+      "retrievedAt": "2026-09-14T22:19:05.185Z",
+      "lastValidatedAt": "2026-09-15T02:08:44.225Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-masking"],
+          "summary": "The user needs table SELECT because no other relevant read grant applies. It supplies all-column access while masks continue to affect columns lacking UNMASK. dp800-d2-masking, decoded lines 45-55."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-masking"],
+          "summary": "Column UNMASK for Phone supplies precisely the required exemption. Together with a and the closed baseline, it leaves Email masked without changing either mask definition. dp800-d2-masking, decoded lines 45-55, 123-125 and 318-322."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-masking"],
+          "summary": "Table UNMASK covers both named masked columns when combined with SELECT, so Email would not remain masked. Its proper alternate is an authorized reader of all masked columns. dp800-d2-masking, decoded lines 123-125 and 318-322."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-masking"],
+          "summary": "Mask-management authority cannot replace SELECT or UNMASK. Actual modification also requires table ALTER; merely granting the permission is not a mask edit. The documented security-officer use case is outside this unchanged-mask task. dp800-d2-masking, decoded lines 47-51 and 90."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T03:20:54.918Z",
+        "notes": "Independent r2 scores: alignment 4 for the DDM objective; accuracy 4 for the documented permission dependencies and scopes; scenarioCompleteness 4 for named masks and the closed effective-permission baseline; answerUniqueness 4 after checking all six pairs; distractorPlausibility 3 because d is easier to eliminate; distractorEvidence 4 because both current distractors have directly sourced legitimate alternate contexts; documentationStrength 4 because the sole primary receipt now covers every named option; citationSpecificity 4 for exact permission and granular-scope clauses; difficultyAuthenticity 4 for intermediate implementation; explanationQuality 4 for the presentation and permission-versus-operation qualifications; originality 4 within the bounded local comparison; clarityAccessibility 4 for explicit requirements. Total 47/48, no zeros, all critical criteria 4. This score does not supersede the different r1 artifact.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-001": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "a03f7e6b6d5cce9a383c4b9782c4be1550246ab2c614e2a9b190e050d88ad2bb",
+      "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+      "retrievedAt": "2026-09-14T22:25:54.091Z",
+      "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+          "summary": "NOT NULL excludes the value the CHECK comparison cannot reject, while the existing > 0 expression excludes zero and negatives. Repeated positive amounts remain permitted because no uniqueness rule is added."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+          "summary": "The default can fill an omitted Amount with 1 but cannot reject a supplied NULL. Because the retained comparison accepts UNKNOWN, the required missing-value rejection is still absent."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-unique-check"],
+          "summary": "UNIQUE admits the first NULL in this nullable single-column case while rejecting a second positive 12. It both underenforces nullability and overenforces the allowed positive-value repetition."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-unique-check"],
+          "summary": "The proposed >= 0 predicate admits zero and still evaluates to UNKNOWN for NULL on a nullable column. Neither failure is fixed by broadening the original comparison."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:12:36.732Z",
+        "notes": "46/48, independently assigned. The current constraints objective, explicit clean-data/enabled-CHECK premises, and NULL/zero/duplicate counterexamples earn full alignment, accuracy, completeness and uniqueness. Direct unit-plus-product evidence supports every option and the bounded explanation. Intermediate composition is authentic and wording is clear. Distractor plausibility loses one point for the readily excluded nonnegative/unique alternatives; originality loses one for a conventional NULL/CHECK teaching pattern rather than a novel incident.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-002": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "34ee3c8890c5e8fb01296a307fcfac1a888c8cff3afd782ea4192fb31f98e133",
+      "sourceIds": ["dp800-d1-unique-check"],
+      "retrievedAt": "2026-09-14T22:25:54.091Z",
+      "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-unique-check"],
+          "summary": "The listed key is exactly the required tenant/code pair. Revision differences cannot differentiate this key, while a different tenant or a different code makes an allowable different pair."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-unique-check"],
+          "summary": "Making ExternalCode unique globally rejects the explicitly permitted rows (A, X, 1) and (B, X, 1). Omitting TenantId changes the scope of identity rather than implementing tenant-scoped uniqueness."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-unique-check"],
+          "summary": "TenantId alone repeats for a tenant's different codes. This would reject (A, X, 1) together with (A, Y, 1), contrary to the stated one-tenant-many-codes cardinality."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-unique-check"],
+          "summary": "Rows (A, X, 1) and (A, X, 2) are unique triples but repeat the forbidden pair. Including Revision therefore permits the exact counterexample the requirement excludes."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:12:36.732Z",
+        "notes": "47/48. Exact objective fit, explicit cardinality/nullability requirements, and independently constructed pair/triple counterexamples justify the full technical and scenario scores. Every distractor is a plausible wrong choice of key granularity with direct product evidence. The concise parallel SQL fragments and bounded explanation deserve full clarity and explanation scores. Intermediate reasoning is authentic. Originality is 3 because tenant-scoped business keys are a familiar instructional pattern, although the Revision boundary gives this encounter a distinct tested invariant.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-003": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "efbb6956cd308a56729520fcc02f35dee67cbc1bd145d4f0aedd04ab7c6b2d11",
+      "sourceIds": ["dp800-d1-sequences"],
+      "retrievedAt": "2026-09-14T22:25:53.961Z",
+      "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-sequences"],
+          "summary": "The exact trace is first allocation 700, rollback with allocation retained, then next allocation 701. SQL Server sequence consumption is independent of committing the transaction."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-sequences"],
+          "summary": "700 has already been allocated by the DECLARE initializer. The documented rollback rule consumes rather than returns that number, so the final separate call cannot reuse it under the given exclusions."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-sequences"],
+          "summary": "702 requires one more increment than the two calls produce. No other allocation or restart/cache-loss event is present, and ROLLBACK itself is not a NEXT VALUE FOR call."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-sequences"],
+          "summary": "The sequence exists before the shown transaction begins. Rolling back the later transaction neither drops that already-created object nor reclaims its generated value."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:12:36.732Z",
+        "notes": "46/48. The SEQUENCES objective is exact, the call trace is supported by direct product limitations, and exclusions close the actual competing numeric outcomes. Evidence, bounded explanations, short code and SSMS scope earn full technical and clarity scores. The intermediate label matches the allocation-versus-transaction reasoning. Distractor plausibility is 3 because the long object-deletion answer is comparatively easy; originality is 3 because sequence rollback is a standard teaching fact, despite the independently framed script.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-004": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "8fe2d5e541dee1b8f23c3a3de6dad5f56476b6856c84c33c4934a220f8610946",
+      "sourceIds": ["dp800-d1-create-view"],
+      "retrievedAt": "2026-09-14T22:29:52.878Z",
+      "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-create-view"],
+          "summary": "The product reference expressly rejects alterations affecting a schema-bound view's definition. The referenced column cannot be dropped while that binding remains, independently of the administrator having ordinary ALTER permission."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-create-view"],
+          "summary": "CHECK OPTION controls row visibility after modifications through the view. It does not bind schema dependencies for the administrator's ALTER TABLE statement."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-create-view"],
+          "summary": "The ENCRYPTION attribute addresses definition text in catalog storage. Nothing in that attribute establishes the separately documented SCHEMABINDING restriction on the table's referenced columns."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-create-view"],
+          "summary": "VIEW_METADATA changes browse-mode metadata returned through supported client APIs. It is not a guard against altering the underlying schema."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:18:00.668Z",
+        "notes": "45/48. The Create views objective, exact SQL Server scope, explicit administrator premise and intact dependency give full alignment, completeness and answer uniqueness. Each attribute has a separate direct product subsection, supporting full accuracy, evidence and citation scores. The explanation preserves the authorization-versus-dependency distinction and the short options are clear. Distractors score 3 because VIEW_METADATA is comparatively remote; difficulty scores 3 for a low-end intermediate attribute decision; originality scores 3 for a familiar schema-binding use case.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-005": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "358d60f8db880e880d3f3207526c36e300857e330b4d903bdfc0a68c226673c1",
+      "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+      "retrievedAt": "2026-09-14T22:29:52.790Z",
+      "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+          "summary": "The unchanged unique key pairs each new version with its own old version, <> is adequate for the explicitly non-null decimal values, and there is no cap on qualifying rows. This matches the source's set-based price-audit pattern."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+          "summary": "Two genuinely changed rows produce two required audit pairs, but the displayed TOP (1) caps the output at one. The correct key join and comparison do not repair that loss. This conclusion applies basic row-limit semantics to the sources' documented multirow sets."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+          "summary": "Swapping two items' prices makes this join match each new price to the other item's old price. It can also include unchanged equal-price rows, so it neither maintains identity nor identifies unequal per-item values."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+          "summary": "The cross product loses the required same-ItemId association. On old 10,20,30 and new 20,10,30 it emits six unequal-price pairs rather than the two real same-item changes, including false pairs for the unchanged third item."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:18:00.668Z",
+        "notes": "44/48. The Create triggers objective and explicit stable-key/non-null/multirow premises support full alignment, completeness and uniqueness. The training audit example plus the product old/new-rowset and UPDATE-attempt descriptions directly support core accuracy, documentation and citation specificity. Explanations stay within row selection and the parallel SQL fragments are readable. Distractor plausibility is 3 for easy TOP/CROSS JOIN eliminations; evidence is 3 because their counterexamples are relational deductions rather than separately documented worked variants. Difficulty is 3 for lower-end advanced reasoning; originality is 3 for a conventional audit pattern.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 3,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-007": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "58fa617762a5d6234e920b594a21e2ab68d9befa9bb6f0d7d065738e2e35b599",
+      "sourceIds": ["dp800-d1-over"],
+      "retrievedAt": "2026-09-14T22:36:16.207Z",
+      "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-over"],
+          "summary": "The partition boundary is TenantId, the complete EventTime/EventId order resolves ties within it, and the unbounded-preceding ROWS frame accumulates through each individual current event. It satisfies all three independent requirements."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-over"],
+          "summary": "Without partitioning, all tenants occupy one window. A preceding tenant A amount can enter tenant B's cumulative sum, regardless of the otherwise appropriate row frame."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-over"],
+          "summary": "RANGE over EventTime alone includes every timestamp peer and omits the required EventId ordering. Two tied events of 5 and 7 both get the peer total 12 instead of the requested row-by-row first total 5."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-over"],
+          "summary": "The lower bound is the immediately preceding row, not the partition start. On amounts 5,7,11 it produces 18 at the third row instead of the lifetime cumulative 23."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:18:00.668Z",
+        "notes": "46/48. The current window-functions objective, explicit tenant/tie/lifetime requirements and independent numeric counterexamples justify full technical scores. Each distractor is a plausible partial solution, directly refuted by a specific OVER subsection. Three interacting calculation axes support advanced difficulty, and the explanation avoids confusing logical order with output sorting. Originality is 3 for a familiar running-total pattern; clarity is 3 because the long similar inline SQL fragments require careful horizontal comparison.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "dp800-direct-008": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "99a92892d78ae99c4c2f5e860183173372a729d70f8fba220b37538c8c4247d9",
+      "sourceIds": ["dp800-d1-window-unit"],
+      "retrievedAt": "2026-09-14T22:17:21.774Z",
+      "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-window-unit"],
+          "summary": "DENSE_RANK's documented behavior is precisely equal ranks for ties and the next consecutive rank for the next distinct ordering value. It satisfies both constraints simultaneously."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-window-unit"],
+          "summary": "ROW_NUMBER assigns different sequential numbers even when Priority ties. It fails the requirement that equal priorities receive the same rank."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-window-unit"],
+          "summary": "RANK preserves the tied rank but skips numbers after tied rows. Priorities 1,1,1,2 lead to ranks 1,1,1,4 rather than the required consecutive distinct ranks."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-window-unit"],
+          "summary": "NTILE(4) targets four roughly equal row-count groups rather than one rank per distinct Priority. For eight rows whose first three priorities tie, the tie can cross the two-row bucket boundary."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:22:18.312Z",
+        "notes": "46/48. The current window-functions objective, two explicit semantic requirements and direct four-function definitions earn full technical, evidence and citation scores. Beginner is the correct classification; the brief explanations and parallel invocations are clear. Distractor plausibility is 3 because NTILE's bucket purpose is less close than RANK's tie behavior. Originality is 3 for a standard dense-ranking distinction, while the question is not copied from an assessment and does not duplicate the bank's cumulative-window or RRF tasks.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-009": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "295faa1f509a738259db7cdc15e61a9eab794fba9e4b5c0744cd63a95a200846",
+      "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+      "retrievedAt": "2026-09-14T22:17:22.373Z",
+      "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-ai-instructions"],
+          "summary": "The unit explicitly places repository instructions in copilot-instructions.md under the root .github folder and describes automatic context inclusion. The stem already supplies enabled support, and the explanation correctly avoids an obedience guarantee."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-ai-instructions"],
+          "summary": "The documented .prompt.md location holds reusable task prompts referenced when needed. It does not substitute for the automatically included repository instruction file requested here."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"],
+          "summary": "The open SQL script may supply editor context, but a comment in that file is not the dedicated repository-root instruction artifact. Local relevance does not establish automatic team-wide scope."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+          "summary": "Pasting a prompt supplies the current conversation with guidance but leaves the repeated-context problem unsolved and creates no persistent repository instruction file."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:22:18.312Z",
+        "notes": "45/48. The instruction-files subskill is exact and the enabled-support/automatic-scope premises make the named repository file uniquely correct among the options. Direct teaching sections and the open-file/prompt context list support all claims, with no reliance on security-policy generalizations. The beginner classification and non-enforcement explanation are honest and clear. Distractor plausibility is 2 because comments and pasted chat text are conspicuous non-file alternatives; originality is 3 for basic documented-path recognition. The deductions were not converted from an earlier rubric.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-010": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "d5821d98ca0b47c4edf59b050aabba81cc305790b2729b93fcdd22e7278bd6af",
+      "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"],
+      "retrievedAt": "2026-09-14T22:17:22.373Z",
+      "lastValidatedAt": "2026-09-15T02:33:57.583Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "summary": "The account's database permissions are the relevant authorization layer once connected. The source's least-privileged MCP-account recommendation and GRANT/REVOKE discussion directly support this choice without asserting that the current account has already been correctly restricted."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+          "summary": "Repository instructions influence the model's preferred SQL but do not assign the connection principal's database privileges. They address generated behavior rather than the engine's authorization decision."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "summary": "Private-network configuration controls connectivity and exposure. It does not replace the SQL permissions governing a principal after that connection is established."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "summary": "Human review can assess or stop proposed SQL in the workflow, but reviewing the text does not itself grant or revoke the database identity's authorization."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T03:16:56.156Z",
+        "notes": "46/48, scored anew on the repaired wording and new binding. The security-impact objective, established-connection premise and precise authorization question earn full technical and completeness scores. The two actual source units distinguish permissions, contextual guidance, private networking and human review directly. Beginner is the appropriate classification, the explanation preserves complementary controls and the positive parallel options are clear. Distractor plausibility is 3 because the stem helps eliminate two layers; originality is 3 for a standard foundational control taxonomy. No score was copied or converted from the rejected earlier snapshot.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-006": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "c36f55915facb1b9ad3e8f9442c57427828fe654964444e043afd6a8c1f15de9",
+      "sourceIds": ["dp800-d1-cte", "dp800-d1-views"],
+      "retrievedAt": "2026-09-14T22:36:16.115Z",
+      "lastValidatedAt": "2026-09-15T01:46:37.116Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-cte"],
+          "summary": "Explicitly populate the intermediate once, then read that stored table twice in the same usable scope. This implements the documented temporary-object alternative rather than assuming CTE caching. No actual performance measurement is claimed. dp800-d1-cte, decoded lines 38-40."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-cte"],
+          "summary": "One CTE declaration belongs to its following statement, not the next independent SELECT. A same-named table or view would be a different object and cannot rescue the claimed shared CTE result. dp800-d1-cte, decoded lines 5, 26 and 55."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-cte"],
+          "summary": "Repeated definitions are independently evaluated statement-local expressions, not one stored population. They are valid when recomputation is acceptable, which is explicitly not this requirement. dp800-d1-cte, decoded lines 38-40 and 55."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-views"],
+          "summary": "An ordinary view reuses its definition while obtaining data from underlying tables; it does not promise these stored intermediate rows. The indexed-view exception is real but excluded. dp800-d1-views, decoded lines 21-25 and 119-127."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T02:44:52.033Z",
+        "notes": "Independent scores: alignment 4 for the CTE objective; accuracy 4 for scope and explicit-storage semantics; scenarioCompleteness 4 for connection, capability and lifetime conditions; answerUniqueness 4 because only a meets all requirements; distractorPlausibility 3 because two choices are neighboring CTE misconceptions; distractorEvidence 4 because each has a documented legitimate alternate use; documentationStrength 4 for actual official CTE and view content; citationSpecificity 4 for precise scope, materialization and indexed-view clauses; difficultyAuthenticity 4 for the repaired intermediate implementation level; explanationQuality 4 for the explicit spool qualification and restrained performance claims; originality 4 within inspected banks, with different CTAS/KQL decisions distinguished; clarityAccessibility 4 for concise, explicit requirements. Total 47/48, no zeros, all critical criteria 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-013": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "76a16749e0376fec0e66e02ff2f72a007ce345dea14a4a440bade6de9777275f",
+      "sourceIds": [
+        "dp800-d2-always-encrypted",
+        "dp800-d2-encryption-unit",
+        "dp800-d2-masking"
+      ],
+      "retrievedAt": "2026-09-14T22:19:05.185Z",
+      "lastValidatedAt": "2026-09-14T23:49:44.600Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-always-encrypted"],
+          "summary": "Deterministic encryption supplies the permitted equality operation while client-side parameter encryption and external plaintext keys preserve the stated boundary. It leaks equality patterns, which the explanation acknowledges. dp800-d2-always-encrypted, lines 13, 30-42 and 62-85."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "dp800-d2-always-encrypted",
+            "dp800-d2-encryption-unit"
+          ],
+          "summary": "The driver can protect values but cannot give randomized no-enclave ciphertext an unsupported server-side equality search. This option is useful when the encrypted column need not be searched. dp800-d2-always-encrypted, lines 39-42 and 62-85; dp800-d2-encryption-unit, line 84."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-encryption-unit"],
+          "summary": "TDE permits normal database queries but protects files, logs and backups rather than excluding plaintext from authorized engine processing. Its genuine at-rest use case does not satisfy this stronger boundary. dp800-d2-encryption-unit, lines 23-35 and 138-140."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-masking"],
+          "summary": "DDM leaves the data unchanged in storage and masks displayed query values. That can reduce accidental exposure but cannot keep plaintext out of the engine or act as encryption. dp800-d2-masking, lines 16-23 and 100-119."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T02:44:52.033Z",
+        "notes": "Independent scores: alignment 4 for the encryption objective; accuracy 4 for the qualified no-enclave equality and plaintext boundary; scenarioCompleteness 4 for version, type, driver, key access and encrypted parameters; answerUniqueness 4 after testing both requirements against all options; distractorPlausibility 3 because randomized AE competes closely but TDE/DDM are easier eliminations; distractorEvidence 4 for explicitly sourced alternate uses; documentationStrength 4 for the product article plus separate TDE and DDM evidence; citationSpecificity 4 for exact operation, key and presentation clauses; difficultyAuthenticity 2 because the advanced label exceeds the mostly direct capability choice; explanationQuality 4 for parameter, collation and leakage bounds; originality 4 within the inspected local corpus; clarityAccessibility 4 for explicit, readable constraints. Total 45/48, no zeros, all critical criteria 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-014": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "a690f9a0f59a27a2edfa69a9c45d92039239de925cd6a81ecb0eb8378001dc40",
+      "sourceIds": ["dp800-d2-isolation-unit", "dp800-d2-transaction-guide"],
+      "retrievedAt": "2026-09-14T23:41:04.566Z",
+      "lastValidatedAt": "2026-09-14T23:49:44.600Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-transaction-guide"],
+          "summary": "SNAPSHOT supplies the transaction-level committed row versions and avoids shared data-read locks. Select it before the transaction with ALLOW_SNAPSHOT_ISOLATION ON; preserve the schema-lock and first-data-access qualifications. dp800-d2-transaction-guide, lines 1021-1027, 1045-1056 and 1106-1108."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-transaction-guide"],
+          "summary": "RCSI obtains a new committed snapshot at each statement start. It can allow writer progress but cannot promise the same version across both report reads. Keeping versions stored until commit does not change that selection rule. dp800-d2-transaction-guide, lines 1054-1060."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-transaction-guide"],
+          "summary": "SERIALIZABLE obtains retained read and range locks, not the requested versioned view. Those locks can block conflicting updates; allowing writes to unrelated rows does not meet both requirements. dp800-d2-transaction-guide, lines 301 and 312-329."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": [
+            "dp800-d2-transaction-guide",
+            "dp800-d2-isolation-unit"
+          ],
+          "summary": "READ UNCOMMITTED tolerates dirty and changing reads rather than establishing a stable committed snapshot. It has a legitimate approximate-diagnostic use case, not this consistency contract. dp800-d2-transaction-guide, lines 309 and 323-329; dp800-d2-isolation-unit, line 69."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T02:44:52.033Z",
+        "notes": "Independent scores: alignment 4 for isolation and concurrency; accuracy 4 for statement versus transaction versioning and qualified lock behavior; scenarioCompleteness 4 for explicit transaction, enabled options and read-only/DDL/hint exclusions; answerUniqueness 4 because only c meets both requirements; distractorPlausibility 3 because RCSI and SERIALIZABLE compete meaningfully while dirty-read isolation is easier; distractorEvidence 4 for sourced alternatives for every level; documentationStrength 4 for the product guide corroborating and qualifying the unit; citationSpecificity 4 for exact version timing, lock and setup clauses; difficultyAuthenticity 3 for real two-constraint application without deeper advanced diagnosis; explanationQuality 4 for bounded concurrency claims; originality 4 after distinguishing the existing DDL-lock scenario; clarityAccessibility 4 for explicit, compact constraints. Total 46/48, no zeros, all critical criteria 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-015": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "9bf6d8f744cc9b8fbb05335ca2889704734c00917a7ea9a3c0af8138483bb04f",
+      "sourceIds": ["dp800-d2-store-unit"],
+      "retrievedAt": "2026-09-14T22:11:09.851Z",
+      "lastValidatedAt": "2026-09-15T03:41:14.714Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-store-unit"],
+          "summary": "The float-weighted products are 1000 and 1000, their total is 2000, and the bigint execution total is 101. Dividing the float numerator by that count gives approximately 19.8019801980198, the requested pooled execution mean. This is the aggregation structure actually shown by the source."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-store-unit"],
+          "summary": "AVG(avg_duration) returns float 505 by averaging the two interval means equally. It therefore treats the one-execution and hundred-execution rows as equal-sized observations instead of weighting the represented 101 executions."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-store-unit"],
+          "summary": "The weighted SUM returns float 2000, the reconstructed accumulated duration. It omits normalization by the 101 executions, so it answers a total-duration question rather than the requested mean."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-store-unit"],
+          "summary": "MAX(avg_duration) returns float 1000, the larger recorded interval average. It does not combine the execution populations and is not the overall per-execution mean."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T04:18:30.519Z",
+        "notes": "44/48, independently assigned to this redesigned calculation. The Query Store performance objective, actual weighted-SUM source expression and explicit typed/population premises earn full technical and completeness scores. Intermediate is a credible classification for reconstructing totals and normalizing by execution count, and the explanation is bounded and clear. Distractor plausibility is 3 for the easy MAX/total alternatives and longer correct expression. Distractor evidence is 3 because their exact numeric/type results are independently derived from the fixture rather than documented as separate source examples. Originality is 2 for substantial weighted-rollup overlap with dp700-ingest-040, kept distinct because the required numerator reconstruction and null-denominator decisions differ. This is not a relabeled score from the earlier manual-review snapshot.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 3,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 2,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-022": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "981fc7d765163f61ee42d939bbf4ccab22b5c27b5213e9a1821678a64585f06e",
+      "sourceIds": ["dp800-d3-maintenance"],
+      "retrievedAt": "2026-09-14T22:12:36.209Z",
+      "lastValidatedAt": "2026-09-15T00:39:05.156Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-maintenance"],
+          "summary": "The unit explicitly connects Change Tracking's record that a row changed with background batch refresh. This meets the requested changed-row signal without turning the answer into a promise of automatic embedding maintenance."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-maintenance"],
+          "summary": "CDC also permits asynchronous consumption, but its documented detailed captured changes include before/after values. The stem excludes capturing that information, not merely reading it in a particular consumer."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-maintenance"],
+          "summary": "A custom trigger can mark or log changes, but that is exactly the custom logging mechanism the scenario forbids. Running refresh later does not change how the log was produced."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-maintenance"],
+          "summary": "The source assigns Foundry the model-selection/hosting part and leaves change detection and database updates to another process. Model management alone therefore cannot implement the stated row-change mechanism."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:54:20.823Z",
+        "notes": "45/48, independently assigned. The current maintenance-method objective and the explicit no-image/no-custom-log requirements establish a unique supported mechanism. All four alternatives are directly discussed in the maintenance-method section, earning full accuracy and evidence scores without importing native AI availability claims. The explanation appropriately stops short of implementation and the wording is clear. Distractor plausibility is 3 because the trigger and Foundry-alone options are easy; difficulty is 3 for a low-end intermediate selection rather than a design exercise; originality is 3 for a conventional Change Tracking/CDC contrast.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-023": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "ec133e12d56d031cd4118d91111a6d8337bc86245502212f2e900e00e4bd0c54",
+      "sourceIds": ["dp800-d3-vector-distance"],
+      "retrievedAt": "2026-09-14T22:23:50.656Z",
+      "lastValidatedAt": "2026-09-15T03:13:13.437Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-vector-distance"],
+          "summary": "True affirms the two properties stated together by the product reference: exact distance and no vector-index use even when an index is available. SQL Server 2025 is explicitly supported, and the wording concerns the function contract rather than arbitrary invalid invocations."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-vector-distance"],
+          "summary": "False would deny one or both documented properties. The reference does not give index availability or metric choice any power to switch this function into approximate indexed search; it names a separate operation for that purpose."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T03:31:28.992Z",
+        "notes": "46/48, independently assigned to ec133e12d56d031cd4118d91111a6d8337bc86245502212f2e900e00e4bd0c54. The current vector-function objective, explicit SQL Server 2025 scope and exact/no-vector-index contract earn full alignment, accuracy, completeness and uniqueness. One specific product paragraph directly supports True and contradicts False, giving full evidence and citation scores. Beginner recognition is the appropriate difficulty, and the explanation is clear and bounded. Distractor plausibility is 3 for the binary format's limited diagnostic detail; originality is 3 for direct contract paraphrase. This is a fresh evaluation of the changed authored form, not a conversion of the earlier 43/48 rubric.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-024": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "c962a8ab3df4ebf06b77741d531215860f8e5d8bb8629a7c61802e2063b2cfb8",
+      "sourceIds": ["dp800-d3-hybrid"],
+      "retrievedAt": "2026-09-14T22:12:36.423Z",
+      "lastValidatedAt": "2026-09-15T00:39:05.156Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-hybrid"],
+          "summary": "B contributes twice at denominator 22. Its sum simplifies to 1/11, strictly greater than the other two scores of 1/21, making it the unique highest-scoring document."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-hybrid"],
+          "summary": "A has only one contribution, 1/21. B has 1/22 from each list, yielding 1/11, so the specified sum disproves automatic dominance by a single keyword rank 1."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-hybrid"],
+          "summary": "The stated formula weights keyword and vector contributions equally. C has no inherent priority and receives the same 1/21 as A, below B's combined value."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-hybrid"],
+          "summary": "The tie between A and C is real but is not the maximum: each is 1/21, whereas B is 2/22. This option mistakes equality between two candidates for first place overall."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:54:20.823Z",
+        "notes": "45/48. Exact RRF alignment, fully specified ranks/constant/absence semantics and direct formula evidence justify full technical, scenario and citation scores. The bounded explanation and legible fractions are clear. Distractor plausibility is 3 because the any/always alternatives are conspicuous despite the credible A/C tie trap. Difficulty is 3 for a small, formula-supplied intermediate calculation; originality is 3 for a standard multi-list-agreement example. No score relies on the source's unrelated performance or BM25 claims.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-026": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "a8e2d44a94a68506c2f3cebf24f40e8b999800b8460385889265fb905a2bcc4b",
+      "sourceIds": ["dp800-d3-rag-context", "dp800-d3-for-json"],
+      "retrievedAt": "2026-09-14T22:23:50.609Z",
+      "lastValidatedAt": "2026-09-15T00:39:05.156Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-rag-context", "dp800-d3-for-json"],
+          "summary": "The one-row result becomes an array with one object; the shared dotted prefix nests label and units under item. The Field kit string and integer 12 match the quoted-string and numeric JSON values shown."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-rag-context", "dp800-d3-for-json"],
+          "summary": "PATH interprets item.label and item.units as nested properties under item. The displayed flat keys retain literal dots and therefore describe a different formatting result."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-rag-context", "dp800-d3-for-json"],
+          "summary": "Although the inner nesting is right, the statement does not request WITHOUT_ARRAY_WRAPPER. A single SELECT row still produces a one-element array by default."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-rag-context", "dp800-d3-for-json"],
+          "summary": "The extra items property would require an explicit ROOT('items') option. It is not inferred from the item-prefixed aliases, and no named root was requested."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:54:20.823Z",
+        "notes": "47/48. The structured-data-to-JSON objective, complete short statement and independent nesting/array/root rules earn full alignment, accuracy, completeness and uniqueness. All distractors are valid JSON representing realistic formatting mistakes, each resolved by explicit teaching and product sections. Intermediate code tracing is authentic and the explanation stays within formatting rather than model guarantees. The compact shapes are clear. Originality is 3 because dot-alias nesting is a conventional FOR JSON teaching pattern, not because an assessment or existing encounter was copied.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-027": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "43b3937e883a3c3d88b8ab2cbb94b7bc252a7ab79b14bf23972f52d23e2428a0",
+      "sourceIds": ["dp800-d3-rag-responses"],
+      "retrievedAt": "2026-09-14T22:12:36.371Z",
+      "lastValidatedAt": "2026-09-15T00:39:05.156Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-rag-responses"],
+          "summary": "This path traverses the given result wrapper and first message to the short content string, and JSON_VALUE is the documented scalar extractor. Both the location and type match."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-rag-responses"],
+          "summary": "The supplied root does not directly contain choices; result contains that array. Omitting the wrapper therefore fails to address the answer node even though JSON_VALUE is the appropriate kind of extractor."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-rag-responses"],
+          "summary": "The path is correct but the function is not: JSON_QUERY is intended for object or array extraction, whereas the supplied content node is explicitly a scalar string."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-rag-responses"],
+          "summary": "The path selects the HTTP code 200 in response metadata, not the requested answer text. A valid scalar extraction is not sufficient if it addresses the wrong branch of the JSON document."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:54:20.823Z",
+        "notes": "46/48. The Extract language model responses subskill is exact, and the complete valid envelope plus short scalar premise closes material ambiguities. The raw unit directly supports both the full path and scalar-versus-object extractor choice, giving full technical/evidence scores. Tracing those independent dimensions is credible intermediate reasoning and the bounded explanation is clear. Distractor plausibility is 3 because HTTP metadata is readily excluded; originality is 3 for a conventional response-wrapper pattern, distinct from the existing encoded-JSON and KQL filtering tasks.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-021": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "8999f0d4ef776e66509f89e2d142c2263b9a9568baabd669b8a7c13c456d4bf7",
+      "sourceIds": ["dp800-d3-input-design"],
+      "retrievedAt": "2026-09-14T22:12:36.116Z",
+      "lastValidatedAt": "2026-09-15T02:37:51.819Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-input-design"],
+          "summary": "The name and description are exactly the two stated semantic inputs and include both required kinds of meaning, without the opaque key or operational timestamp."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-input-design"],
+          "summary": "DisplayName supplies the brand, but the opaque StorageKey adds none of the required feature description. The pair omits one required field and includes a field explicitly irrelevant to this embedding task."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-input-design"],
+          "summary": "The description supplies features but the pair drops the required brand-bearing name and adds an operational timestamp declared irrelevant. It therefore does not include both required semantic fields."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-input-design"],
+          "summary": "Both selected fields are explicitly irrelevant operational information in this scenario. Neither supplies the required brand-bearing name or feature description."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T03:16:56.156Z",
+        "notes": "45/48, independently scored for the new generation. The columns-to-include objective, explicit field meanings and requirement to retain both semantic fields earn full technical and completeness scores. The source's meaningful-text guidance and qualified treatment of metadata directly support the choice and all rejected pairs. Beginner is accurate, the explanation preserves task dependence and the parallel pairs are clear. Distractor plausibility is 2 because the stem largely provides the relevance partition and one choice contains only excluded fields. Originality is 3 for a conventional input-relevance example. No advanced-design credit was assigned.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-025": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "10d83102c3a03830040bcaeb4fc689aeabf74d22b184114508fa9501940ae9e6",
+      "sourceIds": ["dp800-d3-hybrid"],
+      "retrievedAt": "2026-09-14T22:12:36.423Z",
+      "lastValidatedAt": "2026-09-15T02:37:51.819Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-hybrid"],
+          "summary": "Full outer key pairing preserves keyword-only, vector-only and shared IDs. With unique keys in each input, a shared key matches once; COALESCE selects the available output ID and supplies zero for an absent-side contribution, as in the source pattern."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-hybrid"],
+          "summary": "An inner join removes either-side-only candidates. For A,B and B,C it emits only B; setting a missing score to zero cannot restore the rows already excluded by the join."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-hybrid"],
+          "summary": "The left join retains keyword-only and shared candidates but drops vector-only IDs. In the explicit counterexample, C has no keyword-side row and disappears."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-hybrid"],
+          "summary": "Every-pair output changes the grain from documents to keyword/vector combinations. Two inputs of two rows yield four pairs, including unrelated IDs, instead of one result for each candidate ID in their union."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T03:16:56.156Z",
+        "notes": "45/48, independently scored on the repaired hash. The Implement hybrid search objective and explicit coverage/key/absence requirements support full technical and completeness scores. The source directly demonstrates full-outer key pairing and COALESCE for identity and contributions. Intermediate is now an honest classification for this multi-part relational choice, and the bounded explanation is clear. Distractor plausibility is 3 for the easy cross-product alternative and longer complete answer. Distractor evidence is 3 because wrong-join cases are independently reasoned set counterexamples rather than separate worked source examples. Originality is 3 for a standard candidate-union pattern.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 3,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-012": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "0754e82bf41a428c8f16600d83743b195c4ff5158f1fca153b6eea344dd5b5dc",
+      "sourceIds": ["dp800-d2-rls"],
+      "retrievedAt": "2026-09-14T22:19:04.968Z",
+      "lastValidatedAt": "2026-09-15T02:00:26.372Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-rls"],
+          "summary": "AFTER INSERT checks inserted values and makes a violating write fail under an enabled security policy. The primary source also supplies a concrete policy binding for this timing. dp800-d2-rls, decoded lines 26-34, 48-54 and 450-458."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-rls"],
+          "summary": "FILTER alone can hide existing rows but does not reject an INSERT merely because its new row would later be hidden. The source explicitly describes that permitted insertion. dp800-d2-rls, decoded lines 25-30 and 46-48."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-rls"],
+          "summary": "BEFORE UPDATE protects against updates to existing rows that currently violate the predicate. It is a valid operation-specific block, but not the INSERT check requested. dp800-d2-rls, decoded lines 26-34."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-rls"],
+          "summary": "BEFORE DELETE is the documented block timing for deletion. It cannot serve as the native inserted-value check by virtue of sharing the BLOCK predicate family. dp800-d2-rls, decoded lines 26-34."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T03:20:54.918Z",
+        "notes": "Independent scores: alignment 4 for the RLS objective; accuracy 4 for filter versus block behavior and operation timing; scenarioCompleteness 4 for this mechanism-identification task; answerUniqueness 4 because only AFTER INSERT checks the specified operation; distractorPlausibility 2 because BEFORE UPDATE and BEFORE DELETE are easy lexical eliminations; distractorEvidence 4 because all three alternatives have explicitly documented legitimate uses; documentationStrength 4 for the primary description and enabled-policy example; citationSpecificity 4 for exact named operations and the filtered-out INSERT exception; difficultyAuthenticity 4 for the now-honest beginner recognition label; explanationQuality 4 for the creation-versus-visibility distinction; originality 4 within the inspected local corpus; clarityAccessibility 4 for the concise task. Total 46/48, no zeros, all critical criteria 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-018": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "9a386c72f53285676bbfa4196106c8113eea027eafbb7675fd8c6d1fe5f2d820",
+      "sourceIds": ["dp800-d2-reference-data"],
+      "retrievedAt": "2026-09-14T22:31:52.055Z",
+      "lastValidatedAt": "2026-09-15T03:50:56.570Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "summary": "The script runs after table creation and handles both existing and missing keys, satisfying the initial and repeated deployment conditions. Versioning the reference-data logic is explicitly supported. dp800-d2-reference-data, decoded lines 73-89 and 114-132."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "summary": "Predeployment reference-data work can prepare existing objects, but the lookup table in this first deployment does not yet exist. Its timing fails the current initial-load requirement. dp800-d2-reference-data, decoded lines 73-78."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "summary": "A post-schema append is valid for initial population but does not itself reconcile retained keys. The issue is missing existing-row handling, not the mere use of INSERT; adding guarded reconciliation would add behavior beyond the stated append strategy. dp800-d2-reference-data, decoded lines 114-132."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "summary": "Schema-only deployment is legitimate when no data initialization or reconciliation is needed. It cannot supply the required rows in this newly created lookup table. dp800-d2-reference-data, decoded lines 23 and 73-78."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T04:27:57.227Z",
+        "notes": "Fresh criterion judgments: alignment 4 for versioned reference data; accuracy 4 for ordering, retained-key handling and schema/data separation; scenarioCompleteness 4 for the initial and later lifecycle states; answerUniqueness 4 because only c explicitly provides both timing and reconciliation; distractorPlausibility 3 because schema-only is easier to eliminate; distractorEvidence 4 for documented existing-object preparation, initial append and schema-only contexts; documentationStrength 4 for direct coverage in the actual lesson; citationSpecificity 4 for exact phase and matched/missing-key clauses; difficultyAuthenticity 4 for the current intermediate implementation label; explanationQuality 4 because failure is limited to missing existing-key handling rather than all INSERT implementations; originality 4 within the inspected corpus; clarityAccessibility 3 because append versus a guarded INSERT-based reconciliation implementation could be expressed more precisely. Total 46/48, no zeros, all critical criteria 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "dp800-direct-019": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "b278f5ae370a820c2fb17a0a0c3d673cb45e1710534bb4e428be6e5ca0fc67b2",
+      "sourceIds": ["dp800-d2-dab-config"],
+      "retrievedAt": "2026-09-14T22:31:52.477Z",
+      "lastValidatedAt": "2026-09-14T23:49:44.600Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-dab-config"],
+          "summary": "The source explicitly places both database-type and connection-string under data-source, separately from route and entity configuration. Environment-based secret storage does not change that ownership. dp800-d2-dab-config, decoded lines 25-30 and 66-80."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-dab-config"],
+          "summary": "Runtime controls API and host behavior, including the global REST path. It is appropriate for changing that path, not for the requested connection fields. dp800-d2-dab-config, decoded lines 29 and 88-118."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-dab-config"],
+          "summary": "Entities configures the exposed database objects and their mappings. Those mappings are a separate concern and are expressly to remain unchanged here. dp800-d2-dab-config, decoded lines 25-30 and 132-138."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-dab-config"],
+          "summary": "$schema references validation and editor-assistance metadata matched to the DAB installation. It neither contains the database connection string nor represents the database schema to connect to. dp800-d2-dab-config, decoded lines 27 and 64."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T03:20:54.918Z",
+        "notes": "Independent scores: alignment 4 for DAB configuration; accuracy 4 for explicitly documented field ownership; scenarioCompleteness 4 for a version-valid configuration and preservation constraints; answerUniqueness 4 because only data-source owns both fields; distractorPlausibility 3 because semantic names assist elimination; distractorEvidence 4 for directly documented alternative uses of runtime, entities and $schema; documentationStrength 4 for the actual section definitions and examples; citationSpecificity 4 for exact field and role clauses; difficultyAuthenticity 4 for beginner recognition; explanationQuality 4 for clear boundaries and avoidance of version-specific sample claims; originality 4 within inspected banks; clarityAccessibility 4 for concise requirements. Total 47/48, no zeros, all critical criteria 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-020": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "3dc1cbafb59e184e8052c4c7127ed6cdf29d16b64f4328ca7c24235fbd05e417",
+      "sourceIds": ["dp800-d2-dab-procedures"],
+      "retrievedAt": "2026-09-14T23:34:15.423Z",
+      "lastValidatedAt": "2026-09-15T03:50:56.570Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-dab-procedures"],
+          "summary": "The source explicitly defaults to POST when methods is omitted. The stem establishes that this is the effective REST-enabled configuration without an overriding layer. dp800-d2-dab-procedures, decoded lines 65-71."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-dab-procedures"],
+          "summary": "GET-only is a documented explicit configuration, not the omitted-method default. The source's GET example does not override its separate default rule. dp800-d2-dab-procedures, decoded lines 45-47 and 65-71."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-dab-procedures"],
+          "summary": "GET and POST are supported explicit method choices, but that supported set is not the default enabled set. Enabling both requires explicit selection rather than omission. dp800-d2-dab-procedures, decoded lines 12, 45-47 and 67-68."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-dab-procedures"],
+          "summary": "The source provides rest:false for disabling REST. That differs from the enabled endpoint with omitted methods in this question, which receives the POST default. dp800-d2-dab-procedures, decoded lines 12 and 68-71."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T04:27:57.227Z",
+        "notes": "Fresh criterion judgments for the new concept: alignment 4 for configuring REST endpoints; accuracy 4 for the documented POST default; scenarioCompleteness 4 for enabled REST, valid configuration and effective omission; answerUniqueness 4 because only POST is the omitted-setting default; distractorPlausibility 3 because disabled REST is the easier alternative; distractorEvidence 4 for directly documented GET, explicit method selection and rest:false configurations; documentationStrength 4 for the actual product reference; citationSpecificity 4 for the exact configuration example and REST-behavior clauses; difficultyAuthenticity 4 for beginner recall; explanationQuality 4 for separating defaults, support and disabling; originality 4 because no other inspected item tests this default and the old result-set concept is distinct; clarityAccessibility 4 for precise effective-configuration conditions. Total 47/48, no zeros, all critical criteria 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-016": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "33e78a64f7b8e8d48584da1c4385a8049c20a8844a579de6ded8c65085234679",
+      "sourceIds": ["dp800-d2-deadlocks"],
+      "retrievedAt": "2026-09-14T23:41:04.352Z",
+      "lastValidatedAt": "2026-09-15T03:50:56.570Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-deadlocks"],
+          "summary": "Starting a new transaction and replaying the complete safe operation supplies the work discarded by victim rollback. Delay reduces collision risk without guaranteeing success. dp800-d2-deadlocks, decoded lines 20, 334-348 and 354-357."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-deadlocks"],
+          "summary": "The failed statement is only part of this two-update victim transaction, so isolated replay loses earlier required work. The same strategy can be valid when a single statement is the complete failed autocommit transaction. dp800-d2-deadlocks, decoded lines 82, 354-357 and 416-426."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-deadlocks"],
+          "summary": "A healthy active transaction may be committed, but the original transaction in this scenario has already been rolled back. The revised wording no longer embeds an impossible claim that an original victim survives. dp800-d2-deadlocks, decoded lines 20-22, 82 and 372."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-deadlocks"],
+          "summary": "Waiting and continuing is the documented ordinary-blocking path, not recovery from completed victim rollback. Error handling continuing does not restore the original transaction. dp800-d2-deadlocks, decoded lines 20-22 and 336-348."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T04:27:57.227Z",
+        "notes": "Fresh criterion judgments: alignment 4 for deadlock troubleshooting; accuracy 4 for full rollback and conditional control-flow continuation; scenarioCompleteness 4 for the explicit transaction and safe-retry premises; answerUniqueness 4 because only d reconstructs the complete operation; distractorPlausibility 3 for credible but uneven recovery-state confusions; distractorEvidence 4 because isolated autocommit retry, healthy commit and ordinary blocking all have sourced alternate contexts; documentationStrength 4 for direct primary coverage; citationSpecificity 4 for exact rollback, commit/blocking and handling clauses; difficultyAuthenticity 4 for intermediate troubleshooting; explanationQuality 4 for the transaction/control-flow distinction; originality 3 because dp700-monitor-034 shares the broader whole-transaction recovery pattern despite a different engine and error; clarityAccessibility 4 for explicit scope. Total 46/48, no zeros, all critical criteria 4. These judgments apply to the new r2 content, not the earlier review.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-017": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "f3eeba08d35263f8acd0f5aa6fd3d9c964e8c8ea51304d63204dd21d31a2bbe3",
+      "sourceIds": ["dp800-d2-drift", "dp800-d2-project-build"],
+      "retrievedAt": "2026-09-14T22:34:58.083Z",
+      "lastValidatedAt": "2026-09-15T02:57:51.179Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-drift", "dp800-d2-project-build"],
+          "summary": "Script produces the proposed deployment T-SQL without applying the deployment, satisfying both explicit requirements. Both bound lessons independently state this distinction. dp800-d2-drift, decoded lines 77-90; dp800-d2-project-build, lines 106-113."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-project-build"],
+          "summary": "Publish performs the deployment workflow rather than stopping at the requested nonexecuting approval artifact. It is valid after approval when applying the source model to the target is intended. dp800-d2-project-build, decoded lines 25 and 96-104."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-drift", "dp800-d2-project-build"],
+          "summary": "DeployReport is a legitimate preview for XML summaries and operation-based checks, but that artifact is not the actual T-SQL requested. dp800-d2-drift, decoded lines 92-113; dp800-d2-project-build, lines 106-113."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-drift"],
+          "summary": "Extract captures the existing database schema for representation or comparison. It does not produce this source-dacpac-to-target deployment script. dp800-d2-drift, decoded lines 57-65 and 77-90."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T03:36:47.505Z",
+        "notes": "Fresh independent scores: alignment 4 for SQL project deployment; accuracy 4 for the four action meanings and bounded Publish claims; scenarioCompleteness 4 for the source artifact, target access and approval requirement; answerUniqueness 4 because only Script provides T-SQL without deployment execution; distractorPlausibility 3 because the names assist recognition although DeployReport competes credibly; distractorEvidence 4 for directly documented alternate uses of all three other actions; documentationStrength 4 because the actual newly bound lesson explicitly covers Publish and corroborates previews; citationSpecificity 4 for exact action examples and output descriptions; difficultyAuthenticity 4 for intermediate pipeline-action selection; explanationQuality 4 for avoiding unconditional target-object deletion claims; originality 4 within the inspected local corpus; clarityAccessibility 4 for explicit output and execution constraints. Total 47/48, no zeros, all critical criteria 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-028": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "3014c582f8fe6aa432380a10c15e8b04e52d8a1754cc309fb40331bb3ba30378",
+      "sourceIds": [
+        "dp800-d1-json-value",
+        "dp800-d1-openjson",
+        "dp800-d1-json-query"
+      ],
+      "retrievedAt": "2026-09-15T05:45:14.081Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-json-value", "dp800-d1-openjson"],
+          "summary": "OPENJSON in FROM with message nvarchar(max) '$.message' produces the explicitly typed scalar column from the supplied root object. It does not request AS JSON, and compatibility 160 satisfies the minimum 130. This is the documented remedy for a scalar longer than JSON_VALUE can return. A short confirming context, N'{\"message\":\"retained text\"}', would return N'retained text' through the same SELECT; the explicit max-length projection also accommodates the actual 5,100-character value."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-json-value"],
+          "summary": "Strict JSON_VALUE still has the non-RETURNING 4,000-character limit and errors for this 5,100-character string. The exact SELECT would correctly extract N'ready' from N'{\"message\":\"ready\"}', but that legitimate strict short-scalar use changes the stipulated input length and does not fix the current failure."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-json-query"],
+          "summary": "The message property is a scalar, so ordinary JSON_QUERY at that path returns NULL in default lax mode despite its nvarchar(max) return type. With the query unchanged, N'{\"message\":{\"severity\":\"notice\"}}' would instead return the object fragment {\"severity\":\"notice\"}; that is a valid different task, not this scalar-only task."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-json-query"],
+          "summary": "Pathless JSON_QUERY selects $ and returns the enclosing root object, not its message scalar. For example, the unchanged SELECT on N'{\"message\":\"ready\",\"revision\":3}' returns that whole object. It meets a whole-document requirement but leaves exactly the surrounding JSON structure that the current application does not want."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-recovery",
+        "reviewedAt": "2026-09-15T13:50:27.675Z",
+        "notes": "45/48, independently scored rather than converted from PASS 2 or a previous review. Alignment 4: the exact current JSON-query subskill directly covers this decision. Accuracy 4: the documented legacy scalar limit, strict error, typed OPENJSON remedy and JSON_QUERY value-kind/root behaviors support every authored claim under SQL Server 2022. Scenario completeness 4: input validity, property presence/kind/length, SQL type, version, compatibility and output shape are supplied. Answer uniqueness 4: only b produces complete scalar text without changing those premises. Distractor plausibility 3: strict mode and JSON_QUERY's max-length return are credible confusions, but pathless JSON_QUERY is readily excluded and b is longest. Distractor evidence 4: dedicated API contracts and positive short-scalar/object/root examples support both failure and literal alternative contexts for every option. Documentation strength 4: precise official product contracts have inspected direct named-API training ancestry; newer extensions and unrelated training claims are excluded. Citation specificity 4: the three direct API references and the identified Syntax, Arguments, Return value, mode-table and WITH sections address the exact operations, rather than broad overview pages. Difficulty authenticity 3: lower-end intermediate troubleshooting is defensible, but the stem pre-eliminates most diagnosis and the documented limit remedy dominates. Explanation quality 4: the explanation and all distractor notes correctly separate capacity, failure mode and output kind without adding unsupported promises. Originality 3: the new fact-level limit/remedy is distinct, but the familiar documented recipe and scalar-versus-fragment contrast overlap the surrounding bank's teaching pattern. Clarity/accessibility 4: short code choices and a precise positive output goal make the negative constraint and pronoun unambiguous. No critical criterion was relaxed to reach the threshold.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-029": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "5fd9e1d2584eaaffa9c6d44a376802449e79f222f2c0b6dffd6ab045a7cda7d0",
+      "sourceIds": ["dp800-d1-openjson"],
+      "retrievedAt": "2026-09-15T05:45:14.081Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "The explicit '$.SKU' path matches the actual uppercase property while colName retains the required lowercase output name sku. Its scalar value R-84 fits the declared nvarchar(20), and no AS JSON flag is appropriate or necessary. OPENJSON's BIN2 property comparison is independent of the stated case-insensitive collation. The same SELECT would return T-21 from N'{\"SKU\":\"T-21\",\"category\":\"kit\"}', confirming the alias and mapping are separate decisions."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "Default WITH mapping seeks the exact lowercase key sku, which this document lacks. The database's case-insensitive collation does not override OPENJSON property matching, so repeating the clause cannot repair the observed NULL. The identical clause would return R-84 from N'{\"sku\":\"R-84\",\"category\":\"spare\"}', a legitimate lowercase-producer countercontext. That changes the explicitly frozen input rather than supplying another correct answer to this question."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "The path asks for array element zero below SKU, but the supplied property is the scalar string R-84. Bracket indexing is not a request for a string's first character or its complete value. With N'{\"SKU\":[\"R-84\",\"R-85\"]}', the unchanged WITH clause would correctly project R-84 from the first array element. That concrete array case requires a different input shape and does not rescue this option here."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "An explicit path to category selects spare, not the identifier R-84. Naming that output sku does not change which property supplied its value, so producing non-NULL text is not sufficient. On the unchanged payload, the literal clause is valid for a legacy report that intentionally wants category text under that output name. Such a report changes the requested field and cannot satisfy the current identifier requirement."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mapping",
+        "reviewedAt": "2026-09-15T15:35:08.185Z",
+        "notes": "45/48. Exact JSON-objective alignment, complete version/input/output constraints and direct mapping documentation justify the critical 4s. Every distractor has sourced exclusion and a literal positive context. Repeating the failing clause and choosing category weaken plausibility; the one-step repair limits difficulty; generic case-mapping overlap limits originality. Accurate explanations and readable choices retain 4. No blocking duplicate or alternate answer was found.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-030": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "db67fe5022c12ff47b46e06089ed40bb5059a1b395b65bbbf792f9b0be3020f5",
+      "sourceIds": ["dp800-d1-openjson"],
+      "retrievedAt": "2026-09-15T05:45:14.081Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "The path selects the existing detail object, and AS JSON requests its fragment rather than a scalar member. The declared nvarchar(max) also meets the flag's explicit type requirement. Thus the result retains both items and memo in one column. The unchanged definition likewise preserves {\"items\":0,\"memo\":\"hold\"} from N'{\"detail\":{\"items\":0,\"memo\":\"hold\"}}'. Neither a larger scalar type alone nor selecting a child field provides this documented fragment behavior."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "The larger SQL text type does not change ordinary projection into fragment extraction. Because detail is an object and AS JSON is absent, default lax handling returns NULL instead of the object. The exact definition would correctly return ready from N'{\"detail\":\"ready\"}' when scalar text is required. That positive countercontext changes the property's JSON kind and the output contract, so it is not an alternative answer here."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "This definition selects only $.detail.items and projects its value as integer 2. It cannot retain memo or the enclosing object, and its SQL output type also conflicts with the required nvarchar(max) column. On the same supplied document, the unchanged option is entirely valid for an item-count consumer. That narrower numeric requirement is a concrete correct countercontext, but it is explicitly not the complete-object task."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "The path reaches the memo scalar ship and excludes items. Although its SQL output is nvarchar(max), that capacity does not recover the enclosing structure omitted by the path. Using the original document, the unchanged definition correctly serves a memo-only text consumer, returning ship under the alias detail. The candidate instead requires the whole object for later processing, so this otherwise valid scalar projection is insufficient."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mapping",
+        "reviewedAt": "2026-09-15T15:35:08.185Z",
+        "notes": "45/48. Complete input/type/version constraints, precise AS JSON documentation and one defensible key earn the critical 4s. All options have documented value-kind boundaries and concrete valid uses elsewhere. Obvious partial-field distractors reduce plausibility; a single-flag decision limits difficulty; familiar fragment reasoning limits originality. The explanations correctly separate capacity and JSON kind, and the short code remains clear. The distinct OPENJSON schema decision is not a duplicate serialization task.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-031": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "5afbac32c64d4527b03969fdf27e977e1b4e27c84f90dc660d971cf9b1858597",
+      "sourceIds": ["dp800-d1-openjson"],
+      "retrievedAt": "2026-09-15T05:45:14.081Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "The output name billing.code is a single bracket-delimited SQL identifier. Without a column_path override, OPENJSON matches it to the exact top-level JSON key of that name and projects its scalar A7 into nvarchar(10). The nested billing.code path is a different location and is not implicitly traversed. The same query also returns A7 from N'{\"billing.code\":\"A7\"}', showing that the extra nested object does not participate in the selected mapping."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "B2 belongs to the nested billing object, but the bracketed column name supplies no nested JSON path. OPENJSON instead matches the literal billing.code key containing A7. The unchanged query would return B2 from N'{\"billing.code\":\"B2\",\"billing\":{\"code\":\"A7\"}}'; alternatively, an explicit '$.billing.code' projection would reach B2 in the original input. Each concrete countercontext changes a frozen premise, so neither makes this choice correct for the displayed query."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "A literal dot does not prevent default name matching, and the exact billing.code key is present with scalar A7. The absence condition needed for this NULL answer therefore does not hold. With N'{\"billing\":{\"code\":\"B2\"}}', the unchanged SELECT and WITH clause would yield SQL NULL under default lax handling because only the nested key exists. This valid missing-literal-key case is different from the supplied complete input."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "The selected property is the literal scalar A7, not the billing object, and no AS JSON flag requests a fragment. A valid countercontext is SELECT [billing.code] FROM OPENJSON(N'{\"billing\":{\"code\":\"B2\"}}') WITH ([billing.code] nvarchar(max) '$.billing' AS JSON);, which returns the displayed object. That explicitly different projection supplies both the object path and required max-length fragment type. It must not be represented as an outcome of the unchanged query."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mapping",
+        "reviewedAt": "2026-09-15T15:35:08.185Z",
+        "notes": "45/48. The complete two-location literal and directly documented dotted-name rule support alignment, completeness and all critical 4s. Each distractor has a sourced valid context, with c honestly requiring another projection. That conspicuous object alternative reduces plausibility; one-rule result prediction limits difficulty; the familiar documented distinction limits originality. Clear code and accurate explanations retain 4. Related mapping questions do not test the same necessary fact.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-032": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "7848d67e57e4e0be963ee1f66eee9b494e084a6fc852f3d723e2862c91009139",
+      "sourceIds": ["dp800-d1-openjson"],
+      "retrievedAt": "2026-09-15T05:45:14.081Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "The documented default-schema discriminator is 2 for JSON numbers. Applying this filter to the supplied literal therefore returns count with value text 8 and excludes label, enabled and missing. The discriminator remains available to WHERE even though the SELECT list omits it. As another valid case, the unchanged filter selects n but not s from N'{\"n\":-2.5,\"s\":\"-2.5\"}', preserving the distinction between numeric tokens and quoted numeric text."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "Type code 1 denotes a JSON string, so the filter selects label with textual value 8 rather than count's numeric token. OPENJSON also returns numeric values through its SQL text value column, which does not erase their different discriminator codes. The exact filter correctly serves a string-token audit on this same input, but that changed task expressly includes the numeric-looking strings that the current requirement excludes."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "Type code 3 identifies JSON true/false values, so the unchanged filter returns enabled with text true on this input. It does not select count, and no SQL conversion exists here to turn the boolean into a competing numeric token. This same literal filter is appropriate for a boolean-property audit. The present task instead requests JSON numbers, whose separately documented discriminator is 2."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-openjson"],
+          "summary": "Type code 0 denotes JSON null, so this selects the present key named missing with SQL NULL as its value. It does not mean the numeric value zero, and the property's name does not make it absent. On the unchanged input, the literal filter correctly audits explicitly null-valued properties. That is a valid separate requirement, but count's numeric token carries type 2 and is excluded by this choice."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mapping",
+        "reviewedAt": "2026-09-15T15:35:08.185Z",
+        "notes": "47/48. Originality is 3 for a familiar type-code lookup. The beginner/recall label is accurate; no advanced reasoning credit is claimed. The complete literal and default-schema constraint make the key unique, with direct table-level evidence for all four options. Equal-form distractors represent real token classes and have literal positive contexts. Explanations correctly separate SQL representation and JSON kind, and the number-only requirement is clear and objective-aligned.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-034": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "4c1a3c22db67f8b27092fc4fe455c78f9ba52e4122580d60b6a879e4e267d840",
+      "sourceIds": ["dp800-d1-json-modify"],
+      "retrievedAt": "2026-09-15T05:45:14.141Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Supported: the shown document already contains contact, so the Remarks matrix's existing-path/SQL-NULL/strict case applies. The returned document has contact set to JSON null and revision still equal to 6. The separate missing-property error cannot arise for this literal input. This exact expression is appropriate when the consumer requires {\"contact\":null,\"revision\":6}; the conclusion concerns the returned document, not a persisted update."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: with a present contact key, lax mode and a SQL NULL replacement remove that key. The derived result is {\"revision\":6}, not an object retaining a contact member with a null value. This is useful for a deletion-style patch whose consumer expects only the revision property. It is not interchangeable with strict-mode null assignment, even though both expressions supply the SQL token NULL."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: N'null' is a nonnull nvarchar value containing four letters, not SQL NULL and not a JSON null token. The function's newValue rules treat such input as text, giving {\"contact\":\"null\",\"revision\":6}. This unchanged option would be appropriate if an API deliberately stored the word null as a string. The existing key's former string value does not change that distinction."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: N'' is an empty but nonnull nvarchar value. Updating the existing property with it produces {\"contact\":\"\",\"revision\":6}; it neither deletes the key nor supplies JSON null. The identical expression is correct for a contract requiring a present, intentionally blank contact string. The newValue text-handling rule and existing-path/non-NULL update case support that countercontext without conflating empty text with SQL NULL."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mutation",
+        "reviewedAt": "2026-09-15T15:36:40.486Z",
+        "notes": "45/48. Alignment, accuracy, supplied-input completeness, uniqueness, source strength, option evidence, citation precision, explanation, and readability each merit 4. Distractor plausibility is 3 because empty text is readily eliminated; difficulty authenticity is 3 because intermediate implementation involves one small mode/type decision; originality is 3 because the setup follows a familiar null-mutation example. Critical dimensions remain 4; no score was raised to clear the threshold.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-035": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "f1f3c4d091e04b9713e44c7a52edb1282476e00caea37d8af8d0015a969a3cd2",
+      "sourceIds": ["dp800-d1-json-modify"],
+      "retrievedAt": "2026-09-15T05:45:14.141Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Supported: the nvarchar parameter supplies the text 3, and the newValue contract plus the numeric-cast example establish JSON string output for text-typed replacements. The derived result is {\"attempt\":\"3\"}. The old property's numeric type does not impose coercion on the new value. The unchanged expression therefore fits a consumer requiring a string-valued attempt field; a numeric contract would require validated numeric conversion instead."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: the replacement is declared nvarchar(10), so its numeric-looking characters do not become a JSON number automatically. The article's numeric-cast example explicitly distinguishes text replacement from numeric replacement. With the same starting document, using CAST(@next AS int) as newValue would produce {\"attempt\":3}, a positive context for this answer. The expression actually supplied omits that conversion and therefore cannot yield this numeric result."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: JSON_MODIFY returns an updated document for an existing path and nonnull replacement; it does not simply return the old numeric member because the input was text typed. The proposed {\"attempt\":2} would be correct if newValue were the SQL integer 2, for example CAST(2 AS int). That concrete alternative follows the same documented update rule but is not the supplied @next value."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: the parameter contains nonnull text, so the existing member is updated rather than removed. Deletion in the default lax mode requires SQL NULL as newValue. For this one-property input, JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', NULL) would instead return {}, making the option correct in that concrete deletion context. Changing only the nonnull parameter's SQL type does not supply the SQL NULL needed for deletion."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mutation",
+        "reviewedAt": "2026-09-15T15:36:40.486Z",
+        "notes": "45/48. The complete typed input, explicit product contract, unique result, sourced alternatives, useful conversion explanation, and honest beginner classification merit 4 in their respective dimensions. Distractor plausibility is 2: retaining 2 and deleting the member are weak alternatives to the meaningful number/string contrast. Originality is 3 for a conventional type-demonstration setup, distinct from pending token inspection. Critical scores and distractor evidence are independently 4.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-036": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "59b6cb614ed0e0bd27cb59118d18059bf35e7e39faf886f3e942c06028f78bbf",
+      "sourceIds": ["dp800-d1-json-modify"],
+      "retrievedAt": "2026-09-15T05:45:14.141Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Supported: append addresses the existing stages array and adds the new string after its current elements, deriving {\"stages\":[\"receive\",\"validate\",\"verify\"]}. The path argument description and the documented append example establish this behavior. The literal input already supplies an array, so the question does not depend on creating a missing container. This is the correct operation for extending that exact sequence without substituting a scalar or null."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: an ordinary update of the existing stages property replaces its value with the supplied nvarchar text. The derived document is {\"stages\":\"verify\"}, so neither original array element remains in that property. This exact option is valid for a different contract that replaces the collection with a single current-stage string. The existing-path/non-NULL matrix row supports that alternative, but it cannot satisfy array preservation."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: the stages path exists, and strict mode with SQL NULL sets its value to JSON null. The derived document is {\"stages\":null}, not an extended array. This unchanged expression is useful when the contract requires retaining the stages member while explicitly clearing its value. The source's NULL/existing-path matrix supports that countercontext; neither the retained member name nor strictness preserves the former array contents."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-json-modify"],
+          "summary": "Contradicted: lax mode with SQL NULL deletes the existing stages member, giving {} for the shown one-property document. The same expression is correct for a removal request whose target is an empty object. It does not append a null element or retain the array under a null value. Those distinctions follow the documented lax deletion rule and the separate strict-null and append behaviors."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mutation",
+        "reviewedAt": "2026-09-15T15:36:40.486Z",
+        "notes": "43/48, below 44. Distractor plausibility is 2 because both NULL choices are weak competitors to adding verify. Difficulty authenticity is 3 for strong keyword cueing even at beginner level; explanation quality is 3 for little worked transformation; originality is 3 for a textbook append setup recycling 034's null contrast. Other criteria merit 4 from complete input and direct evidence. Technical correctness does not justify inflating these scores.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 3,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-037": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "87a1bb42d35f6f73d2751be7c9d8fa71675bc5fd098ab601cb1c066e86f11204",
+      "sourceIds": ["dp800-d1-json-object"],
+      "retrievedAt": "2026-09-15T05:51:09.231Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-json-object"],
+          "summary": "Supported: ABSENT ON NULL omits a key only when its supplied SQL value is NULL. The given @comment meets that condition, while @code and the int value zero do not, producing {\"code\":\"R9\",\"retry\":0}. The source's null-clause definition and constructor examples support both omission and numeric output. This exact constructor satisfies the stated optional-key contract; it does not discard every value that another language might treat as false."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-json-object"],
+          "summary": "Contradicted: NULL ON NULL converts the SQL NULL comment value into a present JSON null member, yielding {\"code\":\"R9\",\"retry\":0,\"comment\":null}. Code and numeric zero remain, but omission of comment is not achieved. This unchanged constructor fits an API requiring a stable object shape with an explicit null placeholder. The function's json_null_clause argument directly supports that alternative rather than treating null inclusion as a syntax error."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-json-object"],
+          "summary": "Contradicted: omitting the null clause does not request omission of null-valued keys. JSON_OBJECT defaults to NULL ON NULL, so the derived object still contains \"comment\":null alongside code and retry. This exact constructor is appropriate when {\"code\":\"R9\",\"retry\":0,\"comment\":null} is wanted without spelling out the default. It is behaviorally equivalent to option a here, an editorial redundancy rather than a second correct answer."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-json-object"],
+          "summary": "Contradicted: this choice replaces @comment with the literal N'', which is nonnull text. ABSENT ON NULL therefore retains the member, deriving {\"code\":\"R9\",\"retry\":0,\"comment\":\"\"}. The unchanged constructor is useful when a consumer expects an explicit blank comment rather than an omitted key. The argument's SQL-NULL test does not classify empty strings or numeric zero as null, so its presence cannot rescue this option."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mutation",
+        "reviewedAt": "2026-09-15T15:36:40.486Z",
+        "notes": "44/48. Distractor plausibility is 2 because explicit and implicit NULL ON NULL repeat the same outcome. Difficulty authenticity is 3 for a mostly single-policy decision labeled intermediate; originality is 3 for another conventional null-state contract. Complete typed inputs, direct null-policy evidence, a unique key, useful zero/empty-string explanation, and clear presentation support 4 elsewhere. All critical scores and distractor evidence are 4; the narrow pass does not erase weaknesses.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-038": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "24632f0d55a7276b84168565ef4b482eb309f982e58b738d63f0691359a99b4a",
+      "sourceIds": ["dp800-d1-json-arrayagg"],
+      "retrievedAt": "2026-09-15T05:51:09.222Z",
+      "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-json-arrayagg"],
+          "summary": "Supported: aggregate-local ORDER BY Position processes the supplied positions in ascending order, and NULL ON NULL converts the middle SQL NULL into a JSON null element. Together they derive [\"z\",null,\"a\"]. Positions are distinct, so no unresolved ordering tie affects the result. This exact expression fits a positional export preserving missing-value slots; the conclusion uses the documented Azure SQL Database behavior, not SQL Server 2025 availability."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-json-arrayagg"],
+          "summary": "Contradicted: ascending Position supplies the right label order, but ABSENT ON NULL omits the SQL NULL element. The derived array is [\"z\",\"a\"], with no middle placeholder. This unchanged expression fits a compact export that intentionally skips missing labels while retaining increasing position order. The source makes this omission policy the default when no null clause is supplied, reinforcing why explicit NULL ON NULL is needed here."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-json-arrayagg"],
+          "summary": "Contradicted: NULL ON NULL preserves the missing-label slot, but ORDER BY Position DESC places position 30 before 20 and 10. The derived array is [\"a\",null,\"z\"], not the requested sequence. This exact expression would be correct for a reverse-position export that preserves null placeholders. The source's aggregate ordering and null-clause contracts govern independent choices; preserving cardinality alone cannot satisfy the stated ordering requirement."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-json-arrayagg"],
+          "summary": "Contradicted: descending Position reverses the labels and ABSENT ON NULL removes the middle SQL NULL, yielding [\"a\",\"z\"]. This identical expression is suitable for an export that deliberately requests descending positions and excludes missing labels. It is not invalid syntax merely because both choices oppose this contract. The documented ordering and null-omission rules explain the concrete alternative without relying on the physical order of the VALUES rows."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-json-mutation",
+        "reviewedAt": "2026-09-15T15:36:40.486Z",
+        "notes": "46/48. Complete, tie-free inputs and two independent output constraints support intermediate difficulty and full accuracy/uniqueness. The exact product reference supports every option and the bounded Azure SQL Database status, so evidence and citation dimensions merit 4. Distractor plausibility is 3 for the mechanical two-by-two construction and weaker double-failure choice; originality is 3 for a conventional toy export. The training availability conflict is explicitly excluded, not concealed.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-046": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "e656c0d57b73b4aa6014f9dfd9fad021e6eacc30686449af3606902e88d65939",
+      "sourceIds": ["dp800-d3-vector-normalize"],
+      "retrievedAt": "2026-09-15T06:34:21.491Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-vector-normalize"],
+          "summary": "Using the source's norm2 definition gives sqrt((-3)^2+4^2)=5. Scaling the input by 1/5 yields [-0.6,0.8], with squared length 0.36+0.64=1 and unchanged direction. Thus the option is supported in the actual context, not merely under an alternate interpretation. Choosing norm1 or norminf would change the denominator, but neither alternative is selected by the supplied SQL. Insignificant float rounding cannot create another valid choice."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-vector-normalize"],
+          "summary": "The two numbers are rounded sevenths: -3/7 and 4/7. Their Euclidean length is 5/7, so they cannot satisfy the requested norm2 return contract. Arguments > norm_type supplies a literal positive context: with the same input but 'norm1', abs(-3)+abs(4)=7 is the denominator and this option is correct. Rounding does not bridge the substantial difference between lengths 5/7 and one."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-vector-normalize"],
+          "summary": "These components divide the input by four, producing Euclidean length sqrt(0.5625+1)=1.25 rather than one. The documented norminf operation provides the positive context: max(abs(-3),abs(4))=4, so this literal pair is its correct result for the same input. The immutable call instead selects norm2 explicitly. Preserving direction alone is insufficient; the result must also have unit length under the requested norm."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-vector-normalize"],
+          "summary": "The literal pair remains the assigned input and has Euclidean length five. Return value requires the function result to have length one, ruling it out without assuming implementation-specific rounding. Its valid positive context is inspection of the original variable, such as SELECT @v, rather than inspection of VECTOR_NORMALIZE's output. Example 2 supports that distinction between a variable's assigned value and a subsequent normalization expression."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-vectors-recovery",
+        "reviewedAt": "2026-09-15T15:38:13.797Z",
+        "notes": "Score: 46/48. Direct norm definitions establish accuracy, uniqueness, documentation strength, and citation specificity at four. Every distractor represents a recognizable, evidenced operation. The complete expression earns full scenario and clarity credit despite its short stem. Difficulty earns three for a straightforward intermediate calculation; originality earns three because signed 3-4-5 normalization remains close to a textbook illustration, although no bank duplicate was found.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-047": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "0d0562375cae019deafd05de2cf6c4566a3294a2b22f9293ed44e46a2755af17",
+      "sourceIds": ["dp800-d3-vector-search"],
+      "retrievedAt": "2026-09-15T06:34:21.531Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "Earlier vector index versions applies the predicate only after retrieving the fixed neighbor pool. Five selected rows all having Approved=0 therefore leave zero survivors under Approved=1, regardless of approved rows elsewhere. This is the literal documented positive context for the option. Latest iterative filtering is not a counterexample because the stem explicitly excludes that version; successful execution and a matching index leave this explanation uniquely supported."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "The warning-and-fallback mechanism is real, but its compatibility failure is absent from this stem: the query is stated to use a matching index. A positive context would be a Euclidean search whose only same-column index uses cosine, leaving no compatible ANN index. Arguments > METRIC documents that case. Replacing the stated matching-index premise with that different situation would change the problem, not explain these observations."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "Return result set documents an error when a base-table distance column and the generated distance column are referenced ambiguously. That diagnosis is literally correct for an unqualified distance reference in such a schema. Here, however, the query finishes without error and diagnostics expose five predicate-failing candidates. An execution-preventing ambiguity cannot simultaneously explain a successfully returned empty set, so this alternative is technically grounded but easily eliminated."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "Arguments > TABLE requires a base table and explicitly excludes views. The literal diagnosis is valid when a failed call's TABLE argument names a view; that is its sourced positive context. This question instead establishes a valid, completed query using its matching index. The absence of qualifying rows in its selected candidate pool is sufficient to explain empty output and does not suggest an unsupported target."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-vectors-recovery",
+        "reviewedAt": "2026-09-15T15:38:13.797Z",
+        "notes": "Score: 44/48, at the unchanged threshold. The current version-specific reference fully supports the key and all literal countercontexts, preserving every critical four. Distractor plausibility is two because successful execution immediately excludes two error diagnoses. Difficulty is three for a tightly constrained intermediate diagnosis, not deeper troubleshooting. Originality is three because the setup closely follows the documented empty-pool illustration, despite being distinct from existing bank items.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-048": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "1cb62d31354994cb704e5af999e71504ae22e882971ed9dce16bfc33a017e6cc",
+      "sourceIds": ["dp800-d3-vector-search"],
+      "retrievedAt": "2026-09-15T06:34:21.531Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "Keeping Embedding and Euclidean fixed leaves only an applicable Euclidean index on Embedding as the offered way to meet both documented matching conditions. Its positive context is that completed compatible index state, after legitimate provisioning. The wording does not promise concurrent same-column indexes or make this a complete DDL sequence. The latest optimizer may still select kNN; supplying a necessary compatibility condition is not forcing an execution strategy."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "Changing to cosine can satisfy the index's metric, but it changes the distance the application is explicitly required to measure. The same action is literally appropriate when cosine is acceptable and the existing index matches Embedding. Arguments > METRIC supports that positive context without treating metrics as interchangeable. Even coincident rankings for specially normalized data would not preserve the immutable requirement to continue measuring Euclidean distance."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "The documented kNN fallback allows the Euclidean query to execute without compatible indexing, so this option is not an impossible operation. It is a valid positive choice for a workload content to retain exact scanning. It nevertheless supplies no ANN compatibility prerequisite, which is the question's requested change. Working execution and eligibility to use an ANN index are different requirements in the admitted product reference."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "An index on a different vector column does not match a query searching Embedding, even when both use Euclidean distance. Arguments > METRIC explicitly requires both properties, rather than either one. The literal index creation would be useful in a valid context where the query searches that other indexed column with Euclidean distance. Changing the searched column to obtain that context would abandon the present question's target."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-vectors-recovery",
+        "reviewedAt": "2026-09-15T15:38:13.797Z",
+        "notes": "Score: 45/48. The two matching conditions and explicit optimizer qualification earn all critical fours. Scenario completeness is three because the item establishes a compatible end state without operational index-replacement details. Distractor plausibility is three: alternatives are genuine operations but each visibly breaks a named requirement. Difficulty is three for a narrow intermediate design decision. The fact-level distinction from existing exact-distance questions supports full originality credit.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 3,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "dp800-direct-049": {
+      "credentialId": "dp-800",
+      "objectiveVersion": "March 12, 2026",
+      "questionFingerprint": "1a3749851fcb9224406b09d4f89c8f9f36c5bf0bbd6f566f2538e22160457f72",
+      "sourceIds": [
+        "dp800-d3-vector-search",
+        "dp800-d3-vector-distance",
+        "dp800-d3-vector-type"
+      ],
+      "retrievedAt": "2026-09-15T06:34:21.531Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d3-vector-search", "dp800-d3-vector-type"],
+          "summary": "The statement requests TOP(5) WITH APPROXIMATE, omits TOP_N, projects the base Id through d, and projects generated distance through r. Its sole ORDER BY r.distance is implicitly ascending, matching the reference's valid examples. With the given vector shape and available latest-index environment, this is the supported positive context. It requests a five-row approximate cap without forcing ANN selection or guaranteeing five returned rows; the manual disposition concerns quality instead."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "This exact statement retains TOP_N=5 and lacks WITH APPROXIMATE. The current reference rejects TOP_N on a latest index with documented error 42274; an outer TOP(5) does not neutralize the incompatible parameter. The literal positive context is an earlier-version index, where this legacy candidate-limit form, source/result aliases, and distance ordering are supported. Changing the index version to make it valid would contradict the immutable stem."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d3-vector-distance", "dp800-d3-vector-type"],
+          "summary": "The statement is a valid exact-distance query: cosine and the two vector expressions fit VECTOR_DISTANCE's signature, and the alias supplies the nearest-first ordering. Example B provides this positive context for an application requesting exact top-five ranking. The function's explicit no-vector-index contract prevents it from satisfying the requested approximate VECTOR_SEARCH syntax. Its technical validity therefore does not make it a second answer to the actual contract."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d3-vector-search"],
+          "summary": "The latest grammar and alias usage are valid, but TOP(25) encodes the wrong requested bound. A caller wanting up to 25 approximate matches is the literal positive context for this unchanged statement. More than 25 searchable rows removes a trivial small-table explanation, while even an incidental result of five or fewer would not enforce the required cap. The outer TOP value is the documented latest-syntax control."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-adversarial-vectors-recovery",
+        "reviewedAt": "2026-09-15T15:38:13.797Z",
+        "notes": "Score: 43/48, below 44. All critical dimensions earn four because current direct references establish a unique, technically sound answer. Difficulty earns two: latest-syntax recognition plus an elementary cap comparison does not substantiate Advanced depth. Plausibility earns three for the easy cap distractor; originality earns three for the documentation-template construction. Clarity earns three for repetitive single-line SQL alternatives. Preserve manual review; no authored field was repaired.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 3
+        }
+      }
+    }
+  }
+}

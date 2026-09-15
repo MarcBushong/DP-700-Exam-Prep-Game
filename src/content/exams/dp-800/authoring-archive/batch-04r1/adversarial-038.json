@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "24632f0d55a7276b84168565ef4b482eb309f982e58b738d63f0691359a99b4a",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "Ascending aggregate Position order with NULL ON NULL preserves the middle null slot.",
+        "whyIncorrectInContext": "Not incorrect: positions 10, 20, and 30 derive [\"z\",null,\"a\"] with a real JSON null token at the second position.",
+        "couldBeCorrectWhen": "The unchanged expression fits the stated positional export requiring [\"z\",null,\"a\"] from all three supplied rows.",
+        "sourceIds": ["dp800-d1-json-arrayagg"],
+        "evidenceSummary": "Arguments/order_by_clause controls array-element order; json_null_clause states that NULL ON NULL converts SQL NULL to a JSON null element. Examples 3 and 4 demonstrate aggregate-local ordering."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "Ascending order with ABSENT ON NULL could retain a positional placeholder.",
+        "whyIncorrectInContext": "ABSENT ON NULL drops the middle SQL NULL, deriving [\"z\",\"a\"]; correct label order does not preserve array positions.",
+        "couldBeCorrectWhen": "The unchanged expression fits a compact increasing-position export requiring [\"z\",\"a\"] and deliberately omitting missing labels.",
+        "sourceIds": ["dp800-d1-json-arrayagg"],
+        "evidenceSummary": "The null-clause contract explicitly omits SQL NULL elements under ABSENT ON NULL and identifies it as the default; aggregate ordering independently preserves the remaining ascending sequence."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "Descending order with NULL ON NULL could produce the required ascending-position sequence.",
+        "whyIncorrectInContext": "The middle null remains, but position 30 precedes 20 and 10, deriving [\"a\",null,\"z\"] instead of the required array.",
+        "couldBeCorrectWhen": "The unchanged expression fits a reverse-position export requiring [\"a\",null,\"z\"] while retaining the SQL NULL placeholder.",
+        "sourceIds": ["dp800-d1-json-arrayagg"],
+        "evidenceSummary": "The aggregate's ORDER BY clause governs element order independently of NULL ON NULL, which preserves rather than removes the missing-label element."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "Descending order and omitted nulls could satisfy the positional, null-preserving export.",
+        "whyIncorrectInContext": "Both contract dimensions change: the derived array is [\"a\",\"z\"], reversing the labels and removing the placeholder.",
+        "couldBeCorrectWhen": "The unchanged expression is correct for a descending-position export whose target is [\"a\",\"z\"] and whose policy excludes SQL NULL labels.",
+        "sourceIds": ["dp800-d1-json-arrayagg"],
+        "evidenceSummary": "Arguments/order_by_clause and json_null_clause independently support descending input order and omission of SQL NULL elements. The option is a valid alternative policy, not broken syntax."
+      }
+    ],
+    "challenges": {
+      "scope": "The stated service is Azure SQL Database. Conclusions concern its JSON_ARRAYAGG result over the shown rows, not SQL Server 2022, SQL Server 2025, or another Fabric engine.",
+      "plan": "The reference's Managed Instance update-policy qualification is not imported into Azure SQL Database. No pricing tier or plan-specific behavior is used to distinguish the choices.",
+      "role": "The complete query aggregates VALUES rows without protected database objects or external calls. Identity and permissions are not competing explanations for an array's order or null policy.",
+      "preconditions": "Positions 10, 20, and 30 are distinct numeric values. The middle row exists with Label equal to SQL NULL; this is not an absent row, empty string, or the text null.",
+      "featureStatus": "The raw product reference explicitly says GA for Azure SQL Database and Preview for SQL Server 2025. The training unit's broad SQL Server 2022 aggregate-availability sentence is contradicted and not adopted.",
+      "sourceChanges": "Read the indexed JSON_ARRAYAGG body and immediate json-unit aggregation section, including their availability conflict. Product-specific scope controls this verdict; retrieval/review dates remain the unchanged frozen snapshots.",
+      "stemSufficiency": "The required JSON array and all input rows are supplied. Unique positions remove tie ambiguity, and the placeholder asks for only the aggregate expression, not a different row source.",
+      "explanationBounds": "The explanation correctly separates ordering from null retention, identifies ABSENT ON NULL as the aggregate default, and bounds GA to Azure SQL Database rather than SQL Server 2025.",
+      "reasoningDepth": "Two independent choices must satisfy a concrete output contract: ordering direction and null-element policy. This supports intermediate implementation difficulty, not advanced or expert complexity.",
+      "answerClues": "The four choices are a constructed two-by-two matrix of order direction and null policy. Lengths are comparable; the double-wrong choice is weaker, but every option represents a coherent alternative export contract."
+    },
+    "qualityNotes": "Current 026 tests PATH nesting and array wrappers, not aggregate-local order or null positions. Pending 032 inspects input token types, and 037 controls optional object members rather than ordered array slots. No target duplicate was reported in the 584-bank/pending comparison. The deliberately exhaustive two-by-two alternatives and toy export setup limit plausibility and originality, but the two independent constraints provide genuine intermediate reasoning."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-038",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "questionFingerprint": "24632f0d55a7276b84168565ef4b482eb309f982e58b738d63f0691359a99b4a",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-arrayagg",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-arrayagg-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-arrayagg.json",
+        "retrievedAt": "2026-09-15T05:51:09.222Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "JSON_ARRAYAGG (Transact-SQL), Syntax and Arguments/order_by_clause and json_null_clause, documents aggregate-local element ordering, NULL ON NULL placeholders, and default ABSENT ON NULL omission. Examples 3 and 4 illustrate ordered aggregation. The availability note explicitly distinguishes GA in Azure SQL Database from Preview in SQL Server 2025; no training-derived SQL Server 2022 support is asserted."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "Supported: aggregate-local ORDER BY Position processes the supplied positions in ascending order, and NULL ON NULL converts the middle SQL NULL into a JSON null element. Together they derive [\"z\",null,\"a\"]. Positions are distinct, so no unresolved ordering tie affects the result. This exact expression fits a positional export preserving missing-value slots; the conclusion uses the documented Azure SQL Database behavior, not SQL Server 2025 availability.",
+        "sourceIds": ["dp800-d1-json-arrayagg"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: ascending Position supplies the right label order, but ABSENT ON NULL omits the SQL NULL element. The derived array is [\"z\",\"a\"], with no middle placeholder. This unchanged expression fits a compact export that intentionally skips missing labels while retaining increasing position order. The source makes this omission policy the default when no null clause is supplied, reinforcing why explicit NULL ON NULL is needed here.",
+        "sourceIds": ["dp800-d1-json-arrayagg"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: NULL ON NULL preserves the missing-label slot, but ORDER BY Position DESC places position 30 before 20 and 10. The derived array is [\"a\",null,\"z\"], not the requested sequence. This exact expression would be correct for a reverse-position export that preserves null placeholders. The source's aggregate ordering and null-clause contracts govern independent choices; preserving cardinality alone cannot satisfy the stated ordering requirement.",
+        "sourceIds": ["dp800-d1-json-arrayagg"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: descending Position reverses the labels and ABSENT ON NULL removes the middle SQL NULL, yielding [\"a\",\"z\"]. This identical expression is suitable for an export that deliberately requests descending positions and excludes missing labels. It is not invalid syntax merely because both choices oppose this contract. The documented ordering and null-omission rules explain the concrete alternative without relying on the physical order of the VALUES rows.",
+        "sourceIds": ["dp800-d1-json-arrayagg"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independently derived all four ordered arrays, distinguishing a present SQL NULL row from absence, strings, and empty text. Product evidence establishes Azure SQL Database GA despite the immediate training unit's inaccurate SQL Server 2022 aggregate claim; SQL Server 2025 remains Preview. Exact hashes, ancestry, and frozen source dates were checked. Score 46/48. Static review only, without SQL execution, source refresh, candidate edits, ledger writes, or promotion.",
+    "confidenceReason": "High confidence in key a because unique positions, explicit input values, and both documented aggregate clauses determine the requested output. The product-specific availability statement resolves the training conflict; the finding does not extend GA to SQL Server 2025."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 3,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 4,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "46/48. Complete, tie-free inputs and two independent output constraints support intermediate difficulty and full accuracy/uniqueness. The exact product reference supports every option and the bounded Azure SQL Database status, so evidence and citation dimensions merit 4. Distractor plausibility is 3 for the mechanical two-by-two construction and weaker double-failure choice; originality is 3 for a conventional toy export. The training availability conflict is explicitly excluded, not concealed."
+  }
+}

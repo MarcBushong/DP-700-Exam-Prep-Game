@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "dp800-direct-028": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "1eb1f628c8c9f269b34834b36ac016861e0040b87848d4f9917b85f90c2fe563",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-json-value"],
+            "summary": "Strict JSON_VALUE raises an error for a scalar over 4,000 characters instead of returning the required complete text."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-json-value", "dp800-d1-openjson"],
+            "summary": "The product article recommends OPENJSON for scalars longer than 4,000 characters; its explicit nvarchar(max) projection returns the requested string without the JSON wrapper."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-json-query"],
+            "summary": "JSON_QUERY extracts an object or array, not this scalar string; in lax mode it returns NULL for that scalar."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-json-query"],
+            "summary": "Omitting the path returns the whole JSON object, not the required scalar message text."
+          }
+        ]
+      }
+    },
+    "dp800-direct-029": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "01467259599693aaf26d48f7a0b0735b2fef171f65e649c00e3ee8f176c63233",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "Default mapping selects lowercase sku, which is absent; case-insensitive database collation does not change the BIN2 property comparison."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "This requests an array element, but the actual uppercase SKU property contains a scalar string rather than an array."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "An explicit column path can preserve the SQL alias while matching the actual uppercase JSON key exactly."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "This returns the existing category text spare, not the product identifier."
+          }
+        ]
+      }
+    },
+    "dp800-direct-030": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "69356065bf94cc7effa011f9136bd1e6680249214ef8788384359d525999dc4d",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "AS JSON selects the nested object as a JSON fragment and requires the nvarchar(max) output type."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "Without AS JSON the projection expects a scalar; this object yields NULL in the default lax mode."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "This extracts only the numeric items field and returns an integer, losing the required object."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "This extracts only the scalar memo text, not the complete object."
+          }
+        ]
+      }
+    },
+    "dp800-direct-031": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "7fb4806026e4d43faeb9f8416c9fe28436ac1637e45ead9c965d81eee7b22342",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "A dotted SQL column name is matched literally; it does not imply the nested path $.billing.code."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "The exact literal billing.code key exists and contains a scalar, so the default mapping finds A7."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "The column has neither a path to billing nor AS JSON, so it does not return that nested object."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "With no column_path override, OPENJSON matches the WITH column name billing.code against the exact top-level key of that name."
+          }
+        ]
+      }
+    },
+    "dp800-direct-032": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "43d1bd46be845e0887f7beb1bd366b974292afeb784671855c28b67b1d1fe5d3",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "Default-schema type 1 identifies JSON strings, including the quoted value in label."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "Default-schema type 2 identifies numeric JSON values such as count, independently of the returned value column being text."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "Type 3 identifies JSON true/false tokens, not numbers."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-openjson"],
+            "summary": "Type 0 identifies JSON null values, not numbers."
+          }
+        ]
+      }
+    },
+    "dp800-direct-033": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "95fee59fb865a26a64337c333256a82768ac758758080065a01385fdd3214610",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-json-query"],
+            "summary": "A plain text expression is not marked as a JSON fragment; the cited JSON_QUERY guidance requires wrapping preformatted JSON for FOR JSON output."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-json-value"],
+            "summary": "This extracts only the scalar code, losing the required object and units field."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-json-query"],
+            "summary": "With no path it returns the entire object as a valid JSON fragment; FOR JSON does not escape a JSON_QUERY fragment as plain text."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-json-value"],
+            "summary": "This extracts only the scalar units value as text, not the full structured detail object."
+          }
+        ]
+      }
+    },
+    "dp800-direct-034": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "5396d72d04102d99926240019ffe5e7e4bb9d2841f3cf00bd9eff73cc5a212a2",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "For an existing path, strict mode with SQL NULL sets the existing property's value to JSON null."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "For an existing key, lax mode with SQL NULL deletes the property rather than retaining it."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "The nvarchar new value is text, so this stores the JSON string \"null\", not the JSON null token."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "This stores an empty JSON string, not a null value."
+          }
+        ]
+      }
+    },
+    "dp800-direct-035": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "5c8581553ef917add424bb4c8dce1ca250b3b911bdb774d0e4aa2f9ddbb27529",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "The supplied new value is nvarchar, so it is stored as text rather than automatically treated as a JSON number."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "The existing path is updated with a nonnull new value; the old numeric value is not retained."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "The new value is nonnull text; lax-mode deletion applies to a SQL NULL new value instead."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "The product contract and numeric-cast example establish that a text-typed new value is surrounded by JSON string quotes."
+          }
+        ]
+      }
+    },
+    "dp800-direct-036": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "710a1f027d5624804915d01bf2bb6e8af0e691785c1ff86ad2adb3657f28df37",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "This replaces the entire stages value with one string rather than appending to its array."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "The append modifier adds the supplied value to the referenced existing array while preserving its existing elements."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "Strict mode with SQL NULL replaces the existing array value with JSON null."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-json-modify"],
+            "summary": "Lax mode with SQL NULL removes the existing stages property."
+          }
+        ]
+      }
+    },
+    "dp800-direct-037": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "422b6f2a7708bf86b668d257ebd464ce76142d7f77dbe6e4881940f43e6f3351",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-json-object"],
+            "summary": "This retains comment with a JSON null value, which differs from the required omission."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-json-object"],
+            "summary": "JSON_OBJECT defaults to NULL ON NULL, so omitting the clause still retains comment as JSON null."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-json-object"],
+            "summary": "This omits the entire key only when its SQL value is NULL; code and numeric zero are nonnull and remain."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-json-object"],
+            "summary": "The supplied empty string is nonnull, so this retains comment as an empty JSON string instead of omitting the key."
+          }
+        ]
+      }
+    },
+    "dp800-direct-038": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T06:03:09.711Z",
+        "questionFingerprint": "2776e3511d1210cc28204ac999986dfc80595cb24da8c60199c234f509145a90",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-json-arrayagg"],
+            "summary": "Aggregate-local ordering uses Position, and NULL ON NULL keeps the missing label as a JSON null element."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-json-arrayagg"],
+            "summary": "Ordering is correct but ABSENT ON NULL removes the middle element, producing only the two strings."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-json-arrayagg"],
+            "summary": "The null slot remains, but descending Position reverses the two labels and does not produce the requested array."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-json-arrayagg"],
+            "summary": "This both reverses the positional order and removes the null element."
+          }
+        ]
+      }
+    }
+  }
+}

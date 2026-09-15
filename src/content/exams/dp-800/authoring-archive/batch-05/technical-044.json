@@ -1,0 +1,72 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-044",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-models-recovery",
+    "questionFingerprint": "b4bbe3e36819d6766e6aaa5fa7fff609fd79e89473d75947cd5a290e3cce3f07",
+    "reviewedAt": "2026-09-15T15:11:13.672Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-type",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-type.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual Vector data type receipt, including introduction, Sample syntax, Dimensions, examples, Feature availability and conversions. The column grammar is column_name VECTOR(dimensions); float32 is the default base type, and supported dimension counts run from one through 1998. The native representation is optimized binary, with JSON-array interoperability and conversion to/from varchar, nvarchar and json. These distinguish a 1536-component native declaration from a different fixed dimension and from serialized text. float16 is a separately explicit Preview base-type option gated by PREVIEW_FEATURES, not the default used by any VECTOR declaration in this item. The ordinary native float32 type applies to Azure SQL Database; no index, compatibility change or client feature is required merely to choose the declaration."
+      },
+      {
+        "sourceId": "dp800-d3-prepare-vectors-unit",
+        "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-intelligent-search-with-sql/04-prepare-sql-vector-search",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\prepare-vectors-unit.json",
+        "retrievedAt": "2026-09-15T06:15:23.833Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read Prepare SQL for vector search. Its Store vectors with the vector data type section explains that the number in VECTOR(...) matches the dimensions produced by the embedding model and illustrates a VECTOR(1536) column. It also gives the 1998 supported maximum and single-precision component storage. The question fixes the configured output rather than adopting a universal dimension count for every model or configuration. The unit's later dataset-size guideline, approximate-search examples and historical vector-index write restrictions are outside this question and are not used as current universal behavior. Only the directly stated storage-type and dimension-matching contract supports this item."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The exact declaration embedding VECTOR(768) creates a native float32 vector column for 768 components, not the stipulated unchanged 1536-component output. A smaller declared dimension is not an implicit reduction request. Literal positive countercontext: a pipeline instead supplies exactly 768 float32 components for each embedding and requires native vector storage. The same declaration then matches that input count and lies within the documented one-to-1998 range. This is a hypothetical input contract, not an unsupported claim about a particular named model's available output sizes. The type reference and training unit's explicit matching rule support both judgments.",
+        "sourceIds": ["dp800-d3-vector-type", "dp800-d3-prepare-vectors-unit"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The exact declaration embedding VECTOR(1998) specifies 1998 dimensions. The maximum supported number is a bound on the declaration, not a variable-length capacity that infers or resizes a 1536-component value. Literal positive countercontext: the supplied data contract is exactly 1998 float32 components per embedding, with no resizing and a native-vector column requirement. The same declaration is then the documented maximum-sized matching vector type. This countercontext does not assert that any particular provider/model offers 1998-dimensional embeddings; it applies the documented legal dimension range and fixed-output matching rule to a given vector input.",
+        "sourceIds": ["dp800-d3-vector-type", "dp800-d3-prepare-vectors-unit"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "embedding nvarchar(max) is a text-column declaration, not a native VECTOR declaration. It therefore fails the explicit storage-type requirement even though text can represent the complete numeric array. Literal positive countercontext: an interoperability/archive design deliberately retains embeddings as serialized JSON-array text and does not require native-vector storage. This exact nvarchar(max) declaration is then appropriate for that text representation. The product reference explicitly permits vector conversion to/from nvarchar and explains JSON-array interoperability. The candidate explicitly chooses the other representation, so text length capacity cannot make c a native-vector answer.",
+        "sourceIds": ["dp800-d3-vector-type"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "The exact declaration embedding VECTOR(1536) selects the native type with the required fixed component count. Omitting the optional base type selects float32 by the product reference, and 1536 is inside the documented one-to-1998 range. The training unit explicitly says the declaration's count must match the model's output. Literal confirming context is the stated pipeline: each embedding already consists of exactly 1536 float32 components and must be stored unchanged as a native vector. No padding, reduction, float16 conversion, automatic sizing or claim about all models' default dimensions is needed.",
+        "sourceIds": ["dp800-d3-vector-type", "dp800-d3-prepare-vectors-unit"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Fresh independent technical PASS 2 of immutable dp800-direct-044 by dp800-technical-models-recovery, not the author copilot-dp800-direct-author. I re-read the candidate and generation-output copy, all generation-stage and author-only option evidence, frozen objective/source records, source registry branches and source-retrieval-index.json. The freshly calculated repository questionFingerprint matched raw/parsed candidates, generation output and generation metadata at b4bbe3e36819d6766e6aaa5fa7fff609fd79e89473d75947cd5a290e3cce3f07. The objective fingerprint matched the frozen and installed maps. The actual .grounding\\dp-expansion\\dp-800-guide.json MCP receipt, retrieved 2026-09-14T18:19:19.493Z, explicitly establishes March 12, 2026 and Design for vector data, including vector data type, vector indexes, and size under Design and implement intelligent search in the 25-30% AI domain. The captured current credential and course were read separately; no future objective map or changed version label was used.\n\nBoth actual source receipts were decoded and checked against their precise source-index paths, microsoft_docs_fetch tool, https://learn.microsoft.com/api/mcp endpoint, input URLs, retrieval times and successful nonempty text. sourceReviews preserves the exact 2026-09-15T06:57:02.652Z frozen review dates. The vector article's immediate parent is the training models-summary.json receipt at 2026-09-15T06:07:09.176Z, which directly links the Vector data type article; models-module.json at 2026-09-14T22:06:21.049Z links that summary. The prepare-vectors unit is directly linked by the actual search-module.json receipt at 2026-09-14T22:06:20.865Z. Both module indices are linked by dp-800-training-ai.json at 2026-09-14T18:31:14.994Z. The saved rendered credential-link receipt at 2026-09-14T18:31:24.010Z and ai-training-redirect.json at 2026-09-14T18:57:14.033Z establish the exact training-root target and English canonical path. validateSourceProvenance returned no findings under the actual catalog, and validatedSupportingSourceIds admitted both citations. A related product page or official hostname was not used as a substitute for these immediate training parents.\n\nIndependent derivation yields d: the required native representation excludes nvarchar(max), the fixed 1536 output excludes both 768 and 1998, and default float32 matches the stated precision. I inspected each literal declaration against the grammar and the dimension range. The fact that 1998 is allowed does not make it an automatic maximum-capacity allocation for any smaller input. Every declaration has a sourced positive input/representation context, including the maximum-dimensional one; no specific model's unsupported dimension option is invented. The question fixes output dimensions instead of asserting that all embeddings or all configurations of a named model have 1536 elements. No SQL DDL or insertion was executed, and no expected SQL error text is fabricated.\n\nThe product reference's float16 Preview extension is explicitly separated from ordinary float32. The training unit's later approximate-search/index advice includes version-specific limitations and is not adopted by the stem, explanation or countercontexts. Likewise this question does not use the AI_GENERATE_EMBEDDINGS article's disputed return-type paragraph; it begins with an already specified component array contract. Native storage, JSON interoperability and component precision are kept distinct. There is no index, client-driver, server-runtime or remote-service prerequisite hidden inside the declaration-selection task.\n\nDuplicate/construction comparison covered the full 583 installed records and 114 occurrences in all 18 candidate files under .grounding\\dp-expansion, yielding 643 distinct questionId/content-hash records after grouping identical snapshots but retaining revisions. duplicateFindings and scenarioDuplicateFindings returned no target findings. Full comparison with pending 042 distinguished request-parameter lifetime from fixed native storage sizing; 045 tests client/TDS native transport; 048 matches an ANN index's column/metric; 049 uses VECTOR(1536) only as an already satisfied condition for latest-index query syntax. Installed 023 tests exact VECTOR_DISTANCE behavior, while installed 021 selects meaningful input fields. Pending 038 preserves positions in a JSON aggregate, not vector dimensions. Knowing the storage declaration does not answer those other mechanisms, so the common numeric/vector vocabulary is not a same-fact duplicate.\n\nqualityFindings reported pronoun-review only; 'that output' clearly identifies the specified 1536 float32 components. The repeated numeric value makes this a straightforward, low-end intermediate declaration-selection item, not an advanced sizing optimization or model-selection problem. The 768 and 1998 choices are valid native declarations with genuinely different fixed contracts, and the text option is a valid alternative representation. This modest reasoning depth and the visible numeric cue are recorded for the separate third-context difficulty/answer-clue assessment rather than hidden by the technical verdict. No realism score was assigned. This verified result is PASS 2 only: candidates, sources, objective maps, adversarial records and ledgers remain untouched, with no promotion.",
+    "confidenceReason": "The actual native-type grammar, explicit float32 default, dimension bound and training unit's output-matching rule independently support only VECTOR(1536). Each other exact declaration has a documented positive data/representation context that the stem excludes, without assuming a named provider supports arbitrary dimensions. Exact generation/objective/source bindings and installed/pending duplicate comparisons passed. The item is intentionally simple; no SQL execution, rubric score or final three-pass approval is claimed."
+  }
+}

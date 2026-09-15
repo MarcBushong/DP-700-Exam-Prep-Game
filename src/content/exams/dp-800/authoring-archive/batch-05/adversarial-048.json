@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "1cb62d31354994cb704e5af999e71504ae22e882971ed9dce16bfc33a017e6cc",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "Switching the query to cosine supplies the requested compatibility change.",
+        "whyIncorrectInContext": "It can match the existing index, but it abandons the explicit Euclidean-distance requirement. Equivalent rankings in some datasets would not preserve that metric.",
+        "couldBeCorrectWhen": "The workload instead permits cosine distance on Embedding and retains its matching cosine index without requiring Euclidean measurements.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Arguments > METRIC names distinct metrics and requires query/index agreement on both the metric and the searched column."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "Keeping kNN fallback supplies the missing ANN compatibility prerequisite.",
+        "whyIncorrectInContext": "The query can continue working with Euclidean distance, but deliberately leaving no compatible ANN index does not supply the requested prerequisite.",
+        "couldBeCorrectWhen": "The workload accepts exact kNN execution and intentionally operates without an ANN-compatible index rather than requiring one for this query.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Behavior without a vector index permits a full-table kNN scan; executable fallback and ANN compatibility are separate documented conditions."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "A Euclidean index on another vector column fixes Embedding compatibility.",
+        "whyIncorrectInContext": "Matching only the metric is insufficient. The unchanged query still searches Embedding, not the differently indexed column.",
+        "couldBeCorrectWhen": "A different workload searches that other vector column using Euclidean distance, with valid query vectors and an applicable index on that column.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Arguments > METRIC makes same-column and same-metric matching conjunctive; an index elsewhere does not satisfy the Embedding requirement."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "An applicable Euclidean index on Embedding supplies the missing compatibility.",
+        "whyIncorrectInContext": "Not incorrect: this retains both required query properties while supplying an index that matches each of them.",
+        "couldBeCorrectWhen": "Provisioning leaves an applicable Euclidean index available on Embedding under supported index-creation conditions, as required by the stated compatibility task.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Arguments > METRIC establishes the necessary match; Key enhancements preserves the latest optimizer's freedom to choose kNN even with compatible indexing."
+      }
+    ],
+    "challenges": {
+      "scope": "The task is an ANN compatibility property in an enabled Azure SQL Database Preview environment. It does not ask for legacy/latest SQL syntax or a platform migration.",
+      "plan": "Same column and metric are necessary, not sufficient to force ANN selection. Latest optimizer choice remains conditional; neither performance improvement nor a particular physical plan is promised.",
+      "role": "No role choice or executable DDL is requested. Appropriate provisioning authorization remains necessary operationally; this answer does not claim ordinary query access grants index-management rights.",
+      "preconditions": "The answer supplies an applicable index state, not a complete create/rebuild script or permission to keep multiple indexes on the same column. Existing-index replacement and creation requirements are not waived.",
+      "featureStatus": "The stem and source both label vector search Preview and presume an enabled Azure deployment. Compatibility does not prove regional rollout, feature GA, or SQL Server latest-index support.",
+      "sourceChanges": "Earlier training says a matching index is used categorically. The current reference's optimizer-driven latest behavior qualifies that claim; obsolete read-only and universal post-filter rules do not govern this answer.",
+      "stemSufficiency": "The required metric and searched column are explicit. Even if cosine and Euclidean produced the same ranking for particular data, changing the measured metric would violate the stated contract.",
+      "explanationBounds": "The explanation correctly identifies a prerequisite and expressly disclaims mandatory ANN selection. It offers no ungrounded coexistence, create-success, speed, or accuracy guarantee.",
+      "reasoningDepth": "The decision intersects two compatibility constraints and distinguishes working fallback from an index prerequisite. That supports intermediate reasoning, but the architecture-design label describes only a narrow design choice.",
+      "answerClues": "Choices have comparable lengths and syntax. Each distractor violates a named requirement, making elimination fairly direct; none is made correct by ignoring the immutable metric or column."
+    },
+    "qualityNotes": "No target duplicate finding arose across 584 installed questions and 73 noninstalled authored variants. Full installed and pending dp800-direct-023 items test VECTOR_DISTANCE's exact/no-index contract, not this same-column/same-metric condition. Adjacent 047 assumes compatibility and diagnoses older filtering; 049 selects latest syntax. The index answer is defensible as a prerequisite-level change, not a complete DDL migration. That limited operational context lowers scenario and difficulty credit."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-048",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "questionFingerprint": "1cb62d31354994cb704e5af999e71504ae22e882971ed9dce16bfc33a017e6cc",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-search",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-search.json",
+        "retrievedAt": "2026-09-15T06:34:21.531Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "VECTOR_SEARCH (Transact-SQL) (Preview), Arguments > METRIC, requires an ANN index matching both the selected column and distance metric; absence of a compatible index raises a warning and uses kNN. Key enhancements and Iterative filtering behavior allow latest optimizer strategy selection. Behavior without a vector index supplies the exact-scan countercontext. The actual search-summary link establishes credential-scoped provenance, not approval by hostname alone."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Changing to cosine can satisfy the index's metric, but it changes the distance the application is explicitly required to measure. The same action is literally appropriate when cosine is acceptable and the existing index matches Embedding. Arguments > METRIC supports that positive context without treating metrics as interchangeable. Even coincident rankings for specially normalized data would not preserve the immutable requirement to continue measuring Euclidean distance.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The documented kNN fallback allows the Euclidean query to execute without compatible indexing, so this option is not an impossible operation. It is a valid positive choice for a workload content to retain exact scanning. It nevertheless supplies no ANN compatibility prerequisite, which is the question's requested change. Working execution and eligibility to use an ANN index are different requirements in the admitted product reference.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "An index on a different vector column does not match a query searching Embedding, even when both use Euclidean distance. Arguments > METRIC explicitly requires both properties, rather than either one. The literal index creation would be useful in a valid context where the query searches that other indexed column with Euclidean distance. Changing the searched column to obtain that context would abandon the present question's target.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "Keeping Embedding and Euclidean fixed leaves only an applicable Euclidean index on Embedding as the offered way to meet both documented matching conditions. Its positive context is that completed compatible index state, after legitimate provisioning. The wording does not promise concurrent same-column indexes or make this a complete DDL sequence. The latest optimizer may still select kNN; supplying a necessary compatibility condition is not forcing an execution strategy.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Re-derived d from the frozen candidate and actual METRIC contract after reading .grounding\\dp-expansion\\direct\\batch-05\\technical-048.json, generation output/claims, exact map, source index, raw MCP receipts, and provenance ancestors. Independently recomputed content/objective hashes and checked literal alternative contexts. The approval is limited to compatibility, not DDL coexistence or optimizer selection. Full neighboring items and duplicate diagnostics remain distinct. Score: 45/48; no SQL execution, source renewal, ledger write, or promotion is asserted.",
+    "confidenceReason": "The documented necessary condition is explicit and matches both immutable requirements. Each other option either changes a required property or leaves compatible indexing absent. The current product reference resolves the training material's overly categorical index-use wording. Remaining operational details concern provisioning, not the asked compatibility property, and are acknowledged in scenario scoring instead of invented as successful DDL behavior."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 3,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 3,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 4,
+      "clarityAccessibility": 4
+    },
+    "notes": "Score: 45/48. The two matching conditions and explicit optimizer qualification earn all critical fours. Scenario completeness is three because the item establishes a compatible end state without operational index-replacement details. Distractor plausibility is three: alternatives are genuine operations but each visibly breaks a named requirement. Difficulty is three for a narrow intermediate design decision. The fact-level distinction from existing exact-distance questions supports full originality credit."
+  }
+}

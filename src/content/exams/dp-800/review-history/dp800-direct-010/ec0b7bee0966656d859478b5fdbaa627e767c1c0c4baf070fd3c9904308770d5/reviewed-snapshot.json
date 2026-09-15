@@ -1,0 +1,338 @@
+{
+  "question": {
+    "id": "dp800-direct-010",
+    "question": "A schema-assistance workflow uses an MCP connection to SQL Server. Its existing database principal can modify data, but the approved workflow requires only read operations. Write prevention must not depend on the model obeying a prompt. Which change establishes the required database authorization boundary?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Replace the writable principal with one limited to the approved read operations."
+      },
+      {
+        "id": "b",
+        "text": "Keep the writable principal and add a repository instruction saying not to write."
+      },
+      {
+        "id": "c",
+        "text": "Keep the writable principal and restrict the endpoint to a private network."
+      },
+      {
+        "id": "d",
+        "text": "Keep the writable principal and require human review of generated SQL text."
+      }
+    ],
+    "correctAnswer": ["a"],
+    "explanation": "Enforce the boundary with the MCP connection's database privileges.",
+    "deepExplanation": "Prompt guidance, human review and network protection are useful but different controls. The requested boundary is authorization: the assistant's connection should possess only the operations approved for this read-only workflow.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Custom instructions influence generated suggestions but do not remove the connection's database privileges, so write prevention still depends on model behavior.",
+      "c": "Network restrictions address where a connection can be reached; they do not remove the write permissions of a principal that successfully connects.",
+      "d": "Human review is recommended, but retaining write authorization does not establish the requested database permission boundary independent of that review process."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-sql-solutions-by-using-ai-assisted-tools",
+    "subskill": "Interpret security impact of using AI-assisted tools",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/3-interpret-security-impact",
+      "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/6-create-configure-copilot-instruction-files"
+    ],
+    "documentationTitles": [
+      "Interpret security impact of using AI-assisted tools",
+      "Create and configure GitHub Copilot instruction files"
+    ],
+    "generatedAt": "2026-09-14T23:22:42.918Z",
+    "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+    "featureStatus": "GA",
+    "tags": ["mcp", "least-privilege", "ai-assisted-sql"],
+    "conceptId": "sql-mcp-read-only-authorization-independent-of-model-guidance",
+    "verificationStatus": "rejected",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "Final adversarial verdict rejected. The actual frozen sources support the key and all option assessments, but the independently scored realism rubric is 43/48. All distractors explicitly keep the writable principal while the sole replacement option restates the approved read-only requirement; the intermediate label overstates the reasoning demanded. No executable SQL or privilege configuration is present to elevate this beyond a conceptual control distinction. Existing tool-boundary and Fabric permission questions were reviewed and are not the reason for rejection. Source snapshots, raw relative evidence paths, original author identity and recomputed current hashes are preserved. The candidate was not edited or promoted. Any authored repair restarts generation, technical review and adversarial review.",
+    "requiresManualReview": true,
+    "sourceLastReviewedAt": "2026-09-14T23:22:42.902Z",
+    "confidenceReason": "High confidence in the technical read-only-account principle and in the design rejection for this exact snapshot. The evidence supports the answer, but strong answer-pattern cues plus unearned intermediate difficulty leave the independent score below the mandatory threshold."
+  },
+  "review": {
+    "questionId": "dp800-direct-010",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-independent-adversarial-design-01",
+    "questionFingerprint": "ec0b7bee0966656d859478b5fdbaa627e767c1c0c4baf070fd3c9904308770d5",
+    "reviewedAt": "2026-09-15T02:22:18.312Z",
+    "verdict": "rejected",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-ai-security",
+        "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/3-interpret-security-impact",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\tools-security.json",
+        "retrievedAt": "2026-09-14T22:17:21.442Z",
+        "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+        "supportingSummary": "Interpret security impact of using AI-assisted tools explicitly recommends dedicated read-only service accounts for MCP schema queries. It separately addresses private networking and human review of generated SQL. Those independent recommendations support the permission-boundary answer but do not make this heavily cued question an authentic intermediate exercise."
+      },
+      {
+        "sourceId": "dp800-d1-ai-instructions",
+        "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/6-create-configure-copilot-instruction-files",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\tools-instructions.json",
+        "retrievedAt": "2026-09-14T22:17:22.373Z",
+        "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+        "supportingSummary": "Create and configure GitHub Copilot instruction files defines markdown guidance as context influencing suggestions and recommends testing whether the assistant follows it. It does not assign or revoke database privileges. This supports rejecting prompt-only write prevention while retaining the independent editorial rejection of the candidate."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "The technical key is correct: the source prescribes least-privileged read-only accounts for MCP schema access. Replacing the write-capable connection identity with one limited to the approved reads establishes the intended authorization boundary.",
+        "sourceIds": ["dp800-d1-ai-security"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Instruction text can influence suggestions but leaves the principal's write authority unchanged. It directly depends on the model following the instruction, which is the failure mode the stem excludes.",
+        "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Private connectivity addresses network exposure. A permitted connection still authenticates as the same writable database principal, so this does not supply read-only operation authorization.",
+        "sourceIds": ["dp800-d1-ai-security"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Human review is recommended for generated SQL but does not revoke database permissions. Retaining the writable principal leaves write prevention dependent on a process rather than the requested authorization boundary.",
+        "sourceIds": ["dp800-d1-ai-security"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": false
+    },
+    "verificationNotes": "Final adversarial verdict rejected. The actual frozen sources support the key and all option assessments, but the independently scored realism rubric is 43/48. All distractors explicitly keep the writable principal while the sole replacement option restates the approved read-only requirement; the intermediate label overstates the reasoning demanded. No executable SQL or privilege configuration is present to elevate this beyond a conceptual control distinction. Existing tool-boundary and Fabric permission questions were reviewed and are not the reason for rejection. Source snapshots, raw relative evidence paths, original author identity and recomputed current hashes are preserved. The candidate was not edited or promoted. Any authored repair restarts generation, technical review and adversarial review.",
+    "confidenceReason": "High confidence in the technical read-only-account principle and in the design rejection for this exact snapshot. The evidence supports the answer, but strong answer-pattern cues plus unearned intermediate difficulty leave the independent score below the mandatory threshold."
+  },
+  "envelope": {
+    "credentialId": "dp-800",
+    "objectiveVersion": "March 12, 2026",
+    "questionFingerprint": "ec0b7bee0966656d859478b5fdbaa627e767c1c0c4baf070fd3c9904308770d5",
+    "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"],
+    "retrievedAt": "2026-09-14T22:17:22.373Z",
+    "lastValidatedAt": "2026-09-14T23:22:42.918Z",
+    "answerEvidence": [
+      {
+        "choiceId": "a",
+        "sourceIds": ["dp800-d1-ai-security"],
+        "summary": "The technical key is correct: the source prescribes least-privileged read-only accounts for MCP schema access. Replacing the write-capable connection identity with one limited to the approved reads establishes the intended authorization boundary."
+      }
+    ],
+    "distractorEvidence": [
+      {
+        "choiceId": "b",
+        "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+        "summary": "Instruction text can influence suggestions but leaves the principal's write authority unchanged. It directly depends on the model following the instruction, which is the failure mode the stem excludes."
+      },
+      {
+        "choiceId": "c",
+        "sourceIds": ["dp800-d1-ai-security"],
+        "summary": "Private connectivity addresses network exposure. A permitted connection still authenticates as the same writable database principal, so this does not supply read-only operation authorization."
+      },
+      {
+        "choiceId": "d",
+        "sourceIds": ["dp800-d1-ai-security"],
+        "summary": "Human review is recommended for generated SQL but does not revoke database permissions. Retaining the writable principal leaves write prevention dependent on a process rather than the requested authorization boundary."
+      }
+    ],
+    "rubric": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-design-01",
+      "reviewedAt": "2026-09-15T02:22:18.312Z",
+      "notes": "43/48, below the required 44. Exact security-impact alignment, explicit read-only premises, a unique least-privilege answer and direct source distinctions earn full technical/documentation scores. The explanation is accurate and the prose clear. Distractor plausibility is 2 because every wrong option visibly keeps the disallowed writable principal, with prompt reliance already prohibited. Difficulty authenticity is 2 because this intermediate-labelled scenario asks only for a restatement of read-only authorization, not a substantive applied permission decision. Originality is 3 for a standard abstract least-privilege contrast. These design defects prevent a verified final verdict despite the correct key.",
+      "version": 2,
+      "scores": {
+        "alignment": 4,
+        "accuracy": 4,
+        "scenarioCompleteness": 4,
+        "answerUniqueness": 4,
+        "distractorPlausibility": 2,
+        "distractorEvidence": 4,
+        "documentationStrength": 4,
+        "citationSpecificity": 4,
+        "difficultyAuthenticity": 2,
+        "explanationQuality": 4,
+        "originality": 3,
+        "clarityAccessibility": 4
+      }
+    }
+  },
+  "stages": {
+    "generation": {
+      "authorId": "copilot-dp800-direct-author",
+      "generatedAt": "2026-09-14T23:22:42.918Z",
+      "questionFingerprint": "ec0b7bee0966656d859478b5fdbaa627e767c1c0c4baf070fd3c9904308770d5",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "claims": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "summary": "The security unit recommends dedicated least-privileged, read-only connections for schema-query scenarios. Database permissions restrict permitted operations independently of model guidance."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"],
+          "summary": "Custom instructions influence generated suggestions but do not remove the connection's database privileges, so write prevention still depends on model behavior."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "summary": "Network restrictions address where a connection can be reached; they do not remove the write permissions of a principal that successfully connects."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "summary": "Human review is recommended, but retaining write authorization does not establish the requested database permission boundary independent of that review process."
+        }
+      ]
+    },
+    "technical": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "review": {
+        "questionId": "dp800-direct-010",
+        "authorId": "copilot-dp800-direct-author",
+        "reviewerId": "dp800-independent-technical-01",
+        "questionFingerprint": "ec0b7bee0966656d859478b5fdbaa627e767c1c0c4baf070fd3c9904308770d5",
+        "reviewedAt": "2026-09-15T01:35:28.145Z",
+        "verdict": "verified",
+        "sourceReviews": [
+          {
+            "sourceId": "dp800-d1-ai-security",
+            "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/3-interpret-security-impact",
+            "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\tools-security.json",
+            "retrievedAt": "2026-09-14T22:17:21.442Z",
+            "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+            "supportingSummary": "The raw MCP security paragraph recommends a dedicated read-only service account when the assistant only needs schema queries. Private endpoints/VPNs are described separately under network security, and generated SQL is separately subject to human review. These clauses distinguish a database authorization boundary from useful network or process controls."
+          },
+          {
+            "sourceId": "dp800-d1-ai-instructions",
+            "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/6-create-configure-copilot-instruction-files",
+            "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\tools-instructions.json",
+            "retrievedAt": "2026-09-14T22:17:22.373Z",
+            "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+            "supportingSummary": "The reread raw instruction definition says its text is context that influences suggestions; the best-practice section advises testing whether guidance is followed. This describes model behavior, not an operation that changes SQL privileges. A no-write instruction therefore cannot substitute for removing write authorization from the connection."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "A principal limited to the approved reads lacks authority for unapproved writes regardless of the model's intent. This is the concrete least-privilege, read-only-account control recommended in the raw MCP security section for schema assistance.",
+            "sourceIds": ["dp800-d1-ai-security"]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Guidance can ask the model to avoid writes, but the unchanged writable principal is still authorized to perform them. A model or tool action that ignores the guidance would not meet an independent database permission restriction, so the required boundary is absent.",
+            "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "A private network limits endpoint reachability. Once this workflow connects through that network using the same principal, its database write rights remain unchanged. Reachability protection is complementary to, not a replacement for, read-only authorization.",
+            "sourceIds": ["dp800-d1-ai-security"]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "Human review can detect unsafe generated SQL and is recommended by the source, but it does not change the connection's allowed database operations. Keeping write permissions cannot establish the specific authorization boundary merely by adding a review process.",
+            "sourceIds": ["dp800-d1-ai-security"]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": true
+        },
+        "verificationNotes": "Fresh r1 PASS 2 review. Re-examined every proposed control against the actual MCP, human-review, and instruction paragraphs, excluding generic provider training/retention and filter assertions. Existing SQL Server access and an expressly read-only approved workflow are sufficient for this control-selection question; no concrete MCP product's GA status is inferred from the established permission principle. No runnable GRANT or endpoint configuration is supplied. Intermediate is a modest but defensible control-layer application, not an advanced claim. Similar option lengths and useful-but-wrong-layer alternatives are acceptable. The original scenario tests a permission boundary rather than 009's instruction-file location.",
+        "confidenceReason": "The raw recommendation is directly about a schema-querying MCP connection with restricted database privileges. Rechecking the other paragraphs confirms that network, human-process, and model-guidance controls do not themselves revoke the principal's write authority."
+      }
+    },
+    "adversarial": {
+      "questionFingerprint": "ec0b7bee0966656d859478b5fdbaa627e767c1c0c4baf070fd3c9904308770d5",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-design-01",
+      "reviewedAt": "2026-09-15T02:22:18.312Z",
+      "verdict": "rejected",
+      "optionChallenges": [
+        {
+          "choiceId": "a",
+          "claimRepresented": "A dedicated principal limited to approved reads places write prevention in database authorization rather than model behavior.",
+          "whyIncorrectInContext": "This is NOT technically incorrect: a connection authorized only for the approved read operations lacks the unwanted write authority. It directly addresses the database permission boundary requested by the stem.",
+          "couldBeCorrectWhen": "It is correct for a schema-assistance connection whose approved operations are read-only, with the limited principal actually used by that connection and no alternative write-capable authorization path included in its privileges.",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "evidenceSummary": "The MCP server security section expressly recommends least-privilege connections and dedicated read-only service accounts when the assistant only queries schema information. The candidate selects exactly that control."
+        },
+        {
+          "choiceId": "b",
+          "claimRepresented": "An instruction telling the model not to write creates a database-enforced read-only boundary while the connection keeps write authority.",
+          "whyIncorrectInContext": "Instructions supply model context; they do not remove the principal's write permission. A model response that ignores the instruction would still run under a write-capable principal.",
+          "couldBeCorrectWhen": "It would be useful as behavioral guidance when writes are technically permitted but the team wants a preference or planning rule, or as an additional layer after the database privileges have already been restricted.",
+          "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+          "evidenceSummary": "The instructions unit describes influencing suggestions and iterative compliance testing. The security unit separately prescribes least-privileged read-only MCP accounts, distinguishing contextual guidance from authorization."
+        },
+        {
+          "choiceId": "c",
+          "claimRepresented": "A private network alone removes write authority from a database principal that still has permission to modify data.",
+          "whyIncorrectInContext": "A successful connection from inside the allowed network would retain the same database write permissions. Restricting reachability does not implement the requested operation-level boundary.",
+          "couldBeCorrectWhen": "It would fit a separate requirement to constrain MCP network exposure or require private connectivity. It can complement least privilege, but cannot replace the specified read-only principal.",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "evidenceSummary": "The source lists private endpoints or VPNs under Network security, separately from dedicated read-only accounts under the MCP authentication/least-privilege guidance. They solve different parts of the security design."
+        },
+        {
+          "choiceId": "d",
+          "claimRepresented": "Human review of generated SQL changes the connection's database authorization to prevent writes independently of the review process.",
+          "whyIncorrectInContext": "Review may detect unwanted SQL, but the retained principal remains authorized to write. The requested boundary is enforced by permissions, not by a reviewer consistently catching or rejecting each statement.",
+          "couldBeCorrectWhen": "It is appropriate for validating generated code against security and correctness requirements, and should complement an already least-privileged connection. It is not itself an authorization change.",
+          "sourceIds": ["dp800-d1-ai-security"],
+          "evidenceSummary": "Evaluating AI suggestions critically recommends human review and checking permission statements. The distinct MCP section recommends least-privileged accounts; the review recommendation does not claim to revoke database permissions."
+        }
+      ],
+      "challenges": {
+        "scope": "The technical requirement is specifically database authorization for an existing SQL Server MCP connection, not network isolation, prompt quality or a promise that any MCP server is universally read-only.",
+        "plan": "No Copilot plan or particular MCP product entitlement is necessary to apply the documented least-privilege principle. The workflow is already configured; the question does not establish a deployment or licensing procedure.",
+        "role": "The relevant principal is the database identity actually used by the MCP connection. A human reviewer and repository-instruction author have different functions; their involvement does not alter that identity's permissions.",
+        "preconditions": "The premise gives existing write authority and an approved read-only workload. The selected principal must genuinely be limited to approved reads, including its effective privileges; the item does not provide a concrete grant/role configuration to evaluate.",
+        "featureStatus": "The source's read-only-account recommendation is a non-preview security design principle. This review does not convert that principle into a claim that every SQL MCP implementation has a named GA read-only mode.",
+        "sourceChanges": "I read the frozen security and instruction units and matched their recorded URLs/times. The technical answer remains supported. No new source change explains the rejection: it is a design/difficulty failure in this exact authored snapshot.",
+        "stemSufficiency": "The stem is technically sufficient and has one correct answer, but it states both the problem and solution category so directly that little analysis remains: writable principal, read-only requirement, and database authorization boundary.",
+        "explanationBounds": "The explanations accurately distinguish guidance, network protection and human review from database privileges. They do not need a factual correction; technical correctness is separate from the failed realism rubric.",
+        "reasoningDepth": "The intermediate label is not earned in this exact item. There is no effective-permission conflict, role membership, object scope, or competing least-privilege design to resolve. It reduces to recognizing read-only authorization from a near-restatement of the requirement.",
+        "answerClues": "Every wrong answer begins by keeping the writable principal; the sole answer that changes it says it is limited to the approved read operations, closely echoing the stem. The prompt alternative is also expressly disallowed by the stem. This is a substantial answer-pattern cue, not merely necessary technical vocabulary."
+      },
+      "qualityNotes": "Rejected on independent design score 43/48, not on technical correctness or missing source ancestry. Distractor plausibility is 2 and difficulty authenticity is 2 because the only permission-changing option restates the desired boundary while all three distractors visibly retain write authority. Originality is 3 for a familiar abstract least-privilege formulation. Existing gh300-012 and gh600-b-001/gh600-c-039 constrain tools, while fabric-005 combines Fabric connectivity with object grants; the database-versus-tool/network distinction remains semantically different, so duplication is not the rejection reason. Any authored difficulty or option repair must restart all three passes."
+    }
+  }
+}

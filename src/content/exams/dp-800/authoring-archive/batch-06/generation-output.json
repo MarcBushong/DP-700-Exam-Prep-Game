@@ -1,0 +1,695 @@
+{
+  "schemaVersion": 1,
+  "requestId": "dp800-direct-06-integration",
+  "authorId": "copilot-dp800-direct-author",
+  "generatedAt": "2026-09-15T15:19:19.300Z",
+  "candidates": [
+    {
+      "id": "dp800-direct-053",
+      "question": "A Data API builder 2.0 deployment loads a top-level configuration and a child through data-source-files. The top-level runtime enables REST; the child contains runtime.rest.enabled = false. Both files have valid data-source and entities definitions. A child entity has REST enabled and the caller has permission. REST remains available for that entity. Which documented configuration rule explains this?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "An explicitly defined entity takes precedence over an autoentities name match."
+        },
+        {
+          "id": "b",
+          "text": "The top-level file controls runtime; child runtime settings are ignored."
+        },
+        {
+          "id": "c",
+          "text": "Entity names must be unique across the configuration files."
+        },
+        {
+          "id": "d",
+          "text": "Each configuration file must provide its own data-source definition."
+        }
+      ],
+      "correctAnswer": ["b"],
+      "explanation": "DAB ignores runtime settings in child configuration files.",
+      "deepExplanation": "Multi-file organization does not give each child an independent runtime. Change the authoritative top-level runtime when a global behavior must change; entity-specific endpoint settings remain a separate concern.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The scenario has no autoentities collision; that separate rule does not explain why child runtime settings are ignored.",
+        "c": "Name uniqueness does not select a child's runtime configuration; all provided entity definitions are valid.",
+        "d": "Both files already satisfy that requirement, which concerns database connectivity rather than runtime precedence."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Create configuration files for Data API builder (DAB)",
+      "difficulty": "intermediate",
+      "complexity": "troubleshooting",
+      "sourceIds": ["dp800-d2-dab-reference"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/data-api-builder/reference-configuration"
+      ],
+      "documentationTitles": [
+        "Data API builder configuration schema reference"
+      ],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["data-api-builder-2", "multiple-config", "runtime-scope"],
+      "conceptId": "dab-multiple-config-top-level-runtime-ignores-child-runtime",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-054",
+      "question": "Two referenced DAB 2.0 configuration files each define an entity named Order, but their data-source connections target different databases. The team must keep the two database connections and both entity definitions in one running DAB configuration tree. Which change satisfies the documented entity-name rule?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Rename only the configuration files."
+        },
+        {
+          "id": "b",
+          "text": "Move the child files into separate subfolders without changing the entities."
+        },
+        {
+          "id": "c",
+          "text": "Remove one of the entity definitions."
+        },
+        {
+          "id": "d",
+          "text": "Give the two entities distinct names across the loaded files."
+        }
+      ],
+      "correctAnswer": ["d"],
+      "explanation": "Use distinct entity names across the complete configuration tree.",
+      "deepExplanation": "Database connections and filesystem directories are not separate DAB entity-name namespaces. The change preserves both connections and their definitions.",
+      "whyOtherAnswersAreWrong": {
+        "a": "File names do not make duplicated entity names unique across the loaded configuration tree.",
+        "b": "Subfolders are supported but do not create separate entity-name namespaces.",
+        "c": "This removes the collision but violates the requirement to preserve both exposed definitions."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Create configuration files for Data API builder (DAB)",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": ["dp800-d2-dab-reference"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/data-api-builder/reference-configuration"
+      ],
+      "documentationTitles": [
+        "Data API builder configuration schema reference"
+      ],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["data-api-builder-2", "entity-name", "multiple-databases"],
+      "conceptId": "dab-multiple-config-entity-names-global-uniqueness",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-055",
+      "question": "A DAB 2.0 team split Customer and Invoice entity definitions for the same database into two referenced files. It now needs a DAB GraphQL relationship between those entities in one request. The database relationship and permissions are already valid. Which reorganization addresses the documented configuration-file restriction?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Place both related entity definitions in the same configuration file."
+        },
+        {
+          "id": "b",
+          "text": "Nest one child file beneath the other while leaving one entity in each."
+        },
+        {
+          "id": "c",
+          "text": "Keep the entities separate and have the client combine independent API responses."
+        },
+        {
+          "id": "d",
+          "text": "Rename the entities while leaving them in separate files."
+        }
+      ],
+      "correctAnswer": ["a"],
+      "explanation": "Keep both related entities in the same configuration file.",
+      "deepExplanation": "This removes the file-boundary restriction, not every possible database or permission issue. The stem separately establishes the relationship and access prerequisites.",
+      "whyOtherAnswersAreWrong": {
+        "b": "Children can have child files, but that does not remove the prohibition on cross-file relationships.",
+        "c": "That can avoid a cross-file relationship but does not supply the required one-request DAB GraphQL relationship.",
+        "d": "Name uniqueness does not change the cross-file relationship restriction."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Expose database objects, stored procedures, and views, including GraphQL relationships",
+      "difficulty": "intermediate",
+      "complexity": "architecture-design",
+      "sourceIds": ["dp800-d2-dab-reference"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/data-api-builder/reference-configuration"
+      ],
+      "documentationTitles": [
+        "Data API builder configuration schema reference"
+      ],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["data-api-builder-2", "graphql-relationship", "config-boundary"],
+      "conceptId": "dab-graphql-relationships-do-not-cross-config-file-boundaries",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-056",
+      "question": "A DAB 2.0 deployment already has global runtime.cache.enabled set to true. Products is a REST-enabled entity whose cache.enabled is currently false. The team wants Products to use only the in-process L1 cache with a 30-second TTL. Which entity configuration supplies the missing opt-in without requesting distributed caching?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "cache: { enabled: false, ttl-seconds: 30, level: \"L1\" }"
+        },
+        {
+          "id": "b",
+          "text": "cache: { enabled: true, ttl-seconds: 30, level: \"L1L2\" }"
+        },
+        {
+          "id": "c",
+          "text": "cache: { enabled: true, ttl-seconds: 30, level: \"L1\" }"
+        },
+        {
+          "id": "d",
+          "text": "cache: { enabled: true, ttl-seconds: 120, level: \"L1\" }"
+        }
+      ],
+      "correctAnswer": ["c"],
+      "explanation": "Enable the entity cache and specify level L1 with TTL 30.",
+      "deepExplanation": "Global enablement does not opt every entity into caching. Entity enablement, tier selection and TTL have distinct roles in the documented 2.0 configuration.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The entity remains opted out even though a TTL and level are present.",
+        "b": "This requests both cache tiers instead of the specified in-process-only tier.",
+        "d": "The tier and opt-in match but the configured TTL is 120 seconds rather than 30."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Configure entities for REST and GraphQL, including data caching, pagination, searching, and filtering",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": ["dp800-d2-dab-cache-l1"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/data-api-builder/concept/cache/level-1"
+      ],
+      "documentationTitles": ["Implement level 1 cache"],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["data-api-builder-2", "l1-cache", "entity-opt-in"],
+      "conceptId": "dab-l1-cache-global-plus-entity-opt-in",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-057",
+      "question": "In DAB 2.0, global L1 caching is enabled with ttl-seconds = 90. Two REST entities opt into L1 caching: Product sets its own ttl-seconds = 20, while Category omits an entity TTL. What configured TTL applies to each entity?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Product 90 seconds; Category 90 seconds"
+        },
+        {
+          "id": "b",
+          "text": "Product 20 seconds; Category 90 seconds"
+        },
+        {
+          "id": "c",
+          "text": "Product 20 seconds; Category 20 seconds"
+        },
+        {
+          "id": "d",
+          "text": "Product 90 seconds; Category 20 seconds"
+        }
+      ],
+      "correctAnswer": ["b"],
+      "explanation": "Product uses 20 seconds and Category inherits 90 seconds.",
+      "deepExplanation": "These are configured TTLs, not a guarantee that each cached item survives for its full TTL: the documented cache can also be invalidated by modifications.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The explicit entity TTL overrides the global default for Product.",
+        "c": "An entity's override does not replace the global default inherited by other entities.",
+        "d": "This reverses which entity has the explicit override."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Configure entities for REST and GraphQL, including data caching, pagination, searching, and filtering",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": ["dp800-d2-dab-cache-l1"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/data-api-builder/concept/cache/level-1"
+      ],
+      "documentationTitles": ["Implement level 1 cache"],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["data-api-builder-2", "cache-ttl", "inheritance"],
+      "conceptId": "dab-l1-cache-entity-ttl-override-versus-global-inheritance",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-059",
+      "question": "A SQL Server table already has CDC enabled for an existing ETL consumer. The team adds an Azure Functions SQL trigger for row-change processing. The trigger's connection and permissions are ready, but Change Tracking is off at both database and table level. Which change enables the documented change mechanism for this trigger while preserving the ETL consumer?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Enable Change Tracking on the database and monitored table; retain CDC for ETL."
+        },
+        {
+          "id": "b",
+          "text": "Keep CDC alone and create a second capture instance."
+        },
+        {
+          "id": "c",
+          "text": "Enable Change Tracking only on the database and leave the table untracked."
+        },
+        {
+          "id": "d",
+          "text": "Change the CDC retention period without enabling Change Tracking."
+        }
+      ],
+      "correctAnswer": ["a"],
+      "explanation": "Enable Change Tracking at both scopes and keep CDC for its separate consumer.",
+      "deepExplanation": "CDC and Change Tracking serve different consumption patterns. Configuring one is not evidence that the other is enabled.",
+      "whyOtherAnswersAreWrong": {
+        "b": "A second CDC instance supplies another CDC schema, not Change Tracking for the SQL trigger.",
+        "c": "Database enablement alone does not complete the two-step setup for the specific monitored table.",
+        "d": "CDC history retention does not provide the separate tracking feature the trigger requires."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Handle changes by using change event streaming (CES), change data capture (CDC), Change Tracking, Azure Functions with SQL trigger binding, or Azure Logic Apps",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": [
+        "dp800-d2-functions-sql-trigger",
+        "dp800-d2-cdc",
+        "dp800-d2-change-patterns-unit"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-azure-sql-trigger",
+        "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server",
+        "https://learn.microsoft.com/en-us/training/modules/integrate-sql-solutions-azure-services/7-handle-changes-event-driven-patterns"
+      ],
+      "documentationTitles": [
+        "Azure SQL trigger for Functions",
+        "What is change data capture (CDC)?",
+        "Handle changes with event-driven patterns"
+      ],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["azure-functions", "sql-trigger", "change-tracking"],
+      "conceptId": "azure-functions-sql-trigger-requires-change-tracking-not-cdc",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-060",
+      "question": "An Azure Functions SQL trigger last processed a row when Status was queued. Before its next polling iteration, three committed updates change that same row to assigned, running and finished. No poll occurs between those updates. The function receives one change entry for that row showing the final state. Which documented behavior explains this without implying data-loss-free audit history?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "CDC exposes update before and after images in separate change-table rows."
+        },
+        {
+          "id": "b",
+          "text": "Retention cleanup removed a change older than the tracking window."
+        },
+        {
+          "id": "c",
+          "text": "Multiple changes to the same row between polls are combined into one change entry."
+        },
+        {
+          "id": "d",
+          "text": "The application's SQL function failed and its batch is waiting for a retry."
+        }
+      ],
+      "correctAnswer": ["c"],
+      "explanation": "The SQL trigger coalesces multiple changes to a row between polling iterations.",
+      "deepExplanation": "This event-processing mechanism is not a guarantee that every intermediate row image is delivered. Requirements for historical update images need a separately designed capture and retention strategy.",
+      "whyOtherAnswersAreWrong": {
+        "a": "That describes the separate CDC history model, not the SQL trigger's Change Tracking polling behavior.",
+        "b": "The stated coalescing happens between adjacent polls; no expired retention boundary is supplied.",
+        "d": "No function exception is stated; retry handling is not the documented reason intermediate states coalesce before invocation."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Handle changes by using change event streaming (CES), change data capture (CDC), Change Tracking, Azure Functions with SQL trigger binding, or Azure Logic Apps",
+      "difficulty": "intermediate",
+      "complexity": "scenario-based",
+      "sourceIds": ["dp800-d2-functions-sql-trigger", "dp800-d2-cdc"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-azure-sql-trigger",
+        "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server"
+      ],
+      "documentationTitles": [
+        "Azure SQL trigger for Functions",
+        "What is change data capture (CDC)?"
+      ],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["azure-functions", "sql-trigger", "coalesced-changes"],
+      "conceptId": "sql-trigger-polling-coalesces-multiple-updates-to-one-row",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-061",
+      "question": "A SQL-triggered Azure Function is stopped for several days. Its database uses CHANGE_RETENTION = 2 DAYS with AUTO_CLEANUP = ON, and cleanup has removed tracking information older than that window. The function's connection succeeds after restart. Which conclusion about the missing older changes is supported?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "The listener is still retrying a broken connection."
+        },
+        {
+          "id": "b",
+          "text": "Successful reconnection does not restore tracking information already removed by cleanup."
+        },
+        {
+          "id": "c",
+          "text": "A user-function exception places the older changes into its documented retry batch."
+        },
+        {
+          "id": "d",
+          "text": "The deployed Function App is missing a required connection-string setting."
+        }
+      ],
+      "correctAnswer": ["b"],
+      "explanation": "Reconnection cannot restore change-tracking information already removed by cleanup.",
+      "deepExplanation": "Connectivity recovery and retained change history are separate prerequisites. The question establishes actual cleanup, rather than assuming every outage beyond two calendar days necessarily loses a particular row change.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The scenario states that connection succeeds; the missing information was removed from the database rather than temporarily inaccessible through a broken connection.",
+        "c": "The function was stopped and history was cleaned up; no invocation exception created such a retry batch.",
+        "d": "The connection succeeds under the stated settings, so a missing deployment setting does not explain cleaned-up history."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Handle changes by using change event streaming (CES), change data capture (CDC), Change Tracking, Azure Functions with SQL trigger binding, or Azure Logic Apps",
+      "difficulty": "intermediate",
+      "complexity": "troubleshooting",
+      "sourceIds": ["dp800-d2-functions-sql-trigger"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-azure-sql-trigger"
+      ],
+      "documentationTitles": ["Azure SQL trigger for Functions"],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["azure-functions", "change-retention", "recovery"],
+      "conceptId": "sql-trigger-tracking-retention-not-function-reconnect-durability",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-062",
+      "question": "An Azure Functions SQL trigger uses a managed-identity database principal. Change Tracking is enabled. The principal already has SELECT on dbo.WorkItems and all documented permissions for its az_func internal-state schema and tables. It has no VIEW CHANGE TRACKING grant and no broader role that supplies it. Which additional monitored-table permission completes the missing access requirement?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "CREATE SCHEMA"
+        },
+        {
+          "id": "b",
+          "text": "CREATE TABLE"
+        },
+        {
+          "id": "c",
+          "text": "SELECT on dbo.WorkItems again"
+        },
+        {
+          "id": "d",
+          "text": "VIEW CHANGE TRACKING on dbo.WorkItems"
+        }
+      ],
+      "correctAnswer": ["d"],
+      "explanation": "Grant VIEW CHANGE TRACKING on the monitored table.",
+      "deepExplanation": "A managed identity changes authentication, not these database authorization requirements. The stem closes inherited-role and internal-state permissions to isolate the missing table-level grant.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The scenario already establishes the internal-state schema permissions; schema creation does not replace the monitored-table tracking grant.",
+        "b": "Internal table creation is a different requirement and is already satisfied here.",
+        "c": "SELECT is already granted and does not add the distinct VIEW CHANGE TRACKING permission."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Handle changes by using change event streaming (CES), change data capture (CDC), Change Tracking, Azure Functions with SQL trigger binding, or Azure Logic Apps",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": ["dp800-d2-functions-sql-trigger"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-azure-sql-trigger"
+      ],
+      "documentationTitles": ["Azure SQL trigger for Functions"],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": [
+        "azure-functions",
+        "managed-identity",
+        "change-tracking-permission"
+      ],
+      "conceptId": "sql-trigger-principal-needs-table-view-change-tracking",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-063",
+      "question": "On SQL Server 2022, CDC and its capture job are running. A source-table update has committed, but the capture process has not yet processed the associated transaction-log entries. A CDC consumer queries the current capture high-water mark and does not find that update. Which explanation is supported without assuming a failed commit?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "CDC publishes the change only after its capture process handles the relevant log entries."
+        },
+        {
+          "id": "b",
+          "text": "The requested change is necessarily older than the retention low-water mark."
+        },
+        {
+          "id": "c",
+          "text": "A new source column is missing because the existing capture-column list is fixed."
+        },
+        {
+          "id": "d",
+          "text": "The table has reached the two-capture-instance limit."
+        }
+      ],
+      "correctAnswer": ["a"],
+      "explanation": "The committed change is not available through CDC until capture processes its log entries.",
+      "deepExplanation": "The current CDC high-water mark is capture progress, not proof that no later source transaction has committed. This does not assert a fixed maximum capture delay.",
+      "whyOtherAnswersAreWrong": {
+        "b": "The scenario concerns a recent change not yet captured, not a known cleaned-up older change.",
+        "c": "That schema behavior does not explain the absence of the already tracked update before capture processing.",
+        "d": "No new instance is being created; this limit does not explain capture latency for the running instance."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Handle changes by using change event streaming (CES), change data capture (CDC), Change Tracking, Azure Functions with SQL trigger binding, or Azure Logic Apps",
+      "difficulty": "intermediate",
+      "complexity": "troubleshooting",
+      "sourceIds": ["dp800-d2-cdc"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server"
+      ],
+      "documentationTitles": ["What is change data capture (CDC)?"],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["sql-server-2022", "cdc", "capture-latency"],
+      "conceptId": "sql-cdc-capture-latency-after-source-commit",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-064",
+      "question": "A SQL Server 2022 CDC consumer depends on a capture instance's current column shape. A developer adds RegionCode to the source table after that instance was created and now wants a new consumer to receive RegionCode while the old consumer continues unchanged. There is currently only one capture instance and both consumers can remain within retention. Which documented transition supports both schemas?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Keep both consumers on the original capture instance and its existing column list."
+        },
+        {
+          "id": "b",
+          "text": "Remove the existing instance before introducing any replacement."
+        },
+        {
+          "id": "c",
+          "text": "Create a second capture instance for the new shape, overlap the consumers, then retire the obsolete instance."
+        },
+        {
+          "id": "d",
+          "text": "Increase retention on the existing instance without changing its captured-column list."
+        }
+      ],
+      "correctAnswer": ["c"],
+      "explanation": "Use a second capture instance for an overlapping schema transition.",
+      "deepExplanation": "The design relies on the documented maximum of two concurrent instances and overlapping retained timelines. It does not promise lossless recovery after a consumer has already fallen outside retention.",
+      "whyOtherAnswersAreWrong": {
+        "a": "CDC preserves that captured-column shape and ignores newly added columns not identified for the instance, so the new consumer would not receive RegionCode.",
+        "b": "That interrupts the old consumer and forfeits the documented overlap transition required by this scenario.",
+        "d": "A longer history window does not add RegionCode to the existing fixed capture shape."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Handle changes by using change event streaming (CES), change data capture (CDC), Change Tracking, Azure Functions with SQL trigger binding, or Azure Logic Apps",
+      "difficulty": "advanced",
+      "complexity": "scenario-based",
+      "sourceIds": ["dp800-d2-cdc"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server"
+      ],
+      "documentationTitles": ["What is change data capture (CDC)?"],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["sql-server-2022", "cdc", "schema-migration"],
+      "conceptId": "sql-cdc-existing-instance-fixed-captured-column-list",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-065",
+      "question": "A SQL Server 2022 CDC diagnostic reads raw change-table rows and needs only the after images of UPDATE operations, excluding inserts, deletes and update-before images. Which __$operation value identifies those rows?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "3"
+        },
+        {
+          "id": "b",
+          "text": "4"
+        },
+        {
+          "id": "c",
+          "text": "2"
+        },
+        {
+          "id": "d",
+          "text": "1"
+        }
+      ],
+      "correctAnswer": ["b"],
+      "explanation": "Use operation value 4 for update-after images.",
+      "deepExplanation": "The question specifically reads the raw change-table image discriminator; it does not assume that every CDC query-function option returns both update images.",
+      "whyOtherAnswersAreWrong": {
+        "a": "Operation 3 identifies the before image of an update.",
+        "c": "Operation 2 identifies an insertion rather than an update-after image.",
+        "d": "Operation 1 identifies a deletion and its pre-delete values."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Handle changes by using change event streaming (CES), change data capture (CDC), Change Tracking, Azure Functions with SQL trigger binding, or Azure Logic Apps",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": ["dp800-d2-cdc"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server"
+      ],
+      "documentationTitles": ["What is change data capture (CDC)?"],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["sql-server-2022", "cdc", "update-images"],
+      "conceptId": "sql-cdc-operation-codes-distinguish-before-and-after-update-images",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-066",
+      "question": "A SQL Server 2022 CDC consumer's saved from-LSN is now below the capture instance's current minimum LSN because cleanup ran while the consumer was offline. Its requested to-LSN is within the current maximum, and the captured-column schema has not changed. Which diagnosis explains why the original requested interval is not a complete replayable CDC range?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "The requested upper bound is ahead of the capture process's current maximum LSN."
+        },
+        {
+          "id": "b",
+          "text": "The consumer expects a newly added column in an unchanged capture list."
+        },
+        {
+          "id": "c",
+          "text": "The table already has two concurrent capture instances and cannot add a third."
+        },
+        {
+          "id": "d",
+          "text": "The original interval is outside the retained window; advancing from-LSN would skip unavailable history."
+        }
+      ],
+      "correctAnswer": ["d"],
+      "explanation": "CDC alone cannot replay the expired portion of the original interval.",
+      "deepExplanation": "A consumer must detect this gap rather than silently present a truncated interval as a complete replay. This diagnosis does not invent a specific reinitialization procedure or claim that unrelated backups contain the lost CDC rows.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The scenario explicitly places to-LSN inside the current maximum; its failing bound is the lower one.",
+        "b": "The captured-column schema is unchanged, so this schema distinction does not explain the invalid lower LSN bound.",
+        "c": "The consumer is querying an existing instance, not creating a third one."
+      },
+      "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+      "skill": "integrate-sql-solutions-with-azure-services",
+      "subskill": "Handle changes by using change event streaming (CES), change data capture (CDC), Change Tracking, Azure Functions with SQL trigger binding, or Azure Logic Apps",
+      "difficulty": "advanced",
+      "complexity": "troubleshooting",
+      "sourceIds": ["dp800-d2-cdc"],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/relational-databases/track-changes/about-change-data-capture-sql-server"
+      ],
+      "documentationTitles": ["What is change data capture (CDC)?"],
+      "generatedAt": "2026-09-15T15:19:19.300Z",
+      "lastValidatedAt": "2026-09-15T15:19:19.300Z",
+      "featureStatus": "GA",
+      "tags": ["sql-server-2022", "cdc", "retention-window"],
+      "conceptId": "sql-cdc-extraction-interval-must-fit-current-instance-validity-window",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    }
+  ]
+}

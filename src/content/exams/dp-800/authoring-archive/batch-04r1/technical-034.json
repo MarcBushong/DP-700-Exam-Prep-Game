@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-034",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-construction",
+    "questionFingerprint": "4c1a3c22db67f8b27092fc4fe455c78f9ba52e4122580d60b6a879e4e267d840",
+    "reviewedAt": "2026-09-15T13:49:52.244Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-modify",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-modify.json",
+        "retrievedAt": "2026-09-15T05:45:14.141Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently read the actual MCP receipt for JSON_MODIFY (Transact-SQL), including arguments, the full lax/strict behavior table, and examples A, B, C, and E. For SQL NULL at an existing path, the table explicitly distinguishes deletion in lax mode from setting the existing value to JSON null in strict mode. A missing path in strict mode is an error, which the supplied existing contact property rules out. Nonnull nvarchar new values are text, including the literal text null and the empty string. The one-property update contract supports preserving revision. SQL Server 2016 and later applicability covers the stated SQL Server 2022 text-based call; no native-json method or Preview functionality is involved. The decision is grounded in the explicit table, not in an inference from example A's abbreviated displayed result sequence."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "The input explicitly contains contact, so strict path existence succeeds. The new argument is SQL NULL, not the string N'null'. The documented NULL/existing-path/strict combination sets contact's value to JSON null while retaining that member. Only $.contact is targeted, so the documentation-derived result is {\"contact\":null,\"revision\":6}. A missing contact property would instead make strict mode fail, but that countercondition is excluded by the supplied input. A is the only offered expression producing the required document state.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Lax mode with a SQL NULL new value deletes an existing property. With this input B therefore produces {\"revision\":6}, not an object retaining contact. Positive countercontext: this exact expression is correct if a patch intentionally removes the contact member entirely while preserving revision, and the requested result is {\"revision\":6}. The source's NULL/existing-path/lax table row directly supports that deletion contract; it is not interchangeable with storing a JSON null value.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "N'null' is a nonnull nvarchar value. The source's text-value treatment means it becomes the JSON string \"null\", giving {\"contact\":\"null\",\"revision\":6}, rather than the JSON null token. Positive countercontext: keep this exact expression when a downstream protocol deliberately uses the literal four-character text null as its contact sentinel and requires {\"contact\":\"null\",\"revision\":6}. That is a valid text replacement under the documented nvarchar contract, but a different state from the current requirement.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "N'' is an empty but nonnull SQL string. The existing contact value is therefore replaced with a JSON empty string, yielding {\"contact\":\"\",\"revision\":6}; neither deletion nor a JSON null assignment is requested by this argument. Positive countercontext: the exact expression is correct for a patch that must retain contact but clear it to an empty text field, with {\"contact\":\"\",\"revision\":6} as the contract. The documented nonnull update and text handling support that positive case.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent recovered PASS2 approves only this exact technical snapshot. The answer was re-derived from the actual JSON_MODIFY behavior table: SQL NULL plus an existing path has different strict/lax results, and neither a text sentinel nor an empty string is JSON null. The input supplies valid nvarchar(max) JSON, an existing contact property, and an unrelated revision member, so no missing-parent insertion, strict missing-path error, table permission, or database write is assumed. The choices are expressions to return a patched document, not claims that invoking a function mutates the local variable automatically. Intermediate implementation classification is defensible because the caller must preserve a member and distinguish four document states. The candidate, complete generation claim record, objective map, source manifest, registry, and retrieval index were read; helper-computed bindings match the immutable batch-04r1 content. technical-028.json supplied field structure only. The actual .grounding\\dp-expansion\\dp-800-guide.json receipt confirms the March 12, 2026 map, its three published weight ranges, 11 skills, and 73 subskills. This JSON-function query maps to Write advanced T-SQL code within the 35-40% database-design domain; JSON_MODIFY need not be literally enumerated in the guide's illustrative 'such as' list to fall within that subskill. The relevant provenance is credential preparation to the design learning path to the database-objects module to the JSON-columns unit, then a direct named-API reference to JSON_MODIFY. Evidence read: .grounding\\dp-expansion\\dp-800-credential.json, .grounding\\dp-expansion\\dp-800-course.json, .grounding\\dp-expansion\\dp-800-rendered-training-links.json, .grounding\\dp-expansion\\design-training-redirect.json, .grounding\\dp-expansion\\dp-800-training-design.json, .grounding\\dp-expansion\\authors\\design\\raw\\module-objects.json, and .grounding\\dp-expansion\\direct\\expansion-docs\\json-columns-unit.json. The unit's explicit JSON_MODIFY UPDATE example and text-column statement are the named-reference evidence. The advanced JSON unit does not name JSON_MODIFY and was not substituted as its immediate parent. No nonexistent unit-to-document URL or doc-to-doc permission was invented. Native-json .modify() Preview statements in that training unit do not determine this text-function call's status. The frozen 66-source graph passed validateSourceProvenance with zero findings; raw MCP input, timestamp, endpoint/tool, nonerror content, title, and existing relative path were checked independently of curator summaries. All source retrieval and last-review dates remain the frozen snapshot dates; reviewedAt records this independent pass instead. Duplicate diagnostics covered 583 installed records and all located new cohort/repair/generation records: 784 located, 643 distinct helper-hashed snapshots, 608 stable IDs. Historical same-ID copies are revisions, not additional questions. No target-related deterministic duplicate or cosmetic-scenario finding was produced. Independent semantic comparison distinguishes strict-NULL patch retention here from 035's SQL input-type serialization, 036's array append operation, 037's constructor omission policy, and 038's aggregate ordering/null-position contract. Reuse of the strict/lax distinction in 036's distractors is a construction relationship, not an identical tested answer fact; the different operation and array-preservation requirement matter. The existing SQL JSON extraction/PATH items and the new embedding/vector cohort do not duplicate this patch decision. No target-specific automated quality warning was emitted. All four options have concrete useful contexts, comparable syntax, and no answer-length or grammar shortcut. Regular authored key rotation across the batch is noted for later editorial assessment, not used as evidence of correctness. Original question wording and data were compared with the read product/training examples; no assessment, quiz, dump, or copied question bank was used. Code and all literal output countercontexts were reasoned from documentation, not executed against SQL. This file is only a technical approval: candidates remain candidates, and no rubric, PASS3, final ledger, source/candidate repair, or gameplay promotion was created.",
+    "confidenceReason": "Strong direct evidence: the product's existing-path SQL NULL table row resolves strict retention versus lax deletion, and its nvarchar handling resolves both text alternatives. The input closes the documented strict-mode precondition. Every wrong choice has a sourced literal positive countercontext. Approval is limited to this frozen SQL Server 2022 technical pass and is not an execution or gameplay claim."
+  }
+}

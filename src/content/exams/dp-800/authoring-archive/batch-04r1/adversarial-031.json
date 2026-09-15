@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "5afbac32c64d4527b03969fdf27e977e1b4e27c84f90dc660d971cf9b1858597",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "The dot inside the bracketed SQL column name makes default mapping navigate to billing's nested code B2.",
+        "whyIncorrectInContext": "The brackets delimit one SQL name, billing.code. Without an explicit column_path, OPENJSON matches that name to the literal top-level key, whose value is A7. The existing nested B2 is not the selected property.",
+        "couldBeCorrectWhen": "With @payload = N'{\"billing.code\":\"B2\",\"billing\":{\"code\":\"A7\"}}', the unchanged query returns B2. For the original input instead, WITH ([billing.code] nvarchar(10) '$.billing.code') would select B2. The former changes the input; the latter changes the projection.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "Remarks directly distinguishes dotted WITH column names from explicit nested column paths. colName uses the default literal name unless column_path overrides it. Thus B2 can be a real result under the stated alternate input or nested-path projection, but not this frozen query."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "Default mapping cannot resolve the dotted column name and therefore returns SQL NULL.",
+        "whyIncorrectInContext": "The exact literal billing.code key is present with the short scalar A7. A dot does not invalidate this default name match, so neither an absent-property nor a nonscalar-path NULL condition applies.",
+        "couldBeCorrectWhen": "With @payload = N'{\"billing\":{\"code\":\"B2\"}}', SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10)); returns SQL NULL in default lax mode. The query is unchanged, but the required literal dotted key is absent.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "Remarks permits literal dotted-name matching and identifies lax as the default missing-path mode. colName defines the exact default property lookup. Together these rules explain successful extraction here and NULL for the concrete nested-only input."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "The shown scalar projection returns the nested billing object as the fragment {\"code\":\"B2\"}.",
+        "whyIncorrectInContext": "The query selects literal billing.code, not billing, and declares no AS JSON flag. The actual selected value is A7. Returning the nested object as a fragment instead requires an explicit billing path and the nvarchar(max) type mandated for AS JSON.",
+        "couldBeCorrectWhen": "SELECT [billing.code] FROM OPENJSON(N'{\"billing\":{\"code\":\"B2\"}}') WITH ([billing.code] nvarchar(max) '$.billing' AS JSON); returns the displayed object fragment. This is a deliberately different query, not an unchanged-query counterexample: both the path and fragment-capable projection are necessary.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The AS JSON and type sections require nvarchar(max) when preserving objects or arrays. column_path must select the desired property, while Remarks keeps a dotted default column name literal. These explicit contracts support the alternate fragment query, not silently changing the original projection."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "The default WITH mapping reads A7 from the exact literal top-level key billing.code.",
+        "whyIncorrectInContext": "This is supported, not incorrect. The bracketed output name matches the literal JSON key, no path override is supplied, and the selected value is scalar text compatible with nvarchar(10). The nested object's different code remains irrelevant.",
+        "couldBeCorrectWhen": "The displayed query correctly returns A7 for the given input. It also returns A7 unchanged when @payload = N'{\"billing.code\":\"A7\"}', demonstrating that the nested billing object is not a prerequisite for default dotted-name mapping.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "Remarks directly documents matching a dotted WITH name to a key containing that dot and requiring a separate explicit path for nested traversal. The scalar projection and explicit-schema return contracts support A7 in the declared output column."
+      }
+    ],
+    "challenges": {
+      "scope": "This tests JSON-to-relational default name mapping in OPENJSON. It is not FOR JSON PATH alias nesting, JavaScript property access or an implicit nested JSON path supplied by the SQL brackets.",
+      "plan": "SQL Server 2022 at compatibility 160 supports the shown established OPENJSON schema. No cloud tier or newer compatibility override changes the default dotted-key interpretation required here.",
+      "role": "The query uses only its declared variable. No protected table, persistent object, external model or administrative action introduces a permission-dependent competing result.",
+      "preconditions": "The literal has two distinct locations, a top-level billing.code string and an object named billing. Both scalar codes fit nvarchar(10). There is no column_path, strict mode or AS JSON flag. SQL brackets preserve the column name rather than supplying JSON path syntax.",
+      "featureStatus": "The documented literal-name and explicit-path rules belong to established OPENJSON functionality available in SQL Server 2022. No Preview or native-json extension is used or needed.",
+      "sourceChanges": "The indexed raw MCP article matches the frozen manifest and explicitly addresses dotted WITH names in Remarks. Its current newer-platform notes do not alter that contract. The credential-linked unit is ancestry evidence, not permission to infer unrelated feature availability.",
+      "stemSufficiency": "The complete input and query fix both competing values and the absence of an explicit path. Removing or changing the literal key can yield other choices only under a different input. Selecting the object requires the openly different countercontext query, not a hidden prerequisite.",
+      "explanationBounds": "The explanation correctly identifies A7 and states what an explicit nested path would change. For c, I checked the actual AS JSON/nvarchar(max) requirements instead of claiming the original scalar projection could return an object. No SQL execution is claimed.",
+      "reasoningDepth": "Predicting the result requires distinguishing SQL identifier syntax from JSON path syntax, but it remains a single mapping rule. Intermediate is defensible at its lower edge; difficulty authenticity is 3 because no broader implementation or troubleshooting is demanded.",
+      "answerClues": "A7 and B2 are equally short plausible competitors. The object choice needs a different path and projection and is 13 characters versus the declared width 10, weakening plausibility. The stem also names the literal-key distinction. The pronoun this clearly refers to the displayed query."
+    },
+    "qualityNotes": "45/48; plausibility, difficulty and originality receive 3. Metadata and target-specific deterministic checks covered 584 installed records plus 48 pending snapshots/37 new IDs without a distinct-ID duplicate finding. Full nearest comparisons included 028, 029, 030, fabric-032 and pending 033. Literal dotted-name binding differs from case-sensitive mapping and fragment preservation. The alternate object-producing query is explicitly a countercontext, not a repair or a claim about the immutable query."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-031",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "questionFingerprint": "5afbac32c64d4527b03969fdf27e977e1b4e27c84f90dc660d971cf9b1858597",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "OPENJSON (Transact-SQL): independently read Remarks' explicit distinction between literal dotted WITH names and nested column paths, together with colName, column_path, AS JSON and return-schema rules. A present literal scalar maps normally; a missing literal key can yield NULL in lax mode. Returning a nested object instead needs its explicit path and nvarchar(max) AS JSON. These sections establish both the actual A7 result and valid alternate contexts."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "B2 belongs to the nested billing object, but the bracketed column name supplies no nested JSON path. OPENJSON instead matches the literal billing.code key containing A7. The unchanged query would return B2 from N'{\"billing.code\":\"B2\",\"billing\":{\"code\":\"A7\"}}'; alternatively, an explicit '$.billing.code' projection would reach B2 in the original input. Each concrete countercontext changes a frozen premise, so neither makes this choice correct for the displayed query.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "A literal dot does not prevent default name matching, and the exact billing.code key is present with scalar A7. The absence condition needed for this NULL answer therefore does not hold. With N'{\"billing\":{\"code\":\"B2\"}}', the unchanged SELECT and WITH clause would yield SQL NULL under default lax handling because only the nested key exists. This valid missing-literal-key case is different from the supplied complete input.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "The selected property is the literal scalar A7, not the billing object, and no AS JSON flag requests a fragment. A valid countercontext is SELECT [billing.code] FROM OPENJSON(N'{\"billing\":{\"code\":\"B2\"}}') WITH ([billing.code] nvarchar(max) '$.billing' AS JSON);, which returns the displayed object. That explicitly different projection supplies both the object path and required max-length fragment type. It must not be represented as an outcome of the unchanged query.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "The output name billing.code is a single bracket-delimited SQL identifier. Without a column_path override, OPENJSON matches it to the exact top-level JSON key of that name and projects its scalar A7 into nvarchar(10). The nested billing.code path is a different location and is not implicitly traversed. The same query also returns A7 from N'{\"billing.code\":\"A7\"}', showing that the extra nested object does not participate in the selected mapping.",
+        "sourceIds": ["dp800-d1-openjson"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent PASS3 of immutable 031 only. Read candidate/generation, exact current objectives, policy, frozen source manifest/registry/index and the raw MCP article, including the dotted-name Remarks and AS JSON requirements. Verified credential-linked training ancestry and independently computed both hashes. technical-031.json supplied only separately checked stage bindings, not inherited conclusions. Countercontexts identify input changes versus the different fragment query explicitly. No SQL execution, authored repair, source/ledger edits or promotion.",
+    "confidenceReason": "The product article directly documents this literal-name versus nested-path distinction. The fixed scalar key makes A7 unique; the NULL and object alternatives require different conditions or code. The weaker object distractor reduces plausibility without creating ambiguity."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 3,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "45/48. The complete two-location literal and directly documented dotted-name rule support alignment, completeness and all critical 4s. Each distractor has a sourced valid context, with c honestly requiring another projection. That conspicuous object alternative reduces plausibility; one-rule result prediction limits difficulty; the familiar documented distinction limits originality. Clear code and accurate explanations retain 4. Related mapping questions do not test the same necessary fact."
+  }
+}

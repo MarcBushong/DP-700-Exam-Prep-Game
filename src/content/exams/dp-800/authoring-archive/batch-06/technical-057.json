@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-057",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-integration-06",
+    "questionFingerprint": "40a476ed2102d6bf3beb18f25a191716c0693047599650e403962638b6bb0916",
+    "reviewedAt": "2026-09-15T15:55:49.263Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d2-dab-cache-l1",
+        "url": "https://learn.microsoft.com/en-us/azure/data-api-builder/concept/cache/level-1",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\dab-cache-level1.json",
+        "retrievedAt": "2026-09-15T07:07:25.237Z",
+        "lastReviewedAt": "2026-09-15T15:19:19.284Z",
+        "supportingSummary": "The current L1 article explicitly says omitted entity TTL inherits the global TTL and an entity TTL overrides the global value. It describes DAB 2.0 and later, REST endpoints and modification invalidation. That supports Product=20 and Category=90 as configured TTLs, without promising residency duration, cross-entity override propagation or invalidation for arbitrary external SQL writes."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The global ninety-second value supplies a default, not a mandatory TTL for every entity. Product's explicit twenty-second value overrides it, so the proposed ninety/ninety pair is wrong here. That exact pair would be correct if Product also omitted its entity TTL, or explicitly set ninety, while Category continued to inherit ninety. These are configured lifetimes, not guaranteed uninterrupted cache residency.",
+        "sourceIds": ["dp800-d2-dab-cache-l1"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "The article supplies both required rules: an entity value overrides the global TTL, and omission inherits it. Applying them independently gives twenty seconds for Product and ninety for Category. This same literal pair would also occur if Category explicitly selected ninety rather than inheriting it. Both entities already opt into REST L1 caching, so enablement or another tier does not change this answer.",
+        "sourceIds": ["dp800-d2-dab-cache-l1"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Product's override belongs to Product; it does not replace the runtime default inherited by Category. Therefore Category cannot acquire twenty seconds merely because its sibling has that value. The proposed twenty/twenty pair is valid when both entities explicitly set twenty, or when the global TTL is twenty and neither overrides it. The actual global value here is ninety and Category has no override.",
+        "sourceIds": ["dp800-d2-dab-cache-l1"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "This pair reverses the configured inheritance relationship. Product, not Category, supplies the explicit twenty-second TTL, and Category alone falls back to the ninety-second default. The exact ninety/twenty pair would be correct if Product omitted its override while Category explicitly set twenty. That alternative changes the configuration premises; it is not a different interpretation of the documented per-entity override rule.",
+        "sourceIds": ["dp800-d2-dab-cache-l1"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Applied inheritance separately to each REST entity and obtained the unique twenty/ninety pair. The current L1 article explicitly supplies both rules and version scope; no claim from the training unit's GraphQL cache example was adopted. The explanation correctly distinguishes configured TTL from guaranteed cache survival. All four numeric pairs have documented configuration contexts, avoiding invented alternatives. This is lower-end intermediate configuration interpretation, not advanced tuning. The 584-bank/cohort comparison and full dp700-manage-017, dp700-monitor-049 and dp800-direct-019/020 records concern different cache or configuration contracts. Sibling 056 tests opt-in and tiers, not TTL precedence. Frozen provenance and source dates match; no live cache operation was asserted.",
+    "confidenceReason": "High confidence in b because the product article explicitly states override and omission behavior for the scoped REST L1 feature. The reviewed text is configuration interpretation, not an executable snippet or a cache-invalidation guarantee."
+  }
+}

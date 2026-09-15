@@ -1,0 +1,320 @@
+{
+  "question": {
+    "id": "dp800-direct-018",
+    "question": "An SDK-style SQL database project creates a lookup table on its first deployment. Reference rows have stable primary keys and must be present afterward. Later deployments retain the table and must reconcile those rows without duplicate-key errors. Which script strategy fits both the deployment order and repeated execution?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Run the seed only as a predeployment script against the not-yet-created table"
+      },
+      {
+        "id": "b",
+        "text": "Run unconditional INSERT statements for the same keys after every deployment"
+      },
+      {
+        "id": "c",
+        "text": "Run a versioned post-deployment script that updates existing keys and inserts missing keys"
+      },
+      {
+        "id": "d",
+        "text": "Include the seed INSERT statements as ordinary compiled schema-object files"
+      }
+    ],
+    "correctAnswer": ["c"],
+    "explanation": "Use an idempotent, versioned post-deployment data script.",
+    "deepExplanation": "Both conditions matter: the table must exist before seeding, and subsequent executions must handle rows already present. The answer describes the required behavior, not a guarantee that any arbitrary MERGE implementation is safe.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Predeployment scripts run before schema deployment, so the lookup table does not yet exist in the stated initial deployment.",
+      "b": "Repeated inserts of stable existing primary keys can fail on subsequent deployments; the script is not idempotent.",
+      "d": "Reference-data scripts sit outside the compiled schema model; treating the seed DML as a normal schema object does not implement the post-deployment data lifecycle."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-ci-cd-by-using-sql-database-projects",
+    "subskill": "Create and manage reference/static data in source control",
+    "difficulty": "advanced",
+    "complexity": "scenario-based",
+    "sourceIds": ["dp800-d2-reference-data"],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/training/modules/implement-cicd-sql-database-projects/03-configure-source-control-manage-reference-data"
+    ],
+    "documentationTitles": [
+      "Configure source control and manage reference data"
+    ],
+    "generatedAt": "2026-09-14T23:49:44.600Z",
+    "lastValidatedAt": "2026-09-14T23:49:44.600Z",
+    "featureStatus": "GA",
+    "tags": ["sql-database-projects", "reference-data", "postdeployment"],
+    "conceptId": "sql-project-postdeployment-reference-data-idempotence",
+    "verificationStatus": "manual-review-required",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "Independent PASS 3 for unchanged batch-02 item 018. Independently reproduced the exact question and objective fingerprints and reread the actual source and saved CI/CD-module ancestry. The c key is correct; the negative verdict is a strict quality decision, not a technical-key reversal. Positive contextual alternatives for a and d cannot be attested without changing their literal claims. The Advanced label and self-disqualifying choices also weaken construction. The independent rubric totals 42/48 and distractorEvidence is 2. All review checks are true because the technical exclusions and review activities are complete; qualityReviewed does not mean the rubric passed. The bounded scan covered 575 bank records and the frozen 27-item cohort, excluding same-ID lineage, with no different-item duplicate finding. Related streaming retry-safety, CDF and cancellation items concern different mechanisms. codeReviewed is N/A: no executable script, SDK build or deployment test. Returned inline without edits, promotion or readiness changes.",
+    "requiresManualReview": true,
+    "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
+    "confidenceReason": "High confidence in the technical c answer and the frozen source's exclusions. Insufficient quality for strict promotion: some distractors are intrinsically invalid rather than documented choices that become valid in another context, and Advanced difficulty is not convincingly earned."
+  },
+  "review": {
+    "questionId": "dp800-direct-018",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-independent-adversarial-011",
+    "questionFingerprint": "6cb97ba2c6a420b6ee2a8963a5b547f06374e65911af60cc951743812bb5c8a8",
+    "reviewedAt": "2026-09-15T03:20:54.918Z",
+    "verdict": "manual-review-required",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d2-reference-data",
+        "url": "https://learn.microsoft.com/en-us/training/modules/implement-cicd-sql-database-projects/03-configure-source-control-manage-reference-data",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\secure\\raw\\cicd-reference-data.json",
+        "retrievedAt": "2026-09-14T22:31:52.055Z",
+        "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+        "supportingSummary": "Independently read the actual lesson. Decoded lines 73-89 define versioned reference data and pre/post deployment timing; lines 95-110 explicitly exclude included data scripts from schema compilation; lines 114-132 establish rerun behavior, duplicate-key failures and update-existing/insert-missing reconciliation. These prove c and the exclusions, but do not supply valid literal alternates for seeding a nonexistent target or compiling bare seed DML."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The target table is created by the deployment plan and is absent when the proposed predeployment seed runs. Predeployment preparation of existing data is a legitimate different use, not a rescue of this literal choice. dp800-d2-reference-data, decoded lines 75-78.",
+        "sourceIds": ["dp800-d2-reference-data"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Repeated unconditional insertion of the same retained primary keys does not reconcile rows and is explicitly documented to fail on the next deployment. dp800-d2-reference-data, decoded lines 114-132.",
+        "sourceIds": ["dp800-d2-reference-data"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "Post-deployment execution waits for schema creation, and updating matched keys while inserting missing keys handles repeat deployments. The abstract behavior is correct without endorsing arbitrary concurrent MERGE implementations. dp800-d2-reference-data, decoded lines 73-89 and 114-132.",
+        "sourceIds": ["dp800-d2-reference-data"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The source explicitly states that included seed files must be removed from normal schema compilation or the build fails. Declarative schema files are valid for object definitions, not bare reference-data INSERT scripts. dp800-d2-reference-data, decoded lines 73-75 and 95-110.",
+        "sourceIds": ["dp800-d2-reference-data"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent PASS 3 for unchanged batch-02 item 018. Independently reproduced the exact question and objective fingerprints and reread the actual source and saved CI/CD-module ancestry. The c key is correct; the negative verdict is a strict quality decision, not a technical-key reversal. Positive contextual alternatives for a and d cannot be attested without changing their literal claims. The Advanced label and self-disqualifying choices also weaken construction. The independent rubric totals 42/48 and distractorEvidence is 2. All review checks are true because the technical exclusions and review activities are complete; qualityReviewed does not mean the rubric passed. The bounded scan covered 575 bank records and the frozen 27-item cohort, excluding same-ID lineage, with no different-item duplicate finding. Related streaming retry-safety, CDF and cancellation items concern different mechanisms. codeReviewed is N/A: no executable script, SDK build or deployment test. Returned inline without edits, promotion or readiness changes.",
+    "confidenceReason": "High confidence in the technical c answer and the frozen source's exclusions. Insufficient quality for strict promotion: some distractors are intrinsically invalid rather than documented choices that become valid in another context, and Advanced difficulty is not convincingly earned."
+  },
+  "envelope": {
+    "credentialId": "dp-800",
+    "objectiveVersion": "March 12, 2026",
+    "questionFingerprint": "6cb97ba2c6a420b6ee2a8963a5b547f06374e65911af60cc951743812bb5c8a8",
+    "sourceIds": ["dp800-d2-reference-data"],
+    "retrievedAt": "2026-09-14T22:31:52.055Z",
+    "lastValidatedAt": "2026-09-14T23:49:44.600Z",
+    "answerEvidence": [
+      {
+        "choiceId": "c",
+        "sourceIds": ["dp800-d2-reference-data"],
+        "summary": "Post-deployment execution waits for schema creation, and updating matched keys while inserting missing keys handles repeat deployments. The abstract behavior is correct without endorsing arbitrary concurrent MERGE implementations. dp800-d2-reference-data, decoded lines 73-89 and 114-132."
+      }
+    ],
+    "distractorEvidence": [
+      {
+        "choiceId": "a",
+        "sourceIds": ["dp800-d2-reference-data"],
+        "summary": "The target table is created by the deployment plan and is absent when the proposed predeployment seed runs. Predeployment preparation of existing data is a legitimate different use, not a rescue of this literal choice. dp800-d2-reference-data, decoded lines 75-78."
+      },
+      {
+        "choiceId": "b",
+        "sourceIds": ["dp800-d2-reference-data"],
+        "summary": "Repeated unconditional insertion of the same retained primary keys does not reconcile rows and is explicitly documented to fail on the next deployment. dp800-d2-reference-data, decoded lines 114-132."
+      },
+      {
+        "choiceId": "d",
+        "sourceIds": ["dp800-d2-reference-data"],
+        "summary": "The source explicitly states that included seed files must be removed from normal schema compilation or the build fails. Declarative schema files are valid for object definitions, not bare reference-data INSERT scripts. dp800-d2-reference-data, decoded lines 73-75 and 95-110."
+      }
+    ],
+    "rubric": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-011",
+      "reviewedAt": "2026-09-15T03:20:54.918Z",
+      "notes": "Independent scores: alignment 4 for versioned reference data; accuracy 4 for ordering, repeated-key handling and compiled-model exclusion; scenarioCompleteness 4 for first and retained-table deployments; answerUniqueness 4 because c uniquely satisfies both phases; distractorPlausibility 2 because a and d advertise intrinsic failures; distractorEvidence 2 because the source establishes their exclusions but not valid contextual uses of those literal choices; documentationStrength 4 for direct coverage of the actual question claims; citationSpecificity 4 for exact ordering, Build Remove and reconciliation clauses; difficultyAuthenticity 2 because the Advanced label exceeds the recipe-like decision; explanationQuality 4 for bounded idempotence and MERGE claims; originality 4 within inspected banks; clarityAccessibility 4 for explicit requirements. Total 42/48, no zeros. Critical correctness/source scores are 4, but the total and distractorEvidence minimum fail. No score was increased to reach 44.",
+      "version": 2,
+      "scores": {
+        "alignment": 4,
+        "accuracy": 4,
+        "scenarioCompleteness": 4,
+        "answerUniqueness": 4,
+        "distractorPlausibility": 2,
+        "distractorEvidence": 2,
+        "documentationStrength": 4,
+        "citationSpecificity": 4,
+        "difficultyAuthenticity": 2,
+        "explanationQuality": 4,
+        "originality": 4,
+        "clarityAccessibility": 4
+      }
+    }
+  },
+  "stages": {
+    "generation": {
+      "authorId": "copilot-dp800-direct-author",
+      "generatedAt": "2026-09-14T23:49:44.600Z",
+      "questionFingerprint": "6cb97ba2c6a420b6ee2a8963a5b547f06374e65911af60cc951743812bb5c8a8",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "claims": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "summary": "Predeployment scripts run before schema deployment, so the lookup table does not yet exist in the stated initial deployment."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "summary": "Repeated inserts of stable existing primary keys can fail on subsequent deployments; the script is not idempotent."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "summary": "Post-deployment runs after the table is created, and matching existing keys while inserting missing ones provides the required repeatable reference-data reconciliation."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "summary": "Reference-data scripts sit outside the compiled schema model; treating the seed DML as a normal schema object does not implement the post-deployment data lifecycle."
+        }
+      ]
+    },
+    "technical": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "review": {
+        "questionId": "dp800-direct-018",
+        "authorId": "copilot-dp800-direct-author",
+        "reviewerId": "dp800-independent-technical-011",
+        "questionFingerprint": "6cb97ba2c6a420b6ee2a8963a5b547f06374e65911af60cc951743812bb5c8a8",
+        "reviewedAt": "2026-09-15T02:33:37.663Z",
+        "verdict": "verified",
+        "sourceReviews": [
+          {
+            "sourceId": "dp800-d2-reference-data",
+            "url": "https://learn.microsoft.com/en-us/training/modules/implement-cicd-sql-database-projects/03-configure-source-control-manage-reference-data",
+            "evidencePath": ".grounding\\dp-expansion\\authors\\secure\\raw\\cicd-reference-data.json",
+            "retrievedAt": "2026-09-14T22:31:52.055Z",
+            "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+            "supportingSummary": "Frozen reference-data unit, decoded lines 71-89, places data scripts outside the compiled model and distinguishes pre/post deployment order. Lines 95-110 require excluding included data scripts from schema compilation. Lines 114-132 establish repeated execution and update-existing/insert-missing behavior rather than repeated unconditional inserts."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "Predeployment executes before schema changes create the lookup table on the first deployment. Seeding that not-yet-created table therefore has the wrong ordering. dp800-d2-reference-data, decoded lines 75-78.",
+            "sourceIds": ["dp800-d2-reference-data"]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "Post-deployment scripts run again on subsequent deployments. Repeating unconditional INSERTs for retained primary keys causes duplicate-key violations instead of reconciliation. dp800-d2-reference-data, decoded lines 114-132.",
+            "sourceIds": ["dp800-d2-reference-data"]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "A versioned post-deployment script runs after table creation and reconciles stable keys by updating existing rows and inserting missing ones. This satisfies both initial deployment and rerun behavior. dp800-d2-reference-data, decoded lines 73-89 and 114-132.",
+            "sourceIds": ["dp800-d2-reference-data"]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "Reference-data DML belongs in deployment scripts outside the compiled schema model. SDK-included data files must be excluded from normal schema compilation, not treated as ordinary schema objects. dp800-d2-reference-data, decoded lines 75 and 95-110.",
+            "sourceIds": ["dp800-d2-reference-data"]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": true
+        },
+        "verificationNotes": "Independently derived c. Advanced applied construction combines first-deployment ordering, rerun idempotence and the SDK compiled-model boundary; classification does not rest on statement length. Stable keys and table retention make the repeatability distinction definite. The abstract update/insert strategy does not promise that arbitrary MERGE code is safe under concurrency, and no such implementation was supplied or executed. Versioned data and core deployment-script features are GA. Frozen credential/module/unit/product ancestry and exact source/taxonomy bindings were checked. Originality checked against supplied prose; no batch exact-stem or concept duplicate, without corpus-wide clearance. codeReviewed is N/A: no executable snippet. No live retrieval, file edits, rubric, adversarial approval or promotion; PASS 2 only.",
+        "confidenceReason": "High confidence: the single direct teaching receipt explicitly covers ordering, every-deployment execution, duplicate-key failure and schema-model exclusion, with a concrete update-existing/insert-missing example."
+      }
+    },
+    "adversarial": {
+      "questionFingerprint": "6cb97ba2c6a420b6ee2a8963a5b547f06374e65911af60cc951743812bb5c8a8",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-011",
+      "reviewedAt": "2026-09-15T03:20:54.918Z",
+      "verdict": "manual-review-required",
+      "optionChallenges": [
+        {
+          "choiceId": "a",
+          "claimRepresented": "A seed script against a not-yet-created table can run before the deployment plan creates that table.",
+          "whyIncorrectInContext": "The required target does not exist at the proposed time. This is an ordering failure, not merely a less-preferred deployment convention.",
+          "couldBeCorrectWhen": "Predeployment scripts legitimately migrate existing data or drop constraints before schema changes. That documented alternate does not validate this literal choice, which embeds seeding a not-yet-created table. Making it valid requires changing that claim, not merely supplying another ordinary deployment context.",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "evidenceSummary": "dp800-d2-reference-data, decoded lines 75-78, documents pre/post execution order and legitimate predeployment preparation. It does not supply a valid context for seeding a nonexistent target."
+        },
+        {
+          "choiceId": "b",
+          "claimRepresented": "Unconditional INSERTs of the same stable keys can safely reconcile retained reference rows after every deployment.",
+          "whyIncorrectInContext": "After the initial seed, retained primary keys already exist. Repeating those INSERTs causes duplicate-key violations rather than updating the existing reference rows.",
+          "couldBeCorrectWhen": "Plain INSERT is appropriate for initial population when the target keys are absent. It is not an evidenced repeatable strategy for the retained-table lifecycle stated here; a fresh-target-only lifecycle would change that premise.",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "evidenceSummary": "dp800-d2-reference-data, decoded lines 114-132, explicitly contrasts the second-deployment duplicate-key failure with updating matched keys and inserting missing ones."
+        },
+        {
+          "choiceId": "c",
+          "claimRepresented": "A versioned post-deployment script can reconcile existing and missing reference keys after the schema exists.",
+          "whyIncorrectInContext": "NOT incorrect: post-deployment timing addresses first creation, while update-existing/insert-missing behavior addresses subsequent retained rows. Both requirements are met.",
+          "couldBeCorrectWhen": "It is correct for the specified sequential deployment lifecycle with stable keys and compatible reference data. It does not guarantee that arbitrary MERGE code, triggers or concurrent deployments are globally race-free or side-effect-free.",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "evidenceSummary": "dp800-d2-reference-data, decoded lines 73-89 and 114-132, directly supports versioned deployment data, post-deployment ordering and key-based reconciliation."
+        },
+        {
+          "choiceId": "d",
+          "claimRepresented": "Bare seed INSERT statements belong in ordinary compiled SQL schema-object files.",
+          "whyIncorrectInContext": "The source explicitly places deployment data scripts outside the compiled schema model and says compilation of included seed files fails unless they are excluded.",
+          "couldBeCorrectWhen": "Ordinary compiled files are appropriate for declarative table, view or stored-procedure definitions. That is a legitimate adjacent use of the compiled model, but not a context in which this literal bare-seed-DML choice becomes correct. No such supported alternate was found in the frozen evidence.",
+          "sourceIds": ["dp800-d2-reference-data"],
+          "evidenceSummary": "dp800-d2-reference-data, decoded lines 73-75 and 95-110, distinguishes schema objects from deployment scripts and explicitly requires Build Remove for included seed files."
+        }
+      ],
+      "challenges": {
+        "scope": "The task concerns both first deployment and later deployments retaining the same lookup table and stable keys. A solution valid only against an empty target does not satisfy the complete lifecycle.",
+        "plan": "The deployment plan creates the table before a post-deployment script runs. A predeployment seed of the explicitly nonexistent table fails ordering; the point is execution order, not speculation about when the deployment plan is generated.",
+        "role": "The question selects a script strategy, not a permission grant or production execution. Normal deployment and DML authorization remain necessary, but additional authority cannot create an existing target at the wrong stage or make bare DML a schema object.",
+        "preconditions": "Stable keys, retained rows and first-deployment table creation are explicit. The abstract reconciliation assumes valid data and an ordinary deployment lifecycle; it does not establish concurrency control, trigger behavior or arbitrary migration safety.",
+        "featureStatus": "The frozen lesson documents core SDK-style project inclusion and PreDeploy/PostDeploy behavior without a preview dependency. No installed SDK build or version-specific tool execution was performed.",
+        "sourceChanges": "The actual saved lesson was read, including its SDK globbing, Build Remove, script ordering and repeated-execution example. The source's broad MERGE-safety language is bounded by the candidate's explicit refusal to guarantee arbitrary implementations.",
+        "stemSufficiency": "The stem is sufficient to identify c uniquely. The weakness is not missing requirements: a embeds a nonexistent-target failure and d embeds an artifact-category error, leaving no supported ordinary context for those literal choices.",
+        "explanationBounds": "The explanation correctly specifies behavior rather than asserting every MERGE statement is safe. It does not promise deletion of obsolete reference keys, global transaction atomicity or protection from concurrent deployment races.",
+        "reasoningDepth": "Ordering, repeatability and model membership are real concepts, but the offered options make the Advanced label weak. The choice is a short deployment recipe rather than analysis of conflicting scripts, execution evidence or a difficult migration trade-off.",
+        "answerClues": "Option a announces a not-yet-created target; b announces unconditional repeated inserts; d places seed DML in the compiled schema model. Option c is the only option describing both safe conditions and is also the most elaborated positive strategy."
+      },
+      "qualityNotes": "42/48; manual-review-required. The c key and explanations are technically supported. Strict quality fails because the distractor set contains inherently invalid literal proposals without verified contextual alternates, and the Advanced construction is weak. Related correct concepts are not substituted for evidence that those choices could actually be correct."
+    }
+  }
+}

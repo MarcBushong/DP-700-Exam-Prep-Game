@@ -16,6 +16,12 @@ source approvals and fresh review of prior AI-103 records. Packages without a
 strict policy retain the unchanged legacy two-pass and ten-criterion 0–2 rubric,
 including DP-700. Missing legacy question metadata defaults to manual review.
 
+DP-800 and DP-420 also opt into this same strict profile. Their generic
+credential-scoped prompts do not import GitHub-specific subjects or personas.
+See [DP content maintenance](dp-content-maintenance.md) for current objective
+versions, source restrictions, and DP-420's separately preserved prospective map.
+The legacy profile remains unchanged for packages that do not opt in.
+
 Strict packages explicitly declare this in their existing `manifest.json`:
 
 ```json

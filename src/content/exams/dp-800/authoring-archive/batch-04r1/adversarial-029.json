@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "5fd9e1d2584eaaffa9c6d44a376802449e79f222f2c0b6dffd6ab045a7cda7d0",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "The default lowercase sku mapping can read uppercase SKU because the database and input collation ignore case.",
+        "whyIncorrectInContext": "OPENJSON does not use that collation to match JSON properties. With no column_path override, it looks for the exact lowercase key sku, which is absent. Repeating this clause preserves the stated NULL result.",
+        "couldBeCorrectWhen": "For @payload = N'{\"sku\":\"R-84\",\"category\":\"spare\"}', SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20)); returns R-84. The option is unchanged, but the producer now supplies the exact lowercase property name. That changes the frozen input.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The with_clause and colName sections establish case-sensitive default name matching. The column_path section makes matching explicitly collation-unaware, using BIN2 comparison. Remarks identify lax as the default and permit NULL when the selected property is absent."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "Selecting index zero beneath SKU reads the identifier from the supplied scalar string.",
+        "whyIncorrectInContext": "The shown SKU value is the scalar string R-84, not an array containing that string. The array-element path does not mean the first character or the whole scalar. It therefore does not address the required value.",
+        "couldBeCorrectWhen": "For @payload = N'{\"SKU\":[\"R-84\",\"R-85\"],\"category\":\"spare\"}', SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.SKU[0]'); selects R-84. The identical option is appropriate when the identifier is the first array element, unlike this input.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The path section distinguishes array elements from object properties and demonstrates zero-based array positions. column_path selects the value to populate a typed output column. These rules support the array countercontext, not treating a JSON string as an array."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "An explicit uppercase property path retrieves SKU while retaining the lowercase SQL output name sku.",
+        "whyIncorrectInContext": "This is supported, not incorrect. The exact uppercase key exists, its value is scalar text, and R-84 fits nvarchar(20). The path overrides only property selection; the output column remains sku.",
+        "couldBeCorrectWhen": "It is correct for the stated input, returning R-84. With @payload = N'{\"SKU\":\"T-21\",\"category\":\"kit\"}', the unchanged SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.SKU'); instead returns T-21 under the same output name.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "colName defines the SQL output name, while column_path overrides default property mapping. The BIN2 rule requires the uppercase spelling used here. The AS JSON section confirms that ordinary typed projection without that flag extracts scalar values."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "Reading category into the output named sku satisfies the requirement to return the product identifier.",
+        "whyIncorrectInContext": "The selected property exists, so the clause can return text, but that text is spare. Renaming its output does not turn category into the SKU value R-84. A non-NULL result alone is insufficient.",
+        "couldBeCorrectWhen": "Using the supplied @payload, SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.category'); returns spare. This is valid if a legacy consumer requests category text in its column named sku. That is a different requested field, not this identifier task.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The colName and column_path contracts separate output naming from the selected JSON property. The documented typed-schema example maps differently named SQL columns to explicit source paths. Scalar projection preserves the selected category value rather than inferring business meaning from the alias."
+      }
+    ],
+    "challenges": {
+      "scope": "This is local SQL Server JSON projection, not Eventhouse ingestion or a client-side case-insensitive object lookup. The requirement preserves both the input and output column name; the source property to read is SKU.",
+      "plan": "SQL Server 2022 and compatibility 160 satisfy the documented ordinary OPENJSON requirement of 130 or higher. No Azure service tier, compatibility override or Synapse-only array identity feature is needed.",
+      "role": "All alternatives operate on the declared local variable. There is no table, external endpoint, object creation or database configuration change requiring an unstated permission that could alter the choice.",
+      "preconditions": "The literal is valid JSON with distinct SKU and category keys; SKU is a short string, not an array or JSON null. The explicit input type preserves it. Case-insensitive SQL collation does not relax JSON property matching.",
+      "featureStatus": "Only established OPENJSON syntax documented for SQL Server 2016 and later is used. No native json type, SQL Server 2025 extension, Preview function or Synapse serverless identity expression is imported into the 2022 context.",
+      "sourceChanges": "The indexed raw MCP OPENJSON receipt matches the frozen URL and retrieval date. Its current BIN2/default-mapping rules apply here; its compatibility-override note is unnecessary at 160. Training establishes named-function ancestry, not blanket availability of newer JSON functions.",
+      "stemSufficiency": "The supplied literal, observed NULL, fixed output name and unchanged input remove the principal alternatives. An array input, lowercase producer key or category-reporting requirement rescues a distractor only by changing a stated premise.",
+      "explanationBounds": "The explanations correctly separate output alias and property path without promising collation changes or automatic JSON-key normalization. The array distractor is not character indexing. All conclusions are documentation-based static review, not SQL execution.",
+      "reasoningDepth": "Resolving a SQL-collation versus JSON-matching misconception is applied but narrow. Most diagnosis is supplied in the stem; selecting the explicit path is lower-intermediate work. Difficulty authenticity is 3 rather than advanced implementation credit.",
+      "answerClues": "Choice a repeats the already failing clause, and category is an easy wrong-field distractor, so plausibility is 3. The key is not conspicuously longest. The pronoun warning is harmless: its refers to the shown query's sku column."
+    },
+    "qualityNotes": "45/48: distractor plausibility, difficulty authenticity and originality are 3. Metadata comparison covered 584 installed questions and 48 pending snapshots representing 37 new IDs; target-specific lexical/code/scenario checks found no distinct-ID findings. Closest full records included fabric-032 and dp800-direct-027/028 plus 030/031. Eventhouse's case-mapping diagnosis overlaps conceptually, but this item tests SQL collation-unaware WITH mapping and an unchanged alias. Old same-ID batch snapshots are not additional questions."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-029",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "questionFingerprint": "5fd9e1d2584eaaffa9c6d44a376802449e79f222f2c0b6dffd6ab045a7cda7d0",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "OPENJSON (Transact-SQL): independently read the raw MCP body, especially with_clause, path, colName, column_path and Remarks. Default column-to-key matching is case-sensitive; explicit paths override mapping independently of output names, using collation-unaware BIN2 comparison. Array positions address elements rather than string characters. Ordinary scalar projection and default lax missing-path behavior distinguish every option. The documented compatibility minimum is satisfied by the stated 160."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Default WITH mapping seeks the exact lowercase key sku, which this document lacks. The database's case-insensitive collation does not override OPENJSON property matching, so repeating the clause cannot repair the observed NULL. The identical clause would return R-84 from N'{\"sku\":\"R-84\",\"category\":\"spare\"}', a legitimate lowercase-producer countercontext. That changes the explicitly frozen input rather than supplying another correct answer to this question.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The path asks for array element zero below SKU, but the supplied property is the scalar string R-84. Bracket indexing is not a request for a string's first character or its complete value. With N'{\"SKU\":[\"R-84\",\"R-85\"]}', the unchanged WITH clause would correctly project R-84 from the first array element. That concrete array case requires a different input shape and does not rescue this option here.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "The explicit '$.SKU' path matches the actual uppercase property while colName retains the required lowercase output name sku. Its scalar value R-84 fits the declared nvarchar(20), and no AS JSON flag is appropriate or necessary. OPENJSON's BIN2 property comparison is independent of the stated case-insensitive collation. The same SELECT would return T-21 from N'{\"SKU\":\"T-21\",\"category\":\"kit\"}', confirming the alias and mapping are separate decisions.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "An explicit path to category selects spare, not the identifier R-84. Naming that output sku does not change which property supplied its value, so producing non-NULL text is not sufficient. On the unchanged payload, the literal clause is valid for a legacy report that intentionally wants category text under that output name. Such a report changes the requested field and cannot satisfy the current identifier requirement.",
+        "sourceIds": ["dp800-d1-openjson"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent PASS3 of immutable 029 only. Read the exact candidate, matching generation output/claims, current objective map, package policy, frozen manifest, registry/index and raw MCP evidence through the credential-linked design path and JSON unit. Independently recomputed both hashes and re-derived every option before checking technical-029.json's separate reviewer/time binding. Countercontexts preserve each option literally and state changed premises. Static review only; no SQL execution, candidate/source edits, ledger writes or promotion.",
+    "confidenceReason": "The exact-case property path is the only offered clause selecting R-84 while preserving sku and the given input. Direct OPENJSON rules defeat the collation, array and wrong-field alternatives; remaining deductions are editorial, not technical ambiguity."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 3,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "45/48. Exact JSON-objective alignment, complete version/input/output constraints and direct mapping documentation justify the critical 4s. Every distractor has sourced exclusion and a literal positive context. Repeating the failing clause and choosing category weaken plausibility; the one-step repair limits difficulty; generic case-mapping overlap limits originality. Accurate explanations and readable choices retain 4. No blocking duplicate or alternate answer was found."
+  }
+}

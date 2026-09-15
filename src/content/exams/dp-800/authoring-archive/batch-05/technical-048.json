@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-048",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-vector-recovery",
+    "questionFingerprint": "1cb62d31354994cb704e5af999e71504ae22e882971ed9dce16bfc33a017e6cc",
+    "reviewedAt": "2026-09-15T15:01:29.553Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-search",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-search.json",
+        "retrievedAt": "2026-09-15T06:34:21.531Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Read the actual full indexed MCP receipt for VECTOR_SEARCH (Transact-SQL) (Preview). Arguments > METRIC explicitly makes both the metric and the searched column necessary matches for an ANN index, and states that no compatible index produces a warning and kNN fallback. Behavior without a vector index describes a full-table kNN scan. Key enhancements and Iterative filtering behavior say the latest optimizer can choose DiskANN or kNN according to query characteristics. Therefore a matching Euclidean index on Embedding supplies compatibility, not a forced ANN plan. Preview and regional/index-version availability qualifications remain in effect, and the article's latest full-DML support is not replaced with the older training unit's read-only generalization."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Changing the query metric to cosine would make it match the existing cosine index on Embedding, but it would break the explicit requirement to continue measuring Euclidean distance. Arguments > METRIC lists the metrics separately and requires query/index agreement; it does not make them interchangeable. Sourced countercontext: this literal change is appropriate when cosine is acceptable or required for the workload and the existing index matches that searched column. Even then, compatibility alone is not an optimizer-use guarantee.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The source permits a Euclidean VECTOR_SEARCH query without a compatible ANN index to run using kNN, so this option can preserve the metric and execute. It does not supply the missing ANN compatibility prerequisite requested by the stem. Sourced countercontext: deliberately retaining this exact approach is a valid decision if the requirement is Euclidean exact/kNN execution and the workload accepts the documented scan instead of needing an ANN-compatible index. Execution capability and ANN-index compatibility are distinct claims.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Arguments > METRIC requires a matching index on the same column, not merely an index somewhere in the table using the requested metric. A Euclidean index on another vector column leaves the Embedding query without that match. Sourced countercontext: the literal creation would supply the corresponding compatibility prerequisite for a workload that actually searches that other column with Euclidean distance. It would not help the unchanged Embedding target in this question.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "The query must keep Euclidean distance and keep Embedding as its target. Applying the source's two-part same-column/same-metric condition independently identifies an applicable Euclidean vector index on Embedding as the sole offered compatibility change. Context boundary: this is a prerequisite-level answer, not a claim that two vector indexes can coexist on the column, that creation bypasses DDL requirements, or that the optimizer must subsequently choose ANN. The latest optimizer's documented option to use kNN remains intact.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent technical PASS2 only; re-derived answer d by preserving both immutable requirements rather than treating any working search as sufficient. Read the full candidate and explanations, exact generation-output.json record, validation-metadata.json claims, candidate-evidence.json, objective map, source manifest, registry and retrieval index. Recomputed both hashes and verified the author and 2026-09-15T06:57:02.666Z generation binding against the actual current March 12, 2026 guide and source retrieval chronology. Read the raw guide/credential/course and the complete relevant credential-linked AI path -> search module -> search summary -> direct product-reference chain, including actual public training-link/redirect receipts. The current product receipt is the evidence for compatibility and fallback; the vector-patterns training unit's categorical index-use language is narrowed by the product article's optimizer-driven latest behavior. The preparation unit's older read-only/stale-index statements and the patterns unit's universal post-filter phrasing are not treated as current universal rules; current product evidence gives latest DML maintenance and iterative filtering. The stem labels Preview and presupposes an enabled Azure environment. It asks which index property supplies compatibility, not for executable CREATE INDEX DDL, permission provisioning, coexistence of indexes or a promised execution plan. There is consequently no unsupported create/rebuild sequence or optimizer guarantee in the approved interpretation. API/metric/column contracts were reviewed statically; no SQL execution or tenant access occurred. Existing deterministic duplicate and normalized-scenario diagnostics compared all 583 installed records and 60 additional noninstalled authored variants across 201 entries in 35 candidate/generation files, excluding identical target copies; no target diagnostic was emitted. Separately inspected installed dp800-direct-023 and its original pending form: they test VECTOR_DISTANCE's immutable exact/no-index behavior, not VECTOR_SEARCH's two-part compatibility condition. Pending dp800-direct-047 already has a matching index and tests older post-filtering; dp800-direct-049 tests the latest SELECT syntax and cap. These nearby references do not make the target a cosmetic same-fact question. This targeted semantic inspection is separate from lexical heuristics. The pronoun's referent is the stated workload/column. The intermediate dual-constraint design choice is clear; wrong choices each meet at most part of the task, and the correct choice is not singled out by grammar or exceptional length. Frozen source identifiers, URL, timestamps and evidence path are unchanged. The technical approval does not change any candidate/source/ledger file or supply adversarial review, a realism rubric, promotion or runtime proof.",
+    "confidenceReason": "The source explicitly states the exact two matching properties and the incompatible-index fallback. Every choice was checked against both retained requirements, uniquely leaving d. The approval is deliberately limited to compatibility: it neither infers DDL coexistence rules nor promises ANN selection by the latest optimizer."
+  }
+}

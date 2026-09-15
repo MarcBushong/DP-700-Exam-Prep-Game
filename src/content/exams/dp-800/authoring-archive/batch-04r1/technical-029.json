@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-029",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-extraction",
+    "questionFingerprint": "5fd9e1d2584eaaffa9c6d44a376802449e79f222f2c0b6dffd6ab045a7cda7d0",
+    "reviewedAt": "2026-09-15T13:44:28.967Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently inspected the actual saved Microsoft Learn MCP text for OPENJSON (Transact-SQL), not just the manifest summary. Syntax defines WITH (colName type [column_path] [AS JSON]); the default WITH mapping uses case-sensitive JSON key names. The colName and column_path argument sections distinguish the SQL output name from its explicitly selected property and state that path-step matching is BIN2, case-sensitive and collation-unaware. This is distinct from the default-schema value column inheriting the JSON expression's collation. The scalar projection and default-lax contracts establish extraction of an existing string and NULL for an unavailable scalar path. The immediate training parent's actual text independently explains zero-based array selectors such as $.items[0], whereas the supplied SKU is a string, not an array. The introductory applicability statement covers SQL Server 2016 and later, and the ordinary OPENJSON prerequisite is compatibility 130 or higher. SQL Server 2022 at 160 therefore needs neither the newer compatibility override nor the Synapse-serverless-only identity extension."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The literal replacement is the original WITH (sku nvarchar(20)). The document has uppercase SKU and no lowercase sku, so default case-sensitive mapping still leaves the projected sku as SQL NULL. The database's case-insensitive collation does not override OPENJSON property matching. The primary article's WITH and colName definitions support that failure. Literal positive countercontext: with @payload = N'{\"sku\":\"R-84\",\"category\":\"spare\"}', SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20)); returns R-84 in the sku column. Here the producer really supplies the lowercase key; the clause itself is valid and unchanged. This is a source-derived outcome, not a SQL execution result.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The optional column_path is syntactically legitimate, but '$.SKU[0]' requests element zero of an array at SKU. The shown value is the scalar string R-84, not an array and not a container whose first character can be selected with a JSON array step. It therefore does not identify the required scalar path; default lax projection yields SQL NULL rather than R-84. The primary OPENJSON column_path/lax contract and its inspected training parent's explicit zero-based array-path example establish the distinction. Literal positive countercontext: for @payload = N'{\"SKU\":[\"R-84\",\"S-12\"],\"category\":\"spare\"}', SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.SKU[0]'); returns R-84. The array actually exists in that alternative, and the first string fits the declared length.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "The explicit '$.SKU' column path matches the actual uppercase property while the independent colName remains lowercase sku. Without AS JSON, the existing string is extracted as the scalar R-84, which fits nvarchar(20). Neither the output name nor the input is changed. The primary article explicitly permits a column_path override when output-column and property names differ and specifies BIN2 matching of that path. Literal confirming alternative: with @payload = N'{\"SKU\":\"S-12\",\"category\":\"adapter\"}', SELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.SKU'); returns S-12 under the same output name. Thus the key is based on documented mapping semantics, not an assumed database-collation coercion.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The explicit '$.category' path exists and contains the scalar spare. The query is valid, but it returns spare in the column named sku, not the identifier R-84. An output-column name does not change which property an explicit path selects; the colName/column_path definitions establish that separation. Literal positive countercontext: when the required result is the category text, SELECT sku AS category FROM OPENJSON(@payload) WITH (sku nvarchar(20) '$.category'); returns the desired category value spare for the original input. The exact proposed WITH clause remains intact; only the surrounding task and selected output label differ. This legitimate use cannot satisfy the original product-identifier requirement.",
+        "sourceIds": ["dp800-d1-openjson"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent technical PASS 2 for frozen dp800-direct-029 only. I read its complete candidate, author-only candidate-evidence entry, generation-output entry and validation-metadata generation record; the author's outcome and alternate-context prose were not accepted as proof. The repository questionFingerprint helper recomputed the exact hash above, unchanged by questionSchema parsing and identical to both generation bindings. The author is copilot-dp800-direct-author, request dp800-direct-04-json-r1, generated/lastValidated at 2026-09-15T06:30:44.841Z. No authored field was repaired.\n\nI read the actual .grounding\\dp-expansion\\dp-800-guide.json MCP body, retrieved 2026-09-14T18:19:19.493Z. It explicitly supplies the March 12, 2026 map, including Design and develop database solutions (35-40%), Write advanced T-SQL code and its JSON-functions subskill naming OPENJSON. The frozen objectives file and installed DP-800 map produce the same independently computed objectiveFingerprint. The guide's other published domains, weights and subskills were inspected rather than inferred from the credential title. The actual dp-800-credential.json and dp-800-course.json receipts, retrieved 2026-09-14T18:19:19.510Z and 2026-09-14T18:19:19.466Z respectively, corroborate credential/course context, not the technical key.\n\nProvenance was checked against actual bodies and link receipts. .grounding\\dp-expansion\\dp-800-rendered-training-links.json at 2026-09-14T18:31:24.010Z records the credential's locale-neutral design/development learning-path link; .grounding\\dp-expansion\\design-training-redirect.json at 2026-09-14T18:57:14.063Z records that exact path's English canonical destination. The MCP path body .grounding\\dp-expansion\\dp-800-training-design.json at 2026-09-14T18:31:14.910Z contains ../../modules/write-advanced-sql-code/. The actual module receipt .grounding\\dp-expansion\\authors\\design\\raw\\module-advanced.json at 2026-09-14T22:04:32.840Z links 4-json-functions. Its child .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json at 2026-09-15T05:45:14.019Z explicitly names and teaches OPENJSON with default and typed schemas, and explains zero-based array-path indexing. The technical source's immediate parent is this training unit by explicit-reference: the reference is the actual API name and the child is that API's exact primary function article. I do not claim the training contains the article URL as a hyperlink or substitute a documentation-to-documentation parent. The unit's unrelated performance assertions and broad newer-function availability claims are not used.\n\nThe OPENJSON receipt's endpoint, microsoft_docs_fetch tool, input URL, retrieval timestamp and nonempty actual text were checked. source-registry.json, sources.json and source-retrieval-index.json bind the same exact source identity and real relative evidence path. The frozen source review remains 2026-09-15T06:30:44.832Z; it was not relabeled with my review time. validateSourceProvenance returned no findings and validatedSupportingSourceIds admitted dp800-d1-openjson under the current catalog. These structural results supplement, not replace, the body/ancestry inspection. No new network retrieval or live URL availability test is claimed.\n\nDocumentary code review yields a = NULL, b = NULL for the invalid array step on this string, c = R-84, d = spare. All four clauses follow the documented WITH grammar; b is wrong for its input shape, not globally invalid syntax. DECLARE supplies valid Unicode JSON, the selected output column is defined in every option, and all actual strings fit the chosen length. Compatibility 160 satisfies the ordinary minimum of 130. No database-object access, elevated-role operation, Preview extension, collation alteration, native-json requirement or SQL Server 2025 feature is needed. The explanation correctly separates SQL naming/collation from JSON path comparison. No tenant, database, LocalDB or SQL runtime execution was performed; the literal countercontexts are documentary derivations.\n\nLocal duplicate diagnostics covered every one of the 583 installed records, including nonverified records, plus all 11 current batch-04r1 JSON candidates and 14 batch-05 AI candidates: 608 distinct IDs. duplicateFindings and scenarioDuplicateFindings returned no finding involving these four assigned targets. I also screened 20 installed JSON/collation-related stems, inspected the nearest relevant full choices/code, and compared the current JSON and AI cohorts. The strongest related item is fabric-032: Eventhouse identity mapping also has a casing mismatch and an explicit-mapping remedy. I judge 029 keep-distinct on a bounded basis because it requires the actual OPENJSON WITH repair while separating SQL case-insensitive collation from BIN2 path matching and scalar versus array selection; it does not merely rename an Eventhouse field. This cross-platform overlap is real and is disclosed, not erased by a different conceptId. dp800-direct-031 instead tests whether dots in a SQL column name imply JSON navigation; dp800-direct-027 navigates a response envelope; the AI cohort covers models, vectors and chunking. None supplies the same complete engine-specific decision. This is not a claim that all 608 items received a global semantic originality certification.\n\nqualityFindings reported pronoun-review for 'that output column name'; its antecedent is unambiguously sku. The case-insensitive condition is consequential, not decoration. The options are executable schema clauses, each with a valid sourced positive use, and there is no article-agreement or answer-length shortcut. The four assigned original key positions are c/a/d/b, one of each; the 25 new candidates produced no target answer-position or repeated-opening finding. Intermediate/technical-implementation is reasonable for choosing an explicit projection while rejecting a collation-based misconception. The R-84/category example applies the documentation's contracts without reproducing an assessment. This technical verified verdict is PASS 2 only. It is not an adversarial review, rubric score, final ledger attestation or gameplay promotion; the candidate and all frozen inputs remain unchanged.",
+    "confidenceReason": "The directly inspected OPENJSON mapping contract yields one repair that preserves both required inputs: option c. Every other clause has a specific sourced failure and an explicit valid alternative context, including an actual array for b. Exact question/objective bindings, frozen source snapshots and training ancestry match. Local diagnostics found no blocker, with the close Eventhouse casing analogy explicitly distinguished rather than ignored. Confidence is documentary and limited to this technical pass; execution and final three-pass approval are not claimed."
+  }
+}

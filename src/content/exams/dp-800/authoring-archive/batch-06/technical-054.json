@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-054",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-integration-06",
+    "questionFingerprint": "78a14c9fa1451061112de82b3e06bb53172f6454bad56fe56854660db4985d4a",
+    "reviewedAt": "2026-09-15T15:55:49.263Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d2-dab-reference",
+        "url": "https://learn.microsoft.com/en-us/azure/data-api-builder/reference-configuration",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\dab-reference.json",
+        "retrievedAt": "2026-09-15T06:15:24.172Z",
+        "lastReviewedAt": "2026-09-15T15:19:19.284Z",
+        "supportingSummary": "Data source files permits child files and subfolders but requires entity names to be unique across all configuration files. The same passage separately requires each file's data-source. Its actual path examples establish that file organization is independent of the entity namespace; they do not grant separate namespaces to separate databases. Exact training ancestry and source approval were checked."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Renaming files leaves both entity keys equal to Order, so it does not satisfy the reference's all-files uniqueness requirement. File paths are inputs to data-source-files, not qualifiers on entity names. Renaming only files is useful in the different literal context where a parent already references the intended filenames but correctly configured, uniquely named child entities reside in incorrectly named files.",
+        "sourceIds": ["dp800-d2-dab-reference"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The reference explicitly permits subfolders while independently requiring unique entity names across every configuration file. Moving the two unchanged Order definitions therefore preserves the collision. The proposed move is valid when entities already have distinct names and the parent already references separate target subfolders, with the remaining task simply placing each child file at its configured location rather than changing API identities.",
+        "sourceIds": ["dp800-d2-dab-reference"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Deleting one definition would remove the duplicate name, but the stem requires both entity definitions to remain exposed alongside both database connections. Thus it is a technically possible edit that violates an explicit requirement, not an unsupported DAB capability. It would be an appropriate literal change if one duplicate exposure were obsolete and only the surviving entity were intended to remain.",
+        "sourceIds": ["dp800-d2-dab-reference"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "Distinct entity keys satisfy the documented namespace rule across the loaded tree while allowing both data-source definitions and both entities to remain. Neither separate connection strings nor separate directories supplies that uniqueness automatically. The same correction applies when two files use the same database but expose different objects under an accidentally reused entity name; the deployment still needs globally distinct names.",
+        "sourceIds": ["dp800-d2-dab-reference"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "The raw reference makes entity names unique across the complete tree, independently of connection strings and directory layout. Keeping both definitions explicitly rules out deletion, leaving d as the only compliant edit. Filename and subfolder alternatives have genuine organizational uses, but neither changes an entity key. No executable configuration or database operation was claimed. The exact approved reference follows the captured summary/module/preparation chain. Comparison covered 584 bank records and direct cohort metadata; full dp800-direct-019/020 and dp700-ingest-015 records concern section ownership, methods and warehouse keys, respectively. Siblings 053/055 address runtime authority and relationship scope. Intermediate implementation classification and balanced choices are reasonable.",
+    "confidenceReason": "The global naming rule directly supports d and the stated preservation constraint defeats c. The conclusion is limited to satisfying that rule, not guaranteeing all other deployment prerequisites or preserving preexisting client endpoint names."
+  }
+}

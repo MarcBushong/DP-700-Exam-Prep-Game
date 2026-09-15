@@ -63,8 +63,8 @@ are sealed by default; GH-600 explicitly enables beta study access while retaini
 its beta status and all normal content-review gates.
 
 The map represents all 18 requested identifiers. AZ-800 is explicitly retiring;
-GH-600 is beta; DP-420 is sealed because its captured objective outline is
-future-dated. Undated outlines use clearly labelled retrieved-content versions,
+GH-600 is beta; DP-420 is sealed because a complete currently effective objective
+map was not established from the permitted evidence. Undated outlines use clearly labelled retrieved-content versions,
 not invented effective dates. Other mapped credentials without a reviewed
 package remain sealed even when their identity and current outline are verified.
 
@@ -73,6 +73,7 @@ package remain sealed even when their identity and current outline are verified.
 | Dungeon                         | Playable verified encounters | Modes                             |
 | ------------------------------- | ---------------------------: | --------------------------------- |
 | DP-700: The Fabric Depths       |                          162 | Study and Boss Gauntlet           |
+| DP-800: The Database Deeps      |                           39 | Study                             |
 | AZ-104: The Infrastructure Keep |                           30 | Study                             |
 | SC-200: The Sentinel Watch      |                           30 | Study                             |
 | AI-103: The AI Workshop         |                            0 | Sealed: availability unverified   |
@@ -80,7 +81,7 @@ package remain sealed even when their identity and current outline are verified.
 | GH-300: The Copilot Spire       |                          149 | Study and Boss Gauntlet           |
 | GH-600: The Agentic Workshop    |                          136 | Beta Study and Boss Gauntlet      |
 
-**507 playable verified encounters**. GH-300 retains three rejected duplicates
+**546 playable verified encounters**. GH-300 retains three rejected duplicates
 and three manual-review records outside gameplay. GH-600 has **136 fully
 three-pass-reviewed questions** available for beta study and 13 rejected
 candidates outside gameplay. Its card, setup, and question metadata retain the
@@ -99,6 +100,40 @@ and limitations. The [earlier GitHub expansion report](docs/github-expansion-rep
 preserves its original review snapshot. The
 [initial dungeon implementation report](docs/dungeon-implementation-report.md)
 records the earlier platform baseline.
+
+### DP-800 limited Study release
+
+**DP-800 Study is open with 39 independently verified original encounters.**
+All 39 completed separate generation, technical verification and adversarial
+review, meet the unchanged 44/48 rubric gate, and cover all three major objective
+areas. The effective map is **March 12, 2026**; the source manifest's latest
+retrieval is **September 15, 2026, 06:42:29 UTC**, and the latest independent
+question review is **September 15, 2026, 15:38:13 UTC**. This is a limited,
+build-time-grounded bank, not an always-current assessment.
+
+The **150-question target is not met: 111 verified questions remain**. At the
+requested DP-800-first delivery cutoff, 102 unique original questions were
+saved: 39 verified, two current manual-review records excluded from play, and
+61 outside the gameplay package without completed final approval.
+Their immutable authoring snapshots and actual partial reviews are retained in
+[`authoring-archive`](src/content/exams/dp-800/authoring-archive/).
+The cutoff is a delivery-priority decision, not a claim that official sources
+cannot support more content. Boss stays locked below the unchanged 75-question
+minimum; filtered runs are visibly capped to their real eligible pool.
+Earlier rejected and manual-review versions remain archived; their authored
+repairs restarted all three passes rather than inheriting approval.
+
+**DP-420 content is deferred.** It retains a null current objective version.
+Its retrieved **October 6,
+2026** outline is prospective and stored outside gameplay; both modes remain
+locked. This is an unresolved current-map/content gap, not a claim that the
+credential itself is future-only.
+
+See the [expansion progress and historical blocked report](docs/dp-expansion-report.md) for exact
+counts, executed checks, outstanding acceptance gates and source evidence, and
+[DP content maintenance](docs/dp-content-maintenance.md) for the resume workflow.
+The report distinguishes this limited Study release, unfulfilled content goals,
+historical failures, and actual final acceptance evidence.
 
 ![Earlier dungeon-map layout illustrating original castle artwork and hero-class selection; current availability is listed above](docs/screenshots/dungeon-map.png)
 

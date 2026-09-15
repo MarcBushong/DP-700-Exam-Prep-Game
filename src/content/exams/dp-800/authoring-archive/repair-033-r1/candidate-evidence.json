@@ -1,0 +1,40 @@
+[
+  {
+    "questionId": "dp800-direct-033",
+    "disclaimer": "Author-only contextual analysis; not an independent technical or adversarial pass.",
+    "options": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "This option proposes @detail",
+        "whyIncorrectInContext": "A plain text expression is not marked as a JSON fragment; the cited JSON_QUERY guidance requires wrapping preformatted JSON for FOR JSON output.",
+        "couldBeCorrectWhen": "The response should contain the document as a JSON string rather than embed its structure.",
+        "sourceIds": ["dp800-d1-json-query"],
+        "evidenceSummary": "A plain text expression is not marked as a JSON fragment; the cited JSON_QUERY guidance requires wrapping preformatted JSON for FOR JSON output."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "This option proposes JSON_VALUE(@detail, '$.code')",
+        "whyIncorrectInContext": "This extracts only the scalar code, losing the required object and units field.",
+        "couldBeCorrectWhen": "The detail field should contain only the scalar code text.",
+        "sourceIds": ["dp800-d1-json-value"],
+        "evidenceSummary": "This extracts only the scalar code, losing the required object and units field."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "This option proposes JSON_QUERY(@detail)",
+        "whyIncorrectInContext": "Not incorrect in this context. With no path it returns the entire object as a valid JSON fragment; FOR JSON does not escape a JSON_QUERY fragment as plain text.",
+        "couldBeCorrectWhen": "A validated existing JSON object or array must be nested in FOR JSON output.",
+        "sourceIds": ["dp800-d1-json-query"],
+        "evidenceSummary": "With no path it returns the entire object as a valid JSON fragment; FOR JSON does not escape a JSON_QUERY fragment as plain text."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "This option proposes JSON_VALUE(@detail, '$.units')",
+        "whyIncorrectInContext": "This extracts only the scalar units value as text, not the full structured detail object.",
+        "couldBeCorrectWhen": "Only the units scalar is needed as the field value.",
+        "sourceIds": ["dp800-d1-json-value"],
+        "evidenceSummary": "This extracts only the scalar units value as text, not the full structured detail object."
+      }
+    ]
+  }
+]

@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-052",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-chunks-recovery",
+    "questionFingerprint": "fa7b37c1ebadd73ace902c392210b5a95422983995a787584ce0439e4da3ded7",
+    "reviewedAt": "2026-09-15T15:07:17.369Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-generate-chunks",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-chunks-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\ai-generate-chunks.json",
+        "retrievedAt": "2026-09-15T06:42:29.174Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual AI_GENERATE_CHUNKS (Transact-SQL) MCP body, including syntax, ENABLE_CHUNK_SET_ID, the complete Return types table and the multi-row CROSS APPLY example. The result contains chunk with the source expression's type, bigint chunk_order beginning at 1 and increasing by 1, bigint chunk_offset identifying source position, int chunk_length measuring returned characters, and optional bigint chunk_set_id grouping chunks from a source/document/row. ENABLE_CHUNK_SET_ID=1 enables that optional column; omission, NULL or 0 disables it. The multi-row remarks explicitly reset order/offset when a new source begins and use a different set ID for the different source. Those are returned grouping/ordinal semantics, not a durable document-key contract or a guarantee of final SELECT row order."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "chunk_set_id supplies the requested source group, but chunk_offset is the source character position, not the one-based ordinal incremented once per chunk. The exact Return types table gives those fields different meanings, and the multi-row example distinguishes chunk_order from offsets. A valid literal positive countercontext retains the displayed ENABLE_CHUNK_SET_ID=1 query and changes the diagnostic requirement to source grouping plus the starting position of each chunk in its document. The unchanged pair chunk_set_id and chunk_offset then supplies precisely those two metadata values. That requirement is explicitly not the candidate's ordinal requirement.",
+        "sourceIds": ["dp800-d3-generate-chunks"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "chunk_length is an int character count of the returned chunk, not its ordinal. Full-sized rows can share the same length while their order numbers differ, so a length does not identify the requested place in the per-source sequence. A valid literal positive countercontext is a diagnostic using the same enabled grouping column to report which source each chunk belongs to and how many characters that returned chunk contains. The unchanged chunk_set_id and chunk_length pair is then correct. Neither that alternate task nor the documented length contract converts length into chunk_order for this stem.",
+        "sourceIds": ["dp800-d3-generate-chunks"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "chunk_order and chunk_offset describe within-source ordinal and source position, respectively; neither is the optional source-group label. The multi-row remarks explicitly reset both values for a new source, so the pair cannot be relabeled as grouping metadata for the candidate's multiple documents. A valid literal positive countercontext is inspecting a single already-known document and needing its chunk ordinal together with the source starting position. The unchanged pair then answers that different diagnostic task without needing a generated group label. This does not assume that the two fields are globally unique or physically sort the SELECT result.",
+        "sourceIds": ["dp800-d3-generate-chunks"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "The code explicitly sets ENABLE_CHUNK_SET_ID=1, making chunk_set_id available to c.*. Its documented role is to group chunks of the same source; chunk_order is the bigint sequence starting at 1 and incrementing by 1 within that source. The remarks and multi-row example show new source groups and reset ordinals, which directly matches the two requested values. Literal confirming context is the stated multiple-document CROSS APPLY diagnostic with grouping enabled and character source text. If the flag were omitted or 0, this same projected group-column requirement would not be satisfied because chunk_set_id would not be returned; the frozen code rules out that countercase. No durable ID or display-order guarantee is required.",
+        "sourceIds": ["dp800-d3-generate-chunks"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent recovery PASS 2 only for immutable dp800-direct-052 in .grounding\\dp-expansion\\direct\\batch-05. I read the complete current candidate/code, generation-output.json entry, candidate-evidence.json, generation metadata, objectives, source registry/index/manifest and the installed catalog/package policy. The original generation request is dp800-direct-05-models-vectors by copilot-dp800-direct-author at 2026-09-15T06:57:02.666Z. Repository questionFingerprint and objectiveFingerprint helpers independently matched this candidate to the generation output, recorded generation hashes and installed current objective map. The March 12, 2026 map was retrieved at 2026-09-14T18:19:19.493Z; I read its actual .grounding\\dp-expansion\\dp-800-guide.json receipt. Design and implement chunks for embeddings belongs to the models-and-embeddings skill within Implement AI capabilities in database solutions (25-30%). The credential/course root receipts were also inspected; a module label or a changed outer date was not used to renew objective review.\n\nThe sole sourceReview copies the exact frozen URL, retrievedAt and lastReviewedAt and uses the actual relative path from source-retrieval-index.json. The raw receipt identifies https://learn.microsoft.com/api/mcp, microsoft_docs_fetch, the exact input URL and matching retrieval time, and contains the full function contract. validateSourceProvenance returned no findings and validatedSupportingSourceIds admitted this exact article under the current catalog allowlist. I independently checked the actual parent passage: .grounding\\dp-expansion\\authors\\ai\\receipts\\models-design.json, retrieved 2026-09-14T22:12:36.116Z, directly names and uses AI_GENERATE_CHUNKS. It is a training unit, so this is a named-API explicit reference, not permission inherited from a related documentation page. Its actual parent index .grounding\\dp-expansion\\authors\\ai\\receipts\\models-module.json (2026-09-14T22:06:21.049Z) links that unit, and .grounding\\dp-expansion\\dp-800-training-ai.json (2026-09-14T18:31:14.994Z) links that module. The official credential preparation link and exact English-path receipt were inspected in .grounding\\dp-expansion\\dp-800-rendered-training-links.json (2026-09-14T18:31:24.010Z) and .grounding\\dp-expansion\\ai-training-redirect.json (2026-09-14T18:57:14.033Z). No actual source content, provenance record or frozen date was changed. This is re-review of the saved evidence, not a claim of new MCP retrieval or live availability testing.\n\nI derived the answer from the exact returned SQL schema rather than a guessed name or the embedding article's inconsistent chunk_text example. chunk uses the input's character type; chunk_order and chunk_offset are bigint; chunk_length is int; optional chunk_set_id is bigint. SOURCE=d.Body follows the documented character-expression requirement for the document text being processed in the stipulated operation. The fragment is a query over the scenario's existing Documents table, not a claimed self-contained table-creation script. CHUNK_TYPE=FIXED and positive CHUNK_SIZE=200 satisfy the actual grammar. The int literal ENABLE_CHUNK_SET_ID=1 explicitly activates the optional grouping column; the reference's own multi-row example uses the same CROSS APPLY/alias pattern. SQL Server 2025 and compatibility 170 satisfy the documented function prerequisite. The product reference supports the feature without a Preview gate; no unrelated Preview vector-index or local-runtime feature is involved.\n\nThe requested group label and ordinal have exactly one matching pair, d. The explanation correctly distinguishes a generated result-group label from a globally durable document identifier. I do not infer stability across separate executions, a numbering policy beyond the source contract, or persistence of chunk_set_id. The absence of ORDER BY is not a defect for asking which columns contain metadata; it would be insufficient to promise an ordered display, and no such promise is made. Offsets and ordinals can coincide for an initial chunk without becoming the same column contract. chunk_length measures text size rather than sequence, and order/offset reset across source groups. Every wrong pair has a valid literal alternate diagnostic purpose described in its choiceReview. No SQL execution or observed output is claimed; these are source-derived schema and context checks.\n\nDuplicate checks included all 583 installed records across ai-103 (30), az-104 (30), dp-700 (162), dp-800 (27), github-agentic-ai-developer (149), github-copilot (155) and sc-200 (30), including nonverified records. The comparison also included all 18 local candidate snapshots, with 114 rows representing 87 distinct ID/fingerprint variants; removing copies shared with the installed set yielded 643 combined variants. Pairwise duplicateFindings and scenarioDuplicateFindings produced no target findings. I inspected related concepts and the nearest full questions: 051 interprets overlap percentages, 050 diagnoses compatibility-level recognition, 007 combines window partitioning/order/frame for cumulative aggregation, 008 distinguishes dense-rank tie semantics, and 028 changes JSON extraction for an overlength scalar. Their shared terms 'source', 'order', 'row' or 'character' do not supply this optional chunk-result-schema distinction. No same-fact cosmetic duplicate of the grouping-plus-ordinal decision was found.\n\nqualityFindings reported negative-wording because the stem excludes offset/length. Here that exclusion precisely names the diagnostic's output requirement rather than reversing the selection task. All choices are parallel pairs of real returned column names, with equal structural specificity; d is not a uniquely long or grammatically privileged answer. The 14-item batch has 13 single-select keys distributed a=3, b=3, c=3, d=4, plus one multi-select a,c. Intermediate technical-implementation is reasonable for matching two output requirements to the correlated multi-source function schema and its enabling flag; this is not labeled advanced or a general ordering/persistence design exercise. The wording is original technical study material, and the fact-level concept is distinct from chunk sizing or compatibility. The verified verdict approves only this technical pass. It does not create adversarial metadata, a realism rubric, a final ledger attestation or playable content.",
+    "confidenceReason": "The exact saved return-schema table, optional-column flag and multi-row remarks directly establish chunk_set_id plus chunk_order as the unique pair. Each distractor is a real but differently purposed metadata pair with a sourced literal countercontext. Syntax, platform, current-objective hashes, frozen source snapshots, direct training ancestry and installed-plus-pending duplicate comparisons passed. No SQL runtime result, durable identifier behavior, ordered display or final three-pass approval is asserted."
+  }
+}

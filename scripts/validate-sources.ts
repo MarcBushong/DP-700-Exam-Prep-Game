@@ -10,6 +10,7 @@ import {
 import { credentials } from '../src/features/dungeons/catalog';
 import { argument, examId } from './content-files';
 import {
+  englishTrainingTarget,
   strictEvidenceUrlSchema,
   sourceRegistrySchema,
 } from '../src/features/dungeons/provenance';
@@ -22,6 +23,29 @@ function isRecordedLayoutView(url: URL, credential?: SourcePolicyContext) {
       '/en-us/azure/ai-services/document-intelligence/prebuilt/layout' &&
     url.search === '?view=doc-intel-4.0.0'
   );
+}
+
+function documentIdentityUrl(
+  url: URL,
+  allowCanonicalView: boolean,
+  credential?: SourcePolicyContext,
+): URL {
+  const identity = new URL(url);
+  const approvedSqlFamily =
+    url.pathname.startsWith('/en-us/sql/t-sql/') ||
+    (credential?.credentialId === 'dp-800' &&
+      credential.provider === 'Microsoft' &&
+      credential.strictGuideLinked &&
+      url.pathname.startsWith('/en-us/sql/relational-databases/'));
+  if (
+    allowCanonicalView &&
+    ((url.pathname.startsWith('/en-us/kusto/') &&
+      url.search === '?view=microsoft-fabric') ||
+      (approvedSqlFamily && url.search === '?view=sql-server-ver17') ||
+      isRecordedLayoutView(url, credential))
+  )
+    identity.search = '';
+  return identity;
 }
 
 export function sameCanonicalDocument(
@@ -49,17 +73,11 @@ export function safeSourceUrl(
       'Source URLs must not contain encoded paths, whitespace, or unsafe delimiters.',
     );
   const url = new URL(value);
-  const structuralUrl = new URL(url);
-  if (
-    allowCanonicalView &&
-    ((url.pathname.startsWith('/en-us/kusto/') &&
-      url.search === '?view=microsoft-fabric') ||
-      (url.pathname.startsWith('/en-us/sql/t-sql/') &&
-        url.search === '?view=sql-server-ver17') ||
-      isRecordedLayoutView(url, credential))
-  ) {
-    structuralUrl.search = '';
-  }
+  const structuralUrl = documentIdentityUrl(
+    url,
+    allowCanonicalView,
+    credential,
+  );
   if (credential) assertAllowedSourceUrl(structuralUrl.href, credential);
   else learnUrlSchema.parse(structuralUrl.href);
   if (credential?.strictGuideLinked)
@@ -77,12 +95,45 @@ export function safeSourceUrl(
   return url;
 }
 
+export function matchesRecordedSourceTarget(
+  actual: string,
+  expected: string,
+  credential?: SourcePolicyContext,
+): boolean {
+  const resolved = safeSourceUrl(actual, true, credential);
+  const recorded = safeSourceUrl(expected, false, credential);
+  return sameCanonicalDocument(
+    recorded.href,
+    documentIdentityUrl(resolved, true, credential).href,
+    credential,
+  );
+}
+
+function safeTrainingLinkTarget(
+  value: string,
+  canonicalUrl: string,
+  credential?: SourcePolicyContext,
+): URL {
+  if (
+    !credential?.strictGuideLinked ||
+    englishTrainingTarget(value) !== canonicalUrl
+  )
+    throw new Error(
+      'A training-link check requires an exactly bound strict canonical receipt.',
+    );
+  safeSourceUrl(canonicalUrl, false, credential);
+  return new URL(value);
+}
+
 export async function checkOnlineSource(
   value: string,
   fetcher: typeof fetch = fetch,
   credential?: SourcePolicyContext,
+  trainingCanonicalUrl?: string,
 ) {
-  let url = safeSourceUrl(value, false, credential);
+  let url = trainingCanonicalUrl
+    ? safeTrainingLinkTarget(value, trainingCanonicalUrl, credential)
+    : safeSourceUrl(value, false, credential);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 12_000);
   try {
@@ -105,12 +156,23 @@ export async function checkOnlineSource(
           throw new Error(
             'Missing redirect target or redirect limit exceeded.',
           );
-        url = safeSourceUrl(new URL(location, url).href, true, credential);
+        const target = new URL(location, url).href;
+        if (trainingCanonicalUrl && target !== trainingCanonicalUrl)
+          throw new Error(
+            'Training link redirect differs from its recorded canonical receipt.',
+          );
+        url = safeSourceUrl(target, true, credential);
         continue;
       }
       if (!response.ok) {
         await response.body?.cancel();
         throw new Error(`HTTP ${response.status}`);
+      }
+      if (trainingCanonicalUrl && url.href !== trainingCanonicalUrl) {
+        await response.body?.cancel();
+        throw new Error(
+          'Training link did not redirect to its recorded canonical source.',
+        );
       }
       const officialPdf =
         credential?.provider === 'GitHub' &&
@@ -222,6 +284,20 @@ if (isMain(import.meta.url)) {
       credential.strictGuideLinked && 'sourceRegistry' in content
         ? sourceRegistrySchema.parse(content.sourceRegistry)
         : undefined;
+    const trainingTargets = new Map(
+      registry?.sources.flatMap((source) =>
+        source.sourceClass === 'training'
+          ? source.parents
+              .filter(
+                (parent) =>
+                  parent.relation === 'direct-link' &&
+                  englishTrainingTarget(parent.targetUrl) ===
+                    parent.canonicalUrl,
+              )
+              .map((parent) => [parent.targetUrl, parent.canonicalUrl] as const)
+          : [],
+      ),
+    );
     const urls = [
       ...new Set([
         ...manifest.sources.map((source) => source.url),
@@ -239,7 +315,10 @@ if (isMain(import.meta.url)) {
           .every((source) => source.featureStatus === 'Not applicable'),
     );
     urls.forEach((url) => {
-      if (identityContextUrls.includes(url)) {
+      const trainingCanonical = trainingTargets.get(url);
+      if (trainingCanonical)
+        safeTrainingLinkTarget(url, trainingCanonical, credential);
+      else if (identityContextUrls.includes(url)) {
         if (!isAllowedIdentityUrl(url, credential))
           throw new Error(`Unapproved identity/competency context URL: ${url}`);
       } else safeSourceUrl(url, false, credential);
@@ -247,6 +326,10 @@ if (isMain(import.meta.url)) {
     console.log(
       `Offline structural source checks passed: ${manifest.sources.length} records, ${urls.length} allowlisted official URLs.`,
     );
+    if (trainingTargets.size)
+      console.log(
+        `${trainingTargets.size} checked URLs are recorded training-link targets, not additional canonical evidence sources.`,
+      );
     if (registry) {
       const withdrawn = manifest.sources.filter(
         (source) =>
@@ -270,7 +353,12 @@ if (isMain(import.meta.url)) {
       );
       for (const url of implementationUrls) {
         try {
-          const result = await checkOnlineSource(url, fetch, credential);
+          const result = await checkOnlineSource(
+            url,
+            fetch,
+            credential,
+            trainingTargets.get(url),
+          );
           if (registry) {
             const expectedTargets = registry.sources.flatMap((source) => [
               ...(source.canonicalUrl === url ? [source.canonicalUrl] : []),
@@ -281,7 +369,11 @@ if (isMain(import.meta.url)) {
             if (
               expectedTargets.some(
                 (target) =>
-                  !sameCanonicalDocument(target, result.finalUrl, credential),
+                  !matchesRecordedSourceTarget(
+                    result.finalUrl,
+                    target,
+                    credential,
+                  ),
               )
             )
               throw new Error(

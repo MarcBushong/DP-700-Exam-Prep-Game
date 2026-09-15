@@ -99,12 +99,22 @@ export async function scaffoldGeneration(
       )}\n`,
       { flag: 'wx' },
     );
-  for (const file of request.reviewPolicy
+  const strictPrompts = [
+    'github-copilot',
+    'github-agentic-ai-developer',
+  ].includes(request.credentialId)
     ? [
         'generate-gh-three-pass.prompt.md',
         'verify-gh-technical.prompt.md',
         'verify-gh-adversarial.prompt.md',
       ]
+    : [
+        'generate-three-pass.prompt.md',
+        'verify-technical.prompt.md',
+        'verify-adversarial.prompt.md',
+      ];
+  for (const file of request.reviewPolicy
+    ? strictPrompts
     : request.credentialId === 'dp-700'
       ? [
           'generate-dp700-questions.prompt.md',

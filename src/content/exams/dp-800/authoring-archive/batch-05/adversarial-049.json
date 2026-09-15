@@ -1,0 +1,155 @@
+{
+  "adversarial": {
+    "questionFingerprint": "1a3749851fcb9224406b09d4f89c8f9f36c5bf0bbd6f566f2538e22160457f72",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "verdict": "manual-review-required",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "The legacy TOP_N statement satisfies the latest-index five-row request.",
+        "whyIncorrectInContext": "TOP_N is unsupported on latest indexes; the outer TOP does not remove that invalid inner parameter or supply WITH APPROXIMATE.",
+        "couldBeCorrectWhen": "The unchanged statement targets an earlier-version index using its supported TOP_N candidate limit, with the existing valid vector and table.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Syntax and Error using legacy syntax explicitly separate index versions and document error 42274 for TOP_N against a latest index."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "The five-row WITH APPROXIMATE statement uses the supported latest syntax.",
+        "whyIncorrectInContext": "Not incorrect: it omits TOP_N, projects d.Id and r.distance correctly, and orders solely by generated distance ascending.",
+        "couldBeCorrectWhen": "The available latest-index Azure environment requests approximate search capped at five with the supplied valid, dimension-matched query vector.",
+        "sourceIds": ["dp800-d3-vector-search", "dp800-d3-vector-type"],
+        "evidenceSummary": "Latest Syntax, Return result set, and ORDER BY requirements support these exact clauses; VECTOR(1536) is a valid float32 declaration."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "The VECTOR_DISTANCE statement satisfies the approximate-query contract.",
+        "whyIncorrectInContext": "The statement calculates exact distances and does not request latest approximate VECTOR_SEARCH syntax, although its five-row exact ranking is valid.",
+        "couldBeCorrectWhen": "The application requires exact cosine nearest-neighbor ranking with a five-row cap over the supplied table and valid query vector.",
+        "sourceIds": ["dp800-d3-vector-distance", "dp800-d3-vector-type"],
+        "evidenceSummary": "VECTOR_DISTANCE's opening contract and Example B support exact TOP ranking by its scalar distance alias, without using a vector index."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "The TOP (25) approximate statement enforces the five-row maximum.",
+        "whyIncorrectInContext": "The requested upper bound is 25, not five. An occasional smaller result cannot make this statement enforce a five-row cap.",
+        "couldBeCorrectWhen": "The caller instead requests up to 25 approximate results from the same supported latest-index environment and dimension-compatible vectors.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Latest Syntax places the requested result bound in SELECT TOP (N) WITH APPROXIMATE; the function no longer accepts the legacy TOP_N bound."
+      }
+    ],
+    "challenges": {
+      "scope": "The stated Azure SQL Database environment already has available Preview support and a latest-version index. This is not a claim that the syntax exists in every region or on SQL Server 2025.",
+      "plan": "WITH APPROXIMATE requests approximate search but does not force DiskANN. The source permits optimizer-selected kNN; no speed, exact-row-count, recall, or physical-plan guarantee is added.",
+      "role": "The query vector is already supplied, so no external model identity is required by these statements. The question is syntax selection, not a grant script or tenant-access test.",
+      "preconditions": "The base table, typed nonnull vector, and matching dimensions are supplied. An existing latest index does not imply it was created with only 26 rows: the documented creation minimum is 100. Unspecified index metric can affect strategy, not the requested syntax contract.",
+      "featureStatus": "Preview and regional rollout remain explicit. Latest indexes are currently Azure SQL Database/Fabric features in the captured reference, whereas SQL Server 2025 retains the earlier-version limitation.",
+      "sourceChanges": "Older training's TOP_N, universal post-filter, and read-only guidance cannot override current version-specific requirements. The product workflow's extra ORDER BY column conflicts with its explicit restriction; b uses only r.distance and follows the restriction.",
+      "stemSufficiency": "The requirement is to request a five-row approximate cap, not to guarantee exactly five results. Each VECTOR_SEARCH alternative has the same valid alias pattern, leaving syntax version and bound decisive.",
+      "explanationBounds": "The key and distractor explanations are technically supported. The non-guarantee about result count avoids equating a requested cap with runtime evidence, and no SQL execution is claimed.",
+      "reasoningDepth": "The Advanced label overstates the actual distinction: recognize latest grammar, exclude the exact API, and compare five with 25. Correct aliases shared by the alternatives add reading load, not independent decision depth.",
+      "answerClues": "The three VECTOR_SEARCH options are 171-178 characters in single-line strings, with b and d differing only in TOP's number. Their near-identical presentation burdens scanning; the cap distractor is conspicuously easy."
+    },
+    "qualityNotes": "Across 584 installed records and 73 noninstalled authored variants, no target duplicate diagnostic appeared. Full dp800-direct-023, ai103-028, and pending 044, 047, and 048 comparisons confirm different decisive facts. Nevertheless, novelty is mainly a documented syntax migration template. The Advanced label, obvious cap distractor, and dense near-identical SQL alternatives reduce realism to 43/48. Technical correctness is preserved, but the lower independent quality disposition is manual review."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-049",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "questionFingerprint": "1a3749851fcb9224406b09d4f89c8f9f36c5bf0bbd6f566f2538e22160457f72",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "verdict": "manual-review-required",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-search",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-search.json",
+        "retrievedAt": "2026-09-15T06:34:21.531Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "VECTOR_SEARCH (Transact-SQL) (Preview), latest Syntax and legacy-error sections, require TOP WITH APPROXIMATE without TOP_N. Return result set assigns base columns to the source alias and distance to the function alias; ORDER BY permits only ascending generated distance. Regional availability and optimizer choice qualify the contract. The inconsistent multi-column workflow example is not relied upon. Actual search-summary ancestry and frozen MCP metadata match this exact article."
+      },
+      {
+        "sourceId": "dp800-d3-vector-distance",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\ai\\receipts\\doc-vector-distance.json",
+        "retrievedAt": "2026-09-14T22:23:50.656Z",
+        "lastReviewedAt": "2026-09-15T00:39:05.140Z",
+        "supportingSummary": "VECTOR_DISTANCE (Transact-SQL) explicitly calculates exact distances without a vector index. Its syntax accepts cosine and two vector expressions, returns scalar float, and Example B ranks a TOP-limited base-table query by the distance alias. That evidence supports c as valid exact SQL, not approximate syntax. The credential-linked search summary directly references the article, and the earlier frozen source-review date is retained exactly."
+      },
+      {
+        "sourceId": "dp800-d3-vector-type",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-type.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Vector data type, Sample syntax, Dimensions, and Examples A/B, supports VECTOR(1536), an integer primary key separate from the vector column, NOT NULL, and typed variables. The maximum is 1998 and the default base type is float32. Preview float16 configuration is separate and unused here. The models module's summary directly links this exact article; no same-host inference substitutes for that observed provenance."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "This exact statement retains TOP_N=5 and lacks WITH APPROXIMATE. The current reference rejects TOP_N on a latest index with documented error 42274; an outer TOP(5) does not neutralize the incompatible parameter. The literal positive context is an earlier-version index, where this legacy candidate-limit form, source/result aliases, and distance ordering are supported. Changing the index version to make it valid would contradict the immutable stem.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "The statement requests TOP(5) WITH APPROXIMATE, omits TOP_N, projects the base Id through d, and projects generated distance through r. Its sole ORDER BY r.distance is implicitly ascending, matching the reference's valid examples. With the given vector shape and available latest-index environment, this is the supported positive context. It requests a five-row approximate cap without forcing ANN selection or guaranteeing five returned rows; the manual disposition concerns quality instead.",
+        "sourceIds": ["dp800-d3-vector-search", "dp800-d3-vector-type"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "The statement is a valid exact-distance query: cosine and the two vector expressions fit VECTOR_DISTANCE's signature, and the alias supplies the nearest-first ordering. Example B provides this positive context for an application requesting exact top-five ranking. The function's explicit no-vector-index contract prevents it from satisfying the requested approximate VECTOR_SEARCH syntax. Its technical validity therefore does not make it a second answer to the actual contract.",
+        "sourceIds": ["dp800-d3-vector-distance", "dp800-d3-vector-type"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The latest grammar and alias usage are valid, but TOP(25) encodes the wrong requested bound. A caller wanting up to 25 approximate matches is the literal positive context for this unchanged statement. More than 25 searchable rows removes a trivial small-table explanation, while even an incidental result of five or fewer would not enforce the required cap. The outer TOP value is the documented latest-syntax control.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": false
+    },
+    "verificationNotes": "Read .grounding\\dp-expansion\\direct\\batch-05\\technical-049.json, the exact candidate/generation/claims, objective map, source index, all three raw product receipts, and credential-linked provenance. Independently recomputed hashes and checked complete SQL alternatives against current grammar, aliases, ascending distance, and legacy behavior. No second answer or unsupported GA claim was found. Static documentation review is not SQL execution. The independently scored 43/48 quality failure supersedes technical approval; candidate, source files, and ledgers remain untouched.",
+    "confidenceReason": "The key b is strongly supported by explicit current syntax and each distractor has a valid literal alternate context. That factual confidence does not establish Advanced difficulty or excellent presentation. Shared alias correctness is not additional answer discrimination, and the cap mismatch is elementary. Manual review preserves those independently observed quality limits rather than converting a technically correct candidate into an approval."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 3,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 2,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 3
+    },
+    "notes": "Score: 43/48, below 44. All critical dimensions earn four because current direct references establish a unique, technically sound answer. Difficulty earns two: latest-syntax recognition plus an elementary cap comparison does not substantiate Advanced depth. Plausibility earns three for the easy cap distractor; originality earns three for the documentation-template construction. Clarity earns three for repetitive single-line SQL alternatives. Preserve manual review; no authored field was repaired."
+  }
+}
