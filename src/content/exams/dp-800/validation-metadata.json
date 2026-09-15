@@ -1,4 +1,1537 @@
 {
   "schemaVersion": 1,
-  "encounters": {}
+  "encounters": {
+    "dp800-direct-011": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-15T01:20:17.007Z",
+        "questionFingerprint": "6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d2-masking"],
+            "summary": "SELECT authorizes reading the table. It is required in addition to UNMASK and does not itself reveal the masked Phone values."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d2-masking"],
+            "summary": "Metadata visibility is not a substitute for SELECT or UNMASK. It does not authorize the required unmasked table-data read."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d2-masking"],
+            "summary": "SQL Server 2022 supports column-scoped UNMASK. Combined with SELECT, it reveals Phone without requiring broader unmasking permission."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d2-masking"],
+            "summary": "ALTER ANY MASK manages mask definitions; it grants neither SELECT nor column-level UNMASK, so it cannot replace either required permission. Changing a mask also requires table ALTER and is outside the stated no-schema-change workflow."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-011",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-011",
+          "questionFingerprint": "6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081",
+          "reviewedAt": "2026-09-15T01:28:05.564Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d2-masking",
+              "url": "https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\secure\\raw\\doc-masking.json",
+              "retrievedAt": "2026-09-14T22:19:05.185Z",
+              "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+              "supportingSummary": "Freshly reread the frozen dp800-d2-masking receipt: Permissions, decoded lines 43-55, separates table SELECT, UNMASK and mask-management authority; changing a mask requires ALTER ANY MASK plus table ALTER. SQL Server 2022 granular permissions, lines 123-125, and the column-scoped GRANT example, lines 318-319, support Phone-only unmasking. The repaired explanation now correctly distinguishes a permission grant from a schema-changing operation. Dates remain the actual frozen source dates; no live retrieval is claimed."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "supported",
+              "rationale": "Table SELECT supplies access to all dbo.Contact columns while existing masks still apply. Because this user has no inherited data access, SELECT is required alongside c; UNMASK alone is insufficient. dp800-d2-masking, decoded lines 45-55; https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking#permissions.",
+              "sourceIds": ["dp800-d2-masking"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "contradicted",
+              "rationale": "VIEW DEFINITION concerns metadata, not the required table-data read and unmasking permissions. Neither pairing it with a nor pairing it with c supplies both SELECT and UNMASK. The source expressly requires SELECT for UNMASK to have an effect and distinguishes metadata visibility. dp800-d2-masking, decoded lines 45-55; https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking#permissions.",
+              "sourceIds": ["dp800-d2-masking"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "supported",
+              "rationale": "SQL Server 2022 supports column-level UNMASK. Granting it only for dbo.Contact.Phone, together with table SELECT, reveals Phone without granting UNMASK on other masked columns. The documented column-scoped GRANT example corroborates that scope. dp800-d2-masking, decoded lines 55, 123-125 and 318-319; https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking#granular-permissions-introduced-in-sql-server-2022.",
+              "sourceIds": ["dp800-d2-masking"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "contradicted",
+              "rationale": "ALTER ANY MASK manages mask definitions; it grants neither SELECT nor UNMASK and cannot replace either required permission. Changing a mask additionally requires table ALTER and would leave the permitted no-schema-change workflow. The repaired rationale no longer claims that merely granting this permission changes the schema. dp800-d2-masking, decoded lines 45-55 and 90; https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking#permissions.",
+              "sourceIds": ["dp800-d2-masking"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh PASS 2 of repair-011-r1, generated 2026-09-15T01:20:17.007Z. Reread the repaired item, generation metadata and frozen documentation; independently recomputed both parsed fingerprints. Only rationale d and the generation/validation timestamps differ from the retained original. Re-derived a+c and evaluated all four options; the previous explanation defect is resolved. Reconfirmed captured credential preparation links and the saved redirect through dp800-training-secure, dp800-d2-module-security and dp800-d2-masking-unit to dp800-d2-masking; source/taxonomy/registry snapshots are unchanged. Phone-only refers to permission-based masking presentation, not protection against inference. Originality and duplicate checks are bounded to the supplied teaching/product text and nine other batch candidates; the retained original is a superseded version, not an additional active question. No peer exact-stem or concept duplicate was found. codeReviewed is an explicit N/A pass because no executable snippet is present. This verified verdict attests technical PASS 2 only: no candidate promotion, rubric scoring or adversarial approval; a separate third-context challenge remains required.",
+          "confidenceReason": "High confidence: the frozen Permissions section explicitly requires SELECT with UNMASK, the SQL Server 2022 section confirms column scope, and the repaired d rationale accurately states both mask-modification prerequisites. All options and explanations now align with dp800-d2-masking; no live-browser or SQL-execution claim is made."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-011",
+        "reviewedAt": "2026-09-15T02:00:28.947Z",
+        "verdict": "manual-review-required",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "Table-level SELECT authorizes this reporting user to read every column of dbo.Contact; it does not itself remove dynamic masks.",
+            "whyIncorrectInContext": "NOT incorrect in the intended permission set: a supplies the read access that c cannot provide. SELECT alone still returns masked Phone values. Sufficiency assumes no conflicting permissions and no separate effective unmasking rights on other masked columns.",
+            "couldBeCorrectWhen": "It is required together with c for the intended ordinary reporting principal. SELECT alone is also appropriate when a reader should receive masked values for every masked column; the saved example demonstrates that separate scenario.",
+            "sourceIds": ["dp800-d2-masking"],
+            "evidenceSummary": "dp800-d2-masking, Permissions, decoded lines 43-55, explicitly separates table SELECT from UNMASK. The SELECT-only demonstration at lines 166-187 returns masked values. Neither passage requires broad db_datareader membership for a table-scoped grant."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "VIEW DEFINITION on dbo.Contact is offered as a competing permission for the required table-data read and Phone-only unmasking.",
+            "whyIncorrectInContext": "It is not a replacement for the SELECT and UNMASK requirements under the intended reading. However, the sole admitted receipt never names VIEW DEFINITION. Its exact semantics and the asserted metadata-only exclusion are not independently established merely by the linked article title.",
+            "couldBeCorrectWhen": "A task limited to inspecting the definition or metadata of dbo.Contact, rather than reading its rows, is the meaningful proposed alternate. The saved source separates metadata visibility from UNMASK and links Metadata Visibility Configuration, but does not document this named grant. That alternate remains unverified in this frozen citation set; I will not fabricate a sourced counterexample.",
+            "sourceIds": ["dp800-d2-masking"],
+            "evidenceSummary": "dp800-d2-masking, decoded lines 45-55, supports SELECT plus UNMASK and distinguishes metadata visibility. It contains no VIEW DEFINITION occurrence. https://learn.microsoft.com/en-us/sql/relational-databases/security/metadata-visibility-configuration is only a reference in the receipt, not independently fetched content admitted for this item. This is an evidence gap, not a claim that b is the correct answer."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "SQL Server 2022 column-level UNMASK for dbo.Contact.Phone reveals that masked column without granting UNMASK on every masked column.",
+            "whyIncorrectInContext": "NOT incorrect under the intended effective-permission baseline: SQL Server 2022 supports column scope, and a provides the separate SELECT permission. A new narrow grant does not establish Phone-only effective rights if another direct UNMASK grant already exists; the stem does not explicitly close that starting-state possibility.",
+            "couldBeCorrectWhen": "It is valid for a SQL Server 2022 principal whose effective read access is supplied by a and whose other masked columns lack UNMASK or overriding authority. The documentation first supplies reading permission before demonstrating column UNMASK; selecting c alone would not supply data access.",
+            "sourceIds": ["dp800-d2-masking"],
+            "evidenceSummary": "dp800-d2-masking, decoded lines 123-125, explicitly introduces column-level UNMASK in SQL Server 2022. Lines 304-319 separately supply db_datareader access and then grant UNMASK on one named column; a is the narrower table-read substitute in this question. Lines 45-55 establish the independent SELECT prerequisite."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "Database-scoped ALTER ANY MASK grants authority relevant to administering mask definitions, rather than the requested read and selective-unmask permissions.",
+            "whyIncorrectInContext": "It supplies neither of the two required read-path permissions and is broader than the named table and column need. Granting d is not itself a schema change. Using it to add, replace or remove a mask additionally requires table ALTER and would violate the no-schema-change workflow; that is distinct from merely granting the permission.",
+            "couldBeCorrectWhen": "A security officer authorized to add, replace or remove masks on an existing table can appropriately receive ALTER ANY MASK together with ALTER on that table. Schema modification must be permitted in that alternate administration scenario. The permission is useful there without making it a SELECT or UNMASK substitute here.",
+            "sourceIds": ["dp800-d2-masking"],
+            "evidenceSummary": "dp800-d2-masking, decoded lines 47-51, distinguishes CONTROL, UNMASK and ALTER ANY MASK and explicitly names both mask-modification prerequisites and the security-officer use case. Lines 90 and 191-205 corroborate actual schema-changing mask operations. The repaired d explanation no longer confuses permission with operation."
+          }
+        ],
+        "challenges": {
+          "scope": "On the intended effective-permission reading, table SELECT plus Phone-column UNMASK is appropriately scoped. Other already-masked columns remain masked only absent other effective UNMASK or overriding authority. This concerns ordinary query-result presentation, not cryptographic secrecy or prevention of inference. dp800-d2-masking, decoded lines 16-23, 45-55, 100-125.",
+          "plan": "Enumerated all six proposed self-sufficient pairs: a+c supplies both controls; a+b lacks Phone UNMASK; a+d lacks UNMASK and cannot lawfully remove a mask; b+c lacks SELECT; b+d lacks both read controls; c+d lacks SELECT. No second self-sufficient pair is supported. Different incremental-grant answers become possible only by importing unspecified pre-existing direct rights, which is why the starting-state wording matters.",
+          "role": "The stem excludes inherited data permissions and administrative roles, not all existing direct permissions. A reporting principal could already hold direct SELECT or direct UNMASK on another masked column without an administrative role. Direct overriding authority also is not equivalent to role membership. The source makes effective CONTROL and UNMASK decisive, not job title alone; the unconditional Phone-only outcome is under-specified. dp800-d2-masking, decoded lines 45-55 and 77.",
+          "preconditions": "SQL Server 2022 and an existing masked Phone column are explicit. The proposal additionally assumes an ordinary permitted grantor, no effective denial defeating the read, and no existing direct UNMASK on other masked columns. Grantor creation or execution is not the task, so I do not demand login-creation options; the unresolved effective-permission baseline is the material gap. The article requires SELECT alongside UNMASK and distinguishes overriding CONTROL at decoded lines 45-55.",
+          "featureStatus": "The frozen product receipt expressly supports SQL Server 2022 column UNMASK at decoded lines 123-125 and demonstrates it at lines 318-319. The recorded GA status is consistent with the documented released-version feature. I make no fresh-live availability claim and do not import Azure service tiers, Fabric workspace roles or Fabric EXECUTE AS restrictions into this SQL Server question.",
+          "sourceChanges": "Both independently recomputed hashes match the requested frozen question and March 12, 2026 objectives. The masking receipt URL and retrieval time match the manifest, and its bytes remained unchanged on the final check. Saved credential links, the secure-path redirect, path, module and masking unit establish ancestry. Where the unit simplifies mask counts or ALTER prerequisites, the product receipt controls; no browser, live retrieval or replacement source was used.",
+          "stemSufficiency": "The stem is sufficient to infer the intended a+c permission set but not to attest every possible starting state it literally permits. No inherited permissions is narrower than no existing direct or inherited effective permissions. Phone-only should also be read as only among already-masked columns, not as automatically masking otherwise unmasked columns. These qualifications must not be silently supplied to obtain an unconditional pass.",
+          "explanationBounds": "The repair to d is sound: a permission grant alone does not change schema, and mask modification requires ALTER ANY MASK plus table ALTER. The explanation correctly separates SELECT and UNMASK. The b rationale still lacks named-permission evidence in the admitted receipt. Do not expand the item into a guarantee against inference; the product security note expressly disclaims that protection at decoded lines 100-119.",
+          "reasoningDepth": "The item combines data access with column-level presentation control, but the answer is a short two-permission recipe. It presents no effective-grant inventory, conflicting permission, result set, code diagnosis or implementation trade-off to resolve. SQL Server 2022 scope is useful, yet the advanced label is not convincingly earned by this construction.",
+          "answerClues": "The correct permission names closely echo read and unmasked in the stem. VIEW DEFINITION looks like metadata, while database-scope ALTER ANY MASK contrasts with narrowly scoped and the no-schema-change constraint. Declaring Select two is appropriate, not itself a defect; the weakness is that semantic elimination substantially substitutes for advanced reasoning."
+        },
+        "qualityNotes": "Manual review required, not an endorsement of a competing key. The intended a+c answer and repaired d distinction are strong; the frozen named-permission evidence for b, the direct-permission baseline and the advanced difficulty claim are not sufficient for strict promotion. Independent rubric: 36/48. Corpus checking found no different-item exact stem or concept match; same-ID originals are retained snapshots, not new items. Question-specific findings are returned inline for parent persistence. No candidate, source, ledger or Study readiness state was changed."
+      }
+    },
+    "dp800-direct-001": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "a03f7e6b6d5cce9a383c4b9782c4be1550246ab2c614e2a9b190e050d88ad2bb",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+            "summary": "A default supplies an omitted value but does not reject an explicitly supplied NULL. The existing CHECK also permits UNKNOWN, so nullability must be constrained."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+            "summary": "UNIQUE addresses duplicate values rather than the required nullability rule. It permits a NULL in this setting and would reject equal positive amounts that the scenario permits."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+            "summary": "NOT NULL rejects missing values; the existing positive-value CHECK rejects zero and negative values. Neither rule prohibits equal positive amounts on separate invoices."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+            "summary": "The replacement permits zero, contrary to the required positive domain, and a comparison with NULL still evaluates to UNKNOWN rather than FALSE."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-001",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "a03f7e6b6d5cce9a383c4b9782c4be1550246ab2c614e2a9b190e050d88ad2bb",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-constraints",
+              "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-database-objects/6-design-implement-constraints",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\objects-constraints.json",
+              "retrievedAt": "2026-09-14T22:10:35.513Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "Reread the raw receipt through the r1 index. Its constraint table identifies NOT NULL as the missing-data control, its CHECK section allows UNKNOWN, and its DEFAULT section supplies values only when an INSERT omits them. Those specific clauses support separating nullability from defaults. The unit's broader always-enforced language is not evidence for this decision."
+            },
+            {
+              "sourceId": "dp800-d1-unique-check",
+              "url": "https://learn.microsoft.com/en-us/sql/relational-databases/tables/unique-constraints-and-check-constraints",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\doc-unique-check.json",
+              "retrievedAt": "2026-09-14T22:25:54.091Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The raw product article's UNIQUE section rejects repeated values but allows a NULL in the single-column case. Its CHECK limitations explicitly reject FALSE rather than UNKNOWN and demonstrate a NULL passing a comparison CHECK. This supports both the positive-plus-NOT-NULL answer and the contextual failures of uniqueness and a nonnegative replacement predicate."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "contradicted",
+              "rationale": "An omitted Amount can receive the default 1, but explicitly inserting NULL does not request a default. Because the column remains nullable and NULL > 0 is UNKNOWN, that insertion still succeeds under these constraints and violates the missing-value requirement.",
+              "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "contradicted",
+              "rationale": "Two otherwise different invoices each having Amount 7 are allowed by the scenario but rejected by UNIQUE (Amount). The same constraint also permits a first NULL. It therefore imposes an unwanted distinctness rule without solving the requested nullability rule.",
+              "sourceIds": ["dp800-d1-unique-check"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "supported",
+              "rationale": "The NOT NULL change rejects missing amounts. Once the value is non-null, the retained Amount > 0 predicate rejects zero and negatives while admitting positives. Repeated positive values remain legal because no uniqueness constraint is introduced.",
+              "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "contradicted",
+              "rationale": "The replacement admits zero because 0 >= 0 is TRUE, and it admits NULL because the comparison remains UNKNOWN. Both are counterexamples to the stated requirements; broadening the comparison cannot substitute for the missing NOT NULL property.",
+              "sourceIds": ["dp800-d1-unique-check"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh technical review of batch-01r1, PASS 2 only. Rechecked explicit NULL, omitted Amount, zero, negatives, and repeated positive amounts against the raw clauses. SQL Server 2022, an enabled CHECK, and cleaned existing data supply the relevant scope; the question does not justify claims about bypassed or disabled constraints or universal bulk-load enforcement. The SQL fragments and explanation are consistent. Intermediate difficulty fits combining domain and nullability rules, and the key is shorter than the last distractor. The billing scenario is original within the supplied material and not a duplicate of 002's business-key scope.",
+          "confidenceReason": "Independent re-evaluation of r1 leaves c as the only change satisfying all three requirements. The actual product CHECK limitation, not a generalized training summary, decides the otherwise easy-to-miss NULL case."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "a03f7e6b6d5cce9a383c4b9782c4be1550246ab2c614e2a9b190e050d88ad2bb",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:12:36.732Z",
+        "verdict": "verified",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "A default on the still-nullable Amount column closes the NULL-admission gap while retaining the positive-value check.",
+            "whyIncorrectInContext": "An INSERT explicitly supplying NULL is a counterexample: DEFAULT (1) handles an omitted value, not that supplied NULL, and Amount > 0 evaluates to UNKNOWN. The row can still enter.",
+            "couldBeCorrectWhen": "This would fit a different rule that supplies a positive value when Amount is omitted but intentionally permits explicit NULL. It is not a nullability restriction.",
+            "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+            "evidenceSummary": "The constraints unit defines defaults for INSERT operations with no specified value. The product article's Limitations of CHECK constraints explicitly demonstrates NULL passing a comparison because the result is not FALSE."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "A UNIQUE constraint on Amount can substitute for rejecting NULL without restricting repeated positive invoice amounts.",
+            "whyIncorrectInContext": "A first NULL can satisfy this nullable single-column UNIQUE constraint. Conversely, two invoices with Amount 12 would violate it even though the business rule explicitly permits both.",
+            "couldBeCorrectWhen": "UNIQUE (Amount) would be appropriate if amounts themselves were a unique business attribute and at most one NULL were acceptable. Those are different requirements.",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "evidenceSummary": "The UNIQUE section permits NULL in this setting and describes duplicate rejection through a unique index. Those semantics refute both the missing-value and permitted-duplicate claims."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "NOT NULL and the retained CHECK (Amount > 0) independently exclude missing and nonpositive amounts without demanding uniqueness.",
+            "whyIncorrectInContext": "This is NOT incorrect: NOT NULL rejects NULL, the enabled CHECK rejects zero and negative values, and neither rule rejects a second row merely because it repeats a positive amount.",
+            "couldBeCorrectWhen": "It is correct for the stated ordinary insert domain after existing rows have been cleaned, with the positive-value CHECK retained and enabled. Disabling that check would be a changed premise.",
+            "sourceIds": ["dp800-d1-constraints", "dp800-d1-unique-check"],
+            "evidenceSummary": "The unit identifies NOT NULL as the missing-data constraint. The product CHECK section defines logical domain tests and the FALSE-versus-UNKNOWN distinction, supporting the need to combine the two rules."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "A nullable Amount with CHECK (Amount >= 0) enforces the requested strictly positive, mandatory-value domain.",
+            "whyIncorrectInContext": "Amount 0 makes the replacement predicate TRUE, and NULL makes it UNKNOWN; both violate the requested domain yet survive this change.",
+            "couldBeCorrectWhen": "This expression would fit an optional amount where zero is a valid known value and negative amounts alone must be excluded.",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "evidenceSummary": "CHECK constraints restrict values by their Boolean expression but reject only FALSE. Applying the documented rule to >= 0 establishes the zero and NULL counterexamples."
+          }
+        ],
+        "challenges": {
+          "scope": "The claim is about an enabled scalar CHECK and column nullability on SQL Server 2022. It is not a promise about all engines, bulk-loading options, disabled constraints, or cross-row business rules.",
+          "plan": "No cloud service tier, Copilot subscription, or preview facility is involved. The SQL Server constraint behavior in the cited product article supplies the relevant platform scope.",
+          "role": "This is a schema-design choice, not a claim that an unprivileged invoice writer can alter the table. Changing the definition and exercising ordinary INSERT permissions are separate responsibilities.",
+          "preconditions": "Existing data is explicitly cleaned and the CHECK is explicitly enabled. I challenged explicit NULL, zero, a negative value, and two equal positive values; the selected combination handles all four cases.",
+          "featureStatus": "NOT NULL, DEFAULT, UNIQUE and CHECK are established SQL Server features in the frozen teaching and product evidence. Nothing here relies on SQL Server 2025 additions or a preview label.",
+          "sourceChanges": "I read both original MCP responses, including the product article's CHECK limitations. Their recorded URLs and retrieval times match the frozen manifest; its 2026-09-14T23:22:42.902Z source-review snapshot is preserved, not replaced with a new retrieval claim.",
+          "stemSufficiency": "Mandatory positive values and permission to repeat positives are separate explicit requirements. A request merely to fill omitted values or eliminate duplicate amounts would yield different options, but neither is this request.",
+          "explanationBounds": "The explanation correctly treats UNKNOWN separately from FALSE. I excluded the teaching unit's broader assertions that constraints cannot be bypassed or must be checked on every DELETE.",
+          "reasoningDepth": "Intermediate is justified by composing nullability and domain integrity while rejecting an overrestrictive uniqueness rule. This is a small applied integrity decision, not advanced database architecture.",
+          "answerClues": "All options describe a schema change in parallel language. The correct option is not uniquely long. UNIQUE and >= 0 are weaker distractors than DEFAULT, but their failures require checking the stated permitted values."
+        },
+        "qualityNotes": "Independent score 46/48. The familiar NULL/CHECK misconception reduces originality, and two distractors are relatively easy. Within this batch, 002 tests tuple uniqueness rather than three-valued validation. Across 556 existing bank questions, dp700-ingest-033 tests COUNT treatment of NULL and dp700-ingest-035 tests DataFrame row filtering, not SQL constraint acceptance. The cohort copy with this same ID is not a separate encounter. No blocking semantic duplicate was found."
+      }
+    },
+    "dp800-direct-002": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "34ee3c8890c5e8fb01296a307fcfac1a888c8cff3afd782ea4192fb31f98e133",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "summary": "A UNIQUE constraint can enforce a combination of columns independently of the existing primary key. The two-column tuple matches the required business identity."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "summary": "This rejects reuse of a code across different tenants, although the scenario explicitly allows that reuse."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "summary": "This permits only one record per tenant and therefore rejects the required multiple different codes for one tenant."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "summary": "Different Revision values make distinct three-column tuples, so the same tenant/code pair could be inserted more than once."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-002",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "34ee3c8890c5e8fb01296a307fcfac1a888c8cff3afd782ea4192fb31f98e133",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-unique-check",
+              "url": "https://learn.microsoft.com/en-us/sql/relational-databases/tables/unique-constraints-and-check-constraints",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\doc-unique-check.json",
+              "retrievedAt": "2026-09-14T22:25:54.091Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The reread raw UNIQUE section explicitly covers a combination of columns that is not the primary key. It states that the engine uses a unique index to reject duplicate entries. Comparing equality over the actual listed columns supports the pair-level key and reveals why singleton constraints overrestrict while adding Revision underrestricts."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "supported",
+              "rationale": "Only TenantId and ExternalCode define the required business identity. The pair constraint rejects another row for tenant 3/code A even when Revision changes, while allowing tenant 3/code B and tenant 4/code A. It can coexist with the RecordId primary key.",
+              "sourceIds": ["dp800-d1-unique-check"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "contradicted",
+              "rationale": "If tenant 3 and tenant 4 each import code A, the stem says both are valid. UNIQUE (ExternalCode) rejects the second A without considering its tenant, so its global restriction is stronger than the allowed business rule.",
+              "sourceIds": ["dp800-d1-unique-check"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "contradicted",
+              "rationale": "Tenant 3 must be able to import both code A and code B. A singleton TenantId constraint rejects that second record regardless of its different code, preventing the many-codes-per-tenant behavior expressly required.",
+              "sourceIds": ["dp800-d1-unique-check"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "contradicted",
+              "rationale": "Rows (3, A, 4) and (3, A, 5) have different three-column tuples and satisfy this constraint, yet repeat the forbidden tenant/code pair. Including Revision tests a larger identity than the business rule permits.",
+              "sourceIds": ["dp800-d1-unique-check"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh r1 PASS 2 review. Checked each constraint against new example tuples and verified that all three key components are explicitly NOT NULL, avoiding nullable-composite-key side issues. The SQL Server 2022 context and separate RecordId key make an additional UNIQUE constraint a well-scoped implementation choice. No version-specific or preview behavior is required. Intermediate classification matches the need to distinguish constraints that are too broad from one that is too permissive. Parallel constraint syntax and a longer wrong option avoid a verbosity clue. Duplicate inspection was limited to the ten r1 rows; 001 tests a different fact despite sharing this source.",
+          "confidenceReason": "The raw combination-of-columns rule maps directly onto the candidate tuples. Each incorrect option fails an explicitly allowed or forbidden pair of rows, so the answer is not dependent on an unstated tenant convention."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "34ee3c8890c5e8fb01296a307fcfac1a888c8cff3afd782ea4192fb31f98e133",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:12:36.732Z",
+        "verdict": "verified",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "Uniqueness over exactly TenantId and ExternalCode enforces one occurrence of the business-key pair independently of Revision.",
+            "whyIncorrectInContext": "This is NOT incorrect: (A, X, 1) and (A, X, 2) collide on the selected pair, while (A, Y, 1) and (B, X, 1) remain permissible distinct pairs.",
+            "couldBeCorrectWhen": "It fits the stated business identity where revisions cannot create additional records for an existing tenant/code pair and RecordId remains the table's primary key.",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "evidenceSummary": "The UNIQUE constraints section explicitly supports uniqueness of a non-primary-key combination of columns. Applying that definition to the exact two-column tuple supports each acceptance and rejection above."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "ExternalCode alone is the uniqueness boundary even though multiple tenants may reuse a code.",
+            "whyIncorrectInContext": "(A, X, 1) and (B, X, 1) are allowed by the stem but share ExternalCode X. This constraint would reject their permitted coexistence.",
+            "couldBeCorrectWhen": "It would fit a globally unique external-code namespace, with no cross-tenant reuse. Such a namespace is explicitly not the requested model.",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "evidenceSummary": "The product article's column-versus-combination distinction makes the scope of a single-column UNIQUE precise. TenantId cannot qualify duplicates when it is absent from the key."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "TenantId alone should be unique even though each tenant can contain many different external codes.",
+            "whyIncorrectInContext": "(A, X, 1) and (A, Y, 1) are distinct permitted pairs but both have TenantId A. A unique tenant column permits only one of them.",
+            "couldBeCorrectWhen": "This would fit a one-record-per-tenant table whose business identity is the tenant itself, rather than an import table storing multiple codes for that tenant.",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "evidenceSummary": "UNIQUE prohibits repeated values for its listed column or tuple. With only TenantId listed, distinct ExternalCode values do not differentiate the constrained keys."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "Adding Revision to a unique tenant/code key still prevents repeating the tenant/code pair across revisions.",
+            "whyIncorrectInContext": "(A, X, 1) and (A, X, 2) are different three-column tuples, so both pass this constraint even though the same tenant/code pair has occurred twice.",
+            "couldBeCorrectWhen": "This would fit a version-history table that deliberately stores multiple revisions for a tenant/code pair and requires only the complete tenant/code/revision triple to be unique.",
+            "sourceIds": ["dp800-d1-unique-check"],
+            "evidenceSummary": "The article defines composite uniqueness over the specified combination, not every subset. Different Revision values distinguish the triples but do not satisfy the requested pair-level invariant."
+          }
+        ],
+        "challenges": {
+          "scope": "The problem selects a SQL Server UNIQUE constraint for a business-key tuple, not a surrogate-key generator, a query DISTINCT operation, or a tenant authorization rule.",
+          "plan": "No edition-dependent index optimization or cloud plan is claimed. The selection uses the ordinary SQL Server constraint semantics documented for a column or combination of columns.",
+          "role": "RecordId is already the primary key; the request concerns an additional business constraint, not assigning another primary key or granting permission to an import-service identity.",
+          "preconditions": "All three business columns are explicitly NOT NULL, excluding nullable-composite-key distractions. The task is constraint design, not a guarantee that an ALTER operation would succeed over unspecified pre-existing duplicate data.",
+          "featureStatus": "The source describes established UNIQUE constraint behavior. No preview capability, filtered-index feature, or new SQL Server 2025 data type is needed for this answer.",
+          "sourceChanges": "I read the frozen product article, verified its direct link in the retrieved constraints unit, and matched its URL and retrieval timestamp to sources.json. The March 12 objective map and current question hashes were independently recomputed.",
+          "stemSufficiency": "The tenant can have multiple codes, codes can repeat across tenants, and Revision must not weaken pair uniqueness. Concrete two-row witnesses distinguish each wrong key from the right one without an unstated business assumption.",
+          "explanationBounds": "The explanation is correctly about the columns included in the tuple. It does not claim that a UNIQUE constraint repairs existing duplicates, changes collations, or supplies missing values.",
+          "reasoningDepth": "Intermediate technical implementation is supported by the need to avoid two overrestrictive keys and one underrestrictive larger key. Merely recalling the word UNIQUE does not settle which columns belong in it.",
+          "answerClues": "All four answers are parallel UNIQUE fragments. The three-column distractor is longer than the correct answer, so length does not identify the key. The negative-wording warning comes from the useful NOT NULL prerequisite."
+        },
+        "qualityNotes": "Independent score 47/48. This is a conventional but well-constrained composite-key exercise. Item 001 treats the NULL/CHECK gap instead. dp700-ingest-037 uses a similar tenant/code pair for a left-outer KQL lookup, whereas this item enforces pair uniqueness across revisions; dp700-ingest-015 selects warehouse surrogate identity. Those are different operations and failure conditions, not cosmetic credential substitutions. No separate duplicate of the same-ID cohort copy was counted."
+      }
+    },
+    "dp800-direct-003": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "efbb6956cd308a56729520fcc02f35dee67cbc1bd145d4f0aedd04ab7c6b2d11",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-sequences"],
+            "summary": "The first NEXT VALUE FOR allocates 700 outside transaction rollback semantics. Rolling back the transaction does not make that number available again."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-sequences"],
+            "summary": "Only one preceding call has consumed a value. With increment 1 and no other allocations or restart effects, the next value is not two increments beyond the start."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-sequences"],
+            "summary": "The sequence was created before BEGIN TRANSACTION. The rollback does not remove that pre-existing sequence or undo its allocation."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-sequences"],
+            "summary": "The first allocation consumes 700 whether its transaction commits or rolls back. The next call advances the sequence by its configured increment of 1."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-003",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "efbb6956cd308a56729520fcc02f35dee67cbc1bd145d4f0aedd04ab7c6b2d11",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-sequences",
+              "url": "https://learn.microsoft.com/en-us/sql/relational-databases/sequence-numbers/sequence-numbers",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\doc-sequences.json",
+              "retrievedAt": "2026-09-14T22:25:53.961Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "Reread the raw Overview, Limitations, and CREATE SEQUENCE examples. Allocation occurs at NEXT VALUE FOR even without inserting a row; generated numbers are consumed whether their transaction commits or rolls back. Cache loss on shutdown is a separate documented gap cause. START WITH and INCREMENT BY determine the simple sequence trace used here."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "contradicted",
+              "rationale": "700 is consumed by the DECLARE initializer before ROLLBACK. The documented transaction rule does not restore that number, so the final call cannot repeat 700 without a sequence reset or other condition excluded by the displayed script.",
+              "sourceIds": ["dp800-d1-sequences"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "contradicted",
+              "rationale": "702 would require advancement beyond the next single increment. There is only one earlier allocation, not two, and the stem rules out outside calls and restart-related gaps. The visible start and increment instead lead to 701.",
+              "sourceIds": ["dp800-d1-sequences"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "contradicted",
+              "rationale": "The sequence definition runs in the preceding SSMS batch, before the explicit BEGIN TRANSACTION being rolled back. The object is therefore not a creation inside that transaction, and its already-consumed sequence value is separately documented as surviving rollback.",
+              "sourceIds": ["dp800-d1-sequences"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "supported",
+              "rationale": "Starting at 700, the first call consumes 700 while assigning @reserved. ROLLBACK does not undo sequence consumption. The final call then applies INCREMENT BY 1 and produces 701, with no extra allocation or reset in the stated execution.",
+              "sourceIds": ["dp800-d1-sequences"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh r1 PASS 2 review from the actual sequence receipt, including the rollback and cache qualifications. Rechecked CREATE SEQUENCE, bigint variable initialization, both NEXT VALUE FOR calls, and the explicit transaction boundary. SSMS is a GO-aware client; permissions, object-name availability, and absence of other calls/restarts are stated. The documentation and hand trace, not a live SQL execution, support the code result. Intermediate difficulty is honest for this short allocation trace, and the three numeric answers are equally brief. This original sequence question remains distinct from every other fact-level concept in the ten-row r1 set.",
+          "confidenceReason": "The source explicitly settles the transaction behavior and the code visibly supplies the start, increment, and number of calls. Recomputing that trace yields 701 without using the historical review's verdict as evidence."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "efbb6956cd308a56729520fcc02f35dee67cbc1bd145d4f0aedd04ab7c6b2d11",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:12:36.732Z",
+        "verdict": "verified",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "ROLLBACK restores the first allocated sequence value so the final NEXT VALUE FOR returns 700 again.",
+            "whyIncorrectInContext": "The DECLARE initializer has already requested 700. The source states that sequence values are consumed regardless of transaction rollback, so 700 is not reclaimed for the final statement.",
+            "couldBeCorrectWhen": "700 could be returned by the first call, or after an explicit RESTART WITH 700. The shown script has already made its first call and contains no restart.",
+            "sourceIds": ["dp800-d1-sequences"],
+            "evidenceSummary": "Sequence numbers, Overview and Limitations, says allocation occurs when NEXT VALUE FOR is called and outside the current transaction. Its reset example uses an explicit ALTER SEQUENCE restart, which this script lacks."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "The final call skips an additional increment and returns 702 after the one shown prior allocation.",
+            "whyIncorrectInContext": "The first request consumes 700 and the next request advances by the specified increment of 1. ROLLBACK is not another sequence request, and no third allocation or cache-loss event appears.",
+            "couldBeCorrectWhen": "702 could be the third allocation at this start/increment, for example if another caller requested 701 between the two shown calls. Concurrent and other calls are expressly excluded.",
+            "sourceIds": ["dp800-d1-sequences"],
+            "evidenceSummary": "The article defines sequence progression by its start and increment and separately identifies shared use and unexpected shutdown as causes of gaps. Those gap-producing circumstances are absent from the stem."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "Rolling back the transaction removes the sequence object and prevents the final SELECT from obtaining any value.",
+            "whyIncorrectInContext": "CREATE SEQUENCE is executed before the displayed BEGIN TRANSACTION and separated by GO. This rollback is not a rollback of that earlier creation; the sequence also retains its consumed allocation.",
+            "couldBeCorrectWhen": "Object absence could be an issue in a different script that drops the sequence before the final query. That would violate this script's no-other-statements premise, not describe its rollback behavior.",
+            "sourceIds": ["dp800-d1-sequences"],
+            "evidenceSummary": "The source creates sequences independently, demonstrates GO-separated creation and later NEXT VALUE FOR calls, and states the allocation is outside transaction scope. It provides no basis for treating this later rollback as object deletion."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "The final SELECT returns 701 because one value was consumed and the sequence continues despite rollback.",
+            "whyIncorrectInContext": "This is NOT incorrect: the first call returns 700 into @reserved, rollback does not restore it, and the subsequent separate statement obtains 701 with INCREMENT BY 1.",
+            "couldBeCorrectWhen": "It is correct for the displayed isolated script with valid permissions, no pre-existing object, and no extra allocation, restart, or shutdown between calls.",
+            "sourceIds": ["dp800-d1-sequences"],
+            "evidenceSummary": "The documented outside-transaction consumption rule, together with the start/increment syntax and pre-insert variable use examples, supports this two-call trace."
+          }
+        ],
+        "challenges": {
+          "scope": "This is SQL Server 2022 executed through SSMS, so GO is a client batch separator. The question asks about the final SELECT, not whether a sequence promises gap-free persisted invoice numbers.",
+          "plan": "No Azure service tier, distributed sequence service or cache configuration change is involved. The script uses the SQL Server sequence definition and normal NEXT VALUE FOR behavior in the frozen article.",
+          "role": "Required permissions and absence of the named object are explicit. A permission error or name collision therefore cannot be substituted for the requested numeric result.",
+          "preconditions": "I challenged other callers, restart and cache-loss scenarios; the stem excludes them. The displayed creation precedes BEGIN TRANSACTION, and each NEXT VALUE FOR appears in a separate statement, avoiding the same-statement repeated-reference rule.",
+          "featureStatus": "The evidence's SQL Server sequence examples and transaction rule cover established functionality, not a preview addition. No claim is made about every identity or autonumber implementation.",
+          "sourceChanges": "The actual Sequence numbers MCP response was read, including its gap, same-statement and explicit-restart limitations. Its 2026-09-14T22:25:53.961Z retrieval and frozen source-review date match the manifest; no new retrieval was performed.",
+          "stemSufficiency": "START WITH 700, INCREMENT BY 1, two distinct calls and the location of BEGIN TRANSACTION determine the result. It is unnecessary to invent inserted rows because allocation is explicitly independent of row insertion.",
+          "explanationBounds": "The explanation limits its numeric certainty to the listed exclusions. It does not claim that rollbacks preserve table changes or that caching cannot ever lose values.",
+          "reasoningDepth": "Intermediate implementation is appropriate for tracing allocation independently of transaction rollback and distinguishing object-creation scope from consumption. It is not an advanced concurrency question because concurrency is excluded.",
+          "answerClues": "Three answers are equally short numbers; the only long option is wrong. That option is visually different but represents a real object-lifetime misconception. The correct value is not exposed by grammar or longest-answer selection."
+        },
+        "qualityNotes": "Independent score 46/48. The rollback misconception is familiar and the nonnumeric distractor is easier to separate than the numeric alternatives. The original short script remains distinct from cohort item 016, which asks what application transaction to retry after deadlock rollback, not whether sequence allocation is reclaimed. No existing bank neighbor tests this two-call sequence result."
+      }
+    },
+    "dp800-direct-004": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "8fe2d5e541dee1b8f23c3a3de6dad5f56476b6856c84c33c4934a220f8610946",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-create-view"],
+            "summary": "CHECK OPTION constrains data modifications made through the view to its selection criteria; it is not a dependency-binding rule for ALTER TABLE."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-create-view"],
+            "summary": "Schema binding prevents alterations to referenced objects when those alterations affect the view definition. Dropping the referenced column is such an incompatible alteration."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-create-view"],
+            "summary": "ENCRYPTION protects the stored view-definition text from ordinary inspection; it does not establish schema-binding dependency protection."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-create-view"],
+            "summary": "VIEW_METADATA changes metadata exposed for supported client browsing operations; it does not bind the underlying schema against the specified column drop."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-004",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "8fe2d5e541dee1b8f23c3a3de6dad5f56476b6856c84c33c4934a220f8610946",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-create-view",
+              "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-view-transact-sql",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\doc-create-view.json",
+              "retrievedAt": "2026-09-14T22:29:52.878Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The reread raw SCHEMABINDING argument requires two-part, same-database references and says an ALTER TABLE affecting the bound definition fails until the dependency is removed. Its neighboring argument sections place CHECK OPTION on through-view data modifications, ENCRYPTION on definition text, and VIEW_METADATA on client browse metadata. SQL Server syntax contains the named options."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "contradicted",
+              "rationale": "This option tests whether data modified through a view satisfies its SELECT criteria afterward. It does not bind the base-table definition, and an ALTER TABLE DROP COLUMN is not a through-view row modification to which CHECK OPTION applies.",
+              "sourceIds": ["dp800-d1-create-view"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "supported",
+              "rationale": "A referenced column is part of the bound view's dependency. The raw SCHEMABINDING rule therefore rejects its incompatible removal while the view remains unchanged, exactly matching the administrator's stated behavior and the required failure.",
+              "sourceIds": ["dp800-d1-create-view"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "contradicted",
+              "rationale": "The reference describes ENCRYPTION as affecting stored CREATE VIEW text, not dependencies on base columns. Hiding that text from ordinary inspection does not make a non-schema-bound view prevent the administrator's column drop.",
+              "sourceIds": ["dp800-d1-create-view"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "contradicted",
+              "rationale": "Returning view-oriented browse metadata to ODBC/OLE DB and related clients concerns metadata consumers, not ALTER TABLE validation. VIEW_METADATA therefore cannot enforce the required protection for the referenced base column.",
+              "sourceIds": ["dp800-d1-create-view"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh technical judgment for r1, PASS 2 only. Independently matched all four attributes to their raw argument sections and retained the distinction between DDL dependency protection and permissions. SQL Server 2022 and explicit two-part references appropriately scope the option; the administrator is not assumed unable to remove binding, because the stem explicitly rules out doing so first. The named SQL fragments and explanations are accurate without claiming strong secrecy from ENCRYPTION. Intermediate scenario difficulty and comparable option lengths are acceptable. This original migration scenario concerns schema dependencies, unlike 006's storage/reuse distinction.",
+          "confidenceReason": "The single actual CREATE VIEW receipt contains both the affirmative incompatible-ALTER rule and the non-DDL purpose of every distractor. The column dependency and preserved view make the keyed attribute decisive."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "8fe2d5e541dee1b8f23c3a3de6dad5f56476b6856c84c33c4934a220f8610946",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:18:00.668Z",
+        "verdict": "verified",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "WITH CHECK OPTION makes a view's dependencies prevent an otherwise authorized administrator from dropping a referenced table column.",
+            "whyIncorrectInContext": "CHECK OPTION checks the view's selection criteria for modifications through the view. An ALTER TABLE DROP COLUMN is not such a row modification and gains no dependency binding from this clause.",
+            "couldBeCorrectWhen": "It would fit a requirement to reject INSERT or UPDATE operations through an updatable view when the resulting row would no longer satisfy the view's selection predicate.",
+            "sourceIds": ["dp800-d1-create-view"],
+            "evidenceSummary": "CREATE VIEW, CHECK OPTION, limits the clause to modifications through the view and explicitly excludes direct underlying-table updates. The separate SCHEMABINDING section, not CHECK OPTION, discusses incompatible ALTER TABLE operations."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "WITH SCHEMABINDING preserves the view's referenced schema by rejecting an incompatible change while the dependency remains.",
+            "whyIncorrectInContext": "This is NOT incorrect: dropping a referenced column changes the view definition's required schema. The product article says such ALTER TABLE operations fail until the bound dependency is removed or changed.",
+            "couldBeCorrectWhen": "It applies to a valid same-database schema-bound view with the required two-part references, provided the administrator does not first remove or change the binding. That is the stated protection model.",
+            "sourceIds": ["dp800-d1-create-view"],
+            "evidenceSummary": "The SCHEMABINDING arguments explicitly require schema.object references in the same database and prohibit table modifications affecting the view definition. They also explicitly allow resolving the dependency by first changing or dropping the view."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "WITH ENCRYPTION binds the schema of the view's underlying table rather than only affecting stored definition text.",
+            "whyIncorrectInContext": "Obscuring the stored CREATE VIEW text does not create the SCHEMABINDING dependency. It therefore does not establish the requested guard against dropping the referenced column.",
+            "couldBeCorrectWhen": "This attribute would fit a request to obscure the stored view-definition text from ordinary catalog inspection, subject to its documented effects such as replication restrictions.",
+            "sourceIds": ["dp800-d1-create-view"],
+            "evidenceSummary": "The ENCRYPTION subsection describes encrypted definition entries in sys.syscomments and a replication restriction. Schema-modification protection is separately and specifically documented under SCHEMABINDING."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "WITH VIEW_METADATA makes client-facing metadata a schema-dependency guard against ALTER TABLE.",
+            "whyIncorrectInContext": "Changing whether supported browse-mode APIs report view or base-table metadata does not prevent a table definition from changing. It is a different behavior from schema binding.",
+            "couldBeCorrectWhen": "It would fit supported DB-Library, ODBC or OLE DB browse-mode consumers that need metadata about the view rather than the base tables, including client-side updatable-cursor scenarios.",
+            "sourceIds": ["dp800-d1-create-view"],
+            "evidenceSummary": "CREATE VIEW, VIEW_METADATA, identifies the affected client APIs and returned metadata. The article does not give this attribute the dependency restrictions it assigns to SCHEMABINDING."
+          }
+        ],
+        "challenges": {
+          "scope": "The platform is SQL Server 2022, not Synapse or a generic Fabric endpoint. The frozen reference explicitly separates their view syntax and limitations, so I did not generalize schema-binding availability across products.",
+          "plan": "The decision is an ordinary view attribute, not an indexed-view performance feature or cloud plan entitlement. No index or paid service tier is needed to explain this dependency failure.",
+          "role": "The administrator already has table-alter permission. SCHEMABINDING is not a security boundary against that administrator changing or dropping the view first; the stem expressly excludes that workaround.",
+          "preconditions": "Two-part references and an actually referenced column are supplied. The documented same-database binding rule was checked. This is selection of the attribute's effect, not an assertion that every unspecified view definition can be rebound without adjustment.",
+          "featureStatus": "All listed SQL Server view attributes are documented established syntax. The statement is restricted to SQL Server 2022 and does not borrow a newer or preview platform's view behavior.",
+          "sourceChanges": "I read the saved CREATE VIEW syntax and the four separate argument subsections, and confirmed its explicit link from the saved Create views unit. The frozen source URL/time and objective/content bindings match; no browser or new retrieval is involved.",
+          "stemSufficiency": "The phrase incompatible DROP COLUMN plus the no-view-change premise prevents confusing permission to issue ALTER with permission to violate an existing bound dependency. None of the other listed attributes has the requested effect.",
+          "explanationBounds": "The explanation appropriately limits ENCRYPTION to ordinary definition inspection and SCHEMABINDING to dependency protection. It does not assert that administrators are unable to remove the view or that all ALTER TABLE operations fail.",
+          "reasoningDepth": "This is low-end intermediate: a concrete migration failure must be mapped to dependency protection rather than data visibility, catalog text or browse metadata. It is not substantial schema-migration planning.",
+          "answerClues": "All options have the same WITH form and similar length. SCHEMABINDING is a semantically suggestive name, but recognizing its precise dependency effect rather than selecting ENCRYPTION still requires the documented distinction."
+        },
+        "qualityNotes": "Independent score 45/48. Lower-end difficulty, recognizable attribute naming and the standard schema-binding scenario reduce noncritical scores. The negative wording is necessary to express the migration guard and does not reverse the requested answer. Cohort item 017 concerns generating a deployment artifact, while fabric-005 concerns SELECT authorization on a view; neither tests preserving a view's bound dependencies. No blocking semantic overlap was found."
+      }
+    },
+    "dp800-direct-005": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "358d60f8db880e880d3f3207526c36e300857e330b4d903bdfc0a68c226673c1",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+            "summary": "The stable-key comparison is appropriate, but TOP (1) limits the audit to one changed row and loses additional changes from the same statement."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+            "summary": "Matching by Price rather than the unchanged ItemId does not pair each item with its own previous row. It can match unchanged or unrelated items instead of the required actual per-item changes."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+            "summary": "Cross-pairing affected rowsets does not associate each item's new value with its own prior value, so unrelated items can produce incorrect audit pairs."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+            "summary": "Inserted supplies new values and deleted supplies old values. Joining their unchanged primary keys preserves row identity, and the inequality filters out unchanged non-null prices."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-005",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "358d60f8db880e880d3f3207526c36e300857e330b4d903bdfc0a68c226673c1",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-triggers",
+              "url": "https://learn.microsoft.com/en-us/training/modules/implement-programmability-objects/6-create-triggers",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\prog-triggers.json",
+              "retrievedAt": "2026-09-14T22:10:34.735Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The reread raw DML paragraph puts new UPDATE values in inserted and old values in deleted. The price-history example joins both sets on ProductID and filters unequal prices. Those executable operations support the candidate's stable-key comparison; the unit's sentence loosely equating UPDATE() with actual changed values is not used."
+            },
+            {
+              "sourceId": "dp800-d1-create-trigger",
+              "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-trigger-transact-sql",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\doc-create-trigger.json",
+              "retrievedAt": "2026-09-14T22:29:52.790Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The raw product description treats inserted/deleted as logical tables representing the affected old/new rows. It limits each trigger's sets to the invoking UPDATE and specifically describes UPDATE() as detecting an attempted column operation. This supports evaluating all affected rows and comparing their own values rather than assuming one row or an actual change from column targeting alone."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "contradicted",
+              "rationale": "Suppose items 5 and 6 both change, from 8 to 12 and from 15 to 18. Both satisfy the key join and inequality, but TOP (1) returns only one. Its correct comparison does not compensate for losing another required audit row from the same statement.",
+              "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "contradicted",
+              "rationale": "For old prices 8 and 15 becoming 12 and 18, none of the new values equals an old one, so this Price-equality join misses both changes. If values do match, they need not belong to the same ItemId; price equality is not the identity mapping required for audit history.",
+              "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "contradicted",
+              "rationale": "The same two-item change produces four unequal-price cross pairs, including new 12 against unrelated old 15 and new 18 against unrelated old 8. Only two key-matched transitions are real. The cross join can fabricate history even though its inequality is syntactically valid.",
+              "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "supported",
+              "rationale": "The unchanged primary key gives one old row per new row. Because Price is non-null decimal, <> reliably excludes unchanged values, and without a row limit the query returns both real transitions in the example and all qualifying transitions in a larger update.",
+              "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Re-evaluated all r1 expressions against raw trigger semantics and a fresh two-item trace, including the unchanged-price case; PASS 2 only. Stable ItemId, NOT NULL decimal Price, and no interfering triggers remove the decisive pairing/comparison ambiguities. SELECT fragments are audit-source expressions, not complete trigger bodies or a recommendation to return trigger result sets. The code idiom is standard, while no assessment text was used. Advanced is defensible because a solver must prove complete row cardinality, identity-preserving joins, and actual-change filtering simultaneously. The longer TOP distractor prevents a simple longest-answer cue. This set-based audit concept is unique within the ten r1 candidates.",
+          "confidenceReason": "Rereading the actual old/new-rowset definitions and evaluating the four expressions yields two correct pairs only for d. The supporting code and explicit prerequisites make the result stronger than merely matching a familiar trigger pattern."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "358d60f8db880e880d3f3207526c36e300857e330b4d903bdfc0a68c226673c1",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:18:00.668Z",
+        "verdict": "verified",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "Returning TOP (1) of the correctly paired changed rows logs every actual change from a potentially multirow UPDATE.",
+            "whyIncorrectInContext": "If items 1 and 2 change from 10 to 20 and from 20 to 10, both should be logged, but TOP (1) returns at most one qualifying row. Correct pairing does not compensate for that cap.",
+            "couldBeCorrectWhen": "This would return the needed result if at most one row actually changed, or if the task intentionally wanted only one example change. Neither restriction is guaranteed here.",
+            "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+            "evidenceSummary": "The sources establish affected-row sets and show an uncapped key-joined audit SELECT. The missing-row counterexample is a static SQL deduction from the candidate's added TOP (1), not a claim that the trigger unit separately teaches TOP syntax."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "Joining old and new rowsets by equal Price pairs each item with its own changed prior value.",
+            "whyIncorrectInContext": "For old prices item 1=10 and item 2=20, changed to 20 and 10, the price join pairs item 1's new 20 with item 2's old 20. It records unrelated equal values instead of item 1's old 10.",
+            "couldBeCorrectWhen": "An equality-on-price join could answer a different question about matching equal prices across the two sets. It cannot represent actual unequal before/after prices for each unchanged item identity.",
+            "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+            "evidenceSummary": "The unit's audit example joins deleted and inserted by ProductID and separately compares Price. The product reference identifies the two sets as old and new row values, which makes a price-based cross-item match distinguishable from a same-item update."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "A cross product of old and new rows, filtered only by unequal Price, preserves each item's own before/after association.",
+            "whyIncorrectInContext": "With several affected items, each new row is compared with old rows belonging to other items. Even an unchanged item can acquire false audit pairs when its price differs from another item's old price.",
+            "couldBeCorrectWhen": "If the statement could affect only one row, this product would contain at most its own old/new pair. An intentional all-pairs price comparison is another different use, but neither establishes a multirow identity-preserving audit.",
+            "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+            "evidenceSummary": "The documented old/new rowsets and stable-key audit example supply the pairing model. Removing the equality on the key changes that model into unrelated combinations; this counterexample is derived from the shown relational expression."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "Joining inserted to deleted by the unchanged unique ItemId and filtering unequal non-null Price returns every and only actual per-item price change.",
+            "whyIncorrectInContext": "This is NOT incorrect: the unchanged primary key gives each new row exactly its old partner, no TOP truncates the set, and the non-null comparison excludes unchanged prices.",
+            "couldBeCorrectWhen": "It is correct for the described update rowsets with a stable key and non-null comparable decimal prices. A changing key or nullable price would require reevaluating the pairing or comparison.",
+            "sourceIds": ["dp800-d1-triggers", "dp800-d1-create-trigger"],
+            "evidenceSummary": "The training unit contains an audit INSERT SELECT joining the old and new rows by ProductID and filtering d.Price <> i.Price. The product reference confirms old/new rowset semantics and says UPDATE() detects attempted column updates rather than value inequality."
+          }
+        ],
+        "challenges": {
+          "scope": "The task selects the rowset feeding a SQL Server table audit, not a complete trigger definition or a promise about committed audit durability. The options are SELECT expressions to identify rows, not advice to return an unsolicited result set from a trigger.",
+          "plan": "No Azure plan, CLR integration or natively compiled trigger facility is required by this rowset-selection problem. I did not import the product article's special memory-optimized trigger requirements into an unstated deployment claim.",
+          "role": "The question is about correctness of the trigger's row association, not whether the updating user can create the trigger or write the audit table. It does not recommend elevated EXECUTE AS privileges.",
+          "preconditions": "The stem explicitly fixes the primary key, makes decimal Price NOT NULL and excludes interfering triggers. Those conditions remove key-change pairing, NULL comparison and trigger-interaction alternatives. A multirow update may contain both changed and unchanged rows.",
+          "featureStatus": "The old/new DML rowsets and stable-key comparison are established SQL Server behavior. No preview feature, new data type or version-specific audit service is used.",
+          "sourceChanges": "I read both saved MCP texts and checked the product article's UPDATE() attempt language against the unit's looser changed-column wording. The candidate uses value comparison and does not inherit that overstatement. Both manifest snapshot dates and URLs match the raw evidence.",
+          "stemSufficiency": "For old prices 10,20,30 and new prices 20,10,30 on stable IDs 1,2,3, the correct result contains precisely two same-ID changes. That one example exposes truncation, price-based mispairing and cross-product false positives without assuming all affected rows change.",
+          "explanationBounds": "The explanations correctly separate a statement targeting a column from an actual value difference. They do not claim this SELECT alone persists an audit record, handles nullable changes, or guarantees behavior if ItemId changes.",
+          "reasoningDepth": "The advanced label is at its lower boundary but has a defensible three-part burden: all affected rows, correct old/new identity, and actual rather than attempted changes. It is not advanced because of trigger vocabulary alone and does not test transaction design or performance tuning.",
+          "answerClues": "All options are comparable SQL rowset expressions; the TOP distractor is longer than the correct answer. The unchanged-key hint is necessary correctness context, not a hidden grammar cue. TOP and CROSS JOIN are easier than the equal-price mispairing distractor."
+        },
+        "qualityNotes": "Independent score 44/48, at the configured floor rather than an exemplar. Multirow, identity and value-change reasoning make this more than single-fact recall, but difficulty is lower-end advanced and two distractors are readily eliminated. Counterexample evidence for TOP/cross pairing is derived from SQL expressions and documented rowset semantics, so distractorEvidence is 3, not 4. The audit pattern resembles the teaching example; no assessment was copied. sc200-008 selects an associated latest event with arg_max, and cohort 022 chooses a change-detection mechanism; neither tests joining old/new trigger versions."
+      }
+    },
+    "dp800-direct-007": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "58fa617762a5d6234e920b594a21e2ab68d9befa9bb6f0d7d065738e2e35b599",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-over"],
+            "summary": "Without PARTITION BY TenantId, the window combines tenants instead of restarting the cumulative calculation independently for each tenant."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-over"],
+            "summary": "Tenant partitioning isolates the totals, the timestamp/key pair supplies the required order, and the unbounded-preceding ROWS frame includes every earlier event through the current row."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-over"],
+            "summary": "Ordering only by EventTime omits the required key tie-breaker, and RANGE groups timestamp peers rather than advancing in the required event-key order."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-over"],
+            "summary": "This frame includes only the previous and current rows. It is a two-event sliding sum rather than a lifetime cumulative total for tenants with more events."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-007",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "58fa617762a5d6234e920b594a21e2ab68d9befa9bb6f0d7d065738e2e35b599",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-over",
+              "url": "https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\doc-over.json",
+              "retrievedAt": "2026-09-14T22:36:16.207Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "Reread the raw grammar and separate PARTITION BY, ORDER BY, ROWS/RANGE, UNBOUNDED PRECEDING, and CURRENT ROW clauses. Calculation restarts per partition; logical ordering can use multiple expressions; RANGE includes ordering peers whereas ROWS uses physical positions. An unbounded start retains the entire preceding partition. The frame features are explicitly supported from SQL Server 2012 onward."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "contradicted",
+              "rationale": "Without a tenant partition, the source says all input rows form one partition. An earlier nonzero event belonging to another tenant enters this running sum, so even its correct row frame and tie-breaker do not provide independently restarting tenant totals.",
+              "sourceIds": ["dp800-d1-over"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "supported",
+              "rationale": "TenantId isolates each tenant's rows, EventTime plus the unique per-tenant EventId settles ordering ties, and the explicit unbounded-to-current ROWS frame includes each event's complete preceding lifetime. The window expression retains each input row.",
+              "sourceIds": ["dp800-d1-over"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "contradicted",
+              "rationale": "For same-time events with increasing EventIds and amounts 3 and 6, the required progression is 3 then 9. This EventTime-only RANGE frame includes both timestamp peers for the first event and reports 9 there, failing the requested EventId tie-break.",
+              "sourceIds": ["dp800-d1-over"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "contradicted",
+              "rationale": "For a tenant's ordered amounts 3, 6, and 12, the third event should have lifetime total 21. The one-preceding frame includes only 6 and 12 and reports 18. It is a sliding calculation that cannot cover the many-event lifetime specified.",
+              "sourceIds": ["dp800-d1-over"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh r1 technical review, PASS 2 only. Rechecked grammar, SQL Server 2022 availability, and new peer/third-event examples against the raw reference. The supplied key uniqueness and non-null values settle logical-order requirements; no claim is made that a window ORDER BY also guarantees final presentation order. All distractors are syntactically credible and separately fail tenant isolation, peer handling, or frame extent. Jointly satisfying those three constraints supplies actual advanced reasoning. The key is somewhat longer but the bounded-frame distractor has comparable structure, so a reader must understand the changed clause. The scenario is original and distinct from 008's dense-rank recall within r1.",
+          "confidenceReason": "Independent examples produce different results for each incorrect frame/partition design, while the raw syntax supports b directly. The unambiguous tie-break and explicit cumulative extent prevent reliance on an assumed default frame."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "58fa617762a5d6234e920b594a21e2ab68d9befa9bb6f0d7d065738e2e35b599",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:18:00.668Z",
+        "verdict": "verified",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "A single unpartitioned running window keeps each tenant's total independent when events are ordered by time and ID.",
+            "whyIncorrectInContext": "If tenant A has an amount 5 before tenant B's amount 7, the unpartitioned cumulative calculation can give B a total of 12 instead of its own 7. EventId is not required to be globally unique either.",
+            "couldBeCorrectWhen": "It could be correct for an intentionally global running total over a suitably ordered input, or a report already restricted to one tenant. The requested report calculates separately for multiple tenants.",
+            "sourceIds": ["dp800-d1-over"],
+            "evidenceSummary": "The PARTITION BY section explicitly says omitting the clause treats the whole query result as one partition. Correct ordering and an unbounded frame do not create tenant boundaries."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "Tenant partitioning, time-plus-unique-ID ordering and an unbounded-preceding ROWS frame produce each tenant's row-by-row lifetime cumulative amount.",
+            "whyIncorrectInContext": "This is NOT incorrect: PARTITION BY isolates tenants, EventId orders timestamp ties within a tenant, and the frame includes every prior row through the current row without collapsing output rows.",
+            "couldBeCorrectWhen": "It is correct when the input contains the lifetime rows to be reported and the stated non-null per-tenant key is unique. It defines calculation order; a separate outer ORDER BY would control presentation order.",
+            "sourceIds": ["dp800-d1-over"],
+            "evidenceSummary": "The reference separately defines partition restart, logical ORDER BY, physical ROWS boundaries and UNBOUNDED PRECEDING. Its SUM running-total example and outer-versus-window ordering explanation support this composition."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "Ordering only by EventTime with a RANGE frame implements the required EventId tie-break and individual-event cumulative progression.",
+            "whyIncorrectInContext": "For amounts 5 and 7 at the same timestamp with increasing EventId, the requested first total is 5. RANGE over EventTime includes both timestamp peers and produces 12 for the first row as well as the second.",
+            "couldBeCorrectWhen": "It would fit timestamp-level cumulative totals where every event sharing a timestamp should receive the same total. If times happened to be unique, this particular peer difference could disappear, but uniqueness is not guaranteed.",
+            "sourceIds": ["dp800-d1-over"],
+            "evidenceSummary": "ROWS or RANGE states that RANGE CURRENT ROW includes all rows with the same ORDER BY values. Because this option omits EventId, peers are determined only by EventTime, contrary to the required tie-break."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "A frame starting one row before the current event is equivalent to the tenant's lifetime running sum.",
+            "whyIncorrectInContext": "For one tenant's amounts 5,7,11, the third lifetime total is 23. This frame includes only 7 and 11 and yields 18, forgetting the first event.",
+            "couldBeCorrectWhen": "It would be appropriate for a two-event moving sum, or could coincide with lifetime totals while a tenant has no more than two rows. The stem explicitly allows many events.",
+            "sourceIds": ["dp800-d1-over"],
+            "evidenceSummary": "The ROWS boundary definitions distinguish an unsigned number PRECEDING from UNBOUNDED PRECEDING at the partition start. Applying those documented boundaries gives the 18-versus-23 counterexample."
+          }
+        ],
+        "challenges": {
+          "scope": "The expressions calculate over a SQL Server 2022 report rowset. They preserve rows rather than grouping them, and the window's logical order is not a claim that the final result is physically returned in that order.",
+          "plan": "Neither a particular index nor a service plan is a correctness prerequisite. The article's performance advice is separate from its PARTITION, ORDER and frame semantics.",
+          "role": "This is a reporting calculation, not tenant authorization. PARTITION BY prevents mixing the sums but is not row-level access control and does not grant a caller permission to see tenant data.",
+          "preconditions": "Non-null inputs and EventId uniqueness within each tenant make the requested order determinate. The cumulative frame presumes the report input includes the relevant lifetime events; filtering history out before the window would be a different input.",
+          "featureStatus": "The raw OVER reference explicitly dates ROWS/RANGE support to SQL Server 2012 and later, encompassing SQL Server 2022. No SQL Server 2025-only or preview syntax is used.",
+          "sourceChanges": "I checked the actual raw OVER syntax, boundary definitions, limitations, SUM example and window-versus-outer-order explanation. Its linked ancestry is present in the saved window unit. Frozen source timestamps and exact objective/content bindings are unchanged.",
+          "stemSufficiency": "Each wrong answer fails a different explicit requirement: tenant isolation, tie-breaking, or lifetime extent. Tiny examples with two tenants, tied times, and a third event are all permitted by the stem.",
+          "explanationBounds": "The explanation properly describes RANGE peers for the ordering actually shown, not an absolute claim that RANGE is always wrong. It also avoids promising an index, performance improvement or sorted output.",
+          "reasoningDepth": "Advanced applied reasoning is earned by coordinating three independent window axes and a tied-time counterexample. Knowing SUM alone or adding PARTITION BY without understanding frames cannot solve the item.",
+          "answerClues": "All four answers use SUM OVER and near-parallel SQL. The correct expression is somewhat longer because it includes all requirements, but the bounded-frame distractor has almost the same structure. Length alone does not identify it."
+        },
+        "qualityNotes": "Independent score 46/48. The window design has genuine interacting constraints, but running-total examples are conventional and long inline SQL increases scanning load. Item 008 tests dense ranking, not partitioned cumulative frames; cohort 024/025 concern rank fusion and result-set joins, not window-frame extent. The existing-bank screen found no matching semantic task. Pronouns refer clearly to the report's tenant/event scope."
+      }
+    },
+    "dp800-direct-008": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "99a92892d78ae99c4c2f5e860183173372a729d70f8fba220b37538c8c4247d9",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-window-unit"],
+            "summary": "ROW_NUMBER assigns a distinct sequential number to every row, including rows with equal ordering values, so it does not give tied priorities the same rank."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-window-unit"],
+            "summary": "RANK gives ties the same rank but leaves gaps before the next distinct value, contrary to the consecutive-rank requirement."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-window-unit"],
+            "summary": "DENSE_RANK assigns the same rank to ties and advances to the next consecutive number for the next distinct ordering value."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-window-unit"],
+            "summary": "NTILE divides ordered rows into a specified number of approximately equal groups; it does not assign one consecutive rank per distinct priority value."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-008",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "99a92892d78ae99c4c2f5e860183173372a729d70f8fba220b37538c8c4247d9",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-window-unit",
+              "url": "https://learn.microsoft.com/en-us/training/modules/write-advanced-sql-code/3-window-functions",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\advanced-window.json",
+              "retrievedAt": "2026-09-14T22:17:21.774Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The actual Use ranking functions text distinguishes unique row numbering, tied competition ranks with gaps, tied dense ranks without gaps, and NTILE distribution buckets. Reread the definitions and dense-ranking example rather than relying on the unit's unrelated aggregate, LAST_VALUE, or percentile simplifications."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "contradicted",
+              "rationale": "For priorities 2, 2, 2, and 9, ROW_NUMBER assigns 1, 2, 3, and 4. Its unique numbering gives the three equal priorities different values, so lack of numerical gaps does not satisfy the shared-rank requirement.",
+              "sourceIds": ["dp800-d1-window-unit"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "contradicted",
+              "rationale": "RANK assigns 1, 1, 1, and 4 to priorities 2, 2, 2, and 9. It correctly preserves the tie but skips rank 2 for the next distinct value, directly conflicting with the consecutive-rank requirement.",
+              "sourceIds": ["dp800-d1-window-unit"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "supported",
+              "rationale": "The raw DENSE_RANK definition preserves a common rank for ties and increments without skipped numbers. It gives 1, 1, 1, and 2 for priorities 2, 2, 2, and 9, meeting both of the stem's conditions.",
+              "sourceIds": ["dp800-d1-window-unit"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "contradicted",
+              "rationale": "With four rows and NTILE(4), each row occupies a different bucket. Priorities 2, 2, 2, and 9 therefore split the tied priorities across buckets; the function distributes row counts rather than computing one rank per distinct priority.",
+              "sourceIds": ["dp800-d1-window-unit"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh r1 PASS 2 review using the raw ranking section and a four-row tie example. SQL Server 2022 supports these established functions. The stem supplies Priority ordering and asks for a function name, not runnable standalone calls without OVER, so the choice fragments are appropriate. Beginner / concept-recall accurately reflects the direct semantic distinction even though the objective skill is called advanced T-SQL. Function-name length is not a meaningful unique cue. The Priority context is not copied assessment content, and 007's cumulative aggregate problem does not duplicate this fact.",
+          "confidenceReason": "Each raw ranking definition yields a concrete result on the same four rows, and only DENSE_RANK preserves both common tie values and consecutive distinct ranks. The re-review requires no new feature assumption."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "99a92892d78ae99c4c2f5e860183173372a729d70f8fba220b37538c8c4247d9",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:22:18.312Z",
+        "verdict": "verified",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "ROW_NUMBER directly gives equal ordering values the same rank and the next distinct value the next rank.",
+            "whyIncorrectInContext": "For ordered priorities 1,1,1,2, ROW_NUMBER assigns 1,2,3,4. The first three tied priorities already fail the same-rank requirement.",
+            "couldBeCorrectWhen": "It is suitable for a distinct sequential number for every row, including tied priorities. It could coincide with dense ranks on a tie-free input, but the required tie behavior is not provided.",
+            "sourceIds": ["dp800-d1-window-unit"],
+            "evidenceSummary": "The ranking section explicitly states that ROW_NUMBER gives a unique sequential number to each row even for tied values and illustrates that outcome with equal product prices."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "RANK preserves ties without leaving a gap before the next distinct ordering value.",
+            "whyIncorrectInContext": "For priorities 1,1,1,2, RANK produces 1,1,1,4 rather than the required 1,1,1,2. It satisfies tie equality but fails consecutive distinct ranks.",
+            "couldBeCorrectWhen": "It fits competition ranking where tied rows share a position and subsequent rank numbers account for the number of preceding rows. It also happens to match dense ranking when there are no ties.",
+            "sourceIds": ["dp800-d1-window-unit"],
+            "evidenceSummary": "Apply window functions for analytics explicitly contrasts RANK's skipped numbers after ties with DENSE_RANK's consecutive numbering and provides parallel result examples."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "DENSE_RANK maps tied Priority values to one rank and increments once for each next distinct value.",
+            "whyIncorrectInContext": "This is NOT incorrect: the function's documented tie-preserving, gap-free behavior gives 1,1,1,2 for priorities 1,1,1,2, meeting both requirements together.",
+            "couldBeCorrectWhen": "It is correct for a report ranking distinct priority levels while retaining the same rank on ties. Ascending versus descending priority order changes which level comes first, not these tie/gap semantics.",
+            "sourceIds": ["dp800-d1-window-unit"],
+            "evidenceSummary": "The DENSE_RANK subsection says tied values receive the same rank and numbering continues with the next consecutive number. Its example is directly contrasted with ROW_NUMBER and RANK."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "NTILE(4) assigns one consecutive rank per distinct Priority while preserving ties regardless of group sizes.",
+            "whyIncorrectInContext": "With eight priorities 1,1,1,2,3,4,5,6, four roughly equal two-row buckets split the first three tied values between buckets 1 and 2. The bucket number is not a rank per distinct priority.",
+            "couldBeCorrectWhen": "It would fit a quartile or balanced four-group distribution requirement. A specially balanced dataset might accidentally resemble dense ranking, but that coincidence is not the requested function semantics.",
+            "sourceIds": ["dp800-d1-window-unit"],
+            "evidenceSummary": "The NTILE subsection defines distribution into a specified number of roughly equal groups, not grouping by each distinct value. The equal-size-bucket counterexample follows that documented rule."
+          }
+        ],
+        "challenges": {
+          "scope": "This asks which SQL Server ranking function has particular tie and gap semantics, not for a complete SELECT or an ordering guarantee for the displayed report.",
+          "plan": "No cloud plan, index design or special deployment option affects the choice between these four ordinary ranking functions. The question does not claim that any feature entitlement is being provisioned.",
+          "role": "The report author selects a calculation over data they can already query. The question makes no additional claims about roles, row-level security or permission escalation.",
+          "preconditions": "Priority supplies the ordering expression, and equal values must share ranks. No assumption about four distinct values or equal group sizes is available to rescue NTILE. Direction of ordering does not change the requested tie/gap behavior.",
+          "featureStatus": "The frozen SQL training unit teaches these as the four existing SQL Server ranking functions. The candidate does not use any newer function or preview-only SQL syntax.",
+          "sourceChanges": "I read the raw ranking definitions and example results, rather than relying on the generation summary. The unit's URL and 2026-09-14T22:17:21.774Z retrieval match the frozen manifest; its dated source-review snapshot remains unchanged.",
+          "stemSufficiency": "Two explicit properties are sufficient to choose DENSE_RANK. Although several functions coincide on special tie-free datasets, the task asks for their guaranteed semantic behavior for ties, not one lucky sample output.",
+          "explanationBounds": "The explanations correctly distinguish distinct row numbers, competition ranks, dense ranks and equal-size buckets. I did not import the unit's unrelated simplified LAST_VALUE or percentile discussion.",
+          "reasoningDepth": "Beginner/concept-recall is honest. This is entry-level recognition of two ranking properties, not advanced query construction merely because the objective uses the phrase advanced T-SQL.",
+          "answerClues": "All options are short valid function invocations. DENSE_RANK's name hints at its semantics, as expected in a foundational identification question, but length and grammatical agreement do not distinguish the answer."
+        },
+        "qualityNotes": "Independent score 46/48. This is intentionally foundational and conventional. NTILE is a weaker distractor than RANK, though the four functions form a legitimate comparison set. Within this batch, 007 treats row-frame aggregation rather than ranking; cohort 024 uses already-supplied ranks in RRF arithmetic. Existing Azure Search semantic-ranking questions address retrieval reranking, not SQL dense-rank semantics. No blocking duplicate was found."
+      }
+    },
+    "dp800-direct-009": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "295faa1f509a738259db7cdc15e61a9eab794fba9e4b5c0744cd63a95a200846",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+            "summary": "A .prompt.md file represents a reusable task prompt. That differs from the repository-wide instruction file included automatically for the stated purpose."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+            "summary": "Open-file code can provide context to an assistant, but a comment in one SQL script is not the documented automatically included repository instruction file."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+            "summary": "A chat-local prompt repeats context for that conversation and does not supply the shared repository instruction file requested."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+            "summary": "The teaching unit identifies this file at the repository root's .github directory as repository-wide custom instructions, distinct from task-specific prompt files."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-009",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "295faa1f509a738259db7cdc15e61a9eab794fba9e4b5c0744cd63a95a200846",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-ai-instructions",
+              "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/6-create-configure-copilot-instruction-files",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\tools-instructions.json",
+              "retrievedAt": "2026-09-14T22:17:22.373Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "Reread the raw repository-file definition and creation steps: copilot-instructions.md belongs in .github at the repository root and supplies common context. The text separately places reusable .prompt.md tasks under .github/prompts and describes referencing them in chat. Its testing advice treats instructions as behavioral guidance rather than mandatory enforcement."
+            },
+            {
+              "sourceId": "dp800-d1-ai-security",
+              "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/3-interpret-security-impact",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\tools-security.json",
+              "retrievedAt": "2026-09-14T22:17:21.442Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The reread raw context list names open-file code and natural-language prompts as input context, explaining the limited role of the SQL-comment and one-off-chat alternatives. The review section recommends checking generated code. None of the unit's broad training/retention or filtering claims is necessary or adopted for this file-location decision."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "contradicted",
+              "rationale": "A file under .github/prompts ending in .prompt.md is the reusable task-prompt mechanism described by the source. It may contain SQL guidance, but invoking a task prompt is precisely different from the automatically included repository instruction context requested.",
+              "sourceIds": ["dp800-d1-ai-instructions"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "contradicted",
+              "rationale": "An open-file comment can contribute incidental code context, as the security unit notes. It is not the documented repository instruction file and therefore does not establish the automatic repository-wide guidance mechanism for other files and conversations.",
+              "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "contradicted",
+              "rationale": "The current chat can receive a pasted instruction, but that is the repeated prompting the source's repository-file feature is designed to avoid. A one-conversation prompt does not create a shared repository instruction file.",
+              "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "supported",
+              "rationale": "The raw source names exactly .github/copilot-instructions.md as the repository-level location and describes its contents as automatically supplied context. With instruction support already enabled in the stem, it is the specified shared guidance file.",
+              "sourceIds": ["dp800-d1-ai-instructions"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh r1 technical review from both actual receipts, PASS 2 only. Rechecked the path literal, repository scope, reusable-task distinction, and transient-context alternatives. The support-enabled premise is material: the answer does not promise equivalent behavior in unsupported Copilot clients or infer a particular IDE setting. No model-compliance, training, or retention guarantee is present. File paths are identifiers rather than executable code. Beginner recall is appropriate and the key is not the longest option. The shared-guidance framing is original; its mechanism/location concept remains separate from 010's authorization boundary.",
+          "confidenceReason": "The reread instruction unit explicitly differentiates the two repository file mechanisms, while the security unit explains why open code and chat prompts are context but not that shared-file mechanism. The supplied support prerequisite leaves d unambiguous."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "295faa1f509a738259db7cdc15e61a9eab794fba9e4b5c0744cd63a95a200846",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:22:18.312Z",
+        "verdict": "verified",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "A SQL review .prompt.md file is the automatically included repository-wide instruction file described in the requirement.",
+            "whyIncorrectInContext": "The unit classifies .prompt.md files in .github/prompts as reusable task prompts referenced in chat. That is the explicitly excluded task-invocation mechanism, not the repository instruction file.",
+            "couldBeCorrectWhen": "This path would fit a reusable SQL-review task that users invoke or reference when they need that workflow, rather than persistent repository-wide guidance supplied automatically.",
+            "sourceIds": ["dp800-d1-ai-instructions"],
+            "evidenceSummary": "The instruction unit distinguishes repository instructions in .github/copilot-instructions.md from reusable .prompt.md task templates in .github/prompts and describes their use through chat references or a prompt picker."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "A comment in one open SQL script supplies the documented automatically included repository-wide instructions.",
+            "whyIncorrectInContext": "Open-file content can contribute local context, but the comment is not the documented repository instruction artifact. Its presence in the current editor does not establish shared repository-wide inclusion.",
+            "couldBeCorrectWhen": "It could help explain the particular SQL script currently being edited, where local code context rather than a durable team-wide instruction mechanism is the goal.",
+            "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"],
+            "evidenceSummary": "The security unit lists open editor files among possible Copilot context. The instructions unit separately defines the dedicated repository file and its placement, demonstrating the difference between local content and shared instructions."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "Pasting guidance into one chat provides the persistent automatic repository context requested by the team.",
+            "whyIncorrectInContext": "The pasted prompt only supplies that interaction's guidance and still requires the repeated prompting the stem rejects. It creates no repository instruction file.",
+            "couldBeCorrectWhen": "A one-off question or temporary preference for the current conversation would appropriately use a chat prompt rather than changing team-wide repository guidance.",
+            "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+            "evidenceSummary": "The instructions unit introduces custom files specifically as an alternative to repeating context in each prompt; the security unit identifies natural-language prompts as another input channel."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "The repository-root .github/copilot-instructions.md file holds the automatically supplied shared guidance when repository instruction support is enabled.",
+            "whyIncorrectInContext": "This is NOT incorrect: the saved unit explicitly names that filename and folder for repository instructions and explains that the files provide context without repeating it in each prompt.",
+            "couldBeCorrectWhen": "It is correct for the stated enabled repository-instruction workflow. It provides guidance, not guaranteed adherence, and should not be generalized to unsupported clients or arbitrary file locations.",
+            "sourceIds": ["dp800-d1-ai-instructions"],
+            "evidenceSummary": "Create a repository instruction file gives the .github folder and copilot-instructions.md filename. The introductory explanation describes automatic contextual guidance; its iterative-testing advice does not promise enforcement."
+          }
+        ],
+        "challenges": {
+          "scope": "The requirement is the documented repository-wide instruction file in an already supported and enabled Copilot workflow. It is not a statement that every Copilot surface loads every instruction format.",
+          "plan": "The team already uses Copilot with repository instructions enabled. The answer does not depend on inventing a subscription entitlement, organizational policy setting or particular version of a settings UI.",
+          "role": "This is team-maintained repository guidance, not an organization-owner policy or a database role assignment. The file is context for assistance, not a security authorization artifact.",
+          "preconditions": "Repository instruction support is expressly enabled and the task requires automatic shared context rather than explicit task invocation. The answer's path is relative to the repository root, as described by the unit.",
+          "featureStatus": "The frozen unit teaches the basic repository instruction mechanism as an existing feature. No preview-only client integration or new setting is asserted, and the answer remains scoped to supported enabled use.",
+          "sourceChanges": "I read both raw MCP units, checking the two file types and the distinct open-file/prompt input channels. Their URLs and retrieval times match the frozen snapshots. Broad data-retention and model-training claims in the security unit were not used.",
+          "stemSufficiency": "Other supported instruction mechanisms could exist, but none of the three listed alternatives is the requested repository file. Explicit support and automatic scope prevent ambiguity with reusable tasks or transient editor context.",
+          "explanationBounds": "The answer carefully says instruction files guide behavior rather than enforce it. The automated absolute-wording warning is triggered by a denied guarantee, not an unsupported promise of perfect model obedience.",
+          "reasoningDepth": "Beginner/concept-recall is honest: the learner identifies a documented file type and scope. The SQL context does not transform this into an advanced database-security or prompt-engineering task.",
+          "answerClues": "Two options are not repository file paths and are easy to eliminate from a file-location question; the stem also clearly excludes a reusable task prompt. I scored distractor plausibility 2 for that conspicuous weakness rather than treating all four as equally competitive."
+        },
+        "qualityNotes": "Independent score 45/48. This passes as a foundational file/scope distinction, not as a strong applied encounter. The two non-file alternatives and explicit exclusions make it easy. Compared with gh300-011, which permits either reusable prompts or instructions for an MCP workflow, this item specifically distinguishes automatic repository instructions from invoked prompts. gh300-010 and gh300-b-028 test path-specific agent exclusion and branch selection instead. These are real factual distinctions; the same filename appearing is not itself a semantic duplicate."
+      }
+    },
+    "dp800-direct-010": {
+      "generation": {
+        "authorId": "copilot-dp800-direct-author",
+        "generatedAt": "2026-09-14T23:22:42.918Z",
+        "questionFingerprint": "ec0b7bee0966656d859478b5fdbaa627e767c1c0c4baf070fd3c9904308770d5",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "claims": [
+          {
+            "choiceId": "a",
+            "sourceIds": ["dp800-d1-ai-security"],
+            "summary": "The security unit recommends dedicated least-privileged, read-only connections for schema-query scenarios. Database permissions restrict permitted operations independently of model guidance."
+          },
+          {
+            "choiceId": "b",
+            "sourceIds": ["dp800-d1-ai-security", "dp800-d1-ai-instructions"],
+            "summary": "Custom instructions influence generated suggestions but do not remove the connection's database privileges, so write prevention still depends on model behavior."
+          },
+          {
+            "choiceId": "c",
+            "sourceIds": ["dp800-d1-ai-security"],
+            "summary": "Network restrictions address where a connection can be reached; they do not remove the write permissions of a principal that successfully connects."
+          },
+          {
+            "choiceId": "d",
+            "sourceIds": ["dp800-d1-ai-security"],
+            "summary": "Human review is recommended, but retaining write authorization does not establish the requested database permission boundary independent of that review process."
+          }
+        ]
+      },
+      "technical": {
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "review": {
+          "questionId": "dp800-direct-010",
+          "authorId": "copilot-dp800-direct-author",
+          "reviewerId": "dp800-independent-technical-01",
+          "questionFingerprint": "ec0b7bee0966656d859478b5fdbaa627e767c1c0c4baf070fd3c9904308770d5",
+          "reviewedAt": "2026-09-15T01:35:28.145Z",
+          "verdict": "verified",
+          "sourceReviews": [
+            {
+              "sourceId": "dp800-d1-ai-security",
+              "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/3-interpret-security-impact",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\tools-security.json",
+              "retrievedAt": "2026-09-14T22:17:21.442Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The raw MCP security paragraph recommends a dedicated read-only service account when the assistant only needs schema queries. Private endpoints/VPNs are described separately under network security, and generated SQL is separately subject to human review. These clauses distinguish a database authorization boundary from useful network or process controls."
+            },
+            {
+              "sourceId": "dp800-d1-ai-instructions",
+              "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-sql-solutions-ai-assisted-tools/6-create-configure-copilot-instruction-files",
+              "evidencePath": ".grounding\\dp-expansion\\authors\\design\\raw\\tools-instructions.json",
+              "retrievedAt": "2026-09-14T22:17:22.373Z",
+              "lastReviewedAt": "2026-09-14T23:22:42.902Z",
+              "supportingSummary": "The reread raw instruction definition says its text is context that influences suggestions; the best-practice section advises testing whether guidance is followed. This describes model behavior, not an operation that changes SQL privileges. A no-write instruction therefore cannot substitute for removing write authorization from the connection."
+            }
+          ],
+          "choiceReviews": [
+            {
+              "choiceId": "a",
+              "assessment": "supported",
+              "rationale": "A principal limited to the approved reads lacks authority for unapproved writes regardless of the model's intent. This is the concrete least-privilege, read-only-account control recommended in the raw MCP security section for schema assistance.",
+              "sourceIds": ["dp800-d1-ai-security"]
+            },
+            {
+              "choiceId": "b",
+              "assessment": "contradicted",
+              "rationale": "Guidance can ask the model to avoid writes, but the unchanged writable principal is still authorized to perform them. A model or tool action that ignores the guidance would not meet an independent database permission restriction, so the required boundary is absent.",
+              "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"]
+            },
+            {
+              "choiceId": "c",
+              "assessment": "contradicted",
+              "rationale": "A private network limits endpoint reachability. Once this workflow connects through that network using the same principal, its database write rights remain unchanged. Reachability protection is complementary to, not a replacement for, read-only authorization.",
+              "sourceIds": ["dp800-d1-ai-security"]
+            },
+            {
+              "choiceId": "d",
+              "assessment": "contradicted",
+              "rationale": "Human review can detect unsafe generated SQL and is recommended by the source, but it does not change the connection's allowed database operations. Keeping write permissions cannot establish the specific authorization boundary merely by adding a review process.",
+              "sourceIds": ["dp800-d1-ai-security"]
+            }
+          ],
+          "checks": {
+            "answerDefensible": true,
+            "correctOptionsSupported": true,
+            "distractorsIncorrect": true,
+            "explanationsSupported": true,
+            "directSources": true,
+            "featureStatus": true,
+            "currentTerminology": true,
+            "prerequisitesComplete": true,
+            "codeReviewed": true,
+            "originalContent": true,
+            "duplicatesReviewed": true,
+            "qualityReviewed": true
+          },
+          "verificationNotes": "Fresh r1 PASS 2 review. Re-examined every proposed control against the actual MCP, human-review, and instruction paragraphs, excluding generic provider training/retention and filter assertions. Existing SQL Server access and an expressly read-only approved workflow are sufficient for this control-selection question; no concrete MCP product's GA status is inferred from the established permission principle. No runnable GRANT or endpoint configuration is supplied. Intermediate is a modest but defensible control-layer application, not an advanced claim. Similar option lengths and useful-but-wrong-layer alternatives are acceptable. The original scenario tests a permission boundary rather than 009's instruction-file location.",
+          "confidenceReason": "The raw recommendation is directly about a schema-querying MCP connection with restricted database privileges. Rechecking the other paragraphs confirms that network, human-process, and model-guidance controls do not themselves revoke the principal's write authority."
+        }
+      },
+      "adversarial": {
+        "questionFingerprint": "ec0b7bee0966656d859478b5fdbaa627e767c1c0c4baf070fd3c9904308770d5",
+        "objectiveVersion": "March 12, 2026",
+        "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+        "reviewerId": "dp800-independent-adversarial-design-01",
+        "reviewedAt": "2026-09-15T02:22:18.312Z",
+        "verdict": "rejected",
+        "optionChallenges": [
+          {
+            "choiceId": "a",
+            "claimRepresented": "A dedicated principal limited to approved reads places write prevention in database authorization rather than model behavior.",
+            "whyIncorrectInContext": "This is NOT technically incorrect: a connection authorized only for the approved read operations lacks the unwanted write authority. It directly addresses the database permission boundary requested by the stem.",
+            "couldBeCorrectWhen": "It is correct for a schema-assistance connection whose approved operations are read-only, with the limited principal actually used by that connection and no alternative write-capable authorization path included in its privileges.",
+            "sourceIds": ["dp800-d1-ai-security"],
+            "evidenceSummary": "The MCP server security section expressly recommends least-privilege connections and dedicated read-only service accounts when the assistant only queries schema information. The candidate selects exactly that control."
+          },
+          {
+            "choiceId": "b",
+            "claimRepresented": "An instruction telling the model not to write creates a database-enforced read-only boundary while the connection keeps write authority.",
+            "whyIncorrectInContext": "Instructions supply model context; they do not remove the principal's write permission. A model response that ignores the instruction would still run under a write-capable principal.",
+            "couldBeCorrectWhen": "It would be useful as behavioral guidance when writes are technically permitted but the team wants a preference or planning rule, or as an additional layer after the database privileges have already been restricted.",
+            "sourceIds": ["dp800-d1-ai-instructions", "dp800-d1-ai-security"],
+            "evidenceSummary": "The instructions unit describes influencing suggestions and iterative compliance testing. The security unit separately prescribes least-privileged read-only MCP accounts, distinguishing contextual guidance from authorization."
+          },
+          {
+            "choiceId": "c",
+            "claimRepresented": "A private network alone removes write authority from a database principal that still has permission to modify data.",
+            "whyIncorrectInContext": "A successful connection from inside the allowed network would retain the same database write permissions. Restricting reachability does not implement the requested operation-level boundary.",
+            "couldBeCorrectWhen": "It would fit a separate requirement to constrain MCP network exposure or require private connectivity. It can complement least privilege, but cannot replace the specified read-only principal.",
+            "sourceIds": ["dp800-d1-ai-security"],
+            "evidenceSummary": "The source lists private endpoints or VPNs under Network security, separately from dedicated read-only accounts under the MCP authentication/least-privilege guidance. They solve different parts of the security design."
+          },
+          {
+            "choiceId": "d",
+            "claimRepresented": "Human review of generated SQL changes the connection's database authorization to prevent writes independently of the review process.",
+            "whyIncorrectInContext": "Review may detect unwanted SQL, but the retained principal remains authorized to write. The requested boundary is enforced by permissions, not by a reviewer consistently catching or rejecting each statement.",
+            "couldBeCorrectWhen": "It is appropriate for validating generated code against security and correctness requirements, and should complement an already least-privileged connection. It is not itself an authorization change.",
+            "sourceIds": ["dp800-d1-ai-security"],
+            "evidenceSummary": "Evaluating AI suggestions critically recommends human review and checking permission statements. The distinct MCP section recommends least-privileged accounts; the review recommendation does not claim to revoke database permissions."
+          }
+        ],
+        "challenges": {
+          "scope": "The technical requirement is specifically database authorization for an existing SQL Server MCP connection, not network isolation, prompt quality or a promise that any MCP server is universally read-only.",
+          "plan": "No Copilot plan or particular MCP product entitlement is necessary to apply the documented least-privilege principle. The workflow is already configured; the question does not establish a deployment or licensing procedure.",
+          "role": "The relevant principal is the database identity actually used by the MCP connection. A human reviewer and repository-instruction author have different functions; their involvement does not alter that identity's permissions.",
+          "preconditions": "The premise gives existing write authority and an approved read-only workload. The selected principal must genuinely be limited to approved reads, including its effective privileges; the item does not provide a concrete grant/role configuration to evaluate.",
+          "featureStatus": "The source's read-only-account recommendation is a non-preview security design principle. This review does not convert that principle into a claim that every SQL MCP implementation has a named GA read-only mode.",
+          "sourceChanges": "I read the frozen security and instruction units and matched their recorded URLs/times. The technical answer remains supported. No new source change explains the rejection: it is a design/difficulty failure in this exact authored snapshot.",
+          "stemSufficiency": "The stem is technically sufficient and has one correct answer, but it states both the problem and solution category so directly that little analysis remains: writable principal, read-only requirement, and database authorization boundary.",
+          "explanationBounds": "The explanations accurately distinguish guidance, network protection and human review from database privileges. They do not need a factual correction; technical correctness is separate from the failed realism rubric.",
+          "reasoningDepth": "The intermediate label is not earned in this exact item. There is no effective-permission conflict, role membership, object scope, or competing least-privilege design to resolve. It reduces to recognizing read-only authorization from a near-restatement of the requirement.",
+          "answerClues": "Every wrong answer begins by keeping the writable principal; the sole answer that changes it says it is limited to the approved read operations, closely echoing the stem. The prompt alternative is also expressly disallowed by the stem. This is a substantial answer-pattern cue, not merely necessary technical vocabulary."
+        },
+        "qualityNotes": "Rejected on independent design score 43/48, not on technical correctness or missing source ancestry. Distractor plausibility is 2 and difficulty authenticity is 2 because the only permission-changing option restates the desired boundary while all three distractors visibly retain write authority. Originality is 3 for a familiar abstract least-privilege formulation. Existing gh300-012 and gh600-b-001/gh600-c-039 constrain tools, while fabric-005 combines Fabric connectivity with object grants; the database-versus-tool/network distinction remains semantically different, so duplication is not the rejection reason. Any authored difficulty or option repair must restart all three passes."
+      }
+    }
+  }
 }

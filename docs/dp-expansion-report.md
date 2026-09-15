@@ -1,5 +1,62 @@
 # DP-800 / DP-420: blocked partial contribution
 
+## Resumed direct authoring
+
+**First successful full-review cohort result:** items 001-005 and 007-009
+completed genuine technical and adversarial review with rubric totals
+46, 47, 46, 45, 44, 46, 46 and 45. Their unchanged author hashes, source snapshots,
+objective bindings and separate reviewer identities pass the repository gates.
+Item 010 is rejected at 43/48 for construction/difficulty; item 011r1 is
+manual-review-required at 36/48. Those failed results are not waived.
+
+The installed package now has **8 eligible reviewed questions, 1 rejected and
+1 manual-review record; 0 playable questions** because the 25-item Study minimum
+and verified domain breadth are not yet met. The consolidated ledger contains
+566 actual independently authored records. All 556 baseline records compare
+unchanged; the ten additions exactly match their respective final attestations.
+
+The user subsequently instructed autonomous continuation. The original stopped
+handoff below is retained as historical evidence, not a current claim that no
+authoring occurred. Local unfinished/RED checkpoints are
+`54cf3b8684a7fe2786b4478cbfaaec61e656a087` and
+`f7791529cc031301e230e4750bf74dde5b25fa79`; neither is a tested delivery.
+
+The initial resumed cohort now contains **27 original candidate records**:
+10 database-design, 10 security/deployment, and 7 AI/RAG items. Their actual
+generation snapshots are `batch-01r1`, `batch-02`, and `batch-03` under ignored
+`.grounding/dp-expansion/direct`, combined without alteration in `cohort-01`.
+The initial batch-01 snapshot had a source-skill mapping defect; its replacement
+is a new immutable generation with new hashes, not an edited approval.
+
+Candidate coverage is 3 domains, 11 skills and 25 subskills; difficulty is
+4 beginner, 14 intermediate and 9 advanced. There are 23 applied items, 3 code
+items and 1 multi-select. These counts are **not reviewed or playable coverage**.
+No Expert labels were manufactured to meet the desired mix.
+
+All 56 curated canonical source URLs plus 3 recorded locale-neutral training
+targets passed online availability checks at **2026-09-15T00:57:01.961Z**.
+This required a tests-first correction for actual SQL documentation moniker
+redirects; 115 focused source/legacy tests passed with unchanged permissions and
+quality thresholds. Availability is not factual question verification.
+
+The first actual technical attestation withheld approval for item
+`dp800-direct-011` because one explanation confused granting a permission with
+performing a schema change. That original review is preserved. A newly authored
+repair, not an edited old approval, received a fresh technical pass at
+**2026-09-15T01:28:05.564Z**, bound to
+`6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081`.
+The separate adversarial/rubric context must still complete; this is not a fully
+verified or playable question. A ten-item technical review remains assigned to the revised first
+batch. A separate ten-item researcher stopped on a missing system-Chrome
+dependency in its browser tool and produced no attestation; the sync tool then
+refused a follow-up. A narrower one-item review uses the saved actual official
+source/DOM/redirect evidence without that browser dependency. These tooling
+failures are not question rejections. Further authoring expansion is paused until
+a real technical/adversarial verification cycle succeeds. The seven genuine
+production-content acceptance failures remain visible, and no push is authorized.
+
+## Historical stopped handoff
+
 **The requested question banks and end-to-end delivery are not complete.**
 This local branch contains integration and source-grounding work, not a new
 playable DP bank. No feature-branch commit, push, pull request, merge or deployment
