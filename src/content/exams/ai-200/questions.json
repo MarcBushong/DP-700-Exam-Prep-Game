@@ -81,10 +81,10 @@
       "a"
     ],
     "explanation": "Use the recorded manifest digest. Moving a tag changes the image that the tag identifies, but not the identity of the retained manifest.",
-    "deepExplanation": "Digest addressing uses registry/repository@sha256:hash. A convenient tag can be useful for following a maintained release, but the current value of either moved tag cannot identify the historical artifact reliably.",
+    "deepExplanation": "Digest addressing uses registry/repository@sha256:hash. A tag can follow a maintained release, but neither moved tag still selects the incident image. The explicit retention condition matters: knowing a digest does not restore a removed manifest.",
     "whyOtherAnswersAreWrong": {
-      "b": "A stable production tag identifies the image it currently references. It can intentionally follow updates, but the stem says that tag moved after the incident, so it no longer selects the recorded artifact.",
-      "c": "A release-looking name is still a mutable tag unless a non-reuse or locking policy protects it. This release tag explicitly moved, so its name is not evidence of the incident image."
+      "b": "The current production tag selects its current image, not the incident image after the stated move. Tag-based addressing is useful when the goal is to follow a maintained version rather than reproduce historical content.",
+      "c": "A release-looking name is still a mutable tag. A never-reused tag can preserve a particular build reference, but this release tag explicitly moved, so it no longer selects the recorded image."
     },
     "objectiveDomain": "develop-containerized-solutions-on-azure",
     "skill": "implement-container-application-hosting",
@@ -93,18 +93,18 @@
     "complexity": "scenario-based",
     "sourceIds": [
       "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
-      "ai200-20260914-doc-acr-tags"
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images"
     ],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
-      "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version"
+      "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/4-tag-version-images"
     ],
     "documentationTitles": [
       "Registries, repositories, and artifacts",
-      "Recommendations for tagging and versioning container images"
+      "Tag and version images"
     ],
-    "generatedAt": "2026-09-14T18:39:51.882Z",
-    "lastValidatedAt": "2026-09-14T18:39:51.882Z",
+    "generatedAt": "2026-09-14T22:11:04.246Z",
+    "lastValidatedAt": "2026-09-14T22:11:04.246Z",
     "featureStatus": "GA",
     "tags": [
       "ai-200",
@@ -112,12 +112,12 @@
       "acr"
     ],
     "conceptId": "acr.tag-versus-digest-addressing",
-    "verificationStatus": "manual-review-required",
+    "verificationStatus": "rejected",
     "verifiedAgainstSourceIds": [],
-    "verificationNotes": "Source-provenance adjudication: c-002 must no longer be verified because its unchanged sourceIds include the withdrawn ACR tagging article. The retained storage unit supports the historical-digest key, but adequate evidence elsewhere does not excuse an unapproved cited source. The actual versioning parent does not identify the selected article. Preserve the exact question and earlier passes; no source removal or substituted citation is authorized. This is pending curation, not a finding that the digest answer is false. Earlier technical/editorial notes retained without new classification review: Both current tags fail the stated historical selection despite plausible naming. Pronouns have explicit antecedents. Distinct from c-003 servicing policy and c-004 producing-build traceability; no authored field was repaired.",
+    "verificationNotes": "Fresh independent continuation PASS 3 on the new source-repaired authored fingerprint. Rejected, 42/48 with originality 0. The fresh 22:33:53.351Z semantic audit identifies SEM-C001 against existing gh600-b-034. I independently read that full question and agree: both supply an exact historical identifier and test using it instead of a moving name. The retention premise is already satisfied, not a second tested operation. Technical correctness survives but originality does not. The c-002/s-004 manual overlap is also recorded, without changing s-004. Preserve all existing questions; no renamed reskin or old approval inheritance. Semantic comparison: I agree with SEM-C001 after reading all choices and explanations of gh600-b-034: the complete shared decision is supplied fixed historical identity versus a moving named reference. ACR digest syntax and retained-manifest wording add context, not an independently tested operation. Reject c-002; retain the existing GH record untouched. The s-004 historical-secret-value comparison remains an additional manual editorial issue, not a reason to approve c-002 or modify s-004. Distinctions from c-005 structure, c-007 omission default and c-008 untagged storage are real but do not override SEM-C001.",
     "requiresManualReview": true,
     "sourceLastReviewedAt": "2026-09-14T18:11:28.429Z",
-    "confidenceReason": "High confidence in withholding current strict approval; technical digest-versus-moved-tag reasoning remains supported by the historical reading and approved storage unit. The cited document provenance is not established."
+    "confidenceReason": "High confidence in the technical key and in withholding this candidate for a blocking same-fact duplicate after direct comparison. Source repair fixes provenance, not semantic originality. Its final metadata must not claim verification or playable coverage."
   },
   {
     "id": "ai200-c-003",
@@ -140,11 +140,11 @@
     "correctAnswer": [
       "c"
     ],
-    "explanation": "Maintain a stable tag for the serviced release line. Repointing that tag to a patched base image lets the tracked dependency participate in base-image-triggered rebuilds.",
-    "deepExplanation": "Stable means a maintained release intent, not frozen content. This policy concerns build inputs; the resulting application images can still receive unique deployment tags and require deliberate production rollout.",
+    "explanation": "Maintain a stable tag for the serviced release line. Repointing that tag to a patched base image lets the already-tracked dependency trigger application-image rebuilds.",
+    "deepExplanation": "The tagging unit explicitly reserves stable tags for serviced base images, while the Tasks unit describes base-image triggers for private dependencies in the same registry. Stable means a maintained release reference, not frozen content. Resulting application builds can use never-reused deployment tags; choosing a new production build remains a separate release decision.",
     "whyOtherAnswersAreWrong": {
-      "a": "A digest pins exact content and is appropriate when reproducibility requires a frozen input. It does not follow the updated release-line tag and conflicts with receiving servicing without reference edits.",
-      "b": "A never-reused tag keeps identifying its particular build. That policy is useful for deliberate deployment selection, but a Dockerfile left on the original build does not follow later base-image servicing."
+      "a": "A digest pins exact content and is appropriate when reproducibility requires a frozen input. Leaving the original digest unchanged does not select a later patched base image.",
+      "b": "A never-reused tag continues to identify its particular build. That policy supports deliberate deployment selection and rollback, but leaving a Dockerfile on the original build does not follow later base-image servicing."
     },
     "objectiveDomain": "develop-containerized-solutions-on-azure",
     "skill": "implement-container-application-hosting",
@@ -153,21 +153,21 @@
     "complexity": "scenario-based",
     "sourceIds": [
       "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
-      "ai200-20260914-doc-acr-tags",
-      "ai200-20260914-doc-acr-tasks"
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images",
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
     ],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
-      "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version",
-      "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview"
+      "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/4-tag-version-images",
+      "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/3-build-run-acr-tasks"
     ],
     "documentationTitles": [
       "Registries, repositories, and artifacts",
-      "Recommendations for tagging and versioning container images",
-      "Automate container image builds and maintenance with Azure Container Registry tasks"
+      "Tag and version images",
+      "Build and run images with ACR Tasks"
     ],
-    "generatedAt": "2026-09-14T18:39:51.882Z",
-    "lastValidatedAt": "2026-09-14T18:39:51.882Z",
+    "generatedAt": "2026-09-14T22:11:04.246Z",
+    "lastValidatedAt": "2026-09-14T22:11:04.246Z",
     "featureStatus": "GA",
     "tags": [
       "ai-200",
@@ -175,12 +175,17 @@
       "acr"
     ],
     "conceptId": "acr.stable-base-image-tags",
-    "verificationStatus": "manual-review-required",
-    "verifiedAgainstSourceIds": [],
-    "verificationNotes": "Source-provenance adjudication: both doc-acr-tags and doc-acr-tasks have been withdrawn. The retained storage citation alone does not provide the full maintained-base servicing and dependent-task behavior used in c-003. Each parent teaches a feature without identifying the selected documentation. Preserve the stable-tag technical interpretation as history but withhold current approval. The earlier c-003/c-012 keep-distinct analysis is not a provenance permission and is not reclassified here. Earlier technical/editorial notes retained without new classification review: Read completed semantic keep-distinct c-003/c-012 and both complete questions. Agree: maintained input-reference policy differs from choosing the dependency event after tracking already exists. This distinction is not approval of c-012 difficulty.",
-    "requiresManualReview": true,
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-14T22:42:08.027Z",
+    "verifiedAgainstSourceIds": [
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images",
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
+    ],
+    "verificationNotes": "Fresh independent continuation PASS 3 on the new source-repaired authored fingerprint. Verified, 47/48 after reading the fresh exact-hash semantic assessment and full peers. The longer key is a mild editorial cue, not a substitute for fixed-versus-serviced input reasoning. c-012 already supplies the maintained reference and tests event selection, while this item must choose the reference policy; c-011 tests a source-commit trigger. Those peers are not granted source or technical approval by this distinction. Semantic comparison: Read the fresh replacement c-003/c-012 distinction and all c-011/c-012 options. c-003 chooses stable versus frozen input references; c-012 assumes the maintained reference and chooses the triggering event. c-011 chooses a source-commit trigger. Current c-003 remains distinct, but the peers’ unchanged provenance/status problems are not repaired. This new comparison supersedes only the prior pair binding for current use, never its historical clock.",
+    "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T18:11:28.429Z",
-    "confidenceReason": "High confidence that the exact unchanged citation set cannot meet strict approval after two withdrawals; this is not an asserted reversal of base-image servicing behavior."
+    "confidenceReason": "High confidence from independently combining the exact stable-base training recommendation with the same-registry Tasks dependency condition. No unsupported deployment, trigger-creation or compatibility guarantee is added."
   },
   {
     "id": "ai200-c-004",
@@ -207,12 +212,12 @@
     "correctAnswer": [
       "b"
     ],
-    "explanation": "Combine the build-system identifier with that system’s unique build ID, and never reuse the combined tag. A commit alone cannot distinguish rebuilds caused by a changed base image.",
-    "deepExplanation": "The product guidance explicitly warns that commit-only tags are semi-stable when a base image changes. Prefixing a build ID with its build system also avoids collisions between independently numbered pipelines; this remains an enforced tagging policy, not digest immutability.",
+    "explanation": "Combine the build-system name with its locally unique build ID, and do not reuse that combined tag. This distinguishes the producing execution even when both systems number builds independently or rebuild the same application commit.",
+    "deepExplanation": "The training links build IDs to producing pipeline executions, commit hashes to source state, and combined identifiers to traceability. Given this scenario, the pair of system name and local build ID identifies the producing build; a source commit alone does not. This particular composite naming policy is derived from the stated uniqueness constraints, not presented as a verbatim Microsoft recommendation. A tag remains mutable unless the naming policy or a separate safeguard prevents reuse.",
     "whyOtherAnswersAreWrong": {
-      "a": "Commit tags identify source state, but the tagging article explains that a base-image update can rebuild the same commit with new image content. They do not uniquely identify the producing build in this scenario.",
-      "c": "A build ID supports traceability within a single producing system. The article recommends a system prefix for multiple systems; locally unique numbers can collide under the conditions given here.",
-      "d": "Reusing a stable release-line tag is appropriate for maintained base images. It intentionally moves the reference and cannot retain a distinct reference for every producing deployment build."
+      "a": "Commit-hash tags identify source state. Here the same commit can produce multiple builds after base-image patches, so the hash alone does not distinguish the execution. It remains useful when the traceability target is the source revision.",
+      "c": "Build-ID tags link images to pipeline executions when the producing system is known. These numbers are only locally unique in the stem, so the ID alone cannot distinguish the two independent systems. A single-system workflow with a unique build-ID sequence would not have this cross-system ambiguity.",
+      "d": "Reusing a stable release-line tag is documented for maintained base images that should receive patches. It deliberately moves the reference rather than retain a distinct never-reused reference for each producing deployment build."
     },
     "objectiveDomain": "develop-containerized-solutions-on-azure",
     "skill": "implement-container-application-hosting",
@@ -220,16 +225,22 @@
     "difficulty": "advanced",
     "complexity": "scenario-based",
     "sourceIds": [
-      "ai200-20260914-doc-acr-tags"
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images",
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
     ],
     "sourceUrls": [
-      "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version"
+      "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+      "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/4-tag-version-images",
+      "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/3-build-run-acr-tasks"
     ],
     "documentationTitles": [
-      "Recommendations for tagging and versioning container images"
+      "Registries, repositories, and artifacts",
+      "Tag and version images",
+      "Build and run images with ACR Tasks"
     ],
-    "generatedAt": "2026-09-14T18:39:51.882Z",
-    "lastValidatedAt": "2026-09-14T18:39:51.882Z",
+    "generatedAt": "2026-09-14T22:11:04.246Z",
+    "lastValidatedAt": "2026-09-14T22:11:04.246Z",
     "featureStatus": "GA",
     "tags": [
       "ai-200",
@@ -237,12 +248,17 @@
       "acr"
     ],
     "conceptId": "acr.unique-production-tags",
-    "verificationStatus": "manual-review-required",
-    "verifiedAgainstSourceIds": [],
-    "verificationNotes": "Source-provenance adjudication: c-004 cites only the withdrawn tagging recommendation article. None of its producing-system/build-ID, commit-rebuild or stable-tag contrasts retains a currently approved question citation. The parent training covers related tagging concepts but does not select this article, and it cannot be silently added to the authored sourceIds. Keep the earlier technical key as history and mark manual-review-required pending valid curation and required independent passes. Earlier technical/editorial notes retained without new classification review: Tried commit uniqueness, local run numbers and stable release tags; each loses an explicit invariant. Unlike c-002 exact incident content, this asks which producing execution a deployment name identifies. No difficulty label was changed.",
-    "requiresManualReview": true,
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-14T22:42:08.027Z",
+    "verifiedAgainstSourceIds": [
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images",
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
+    ],
+    "verificationNotes": "Fresh independent continuation PASS 3 on the new source-repaired authored fingerprint. Verified, 46/48 after actual new-hash semantic audit and full gh600-a-012 comparison. The tuple argument was independently derived: equal (system, local ID) pairs imply the same run under the stated identity domains. This is not provider-enforced immutability or arbitrary concatenation. Advanced receives only 3/4 authenticity; scenario-based reasoning is genuine. A run-and-evaluated-commit evidence association, an immutable content reference and a tag write-state safeguard test different decisions. Semantic comparison: Read the whole current candidate, the fresh pair records and full gh600-a-012. The latter asks which run and evaluated commit a report belongs to. c-004 instead derives an execution identifier across independent build namespaces despite repeated source commits. The source-state/run-state vocabulary overlap does not remove that extra collision domain. Its naming policy remains distinct from c-006’s registry-side write control and from c-002’s already-known content identity.",
+    "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T18:11:28.429Z",
-    "confidenceReason": "High confidence in the provenance exclusion because the only cited document has no current approval; no claim that the composite tag itself became technically wrong."
+    "confidenceReason": "High confidence in the conditional cross-system naming derivation and the sourced alternatives. The conclusion rests on explicit scenario constraints plus approved training, not on a Microsoft promise to coordinate independent build systems."
   },
   {
     "id": "ai200-c-005",
@@ -320,7 +336,7 @@
       },
       {
         "id": "b",
-        "text": "Record the image’s digest in the release notes."
+        "text": "Record the image's digest in the release notes."
       },
       {
         "id": "c",
@@ -330,31 +346,31 @@
     "correctAnswer": [
       "c"
     ],
-    "explanation": "Set the deployed image tag’s write-enabled attribute to false. The product guidance recommends locking deployed tags as a release-pipeline safeguard.",
-    "deepExplanation": "Unique tagging is a naming policy, while locking applies a registry attribute to the deployed tag. This is not a claim that administrators can never change the setting or that preview cleanup features have any particular behavior.",
+    "explanation": "Set the deployed image tag write-enabled attribute to false. The training unit demonstrates this registry-side write lock for deployed images; an additional alias or a recorded digest does not perform that operation.",
+    "deepExplanation": "The Lock deployed images section uses az acr repository update with --image and --write-enabled false. It also shows --write-enabled true to unlock. The claim here is only the documented write safeguard, not deletion protection, administrator-proof permanence or behavior under cleanup policies.",
     "whyOtherAnswersAreWrong": {
-      "a": "An image can have several tags, and semantic versions improve human readability. Adding another tag does not apply the documented write-enabled locking attribute to the deployed tag.",
-      "b": "Recording a digest provides immutable artifact identity for traceability. It is useful during investigation but is not the registry-side deployed-tag locking operation requested here."
+      "a": "An image can have several tags, and semantic-version tags communicate release meaning. Adding a name does not set the write-enabled lock on the deployed tag. Version naming is useful for release readability, not this registry write-state change.",
+      "b": "A digest identifies exact image content and can be recorded for reproducible retrieval or incident investigation. Recording that identity does not set the deployed tag write-enabled attribute; it serves traceability rather than the requested registry safeguard."
     },
     "objectiveDomain": "develop-containerized-solutions-on-azure",
     "skill": "implement-container-application-hosting",
     "subskill": "Build, store, version, and manage container images by using Azure Container Registry",
-    "difficulty": "intermediate",
-    "complexity": "scenario-based",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
     "sourceIds": [
       "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
-      "ai200-20260914-doc-acr-tags"
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images"
     ],
     "sourceUrls": [
       "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
-      "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version"
+      "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/4-tag-version-images"
     ],
     "documentationTitles": [
       "Registries, repositories, and artifacts",
-      "Recommendations for tagging and versioning container images"
+      "Tag and version images"
     ],
-    "generatedAt": "2026-09-14T18:39:51.882Z",
-    "lastValidatedAt": "2026-09-14T18:39:51.882Z",
+    "generatedAt": "2026-09-14T22:11:04.246Z",
+    "lastValidatedAt": "2026-09-14T22:11:04.246Z",
     "featureStatus": "GA",
     "tags": [
       "ai-200",
@@ -362,12 +378,16 @@
       "acr"
     ],
     "conceptId": "acr.deployed-tag-write-lock",
-    "verificationStatus": "manual-review-required",
-    "verifiedAgainstSourceIds": [],
-    "verificationNotes": "Source-provenance adjudication: the write-enabled=false recommendation in c-006 depends on withdrawn doc-acr-tags. Its remaining storage citation cannot replace the missing approved key-bearing article. The versioning parent body contains tagging/locking instruction, but that is neither a reference to this article nor an authored citation in this question. Do not change sourceIds or expand the prior lock claim to compensate. Current verdict is manual-review-required. Earlier technical/editorial notes retained without new classification review: The registry attribute survives alias/digest counterexamples. Inspected absolute-wording warning: the explanation negates administrator-proof permanence rather than asserting it. Separate from unique-tag construction in c-004.",
-    "requiresManualReview": true,
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-14T22:42:08.027Z",
+    "verifiedAgainstSourceIds": [
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+      "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images"
+    ],
+    "verificationNotes": "Fresh independent continuation PASS 3 on the new source-repaired authored fingerprint. Verified, 47/48 after the new-hash semantic audit and full az104-005 comparison. This is not an applied item: beginner and concept-recall describe one recalled write-enabled operation. The source’s broader deletion and retention statements were consciously excluded. The AZ-104 comparison changes an inherited management-plane lock to permit operations while preserving deletion protection, unlike this tag write-state question. Semantic comparison: Read full az104-005 and the current c-004 comparison. An inherited ReadOnly/CanNotDelete management-plane lock transition with SAS data-plane behavior is not this ACR tag write attribute. Nor does constructing a namespaced unique tag set that attribute. Beginner/concept-recall remains correct; a semantic distinction is not applied-reasoning credit or proof of broader lock semantics.",
+    "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T18:11:28.429Z",
-    "confidenceReason": "High confidence in withholding the exact record after the safeguard source loses approval; historic locking interpretation remains narrowly bounded and unmodified."
+    "confidenceReason": "High confidence in the specifically demonstrated reversible write-state action and the separate alias/digest purposes. No approval is given to adjacent unsupported stronger lock semantics."
   },
   {
     "id": "ai200-c-007",

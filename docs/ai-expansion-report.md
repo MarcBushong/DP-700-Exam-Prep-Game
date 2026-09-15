@@ -10,22 +10,26 @@ reviews, and the reasons for the shortfall. It does not lower admission gates.
 
 Work is isolated on `marcbushong-ai-banks-beta-access`, based on
 `d9a1e39dbc755448f38584ecca692b9e20e35eb6` from `origin/main`. The canonical
-repository is `MarcBushong/The-Certification-Dungeon`. No main-checkout edits,
-merge to main, push, or pull request are part of this delivery.
+repository is `MarcBushong/The-Certification-Dungeon`. No main-checkout edits or
+merge to main are part of this delivery. The user subsequently authorized
+committing the continuation, pushing this feature branch, and opening a pull request.
 
 ## Actual current inventory
 
 | Canonical package             | Records | Three-pass verified | Manual review | Rejected | Candidate / stale | Playable | Verified shortfall |
 | ----------------------------- | ------: | ------------------: | ------------: | -------: | ----------------: | -------: | -----------------: |
 | `ai-103`                      |     149 |                  29 |            96 |       24 |             0 / 0 |        0 |                121 |
-| `ai-200`                      |     150 |                  27 |            89 |       34 |             0 / 0 |        0 |                123 |
+| `ai-200`                      |     150 |                  30 |            85 |       35 |             0 / 0 |        0 |                120 |
 | `github-agentic-ai-developer` |     149 |                 136 |             0 |       13 |             0 / 0 |        0 |                 14 |
 
 All **299 current AI records** received grounded authoring, separate technical
-review, and a third-context adversarial review. Only **56** passed all current
-question-level gates. The other 243 are explicitly excluded, not counted toward
+review, and a third-context adversarial review. Only **59** passed all current
+question-level gates. The other 240 are explicitly excluded, not counted toward
 available coverage. Fourteen classification repairs received fresh generation
 hashes and two new independent review contexts; seven repaired records passed.
+A follow-up continuation then regrounded four ACR records using three approved
+training units and reran all three passes: c-003, c-004 and c-006 passed; c-002
+was rejected as a duplicate. See [the queue triage and continuation](ai-review-queue-triage.md).
 An additional overlapping planning idea was withheld before candidate generation
 and is not invented into a current rejected record.
 
@@ -89,8 +93,8 @@ Guide/course context alone cannot substantiate an implementation answer.
 
 Manifest counts are **not** counts of currently approved sources. Withdrawn
 documents remain as exact citation snapshots for nonverified audit records;
-their supporting registrations are removed. All **79 affected current
-candidates** (22 AI-103, 57 AI-200) have independent nonverified verdicts.
+their supporting registrations are removed. All **75 affected current
+candidates** (22 AI-103, 53 AI-200) have independent nonverified verdicts.
 An invalid source cannot become usable through a verified descendant or a
 quarantined ancestor. Transport allowlisting and HTTP success do not restore
 source approval.
@@ -143,7 +147,7 @@ The HTTPS, host/path, timeout, redirect, MIME and 2 MB bounds remain in force.
 | AI-103: computer vision                          |                   3 |
 | AI-103: text analysis                            |                   3 |
 | AI-103: information extraction                   |                   6 |
-| AI-200: containers                               |                   8 |
+| AI-200: containers                               |                  11 |
 | AI-200: data management                          |                  10 |
 | AI-200: service integration                      |                   9 |
 | AI-200: security, monitoring and troubleshooting |                   0 |
@@ -160,7 +164,7 @@ countercontexts, answer clues and inflated classifications remain explicit holds
 | Exam   | Beginner | Intermediate | Advanced | Expert | Applied reasoning |
 | ------ | -------: | -----------: | -------: | -----: | ----------------: |
 | AI-103 |       12 |           16 |        1 |      0 |     19/29 (65.5%) |
-| AI-200 |        8 |           16 |        3 |      0 |     18/27 (66.7%) |
+| AI-200 |        9 |           17 |        4 |      0 |     20/30 (66.7%) |
 
 The 15/35/35/15 editorial difficulty mix was **not achieved**. No Expert labels
 were manufactured. Applied reasoning is the independently reviewed non-recall
@@ -188,8 +192,13 @@ from different IDs.
 
 No blocking lexical duplicate remains. The final diagnostic reports retain
 **179 warnings** for AI-103 (24 citation/provenance, 155 editorial quality) and
-**177** for AI-200 (44 citation/provenance, 133 editorial quality), with zero
+**176** for AI-200 (43 citation/provenance, 133 editorial quality), with zero
 blocking/errors. These include nonverified records and are not blanket approvals.
+
+The four-record continuation received another semantic recheck at
+`2026-09-14T22:33:53.351Z`. It retained 77 earlier pair records/clocks, archived
+one superseded decision and added fourteen fresh decisions. The additional
+c-002/gh600-b-034 duplicate brought cumulative recommended exclusions to 25.
 
 ## Beta behavior and preservation
 
@@ -227,6 +236,8 @@ tests**, lint, typecheck and the production build, with zero skipped tests.
 The complete browser suite ran without a concurrent unit workload.
 The [machine-readable validation receipt](ai-expansion-validation.json) records
 the actual commands, outcomes, preserved hashes and earlier resolved failures.
+Those totals describe the committed `1dd10c8` delivery; the subsequent
+four-record continuation has its own validation results in the queue-triage report.
 All per-exam `questions:validate`, `questions:verify`, `questions:duplicates`,
 `questions:coverage`, `questions:report`, and `sources:validate` commands have
 passed for AI-103, AI-200, GH-600 and DP-700, as have global

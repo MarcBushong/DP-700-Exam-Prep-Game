@@ -2,39 +2,39 @@
 
 Unofficial study aid. Deterministic checks validate structure and recorded attestations, not answer semantics, independent reviewer identity, or current feature behavior.
 
-Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verification timestamp.
+Report created: 2026-09-14T22:49:38.491Z. This is not a retrieval or verification timestamp.
 
 - Total candidate records: **150**; malformed: **0**.
 - Playable verified questions: **0**. Playable coverage below counts only these questions.
-- Fully reviewed records before catalog/mode gates: **27**. A beta/sealed credential still has zero playable encounters.
-- Three-pass target: 150 verified; shortfall 123. Rubric minimum 44/48; no automatic conversion from legacy scores.
+- Fully reviewed records before catalog/mode gates: **30**. A beta/sealed credential still has zero playable encounters.
+- Three-pass target: 150 verified; shortfall 120. Rubric minimum 44/48; no automatic conversion from legacy scores.
 - Source provenance violations: 19. Source meaning and reviewer independence are not proven by receipts.
 - Playable coverage shortfall: 150; playable Advanced/Expert share: 0.0% (target >=40%). This is not an authored-content count.
 - Recorded credential status: **unverified**; Study Run **locked**; Boss Gauntlet **locked**.
-- Fully reviewed content target: 150; reviewed shortfall: 123; reviewed but unavailable: 27.
+- Fully reviewed content target: 150; reviewed shortfall: 120; reviewed but unavailable: 30.
 - Availability: The identity and current objective map are grounded, but current exam availability remains unverified. Reviewed encounters do not authorize gameplay.
 - Availability: The catalog marks this dungeon unavailable.
 - Availability: Not every major floor has verified encounters.
-- Availability: Boss Gauntlet needs 75 verified encounters; 27 available.
+- Availability: Boss Gauntlet needs 75 verified encounters; 30 available.
 - Availability: Boss Gauntlet needs verified breadth across every skill.
 - Taxonomy: 4 domains, 9 skills, 27 subskills.
 - Study guide effective date: **Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44**; retrieved: 2026-09-14T17:46:55.568Z.
 - Last grounded through Microsoft Learn MCP: 2026-09-14T18:04:58.437Z.
-- Last recorded verification: 2026-09-14T20:41:16.502Z; last playable verification: None.
+- Last recorded verification: 2026-09-14T22:42:08.027Z; last playable verification: None.
 - Source retrieval range: 2026-09-14T17:46:55.568Z to 2026-09-14T18:04:58.437Z.
 - Source review range: 2026-09-14T18:11:28.429Z to 2026-09-14T18:54:53.668Z.
 - Source records: 117 valid / 117 total; malformed: 0.
-- Multiple citations: 0 playable / 78 candidates.
-- Citation errors: 44; duplicate findings: 0; quality warnings: 133.
+- Multiple citations: 0 playable / 79 candidates.
+- Citation errors: 43; duplicate findings: 0; quality warnings: 133.
 
 ## Verification status (effective, schema-valid candidates)
 
 | Category | Questions |
 | --- | ---: |
 | candidate | 0 |
-| verified | 27 |
-| manual-review-required | 89 |
-| rejected | 34 |
+| verified | 30 |
+| manual-review-required | 85 |
+| rejected | 35 |
 | stale | 0 |
 
 ## Playable domain counts
@@ -247,7 +247,7 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| develop-containerized-solutions-on-azure | 8 |
+| develop-containerized-solutions-on-azure | 11 |
 | develop-ai-solutions-by-using-azure-data-management-services | 10 |
 | connect-to-and-consume-azure-services | 9 |
 | secure-monitor-and-troubleshoot-azure-solutions | 0 |
@@ -256,7 +256,7 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| implement-container-application-hosting | 5 |
+| implement-container-application-hosting | 8 |
 | implement-container-orchestrated-solutions | 3 |
 | develop-ai-solutions-by-using-azure-cosmos-db-for-nosql | 3 |
 | develop-ai-solutions-by-using-azure-database-for-postgresql | 7 |
@@ -270,7 +270,7 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| Build, store, version, and manage container images by using Azure Container Registry | 3 |
+| Build, store, version, and manage container images by using Azure Container Registry | 6 |
 | Build and run images by using Azure Container Registry Tasks | 0 |
 | Deploy containers to Azure App Service, including configuring App Service to supply environment variables and secrets | 2 |
 | Deploy applications to Azure Container Apps, including environment configuration and revision management | 0 |
@@ -302,18 +302,18 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| beginner | 8 |
-| intermediate | 16 |
-| advanced | 3 |
+| beginner | 9 |
+| intermediate | 17 |
+| advanced | 4 |
 | expert | 0 |
 
 ## Reviewed complexity counts (not a claim of availability)
 
 | Category | Questions |
 | --- | ---: |
-| concept-recall | 9 |
+| concept-recall | 10 |
 | technical-implementation | 9 |
-| scenario-based | 1 |
+| scenario-based | 3 |
 | troubleshooting | 7 |
 | architecture-design | 1 |
 
@@ -324,7 +324,7 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 | single-select | 5 |
 | multi-select | 3 |
 | true-false | 0 |
-| scenario | 16 |
+| scenario | 19 |
 | code | 3 |
 
 ## Reviewed source counts (not a claim of availability)
@@ -332,9 +332,9 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 | Category | Questions |
 | --- | ---: |
 | ai200-20260914-guide | 0 |
-| ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage | 3 |
-| ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks | 0 |
-| ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images | 1 |
+| ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage | 6 |
+| ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks | 2 |
+| ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images | 4 |
 | ai200-20260914-unit-deploy-containers-azure-app-service-2-deploy-containers | 1 |
 | ai200-20260914-unit-deploy-containers-azure-app-service-3-configure-runtime | 1 |
 | ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings | 2 |
@@ -451,7 +451,7 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 
 ## Published domain weighting
 
-- Develop containerized solutions on Azure: guide 20–25%; available bank 0.0% (0 playable; 8 fully reviewed).
+- Develop containerized solutions on Azure: guide 20–25%; available bank 0.0% (0 playable; 11 fully reviewed).
 - Develop AI solutions by using Azure data management services: guide 25–30%; available bank 0.0% (0 playable; 10 fully reviewed).
 - Connect to and consume Azure services: guide 20–25%; available bank 0.0% (0 playable; 9 fully reviewed).
 - Secure, monitor, and troubleshoot Azure solutions: guide 20–25%; available bank 0.0% (0 playable; 0 fully reviewed).
@@ -510,7 +510,6 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 
 ## Duplicate, quality, citation, and verification findings
 
-- **warning / citation** [ai200-c-004]: ai200-c-004: at least one citation must support implementation through validated training/doc provenance, not only guide or credential context.
 - **warning / citation** [ai200-c-011]: ai200-c-011: at least one citation must support implementation through validated training/doc provenance, not only guide or credential context.
 - **warning / citation** [ai200-c-012]: ai200-c-012: at least one citation must support implementation through validated training/doc provenance, not only guide or credential context.
 - **warning / citation** [ai200-c-013]: ai200-c-013: at least one citation must support implementation through validated training/doc provenance, not only guide or credential context.
@@ -535,8 +534,8 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 - **warning / citation** [ai200-i-018]: ai200-i-018: at least one citation must support implementation through validated training/doc provenance, not only guide or credential context.
 - **warning / citation** [ai200-i-019]: ai200-i-019: at least one citation must support implementation through validated training/doc provenance, not only guide or credential context.
 - **warning / citation** [ai200-i-034]: ai200-i-034: at least one citation must support implementation through validated training/doc provenance, not only guide or credential context.
-- **warning / source-provenance** [ai200-c-003, ai200-c-009, ai200-c-010, ai200-c-011, ai200-c-012, ai200-c-013, ai200-c-014, ai200-c-015, ai200-c-016]: ai200-20260914-doc-acr-tasks: Source has no approved provenance registry record.
-- **warning / source-provenance** [ai200-c-002, ai200-c-003, ai200-c-004, ai200-c-006, ai200-c-008]: ai200-20260914-doc-acr-tags: Source has no approved provenance registry record.
+- **warning / source-provenance** [ai200-c-009, ai200-c-010, ai200-c-011, ai200-c-012, ai200-c-013, ai200-c-014, ai200-c-015, ai200-c-016]: ai200-20260914-doc-acr-tasks: Source has no approved provenance registry record.
+- **warning / source-provenance** [ai200-c-008]: ai200-20260914-doc-acr-tags: Source has no approved provenance registry record.
 - **warning / source-provenance** [ai200-c-017, ai200-c-018, ai200-c-020]: ai200-20260914-doc-appservice-container: Source has no approved provenance registry record.
 - **warning / source-provenance** [ai200-c-025, ai200-c-026, ai200-c-027]: ai200-20260914-doc-containerapps-revisions: Source has no approved provenance registry record.
 - **warning / source-provenance** [ai200-c-025, ai200-c-028, ai200-c-029, ai200-c-030, ai200-c-031]: ai200-20260914-doc-containerapps-scale: Source has no approved provenance registry record.
@@ -554,12 +553,12 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 - **warning / source-provenance** [ai200-i-025, ai200-i-029, ai200-i-030, ai200-i-034]: ai200-20260914-doc-functions-hosting: Source has no approved provenance registry record.
 - **warning / source-provenance** [ai200-s-001, ai200-s-006]: ai200-20260914-doc-keyvault-secrets: Source has no approved provenance registry record.
 - **warning / source-provenance** [ai200-s-010, ai200-s-013]: ai200-20260914-doc-appconfig-python: Source has no approved provenance registry record.
+- **warning / absolute-wording** [ai200-c-002]: Check absolute claims against documented limitations, including distractors.
 - **warning / pronoun-review** [ai200-c-002]: Check pronoun references; this heuristic does not establish ambiguity.
 - **warning / absolute-wording** [ai200-c-003]: Check absolute claims against documented limitations, including distractors.
 - **warning / pronoun-review** [ai200-c-003]: Check pronoun references; this heuristic does not establish ambiguity.
 - **warning / absolute-wording** [ai200-c-004]: Check absolute claims against documented limitations, including distractors.
 - **warning / pronoun-review** [ai200-c-004]: Check pronoun references; this heuristic does not establish ambiguity.
-- **warning / absolute-wording** [ai200-c-006]: Check absolute claims against documented limitations, including distractors.
 - **warning / pronoun-review** [ai200-c-006]: Check pronoun references; this heuristic does not establish ambiguity.
 - **warning / pronoun-review** [ai200-c-008]: Check pronoun references; this heuristic does not establish ambiguity.
 - **warning / negative-wording** [ai200-c-010]: Review negative wording; prefer a positive, unambiguous task.
@@ -692,11 +691,11 @@ Report created: 2026-09-14T20:51:28.288Z. This is not a retrieval or verificatio
 
 Verified entries marked credential-or-mode-gate are reviewed but unavailable, not missing authored content.
 - **ai200-c-001** (verified; credential-or-mode-gate): no content finding. Review notes: Repository survives the attempted registry/manifest boundary counterexamples. c-005 separately tests manifest composition and shared layers, not the same collection answer. No executable code is present; the exact authored record is retained..
-- **ai200-c-002** (manual-review-required; content-review): source-provenance, pronoun-review. Review notes: Source-provenance adjudication: c-002 must no longer be verified because its unchanged sourceIds include the withdrawn ACR tagging article. The retained storage unit supports the historical-digest key, but adequate evidence elsewhere does not excuse an unapproved cited source. The actual versioning parent does not identify the selected article. Preserve the exact question and earlier passes; no source removal or substituted citation is authorized. This is pending curation, not a finding that the digest answer is false. Earlier technical/editorial notes retained without new classification review: Both current tags fail the stated historical selection despite plausible naming. Pronouns have explicit antecedents. Distinct from c-003 servicing policy and c-004 producing-build traceability; no authored field was repaired..
-- **ai200-c-003** (manual-review-required; content-review): source-provenance, source-provenance, absolute-wording, pronoun-review. Review notes: Source-provenance adjudication: both doc-acr-tags and doc-acr-tasks have been withdrawn. The retained storage citation alone does not provide the full maintained-base servicing and dependent-task behavior used in c-003. Each parent teaches a feature without identifying the selected documentation. Preserve the stable-tag technical interpretation as history but withhold current approval. The earlier c-003/c-012 keep-distinct analysis is not a provenance permission and is not reclassified here. Earlier technical/editorial notes retained without new classification review: Read completed semantic keep-distinct c-003/c-012 and both complete questions. Agree: maintained input-reference policy differs from choosing the dependency event after tracking already exists. This distinction is not approval of c-012 difficulty..
-- **ai200-c-004** (manual-review-required; content-review): citation, source-provenance, absolute-wording, pronoun-review. Review notes: Source-provenance adjudication: c-004 cites only the withdrawn tagging recommendation article. None of its producing-system/build-ID, commit-rebuild or stable-tag contrasts retains a currently approved question citation. The parent training covers related tagging concepts but does not select this article, and it cannot be silently added to the authored sourceIds. Keep the earlier technical key as history and mark manual-review-required pending valid curation and required independent passes. Earlier technical/editorial notes retained without new classification review: Tried commit uniqueness, local run numbers and stable release tags; each loses an explicit invariant. Unlike c-002 exact incident content, this asks which producing execution a deployment name identifies. No difficulty label was changed..
+- **ai200-c-002** (rejected; content-review): absolute-wording, pronoun-review. Review notes: Fresh independent continuation PASS 3 on the new source-repaired authored fingerprint. Rejected, 42/48 with originality 0. The fresh 22:33:53.351Z semantic audit identifies SEM-C001 against existing gh600-b-034. I independently read that full question and agree: both supply an exact historical identifier and test using it instead of a moving name. The retention premise is already satisfied, not a second tested operation. Technical correctness survives but originality does not. The c-002/s-004 manual overlap is also recorded, without changing s-004. Preserve all existing questions; no renamed reskin or old approval inheritance. Semantic comparison: I agree with SEM-C001 after reading all choices and explanations of gh600-b-034: the complete shared decision is supplied fixed historical identity versus a moving named reference. ACR digest syntax and retained-manifest wording add context, not an independently tested operation. Reject c-002; retain the existing GH record untouched. The s-004 historical-secret-value comparison remains an additional manual editorial issue, not a reason to approve c-002 or modify s-004. Distinctions from c-005 structure, c-007 omission default and c-008 untagged storage are real but do not override SEM-C001..
+- **ai200-c-003** (verified; credential-or-mode-gate): absolute-wording, pronoun-review. Review notes: Fresh independent continuation PASS 3 on the new source-repaired authored fingerprint. Verified, 47/48 after reading the fresh exact-hash semantic assessment and full peers. The longer key is a mild editorial cue, not a substitute for fixed-versus-serviced input reasoning. c-012 already supplies the maintained reference and tests event selection, while this item must choose the reference policy; c-011 tests a source-commit trigger. Those peers are not granted source or technical approval by this distinction. Semantic comparison: Read the fresh replacement c-003/c-012 distinction and all c-011/c-012 options. c-003 chooses stable versus frozen input references; c-012 assumes the maintained reference and chooses the triggering event. c-011 chooses a source-commit trigger. Current c-003 remains distinct, but the peers’ unchanged provenance/status problems are not repaired. This new comparison supersedes only the prior pair binding for current use, never its historical clock..
+- **ai200-c-004** (verified; credential-or-mode-gate): absolute-wording, pronoun-review. Review notes: Fresh independent continuation PASS 3 on the new source-repaired authored fingerprint. Verified, 46/48 after actual new-hash semantic audit and full gh600-a-012 comparison. The tuple argument was independently derived: equal (system, local ID) pairs imply the same run under the stated identity domains. This is not provider-enforced immutability or arbitrary concatenation. Advanced receives only 3/4 authenticity; scenario-based reasoning is genuine. A run-and-evaluated-commit evidence association, an immutable content reference and a tag write-state safeguard test different decisions. Semantic comparison: Read the whole current candidate, the fresh pair records and full gh600-a-012. The latter asks which run and evaluated commit a report belongs to. c-004 instead derives an execution identifier across independent build namespaces despite repeated source commits. The source-state/run-state vocabulary overlap does not remove that extra collision domain. Its naming policy remains distinct from c-006’s registry-side write control and from c-002’s already-known content identity..
 - **ai200-c-005** (verified; credential-or-mode-gate): no content finding. Review notes: The complete two-answer set is a and c. b and d deliberately substitute the documented roles of repository and tag. Checked c-001 overlap: that item asks family organization, not internal image composition..
-- **ai200-c-006** (manual-review-required; content-review): source-provenance, absolute-wording, pronoun-review. Review notes: Source-provenance adjudication: the write-enabled=false recommendation in c-006 depends on withdrawn doc-acr-tags. Its remaining storage citation cannot replace the missing approved key-bearing article. The versioning parent body contains tagging/locking instruction, but that is neither a reference to this article nor an authored citation in this question. Do not change sourceIds or expand the prior lock claim to compensate. Current verdict is manual-review-required. Earlier technical/editorial notes retained without new classification review: The registry attribute survives alias/digest counterexamples. Inspected absolute-wording warning: the explanation negates administrator-proof permanence rather than asserting it. Separate from unique-tag construction in c-004..
+- **ai200-c-006** (verified; credential-or-mode-gate): pronoun-review. Review notes: Fresh independent continuation PASS 3 on the new source-repaired authored fingerprint. Verified, 47/48 after the new-hash semantic audit and full az104-005 comparison. This is not an applied item: beginner and concept-recall describe one recalled write-enabled operation. The source’s broader deletion and retention statements were consciously excluded. The AZ-104 comparison changes an inherited management-plane lock to permit operations while preserving deletion protection, unlike this tag write-state question. Semantic comparison: Read full az104-005 and the current c-004 comparison. An inherited ReadOnly/CanNotDelete management-plane lock transition with SAS data-plane behavior is not this ACR tag write attribute. Nor does constructing a namespaced unique tag set that attribute. Beginner/concept-recall remains correct; a semantic distinction is not applied-reasoning credit or proof of broader lock semantics..
 - **ai200-c-007** (verified; credential-or-mode-gate): no content finding. Review notes: Explicit-version counterexamples make both numerical distractors valid elsewhere but wrong when the tag is omitted. Distinct from the historical digest and stable servicing decisions..
 - **ai200-c-008** (rejected; content-review): source-provenance, pronoun-review. Review notes: Rejected despite the supported b key and pass-2 approval: neither automatic highest-version renaming nor a single moved tag identifying both distinct manifests has a defensible sourced correct-elsewhere context. This directly fails strict pass-3 option quality. Any option repair requires three fresh passes; no authored content changed..
 - **ai200-c-009** (manual-review-required; content-review): source-provenance. Review notes: Manual review for the unchanged technical-implementation label. The supported quick-build answer is elementary command recognition, not execution/configuration reasoning. Pass 2 approved the technical key; this context does not approve the applied-coverage claim. Relabeling or adding implementation work restarts all three passes..
@@ -847,9 +846,9 @@ Verified entries marked credential-or-mode-gate are reviewed but unavailable, no
 | Source | Playable / reviewed / candidates | Retrieved | Reviewed | Supporting summary |
 | --- | ---: | --- | --- | --- |
 | ai200-20260914-guide: [Study guide for Exam AI-200: Developing AI Cloud Solutions on Azure](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-200) | 0 / 0 / 0 | 2026-09-14T17:46:55.568Z | 2026-09-14T18:11:28.429Z | The current undated AI-200 guide defines four weighted domains, nine skills, and 27 literal subskills. It establishes scope, not product behavior or GA status. |
-| ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage: [Registries, repositories, and artifacts](https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage) | 0 / 3 / 8 | 2026-09-14T17:54:27.527Z | 2026-09-14T18:11:28.429Z | Distinguishes registry, repository, image manifest, mutable tag, and immutable digest addressing for container delivery. |
-| ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks: [Build and run images with ACR Tasks](https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/3-build-run-acr-tasks) | 0 / 0 / 4 | 2026-09-14T17:54:32.479Z | 2026-09-14T18:11:28.429Z | Explains cloud build-and-push with az acr build, source/base-image/timer triggers, and multi-step build-test workflows. |
-| ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images: [Tag and version images](https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/4-tag-version-images) | 0 / 1 / 1 | 2026-09-14T17:54:38.700Z | 2026-09-14T18:11:28.429Z | Contrasts reusable and unique deployment tags and describes locking deployed artifacts. Preview purge and retention features are excluded. |
+| ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage: [Registries, repositories, and artifacts](https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage) | 0 / 6 / 9 | 2026-09-14T17:54:27.527Z | 2026-09-14T18:11:28.429Z | Distinguishes registry, repository, image manifest, mutable tag, and immutable digest addressing for container delivery. |
+| ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks: [Build and run images with ACR Tasks](https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/3-build-run-acr-tasks) | 0 / 2 / 6 | 2026-09-14T17:54:32.479Z | 2026-09-14T18:11:28.429Z | Explains cloud build-and-push with az acr build, source/base-image/timer triggers, and multi-step build-test workflows. |
+| ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images: [Tag and version images](https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/4-tag-version-images) | 0 / 4 / 5 | 2026-09-14T17:54:38.700Z | 2026-09-14T18:11:28.429Z | Contrasts reusable and unique deployment tags and describes locking deployed artifacts. Preview purge and retention features are excluded. |
 | ai200-20260914-unit-deploy-containers-azure-app-service-2-deploy-containers: [Deploy containers to Azure App Service](https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/2-deploy-containers) | 0 / 1 / 2 | 2026-09-14T17:54:42.042Z | 2026-09-14T18:11:28.429Z | Describes private-image deployment, managed-identity registry pulls, image updates, and deployment verification. |
 | ai200-20260914-unit-deploy-containers-azure-app-service-3-configure-runtime: [Configure container runtime behavior](https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/3-configure-runtime) | 0 / 1 / 1 | 2026-09-14T17:54:46.522Z | 2026-09-14T18:11:28.429Z | Explains container startup overrides, runtime port settings, persistence, and always-on tradeoffs. Confirm port defaults and health-check details against product documentation. |
 | ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings: [Configure application settings](https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/4-configure-settings) | 0 / 2 / 6 | 2026-09-14T17:54:54.466Z | 2026-09-14T18:11:28.429Z | Describes app settings as environment variables, typed connection-string prefixes, slot-specific configuration, and Key Vault references. |
@@ -931,8 +930,8 @@ Verified entries marked credential-or-mode-gate are reviewed but unavailable, no
 | ai200-20260914-unit-instrument-app-opentelemetry-6-debug-distributed-flows-trace-data: [Debug distributed flows with trace data](https://learn.microsoft.com/en-us/training/modules/instrument-app-opentelemetry/6-debug-distributed-flows-trace-data) | 0 / 0 / 2 | 2026-09-14T17:58:52.175Z | 2026-09-14T18:11:28.429Z | Uses transaction waterfalls and KQL correlation to distinguish slow dependencies from local processing and trace gaps. |
 | ai200-20260914-unit-analyze-telemetry-logs-metrics-2-write-basic-kql-queries: [Write basic KQL queries](https://learn.microsoft.com/en-us/training/modules/analyze-telemetry-logs-metrics/2-write-basic-kql-queries) | 0 / 0 / 9 | 2026-09-14T17:58:53.976Z | 2026-09-14T18:11:28.429Z | Uses KQL filtering, projection, grouping, aggregation, and chart rendering over telemetry tables. |
 | ai200-20260914-unit-analyze-telemetry-logs-metrics-3-explore-logs-errors-performance: [Explore logs for errors and performance](https://learn.microsoft.com/en-us/training/modules/analyze-telemetry-logs-metrics/3-explore-logs-errors-performance) | 0 / 0 / 3 | 2026-09-14T17:58:55.848Z | 2026-09-14T18:11:28.429Z | Joins telemetry using operation identifiers and analyzes exception frequency, dependency latency, and failures within a declared table/query scope. |
-| ai200-20260914-doc-acr-tasks: [Automate container image builds and maintenance with Azure Container Registry tasks](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview) | 0 / 0 / 9 | 2026-09-14T18:01:46.238Z | 2026-09-14T18:11:28.429Z | Defines quick, triggered, and multi-step ACR Tasks, build contexts, and inspecting task output. |
-| ai200-20260914-doc-acr-tags: [Recommendations for tagging and versioning container images](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version) | 0 / 0 / 5 | 2026-09-14T18:01:48.658Z | 2026-09-14T18:11:28.429Z | Recommends unique deployment tags versus stable base-image tags and protecting deployed tags from mutation. |
+| ai200-20260914-doc-acr-tasks: [Automate container image builds and maintenance with Azure Container Registry tasks](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview) | 0 / 0 / 8 | 2026-09-14T18:01:46.238Z | 2026-09-14T18:11:28.429Z | Defines quick, triggered, and multi-step ACR Tasks, build contexts, and inspecting task output. |
+| ai200-20260914-doc-acr-tags: [Recommendations for tagging and versioning container images](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version) | 0 / 0 / 1 | 2026-09-14T18:01:48.658Z | 2026-09-14T18:11:28.429Z | Recommends unique deployment tags versus stable base-image tags and protecting deployed tags from mutation. |
 | ai200-20260914-doc-appservice-container: [Configure a custom container for Azure App Service](https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container) | 0 / 0 / 3 | 2026-09-14T18:01:50.587Z | 2026-09-14T18:11:28.429Z | Documents runtime ports, injected environment variables, identity-based registry pulls, storage, and diagnostics for custom containers. Docker Compose preview sections are excluded. |
 | ai200-20260914-doc-containerapps-revisions: [Update and deploy changes in Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/revisions) | 0 / 0 / 3 | 2026-09-14T18:01:52.148Z | 2026-09-14T18:11:28.429Z | Distinguishes revision-scope from application-scope changes, activation, traffic splitting, and zero-downtime single-mode rollover. Preview inactive-revision-limit controls are excluded. |
 | ai200-20260914-doc-containerapps-scale: [Set scaling rules in Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/scale-app) | 0 / 0 / 5 | 2026-09-14T18:01:54.143Z | 2026-09-14T18:11:28.429Z | Documents replica limits, HTTP/TCP/custom KEDA rules, Azure identity authentication, scale-to-zero conditions, and unsupported vertical scaling. |

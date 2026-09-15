@@ -84,7 +84,7 @@ three-pass-reviewed questions** and 13 rejected candidates, but remains sealed
 with an explicit Beta warning. Beta gameplay was not opened.
 
 The strict AI review produced **29 verified / 96 manual / 24 rejected** AI-103
-records and **27 verified / 89 manual / 34 rejected** AI-200 records. The target
+records and **30 verified / 85 manual / 35 rejected** AI-200 records. The target
 of 150 verified questions **each was not achieved**; 29 is not a numeric increase
 over AI-103's earlier 30-record legacy bank. Those original records and completed
 local history are preserved. Both AI credentials remain sealed because current
