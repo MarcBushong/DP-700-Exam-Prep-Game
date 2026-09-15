@@ -1,10 +1,75 @@
 import { describe, expect, it, vi } from 'vitest';
-import { checkOnlineSource, safeSourceUrl } from '../scripts/validate-sources';
+import {
+  checkOnlineSource,
+  matchesRecordedSourceTarget,
+  safeSourceUrl,
+} from '../scripts/validate-sources';
 import type { SourcePolicyContext } from '../src/features/dungeons/sourcePolicy';
 
 const countUrl =
   'https://learn.microsoft.com/en-us/sql/t-sql/functions/count-transact-sql';
 const canonicalCount = `${countUrl}?view=sql-server-ver17`;
+
+describe('DP-800 observed SQL moniker redirects', () => {
+  const article =
+    'https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking';
+  const other =
+    'https://learn.microsoft.com/en-us/sql/relational-databases/security/row-level-security';
+  const credential: SourcePolicyContext = {
+    credentialId: 'dp-800',
+    provider: 'Microsoft',
+    strictGuideLinked: true,
+    sourceAllowlist: [
+      {
+        host: 'learn.microsoft.com',
+        pathPrefixes: [],
+        exactUrls: [article, other, countUrl],
+      },
+    ],
+  };
+
+  it('accepts the observed view only during an approved DP-800 redirect', () => {
+    const resolved = `${article}?view=sql-server-ver17`;
+    expect(() => safeSourceUrl(resolved, false, credential)).toThrow();
+    expect(safeSourceUrl(resolved, true, credential).href).toBe(resolved);
+    expect(() => safeSourceUrl(resolved, true)).toThrow();
+    expect(() =>
+      safeSourceUrl(resolved, true, {
+        ...credential,
+        credentialId: 'dp-700',
+      }),
+    ).toThrow();
+  });
+
+  it('compares the same article identity without discarding other receipt differences', () => {
+    expect(
+      matchesRecordedSourceTarget(
+        `${article}?view=sql-server-ver17`,
+        article,
+        credential,
+      ),
+    ).toBe(true);
+    expect(
+      matchesRecordedSourceTarget(canonicalCount, countUrl, credential),
+    ).toBe(true);
+    expect(
+      matchesRecordedSourceTarget(
+        `${other}?view=sql-server-ver17`,
+        article,
+        credential,
+      ),
+    ).toBe(false);
+  });
+
+  it.each([
+    `${article}?view=sql-server-ver16`,
+    `${article}?view=sql-server-ver17&redirect=elsewhere`,
+    `${article.replace('dynamic-data-masking', 'unapproved')}?view=sql-server-ver17`,
+    'https://example.com/en-us/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver17',
+  ])('rejects unapproved redirect variants %s', (url) => {
+    expect(() => safeSourceUrl(url, true, credential)).toThrow();
+  });
+});
 
 describe('official SQL documentation view redirects', () => {
   it('accepts the observed canonical view only when following a redirect', () => {
