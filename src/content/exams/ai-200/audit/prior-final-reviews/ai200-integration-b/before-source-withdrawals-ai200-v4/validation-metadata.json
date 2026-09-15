@@ -11,23 +11,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "The retry-policy section uses the first of TTL or maximum attempts to expire, and the dead-letter section checks TTL at the next scheduled delivery attempt. The configured storage enables dead-letter handling."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "Attempt budget can govern when it is exhausted before TTL. Here the TTL is already exceeded at a scheduled check, so the documentation does not allow remaining attempts to override it."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "The retry-policy section gives 1440 minutes as the default TTL, but supports configuring another value. A subscription using that default has a different budget; this one explicitly uses 30 minutes."
           }
         ]
@@ -57,25 +51,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The Retry policy note ends delivery at the first limit reached. At the explicitly stated scheduled check, 40 minutes exceeds 30 minutes, so the event is expired even though four of eight attempts remain; configured working storage supplies the dead-letter path.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The attempts bound wins only when reached before TTL. Its unused slots are not permission to deliver an already expired event, because either policy limit can terminate endpoint delivery.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The 1440-minute default is not a fallback overriding an explicit custom TTL. This subscription's configured 30-minute value governs regardless of its remaining attempt budget.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
             }
           ],
           "checks": {
@@ -109,9 +97,7 @@
             "claimRepresented": "The custom TTL can terminate delivery while attempts remain.",
             "whyIncorrectInContext": "This is not incorrect here: the policy check occurs at age 40 minutes, beyond the explicitly configured 30-minute lifetime. Four unused attempts cannot revive an expired event.",
             "couldBeCorrectWhen": "This answer also holds whenever a configured TTL is exhausted before the attempt ceiling at the next delivery check; a working dead-letter destination then supplies the stated retention path.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "evidenceSummary": "Retry policy says first to expire; Dead-letter events says TTL is checked only at the next scheduled delivery attempt. The question supplies that precise checkpoint."
           },
           {
@@ -119,9 +105,7 @@
             "claimRepresented": "The attempt allowance requires four further deliveries before the event can expire.",
             "whyIncorrectInContext": "Remaining attempts are only an upper budget, not an entitlement. The expired TTL has already ended eligibility at this check.",
             "couldBeCorrectWhen": "An attempt ceiling governs when it is reached while the TTL is still live. Further attempts can be eligible only before either limit expires; even then the documented schedule is best effort.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "evidenceSummary": "The article explicitly stops on either limit and permits skipped retry opportunities. It never promises consumption of the entire attempts budget."
           },
           {
@@ -129,9 +113,7 @@
             "claimRepresented": "The default one-day lifetime overrides the subscription's shorter configured lifetime.",
             "whyIncorrectInContext": "A default cannot displace the stated custom 30-minute TTL. The event's unused attempts have no documented resetting effect.",
             "couldBeCorrectWhen": "A subscription actually using the default 1440-minute TTL would use that lifetime, subject independently to its delivery-attempt limit.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "evidenceSummary": "Retry policy identifies 1440 minutes as the default and allows custom values from 1 to 1440. It treats attempt count as a separate bound."
           }
         ],
@@ -160,23 +142,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "The retry-policy section allows increasing attempts within its documented limits. That can improve transient-outage recovery, but the dead-letter section requires explicit storage configuration for retention after exhaustion."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "The dead-letter section requires an existing storage account/container specified on the subscription, explains retrieving failed events there, and notes destination identity authorization requirements."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "A longer event TTL permits delivery attempts over a longer period. It is suitable for extending delivery tolerance, not a substitute for explicitly configured dead-letter storage."
           }
         ]
@@ -206,25 +182,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "More attempts enlarge delivery opportunity, not a separate post-exhaustion payload store. In the cited topic/subscription policy, retention still depends on optional dead-letter storage.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
             },
             {
               "choiceId": "b",
               "assessment": "ambiguous",
               "rationale": "An accessible Blob dead-letter destination is explicitly supported for the topic/system-topic event-subscription delivery policy illustrated by this article. The candidate says only Event Grid push, so the frozen citation does not establish this policy and its GA scope for a possible namespace-topic push deployment.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "TTL extends the event's delivery eligibility. It does not itself configure the separate storage destination that the cited policy requires after delivery is abandoned.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
             }
           ],
           "checks": {
@@ -258,9 +228,7 @@
             "claimRepresented": "Increasing maximum delivery attempts supplies post-exhaustion payload retention.",
             "whyIncorrectInContext": "This extends opportunities to deliver but does not create a destination from which abandoned payloads can be investigated.",
             "couldBeCorrectWhen": "On the documented topic push model, raising a valid attempts budget could help a transient outage recover while TTL remains live, if more deliveries rather than post-exhaustion retention were wanted.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "evidenceSummary": "Retry policy configures attempt count separately from Dead-letter events' explicit storage destination. The latter section, not an attempts increase, supplies retained payloads."
           },
           {
@@ -268,9 +236,7 @@
             "claimRepresented": "A reachable authorized Blob dead-letter destination is available for the unspecified push consumer.",
             "whyIncorrectInContext": "The key is supported for the documented Basic-topic delivery model, but the stem only says Event Grid push. The cited article does not establish that exact configuration for every push-capable model; I cannot independently make the unspoken Basic assumption.",
             "couldBeCorrectWhen": "For a traditional topic/system-topic push event subscription with an existing reachable container and suitable access, explicitly configuring dead-lettering supplies the investigation path.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "evidenceSummary": "Dead-letter events requires a storage account and container and says the feature is disabled by default. Its traditional subscription examples do not substantiate an unrestricted namespace-model claim."
           },
           {
@@ -278,9 +244,7 @@
             "claimRepresented": "Increasing event TTL itself retains the payload after delivery is abandoned.",
             "whyIncorrectInContext": "A longer eligibility period still ends. It does not establish any separate post-exhaustion store for the team to query.",
             "couldBeCorrectWhen": "For the documented topic subscription, extending a supported TTL can make events eligible for a later retry when a recoverable outage lasts beyond the previous TTL.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "evidenceSummary": "Retry policy describes a configurable minute-based lifetime; the distinct Dead-letter events section describes what is needed to save payloads once delivery limits end."
           }
         ],
@@ -309,23 +273,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-entra"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-entra"],
             "summary": "The authorization section lists subscription as an assignable scope. It is suitable for broader publishing responsibility, but exceeds a requirement limited to one topic where other topics share the subscription."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-entra"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-entra"],
             "summary": "The authorization section lists resource group as a valid scope. It fits publishing across the group's topics; the stem explicitly excludes other topics in that group."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-entra"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-entra"],
             "summary": "The permission section identifies EventGrid Data Sender with events/send/action and explicitly allows a specific topic scope, providing the narrow requested publishing permission."
           }
         ]
@@ -355,25 +313,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The authorization section permits subscription-scoped role assignment, but that scope includes additional topics expressly excluded from this application's responsibility. It is valid broad access, not the narrow requirement.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-entra"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-entra"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Resource-group assignment is documented, but the group has other topics in the stem. That inheritance boundary grants broader event-send authorization than the single-topic requirement.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-entra"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-entra"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The actual permissions section explicitly allows a specific topic scope for EventGrid Data Sender's events/send/action permission. It grants publication to the required resource without granting the role on its broader resource-group or subscription.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-entra"
-              ]
+              "sourceIds": ["ai200-20260914-doc-eventgrid-entra"]
             }
           ],
           "checks": {
@@ -407,9 +359,7 @@
             "claimRepresented": "Subscription-wide sender assignment is the least-privilege boundary for a publisher of one topic.",
             "whyIncorrectInContext": "The subscription contains other topics, so this grants a broader boundary than the one-topic requirement.",
             "couldBeCorrectWhen": "It is a documented valid role-assignment scope when the publisher is intentionally authorized across the subscription rather than confined to one topic.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-entra"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-entra"],
             "evidenceSummary": "The permission-assignment section permits an Azure subscription scope as well as narrower resource scopes; the stem explicitly rules out broad publication authority."
           },
           {
@@ -417,9 +367,7 @@
             "claimRepresented": "Resource-group-wide sender assignment limits publication to the single intended custom topic.",
             "whyIncorrectInContext": "Other topics share that resource group. This reduces scope relative to a subscription but still fails the stated one-topic boundary.",
             "couldBeCorrectWhen": "Resource-group scope is appropriate when the entire group is the intended authorization boundary and its relevant topics are legitimate publishing targets.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-entra"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-entra"],
             "evidenceSummary": "The same section names resource groups and specific topics as separate scope choices. Only the latter matches the stated exclusions."
           },
           {
@@ -427,9 +375,7 @@
             "claimRepresented": "Assigning Data Sender on the individual custom topic supplies the required narrow data-plane permission.",
             "whyIncorrectInContext": "This is not incorrect: the principal already obtains a token but lacks send authorization, and topic scope confines this assignment to the required target.",
             "couldBeCorrectWhen": "This is also correct for another principal publishing only to one designated topic; broader scopes are not inherently invalid, merely excessive for this requirement.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-entra"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-entra"],
             "evidenceSummary": "Security principals requires Microsoft.EventGrid/events/send/action after token validation, and Assign permission lists a specific Event Grid topic as a supported assignment scope."
           }
         ],
@@ -458,23 +404,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The supported-bindings table provides a Blob trigger as well as Blob input/output bindings. A Blob trigger is appropriate for blob-driven invocation, while the documented scheduled-read example uses a timer and Blob input."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The table supports Cosmos DB triggers and output bindings. Database-triggered execution is a different role from writing a scheduled job's result using the output binding."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The trigger/binding examples explicitly pair a scheduled job with Timer trigger, Blob Storage input and Azure Cosmos DB output. The opening states that one trigger can coexist with multiple optional bindings."
           }
         ]
@@ -504,25 +444,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Blob can be a trigger or an additional input, but the scheduled example assigns it the input role. Using its trigger would change the invocation condition to blob activity rather than the required schedule.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-bindings"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-bindings"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The matrix permits Cosmos DB triggers, but the stated operation writes a result as output. A database-change invocation is a different requirement and cannot supply the specified scheduled start.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-bindings"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-bindings"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The source's opening example explicitly combines Timer invocation, Blob input and Cosmos DB output. Its one-trigger rule allows those optional bindings without making either data service a second trigger.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-bindings"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-bindings"]
             }
           ],
           "checks": {
@@ -556,9 +490,7 @@
             "claimRepresented": "The Blob input source must also be this scheduled function's invocation trigger.",
             "whyIncorrectInContext": "Reading Blob data is an input-binding action during execution, not the requested event that starts it. A Blob trigger would replace the stipulated schedule with a blob event.",
             "couldBeCorrectWhen": "A Blob trigger is suitable when a blob event is the required invocation source rather than when a scheduled handler merely reads existing Blob data.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "evidenceSummary": "The opening table explicitly separates Timer in its Trigger column from Blob Storage in its Input binding column, and the matrix confirms Blob trigger support."
           },
           {
@@ -566,9 +498,7 @@
             "claimRepresented": "The Cosmos DB output destination should invoke the function.",
             "whyIncorrectInContext": "The database receives the result after invocation. Selecting its trigger would not implement the requested schedule.",
             "couldBeCorrectWhen": "A Cosmos DB trigger is a supported choice when database events should start the function instead of a timer schedule.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "evidenceSummary": "The documented scheduled-job row places Cosmos DB in Output binding, not Trigger; the supported matrix separately lists Cosmos DB trigger capability."
           },
           {
@@ -576,9 +506,7 @@
             "claimRepresented": "A timer supplies scheduled invocation while the other services remain optional bindings.",
             "whyIncorrectInContext": "This is not incorrect: timing is the invocation requirement, while the stated Blob read and Cosmos write are data flow after invocation.",
             "couldBeCorrectWhen": "A timer also fits other scheduled handlers regardless of which supported optional data bindings they use; a service event would require a different trigger.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "evidenceSummary": "The source defines exactly one trigger and gives the identical service-role combination as a conceptual example, not an exam question."
           }
         ],
@@ -607,16 +535,12 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "summary": "The dedicated Reading route parameters section shows template values read through req.route_params and explicitly excludes extra function arguments in Python v2."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "summary": "The Python model examples use req.params for query-string data. That is appropriate for ?job_id=J42 but cannot read a route-only value when the query string is absent."
           },
           {
@@ -661,17 +585,13 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "Reading route parameters states that the route-template capture is available via HttpRequest.route_params. jobs/{job_id} binds J42 under job_id, so this exact assignment reads the path value.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-python"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-python"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The programming-model examples use req.params for query-string values. With no query string, repeating the existing assignment returns no job ID; it would work only if the request supplied a query parameter.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-python"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-python"]
             },
             {
               "choiceId": "c",
@@ -713,9 +633,7 @@
             "claimRepresented": "HttpRequest.route_params retrieves the job_id captured from this route's path.",
             "whyIncorrectInContext": "This is not incorrect: jobs/{job_id} binds J42 in the path and the requested replacement reads precisely that collection using the matching key.",
             "couldBeCorrectWhen": "The same method fits any Python v2 route-template capture; the dictionary key must match that route's placeholder rather than an invented extra handler parameter.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "evidenceSummary": "Reading route parameters demonstrates req.route_params.get with a matching placeholder and explicitly tells Python v2 handlers to read the request collection."
           },
           {
@@ -723,9 +641,7 @@
             "claimRepresented": "The query-parameter collection contains the path's job_id.",
             "whyIncorrectInContext": "The stem excludes a query string, so the original params lookup cannot obtain J42 merely because it appears in the route path.",
             "couldBeCorrectWhen": "req.params.get would retrieve job_id when the caller provides a query parameter such as ?job_id=J42 rather than only the path capture.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "evidenceSummary": "The HTTP key concepts describe params as the query-parameter collection, separately from the route-parameter section."
           },
           {
@@ -779,9 +695,7 @@
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The trigger examples associate Timer with a scheduled job. That is correct for periodic execution, but not the requested direct message-arrival invocation without a polling schedule."
           }
         ]
@@ -836,9 +750,7 @@
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The opening binding table associates Timer with scheduled execution. A timer can drive periodic polling, but the stem requests queued-arrival invocation rather than a schedule.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-bindings"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-bindings"]
             }
           ],
           "checks": {
@@ -933,9 +845,7 @@
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-reference"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-reference"],
             "summary": "The Client SDKs section explicitly allows direct SDK access for functionality not supported by an extension and says independently needed client instances must be created and managed by function code."
           }
         ]
@@ -982,9 +892,7 @@
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The Client SDKs section directly recommends SDK use for functionality absent from a binding extension and requires independently creating/managing the client. The candidate asks exactly for that operation-access escape hatch.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-reference"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-reference"]
             }
           ],
           "checks": {
@@ -1069,9 +977,7 @@
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The Python v1 tab uses function.json for the HTTP trigger and output bindings, whereas the adjacent v2 tab declares them with decorators. The option fits the v1 programming model, not this v2 project."
           },
           {
@@ -1234,16 +1140,12 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "summary": "The Organizing with blueprints section explicitly imports bp, constructs app = func.FunctionApp(), and then calls app.register_functions(bp) in the main file."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "summary": "The layout permits shared pure helper code, while the blueprint example additionally registers blueprint functions with FunctionApp. Import-only use fits helpers without trigger definitions, not these unregistered functions."
           }
         ]
@@ -1273,17 +1175,13 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The Organizing with blueprints example imports bp, creates the main FunctionApp and calls app.register_functions(bp). The stem already supplies the first steps, leaving this exact registration action.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-python"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-python"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The documented helper-code folder has no trigger/binding definitions, while a blueprint requires main-app registration. Importing the object alone is not the second registration step shown for its endpoint definitions.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-python"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-python"]
             }
           ],
           "checks": {
@@ -1317,9 +1215,7 @@
             "claimRepresented": "Registering bp with the main FunctionApp connects its decorated endpoints.",
             "whyIncorrectInContext": "This is not incorrect: the blueprint is imported but not registered, and the documented second stage is precisely app.register_functions(bp).",
             "couldBeCorrectWhen": "The same call is appropriate for any separately defined blueprint whose functions must be registered with the main app, using the actual imported blueprint object.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "evidenceSummary": "Organizing with blueprints shows the two separate steps and the exact register_functions call after importing bp."
           },
           {
@@ -1327,9 +1223,7 @@
             "claimRepresented": "Importing a blueprint alone has the same effect as registering its function definitions.",
             "whyIncorrectInContext": "The documented blueprint setup requires registration in addition to import, and the premise explicitly states that registration has not happened.",
             "couldBeCorrectWhen": "An ordinary helper module with no function definitions may be imported for its helper code without any FunctionApp registration.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "evidenceSummary": "The blueprint section explicitly registers bp; Folder structure separately labels shared as pure helper code with no triggers or bindings."
           }
         ],
@@ -1358,23 +1252,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The 4.x binding matrix lists Service Bus trigger and output, with Input empty. Service Bus is appropriate for queue-driven invocation or supported output, not a separate read binding on an HTTP-triggered function."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The matrix lists Event Grid trigger and output but no Input entry. Event-driven invocation or event publication is a different requirement from this existing-resource input read."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The supported-bindings matrix marks Blob Storage as supporting a standalone Input binding, in addition to Trigger and Output, and the examples use Blob data as extra function input."
           }
         ]
@@ -1404,25 +1292,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The 4.x matrix marks Service Bus Trigger and Output while Input is blank. Trigger-delivered message data does not constitute an extra standalone input attached to an already HTTP-triggered function.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-bindings"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-bindings"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The Event Grid row likewise supports Trigger and Output, not standalone Input. Event delivery/publication cannot be substituted for the requested additional declarative resource read.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-bindings"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-bindings"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The Blob Storage row marks all three directions, including standalone Input. The source also shows Blob reads as extra input to other invocation mechanisms, satisfying the role requested here.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-bindings"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-bindings"]
             }
           ],
           "checks": {
@@ -1456,9 +1338,7 @@
             "claimRepresented": "Service Bus has a standalone input binding to attach to this already HTTP-triggered function.",
             "whyIncorrectInContext": "Its trigger can provide message data, but the requested extra input column is blank. Replacing HTTP with a Service Bus trigger would change the invocation source.",
             "couldBeCorrectWhen": "Service Bus is appropriate as the function's trigger or as an output binding when sending messages is required.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "evidenceSummary": "The Service Bus row marks Trigger and Output, not Input. The article separately defines a trigger as a special input source."
           },
           {
@@ -1466,9 +1346,7 @@
             "claimRepresented": "Event Grid supplies the requested standalone additional input binding.",
             "whyIncorrectInContext": "Event Grid offers event invocation and event publication, but its standalone Input cell is blank. Neither capability satisfies the specified extra declarative read.",
             "couldBeCorrectWhen": "Event Grid fits a trigger-driven event handler or an output binding that publishes an event from a function.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "evidenceSummary": "The Event Grid row marks Trigger and Output only; the HTTP-triggered premise excludes selecting another invocation trigger."
           },
           {
@@ -1476,9 +1354,7 @@
             "claimRepresented": "Blob Storage exposes an ordinary standalone input binding on Functions 4.x.",
             "whyIncorrectInContext": "This is not incorrect: the Blob row contains an Input checkmark and can supply an additional declarative read without replacing the HTTP trigger.",
             "couldBeCorrectWhen": "Blob input also fits a scheduled function that reads a blob during execution, as the article's Timer example demonstrates.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "evidenceSummary": "The supported matrix marks Blob Input under the supported runtime, and the opening scheduled-job example uses Blob input independently of Timer."
           }
         ],
@@ -1507,9 +1383,7 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-reference"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-reference"],
             "summary": "The Deployment section calls the function app the deployment/management unit and states that its functions share runtime version and deployment method. Separate resources supply the required independent boundaries."
           },
           {
@@ -1555,9 +1429,7 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The Deployment section calls the function app the deployment/management unit and says its functions share runtime version and deployment method. Separate app resources create the independent boundaries demanded by the owners.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-reference"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-reference"]
             },
             {
               "choiceId": "b",
@@ -1600,9 +1472,7 @@
             "claimRepresented": "Separate function app resources provide the requested independent deployment and host-runtime management boundary.",
             "whyIncorrectInContext": "This is not incorrect: the documented unit for both management and deployment is the app, so splitting that unit separates the two groups' lifecycles.",
             "couldBeCorrectWhen": "Separate apps also fit other groups that intentionally need distinct app-level deployment or runtime configuration; this need not imply separate billing plans.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-reference"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-reference"],
             "evidenceSummary": "Deployment identifies an app as the execution and management context and states all its functions share runtime version and deployment method."
           },
           {
@@ -1815,9 +1685,7 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "summary": "The Python layout states that requirements.txt lists dependencies installed during publish using remote build and explicitly requires it for that build approach; .venv is excluded from deployment."
           },
           {
@@ -1879,9 +1747,7 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The v2 file table and explicit remote-build note identify requirements.txt as the package list installed during publishing. The local .venv is excluded, so declaring the dependency supplies the missing build input.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-python"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-python"]
             },
             {
               "choiceId": "b",
@@ -1933,9 +1799,7 @@
             "claimRepresented": "Declaring the package in requirements.txt supplies it to the remote-build dependency mechanism.",
             "whyIncorrectInContext": "This is not incorrect: the project uses remote build, the local environment is excluded, and the dependency declaration is explicitly missing.",
             "couldBeCorrectWhen": "This is the documented package-management route for other remote-built Python apps; deploying locally prebuilt dependencies is a different supported build approach.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-python"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-python"],
             "evidenceSummary": "Folder structure identifies requirements.txt as dependencies installed during publish with remote build, and Package management requires third-party packages in that file."
           },
           {
@@ -1994,16 +1858,12 @@
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "summary": "The matrix supports Table input bindings, while the introduction makes additional bindings optional. This is appropriate for table-backed lookup data, but the stated app has no such input binding."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-reference"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-reference"],
             "summary": "The Default host storage section explicitly requires an Azure Storage account when creating a function app and distinguishes its internal host/extension use from application service access."
           }
         ]
@@ -2050,17 +1910,13 @@
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The Table row permits an optional input binding, but the application has none. Its hypothetical lookup-data role cannot explain this app's intrinsic host-storage requirement.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-bindings"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-bindings"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "Default host storage states that creating an Azure function app instance requires an Azure Storage account used internally by the host and some extensions. Writing business data to Cosmos through an SDK does not replace that host purpose.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-reference"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-reference"]
             }
           ],
           "checks": {
@@ -2094,9 +1950,7 @@
             "claimRepresented": "An explicit Blob output binding explains this app's storage requirement.",
             "whyIncorrectInContext": "The premise expressly says no Blob bindings and identifies Cosmos DB SDK writes as business output, so this particular application dependency is absent.",
             "couldBeCorrectWhen": "An app that deliberately writes business data through a Blob output binding would require access to the selected Blob storage resource.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "evidenceSummary": "The Blob row includes output support and the opening binding definition connects output bindings to writing external data."
           },
           {
@@ -2104,9 +1958,7 @@
             "claimRepresented": "An explicit Table input binding explains this app's storage requirement.",
             "whyIncorrectInContext": "The premise expressly excludes Table bindings. This option therefore cannot explain a dependency that remains without any such application read.",
             "couldBeCorrectWhen": "An app that reads Azure Table data through a configured Table input binding would need the associated storage connection.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-bindings"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-bindings"],
             "evidenceSummary": "The Table Storage row explicitly marks Input support; this is an optional application integration, unlike default host storage."
           },
           {
@@ -2114,9 +1966,7 @@
             "claimRepresented": "The Functions host has a default Azure Storage dependency independent of application result storage.",
             "whyIncorrectInContext": "This is not incorrect for the Azure function app context: selecting Cosmos DB SDK writes does not remove the documented account used internally by the host.",
             "couldBeCorrectWhen": "The same host/application distinction applies to Azure function apps whose business results go to other services without application Blob or Table bindings.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-reference"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-reference"],
             "evidenceSummary": "Default host storage expressly requires an account when creating an app and identifies internal host/extension use, separately from the Client SDKs section."
           }
         ],
@@ -2481,23 +2331,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-hosting"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-hosting"],
             "summary": "The timeout table footnote states that an HTTP-triggered response is limited to 230 seconds regardless of function app timeout and suggests deferred work with an immediate response for longer processing."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-hosting"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-hosting"],
             "summary": "The cold-start table identifies Premium always-ready instances as a startup-latency control. That is suitable for startup delays, but the stem explicitly says the warm instance begins immediately and fails later in a long response."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-hosting"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-hosting"],
             "summary": "functionTimeout governs execution duration and produces a timeout when exceeded. It would explain a run exceeding ten minutes, but the six-minute run and earlier 230-second response loss do not exhaust that setting."
           }
         ]
@@ -2527,25 +2371,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The timeout table's first footnote imposes the 230-second HTTP response boundary independently of functionTimeout and connects it to the load-balancer path. Six minutes exceeds that response window despite remaining within the configured ten-minute execution window.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-hosting"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-hosting"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The cold-start table gives Premium always-ready capacity the role of avoiding startup delays. A warm instance that begins immediately rules that out as the cause of response loss several minutes later.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-hosting"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-hosting"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "functionTimeout governs execution and would be exceeded only after the configured ten minutes. The stated six-minute completion is inside that budget, so it does not explain the earlier approximately 230-second HTTP failure.",
-              "sourceIds": [
-                "ai200-20260914-doc-functions-hosting"
-              ]
+              "sourceIds": ["ai200-20260914-doc-functions-hosting"]
             }
           ],
           "checks": {
@@ -2579,9 +2417,7 @@
             "claimRepresented": "The synchronous HTTP response has a separate 230-second ceiling despite a longer execution timeout.",
             "whyIncorrectInContext": "This is not incorrect: the warm handler starts immediately, six-minute work fits inside ten minutes, and the response fails near the documented shorter HTTP boundary.",
             "couldBeCorrectWhen": "The same distinction matters for other direct HTTP-triggered requests that outlast the response ceiling even while their configured execution duration is sufficient.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-hosting"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-hosting"],
             "evidenceSummary": "Function app timeout duration footnote 1 says 230 seconds regardless of the app timeout and recommends asynchronous work or an immediate response for longer processing."
           },
           {
@@ -2589,9 +2425,7 @@
             "claimRepresented": "Cold-start latency explains this already running job's response loss several minutes later.",
             "whyIncorrectInContext": "The instance is warm and execution starts immediately, so startup provisioning cannot explain the later 230-second loss.",
             "couldBeCorrectWhen": "Always-ready Premium capacity is relevant when a request is delayed while instances start after inactivity, rather than after a warm invocation is underway.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-hosting"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-hosting"],
             "evidenceSummary": "Cold start behavior says Premium always-ready instances avoid cold starts; the HTTP ceiling is separately listed under timeout duration."
           },
           {
@@ -2599,9 +2433,7 @@
             "claimRepresented": "The configured ten-minute execution timeout expires during this six-minute job.",
             "whyIncorrectInContext": "Six minutes does not exceed the stated ten-minute limit, and the client loses its response even earlier at about 230 seconds.",
             "couldBeCorrectWhen": "functionTimeout explains a timeout when execution itself exceeds the configured duration, with the documented worker or host restart consequences.",
-            "sourceIds": [
-              "ai200-20260914-doc-functions-hosting"
-            ],
+            "sourceIds": ["ai200-20260914-doc-functions-hosting"],
             "evidenceSummary": "The section defines functionTimeout for executions exceeding its duration, and footnote 1 separately limits HTTP response time regardless of that value."
           }
         ],

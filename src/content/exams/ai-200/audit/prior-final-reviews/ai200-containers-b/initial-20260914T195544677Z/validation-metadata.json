@@ -792,23 +792,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "The Revision-scope changes section explicitly includes container configuration and images under properties.template. Replacing the image creates a new revision rather than altering the existing snapshot."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "Secret values are listed as application-scoped changes that do not create a new revision. The source separately states that revisions must be restarted before containers recognize new secret values."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "Ingress configuration, including traffic-splitting rules, is explicitly application-scoped. It changes routing among revisions instead of creating a new revision snapshot."
           },
           {
@@ -854,25 +848,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "Changing the container image in the template changes the revision snapshot.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Secret-value changes are application-scoped and do not themselves create a revision; restart is a separate consumption concern.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Ingress weights configure routing between revisions in application scope, not a new template snapshot.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             },
             {
               "choiceId": "d",
@@ -916,9 +904,7 @@
             "whyIncorrectInContext": "Not incorrect: an image-reference change alters the immutable revision-scoped template and creates a replacement revision.",
             "couldBeCorrectWhen": "A release with a genuinely changed image reference in properties.template is the documented revision-producing operation.",
             "evidenceSummary": "Revision-scope changes explicitly include container configuration and images under properties.template.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           },
           {
             "choiceId": "b",
@@ -926,9 +912,7 @@
             "whyIncorrectInContext": "It updates shared configuration rather than creating a revision; container uptake may require restart but that is a different operation.",
             "couldBeCorrectWhen": "This is appropriate for rotating shared secret contents without requesting a new revision; affected containers then need the documented restart behavior.",
             "evidenceSummary": "Application-scope changes list secret values and separately describe restarting revisions so containers recognize them.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           },
           {
             "choiceId": "c",
@@ -936,9 +920,7 @@
             "whyIncorrectInContext": "Weights route requests among existing revisions instead of changing their immutable templates.",
             "couldBeCorrectWhen": "Weight changes are appropriate when ready revisions already exist and the operator wants to alter application-URL distribution.",
             "evidenceSummary": "Ingress configuration including traffic splitting is explicitly application-scoped.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           },
           {
             "choiceId": "d",
@@ -977,23 +959,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "The Zero downtime deployment section keeps ingress traffic on the existing revision until the replacement provisions, scales appropriately and all replicas pass startup/readiness checks. The remaining failed readiness check prevents that transition."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "Successful provisioning is one readiness requirement, not the complete set. The article also requires the appropriate replica count and successful probes; the observed readiness condition is still unmet."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "Controlled traffic splitting across active revisions belongs to multiple revision mode. The documented single-mode transition waits for the replacement readiness conditions rather than starting an automatic partial canary."
           }
         ]
@@ -1023,25 +999,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "One unmet replica readiness condition prevents the single-mode switch, leaving the existing revision serving traffic.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Provisioning is only one of the listed readiness requirements and is not sufficient alone.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "An automatic partial canary is not the documented single-mode transition; intentional split allocation belongs to multiple mode.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             }
           ],
           "checks": {
@@ -1076,9 +1046,7 @@
             "whyIncorrectInContext": "Not incorrect: one unready replica leaves the documented all-replicas startup/readiness condition unsatisfied.",
             "couldBeCorrectWhen": "The existing revision remains healthy, ingress is enabled, and the application uses single revision mode as stated.",
             "evidenceSummary": "Zero downtime deployment says the old revision receives 100% until provisioning, scale and every startup/readiness probe condition are met.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           },
           {
             "choiceId": "b",
@@ -1086,9 +1054,7 @@
             "whyIncorrectInContext": "Provisioning is only one listed condition and cannot override the explicitly unready replica.",
             "couldBeCorrectWhen": "Traffic may switch at that time if provisioning completion coincides with all required replicas and probes also being ready; provisioning alone is never sufficient evidence.",
             "evidenceSummary": "The readiness list is conjunctive; its other scale and probe conditions qualify the timing of full traffic rollover.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           },
           {
             "choiceId": "c",
@@ -1096,9 +1062,7 @@
             "whyIncorrectInContext": "Single revision mode does not implement the described partial canary and still requires complete replacement readiness.",
             "couldBeCorrectWhen": "A deliberately configured split between ready active revisions is available in multiple mode; the “automatic first replica” rule itself is not documented.",
             "evidenceSummary": "Multiple mode permits chosen traffic weights; single-mode zero-downtime behavior waits for the complete readiness list.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           }
         ],
         "challenges": {
@@ -1126,23 +1090,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "Changing application traffic weights can route production requests to v2, but it changes the explicitly protected 90/10 distribution. Weights are appropriate for the main rollout, not a separate directed testing URL."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "The Labels section states that labels route to one specific revision, work independently of traffic splitting and retain their URL when moved. Those properties satisfy targeted testing and the future retargeting requirement."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"],
             "summary": "Single revision mode replaces the previous active revision once the new one is ready. It does not preserve the stated simultaneous 90/10 production allocation and a separate directed testing route."
           }
         ]
@@ -1172,25 +1130,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Changing v2 to 100 percent changes the protected application distribution instead of creating an independent testing route.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The ordinary label URL targets v2 directly and can move to another revision without changing its URL or the application’s weights.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Single mode does not retain the requested simultaneous weighted two-revision production arrangement.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-revisions"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
             }
           ],
           "checks": {
@@ -1225,9 +1177,7 @@
             "whyIncorrectInContext": "Changing v2 to 100% violates the required continuing 90/10 production distribution.",
             "couldBeCorrectWhen": "A full application rollout to a ready v2 can use 100% weight when production distribution is intentionally changing.",
             "evidenceSummary": "Multiple-mode traffic splitting assigns application-URL percentages among ready revisions.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           },
           {
             "choiceId": "b",
@@ -1235,9 +1185,7 @@
             "whyIncorrectInContext": "Not incorrect: label requests select that revision directly without changing the production URL’s weights.",
             "couldBeCorrectWhen": "External HTTP ingress, a ready labeled revision and multiple mode satisfy the ordinary label contract in the cited article.",
             "evidenceSummary": "Labels retain their URL when reassigned and work independently of application-URL traffic weights.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           },
           {
             "choiceId": "c",
@@ -1245,9 +1193,7 @@
             "whyIncorrectInContext": "Single mode cannot retain the stated simultaneous production allocation and independent test routing.",
             "couldBeCorrectWhen": "Single mode suits automatic replacement of the predecessor after readiness when only one serving revision is desired.",
             "evidenceSummary": "The revision-mode table and zero-downtime section describe automatic full replacement, not protected multiple-version allocation.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-revisions"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
           }
         ],
         "challenges": {
@@ -1275,9 +1221,7 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-scale"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-scale"],
             "summary": "The documented algorithm gives ceil(37/5)=8 as the uncapped metric-derived desired count. That would fit a sufficiently high maximum, but the same product evidence bounds scaling by maxReplicas, which is six here."
           },
           {
@@ -1290,9 +1234,7 @@
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-scale"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-scale"],
             "summary": "The scaling article defines desiredReplicas as ceil(currentMetricValue/targetMetricValue) and caps scale-out at the configured maximum. The supplied observation gives eight before the cap and six after applying maxReplicas."
           }
         ]
@@ -1621,9 +1563,7 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-scale"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-scale"],
             "summary": "The scale definition distinguishes replica limits from trigger rules. Raising the maximum changes potential capacity but leaves the documented no-ingress/no-rule zero-replica activation problem unchanged."
           },
           {
@@ -1636,9 +1576,7 @@
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-scale"
-            ],
+            "sourceIds": ["ai200-20260914-doc-containerapps-scale"],
             "summary": "A nonzero minimum is a documented alternative for an ingress-disabled app and keeps a worker available. It conflicts with this scenario’s additional requirement to allow zero replicas while idle."
           }
         ]
@@ -1676,9 +1614,7 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "A higher upper replica bound supplies no queue event signal and leaves the zero-replica activation gap.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-scale"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-scale"]
             },
             {
               "choiceId": "b",
@@ -1693,9 +1629,7 @@
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "One minimum replica avoids zero but directly violates the required idle-zero behavior.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-scale"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-scale"]
             }
           ],
           "checks": {
@@ -1730,9 +1664,7 @@
             "whyIncorrectInContext": "A larger ceiling cannot observe queue arrivals while ingress and event rules remain absent.",
             "couldBeCorrectWhen": "Raising maximum replicas is useful when a working trigger already requests more capacity than the existing cap permits.",
             "evidenceSummary": "Limits describe possible capacity, while rules supply activation criteria; the default-rule warning identifies the no-ingress/no-rule dead end.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-scale"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-scale"]
           },
           {
             "choiceId": "b",
@@ -1751,9 +1683,7 @@
             "whyIncorrectInContext": "A one-replica minimum defeats the requirement to permit zero while idle.",
             "couldBeCorrectWhen": "A nonzero minimum is a documented alternative when an ingress-disabled app must always retain a running instance and idle scale-to-zero is not required.",
             "evidenceSummary": "The default-rule warning offers a scale rule or minimum at least one; only the rule approach can satisfy this stem’s additional zero-idle constraint.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-scale"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-scale"]
           }
         ],
         "challenges": {
@@ -2884,9 +2814,7 @@
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "TCP success demonstrates only a connection, and the stem explicitly states the socket opens before model readiness.",
-              "sourceIds": [
-                "ai200-20260914-doc-containerapps-probes"
-              ]
+              "sourceIds": ["ai200-20260914-doc-containerapps-probes"]
             },
             {
               "choiceId": "c",

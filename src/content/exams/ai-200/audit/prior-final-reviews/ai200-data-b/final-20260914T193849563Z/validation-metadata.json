@@ -11,23 +11,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "IVFFlat searches selected lists according to probes. One probe does not search the whole dataset, so its approximate candidate set cannot define the requested exhaustive baseline."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "The product document describes HNSW as approximate nearest-neighbor search. Its graph traversal trades recall for performance and does not establish an exact baseline."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "Indexing states that without ANN indexes pgvector performs exact search with perfect recall at a performance cost. Using the same eligible dataset creates the required comparison baseline."
           }
         ]
@@ -57,25 +51,19 @@
               "choiceId": "A",
               "assessment": "ambiguous",
               "rationale": "One probe is partial if there are multiple lists, but the stem never gives a list count. The same receipt says probes equal to lists is exact and then the planner does not use that index; lists=1 is an unexcluded counterexample to the authored blanket explanation.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "HNSW is approximate and offers no unconditional exact-neighbor result contract, even if a particular search happens to return the true nearest rows.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "C",
               "assessment": "supported",
               "rationale": "Exhaustive distance ordering without an approximate access path is the documented exact baseline and does not depend on unspecified IVFFlat list/probe settings.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             }
           ],
           "checks": {
@@ -109,9 +97,7 @@
             "claimRepresented": "One IVFFlat probe is proposed as an exact reference run.",
             "whyIncorrectInContext": "It is not safely refuted without knowing lists. For multiple lists it omits other lists, but the stem leaves the documented all-lists special case open.",
             "couldBeCorrectWhen": "When the index has a single list, probes=1 equals lists; the article says this becomes exact and the planner does not use the index. This exposes, rather than repairs, the authored ambiguity.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "IVFFlat explicitly defines exact search when probes equals lists and one-probe search as selecting one list."
           },
           {
@@ -119,9 +105,7 @@
             "claimRepresented": "Default HNSW is described as a guaranteed exhaustive baseline.",
             "whyIncorrectInContext": "Graph traversal is documented as approximate; default search settings supply no exhaustive ranking guarantee.",
             "couldBeCorrectWhen": "HNSW itself is documented for latency-sensitive approximate retrieval. No sourced context makes its default setting a guaranteed exact algorithm, so this complete assertion fails the strict countercontext requirement.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "Indexing and HNSW sections trade recall for performance and expose ef_search as a candidate-list control."
           },
           {
@@ -129,9 +113,7 @@
             "claimRepresented": "Unindexed exact distance search supplies the reference ranking.",
             "whyIncorrectInContext": "This is not incorrect: ranking the same eligible vectors without an ANN access path provides the exhaustive reference requested.",
             "couldBeCorrectWhen": "Use it when exhaustive recall is required and slower full distance evaluation is acceptable, precisely the baseline conditions here.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "Indexing explicitly says absence of indexes gives exact search with perfect recall at a performance cost."
           }
         ],
@@ -160,23 +142,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "The IVFFlat section describes k-means clustering into lists and a training step. The HNSW comparison explicitly contrasts this with an index that can be created on an empty table."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "The HNSW section states that there is no training step, permits creation on an empty table, and describes higher build resource use with better speed/recall tradeoff."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "Exact search is valid without indexes, but HNSW is also explicitly supported on an empty table. The no-index approach fails the requirement to establish an ANN index."
           }
         ]
@@ -206,25 +182,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "IVFFlat constructs trained lists from existing rows; its k-means training requirement conflicts with building a useful empty-table index before loading the data.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "B",
               "assessment": "supported",
               "rationale": "HNSW has no IVFFlat training step and can be built with the table empty, with the stated willingness to pay more build time and memory.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "Leaving out an ANN index preserves exact scanning but does not meet the explicit desire to prepare approximate retrieval for the later workload.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             }
           ],
           "checks": {
@@ -258,9 +228,7 @@
             "claimRepresented": "IVFFlat is recommended on the premise that representative training data is unnecessary.",
             "whyIncorrectInContext": "Its k-means training is the very prerequisite absent from the empty-table scenario.",
             "couldBeCorrectWhen": "IVFFlat can be chosen after representative data exists for faster/lower-memory construction. That supports the method, not this option's claim of training independence; no sourced context validates the complete sentence.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "The IVFFlat clustering phases and HNSW comparison explicitly distinguish their training requirements."
           },
           {
@@ -268,9 +236,7 @@
             "claimRepresented": "HNSW trades greater build resources for no IVFFlat-style training requirement.",
             "whyIncorrectInContext": "It is not incorrect: empty-table construction is explicitly supported and the stem accepts its build time and memory cost.",
             "couldBeCorrectWhen": "An initially empty corpus needing an ANN index before representative samples is the documented HNSW context.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "The HNSW section names no training step, empty-table creation and the build-resource tradeoff."
           },
           {
@@ -278,9 +244,7 @@
             "claimRepresented": "Only unindexed exact search is claimed to work before data loading.",
             "whyIncorrectInContext": "No-index searching does not establish the required ANN index, and HNSW contradicts the asserted exclusivity.",
             "couldBeCorrectWhen": "Unindexed exact search is appropriate for perfect-recall work accepting its cost. No sourced condition makes it the only empty-table-capable approach while HNSW remains supported.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "Indexing supports exact search without indexes; the HNSW paragraph independently permits an empty table."
           }
         ],
@@ -309,23 +273,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "Selecting the index access function pairs vector_cosine_ops with the <=> cosine-distance operator. This also restores the application's stated metric requirement."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "Probes changes how many IVFFlat lists are searched; it does not change the distance operator or operator class. <-> remains the L2 operator rather than cosine distance."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "vector_l2_ops correctly pairs with <->, but that implements Euclidean rather than the required cosine metric. A valid index pair alone is insufficient if it changes application semantics."
           }
         ]
@@ -355,25 +313,19 @@
               "choiceId": "A",
               "assessment": "supported",
               "rationale": "vector_cosine_ops is the operator class for cosine distance and <=> is its query operator, preserving the required metric while making the query compatible.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "ivfflat.probes changes search breadth, not the meaning of the L2 <-> operator or the cosine index's operator class.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "Matching vector_l2_ops to <-> would align an L2 query, but the scenario explicitly requires cosine ranking rather than Euclidean ranking.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             }
           ],
           "checks": {
@@ -407,9 +359,7 @@
             "claimRepresented": "Restore cosine ordering while keeping the cosine operator class.",
             "whyIncorrectInContext": "This is not incorrect: <=> expresses cosine distance and matches the existing vector_cosine_ops index.",
             "couldBeCorrectWhen": "It is the documented pair when the application requires cosine distance, as explicitly retained after the regression.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "Selecting the index access function pairs cosine_ops with <=> and shows a compatible index scan."
           },
           {
@@ -417,9 +367,7 @@
             "claimRepresented": "Keep L2 ordering but search more IVFFlat lists.",
             "whyIncorrectInContext": "More probes cannot turn <-> into cosine distance or make it match a cosine index.",
             "couldBeCorrectWhen": "Raising probes is a documented recall-versus-latency adjustment when the intended metric and index already match, for example an L2 query with a suitable L2 IVFFlat index. Those conditions differ from this cosine requirement.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "The IVFFlat probes section changes list coverage; the L2 section fixes <-> semantics independently of probes."
           },
           {
@@ -427,9 +375,7 @@
             "claimRepresented": "Rebuild a compatible L2 index for the existing L2 query.",
             "whyIncorrectInContext": "This repairs an operator pairing but changes the requested cosine semantics, so it does not solve this application requirement.",
             "couldBeCorrectWhen": "It is correct for an application intentionally seeking Euclidean distance with <->, using vector_l2_ops.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "The L2 access-function section documents exactly this class/operator pair, distinct from cosine."
           }
         ],
@@ -458,23 +404,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "Performance recommends omitting ANALYZE for queries too slow to run, with fewer details. Estimated plan output is useful, but it does not provide the actual execution observations requested here."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "The product document recommends this form when the query completes reasonably quickly and directs readers to inspect index use and parallelism. It provides the measured plan and buffer information needed."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "Performance asks whether the plan actually uses an index. Existence of a definition does not establish the optimizer's selected access path or buffer work."
           }
         ]
@@ -504,25 +444,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "Estimated output cannot supply observed timings or buffer activity because it does not run the query.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "B",
               "assessment": "supported",
               "rationale": "EXPLAIN with ANALYZE runs the staging query and VERBOSE/BUFFERS supply plan details and actual buffer observations for the requested measured investigation.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "The catalog proves an index exists, not whether this query selects it or where this execution spends time and I/O.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             }
           ],
           "checks": {
@@ -556,9 +490,7 @@
             "claimRepresented": "An estimated EXPLAIN plan is treated as actual execution measurement.",
             "whyIncorrectInContext": "Without ANALYZE it cannot supply the observed timing and execution behavior requested.",
             "couldBeCorrectWhen": "The article recommends dropping ANALYZE when executing a query would take too long. That makes estimated-plan inspection useful, never makes estimates actual measurements as this option states.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "Performance explicitly contrasts the measured command with the faster, less-detailed non-ANALYZE alternative."
           },
           {
@@ -566,9 +498,7 @@
             "claimRepresented": "Execute the query with ANALYZE, VERBOSE and BUFFERS to inspect measured plan work.",
             "whyIncorrectInContext": "This is not incorrect: the staging query is acceptably fast, and actual plan/buffer detail is the missing evidence.",
             "couldBeCorrectWhen": "Use this diagnostic when executing the bounded query is acceptable and actual execution rather than estimates is required.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "The first Performance example is EXPLAIN (ANALYZE, VERBOSE, BUFFERS)."
           },
           {
@@ -576,9 +506,7 @@
             "claimRepresented": "An index definition alone is claimed to prove optimizer use and buffer behavior.",
             "whyIncorrectInContext": "A definition cannot reveal which access path this execution selected or how much work occurred.",
             "couldBeCorrectWhen": "A definition can identify a proposed index, but the cited article supplies no context where its existence alone proves actual use. I do not invent such a context.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "Performance asks whether an index was used in the query plan, not merely whether an index exists."
           }
         ],
@@ -1824,23 +1752,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
             "summary": "Switching your application to use PgBouncer explicitly changes the port from direct PostgreSQL's 5432 to 6432. Enabling the feature does not make the original port the pooler endpoint."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
             "summary": "The product document identifies built-in PgBouncer on the same hostname at port 6432 and supports General Purpose. The stem establishes enablement and compatibility."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
             "summary": "Limitations explicitly excludes the Burstable tier from built-in PgBouncer. This would remove rather than enable the requested capability and would not supply the correct port."
           }
         ]
@@ -1870,25 +1792,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "5432 is the direct PostgreSQL endpoint, so retaining that port bypasses the built-in PgBouncer path the application is asked to use.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pooling"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pooling"]
             },
             {
               "choiceId": "B",
               "assessment": "supported",
               "rationale": "For the stipulated enabled General Purpose server, built-in PgBouncer uses the same server hostname with port 6432.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pooling"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pooling"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "The product specifically excludes built-in PgBouncer on Burstable, so switching to it cannot provide the requested pool.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pooling"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pooling"]
             }
           ],
           "checks": {
@@ -1922,9 +1838,7 @@
             "claimRepresented": "Enabling PgBouncer is claimed to redirect the existing direct 5432 endpoint.",
             "whyIncorrectInContext": "The article explicitly requires changing the application port to 6432; enabling the feature does not select that endpoint for a 5432 client.",
             "couldBeCorrectWhen": "Port 5432 remains correct when direct PostgreSQL connectivity is intended. There is no cited condition in which enabling the pooler makes this direct endpoint its automatic redirect.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
             "evidenceSummary": "Switching your application to use PgBouncer says to replace regular 5432 with 6432 while retaining the hostname."
           },
           {
@@ -1932,9 +1846,7 @@
             "claimRepresented": "Keep the server hostname and select the pooler on port 6432.",
             "whyIncorrectInContext": "This is not incorrect: the server is already General Purpose, enabled and compatibility-tested, so the remaining endpoint change is the port.",
             "couldBeCorrectWhen": "It is the documented application switch from a direct connection to built-in PgBouncer on a supported server.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
             "evidenceSummary": "The introductory endpoint description and Switching section both name the same hostname and port 6432."
           },
           {
@@ -1942,9 +1854,7 @@
             "claimRepresented": "Move to Burstable to obtain its built-in pooler while retaining the endpoint.",
             "whyIncorrectInContext": "The product limitations expressly remove built-in PgBouncer capability when moving to Burstable.",
             "couldBeCorrectWhen": "No documented context provides built-in PgBouncer on Burstable. A self-managed alternative would change the proposed product and endpoint, and is not this option.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
             "evidenceSummary": "Limitations excludes Burstable and describes losing the capability when changing from a supported tier."
           }
         ],
@@ -2300,9 +2210,7 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
             "summary": "Limitations states that server/VM restarts also restart PgBouncer and existing connections must be re-established. A stable hostname does not preserve the failed connection object."
           },
           {
@@ -2409,9 +2317,7 @@
             "claimRepresented": "Built-in PgBouncer is assumed to preserve every connection through server restart.",
             "whyIncorrectInContext": "The product limitation says restarting the server also restarts PgBouncer and requires re-establishing existing connections.",
             "couldBeCorrectWhen": "An unchanged hostname is documented across HA failover, but that is not preservation of an existing failed connection object. No cited restart context validates the complete option.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"],
             "evidenceSummary": "The product HA section preserves connection strings, while Limitations separately requires existing connections to be re-established."
           },
           {
@@ -3374,9 +3280,7 @@
             "claimRepresented": "HNSW with KNN 4 is described as exhaustive because a neighbor count allegedly changes its algorithm.",
             "whyIncorrectInContext": "KNN controls requested result count, not HNSW's approximate candidate search, so the reference-run algorithm requirement fails.",
             "couldBeCorrectWhen": "HNSW KNN is documented for low-latency approximate retrieval when exhaustive precision is not required. No sourced condition makes KNN itself convert every underlying algorithm to exhaustive search.",
-            "sourceIds": [
-              "ai200-20260914-doc-redis-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-redis-vector"],
             "evidenceSummary": "The product separates FLAT exact and HNSW approximate algorithms from KNN top-K search methods."
           },
           {

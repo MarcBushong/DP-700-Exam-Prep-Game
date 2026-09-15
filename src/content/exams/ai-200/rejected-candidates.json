@@ -121,9 +121,7 @@
             "choiceId": "b",
             "assessment": "supported",
             "rationale": "Not incorrect: the single initial tag has moved, and the stem excludes a deletion or cleanup operation. Correct-elsewhere/context analysis: Correct when the moved tag was the last reference and no subsequent deletion removes the old manifest. Evidence: Delete untagged manifests explicitly says the previous manifest and unique layer data remain after the stable tag advances.",
-            "sourceIds": [
-              "ai200-20260914-doc-acr-tags"
-            ]
+            "sourceIds": ["ai200-20260914-doc-acr-tags"]
           },
           {
             "choiceId": "c",
@@ -253,9 +251,7 @@
             "choiceId": "a",
             "assessment": "contradicted",
             "rationale": "Raise maximum replicas without adding a wake-up signal. A larger ceiling cannot observe queue arrivals while ingress and event rules remain absent. Alternate-context analysis: Raising maximum replicas is useful when a working trigger already requests more capacity than the existing cap permits. Evidence: Limits describe possible capacity, while rules supply activation criteria; the default-rule warning identifies the no-ingress/no-rule dead end.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-scale"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-scale"]
           },
           {
             "choiceId": "b",
@@ -270,9 +266,7 @@
             "choiceId": "c",
             "assessment": "contradicted",
             "rationale": "Retain one running worker rather than enabling event-driven activation. A one-replica minimum defeats the requirement to permit zero while idle. Alternate-context analysis: A nonzero minimum is a documented alternative when an ingress-disabled app must always retain a running instance and idle scale-to-zero is not required. Evidence: The default-rule warning offers a scale rule or minimum at least one; only the rule approach can satisfy this stem’s additional zero-idle constraint.",
-            "sourceIds": [
-              "ai200-20260914-doc-containerapps-scale"
-            ]
+            "sourceIds": ["ai200-20260914-doc-containerapps-scale"]
           }
         ],
         "checks": {
@@ -397,25 +391,19 @@
             "choiceId": "A",
             "assessment": "contradicted",
             "rationale": "Claim: A new external identity on every delivery safely handles replay after a side effect succeeded. In this context: The retry creates another record instead of repeating the intended source-item/version refresh, turning legitimate redelivery into duplicate side effects. Alternative context: The output intentionally records each delivery attempt separately, rather than representing one refreshed embedding per source item/version; the documented at-least-once behavior explains why delivery-attempt logs may contain repeated events. Evidence: Error handling documents redelivery from saved lease state. It does not guarantee exactly one callback, so a per-delivery append has different semantics from a repeat-safe refresh.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           },
           {
             "choiceId": "B",
             "assessment": "supported",
             "rationale": "Claim: Repeat-safe external work and awaited completion protect the side-effect/checkpoint boundary. In this context: This is not incorrect here: the same item/version may be delivered again, and the delegate must not signal successful completion while required external work is unfinished. Alternative context: An at-least-once processor writes to a separate destination that cannot be atomically committed with its lease checkpoint. Evidence: The processing lifecycle updates leases only after successful delegate completion; retry and asynchronous-completion warnings require treating duplicate delivery and early return deliberately.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           },
           {
             "choiceId": "C",
             "assessment": "contradicted",
             "rationale": "Claim: Returning immediately while untracked embedding writes run prevents replay or loss. In this context: The processor can checkpoint before required work finishes, so a crash can leave a checkpoint past an embedding that was never updated. Alternative context: The background work is explicitly optional and loss is acceptable. The source's missed-event warning supplies that limited boundary; no sourced context makes untracked required embedding writes reliable. Evidence: The Important warning says asynchronous delegate work can be checkpointed before completion and cause missed events, recommending synchronous processing or proper completion tracking.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           }
         ],
         "checks": {
@@ -463,25 +451,19 @@
             "choiceId": "A",
             "assessment": "contradicted",
             "rationale": "Its k-means training is the very prerequisite absent from the empty-table scenario. Countercontext: IVFFlat can be chosen after representative data exists for faster/lower-memory construction. That supports the method, not this option's claim of training independence; no sourced context validates the complete sentence. Evidence: The IVFFlat clustering phases and HNSW comparison explicitly distinguish their training requirements.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
           },
           {
             "choiceId": "B",
             "assessment": "supported",
             "rationale": "It is not incorrect: empty-table construction is explicitly supported and the stem accepts its build time and memory cost. Countercontext: An initially empty corpus needing an ANN index before representative samples is the documented HNSW context. Evidence: The HNSW section names no training step, empty-table creation and the build-resource tradeoff.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
           },
           {
             "choiceId": "C",
             "assessment": "contradicted",
             "rationale": "No-index searching does not establish the required ANN index, and HNSW contradicts the asserted exclusivity. Countercontext: Unindexed exact search is appropriate for perfect-recall work accepting its cost. No sourced condition makes it the only empty-table-capable approach while HNSW remains supported. Evidence: Indexing supports exact search without indexes; the HNSW paragraph independently permits an empty table.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
           }
         ],
         "checks": {
@@ -529,25 +511,19 @@
             "choiceId": "A",
             "assessment": "contradicted",
             "rationale": "Without ANALYZE it cannot supply the observed timing and execution behavior requested. Countercontext: The article recommends dropping ANALYZE when executing a query would take too long. That makes estimated-plan inspection useful, never makes estimates actual measurements as this option states. Evidence: Performance explicitly contrasts the measured command with the faster, less-detailed non-ANALYZE alternative.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
           },
           {
             "choiceId": "B",
             "assessment": "supported",
             "rationale": "This is not incorrect: the staging query is acceptably fast, and actual plan/buffer detail is the missing evidence. Countercontext: Use this diagnostic when executing the bounded query is acceptable and actual execution rather than estimates is required. Evidence: The first Performance example is EXPLAIN (ANALYZE, VERBOSE, BUFFERS).",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
           },
           {
             "choiceId": "C",
             "assessment": "contradicted",
             "rationale": "A definition cannot reveal which access path this execution selected or how much work occurred. Countercontext: A definition can identify a proposed index, but the cited article supplies no context where its existence alone proves actual use. I do not invent such a context. Evidence: Performance asks whether an index was used in the query plan, not merely whether an index exists.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
           }
         ],
         "checks": {
@@ -934,25 +910,19 @@
             "choiceId": "A",
             "assessment": "contradicted",
             "rationale": "The article explicitly requires changing the application port to 6432; enabling the feature does not select that endpoint for a 5432 client. Countercontext: Port 5432 remains correct when direct PostgreSQL connectivity is intended. There is no cited condition in which enabling the pooler makes this direct endpoint its automatic redirect. Evidence: Switching your application to use PgBouncer says to replace regular 5432 with 6432 while retaining the hostname.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"]
           },
           {
             "choiceId": "B",
             "assessment": "supported",
             "rationale": "This is not incorrect: the server is already General Purpose, enabled and compatibility-tested, so the remaining endpoint change is the port. Countercontext: It is the documented application switch from a direct connection to built-in PgBouncer on a supported server. Evidence: The introductory endpoint description and Switching section both name the same hostname and port 6432.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"]
           },
           {
             "choiceId": "C",
             "assessment": "contradicted",
             "rationale": "The product limitations expressly remove built-in PgBouncer capability when moving to Burstable. Countercontext: No documented context provides built-in PgBouncer on Burstable. A self-managed alternative would change the proposed product and endpoint, and is not this option. Evidence: Limitations excludes Burstable and describes losing the capability when changing from a supported tier.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"]
           }
         ],
         "checks": {
@@ -1084,9 +1054,7 @@
             "choiceId": "A",
             "assessment": "contradicted",
             "rationale": "The product limitation says restarting the server also restarts PgBouncer and requires re-establishing existing connections. Countercontext: An unchanged hostname is documented across HA failover, but that is not preservation of an existing failed connection object. No cited restart context validates the complete option. Evidence: The product HA section preserves connection strings, while Limitations separately requires existing connections to be re-established.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pooling"
-            ]
+            "sourceIds": ["ai200-20260914-doc-postgres-pooling"]
           },
           {
             "choiceId": "B",
@@ -1386,9 +1354,7 @@
             "choiceId": "A",
             "assessment": "contradicted",
             "rationale": "KNN controls requested result count, not HNSW's approximate candidate search, so the reference-run algorithm requirement fails. Countercontext: HNSW KNN is documented for low-latency approximate retrieval when exhaustive precision is not required. No sourced condition makes KNN itself convert every underlying algorithm to exhaustive search. Evidence: The product separates FLAT exact and HNSW approximate algorithms from KNN top-K search methods.",
-            "sourceIds": [
-              "ai200-20260914-doc-redis-vector"
-            ]
+            "sourceIds": ["ai200-20260914-doc-redis-vector"]
           },
           {
             "choiceId": "B",
@@ -2226,17 +2192,13 @@
             "choiceId": "A",
             "assessment": "contradicted",
             "rationale": "The rule tests each log's trace context; context-free logs are unaffected and metrics are never sampled by the documented trace rule. Configure trace-based sampling for logs expressly excludes context-free logs, and Enable sampling expressly excludes metrics. The all-three counterexample is unsupported rather than invented.",
-            "sourceIds": [
-              "ai200-20260914-doc-otel-config"
-            ]
+            "sourceIds": ["ai200-20260914-doc-otel-config"]
           },
           {
             "choiceId": "B",
             "assessment": "contradicted",
             "rationale": "The valid SpanId and not-sampled trace flags satisfy the documented drop condition for the correlated log; emission does not exempt it. The configuration section makes the filtering conditional on enablement and the trace flag; the question supplies the opposite conditions.",
-            "sourceIds": [
-              "ai200-20260914-doc-otel-config"
-            ]
+            "sourceIds": ["ai200-20260914-doc-otel-config"]
           },
           {
             "choiceId": "C",

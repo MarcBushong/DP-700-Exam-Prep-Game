@@ -32,33 +32,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Use the original content text as the extracted-image input. Wrong here: the skill needs image objects, not the text field. Counterexample/context: Use content when a text-processing skill needs the document text rather than image data. Evidence: The initial tree has content; the subsequent image-extraction tree adds normalized_images separately (27-46).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Supply extracted image objects through normalized_images. Not incorrect here: the collection is explicitly created to provide images to later skills. Counterexample/context: Correct when image extraction is configured and a downstream skill consumes each image in that collection. Evidence: The lesson describes configuration, image0/image1 and the collection as input to image-information skills (36-46).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Supply the language-detection result as the image collection. Wrong here: language is a skill-generated language value, not extracted images. Counterexample/context: Use the language field when a later step needs the detected language value. Evidence: The language example appends language beside normalized_images, not inside the image-input collection (48-70).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Use source file-name metadata as the image input. Wrong here: a file name identifies the source artifact, not each embedded image. Counterexample/context: Use metadata_storage_name when retaining the source file name in the searchable document. Evidence: The initial metadata fields precede the separate image collection (29-45).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         }
       ],
       "checks": {
@@ -100,33 +92,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Load source records by making a full-text query. Wrong here: a query reads the populated index and does not load prepared records. Counterexample/context: Use full-text requests after ingestion when finding indexed documents by textual criteria. Evidence: Classic indexing and querying are separate workloads; the latter targets already searchable content (54-68).",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Pull directly from a source without a supported connector. Wrong here: the required supported-source prerequisite is expressly absent. Counterexample/context: Choose pull when a supported source can be retrieved and serialized into JSON by the documented ingestion mechanism. Evidence: The ingestion checklist makes push the option when there is no supported source (109).",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Push application-prepared, schema-compatible JSON into the index. Not incorrect here: the application has completed conversion and does not need a pull connector. Counterexample/context: Correct for an unsupported source or real-time index synchronization when application code supplies the JSON documents. Evidence: The indexing section describes direct JSON upload and the checklist covers unsupported sources (55,109).",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Have automatic indexing consume the original non-JSON representation directly. Wrong here: direct push requires JSON, and this source has no supported pull serializer. Counterexample/context: The related automatic-conversion approach is appropriate for supported pull sources; it is not permission to push a non-JSON body directly. Evidence: The source says only JSON can be indexed, while pull retrieves and serializes original data (55).",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         }
       ],
       "checks": {
@@ -168,33 +152,25 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Combine lexical and vector retrieval in a hybrid request. Not incorrect here: both requested retrieval components and their index fields are present. Counterexample/context: Correct when one request needs text search over searchable text and similarity over vector fields. Evidence: The hybrid row explicitly combines text search and vector search in a single query request (15).",
-          "sourceIds": [
-            "ai103-search-query-types"
-          ]
+          "sourceIds": ["ai103-search-query-types"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Use full-text retrieval alone for the combined requirement. Wrong here: lexical retrieval omits the required vector component. Counterexample/context: Choose full-text search alone when matching analyzed terms is sufficient. Evidence: Full-text uses inverted indexes of tokenized terms; the hybrid row adds the vector component (13-15).",
-          "sourceIds": [
-            "ai103-search-query-types"
-          ]
+          "sourceIds": ["ai103-search-query-types"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Use vector retrieval alone for the combined requirement. Wrong here: it does not supply the requested text-matching component. Counterexample/context: Choose vector-only retrieval when similarity over embeddings is the complete retrieval requirement. Evidence: The vector row targets vector fields, distinct from full-text and hybrid rows (13-15).",
-          "sourceIds": [
-            "ai103-search-query-types"
-          ]
+          "sourceIds": ["ai103-search-query-types"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Replace combined retrieval with exact metadata filtering. Wrong here: a Boolean metadata constraint does not combine lexical and vector search. Counterexample/context: Use a filter alone when exact filterable metadata fully identifies the desired subset, or alongside search to constrain it. Evidence: Filter search supports search=* or a search string and operates on filterable fields (25-38).",
-          "sourceIds": [
-            "ai103-search-query-types"
-          ]
+          "sourceIds": ["ai103-search-query-types"]
         }
       ],
       "checks": {
@@ -236,33 +212,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Compare Category to only the first token Safety. Wrong here: equality compares the entire stored Safety Manual value. Counterexample/context: This predicate matches when the complete stored Category value is Safety. Evidence: Text filter fundamentals explicitly reject a partial word equality match against a multiword string (118-120).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Compare Category to lowercase safety manual. Wrong here: no normalizer is configured and the stored initial capitals differ. Counterexample/context: The lowercase literal works if the stored value is lowercase, or appropriate normalization makes equality case-insensitive. Evidence: Default text filters are case-sensitive; a normalizer can change that behavior (122).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Compare Category to the reversed phrase Manual Safety. Wrong here: reversing word order changes the complete literal, and filtering does not tokenize it. Counterexample/context: The reversed literal works for a document whose entire stored Category is Manual Safety. Evidence: Whole-string equality is literal and has no lexical word-breaking (118-120).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "d",
           "assessment": "supported",
           "rationale": "Compare Category to the exact stored Safety Manual literal. Not incorrect here: it preserves the full value and case on a filterable string. Counterexample/context: Correct under the supplied no-normalizer condition when the stored value is exactly Safety Manual. Evidence: The exact-match example and case-sensitivity note jointly support this equality (118-122).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         }
       ],
       "checks": {
@@ -312,34 +280,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Turn on filterability for an existing field without rebuilding. Wrong here: the article explicitly disallows this change on an existing field. Counterexample/context: Setting filterable true is valid while defining a new field; that is not an in-place update of this existing Region. Evidence: The field-definition examples enable filterability, but the following existing-field section forbids mutation (101-114).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Create and populate a second filterable Region representation. Not incorrect here: a new field is a supported alternative and the team can reload the values. Counterexample/context: Correct when retaining the index while adding a filterable field and supplying its values is acceptable. Evidence: The existing-field section lists adding a new field as an alternative (112-114).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Rebuild the index with a filterable Region and reload data. Not incorrect here: rebuild is expressly supported and the stem permits schema changes and reload. Counterexample/context: Correct when a rebuilt index with the desired field attributes can replace the current representation. Evidence: The article names rebuilding the index as the other supported strategy (112-114).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Use Full Lucene syntax instead of changing filterability. Wrong here: a text parser cannot make Region a filterable field. Counterexample/context: Full Lucene is appropriate for fielded, fuzzy, proximity or regex text queries on the relevant searchable content. Evidence: Advanced search changes text operators; filters still require fields attributed filterable (query 70-81; filters 35).",
-          "sourceIds": [
-            "ai103-search-query-types",
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-query-types", "ai103-search-filters"]
         }
       ],
       "checks": {
@@ -381,33 +340,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Search for inspection and the token 12 without a numeric filter. Wrong here: a text token is not an inclusive constraint on numeric PageCount. Counterexample/context: A numeric-looking token can be useful when it is literal searchable string content rather than a numeric-field range. Evidence: Numeric fundamentals distinguish searching number text in strings from selecting numeric fields (132-136).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Keep inspection and add PageCount ge 12. Not incorrect here: this retains lexical matching and the inclusive lower bound. Counterexample/context: Correct when a filterable numeric field must meet a minimum while text matching remains required. Evidence: The combined search/filter example uses ge in a numeric interval, retaining the text query (74-80).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Use search=* with the minimum-page filter. Wrong here: the wildcard drops the inspection text condition. Counterexample/context: Use filter-only matching when the page-count constraint alone fully defines the desired documents. Evidence: With search=* the filter is the sole input, unlike the combined-query pattern (31,66-80).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Keep inspection and filter PageCount lt 12. Wrong here: this selects the short reports that must be excluded. Counterexample/context: Use lt 12 when the actual task is finding inspection reports shorter than twelve pages. Evidence: The examples distinguish inclusive ge lower bounds from exclusive lt upper bounds (71,79).",
-          "sourceIds": [
-            "ai103-search-filters"
-          ]
+          "sourceIds": ["ai103-search-filters"]
         }
       ],
       "checks": {
@@ -449,33 +400,25 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Return each enrichment result with the same input recordId. Not incorrect here: preserving R-17 and R-24 restores identity correlation despite reversed completion. Counterexample/context: Correct for every batch where results must be associated with their original records rather than result order. Evidence: The input contract requires recordId for correlation and the output example reverses a1/b5 while preserving their IDs (49-52,92-119).",
-          "sourceIds": [
-            "ai103-search-custom-skill"
-          ]
+          "sourceIds": ["ai103-search-custom-skill"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Generate output-position IDs and rely on array order. Wrong here: newly assigned IDs do not identify R-17 and R-24. Counterexample/context: No documented positional-correlation mode exists. Sequential-looking IDs are valid only when they equal each corresponding input ID; that is not this proposed algorithm. Evidence: The interface requires the original recordId, not order; its deliberately reordered response defeats positional matching (51,96-106).",
-          "sourceIds": [
-            "ai103-search-custom-skill"
-          ]
+          "sourceIds": ["ai103-search-custom-skill"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Reuse the first input ID for all results. Wrong here: the two distinct inputs require distinct identities. Counterexample/context: A one-record batch could return its sole input ID once; repeating that ID for multiple distinct inputs is not supported. Evidence: Each recordId uniquely identifies a record and each output must preserve that identity (49-52,90).",
-          "sourceIds": [
-            "ai103-search-custom-skill"
-          ]
+          "sourceIds": ["ai103-search-custom-skill"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Return only output data bags without recordId. Wrong here: this omits a required response-envelope identifier. Counterexample/context: Data bags are valid output fields inside a record that also contains recordId. No source supports an identifier-free Web API skill response. Evidence: The output is explicitly a set of records containing recordId and a property bag (88-90).",
-          "sourceIds": [
-            "ai103-search-custom-skill"
-          ]
+          "sourceIds": ["ai103-search-custom-skill"]
         }
       ],
       "checks": {
@@ -517,33 +460,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Omit authResourceId after enabling the caller identity. Wrong here: caller identity and the target authentication resource are separate requirements. Counterexample/context: An API-key-authorized custom endpoint is a documented different authentication approach; it does not satisfy this managed-identity requirement. Evidence: The source first describes API-key authorization, then separately requires authResourceId for managed-identity calls (29-35).",
-          "sourceIds": [
-            "ai103-search-custom-skill"
-          ]
+          "sourceIds": ["ai103-search-custom-skill"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Set authResourceId to api://<appId> for the called app. Not incorrect here: this supplies the required application audience binding. Counterexample/context: Correct when the search identity and Entra-enabled app authorization are established and the endpoint belongs to that app. Evidence: The requirements explicitly name the supported api://<appId> application-ID form (31-37).",
-          "sourceIds": [
-            "ai103-search-custom-skill"
-          ]
+          "sourceIds": ["ai103-search-custom-skill"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Point the URI at a different application while retaining the old audience. Wrong here: HTTPS does not make a mismatched application/audience valid. Counterexample/context: A different HTTPS endpoint is suitable only if it is still an endpoint of the same identified app, or the resource binding is changed to the new app. Evidence: The endpoint must belong to the application identified by authResourceId; mismatches risk failures or unintended destinations (37).",
-          "sourceIds": [
-            "ai103-search-custom-skill"
-          ]
+          "sourceIds": ["ai103-search-custom-skill"]
         },
         {
           "choiceId": "d",
           "assessment": "supported",
           "rationale": "Ensure the URI targets the app identified by authResourceId. Not incorrect here: this is the endpoint half of the required audience binding. Counterexample/context: Correct for a managed-identity custom-skill call whose URI and authentication resource describe the same application. Evidence: The source explicitly requires this match after listing the identity and application prerequisites (33-37).",
-          "sourceIds": [
-            "ai103-search-custom-skill"
-          ]
+          "sourceIds": ["ai103-search-custom-skill"]
         }
       ],
       "checks": {
@@ -593,33 +528,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Implicitly map a same-named enriched output as if it were a source field. Wrong here: the lesson requires explicit skill-output mappings. Counterexample/context: Implicit same-name mapping is documented for values extracted directly from source data. Evidence: The final two bullets distinguish direct-source implicit mappings from explicit hierarchical skill-output mappings (86-89).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Put the output path into a full-text query. Wrong here: querying does not persist the enriched value in the index. Counterexample/context: Use full-text queries after values have been mapped and indexed when retrieving matching content. Evidence: Querying reads a populated index, while indexing loads and serializes content (54-60).",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Explicitly map the skill output path to the target index field. Not incorrect here: the enriched value exists and the missing mapping is the isolated defect. Counterexample/context: Correct when a skill creates a hierarchical value that must be persisted in a target field. Evidence: The lesson explicitly maps skill outputs from hierarchical locations to index fields (89).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Remove the successful skill and retain only direct mappings. Wrong here: the requested contractDate value is produced by that skill. Counterexample/context: A direct-source-only pipeline is sufficient when the required values already exist in source fields and no enrichment is needed. Evidence: The initial source-field tree and direct mappings are distinct from later skill-added fields (29,48,86-89).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         }
       ],
       "checks": {
@@ -669,33 +596,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Assume original content already incorporates separate OCR children. Wrong here: only original content is mapped, while OCR outputs occupy separate image child fields. Counterexample/context: Keeping only content is sufficient when no image-derived text is required or the source text already contains everything needed. Evidence: The tree places Text beneath each image, separately from content, then introduces a merge (59-84).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Merge original content and per-image OCR, then map that output. Not incorrect here: both existing text sources must reach one target field. Counterexample/context: Correct when retaining original text and image OCR together is necessary for retrieval through one index field. Evidence: The merge example creates merged_content from original text and each image, followed by explicit skill-output mapping (72-89).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Replace the original text with OCR from one image. Wrong here: it discards original content and other images despite the retain-both requirement. Counterexample/context: Selecting one image OCR value can serve a pipeline whose only required searchable material is that selected image. Evidence: Per-image OCR outputs are distinct child fields that can feed later skills; they are not automatically a whole-document union (59-72).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Index the language result instead of body text. Wrong here: a language value is not the combined document and OCR content. Counterexample/context: Persist language when downstream retrieval needs that enrichment attribute rather than the document body. Evidence: The language field and merged_content are separate nodes in the final document tree (74-89).",
-          "sourceIds": [
-            "ai103-indexer-pipeline"
-          ]
+          "sourceIds": ["ai103-indexer-pipeline"]
         }
       ],
       "checks": {
@@ -737,33 +656,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Accept only pipe tables because Markdown excludes HTML. Wrong here: the explicit v4.0 change note specifies HTML tables in Markdown. Counterexample/context: A pipe-table consumer can process the article retained simple pipe-table sample, but cannot serve as the only parser for v4.0 merged-cell output. Evidence: The version-specific note at 359 requires HTML; the later sample at 372-385 still displays a simple pipe table, so sample presence cannot override the note.",
-          "sourceIds": [
-            "ai103-document-layout"
-          ]
+          "sourceIds": ["ai103-document-layout"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Flatten table structure into unrelated text lines. Wrong here: the task requires merged-cell and header relationships. Counterexample/context: Text-only consumption is useful when the extracted words alone are sufficient and table relationships are not required. Evidence: The article separates text/word extraction from tables with row/column and span relationships (194-198,293-297).",
-          "sourceIds": [
-            "ai103-document-layout"
-          ]
+          "sourceIds": ["ai103-document-layout"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Keep the parser and use word-level OCR only. Wrong here: this abandons the required Markdown interface and table structure. Counterexample/context: Word output is appropriate when recognized words and their locations are the desired representation rather than structured tables. Evidence: Text, lines and words are a separate extraction output; Markdown tables have their own version-specific contract (194-234,353-359).",
-          "sourceIds": [
-            "ai103-document-layout"
-          ]
+          "sourceIds": ["ai103-document-layout"]
         },
         {
           "choiceId": "d",
           "assessment": "supported",
           "rationale": "Preserve documented HTML table structures within Markdown preprocessing. Not incorrect here: the consumer is dropping a supported representation needed for merged cells. Counterexample/context: Correct for v4.0 2024-11-30 Markdown table output that must retain merged cells and multirow headers. Evidence: The GA note expressly explains why HTML tables replaced the earlier representation (357-359).",
-          "sourceIds": [
-            "ai103-document-layout"
-          ]
+          "sourceIds": ["ai103-document-layout"]
         }
       ],
       "checks": {
@@ -813,33 +724,25 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Connect the Foundry project retrieval component to the intended search service and index. Not incorrect here: a populated index and model deployment do not configure this missing link. Counterexample/context: Correct when project retrieval needs to use an existing search service/index; exact connection representation depends on feature/API. Evidence: The index section describes project connections or index asset IDs; the workflow lists connection after indexing (49,77-82).",
-          "sourceIds": [
-            "ai103-rag-design"
-          ]
+          "sourceIds": ["ai103-rag-design"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Fine-tune response style without adding retrieval access. Wrong here: behavior tuning does not identify the disconnected index. Counterexample/context: Fine-tuning is useful when model behavior, style or task performance is the actual requirement. Evidence: The choose-an-approach section explicitly separates fine-tuning behavior from RAG knowledge retrieval (69-73).",
-          "sourceIds": [
-            "ai103-rag-design"
-          ]
+          "sourceIds": ["ai103-rag-design"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Re-chunk documents without connecting the index. Wrong here: changing prepared content cannot supply the missing connection. Counterexample/context: Review chunking when a connected retriever returns poor or incomplete passages. Evidence: Data preparation is distinct from connection, and the troubleshooting section recommends chunking for poor retrieval quality (79-82,113).",
-          "sourceIds": [
-            "ai103-rag-design"
-          ]
+          "sourceIds": ["ai103-rag-design"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Change instructions while leaving retrieval disconnected. Wrong here: instructions control use of supplied content, not access to the index. Counterexample/context: Change system messages when the model misuses already retrieved content or fabricates despite grounding. Evidence: The key-concepts and troubleshooting sections describe prompt guidance separately from retrieval connection (22,114).",
-          "sourceIds": [
-            "ai103-rag-design"
-          ]
+          "sourceIds": ["ai103-rag-design"]
         }
       ],
       "checks": {
@@ -881,33 +784,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Autocomplete a title prefix to retrieve an already selected document. Wrong here: completion does not request the retained document ID. Counterexample/context: Use autocomplete while a user types partial indexed text and needs suggested completion. Evidence: Autocomplete is search-as-you-type based on partial strings and separate from search (21-23).",
-          "sourceIds": [
-            "ai103-search-query-types"
-          ]
+          "sourceIds": ["ai103-search-query-types"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Run a vector topic query instead of using the selected ID. Wrong here: this starts a similarity retrieval rather than preserving the selected document identity. Counterexample/context: Use vector search when discovering candidate documents by embedding similarity. Evidence: Vector queries search vector fields, whereas lookup directly requests one ID (14,66-68).",
-          "sourceIds": [
-            "ai103-search-query-types"
-          ]
+          "sourceIds": ["ai103-search-query-types"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Look up the document using its retained identifier. Not incorrect here: candidate selection has already finished and one exact record is needed. Counterexample/context: Correct when a selected search hit must populate a details view with its available fields. Evidence: The document lookup paragraph describes this exact workflow without another index scan (66-68).",
-          "sourceIds": [
-            "ai103-search-query-types"
-          ]
+          "sourceIds": ["ai103-search-query-types"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Search title words again to rediscover the selected result. Wrong here: another full-text search is not an exact document lookup. Counterexample/context: Use full-text search when discovering documents matching analyzed title terms rather than retrieving a known ID. Evidence: The full-text row searches inverted indexes; lookup is explicitly contrasted with those query forms (13,66-68).",
-          "sourceIds": [
-            "ai103-search-query-types"
-          ]
+          "sourceIds": ["ai103-search-query-types"]
         }
       ],
       "checks": {
@@ -992,9 +887,7 @@
           "choiceId": "d",
           "assessment": "supported",
           "rationale": "Use classify for selection from predefined categories. Not incorrect here: classification implements the stated bounded category choice. Counterexample/context: Correct when assigning document content to one of the configured category values. Evidence: The classify definition explicitly names predefined categories (82).",
-          "sourceIds": [
-            "ai103-content-understanding-documents"
-          ]
+          "sourceIds": ["ai103-content-understanding-documents"]
         }
       ],
       "checks": {
@@ -1053,25 +946,19 @@
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Consume normalized typed values without a normalization-mode setting. Not incorrect here: canonical values are returned automatically and configuration is explicitly unavailable. Counterexample/context: Correct when downstream code consumes the supported typed date and numeric values rather than source display strings. Evidence: The field-extraction paragraph explicitly says normalization is automatic, not configurable, and returned values are normalized (73).",
-          "sourceIds": [
-            "ai103-content-understanding-documents"
-          ]
+          "sourceIds": ["ai103-content-understanding-documents"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Configure custom normalization on each typed field. Wrong here: the only cited normalization contract expressly rules out configurability. Counterexample/context: No supported Content Understanding field-normalization configuration context is established by these citations. External display formatting would change the action and is not evidence for this setting. Evidence: The same sentence that supports the key directly forbids configurable normalization (73); no alternative setting is documented in either cited article.",
-          "sourceIds": [
-            "ai103-content-understanding-documents"
-          ]
+          "sourceIds": ["ai103-content-understanding-documents"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Use generated prose as the required canonical typed-value representation. Wrong here: prose abandons the specified typed date/number contract. Counterexample/context: Generate prose when a document overview or new narrative insight is the output requirement rather than canonical typed integration. Evidence: The generate method serves summaries and chapter overviews, while typed normalization is separately specified (73,83).",
-          "sourceIds": [
-            "ai103-content-understanding-documents"
-          ]
+          "sourceIds": ["ai103-content-understanding-documents"]
         }
       ],
       "checks": {
@@ -1113,33 +1000,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Use page width and height to identify logical headings and footers. Wrong here: dimensions describe geometry, not predicted text-block roles. Counterexample/context: Use page dimensions when interpreting page geometry and coordinate-based positioning. Evidence: Pages include orientation, width and height; logical roles are a separate paragraph feature (99-111,159-172).",
-          "sourceIds": [
-            "ai103-document-layout"
-          ]
+          "sourceIds": ["ai103-document-layout"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Use words alone without paragraph roles for the logical distinction. Wrong here: recognized word text alone lacks the requested role prediction. Counterexample/context: Use word output when recognized text and its location are sufficient for the consumer. Evidence: The words output includes content, geometry, confidence and spans, separately from paragraph role (194-234).",
-          "sourceIds": [
-            "ai103-document-layout"
-          ]
+          "sourceIds": ["ai103-document-layout"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Use table-cell row and column spans for paragraph heading roles. Wrong here: table spans represent cells, not sectionHeading or pageFooter. Counterexample/context: Use row and column spans to reconstruct table-cell structure and merged cells. Evidence: The table section explains row/column spans and cell indexes; the role table addresses paragraph blocks (165-172,293-297).",
-          "sourceIds": [
-            "ai103-document-layout"
-          ]
+          "sourceIds": ["ai103-document-layout"]
         },
         {
           "choiceId": "d",
           "assessment": "supported",
           "rationale": "Use the predicted paragraph role for each relevant text block. Not incorrect here: PDF section headings and footers are explicitly supported logical roles. Counterexample/context: Correct when interpreting identified paragraph blocks whose predicted role is sectionHeading or pageFooter. Evidence: The model assigns certain paragraphs specialized roles, and PDF is listed for both roles (159-172).",
-          "sourceIds": [
-            "ai103-document-layout"
-          ]
+          "sourceIds": ["ai103-document-layout"]
         }
       ],
       "checks": {
@@ -1206,25 +1085,19 @@
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Leave the analyzer unchanged because GA returns estimates by default. Wrong here: GA defaults do not return those estimates. Counterexample/context: Leaving the definition unchanged is appropriate when field values alone meet the requirement and confidence/grounding are intentionally not needed. Evidence: Optional, default-absent confidence and grounding are explicitly documented (123).",
-          "sourceIds": [
-            "ai103-content-understanding-migration"
-          ]
+          "sourceIds": ["ai103-content-understanding-migration"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Switch extract to generate instead of enabling estimates. Wrong here: changing field method does not enable the independent estimate configuration. Counterexample/context: Switch to generate when the field should compose a summary or insight rather than read an existing source value. Evidence: The opt-in is available across all three methods, while generate has a distinct semantic purpose (71,77-83).",
-          "sourceIds": [
-            "ai103-content-understanding-documents"
-          ]
+          "sourceIds": ["ai103-content-understanding-documents"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Remove fields and retain only Markdown content. Wrong here: this removes the requested field-specific estimates and values. Counterexample/context: Markdown content can be appropriate for retrieval ingestion when field-specific structured extraction is not required. Evidence: The component table separates Markdown for search/retrieval from structured JSON fields and opt-in estimates (69-74).",
-          "sourceIds": [
-            "ai103-content-understanding-overview"
-          ]
+          "sourceIds": ["ai103-content-understanding-overview"]
         }
       ],
       "checks": {
@@ -1274,17 +1147,13 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Rely on text-only Markdown to preserve every table and section relationship. Wrong here: clean text is not a guarantee of all structural relationships, and version support is unresolved. Counterexample/context: Text-only extraction is recommended when clean Markdown is sufficient and faster processing is preferred, subject to an actually supported API mode. Evidence: The extraction-mode paragraph contrasts layout-aware structural needs with faster text-only Markdown without binding that selector to GA (59-61).",
-          "sourceIds": [
-            "ai103-content-understanding-documents"
-          ]
+          "sourceIds": ["ai103-content-understanding-documents"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Replace structural extraction with one generated report overview. Wrong here: an overview does not preserve the tables and nested sections needed for comparison. Counterexample/context: A generated overview is appropriate when summarization, not structure-preserving representation, is the desired output. Evidence: Generate is defined for new insights and summaries, distinct from structure analysis (52-55,83).",
-          "sourceIds": [
-            "ai103-content-understanding-documents"
-          ]
+          "sourceIds": ["ai103-content-understanding-documents"]
         },
         {
           "choiceId": "c",
@@ -1360,36 +1229,25 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Repeatedly create the analyzer instead of polling creation status. Wrong here: resubmitting PUT is not the documented status check for the already started operation. Counterexample/context: PUT is appropriate to initiate creation from a schema; it is not a substitute for checking the returned operation. Evidence: The REST section separates PUT initiation from GET against Operation-Location (102-106,127-139).",
-          "sourceIds": [
-            "ai103-analyzer-definition"
-          ]
+          "sourceIds": ["ai103-analyzer-definition"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "GET the returned operation URL and wait for successful creation. Not incorrect here: dependent analysis must not mistake accepted creation for completion. Counterexample/context: Correct when asynchronous creation has returned an operation location and later work depends on the analyzer existing successfully. Evidence: Creation exposes a status URL; the SDK waits for completion, while content analysis is a separate operation (definition 59,96-106; execution 17-19).",
-          "sourceIds": [
-            "ai103-analyzer-definition",
-            "ai103-analyzer-execution"
-          ]
+          "sourceIds": ["ai103-analyzer-definition", "ai103-analyzer-execution"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Interpret Operation-Location as extracted field values. Wrong here: the header contains a status URL for creation, not content-analysis fields. Counterexample/context: Extracted values are appropriate to consume from a completed analysis result after content submission; no source makes this creation header the values. Evidence: The creation header is a callback URL, while analysis results contain fields and OCR layout (definition 106; execution 117-128).",
-          "sourceIds": [
-            "ai103-analyzer-definition",
-            "ai103-analyzer-execution"
-          ]
+          "sourceIds": ["ai103-analyzer-definition", "ai103-analyzer-execution"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "Use content analysis as the creation-status probe. Wrong here: analyzing content is not the documented GET status check for creation. Counterexample/context: Submit analysis when a usable analyzer is selected and the goal is extracting content from an input file. Evidence: The separate lessons define creation-status GET and analyzer-targeted content analysis (definition 106; execution 17-19).",
-          "sourceIds": [
-            "ai103-analyzer-definition",
-            "ai103-analyzer-execution"
-          ]
+          "sourceIds": ["ai103-analyzer-definition", "ai103-analyzer-execution"]
         }
       ],
       "checks": {
@@ -1456,17 +1314,13 @@
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Keep submitting inline file content through the older analyze contract. Wrong here: the GA migration explicitly moves inline-file clients to analyzeBinary. Counterexample/context: This represents an older preview client pattern identified in migration, not the valid 2025-11-01 request contract. Evidence: The migration says clients previously using inline analyze must instead use analyzeBinary (134).",
-          "sourceIds": [
-            "ai103-content-understanding-migration"
-          ]
+          "sourceIds": ["ai103-content-understanding-migration"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Create an analyzer by using the input file as its schema. Wrong here: the existing analyzer needs content analysis, not another analyzer definition. Counterexample/context: Create an analyzer when defining desired fields and processing settings with a valid schema JSON, not when submitting its input document. Evidence: Analyzer creation submits a schema definition through PUT; the source describes fields and configuration, not input-file analysis (19-55,102-108).",
-          "sourceIds": [
-            "ai103-analyzer-definition"
-          ]
+          "sourceIds": ["ai103-analyzer-definition"]
         },
         {
           "choiceId": "d",

@@ -11,30 +11,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The Mask subsection assigns editing to alpha-zero pixels. This inverted mask would mark the surrounding area, not the selected patch, as the requested edit region."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The Mask subsection requires PNG, dimensions matching the input image, and fully transparent pixels with alpha zero over the area to edit."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "JPEG is allowed for the main input image, but the mask has the separate PNG and alpha-zero requirements. A black JPEG patch is not the documented transparency mask."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "A mask must match the input dimensions. The input remains 1024×1024, so a 512×512 mask does not satisfy the documented contract even if its proportions match."
           }
         ]
@@ -64,33 +56,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Mask, line 1987, makes zero-alpha pixels editable. Making the outside transparent requests edits outside the selected patch, reversing this task.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "Mask, line 1987, requires PNG and the input's dimensions, with alpha zero in the region to edit. The 1024-square PNG with only the patch transparent satisfies all three conditions.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The main image may be JPG (1914), but Mask independently requires a PNG with zero-alpha edit pixels (1987). A black JPEG patch does not implement that separate mask contract.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "The mask must have the same dimensions as the supplied image (1987), not merely proportional geometry. A 512-square mask cannot match this unchanged 1024-square input.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             }
           ],
           "checks": {
@@ -124,9 +108,7 @@
             "claimRepresented": "The opaque center and transparent surroundings select the center for editing.",
             "whyIncorrectInContext": "The selection is inverted: alpha-zero pixels are outside the requested patch, so the wrong area is designated.",
             "couldBeCorrectWhen": "It would designate the desired region if the task instead changed the surroundings while preserving the opaque center.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Mask, line 1987, assigns the editable area to full transparency, not to opacity or a black paint convention."
           },
           {
@@ -134,9 +116,7 @@
             "claimRepresented": "An equal-size PNG with a transparent target patch is the required mask.",
             "whyIncorrectInContext": "This is not incorrect here: both dimension equality and the alpha-zero target convention match the photograph and requested patch.",
             "couldBeCorrectWhen": "It applies when the supplied image is 1024 by 1024 and precisely those transparent mask pixels identify the intended edit area.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "The same Mask sentence specifies PNG, input-size equality and alpha zero; the edit endpoint expressly supports production use."
           },
           {
@@ -144,9 +124,7 @@
             "claimRepresented": "A black patch in a JPEG supplies the required mask.",
             "whyIncorrectInContext": "JPEG does not supply the required PNG transparency-mask contract, regardless of where its black paint lies.",
             "couldBeCorrectWhen": "A JPEG can be the main photograph to edit when it is below the documented 50 MB limit; that distinct input role is not a mask.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Call the image edit API permits JPG main images; the narrower Mask subsection requires PNG and transparent pixels."
           },
           {
@@ -154,9 +132,7 @@
             "claimRepresented": "A half-size proportional mask suffices without resizing the input.",
             "whyIncorrectInContext": "The input is still 1024 by 1024; aspect-ratio preservation cannot replace equality of mask dimensions.",
             "couldBeCorrectWhen": "A 512 by 512 PNG mask with this polarity could accompany a 512 by 512 input image instead.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "The Mask contract compares actual dimensions, not ratios; changing the input would change this condition."
           }
         ],
@@ -185,23 +161,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The response's b64_json value is an encoded string. The documented consumption example base64-decodes that string before passing bytes to image processing; a renderer requiring decoded bytes cannot skip that step."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The GPT-Image-2 capability matrix explicitly specifies base64-only image output with no URL option. The response therefore needs base64 consumption rather than a returned-image-URL download path."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The GPT-Image-2 capability matrix specifies base64-only output, and the image-generation response example places that encoded image data in data[].b64_json."
           }
         ]
@@ -231,25 +201,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The consumer example calls base64.b64decode before passing bytes to Image.open (110-119). b64_json is encoded text, not decoded bytes for the stated renderer.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The GPT-Image-2 Input/Output row explicitly says base64 only and no URL option (21). A returned-image download URL is therefore not this model's response contract.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The data array carries b64_json (183-199), and the example decodes each value to bytes (110-119). That produces exactly the renderer's required representation.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             }
           ],
           "checks": {
@@ -283,9 +247,7 @@
             "claimRepresented": "The returned encoded string already constitutes decoded image bytes.",
             "whyIncorrectInContext": "The renderer requires bytes, whereas b64_json contains text encoding those bytes; forwarding that text omits the necessary conversion.",
             "couldBeCorrectWhen": "Retaining b64_json is appropriate for an encoded-text consumer or intermediary; calling it decoded bytes is never justified.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Output identifies base64 data, and decode_and_save_image decodes before constructing the image; encoded and decoded representations are distinct."
           },
           {
@@ -293,9 +255,7 @@
             "claimRepresented": "GPT-Image-2 supplies a response image URL to fetch instead of base64.",
             "whyIncorrectInContext": "The current model matrix expressly says base64 only and no URL option for this model.",
             "couldBeCorrectWhen": "Historical DALL-E SDK responses in the Go Output section expose an image URL; the page now retires DALL-E 3, so this is a historical counterexample, not a current deployment recommendation.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Matrix line 21 excludes URL output for GPT-Image-2; lines 1530-1541 preserve the model-dependent URL-versus-base64 distinction and line 5 retires DALL-E 3."
           },
           {
@@ -303,9 +263,7 @@
             "claimRepresented": "Decode each b64_json entry to the bytes required by the renderer.",
             "whyIncorrectInContext": "This is not incorrect: the successful response contains encoded image data and the consumer contract requires the decoded representation.",
             "couldBeCorrectWhen": "The approach is suitable for byte-oriented rendering or saving of each returned GPT-Image-2 image, as expressly required here.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "The example walks response_data['data'], reads b64_json, and applies base64.b64decode before image processing."
           }
         ],
@@ -334,37 +292,27 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "Both edges are multiples of 16, the longest edge is below 3840, the aspect ratio is 1:1, and the total of 1048576 pixels is within 655360–8294400."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The dimensions satisfy the edge increment and total-pixel checks, but their 4:1 aspect ratio exceeds the documented 3:1 maximum for explicit GPT-Image-2 sizes."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "These dimensions meet the edge-increment and aspect-ratio checks but total only 262144 pixels, below the documented 655360-pixel minimum."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "Both dimensions are divisible by 16; the longest edge is below 3840, the aspect ratio is below 3:1, and 1327104 total pixels meets the documented range."
           },
           {
             "choiceId": "e",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "Although both edges are multiples of 16 and the aspect ratio is 2:1, the 4096-pixel edge exceeds 3840 and 8388608 total pixels exceeds 8294400."
           }
         ]
@@ -394,41 +342,31 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "1024 and 1024 are divisible by 16; long edge 1024 and ratio 1 satisfy Size; 1048576 pixels lies within the documented interval (1863-1868).",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "2048x512 gives 1048576 pixels and valid edge increments, but its ratio is 4:1. Size caps that ratio at 3:1 (1867); other passing constraints cannot rescue it.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "512x512 has only 262144 pixels, below the 655360 minimum (1868), despite square geometry and divisible edges.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "1536/16=96 and 864/16=54; the long edge is 1536, ratio 16:9, and pixel product 1327104. All four requirements in Size hold.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "e",
               "assessment": "contradicted",
               "rationale": "4096 exceeds the long-edge cap of 3840; 4096x2048=8388608 also exceeds 8294400. It fails twice even though divisibility and ratio pass (1865-1868).",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             }
           ],
           "checks": {
@@ -462,9 +400,7 @@
             "claimRepresented": "1024 by 1024 passes the explicit-size constraints.",
             "whyIncorrectInContext": "This is not incorrect: the edges are multiples of 16, ratio is 1, long edge is 1024 and area is 1048576.",
             "couldBeCorrectWhen": "It is a valid explicit square request for the deployed GPT-Image-2 model, including this one.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Each calculation lies inside the four simultaneous Size constraints; no auto exception is needed."
           },
           {
@@ -472,9 +408,7 @@
             "claimRepresented": "2048 by 512 passes all explicit GPT-Image-2 size checks.",
             "whyIncorrectInContext": "Its area 1048576 and edges pass, but its 4:1 ratio exceeds 3:1.",
             "couldBeCorrectWhen": "Dimensions whose long edge is at most three times the short edge could pass; for example the source's 1536 by 864 example does. Outside explicit-size mode the page warns auto can choose otherwise nonconforming dimensions, without guaranteeing this size.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "The Size section independently limits aspect ratio; satisfying area alone cannot override that limit."
           },
           {
@@ -482,9 +416,7 @@
             "claimRepresented": "512 by 512 is a supported explicit output size for this model.",
             "whyIncorrectInContext": "The square contains only 262144 pixels, below 655360, even though its ratio and edge increments pass.",
             "couldBeCorrectWhen": "A 512-square PNG can instead be a below-50-MB main editing image with a same-sized mask; the main-image contract is not the output-size contract.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Size supplies the minimum area; Call the image edit API and Mask separately specify input file and equal-mask requirements."
           },
           {
@@ -492,9 +424,7 @@
             "claimRepresented": "1536 by 864 satisfies every explicit output-size check.",
             "whyIncorrectInContext": "This is not incorrect: edges divide by 16, ratio is 16:9, longest edge is 1536 and area is 1327104.",
             "couldBeCorrectWhen": "It is valid when that landscape resolution is requested explicitly under GPT-Image-2, as in the proposed set.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "1327104 is between the pixel bounds, 1536 is below 3840 and 16:9 is below 3:1."
           },
           {
@@ -502,9 +432,7 @@
             "claimRepresented": "4096 by 2048 passes the explicit-size validation.",
             "whyIncorrectInContext": "4096 exceeds the 3840 edge ceiling and area 8388608 exceeds 8294400; a valid 2:1 ratio does not repair either failure.",
             "couldBeCorrectWhen": "A PNG at those dimensions could be a main edit input if it meets the separate below-50-MB input rule; it is not a valid explicit generated-output size.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "The documentation keeps input-image format/file-size rules separate from two violated output ceilings."
           }
         ],
@@ -533,30 +461,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The documented text generation body supplies a prompt; it does not upload the local file named in that text. Editing the existing photograph requires providing an input image to the edit operation."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The deployment-scoped Image Edit API section explicitly requires multipart/form-data rather than JSON. Its image field supplies the image file, not merely its local filename."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The n parameter selects how many images generation returns. It does not supply the existing photograph or change a generation call into the documented image-edit request."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The Image Edit API modifies an existing image based on a text prompt, accepts PNG or JPG input files under 50 MB, and documents a multipart/form-data body at the deployment-scoped edits endpoint."
           }
         ]
@@ -586,33 +506,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Generation's JSON prompt (1775-1790) supplies text; the edit section instead requires an input image file (1910, 1973). A local filename in prompt text is not the photograph upload.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Image Edit explicitly takes multipart/form data, not JSON (1941), and image denotes the file (1973). Merely naming a local file in JSON does not meet either requirement.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Number only changes generated-image cardinality (1880-1882). It does not provide the original photograph required by the edit endpoint (1910).",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "The documented deployment edits URL (1919), multipart header (1932), and image-plus-prompt form fields (1944-1945) implement precisely this supplied-photo modification.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             }
           ],
           "checks": {
@@ -646,9 +558,7 @@
             "claimRepresented": "A local filename in a generations prompt submits that photograph for modification.",
             "whyIncorrectInContext": "Text describing a filename supplies no local image bytes and remains a text-to-image generation request.",
             "couldBeCorrectWhen": "A generation prompt alone is appropriate when synthesizing a new image from a description without modifying an existing local photograph.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Generation shows a JSON prompt; edits separately supplies image[] as a file together with the instruction."
           },
           {
@@ -656,9 +566,7 @@
             "claimRepresented": "Changing only the endpoint while retaining JSON and a local filename implements editing.",
             "whyIncorrectInContext": "The deployment-scoped edit section explicitly rejects JSON and requires an image file in multipart form data.",
             "couldBeCorrectWhen": "JSON containing a text prompt is documented for generation, not this edit operation; the literal endpoint-plus-filename combination has no supported edit context.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Required headers and the Important paragraph at lines 1930-1949 specify multipart and show an uploaded file, not filename resolution by the service."
           },
           {
@@ -666,9 +574,7 @@
             "claimRepresented": "Requesting several generated outputs turns the call into a photograph edit.",
             "whyIncorrectInContext": "Changing n changes how many outputs are generated; it does not upload the photograph or select edits.",
             "couldBeCorrectWhen": "Increasing n is appropriate to obtain multiple independent outputs from a generation prompt when no existing-photo modification is required.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Number permits 1-10 outputs while Call the image edit API independently requires existing input images."
           },
           {
@@ -676,9 +582,7 @@
             "claimRepresented": "Use edits with multipart image content and the editing instruction.",
             "whyIncorrectInContext": "This is not incorrect: it repairs both the operation and missing binary upload while retaining the already working deployment and credentials.",
             "couldBeCorrectWhen": "It applies to modifying the provided below-50-MB PNG through the documented deployment-scoped endpoint.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "The GA edit contract specifies images/edits, multipart/form-data, image[] and prompt together."
           }
         ],
@@ -707,30 +611,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "n controls the number of generated images; stream enables partial-image responses; partial_images controls intermediate previews. These settings request one final image with two previews."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The Number subsection makes n=2 a request for two images, not two previews of one image. partial_images=1 also differs from the requested two intermediate previews."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "The streaming contract requires stream=true to return partial images as generation proceeds. Turning it off does not implement the requested live-preview behavior."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "summary": "Three is a supported partial-image count, but it requests three intermediate previews instead of the specified two."
           }
         ]
@@ -760,33 +656,25 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The streaming example uses this exact combination (1839-1842); n counts outputs and partial_images counts previews before the final result (1818).",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "n=2 requests two generated outputs, while partial_images=1 requests one preview. Those are different controls with different cardinalities (1818, 1880-1882).",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The streaming instructions require stream=true for returning intermediate images while generation proceeds (1820, 1902). A preview count alone does not enable that behavior.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "A partial_images value of three is supported (1818-1820), but it requests three intermediate images instead of the stated two; n=1 does not change that count.",
-              "sourceIds": [
-                "ai103-image-generation"
-              ]
+              "sourceIds": ["ai103-image-generation"]
             }
           ],
           "checks": {
@@ -820,9 +708,7 @@
             "claimRepresented": "One final output, enabled streaming and two partials meet the UI request.",
             "whyIncorrectInContext": "This is not incorrect: n remains one while the separate partial count asks for two intermediate previews.",
             "couldBeCorrectWhen": "It fits a streaming-capable GPT-Image-2 request where the UI wants progressive previews of one final image.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Streaming lines 1818-1842 distinguishes final output from partial events and demonstrates n=1, stream=True, partial_images=2."
           },
           {
@@ -830,9 +716,7 @@
             "claimRepresented": "Two generated images with one partial produce the required two previews of one image.",
             "whyIncorrectInContext": "Both counts are misassigned: n asks for two outputs while partial_images asks for only one preview.",
             "couldBeCorrectWhen": "The setting describes a request for two generated images with a one-partial streaming setting, a different output-cardinality requirement.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "Number and Streaming are separate controls; neither count is interchangeable with the other."
           },
           {
@@ -840,9 +724,7 @@
             "claimRepresented": "Disabling streaming still delivers live partial previews.",
             "whyIncorrectInContext": "The documented partial-delivery behavior requires stream=true; a partial count alone does not enable it.",
             "couldBeCorrectWhen": "A nonstreaming call is appropriate when only the completed image is required; the source's synchronous generation example supplies that use case, not live previews.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "The synchronous generation example and Streaming subsection separate final-only responses from partial events."
           },
           {
@@ -850,9 +732,7 @@
             "claimRepresented": "Three partials is the requested preview count.",
             "whyIncorrectInContext": "Three is valid but not the specified two; the final image count does not absorb an extra preview.",
             "couldBeCorrectWhen": "It would fit a UI asking for three intermediate previews while retaining one generated final image.",
-            "sourceIds": [
-              "ai103-image-generation"
-            ],
+            "sourceIds": ["ai103-image-generation"],
             "evidenceSummary": "The documented positive partial range includes three, but the task asks exactly two."
           }
         ],
@@ -881,30 +761,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "The v1 API parameters and reference-source section require the image dimensions to match the video size exactly. The unchanged square image does not match 1280×720."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "The documented v1 input_reference is a reference image anchoring the first frame, PNG is accepted, and the source-image and final-video resolutions must match exactly."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "The documentation separates the natural-language prompt from the uploaded reference file. Omitting input_reference leaves a text-only creation request rather than submitting the prepared image as the anchor."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "720×1280 is a supported portrait video size in the v1 table, but it is not an exact dimension match for this landscape 1280×720 output."
           }
         ]
@@ -934,33 +806,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The reference row requires an exact dimension match (549). A 1024-square source is not 1280x720, even though PNG itself is accepted.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "PNG is accepted and must match output size (547-549). The v1 example passes a file through input_reference alongside size=1280x720 (962-967), matching this prepared landscape reference.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Prompt is natural-language description while input_reference is the file anchor (545, 549). Omitting the latter does not transmit this local PNG as a first-frame reference.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "The table distinguishes 720x1280 portrait from 1280x720 landscape (547); the reference must match width and height, not merely pixel count or the same two edge lengths.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             }
           ],
           "checks": {
@@ -994,9 +858,7 @@
             "claimRepresented": "A square 1024 reference can remain unchanged for landscape 1280x720 output.",
             "whyIncorrectInContext": "The width and height do not match the requested video, violating the explicit exact-size requirement.",
             "couldBeCorrectWhen": "An unchanged reference can be attached when it already has the requested output dimensions; this square file fails that documented condition.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "Input reference in the v1 parameter table must match size exactly; reference-source lines 941-943 repeat that rule."
           },
           {
@@ -1004,9 +866,7 @@
             "claimRepresented": "Prepare the image at the landscape size and submit it as the reference file.",
             "whyIncorrectInContext": "This is not incorrect: width, height and file submission all match the v1 first-frame contract.",
             "couldBeCorrectWhen": "It applies to a PNG reference sized 1280 by 720 and a request for the same landscape output.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "The v1 table accepts PNG and the reference example passes an opened file via input_reference together with size='1280x720'."
           },
           {
@@ -1014,9 +874,7 @@
             "claimRepresented": "Mentioning a local filename instead of attaching a reference supplies the first-frame image.",
             "whyIncorrectInContext": "A prompt is natural-language input, not the reference file parameter; the local pixels have not been submitted.",
             "couldBeCorrectWhen": "Omitting input_reference is documented for text-only creation of a new scene, when no existing image must anchor the first frame.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "The source separates optional reference files from required text prompts and shows both text-only and image-reference creation."
           },
           {
@@ -1024,9 +882,7 @@
             "claimRepresented": "A portrait reference matches a landscape request if the same two dimensions appear.",
             "whyIncorrectInContext": "The ordered width and height are reversed; equal pixel count is not the exact width-by-height match.",
             "couldBeCorrectWhen": "The 720 by 1280 reference fits a portrait video request at size='720x1280', a supported alternative orientation.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "Both orientations appear in the v1 table; the source requires the reference to match the particular selected orientation."
           }
         ],
@@ -1055,30 +911,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "The documented create operation starts a new render job. It is not the status-resumption operation for the previously saved ID and violates the requirement to continue the same generation."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "The videos.create example returns an ID with status queued and completed_at=None. Download is documented for the finished MP4 after completion, not merely after ID allocation."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "The v1 flow retrieves status using the existing video ID, polls the same job, distinguishes completed from failed, and downloads finished content with videos.download_content."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "Remix modifies a previously completed generated video and starts another generation. It is neither a way to resume a queued job nor a status lookup for the original result."
           }
         ]
@@ -1108,33 +956,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Create starts a new render job (535), not a lookup of the saved ID. Repeating the prompt cannot satisfy continuation of that same job.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The source's newly created video has an ID while status=queued and completed_at=None (626). Download is for finished MP4 content after completion (537).",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "GET/videos/{video_id} and videos.retrieve obtain current progress (633, 671); the example checks completed versus failure (674-679), then download_content retrieves the finished video (882).",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "Remix takes an ID from a successfully completed generation (1131) and produces a new queued ID (1201). It neither polls nor resumes the original queued render.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             }
           ],
           "checks": {
@@ -1168,9 +1008,7 @@
             "claimRepresented": "Creating with the same prompt resumes the previously saved render.",
             "whyIncorrectInContext": "Create starts a new job, which violates continuing the saved one; matching prompt text is not a documented idempotency key.",
             "couldBeCorrectWhen": "A new videos.create request is appropriate when a separate new render is intended rather than recovery of the existing ID.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "The endpoint list distinguishes starting a render from retrieving its state; it supplies no same-prompt resumption guarantee."
           },
           {
@@ -1178,9 +1016,7 @@
             "claimRepresented": "Possession of an ID proves the MP4 is complete and immediately downloadable.",
             "whyIncorrectInContext": "The source's queued create response already has an ID and no completion time, directly disproving that inference.",
             "couldBeCorrectWhen": "Download by ID is appropriate after a current status lookup establishes completed; that missing completion evidence is the required condition.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "Create response line 626 and the finished-MP4 definition distinguish allocated identifiers from completed artifacts."
           },
           {
@@ -1188,9 +1024,7 @@
             "claimRepresented": "Poll the existing ID and branch on completion versus failure before downloading.",
             "whyIncorrectInContext": "This is not incorrect: it retains the same job and uses its actual lifecycle state rather than restarting it.",
             "couldBeCorrectWhen": "It applies when the saved job still exists and can move through queued/in_progress to completed or failed, as the stem provides.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "Get Video Status uses the create ID, lists queued/in_progress/completed/failed, and Download Video fetches the finished MP4."
           },
           {
@@ -1198,9 +1032,7 @@
             "claimRepresented": "Remixing a queued ID resumes and returns the original generation.",
             "whyIncorrectInContext": "Remix is a new generation based on a successfully completed previous video, not a queued-job status operation.",
             "couldBeCorrectWhen": "Remix is appropriate after completion when a new edited version of the source video is desired.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "Remix references a successfully completed video and its example returns a new queued video with remixed_from_video_id."
           }
         ],
@@ -1229,30 +1061,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "The remix section uses an ID from a successfully completed generation plus an updated prompt, and recommends one clearly articulated adjustment to retain fidelity to the source."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "Text-only creation starts a new scene from its description. It lacks the completed-video reference that the documented remix workflow uses to retain structure, transitions, and layout."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "Those changes exceed the specified lighting-only revision. The source recommends one narrow adjustment for better fidelity, rather than combining unrelated edits."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "summary": "A reference image anchors the first frame of a newly created video. Remixing the completed video's ID is the documented way to reuse its overall structure and framing for targeted changes."
           }
         ]
@@ -1282,33 +1106,25 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "Remix is documented for targeted changes using a completed ID, and its guidance favors one precise adjustment (1131). Lighting alone matches both the preserved-video requirement and narrow-edit guidance.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Create begins a new render from a prompt (535); without the completed-video reference it is not the documented workflow for retaining the accepted video framework.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Changing viewpoint, motion and setting exceeds the stem's lighting-only requirement. The source specifically recommends one clearly articulated adjustment for fidelity (1131).",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "An image reference anchors the first frame (549); remix uses the completed video to reuse structure, motion and framing (550, 1131). A still-image creation is not the best documented match for accepted transitions.",
-              "sourceIds": [
-                "ai103-video-generation"
-              ]
+              "sourceIds": ["ai103-video-generation"]
             }
           ],
           "checks": {
@@ -1342,9 +1158,7 @@
             "claimRepresented": "Remix the completed video with only the requested lighting adjustment.",
             "whyIncorrectInContext": "This is not incorrect: it references the accepted completed structure and confines the new instruction to the sole requested change.",
             "couldBeCorrectWhen": "It fits targeted editing of an already completed generated video where existing framing and transitions should be retained as far as the model permits.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "Remix lines 1129-1149 explicitly couples a successful predecessor ID with a narrow updated prompt and describes retained structure."
           },
           {
@@ -1352,9 +1166,7 @@
             "claimRepresented": "Text-only new creation is the best operation for retaining the accepted completed video.",
             "whyIncorrectInContext": "It does not reference the existing video and therefore lacks the documented reuse mechanism for its structure.",
             "couldBeCorrectWhen": "It is appropriate when inventing a new scene from text and there is no requirement to retain a completed video's framework.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "Choose your input type identifies text-only creation as new scenes; Remix references the successful predecessor."
           },
           {
@@ -1362,9 +1174,7 @@
             "claimRepresented": "Additional viewpoint, motion and setting changes fit the lighting-only revision.",
             "whyIncorrectInContext": "Those instructions explicitly expand the change beyond what was accepted and requested.",
             "couldBeCorrectWhen": "A broader creative revision could request those changes, but the source still recommends narrow precise edits for greater fidelity rather than promising their preservation.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "The prompt and remix guidance allows described changes while recommending a single clearly articulated adjustment; the extra changes violate this stem."
           },
           {
@@ -1372,9 +1182,7 @@
             "claimRepresented": "A still frame supplied to new creation replaces reference to the completed video.",
             "whyIncorrectInContext": "An image can anchor the first frame but does not supply the completed video's motion and transition structure.",
             "couldBeCorrectWhen": "It fits animating a still image as a fresh video when only that first frame must be visually anchored.",
-            "sourceIds": [
-              "ai103-video-generation"
-            ],
+            "sourceIds": ["ai103-video-generation"],
             "evidenceSummary": "The Input reference row describes a first-frame anchor; Remix_video_id instead reuses structure, motion and framing."
           }
         ],
@@ -1403,30 +1211,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "This reverses the documented tradeoff: low omits high-resolution processing, while high processes detailed segments at greater token cost."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "low processes a reduced 512×512 representation without high-resolution mode. It fits the broad preview but does not select the finer-detail processing requested for inspection."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "auto lets the model choose low or high based on input size; it does not force the high-resolution path for the inspection."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "The detail-level section ties low to reduced-resolution, lower-token analysis when fine detail is unimportant, and high to detailed 512×512 segments for richer interpretation."
           }
         ]
@@ -1456,33 +1256,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The low setting trades fine detail for lower token use, while high adds detailed segments (1207-1208). This mapping reverses both requested priorities.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Low explicitly avoids high-resolution mode (1207). It fits the catalog task but does not select the requested finer processing for inspection.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Auto delegates the low/high selection based on image size (1206); it does not force high-resolution inspection, which the option asserts.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "Low's reduced resolution/token use suits the broad catalog task (1207), while high's detailed segments suit the separate inspection accepting higher cost (1208).",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             }
           ],
           "checks": {
@@ -1516,9 +1308,7 @@
             "claimRepresented": "High for broad previews and low for detailed inspection fit the stated tradeoff.",
             "whyIncorrectInContext": "It reverses the token/detail priorities: the cheaper coarse path belongs to the preview and the detailed path to inspection.",
             "couldBeCorrectWhen": "It would fit reversed priorities, where catalog imagery needed fine visual analysis and inspection deliberately accepted coarse processing.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "Low omits high-resolution processing while high adds detailed segments; the source connects this to input-token use."
           },
           {
@@ -1526,9 +1316,7 @@
             "claimRepresented": "Low for both workloads explicitly selects finer-detail inspection.",
             "whyIncorrectInContext": "It meets the broad-preview goal but does not activate the required high-resolution processing for inspection.",
             "couldBeCorrectWhen": "It is suitable when neither workload requires fine detail and both favor lower input-token use.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "The detail subsection defines low as a reduced 512 by 512 version without high-resolution mode."
           },
           {
@@ -1536,9 +1324,7 @@
             "claimRepresented": "Auto forces high resolution for inspection while satisfying both explicit choices.",
             "whyIncorrectInContext": "Auto delegates the choice based on input size and therefore does not force high for that workload.",
             "couldBeCorrectWhen": "Auto is appropriate when allowing the model to choose low or high from image size is acceptable; it can choose high but is not an explicit high setting.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "The auto definition is a conditional selection rule rather than a guaranteed high-resolution switch."
           },
           {
@@ -1546,9 +1332,7 @@
             "claimRepresented": "Low for previews and high for inspection implement the explicit tradeoff.",
             "whyIncorrectInContext": "This is not incorrect on behavior: it selects reduced processing where fine details are unnecessary and high-resolution processing where they matter.",
             "couldBeCorrectWhen": "It applies to these compatible vision requests when the coarse and detailed workloads have the stated distinct priorities.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "Lines 1204-1208 provide all three setting meanings and the input-processing/token distinction."
           }
         ],
@@ -1577,30 +1361,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "enableSegment=false treats the entire file as one segment. A field schema can describe equipment, but it does not supply the required one-segment-per-procedure boundaries in whole-video mode."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "Custom segmentation uses enableSegment=true with natural-language category instructions. fieldSchema separately defines custom fields populated for each segment; together they meet the boundary and metadata requirements."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "cameraShotTimesMs represents shot boundaries from content extraction, not the semantic procedure boundaries required when camera changes occur within a procedure."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "Segmentation instructions can establish procedure boundaries, but transcription produces spoken text. The requested custom equipment-name field still needs its own fieldSchema definition."
           }
         ]
@@ -1630,33 +1406,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "enableSegment=false explicitly treats the entire file as a single segment (160). Defining a field cannot supply the required per-procedure boundaries in that mode.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "Custom mode combines enableSegment=true with contentCategories boundary instructions (166); fieldSchema defines fields filled for each segment (116). Together they deliver semantic procedures and their equipment field.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "cameraShotTimesMs denotes shot cuts (108), whereas custom segmentation follows supplied semantic instructions (166). The stem explicitly says camera cuts occur within procedures, so shot grouping is unsuitable.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "Transcription supplies spoken text (99), while custom named fields are defined in fieldSchema (116). Semantic segmentation alone does not define the requested equipment-name field.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             }
           ],
           "checks": {
@@ -1690,9 +1458,7 @@
             "claimRepresented": "A whole-recording field schema supplies a segment per procedure.",
             "whyIncorrectInContext": "enableSegment=false treats the whole file as one segment, so it cannot provide the requested procedure-level boundaries.",
             "couldBeCorrectWhen": "It fits a whole-recording equipment summary or whole-video metadata requirement instead of independent procedures.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Segmentation mode explicitly defines whole-video false and per-segment custom fields are described separately."
           },
           {
@@ -1700,9 +1466,7 @@
             "claimRepresented": "Combine semantic procedure boundaries with a per-segment equipment field.",
             "whyIncorrectInContext": "This is not incorrect: category instructions establish the needed grouping and fieldSchema supplies the distinct structured output.",
             "couldBeCorrectWhen": "It fits a custom video analyzer where semantic boundaries differ from camera cuts and a named field is needed for each segment.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Custom segmentation describes natural-language contentCategories with enableSegment=true; Custom fields assigns fields for every segment."
           },
           {
@@ -1710,9 +1474,7 @@
             "claimRepresented": "Every camera shot is a complete procedure segment.",
             "whyIncorrectInContext": "The stem says camera angles change within procedures, so shot boundaries fragment the required semantic units.",
             "couldBeCorrectWhen": "Shot boundaries are appropriate for cut-based editing, or for procedures that genuinely align one-to-one with shots rather than this recording.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Shot detection reports cameraShotTimesMs for existing cuts; generative segmentation is a separate stage that groups by meaning."
           },
           {
@@ -1720,9 +1482,7 @@
             "claimRepresented": "A transcript replaces the explicit equipment-name schema field.",
             "whyIncorrectInContext": "Spoken text does not define the requested custom structured field; segmentation instructions do not create that omitted field contract.",
             "couldBeCorrectWhen": "Transcription can suffice if the downstream requirement is searchable spoken text rather than a named equipment field for each procedure.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Transcription produces WebVTT speech text, whereas fieldSchema declares names/types/descriptions filled by the generative stage."
           }
         ],
@@ -1751,30 +1511,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "The documentation warns that approximately one-frame-per-second sampling can miss brief events and that resized frames can lose small details, so negative extraction is not exhaustive frame-level proof."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "Whole-video mode treats the file as one segment; it does not remove the separately documented approximately 1 FPS sampling or 512×512 resizing limits."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "The technical-limits section identifies both relevant failure modes: rapid or single-frame events can be missed at about 1 FPS, and small features can be lost when frames are resized to 512×512."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "cameraShotTimesMs is a list of shot-boundary timestamps when returnDetails is enabled. Its documented purpose is not exhaustive pixel inspection or removal of sampling limits."
           }
         ]
@@ -1804,33 +1556,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The limitations state that rapid/single-frame events can be missed and small features can be lost (197-198). Therefore a negative extracted field cannot establish the stronger every-original-frame claim.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Whole-video mode is a single segment over the duration (160), not removal of the sampling and resizing constraints (197-198). Regrouping cannot justify exhaustive detail coverage.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "A brief marker can fall between approximately 1-FPS samples and a small marker can disappear in resized frames (197-198). Both documented failure modes prevent the demanded proof of absence.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "cameraShotTimesMs is the detected cut timestamp list returned with details (108), not a certificate of all-pixel inspection. The separate temporal/spatial limits remain applicable.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             }
           ],
           "checks": {
@@ -1864,9 +1608,7 @@
             "claimRepresented": "A negative extracted field proves the marker absent from every original frame.",
             "whyIncorrectInContext": "A sampled, resized analysis can omit the only frame or pixels showing the marker, so this universal claim exceeds the evidence.",
             "couldBeCorrectWhen": "A negative field may support a report about what the analyzer found in its sampled representation; the cited source supplies no circumstance making it exhaustive original-frame proof.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Technical constraints directly warn that brief events and small details may be missed. The valid neighboring context is a bounded analysis result, not a certified absence claim."
           },
           {
@@ -1874,9 +1616,7 @@
             "claimRepresented": "Whole-video segmentation preserves every original frame's detail.",
             "whyIncorrectInContext": "Grouping the file as one segment does not negate the independent temporal sampling and spatial resizing limits.",
             "couldBeCorrectWhen": "Whole-video mode fits full-duration summaries or whole-file checks that accept those analysis limits; it is not an exhaustive-inspection mode.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Segmentation mode false creates one segment, while the later technical limitations still specify sampling and resizing."
           },
           {
@@ -1884,9 +1624,7 @@
             "claimRepresented": "The required release-gate proof remains unestablished because the marker can be missed.",
             "whyIncorrectInContext": "This is not incorrect: either documented information-loss mechanism defeats the universal assurance requirement.",
             "couldBeCorrectWhen": "It applies whenever a required conclusion covers every original frame and the method only samples resized frames, as this stem explicitly demands.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "The 1 FPS warning concerns brief events and the 512-square warning concerns small visual details; neither permits inferring absence from a negative field."
           },
           {
@@ -1894,9 +1632,7 @@
             "claimRepresented": "Shot timestamps certify complete pixel inspection.",
             "whyIncorrectInContext": "They describe detected camera cuts, not per-pixel coverage, and do not remove either documented sampling limit.",
             "couldBeCorrectWhen": "cameraShotTimesMs is useful when an editor needs detected cuts in milliseconds and enables returnDetails, without claiming exhaustive pixel inspection.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Shot detection line 108 defines the timestamp output and returnDetails prerequisite; the technical constraints remain separate."
           }
         ],
@@ -1925,30 +1661,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-vision-request-shapes"
-            ],
+            "sourceIds": ["ai103-vision-request-shapes"],
             "summary": "This changes the content type but retains Chat Completions' nested image_url object. The Responses example uses input_image with image_url set directly to the URL string."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-vision-request-shapes"
-            ],
+            "sourceIds": ["ai103-vision-request-shapes"],
             "summary": "This is the lesson's Chat Completions image item. Leaving it unchanged does not adopt the separately documented Responses input_image contract."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-vision-request-shapes"
-            ],
+            "sourceIds": ["ai103-vision-request-shapes"],
             "summary": "input_text is the documented text instruction item, not the image input item. A base64 data URL must be supplied as image_url on input_image to follow the Responses vision example."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-vision-request-shapes"
-            ],
+            "sourceIds": ["ai103-vision-request-shapes"],
             "summary": "The Responses example pairs input_text with input_image and assigns the data URL directly to image_url, matching both the required item type and value shape."
           }
         ]
@@ -1978,33 +1706,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The Responses example assigns image_url directly to data_url (45); a nested {url: ...} object belongs to the Chat Completions example (72). Changing only the type does not fix both shape differences.",
-              "sourceIds": [
-                "ai103-vision-request-shapes"
-              ]
+              "sourceIds": ["ai103-vision-request-shapes"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "This is the Chat Completions image item at line 72, not the input_image item used inside responses.create at line 45.",
-              "sourceIds": [
-                "ai103-vision-request-shapes"
-              ]
+              "sourceIds": ["ai103-vision-request-shapes"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "input_text carries the text instruction (44), while the image data URL is carried by input_image.image_url (45). Sending that URL as text does not supply the documented image input.",
-              "sourceIds": [
-                "ai103-vision-request-shapes"
-              ]
+              "sourceIds": ["ai103-vision-request-shapes"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "Both the input_image discriminator and string-valued image_url match the Responses example (39-46); the unit explicitly permits a PNG base64 data URL (25).",
-              "sourceIds": [
-                "ai103-vision-request-shapes"
-              ]
+              "sourceIds": ["ai103-vision-request-shapes"]
             }
           ],
           "checks": {
@@ -2038,9 +1758,7 @@
             "claimRepresented": "A Responses input_image uses the nested image_url object retained from Chat Completions.",
             "whyIncorrectInContext": "The source's Responses image_url value is the direct data URL string, not this hybrid nested object.",
             "couldBeCorrectWhen": "A nested image_url object is documented in Chat Completions together with type=image_url; this unchanged hybrid has no documented valid context.",
-            "sourceIds": [
-              "ai103-vision-request-shapes"
-            ],
+            "sourceIds": ["ai103-vision-request-shapes"],
             "evidenceSummary": "Compare Responses line 45 with ChatCompletions line 72: both the discriminator and property value shape differ."
           },
           {
@@ -2048,9 +1766,7 @@
             "claimRepresented": "The unchanged Chat Completions item is valid for the Responses input array.",
             "whyIncorrectInContext": "The surrounding call is responses.create, whose documented image discriminator and URL value differ.",
             "couldBeCorrectWhen": "This exact nested shape is appropriate inside the documented ChatCompletions messages array instead.",
-            "sourceIds": [
-              "ai103-vision-request-shapes"
-            ],
+            "sourceIds": ["ai103-vision-request-shapes"],
             "evidenceSummary": "The lesson deliberately supplies two separate code examples; the nested url object belongs to ChatCompletions."
           },
           {
@@ -2058,9 +1774,7 @@
             "claimRepresented": "Passing the encoded URL as input_text supplies image pixels for visual analysis.",
             "whyIncorrectInContext": "It selects the text item rather than the documented image item, so it does not implement the visual-input contract.",
             "couldBeCorrectWhen": "input_text is appropriate for textual instructions or discussion of an encoded string as text, not to submit the encoded image as visual evidence.",
-            "sourceIds": [
-              "ai103-vision-request-shapes"
-            ],
+            "sourceIds": ["ai103-vision-request-shapes"],
             "evidenceSummary": "The Responses example separates the natural-language input_text item from the input_image carrying data_url."
           },
           {
@@ -2068,9 +1782,7 @@
             "claimRepresented": "Responses receives input_image with the image_url string directly.",
             "whyIncorrectInContext": "This is not incorrect: it matches the lesson's GPT-4.1 Responses image example and the already valid data URL.",
             "couldBeCorrectWhen": "It fits a configured Responses client and image-capable compatible deployment, with the data URL provided in the stated variable.",
-            "sourceIds": [
-              "ai103-vision-request-shapes"
-            ],
+            "sourceIds": ["ai103-vision-request-shapes"],
             "evidenceSummary": "The example uses type=input_image, image_url=data_url inside a user content array; the input_text instruction remains separate."
           }
         ],
@@ -2099,30 +1811,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "The article supports local images encoded as base64 data URLs. The backend already has file access and permission to transmit bytes, so this supplies image content without exposing a public storage URL."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "The source explicitly says the Vision service fetches images from managed infrastructure, not from the caller's VNet; private or VNet-restricted URLs remain unsupported even in the same or peered VNet."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "A publicly accessible image URL is a documented supported input, but making this image public violates the stem's explicit policy constraint."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "detail=high changes visual processing after input is obtained. It does not change the managed fetcher's access to a private image URL."
           }
         ]
@@ -2152,33 +1856,25 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The local-image section encodes backend-readable bytes into a data URL and supplies it through image_url.url (1178-1198). The stem authorizes this transmission without exposing a public storage URL.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Line 1093 explicitly says private image URLs remain unsupported even within the same or peered VNet, because the fetch occurs in managed infrastructure rather than the caller's network.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Public image URLs are supported (1081, 1093), but publishing this URL is expressly forbidden in the scenario. This otherwise valid transport violates the stated constraint.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "High detail selects higher-resolution image interpretation (1208), not network access. It cannot remove the separate private-URL restriction at 1093.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             }
           ],
           "checks": {
@@ -2212,9 +1908,7 @@
             "claimRepresented": "Send bytes read by the authorized backend as an inline base64 image data URL.",
             "whyIncorrectInContext": "This is not incorrect: it removes the unavailable service-side URL fetch while retaining authorization to send the actual image.",
             "couldBeCorrectWhen": "It applies when the backend can read the image, transmission to Azure OpenAI is allowed and a correctly typed data URL is supplied.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "The local-image example reads bytes and constructs a MIME-specific data URL; API details permits that alternative to public URL input."
           },
           {
@@ -2222,9 +1916,7 @@
             "claimRepresented": "The model inherits the backend's peered-VNet access to fetch the private image.",
             "whyIncorrectInContext": "The source explicitly says the managed fetcher is not inside the caller's VNet and excludes even same/peered-VNet private endpoints.",
             "couldBeCorrectWhen": "Backend-side reading can use its authorized network access before inline submission; the cited source does not provide a model-fetch context where peering alone suffices.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "API details line 1093 explicitly rejects this precise private-endpoint inference; Use a local image relocates reading to the client."
           },
           {
@@ -2232,9 +1924,7 @@
             "claimRepresented": "Publishing the image URL is an acceptable repair under the stated policy.",
             "whyIncorrectInContext": "Publicly accessible URLs are supported technically, but this publication violates the explicit prohibition.",
             "couldBeCorrectWhen": "It is suitable when the image can legitimately be publicly accessible and policy permits direct URL submission.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "API details permits public HTTP/HTTPS image URLs but supplies no exception to the stem's no-publication constraint."
           },
           {
@@ -2242,9 +1932,7 @@
             "claimRepresented": "High detail makes a private image URL retrievable by the model.",
             "whyIncorrectInContext": "Detail changes image interpretation, not network access; the private URL remains unsupported.",
             "couldBeCorrectWhen": "High detail is appropriate after the image is accessible, when finer interpretation warrants additional input-token use.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "Configure image detail level describes high-resolution processing while the separate URL requirement governs fetch reachability."
           }
         ],
@@ -2273,30 +1961,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "low changes input-image resolution and token use; it does not increase the explicit 40-token output budget that limits this paragraph caption."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "The article defines length as incomplete output due to max_tokens or model token limits, and its troubleshooting guidance recommends increasing max_tokens or max_completion_tokens for truncation."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "URL and base64 are alternative ways to supply image input. The image already processes successfully, so changing input transport does not repair the reported output-length cap."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "summary": "auto chooses between low and high image processing based on input size. It does not provide additional output tokens for the truncated paragraph."
           }
         ]
@@ -2326,33 +2006,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Low changes the resolution/input-token path (1207). Keeping max_tokens=40 leaves the output cap that can cause finish_reason=length (1294).",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "Length identifies truncation by max_tokens or the model limit (1294). The stem rules out the latter, so increasing the explicit output budget addresses the reported cause; the troubleshooting table also recommends raising it.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "URL and base64 are alternative image-input transports (1081, 1191-1198). The input has already succeeded, and switching transport does not increase the unchanged output cap.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "Auto chooses low or high based on input size (1206), not output length. The same 40-token maximum still truncates the required longer paragraph.",
-              "sourceIds": [
-                "ai103-vision-detail"
-              ]
+              "sourceIds": ["ai103-vision-detail"]
             }
           ],
           "checks": {
@@ -2386,9 +2058,7 @@
             "claimRepresented": "Lowering input detail repairs an explicit 40-token output ceiling.",
             "whyIncorrectInContext": "The already processed image and stated model-capacity sufficiency leave the output cap as the reported problem; lower detail does not raise that cap.",
             "couldBeCorrectWhen": "Low detail is useful when faster, cheaper coarse image interpretation is sufficient, not when a successful detailed request needs more output tokens.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "Low changes resolution and input-token consumption; finish_reason=length points separately to an output allowance or model token limit."
           },
           {
@@ -2396,9 +2066,7 @@
             "claimRepresented": "Increase the output allowance within the model's limits.",
             "whyIncorrectInContext": "This is not incorrect: the supplied small cap explains the truncation after the stem rules out model-capacity and filter causes.",
             "couldBeCorrectWhen": "It applies when a desired answer fits the model but max_tokens is too restrictive, exactly the stated scenario.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "The length definition names max_tokens and Troubleshooting says to increase max_tokens or max_completion_tokens for truncated output; GPT-4o is not the o-series exception."
           },
           {
@@ -2406,9 +2074,7 @@
             "claimRepresented": "Switching image transport repairs an unchanged output budget.",
             "whyIncorrectInContext": "URL and base64 are input alternatives; the image already processes successfully and max_tokens remains 40.",
             "couldBeCorrectWhen": "Inline base64 is appropriate when the client needs to provide a local image rather than a reachable URL, a different failure mode.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "Use a local image changes input delivery, while the output-length diagnosis and cap are documented separately."
           },
           {
@@ -2416,9 +2082,7 @@
             "claimRepresented": "Auto input detail creates enough output tokens despite max_tokens=40.",
             "whyIncorrectInContext": "Auto chooses image processing based on size; it does not increase the explicitly fixed output allowance.",
             "couldBeCorrectWhen": "Auto fits workloads that delegate low/high input processing to the model and already have a sufficient output budget.",
-            "sourceIds": [
-              "ai103-vision-detail"
-            ],
+            "sourceIds": ["ai103-vision-detail"],
             "evidenceSummary": "The detail subsection defines auto as a low/high input choice, not the output-generation maximum."
           }
         ],
@@ -2512,17 +2176,13 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The overview's field-extraction row explicitly limits Extract to documents (69). It is not the documented category-selection method for these product photographs.",
-              "sourceIds": [
-                "ai103-content-understanding-overview"
-              ]
+              "sourceIds": ["ai103-content-understanding-overview"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Classify means choosing predefined categories whereas Generate creates free values (overview 69). This pairing assigns the fixed-list method to the unconstrained summary and reverses the required semantics.",
-              "sourceIds": [
-                "ai103-content-understanding-overview"
-              ]
+              "sourceIds": ["ai103-content-understanding-overview"]
             },
             {
               "choiceId": "c",
@@ -2537,9 +2197,7 @@
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "The first method fits the list, but Extract directly takes document values rather than generating an unconstrained visual description (overview 69).",
-              "sourceIds": [
-                "ai103-content-understanding-overview"
-              ]
+              "sourceIds": ["ai103-content-understanding-overview"]
             }
           ],
           "checks": {
@@ -2573,9 +2231,7 @@
             "claimRepresented": "Extract selects a product photo's fixed PackagingState while Generate describes it.",
             "whyIncorrectInContext": "Generate fits the summary, but Extract is document-only and is not the image category selector.",
             "couldBeCorrectWhen": "An Extract/Generate pairing can fit a document containing a literal state value plus a requested new summary; it is not this photographic category task.",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "evidenceSummary": "The Field extraction row reserves Extract for literal document values and distinguishes Classify for categories."
           },
           {
@@ -2583,9 +2239,7 @@
             "claimRepresented": "Free generation should supply the fixed category while classification supplies unconstrained prose.",
             "whyIncorrectInContext": "The assignments invert the documented output semantics: a predefined choice belongs to Classify and unconstrained description to Generate.",
             "couldBeCorrectWhen": "This pairing would fit the reverse output contract: a freely composed first field and a second field restricted to a predefined category set.",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "evidenceSummary": "Generate composes values freely; Classify selects from a predefined set. The business requirement determines their placement."
           },
           {
@@ -2604,9 +2258,7 @@
             "claimRepresented": "Classify plus Extract supplies an image category and a newly composed description.",
             "whyIncorrectInContext": "Classify is suitable, but document-only literal extraction cannot supply the requested free-form photographic summary.",
             "couldBeCorrectWhen": "Classify plus Extract fits a document schema requiring a category and a literal value already printed in the document.",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "evidenceSummary": "The same Field extraction row provides that document-context distinction and identifies Generate for newly composed descriptions."
           }
         ],
@@ -2700,17 +2352,13 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Visual defects/anomalies are a supported image use case (image 7), but the stem explicitly prioritizes written entries. The image article's text-dominant note (26) favors a different schema.",
-              "sourceIds": [
-                "ai103-content-understanding-images"
-              ]
+              "sourceIds": ["ai103-content-understanding-images"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Image product detection/counting serves inventory analysis (image 8), not the written-log extraction requirement; image 26 recommends document field extraction for that task.",
-              "sourceIds": [
-                "ai103-content-understanding-images"
-              ]
+              "sourceIds": ["ai103-content-understanding-images"]
             },
             {
               "choiceId": "c",
@@ -2725,9 +2373,7 @@
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "The image page explicitly recommends considering a document field extraction schema for extracting and analyzing text from images (26). That is exactly this photographed-log workload.",
-              "sourceIds": [
-                "ai103-content-understanding-images"
-              ]
+              "sourceIds": ["ai103-content-understanding-images"]
             }
           ],
           "checks": {
@@ -2761,9 +2407,7 @@
             "claimRepresented": "A visual-defect schema best addresses extraction of written maintenance entries.",
             "whyIncorrectInContext": "The target evidence is text, not damage to the photographed surface, so this documented visual use case is the wrong workload.",
             "couldBeCorrectWhen": "It suits quality-control photographs where the required output is scratches, cracks or other visual defects.",
-            "sourceIds": [
-              "ai103-content-understanding-images"
-            ],
+            "sourceIds": ["ai103-content-understanding-images"],
             "evidenceSummary": "Manufacturing quality control is explicitly a visual defect use case; the final note instead recommends document schemas for text-dominant analysis."
           },
           {
@@ -2771,9 +2415,7 @@
             "claimRepresented": "Detecting and counting products best extracts written log entries.",
             "whyIncorrectInContext": "Counting objects changes the task rather than extracting the actual maintenance text.",
             "couldBeCorrectWhen": "It fits shelf or inventory imagery whose requirement is product presence, count or visible product details.",
-            "sourceIds": [
-              "ai103-content-understanding-images"
-            ],
+            "sourceIds": ["ai103-content-understanding-images"],
             "evidenceSummary": "Shelf analysis and inventory management specifically supports product detection/counting, distinct from the text-first guidance."
           },
           {
@@ -2824,30 +2466,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "The Shot detection subsection identifies cameraShotTimesMs as millisecond shot-boundary timestamps and states that this output is returned only when returnDetails=true."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "enableSegment=false controls whether the file is treated as one segment. The document gives returnDetails=true, not whole-video grouping, as the condition for returning shot timestamps."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "contentCategories supplies natural-language logic for semantic segments. The editor instead needs the detailed camera-shot output generated in content extraction."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "summary": "fieldSchema controls custom fields filled by the generative model for segments. It is not the documented switch for returning cameraShotTimesMs."
           }
         ]
@@ -2877,33 +2511,25 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The Shot detection paragraph explicitly states that cameraShotTimesMs is returned only with returnDetails=true (108). This is the named switch for the missing output.",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "enableSegment=false makes the file one segment (160); it is not the returnDetails flag required to expose cameraShotTimesMs (108).",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "contentCategories describes semantic segmentation logic (166), rather than selecting the detected cut timestamp output controlled by returnDetails (108).",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "fieldSchema determines custom generative field values (116). It does not replace the explicit details-return switch for the foundational shot list (108).",
-              "sourceIds": [
-                "ai103-video"
-              ]
+              "sourceIds": ["ai103-video"]
             }
           ],
           "checks": {
@@ -2937,9 +2563,7 @@
             "claimRepresented": "Enable returnDetails to expose the detected shot timestamp array.",
             "whyIncorrectInContext": "This is not incorrect: the requested output is precisely the shot-detail field conditioned on this switch.",
             "couldBeCorrectWhen": "It fits a request for detected camera cuts in milliseconds rather than semantic chapters, as in this editor workflow.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Shot detection line 108 expressly names cameraShotTimesMs and says output is only returned with returnDetails=true."
           },
           {
@@ -2947,9 +2571,7 @@
             "claimRepresented": "Whole-video treatment is the switch that exposes cameraShotTimesMs.",
             "whyIncorrectInContext": "enableSegment=false changes grouping, not the documented condition for including shot details.",
             "couldBeCorrectWhen": "It fits a whole-video summary or metadata extraction requirement where a single segment is wanted.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Segmentation mode defines one segment for false, while the separate shot-detection paragraph requires returnDetails."
           },
           {
@@ -2957,9 +2579,7 @@
             "claimRepresented": "Topic contentCategories exposes camera-cut timestamps.",
             "whyIncorrectInContext": "Topic categories define semantic segments; those are expressly not the camera-cut output requested.",
             "couldBeCorrectWhen": "It fits chaptering by meaning, such as separating stories in a broadcast, instead of cut-based editing.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Custom segmentation describes natural-language contentCategories as the boundary logic, not the detailed shot array."
           },
           {
@@ -2967,9 +2587,7 @@
             "claimRepresented": "A generated summary field exposes the built-in shot timestamps.",
             "whyIncorrectInContext": "fieldSchema adds custom generative output and is not the documented switch for the built-in cameraShotTimesMs array.",
             "couldBeCorrectWhen": "It is useful when the requirement is a custom scene description or other business field per segment.",
-            "sourceIds": [
-              "ai103-video"
-            ],
+            "sourceIds": ["ai103-video"],
             "evidenceSummary": "Custom fields uses fieldSchema for names/types/descriptions filled by the model, distinct from foundational shot output."
           }
         ],
@@ -2998,23 +2616,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "summary": "The low threshold is the strictest configuration and also blocks low-severity content, contrary to the requirement to permit that severity."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "summary": "The high threshold permits medium-severity content; the stem explicitly requires medium content to be blocked."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "summary": "The configurability table states that the medium/high configuration leaves low content unfiltered while filtering medium and high, exactly matching the policy."
           }
         ]
@@ -3044,25 +2656,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The low/medium/high row blocks all three levels (168), including the low content the stem requires to permit.",
-              "sourceIds": [
-                "ai103-classic-image-filters"
-              ]
+              "sourceIds": ["ai103-classic-image-filters"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The high-only row permits medium (170); that conflicts with the stem's medium-block requirement.",
-              "sourceIds": [
-                "ai103-classic-image-filters"
-              ]
+              "sourceIds": ["ai103-classic-image-filters"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The medium/high row permits low and filters medium and high (169), exactly the specified policy for the chosen category.",
-              "sourceIds": [
-                "ai103-classic-image-filters"
-              ]
+              "sourceIds": ["ai103-classic-image-filters"]
             }
           ],
           "checks": {
@@ -3096,9 +2702,7 @@
             "claimRepresented": "Blocking low, medium and high meets a policy permitting low severity.",
             "whyIncorrectInContext": "This is more restrictive than allowed: it blocks the very low-severity content the policy permits.",
             "couldBeCorrectWhen": "The Low threshold fits a policy requiring all non-safe severities to be blocked for that category.",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "evidenceSummary": "Configurability labels the low/medium/high row the strictest configuration, distinct from the medium/high row."
           },
           {
@@ -3106,9 +2710,7 @@
             "claimRepresented": "Blocking only high meets a policy also requiring medium blocked.",
             "whyIncorrectInContext": "Medium remains allowed, violating a directly stated requirement.",
             "couldBeCorrectWhen": "The High threshold fits a policy that allows low and medium while blocking only high.",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "evidenceSummary": "The High row explicitly states low and medium are not filtered."
           },
           {
@@ -3116,9 +2718,7 @@
             "claimRepresented": "The Medium threshold blocks medium and high while permitting low.",
             "whyIncorrectInContext": "This is not incorrect: its inclusive blocking set exactly matches the stated policy.",
             "couldBeCorrectWhen": "It applies to the configurable image-input harm category in the explicitly selected classic scope.",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "evidenceSummary": "The medium/high row gives exactly this behavior, and the article separately includes image input categories."
           }
         ],
@@ -3147,30 +2747,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "summary": "A generated field is schema-directed business output. The documentation locates moderation behavior in the model deployment's Guardrails instance and returns its results in content_filters, not an invented business field."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "summary": "The overview says to update the Guardrails instance associated with the model deployment used by the analyzers, permits switching from blocking to annotating, and identifies content_filters in the analyze response. The stem supplies the required modified-filter approval."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "summary": "Classify selects business field values from predefined categories. Changing the field schema is not the documented configuration surface for deployment Guardrails and also violates the unchanged-schema requirement."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "summary": "enableSegment controls logical segmentation of documents or videos. The overview separately describes content filtering through deployment Guardrails and content_filters; segmentation is not an image moderation decision."
           }
         ]
@@ -3200,33 +2792,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "A generated schema field is business output (69, 74), not the deployment Guardrails result surfaced as content_filters (89). It also changes the schema explicitly required to remain unchanged.",
-              "sourceIds": [
-                "ai103-content-understanding-overview"
-              ]
+              "sourceIds": ["ai103-content-understanding-overview"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The source directs changes to the Guardrails associated with the model deployment actually used by the analyzer (89-91) and surfaces flags in content_filters. It allows annotate behavior and requests modified-filter approval (93-99), which the stem supplies.",
-              "sourceIds": [
-                "ai103-content-understanding-overview"
-              ]
+              "sourceIds": ["ai103-content-understanding-overview"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Classify chooses predefined business categories (69); it is not the deployment safety control at 89-93. Changing a field method also violates the unchanged business-schema condition.",
-              "sourceIds": [
-                "ai103-content-understanding-overview"
-              ]
+              "sourceIds": ["ai103-content-understanding-overview"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "enableSegment divides documents/videos into logical sections (68). It has no documented role as an image moderation result; that separate result comes from Guardrails through content_filters (89).",
-              "sourceIds": [
-                "ai103-content-understanding-overview"
-              ]
+              "sourceIds": ["ai103-content-understanding-overview"]
             }
           ],
           "checks": {
@@ -3260,9 +2844,7 @@
             "claimRepresented": "A generated business SafetyDecision field is the deployment's moderation result.",
             "whyIncorrectInContext": "A schema-generated value is not the deployment Guardrails result and adding it also changes the required unchanged business schema.",
             "couldBeCorrectWhen": "Generate can supply a business description or decision-support field when that output is intentionally requested, but not replace the service's content_filters result.",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "evidenceSummary": "Key components defines generated field values; Content filtering and Guardrails independently locates moderation at the used model deployment."
           },
           {
@@ -3270,9 +2852,7 @@
             "claimRepresented": "Configure the used deployment's Guardrails to annotate and consume content_filters.",
             "whyIncorrectInContext": "This is not incorrect: it changes the actual moderation surface and reads the surfaced result without altering business fields.",
             "couldBeCorrectWhen": "It applies where the analyzer uses that model deployment, modified filtering is approved and the application takes responsibility for handling annotations.",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "evidenceSummary": "Lines 89-99 identify deployment-associated Guardrails, content_filters, annotate mode and required modified-filter approval."
           },
           {
@@ -3280,9 +2860,7 @@
             "claimRepresented": "Switching a business field to Classify implements service moderation.",
             "whyIncorrectInContext": "Classify controls business output categories rather than the deployment's Guardrails, and it violates the fixed-schema condition.",
             "couldBeCorrectWhen": "Classify is appropriate for a business field whose value must come from a predefined category set when schema changes are intended.",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "evidenceSummary": "The Field extraction row describes Classify, while Guardrails configuration and surfaced content_filters are separate."
           },
           {
@@ -3290,9 +2868,7 @@
             "claimRepresented": "Whole-content grouping supplies a moderation decision for the image.",
             "whyIncorrectInContext": "enableSegment controls logical sections of documents/videos, not the image workflow's deployment safety decision.",
             "couldBeCorrectWhen": "enableSegment=false can request whole-document or whole-video treatment where segmentation is unnecessary; it is not a safety-control switch.",
-            "sourceIds": [
-              "ai103-content-understanding-overview"
-            ],
+            "sourceIds": ["ai103-content-understanding-overview"],
             "evidenceSummary": "Key components scopes segmentation to documents/videos and the Responsible AI section separately defines content filtering behavior."
           }
         ],

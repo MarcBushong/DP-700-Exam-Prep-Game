@@ -32,17 +32,13 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "The team has no custom execution logic to bring, so hosting such code is unnecessary. Context check: When a team needs full control over agent logic implemented and deployed in a container. Evidence: Agent types describes hosted agents as containerized implementations with execution control; the stated requirement instead matches configuration.",
-          "sourceIds": [
-            "ai103-agent-risk-boundaries"
-          ]
+          "sourceIds": ["ai103-agent-risk-boundaries"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Not incorrect: those are precisely the already chosen assets and configuration-only needs. Context check: When a single agent can be expressed through configuration rather than a custom execution container. Evidence: The declarative prompt-based definition lists a model, instructions, tools and prompts; the scenario supplies those boundaries.",
-          "sourceIds": [
-            "ai103-agent-risk-boundaries"
-          ]
+          "sourceIds": ["ai103-agent-risk-boundaries"]
         }
       ],
       "checks": {
@@ -84,25 +80,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Entra authentication does not change the endpoint into the project API expected by AIProjectClient. Context check: OpenAI inference can use Entra-derived tokens on /openai/v1 with its compatible client, not this project client. Evidence: The endpoint table and authentication note support Entra-backed OpenAI inference but the Python project example uses the project path.",
-          "sourceIds": [
-            "ai103-sdk"
-          ]
+          "sourceIds": ["ai103-sdk"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "The documented project example takes DefaultAzureCredential and the request explicitly removes service keys. Context check: No sourced context validates this exact project-client/raw-key pairing; a key on OpenAI v1 would be a different option. Evidence: Authentication documents keys on /openai/v1 only. The absence of a defensible valid-context pairing fails the strict distractor test.",
-          "sourceIds": [
-            "ai103-sdk"
-          ]
+          "sourceIds": ["ai103-sdk"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Not incorrect: this matches the Python project-client example and the supplied authorized identity. Context check: For a current project with azure-ai-projects 2.x and an Entra identity authorized for its intended operations. Evidence: The stable 2.x table and AIProjectClient example jointly bind client version, project endpoint and credential object.",
-          "sourceIds": [
-            "ai103-sdk"
-          ]
+          "sourceIds": ["ai103-sdk"]
         }
       ],
       "checks": {
@@ -152,25 +142,19 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Not incorrect: it combines the required reserved PTUs and EU processing boundary. Context check: When supported model/location availability and data-zone reserved capacity are both required, as stated. Evidence: The deployment-type list directly assigns reserved PTUs within a data zone to Data Zone Provisioned.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "It satisfies capacity but allows processing outside the specified EU data-zone boundary. Context check: When global processing is approved and reserved predictable throughput is required. Evidence: Global Provisioned is explicitly reserved PTU capacity that can use any Azure region; it lacks this zone restriction.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "It satisfies geographic scope but not the reserved-throughput condition. Context check: When a workload needs EU/US-zone processing and pay-per-token rather than reserved capacity. Evidence: Data Zone Standard is explicitly zone-scoped pay-per-token, contrasting with zone provisioned PTUs.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         }
       ],
       "checks": {
@@ -212,25 +196,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "detected=true establishes detection; recreating the already assigned annotate policy would not enable blocking. Context check: No documented context supports this entire interpretation and remedy; missing-assignment diagnosis requires different observations and configuration. Evidence: Troubleshooting asks reviewers to verify assignment and inspect detected versus filtered; it does not equate a true detection with failure.",
-          "sourceIds": [
-            "ai103-prompt-shields"
-          ]
+          "sourceIds": ["ai103-prompt-shields"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Not incorrect: annotate explains filtered=false and block implements the approved enforcement change. Context check: When an assigned rule detects the desired attack and policy moves from observation to blocking. Evidence: Configuration offers annotate or block; false-positive guidance expressly defines annotate as logging without filtering.",
-          "sourceIds": [
-            "ai103-prompt-shields"
-          ]
+          "sourceIds": ["ai103-prompt-shields"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "filtered=false and annotate both contradict the asserted blocking behavior. Context check: No sourced circumstance makes annotate itself a blocking action; another separate blocker would not validate this claim. Evidence: The article's annotate-versus-block distinction rules out the exact alternative, leaving no defensible contextual counterexample.",
-          "sourceIds": [
-            "ai103-prompt-shields"
-          ]
+          "sourceIds": ["ai103-prompt-shields"]
         }
       ],
       "checks": {
@@ -272,25 +250,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "The malicious third-party text appears later at the tool-response boundary, outside that intervention point. Context check: When the untrusted document is supplied with user input rather than returned by a later tool. Evidence: The opening list permits document scanning at user input and tool response; those are distinct entry points.",
-          "sourceIds": [
-            "ai103-prompt-shields"
-          ]
+          "sourceIds": ["ai103-prompt-shields"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "It addresses adversarial user requests, not this retrieved third-party instruction source. Context check: For the narrower user-prompt attack threat when no third-party document or tool-result boundary is being addressed. Evidence: User prompt attacks originate with the user; document attacks originate in third-party content. The scenario establishes the latter.",
-          "sourceIds": [
-            "ai103-prompt-shields"
-          ]
+          "sourceIds": ["ai103-prompt-shields"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Not incorrect: that is where the third-party instructions first enter the agent. Context check: When tool output introduces untrusted documents or retrieved material after legitimate user input. Evidence: The article expressly lists tool response for document attacks and requires assigning the guardrail to the agent or deployment.",
-          "sourceIds": [
-            "ai103-prompt-shields"
-          ]
+          "sourceIds": ["ai103-prompt-shields"]
         }
       ],
       "checks": {
@@ -340,27 +312,19 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Not incorrect: these fields describe whether images are accepted and text can be produced. Context check: When establishing task and modality compatibility before comparing otherwise suitable models. Evidence: Catalog filters list capabilities and inference tasks; image-analysis models accept text/images and generate natural language.",
-          "sourceIds": [
-            "ai103-model-selection"
-          ]
+          "sourceIds": ["ai103-model-selection"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Origin and cost do not prove image-input support. Context check: When comparing provider preferences and input-token expense after candidate capabilities are already known. Evidence: Collections/source describe origin, while cost-per-input-tokens measures price per million; neither field states modality compatibility.",
-          "sourceIds": [
-            "ai103-model-selection",
-            "ai103-model-benchmarks"
-          ]
+          "sourceIds": ["ai103-model-selection", "ai103-model-benchmarks"]
         },
         {
           "choiceId": "d",
           "assessment": "contradicted",
           "rationale": "General benchmark strength and grouping do not establish the required input surface. Context check: When ranking general language performance within a chosen collection of already compatible models. Evidence: Quality index averages general task benchmarks and collections group models; task fitness needs separate capability evidence.",
-          "sourceIds": [
-            "ai103-model-selection",
-            "ai103-model-benchmarks"
-          ]
+          "sourceIds": ["ai103-model-selection", "ai103-model-benchmarks"]
         }
       ],
       "checks": {
@@ -473,25 +437,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "A passes safety, but applying 3:1 to an explicitly 1:1 workload gives the wrong cost ordering. Context check: For an otherwise identical workload using three input units per output unit, A costs 18 versus C's 19 and passes safety. Evidence: The lesson defines estimated cost at 3:1. Applying the supplied scenario prices verifies A's alternate-ratio win but not this workload.",
-          "sourceIds": [
-            "ai103-model-benchmarks"
-          ]
+          "sourceIds": ["ai103-model-benchmarks"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "B's 0.08 attack success rate exceeds the stated maximum 0.05 even though its equal-volume cost is 3. Context check: If the stated ASR policy admitted 0.08 and these compatible models still met task quality, B would be the least-cost equal-volume candidate. Evidence: Lower ASR is better and input/output prices are separate. Scenario arithmetic supports B's cost advantage but the explicit policy excludes it.",
-          "sourceIds": [
-            "ai103-model-benchmarks"
-          ]
+          "sourceIds": ["ai103-model-benchmarks"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Not incorrect: C passes 0.05 and costs 9 versus A's 12 at equal volumes. Context check: Under the exact supplied quality, safety and equal-volume assumptions; a different token ratio can change the winner. Evidence: The source supplies ASR direction and price units; independently applying the given values yields C as the unique allowed cost minimum.",
-          "sourceIds": [
-            "ai103-model-benchmarks"
-          ]
+          "sourceIds": ["ai103-model-benchmarks"]
         }
       ],
       "checks": {
@@ -541,27 +499,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Generating responses does not supply the requested persistent index and ranked document query service. Context check: When the missing stage is composing a natural-language response after relevant context has already been retrieved. Evidence: The model lesson defines chat/text generation; Search separately defines index-first ranked document retrieval.",
-          "sourceIds": [
-            "ai103-model-selection",
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-model-selection", "ai103-search-architecture"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Numerical vector creation is not ownership of the searchable document index. Context check: When the pipeline needs numerical representations for semantic similarity before storing or querying vectors. Evidence: Embedding models convert text into representations; Search indexes vectors and supports keyword, vector and hybrid queries.",
-          "sourceIds": [
-            "ai103-model-selection",
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-model-selection", "ai103-search-architecture"]
         },
         {
           "choiceId": "d",
           "assessment": "supported",
           "rationale": "Not incorrect: it provides the managed index and ranked keyword/vector retrieval the application lacks. Context check: When approved content must be indexed and queried independently of the already selected generator. Evidence: Classic search returns ranked documents from a predefined index and explicitly supports full-text, vector and hybrid retrieval.",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         }
       ],
       "checks": {
@@ -611,26 +561,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Retrieval returns relevant content but is not the requested Python computation and file transformation. Context check: When a user needs grounded information from an indexed data/document collection rather than executed statistical results. Evidence: File search injects matching chunks; Code Interpreter separately provides statistical analysis and file conversion.",
-          "sourceIds": [
-            "ai103-file-search",
-            "ai103-code-interpreter"
-          ]
+          "sourceIds": ["ai103-file-search", "ai103-code-interpreter"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Not incorrect: its sandbox executes Python, handles files and returns real calculation results. Context check: For bounded offline file analysis that fits the documented memory and execution-time constraints. Evidence: The use-case table names CSV summary statistics and file conversion; limitations explicitly allow no external network access.",
-          "sourceIds": [
-            "ai103-code-interpreter"
-          ]
+          "sourceIds": ["ai103-code-interpreter"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "The requirement is executed results and an output file, not a suggestion for another actor to run. Context check: When the user wants to discuss or obtain code for subsequent execution outside the assistant rather than ask it to calculate now. Evidence: The introductory contrast distinguishes discussing code from dynamically running it and returning actual results.",
-          "sourceIds": [
-            "ai103-code-interpreter"
-          ]
+          "sourceIds": ["ai103-code-interpreter"]
         }
       ],
       "checks": {
@@ -688,25 +631,19 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Not incorrect: its GA core modalities include documents/audio and analyzers can produce structured JSON fields. Context check: When unstructured multimodal content must become schema-aligned output using supported analyzer/model configurations. Evidence: The version matrix identifies GA core multimodal extraction, and the component table ties analyzer field schema to structured JSON output.",
-          "sourceIds": [
-            "ai103-content-understanding-overview"
-          ]
+          "sourceIds": ["ai103-content-understanding-overview"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "A read query does not perform the initial analyzer-defined extraction of uploaded recordings and documents. Context check: When the requirement is retrieving ranked documents from an already populated search index. Evidence: Classic querying targets an existing searchable index and returns ranked documents; indexing and enrichment are separate workloads.",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "It grounds answers in indexed passages rather than defining consistent analyzer field outputs for recordings and documents. Context check: When a user needs answers supported by passages from uploaded manuals or other indexed files. Evidence: File search retrieves relevant chunks from vector stores and supplies them to responses; it is not the analyzer schema service.",
-          "sourceIds": [
-            "ai103-file-search"
-          ]
+          "sourceIds": ["ai103-file-search"]
         }
       ],
       "checks": {
@@ -748,25 +685,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "The source has no supported pull path and the application already owns serialization. Context check: No documented context makes direct pulling from an unsupported source valid; a supported connector would change the authored condition. Evidence: The ingestion checklist distinguishes supported-source pull from unsupported-source push; it directly excludes this exact alternative.",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Queries read populated indexed content and do not insert the prepared documents. Context check: Search requests are valid for retrieving already indexed content, but no cited context turns this document-sending ingestion claim into a query write. Evidence: The indexing/querying sections separate read-write ingestion from read-only query handling; the proposed use has no documented valid ingestion context.",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Not incorrect: application-owned serialization, unsupported sources and real-time changes are explicit push cases. Context check: When the application has valid index-shaped JSON and must synchronize changes without a supported source-reading connector. Evidence: The checklist names both unsupported data sources and real-time synchronization as push requirements; indexing accepts JSON.",
-          "sourceIds": [
-            "ai103-search-architecture"
-          ]
+          "sourceIds": ["ai103-search-architecture"]
         }
       ],
       "checks": {
@@ -816,28 +747,19 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Not incorrect: it explicitly serves both conversation and document context requirements. Context check: For a project Responses app with chained history and a manual uploaded/indexed in a referenced vector store. Evidence: previous_response_id supplies preceding conversational context; file search uploads/indexes files and injects retrieved chunks.",
-          "sourceIds": [
-            "ai103-responses-state",
-            "ai103-file-search"
-          ]
+          "sourceIds": ["ai103-responses-state", "ai103-file-search"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "A previous response cannot ingest absent content; never-uploaded also changes the stem's uploaded-manual condition. Context check: No sourced context validates the whole absent-manual claim; including manual text in history would remove its defining absence. Evidence: Responses chaining carries existing history, while file-search preparation explicitly uploads documents to a vector store.",
-          "sourceIds": [
-            "ai103-responses-state",
-            "ai103-file-search"
-          ]
+          "sourceIds": ["ai103-responses-state", "ai103-file-search"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Manual retrieval can work, but the preceding user question is then not preserved as required. Context check: For independent one-shot document questions where earlier conversational turns are intentionally irrelevant. Evidence: The sources separately demonstrate standalone generation/file retrieval and additional previous_response_id or manual history for multi-turn context.",
-          "sourceIds": [
-            "ai103-responses-state",
-            "ai103-file-search"
-          ]
+          "sourceIds": ["ai103-responses-state", "ai103-file-search"]
         }
       ],
       "checks": {
@@ -879,25 +801,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "Agent prose is not the documented connection credential store and the requirement explicitly prohibits it. Context check: No approved passage makes system instructions a legitimate MCP bearer-credential configuration; dummy explanatory text would not authenticate. Evidence: The setup identifies project_connection_id as stored authentication and provides real connection auth modes, not instruction-based secrets.",
-          "sourceIds": [
-            "ai103-mcp-tools"
-          ]
+          "sourceIds": ["ai103-mcp-tools"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Trust approval does not meet the server's required bearer authentication. Context check: A genuinely no-auth public server is documented, but that changes the auth requirement; approval alone never establishes no-auth behavior. Evidence: The article lists no-auth and custom-key/OAuth connections separately; the server's required method determines configuration.",
-          "sourceIds": [
-            "ai103-mcp-tools"
-          ]
+          "sourceIds": ["ai103-mcp-tools"]
         },
         {
           "choiceId": "d",
           "assessment": "supported",
           "rationale": "Not incorrect: it separates protected connection details from authored instructions and application source. Context check: For a remote authenticated MCP endpoint with a matching connection auth type and authorized project connection manager. Evidence: Prerequisites require Project Manager for connections; connection setup defines project_connection_id as authentication and connection details.",
-          "sourceIds": [
-            "ai103-mcp-tools"
-          ]
+          "sourceIds": ["ai103-mcp-tools"]
         }
       ],
       "checks": {
@@ -939,25 +855,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "The documented current architecture gives each project exactly one owning resource. Context check: No cited current-architecture context permits this ownership; sharing assets or access would not create two resource parents. Evidence: The projects section states each project belongs to a single Foundry resource, directly excluding shared ownership.",
-          "sourceIds": [
-            "ai103-project-organization"
-          ]
+          "sourceIds": ["ai103-project-organization"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "A resource supports multiple child projects; default is a designation, not a count limit. Context check: No documented context validates the asserted limit; separate resources may be chosen for other reasons but that would change the rationale. Evidence: The training explicitly permits one or more child projects and designates one default among them.",
-          "sourceIds": [
-            "ai103-project-organization"
-          ]
+          "sourceIds": ["ai103-project-organization"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Not incorrect: each project has one resource parent and the resource may have multiple projects. Context check: When separate solution assets should be organized under one common Foundry resource. Evidence: Projects hold connections, data and code, and a resource can support multiple child projects.",
-          "sourceIds": [
-            "ai103-project-organization"
-          ]
+          "sourceIds": ["ai103-project-organization"]
         }
       ],
       "checks": {
@@ -1007,9 +917,7 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Not incorrect: the overview expressly requires that project architecture for this deployment route. Context check: When the chosen model's weights are deployed through the documented managed-compute path. Evidence: The overview's managed-compute section explicitly says to use a hub-based project in Foundry classic.",
-          "sourceIds": [
-            "ai103-model-deployment-options"
-          ]
+          "sourceIds": ["ai103-model-deployment-options"]
         },
         {
           "choiceId": "b",
@@ -1024,17 +932,13 @@
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "The selected model is not offered on that route and the workload explicitly deploys weights to VMs. Context check: When the provider offers the selected model through serverless APIs hosted and billed by token usage. Evidence: The deployment comparison contrasts dedicated VM core-hour billing with hosted API input/output billing; provider support determines availability.",
-          "sourceIds": [
-            "ai103-model-deployment-options"
-          ]
+          "sourceIds": ["ai103-model-deployment-options"]
         },
         {
           "choiceId": "d",
           "assessment": "supported",
           "rationale": "Not incorrect: dedicated compute requires that quota and the testing exception is unavailable. Context check: For managed-compute inference without available temporary shared quota for model testing. Evidence: The inference section requires VM quota for specific products and identifies shared testing quota only as an exception for some models.",
-          "sourceIds": [
-            "ai103-model-deployment-options"
-          ]
+          "sourceIds": ["ai103-model-deployment-options"]
         }
       ],
       "checks": {
@@ -1076,25 +980,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "It reverses the documented native-project and compatibility-first resource endpoint assignment. Context check: No sourced context supports the entire reversed arrangement; replacing connection management with model inference changes the option. Evidence: The SDK lists connections as a native project operation and explicitly recommends OpenAI v1 for embeddings/maximum compatibility.",
-          "sourceIds": [
-            "ai103-sdk"
-          ]
+          "sourceIds": ["ai103-sdk"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Not incorrect: each operation is assigned to its documented endpoint responsibility. Context check: When one client manages Foundry-native configuration and another prioritizes the OpenAI-compatible embeddings surface. Evidence: The native client example includes listing connections; the endpoint table assigns embeddings and maximum OpenAI compatibility to /openai/v1.",
-          "sourceIds": [
-            "ai103-sdk"
-          ]
+          "sourceIds": ["ai103-sdk"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "A shared host resource does not expose project connection APIs through OpenAI v1. Context check: No valid context is documented for this pair of operations on v1; two inference-only clients would be a different question. Evidence: The article says a resource exposes multiple endpoints and reserves native project operations for the project client.",
-          "sourceIds": [
-            "ai103-sdk"
-          ]
+          "sourceIds": ["ai103-sdk"]
         }
       ],
       "checks": {
@@ -1136,25 +1034,19 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Not incorrect: it is the documented discounted asynchronous path and global processing is approved. Context check: When large independent jobs do not require interactive responses and their model supports the batch route. Evidence: The deployment-type list identifies Global Batch for large asynchronous jobs at discounted cost.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "It is a general pay-per-token option, not the stated discounted asynchronous priority. Context check: When general global inference needs direct request/response service without reserved throughput. Evidence: Global Standard is described as global pay-per-token for general workloads, contrasting with asynchronous batch.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "Reserved interactive throughput is not the requested discounted asynchronous processing path. Context check: When global processing is approved and predictable high throughput through reserved PTUs is the primary requirement. Evidence: Global Provisioned reserves PTUs for predictable high throughput; batch is the separate asynchronous option.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         }
       ],
       "checks": {
@@ -1196,25 +1088,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "The project name identifies another service scope rather than the named model deployment. Context check: Project names identify project endpoints, but no cited context makes that name the model parameter merely because it contains a deployment. Evidence: The lesson distinguishes endpoint URL from deployment name and assigns the latter to the model parameter.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "The documentation explicitly says inference uses the deployment name, which here differs. Context check: No supported context validates regardless of deployment name; accepting the default name is a narrower, different assertion. Evidence: Deployment settings allow a custom name and state that code uses that deployment name to route requests.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         },
         {
           "choiceId": "c",
           "assessment": "supported",
           "rationale": "Not incorrect: this is the deployment's explicitly configured name. Context check: When calling the configured support-draft deployment through its already working endpoint and authentication. Evidence: Both deployment configuration and programmatic access sections specify the deployment name in model.",
-          "sourceIds": [
-            "ai103-deployment-planning"
-          ]
+          "sourceIds": ["ai103-deployment-planning"]
         }
       ],
       "checks": {
@@ -1256,25 +1142,19 @@
           "choiceId": "a",
           "assessment": "supported",
           "rationale": "Not incorrect: publishing creates the separately callable application resource and endpoint. Context check: When moving a saved project agent to an application endpoint callable by authorized consumers without project membership. Evidence: Publishing creates an Agent Application with its own invocation URL, authentication policy and Entra identity.",
-          "sourceIds": [
-            "ai103-agent-production"
-          ]
+          "sourceIds": ["ai103-agent-production"]
         },
         {
           "choiceId": "b",
           "assessment": "contradicted",
           "rationale": "Saving remains inside the project workspace and does not create the required application endpoint. Context check: When team members need to persist changes for further in-project development and testing. Evidence: The deploying-to-project section defines Save as configuration persistence and says both portal/VS Code approaches remain in the project workspace.",
-          "sourceIds": [
-            "ai103-agent-production"
-          ]
+          "sourceIds": ["ai103-agent-production"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "That deliberately changes the access boundary the scenario requires avoiding. Context check: When the intended consumers participate as authorized project team testers rather than independent application callers. Evidence: The source contrasts team access and testing within a saved project with application endpoints callable without project access.",
-          "sourceIds": [
-            "ai103-agent-production"
-          ]
+          "sourceIds": ["ai103-agent-production"]
         }
       ],
       "checks": {
@@ -1316,25 +1196,19 @@
           "choiceId": "a",
           "assessment": "contradicted",
           "rationale": "The caller already invokes the application; the failing tool uses the agent's target-resource identity. Context check: When the caller needs authorized development/testing access inside the project workspace rather than application invocation. Evidence: Saved project agents are used by project team members, whereas published invocation and target access have separate identity scopes.",
-          "sourceIds": [
-            "ai103-agent-production"
-          ]
+          "sourceIds": ["ai103-agent-production"]
         },
         {
           "choiceId": "b",
           "assessment": "supported",
           "rationale": "Not incorrect: publication creates a distinct identity and prior project permissions do not transfer. Context check: When a published agent's tool needs resources previously authorized only for the project's shared identity. Evidence: The authentication/identity warning explicitly predicts development-success and post-publication tool authorization failures unless roles are reassigned.",
-          "sourceIds": [
-            "ai103-agent-production"
-          ]
+          "sourceIds": ["ai103-agent-production"]
         },
         {
           "choiceId": "c",
           "assessment": "contradicted",
           "rationale": "That restores or maintains project-development access but leaves the published principal unauthorized. Context check: When the tool is still executed in the project using its shared identity and that principal needs target access. Evidence: The publication warning distinguishes the project's shared identity from the newly dedicated one; each needs its own relevant permissions.",
-          "sourceIds": [
-            "ai103-agent-production"
-          ]
+          "sourceIds": ["ai103-agent-production"]
         }
       ],
       "checks": {

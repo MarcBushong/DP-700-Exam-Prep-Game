@@ -615,23 +615,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "Include/exclude strategy recommends including the root for new properties. Include/exclude precedence makes the more specific scalar rating path override the excluded payload subtree."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "An excluded root with selectively included paths can index rating, but new top-level properties remain excluded unless added explicitly. That fails the automatic-inclusion requirement."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "The more precise excluded payload subtree wins over the included root. Without a still more specific rating inclusion, rating remains inside the excluded subtree."
           }
         ]
@@ -661,25 +655,19 @@
               "choiceId": "A",
               "assessment": "supported",
               "rationale": "An included root admits future properties, excluded /payload/* removes its descendants, and the deeper /payload/rating/? inclusion wins for that scalar leaf.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "With an excluded root, only explicitly included descendants are indexed. Rating qualifies, but newly introduced top-level properties do not.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "The payload exclusion is more precise than the included root. Without the narrower rating inclusion, the rating leaf remains excluded with the subtree.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             }
           ],
           "checks": {
@@ -713,9 +701,7 @@
             "claimRepresented": "A broad root inclusion, payload exclusion and more specific rating inclusion satisfy both default and exception requirements.",
             "whyIncorrectInContext": "This is not incorrect here: /* keeps future top-level fields indexed and /payload/rating/? outranks the less precise excluded /payload/* path.",
             "couldBeCorrectWhen": "The indexing policy is opt-out for schema growth but must restore a scalar query field inside one deliberately excluded object.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "Include/exclude strategy recommends included root for future properties; precedence favors deeper paths and /? over /*."
           },
           {
@@ -723,9 +709,7 @@
             "claimRepresented": "An excluded root plus rating inclusion also automatically indexes unspecified new top-level fields.",
             "whyIncorrectInContext": "This is opt-in indexing. It can preserve rating, but unspecified new fields inherit the root exclusion rather than automatic indexing.",
             "couldBeCorrectWhen": "Only a curated allowlist such as rating should receive secondary indexing and newly introduced fields should remain excluded until deliberately added.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "The source explicitly contrasts excluded-root selective inclusion with included-root proactive indexing of new model properties."
           },
           {
@@ -733,9 +717,7 @@
             "claimRepresented": "A root inclusion overrides the more specific excluded payload subtree and keeps rating indexed.",
             "whyIncorrectInContext": "The deeper payload exclusion takes precedence, so rating is removed with the subtree unless a more precise inclusion restores it.",
             "couldBeCorrectWhen": "Every property below payload is intentionally excluded and all other existing/new properties should remain indexed.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "The precedence example excludes an object and restores only a separately included deeper path; without that exception the subtree remains excluded."
           }
         ],
@@ -764,30 +746,22 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "ORDER BY queries on multiple properties requires matching property sequence and direction. This clause exactly matches the existing category/priority composite index."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "The documented composite-index rule requires the same property sequence. Reversing the properties is not the permitted reversal of every sort direction."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "This changes only priority's direction. The product document permits the matching direction set or its complete opposite, not an arbitrary mixture."
           },
           {
             "choiceId": "D",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "The product document explicitly supports the opposite order on all indexed paths. Both directions are reversed while the category/priority property sequence is retained."
           }
         ]
@@ -817,33 +791,25 @@
               "choiceId": "A",
               "assessment": "supported",
               "rationale": "Both property order and direction pattern exactly match the completed composite index, satisfying the documented multi-property ORDER BY rules.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "Putting priority first changes the indexed property sequence. Matching individual directions cannot compensate for a different sequence.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "Changing only priority to ascending is neither the original direction pattern nor its complete reversal.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             },
             {
               "choiceId": "D",
               "assessment": "supported",
               "rationale": "The property sequence stays category then priority and both directions reverse together, a combination the document explicitly supports.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             }
           ],
           "checks": {
@@ -877,9 +843,7 @@
             "claimRepresented": "The existing category-then-priority index supports its declared ascending/descending order.",
             "whyIncorrectInContext": "This is not incorrect here: both the property sequence and each direction match the completed index exactly.",
             "couldBeCorrectWhen": "A multi-property ORDER BY follows category ASC then priority DESC with the corresponding complete composite index.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "ORDER BY queries on multiple properties requires matching paths and directions, with the matching example marked supported."
           },
           {
@@ -887,9 +851,7 @@
             "claimRepresented": "Reversing the property order is the supported reversal of a composite index.",
             "whyIncorrectInContext": "priority first and category second changes the property sequence, which the documented rule does not allow for this existing index.",
             "couldBeCorrectWhen": "A separate composite index is defined with priority before category in the requested directions; the article tells developers to customize indexes for necessary ORDER BY patterns.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "The source marks an age/name query unsupported by a name/age index and says paths must match the query sequence."
           },
           {
@@ -897,9 +859,7 @@
             "claimRepresented": "Only priority's direction may be flipped while category's direction stays unchanged.",
             "whyIncorrectInContext": "The requested pattern is neither the declared ASC/DESC pair nor its complete DESC/ASC opposite.",
             "couldBeCorrectWhen": "The available composite is category ASC, priority ASC, or the complete opposite of that two-column direction set.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "The documentation permits the full direction reversal and explicitly marks a partial reversal unsupported."
           },
           {
@@ -907,9 +867,7 @@
             "claimRepresented": "Reversing both directions while preserving column order remains supported by the same composite.",
             "whyIncorrectInContext": "This is not incorrect here: DESC/ASC reverses every direction of ASC/DESC without changing category-before-priority ordering.",
             "couldBeCorrectWhen": "A query needs the total opposite sort direction for every path in an existing completed composite index.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "The source states the same composite supports ORDER BY with opposite order on all paths; property sequence remains mandatory."
           }
         ],
@@ -938,23 +896,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "Indexing mode None is suited to a pure key-value store without secondary-index needs. This service still queries status and createdAt, so disabling all indexing discards required query support."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "Composite indexes address supported scalar filter/order patterns. rawTrace is not queried and is an object subtree, so adding this index does not remove its unnecessary indexing work."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "summary": "Including and excluding property paths states that reducing indexed paths can lower write latency and RU charge. Excluding the unused subtree preserves the actual query fields."
           }
         ]
@@ -984,25 +936,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "None removes secondary-index support throughout the container, including the metadata paths the service still uses. It is broader than the requested removal of useless work.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "A composite entry leading to an object is not a useful scalar rawTrace index, and adding it does not remove maintenance of the unqueried subtree.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             },
             {
               "choiceId": "C",
               "assessment": "supported",
               "rationale": "Selective exclusion removes index entries for the large object while retaining the metadata paths that answer the actual filters and sorts.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-indexing"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-indexing"]
             }
           ],
           "checks": {
@@ -1036,9 +982,7 @@
             "claimRepresented": "Disabling every secondary index removes unused trace work without sacrificing useful metadata-query paths.",
             "whyIncorrectInContext": "It also removes the useful status/createdAt indexing that the workload explicitly needs. A reduction in write-index work alone is not the full requirement.",
             "couldBeCorrectWhen": "The container is a pure key-value store with no secondary-index queries, or a deliberately managed bulk-load interval will later restore indexing.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "Indexing mode None is documented for pure key-value or bulk operations; selective path exclusion is separately documented as reducing write cost."
           },
           {
@@ -1046,9 +990,7 @@
             "claimRepresented": "Adding a rawTrace/status composite removes unnecessary indexing of a never-queried object.",
             "whyIncorrectInContext": "Adding a composite does not remove the object's existing indexed subtree, and rawTrace is nonscalar rather than a useful composite comparison value.",
             "couldBeCorrectWhen": "A composite over actual scalar query/filter/order fields can improve supported workloads. The source does not supply a useful context for indexing this never-queried object path as written; treating rawTrace as a scalar would change the scenario.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "Composite paths lead to scalar values; nonscalar paths receive an undefined marker. The source's useful composites serve multi-property filters or ORDER BY, not unused object payloads."
           },
           {
@@ -1056,9 +998,7 @@
             "claimRepresented": "Remove the unused rawTrace subtree from secondary indexing while retaining metadata indexes.",
             "whyIncorrectInContext": "This is not incorrect here: the trace only needs direct item retrieval, while status and createdAt still need indexed queries.",
             "couldBeCorrectWhen": "An object subtree is stored/read with its item but never participates in secondary-index filtering or sorting, unlike other metadata fields.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-indexing"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-indexing"],
             "evidenceSummary": "The document defines /* subtree exclusion and says optimizing indexed paths can reduce write latency and RU charges without requiring container-wide None."
           }
         ],
@@ -1087,23 +1027,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-consistency"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-consistency"],
             "summary": "Session consistency describes cached partition-bound tokens and explains that reads without a token behave as Eventual for that partition. The account setting alone does not transport A's write barrier to B."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-consistency"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-consistency"],
             "summary": "Session consistency documents token sharing and requires the token generated for the relevant partition to preserve read-your-writes. This transfers the required minimum-version barrier."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-consistency"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-consistency"],
             "summary": "The documented tokens are partition-bound. A token from an unrelated partition does not express the version barrier for the document written through A."
           }
         ]
@@ -1133,25 +1067,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "A Session account does not transfer A's token cache to B. The document says reads without the partition token behave as eventual, so the caller's write barrier is missing.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-consistency"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-consistency"]
             },
             {
               "choiceId": "B",
               "assessment": "supported",
               "rationale": "Passing the relevant write's session token gives B the partition-bound minimum-version barrier needed for the subsequent point read.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-consistency"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-consistency"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "A token for another partition represents a different progress boundary. It cannot substitute for the token corresponding to this caller's written item.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-consistency"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-consistency"]
             }
           ],
           "checks": {
@@ -1185,9 +1113,7 @@
             "claimRepresented": "An account's Session setting alone transports a writer's read-your-writes barrier to a different client instance.",
             "whyIncorrectInContext": "B has no token for the relevant partition. The account default does not carry A's cached session barrier to B.",
             "couldBeCorrectWhen": "The application does not require this caller's cross-instance read-your-writes guarantee and accepts the documented eventual behavior of tokenless reads.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-consistency"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-consistency"],
             "evidenceSummary": "Session consistency explicitly says tokenless reads for a partition behave as Eventual; cached tokens are client state rather than account-global session state."
           },
           {
@@ -1195,9 +1121,7 @@
             "claimRepresented": "Carry the relevant write's session token to establish B's minimum version barrier.",
             "whyIncorrectInContext": "This is not incorrect here: using the relevant unmodified token preserves the caller's session boundary even though another API instance issues the read.",
             "couldBeCorrectWhen": "A caller's subsequent read is served by a new client that lacks the write's partition-bound session token.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-consistency"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-consistency"],
             "evidenceSummary": "The document describes receiving/caching tokens after writes, using the relevant last token for read-your-writes, and not modifying tokens passed between clients."
           },
           {
@@ -1205,9 +1129,7 @@
             "claimRepresented": "A token from an unrelated partition can establish the required document's write barrier.",
             "whyIncorrectInContext": "Session tokens are partition-bound. Acquiring state for another partition supplies no version barrier for the document written through A.",
             "couldBeCorrectWhen": "That other partition itself is the subject of subsequent session-consistent reads; a token has relevance within its associated partition, not to this document's partition.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-consistency"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-consistency"],
             "evidenceSummary": "Session Tokens are exclusively associated with one partition, and the documented instruction is to use the token last generated for the relevant items."
           }
         ],
@@ -1236,23 +1158,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "Container vector policies identifies the actual vector property path, and the product document excludes wildcard paths in vector policies. A scalar vector property uses /embedding rather than /embedding/*."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "The vector policy's dimensions describe the length of vectors at that path. Using a common default from another model does not describe this model's specified 384-component output."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "Container vector policies requires the path, data type, dimensionality and metric. This entry matches every stated characteristic without using a wildcard or a different model's length."
           }
         ]
@@ -1282,25 +1198,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "A vector policy cannot use the /* wildcard. It must name the actual vector-valued property, not a descendant wildcard expansion.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "The model emits 384 components, so a 1536-dimensional policy does not describe the vectors stipulated in the stem.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             },
             {
               "choiceId": "C",
               "assessment": "supported",
               "rationale": "For a top-level vector-valued /embedding property, float32, dimensions 384 and cosine match the stated model. This is the intended policy entry, but it does not make a vector a JSON scalar.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             }
           ],
           "checks": {
@@ -1334,9 +1244,7 @@
             "claimRepresented": "The vector policy may use /embedding/* for a 384-element embedding.",
             "whyIncorrectInContext": "The source explicitly prohibits wildcards in a vector policy; the vector property path is /embedding. The explanation's phrase 'scalar vector property' introduces a separate terminology error.",
             "couldBeCorrectWhen": "The same product article uses a wildcard path in ordinary indexing excludedPaths to omit vector elements from the ordinary index. That background does not make this exact vector-policy entry valid; moving it to excludedPaths would change the option.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "Vector index examples show /vector1/* only under excludedPaths and /vector1 for vectorIndexes. The following Important paragraph disallows * and [] in vector policy/index paths."
           },
           {
@@ -1344,9 +1252,7 @@
             "claimRepresented": "A 1536-dimensional policy describes a model that emits exactly 384 components.",
             "whyIncorrectInContext": "The declared length conflicts with the provided model output; the common default cannot replace an explicitly known dimension count.",
             "couldBeCorrectWhen": "The vector-valued property actually contains 1536-component float32 vectors produced for cosine comparison.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "The dimensions field is defined as each vector's length; the source's single-vector example uses 1536 for an example path, not as a universal size."
           },
           {
@@ -1354,9 +1260,7 @@
             "claimRepresented": "An ordinary vector-valued /embedding property with 384 float32 components and cosine metric matches this policy.",
             "whyIncorrectInContext": "The proposed policy is not incorrect for the intended vector-valued property. It is not fully defensible against the literal 'scalar document property' wording, which cannot simultaneously contain the described 384-component embedding.",
             "couldBeCorrectWhen": "The stem describes a vector-valued JSON property, not a scalar JSON value, whose actual type, length and model metric are the ones in C.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "The article defines vectors in document properties and policy length/type/metric fields. It does not equate a multidimensional vector with a scalar value."
           }
         ],
@@ -1385,23 +1289,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "Vector indexing policies describes flat as brute-force exact search with 100% recall and a 505-dimension limit. The 384-dimensional benchmark is within that documented limit."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "The document describes quantizedFlat as brute-force search over compressed vectors. Quantization can lose accuracy, so exhaustive enumeration does not satisfy the unqualified exact-recall requirement here."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "Approximate search and result determinism states that diskANN trades some recall for performance and may not return exact top-K matches. That conflicts with the benchmark's required recall contract."
           }
         ]
@@ -1431,25 +1329,19 @@
               "choiceId": "A",
               "assessment": "supported",
               "rationale": "The 384-dimensional vectors fit flat's 505-dimension limit. The product explicitly recommends flat for an exact result contract rather than an approximate or quantized ranking.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "As an index choice guaranteeing original-vector recall, quantizedFlat is unsuitable: its normal indexed search compresses vectors and may alter ranking. A small-data scan fallback is not that index's general exactness contract.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "diskANN is documented to favor efficient high recall rather than guaranteed exact top-K. It is not the documented exact-search choice even though some requests can fall back to a scan.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             }
           ],
           "checks": {
@@ -1483,9 +1375,7 @@
             "claimRepresented": "A flat vector index is the documented exact-recall choice for supported small vectors.",
             "whyIncorrectInContext": "This is not incorrect here: 384 is below the flat limit and the source explicitly recommends flat when exact results are required.",
             "couldBeCorrectWhen": "An exact brute-force retrieval contract matters more than approximate-index performance and the dimension count is at most 505.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "Vector indexing policies describes flat as brute-force with 100% recall, and Approximate search and result determinism explicitly recommends flat for exact results."
           },
           {
@@ -1493,9 +1383,7 @@
             "claimRepresented": "Selecting quantizedFlat necessarily introduces quantization error in this unspecified small benchmark.",
             "whyIncorrectInContext": "Once a quantized index is used, its compressed comparisons need not preserve original-vector recall. But the stem never establishes the 1000-vector minimum; the documented full-scan fallback leaves the blanket rejection unproven for this small collection.",
             "couldBeCorrectWhen": "Quantization's accuracy tradeoff is acceptable for performance, or a below-1000-vector configuration is in the documented full-scan fallback rather than using the quantized index. The latter is a live unexcluded challenge here.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "The source both warns of quantization accuracy loss and states that fewer than 1000 vectors result in a full scan instead; neither passage may be ignored."
           },
           {
@@ -1503,9 +1391,7 @@
             "claimRepresented": "Selecting diskANN necessarily runs approximate indexed search for every small collection.",
             "whyIncorrectInContext": "Active DiskANN sacrifices the exact top-K guarantee, but the same below-1000 full-scan fallback prevents asserting that this unquantified benchmark necessarily takes that approximate path.",
             "couldBeCorrectWhen": "A populated large collection accepts an ANN recall/latency tradeoff, or a small configured collection is below the documented indexing threshold and falls back to a scan.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "Approximate search describes DiskANN's non-guaranteed top-K behavior; Current limitations separately mandates full scanning when fewer than 1000 vectors are indexed."
           }
         ],
@@ -1534,23 +1420,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "The policy document defines Euclidean values as zero for most similar and increasing for less similar. DESC puts larger distances first even though TOP bounds the count."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "Container vector policies defines smaller Euclidean distances as closer, and the VectorDistance query section recommends TOP N. Ascending distance plus TOP 6 satisfies both requirements."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "summary": "Ascending Euclidean distance gives the correct direction, but the query section warns that omitting TOP requests more results and work. This shape does not express the six-record bound."
           }
         ]
@@ -1580,25 +1460,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "Euclidean values increase as vectors become less similar. DESC therefore places more distant matches first, even though TOP 6 caps output.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             },
             {
               "choiceId": "B",
               "assessment": "supported",
               "rationale": "Ascending Euclidean VectorDistance puts the smallest distances first and TOP 6 expresses the maximum six-record request.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "The ordering is suitable, but omitting TOP leaves the requested maximum result count unspecified and conflicts with the product's vector-query guidance.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-vector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-vector"]
             }
           ],
           "checks": {
@@ -1632,9 +1506,7 @@
             "claimRepresented": "Descending Euclidean distance puts the closest six matches first.",
             "whyIncorrectInContext": "TOP 6 limits rows, but DESC puts larger Euclidean distances before smaller ones and thus reverses the requested closeness order.",
             "couldBeCorrectWhen": "The task intentionally wants the six farthest candidates under the same Euclidean distance definition, such as inspecting dissimilar items.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "The source defines zero as most similar and increasing Euclidean values as less similar; reversing that order selects dissimilar rather than nearest items."
           },
           {
@@ -1642,9 +1514,7 @@
             "claimRepresented": "TOP 6 and ascending Euclidean VectorDistance jointly express the closest-first bounded request.",
             "whyIncorrectInContext": "This is not incorrect here: ASC puts the minimum distances first, and TOP expresses the required at-most-six result bound.",
             "couldBeCorrectWhen": "The container vector metric is Euclidean and the request asks for up to six nearest records rather than an unbounded ordered list.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "The metric table gives Euclidean ordering, and the query section demonstrates TOP with ORDER BY VectorDistance and recommends bounding vector requests."
           },
           {
@@ -1652,9 +1522,7 @@
             "claimRepresented": "Ascending VectorDistance without TOP expresses both nearest-first order and the six-row limit.",
             "whyIncorrectInContext": "The order is correct, but the SQL request has no six-row bound; relying on an unstated client-side stop would not express that bound in this query shape.",
             "couldBeCorrectWhen": "An application deliberately requests an unbounded ordered result rather than a fixed top-K, accepting the source's warning about more work and higher RU/latency.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-vector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-vector"],
             "evidenceSummary": "The product explicitly warns that omitting TOP makes vector search try to return many more results, distinguishing absence of a bound from the requested TOP N."
           }
         ],
@@ -1843,23 +1711,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Deployment unit and Dynamic scaling define these exact three requirements. Matching workload identity and lease state coordinates ownership, while unique instance names identify the participating workers."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "The document describes distinct processor names as separate deployment units for different business flows. They receive the feed independently rather than dividing this one intended workload."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Dynamic scaling requires shared lease-container configuration and different instance names. Separate lease stores cannot coordinate the intended ownership distribution, and reused host names break the stated requirement."
           }
         ]
@@ -1889,25 +1751,19 @@
               "choiceId": "A",
               "assessment": "supported",
               "rationale": "The .NET Deployment unit and Dynamic scaling sections define one workload by shared processorName and lease configuration with a distinct WithInstanceName for each worker.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "Different processor names create independent deployment units and independent progress, which delivers the business flow separately rather than dividing this workload.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "Different lease stores cannot coordinate ownership, and the repeated instance name violates the documented unique-worker identity requirement.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             }
           ],
           "checks": {
@@ -1941,9 +1797,7 @@
             "claimRepresented": "Shared processor identity and lease storage plus distinct worker identities create one distributed processor unit.",
             "whyIncorrectInContext": "This is not incorrect here: these are the documented three conditions for sharing lease ownership rather than independently consuming the feed.",
             "couldBeCorrectWhen": "Multiple running .NET workers process the same monitored workload and should divide its leases within a single deployment unit.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "Dynamic scaling explicitly lists same lease configuration, same processorName, and different instance names as the distribution requirements."
           },
           {
@@ -1951,9 +1805,7 @@
             "claimRepresented": "Different processor names make workers divide one feed workload simply because they use the same lease container.",
             "whyIncorrectInContext": "Distinct processor names establish independent business-flow deployment units, so shared physical storage does not merge their progress.",
             "couldBeCorrectWhen": "Two separate consumers must independently process the same changes for different business purposes while sharing a lease container.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "Deployment unit gives independent external-API and data-movement examples; Share the lease container says different processorName values maintain independent state."
           },
           {
@@ -1961,9 +1813,7 @@
             "claimRepresented": "Separate lease stores and a reused instance name provide shared ownership coordination.",
             "whyIncorrectInContext": "The workers do not share the state needed to coordinate this workload, and repeated instance names violate the stated configuration for one shared unit.",
             "couldBeCorrectWhen": "Isolated independent processor deployments keep separate lease stores. A name reused across isolated deployments does not itself create shared state, but this is not the requested one-unit distribution.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "Components identifies the lease container as state/coordination storage; Deployment unit and Dynamic scaling distinguish independent configurations from workers sharing one unit."
           }
         ],
@@ -1992,23 +1842,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Supported SDKs explicitly marks Python and Node.js unsupported for the processor library and directs them to the pull model with manual checkpoint management."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Java is supported, but Python is not part of the processor library's supported pair. A Python pull reader is not equivalent to the requested library-managed processor."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "The actual processor product document names .NET V3 and Java V4 and marks both as supported in its SDK table. This is the supported library choice for the stated worker design."
           }
         ]
@@ -2038,25 +1882,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "Both Python and Node.js are marked unsupported in the processor library table; their pull model leaves checkpoint management to the application.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "Java qualifies but Python does not, so this pair does not meet the requirement that both runtimes support the specified library.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             },
             {
               "choiceId": "C",
               "assessment": "supported",
               "rationale": "The Supported SDKs table marks .NET V3 and Java as the processor-library implementations, providing distributed leases and checkpoints.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             }
           ],
           "checks": {
@@ -2090,9 +1928,7 @@
             "claimRepresented": "Python and Node.js both offer the SDK processor library's managed distributed leases/checkpoints.",
             "whyIncorrectInContext": "Both entries are unsupported for that library in the source's table; a pull reader is not the requested standalone managed processor.",
             "couldBeCorrectWhen": "The team intentionally chooses the change feed pull model and accepts manual checkpoint management in Python or Node.js.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "Supported SDKs explicitly directs these two languages to the pull model, explaining the valid alternative while denying processor-library support."
           },
           {
@@ -2100,9 +1936,7 @@
             "claimRepresented": "Python and Java form an entirely supported processor-library pair.",
             "whyIncorrectInContext": "Java is supported but Python is not, so the complete pair fails even though one language is correct.",
             "couldBeCorrectWhen": "A system permits different consumption contracts: Java uses the processor library while Python uses the documented pull reader with manual checkpointing.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "The table supports Java and the adjoining paragraph provides Python's pull alternative; it does not say that alternative inherits processor-managed checkpoints."
           },
           {
@@ -2110,9 +1944,7 @@
             "claimRepresented": ".NET and Java are the documented supported SDK processor runtimes.",
             "whyIncorrectInContext": "This is not incorrect here: the requested library, standalone hosting and managed processing responsibilities match the two supported languages.",
             "couldBeCorrectWhen": "A standalone worker requires the SDK change feed processor rather than a language-specific pull reader or Azure Functions trigger.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "The opening identifies .NET V3 and Java V4 SDKs, and the Supported SDKs table marks .NET and Java as supported."
           }
         ],
@@ -2141,23 +1973,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Error handling documents redelivery from the last saved checkpoint. An unconditional append with a fresh identity turns this legitimate repeat delivery into another side effect rather than safely repeating the refresh."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "The processor guarantees at-least-once delivery and checkpoints after successful delegate completion. Its asynchronous-processing warning requires completion tracking; a repeat-safe target operation tolerates the documented replay window."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "The product document warns that a delegate can be checkpointed before untracked asynchronous work finishes. Early success can lose work on recovery instead of making repeated delivery safe."
           }
         ]
@@ -2187,25 +2013,19 @@
               "choiceId": "A",
               "assessment": "contradicted",
               "rationale": "The processor may replay the batch from the saved checkpoint. Assigning a new output identity on every delivery turns the documented retry into an additional external result.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             },
             {
               "choiceId": "B",
               "assessment": "supported",
               "rationale": "A repeat-safe source item/version operation tolerates replay, while awaiting completion before successful return aligns the external work with the checkpoint boundary.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "The document warns that returning while untracked asynchronous work is still running allows checkpointing before that work completes, risking missed processing after recovery.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             }
           ],
           "checks": {
@@ -2239,9 +2059,7 @@
             "claimRepresented": "A new external identity on every delivery safely handles replay after a side effect succeeded.",
             "whyIncorrectInContext": "The retry creates another record instead of repeating the intended source-item/version refresh, turning legitimate redelivery into duplicate side effects.",
             "couldBeCorrectWhen": "The output intentionally records each delivery attempt separately, rather than representing one refreshed embedding per source item/version; the documented at-least-once behavior explains why delivery-attempt logs may contain repeated events.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "Error handling documents redelivery from saved lease state. It does not guarantee exactly one callback, so a per-delivery append has different semantics from a repeat-safe refresh."
           },
           {
@@ -2249,9 +2067,7 @@
             "claimRepresented": "Repeat-safe external work and awaited completion protect the side-effect/checkpoint boundary.",
             "whyIncorrectInContext": "This is not incorrect here: the same item/version may be delivered again, and the delegate must not signal successful completion while required external work is unfinished.",
             "couldBeCorrectWhen": "An at-least-once processor writes to a separate destination that cannot be atomically committed with its lease checkpoint.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "The processing lifecycle updates leases only after successful delegate completion; retry and asynchronous-completion warnings require treating duplicate delivery and early return deliberately."
           },
           {
@@ -2259,9 +2075,7 @@
             "claimRepresented": "Returning immediately while untracked embedding writes run prevents replay or loss.",
             "whyIncorrectInContext": "The processor can checkpoint before required work finishes, so a crash can leave a checkpoint past an embedding that was never updated.",
             "couldBeCorrectWhen": "The background work is explicitly optional and loss is acceptable. The source's missed-event warning supplies that limited boundary; no sourced context makes untracked required embedding writes reliable.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "The Important warning says asynchronous delegate work can be checkpointed before completion and cause missed events, recommending synchronous processing or proper completion tracking."
           }
         ],
@@ -2290,23 +2104,17 @@
         "claims": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Starting time explicitly says customization only sets the initial starting point and has no effect after the lease container is initialized. Existing progress controls this restart."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Reading from a previous date and time documents WithStartTime for latest-version mode. Earlier dates are supported when establishing a new starting state, unlike this initialized deployment."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "The processor uses lease state to resume; Reading from the beginning is an explicit initial-start configuration. Full replay is not the normal restart behavior."
           }
         ]
@@ -2336,25 +2144,19 @@
               "choiceId": "A",
               "assessment": "supported",
               "rationale": "The .NET Starting time note explicitly says start options only establish the initial position and have no effect after the lease container is initialized.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             },
             {
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "WithStartTime can initialize latest-version processing at an earlier time. The restriction here is existing lease state, not a ban on historical starts.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "Saved leases represent progress for resumption. Reading from the beginning is a deliberate initial configuration, not an automatic action on every restart.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ]
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
             }
           ],
           "checks": {
@@ -2388,9 +2190,7 @@
             "claimRepresented": "WithStartTime initializes a starting state and does not rewind initialized leases.",
             "whyIncorrectInContext": "This is not incorrect here: the deployment and leases are unchanged and already contain saved progress.",
             "couldBeCorrectWhen": "The same .NET latest-version processor is restarted with initialized leases after an initial-position setting is edited.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "The note after the .NET start-time examples explicitly says these options only set the starting point and changes have no effect after first lease initialization."
           },
           {
@@ -2398,9 +2198,7 @@
             "claimRepresented": "Latest-version mode never supports a historical initial start date.",
             "whyIncorrectInContext": "The document demonstrates WithStartTime with a previous DateTime for that mode. Ignoring an edit after initialization is not a universal ban on earlier dates.",
             "couldBeCorrectWhen": "The documented nearby restriction is all-versions-and-deletes mode, which starts now or resumes retained lease state. It does not make B's literal claim about latest-version on every deployment correct; changing the mode would rewrite its assertion.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "The article contrasts latest-version custom starts with all-versions-and-deletes restrictions, disproving the absolute statement in B."
           },
           {
@@ -2408,9 +2206,7 @@
             "claimRepresented": "Every ordinary restart reprocesses full history before resuming saved leases.",
             "whyIncorrectInContext": "Stored progress is the resume point; full historical starting position is an explicit initialization choice, not automatic restart behavior.",
             "couldBeCorrectWhen": "A deliberately new latest-version workload initializes its start with DateTime.MinValue.ToUniversalTime(). That documents a from-beginning workflow, not this exact automatic-every-restart claim.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "evidenceSummary": "Reading from the beginning gives an explicit builder setting, while the processing/error lifecycle resumes from the lease's saved progress."
           }
         ],
@@ -3207,16 +3003,12 @@
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "HNSW query options describes ef_search as search candidate-list tuning. It does not supply the missing column dimensions required during index creation."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "summary": "The product document's dimensionality requirement applies to indexing the column, including IVFFlat. Switching ANN algorithms does not repair the schema declaration."
           }
         ]
@@ -3263,17 +3055,13 @@
               "choiceId": "B",
               "assessment": "contradicted",
               "rationale": "ef_search changes HNSW search exploration after an index exists. It does not provide the missing vector-column dimension needed to build the index.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             },
             {
               "choiceId": "C",
               "assessment": "contradicted",
               "rationale": "IVFFlat is another approximate vector index and retains the documented explicit-dimension requirement. Changing its name leaves the schema defect.",
-              "sourceIds": [
-                "ai200-20260914-doc-postgres-pgvector"
-              ]
+              "sourceIds": ["ai200-20260914-doc-postgres-pgvector"]
             }
           ],
           "checks": {
@@ -3318,9 +3106,7 @@
             "claimRepresented": "Increasing a query-time HNSW candidate-list parameter supplies missing schema dimensions.",
             "whyIncorrectInContext": "ef_search affects searching an existing usable HNSW index; it does not change the vector column type or repair index creation.",
             "couldBeCorrectWhen": "A correctly dimensioned HNSW index already exists and query recall warrants considering more search candidates at higher query cost.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "HNSW Index options defines ef_search during queries and illustrates connection/transaction settings separately from the dimensionality limit."
           },
           {
@@ -3328,9 +3114,7 @@
             "claimRepresented": "Switching from HNSW to IVFFlat removes the explicit-dimension requirement.",
             "whyIncorrectInContext": "The missing-dimensions rule applies to indexing the column, not only to HNSW. Keeping the dimensionless column retains the reported cause.",
             "couldBeCorrectWhen": "The schema is already valid and the workload prefers IVFFlat's faster builds/lower memory over HNSW's speed-recall tradeoff; that is an algorithm choice, not this schema fix.",
-            "sourceIds": [
-              "ai200-20260914-doc-postgres-pgvector"
-            ],
+            "sourceIds": ["ai200-20260914-doc-postgres-pgvector"],
             "evidenceSummary": "The product distinguishes IVFFlat/HNSW tradeoffs but introduces dimensionality under the shared Indexing Limits section."
           }
         ],

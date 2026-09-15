@@ -11,23 +11,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "The function-calling article defines a function tool through its name, description, and parameters; the Python prompt-agent example registers that definition in the agent tools."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "A function_call_output supplies the result of an already requested call. It is not the declaration of a callable function or its input contract."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "The prompt-agent definition has separate instructions and tools. Instructions guide behavior; function definitions in tools expose the application capability and its parameters."
           }
         ]
@@ -57,25 +51,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The declaration at doc-018 lines 76-102 supplies a name, description and JSON parameter contract before any request.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The later FunctionCallOutput at lines 120-126 is correlated runtime data after execution, not a definition the model can select.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "PromptAgentDefinition passes instructions and tools separately; descriptive prose alone does not register the callable interface.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             }
           ],
           "checks": {
@@ -109,9 +97,7 @@
             "claimRepresented": "Register a callable stock capability using its name, description and input schema.",
             "whyIncorrectInContext": "Not incorrect here: this is registration before any requested stock call, and the declaration exposes both purpose and inputs.",
             "couldBeCorrectWhen": "This definition is appropriate when application code implements the function and the prompt agent must discover how to request it.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "Function-calling lines 42-46 and 76-102 distinguish declaration from execution and return."
           },
           {
@@ -119,9 +105,7 @@
             "claimRepresented": "Use a previously returned stock value as the callable registration.",
             "whyIncorrectInContext": "A past result supplies runtime data but does not define the accepted input fields or callable purpose.",
             "couldBeCorrectWhen": "A function-call output is appropriate after executing a requested stock lookup, correlated with that request; it is not a registration.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "The Python result item at 120-134 is submitted only after execution, separately from FunctionTool."
           },
           {
@@ -129,9 +113,7 @@
             "claimRepresented": "Describe the requested lookup in instructions instead of registering its tool.",
             "whyIncorrectInContext": "Instructions can request behavior but the source gives tools a separate declaration; prose does not publish the function contract.",
             "couldBeCorrectWhen": "Natural-language instructions are appropriate for telling an already configured agent when to use its registered function.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "PromptAgentDefinition supplies distinct instructions and tools at 98-102; the model then requests the registered operation."
           }
         ],
@@ -160,30 +142,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "function_call represents the model request. The documented application submission is function_call_output, rather than another request containing the result."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "In the Python prompt-agent sample, FunctionCallOutput has type function_call_output, call_id=item.call_id, and output containing the function result, then is submitted in the same conversation."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "The source correlates output with item.call_id, not the agent version. The agent reference identifies the agent and cannot identify the particular requested function call."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "FunctionTool parameters describe accepted input. Updating that declaration does not submit a function result to an outstanding call; the runtime sample submits FunctionCallOutput."
           }
         ]
@@ -213,33 +187,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "function_call is the received request type at line 115; the follow-up input is a different function_call_output type.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "Lines 122-125 set type=function_call_output, call_id=item.call_id and the actual result, followed by same-conversation submission.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The sample copies the requested call identifier, not agent.version; an agent version selects configuration and cannot correlate an individual invocation.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "FunctionTool.parameters describes input before creation; changing that schema is not the documented submission of a pending result.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             }
           ],
           "checks": {
@@ -273,9 +239,7 @@
             "claimRepresented": "Return the business result in a new function_call request item.",
             "whyIncorrectInContext": "The sample submits a function_call_output; function_call is the incoming model request and its name does not change that direction.",
             "couldBeCorrectWhen": "A function_call is correct when describing a model request before execution. No cited context makes the literal result-containing request item the correct return mechanism.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "Lines 114-126 distinguish requested name/arguments from the returned output item."
           },
           {
@@ -283,9 +247,7 @@
             "claimRepresented": "Return function_call_output with the original request call_id.",
             "whyIncorrectInContext": "Not incorrect here: the application already executed the function and retains both conversation and agent reference.",
             "couldBeCorrectWhen": "It is correct when the result corresponds to that particular requested function call and is returned before continuing the model turn.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "The Python sample explicitly sets type=function_call_output, call_id=item.call_id and output, then retains conversation.id."
           },
           {
@@ -293,9 +255,7 @@
             "claimRepresented": "Use the agent version identifier as the function-result call identifier.",
             "whyIncorrectInContext": "An agent version identifies configuration, not the outstanding invocation; the sample uses the call item identifier.",
             "couldBeCorrectWhen": "An agent version is appropriate for selecting or deleting a versioned agent. No documented context authorizes substituting it for call_id; accidental identifier equality is not evidence.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "The example deletes using agent.version at 139 but submits item.call_id at 124, demonstrating distinct identifiers."
           },
           {
@@ -303,9 +263,7 @@
             "claimRepresented": "Store returned result data in replacement FunctionTool parameters.",
             "whyIncorrectInContext": "The schema describes inputs and is not an outstanding-call result submission.",
             "couldBeCorrectWhen": "Updating a parameter schema is appropriate when changing the callable input contract, not when delivering this runtime value; no cited example supports the literal proposed result storage.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "The parameter schema at 79-89 precedes execution; the output field at 125 carries the result."
           }
         ],
@@ -334,24 +292,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "The function sample uses a conversation ID separately from its agent reference. Fixing the agent version does not connect a newly created conversation to the previous tool result."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-responses-state",
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-responses-state", "ai103-function-calling"],
             "summary": "Instructions steer behavior, whereas a conversation or explicit response history carries earlier messages and results. Repeating instructions does not supply the missing tool result."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "summary": "The prompt-agent example creates a conversation once and uses conversation.id for both the initial prompt and the function-output continuation, independently of the agent reference."
           }
         ]
@@ -389,26 +340,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The sample uses agent_reference and conversation.id independently; keeping a version does not move old messages into a newly created conversation.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Instructions provide behavior while conversation/history carries earlier results. The Responses lesson repeats instructions and also links prior state.",
-              "sourceIds": [
-                "ai103-function-calling",
-                "ai103-responses-state"
-              ]
+              "sourceIds": ["ai103-function-calling", "ai103-responses-state"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "Lines 74,108 and 132 create one conversation and reuse its ID for prompt and tool-output continuation.",
-              "sourceIds": [
-                "ai103-function-calling"
-              ]
+              "sourceIds": ["ai103-function-calling"]
             }
           ],
           "checks": {
@@ -442,9 +386,7 @@
             "claimRepresented": "Pin the agent version while creating a new conversation for every turn.",
             "whyIncorrectInContext": "Version stability does not carry the old conversation messages into the newly created history container.",
             "couldBeCorrectWhen": "A new conversation is appropriate for an independent interaction using the same agent configuration; it is not continuation of this shipment exchange.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "Function sample lines 96-109 separate agent reference from conversation; lines 129-134 reuse the existing conversation."
           },
           {
@@ -452,10 +394,7 @@
             "claimRepresented": "Repeat agent instructions in each new conversation as the history repair.",
             "whyIncorrectInContext": "Instructions specify behavior, not the earlier tool result, so the stated new request still lacks the previous data.",
             "couldBeCorrectWhen": "Repeating instructions can guide an independent request or accompany explicit history replay, which the stem does not do.",
-            "sourceIds": [
-              "ai103-function-calling",
-              "ai103-responses-state"
-            ],
+            "sourceIds": ["ai103-function-calling", "ai103-responses-state"],
             "evidenceSummary": "Responses-state lines 124-145 include instructions together with previous_response_id; lines 197-246 demonstrate actual history replay."
           },
           {
@@ -463,9 +402,7 @@
             "claimRepresented": "Retain the interaction conversation ID across follow-ups and tool results.",
             "whyIncorrectInContext": "Not incorrect here: the problem was creating fresh conversations, and the project prompt-agent pattern explicitly reuses conversation.id.",
             "couldBeCorrectWhen": "This is supported for the project conversation pattern in the stem, without claiming it applies to every published endpoint.",
-            "sourceIds": [
-              "ai103-function-calling"
-            ],
+            "sourceIds": ["ai103-function-calling"],
             "evidenceSummary": "Function-calling lines 73-74, 108 and 132 use one conversation through request and result."
           }
         ],
@@ -494,30 +431,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "Approval and exposure are different controls. Requiring approval does not remove delete_stock from the exposed tool set; allowed_tools is the documented exposure restriction."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "The project connection authenticates server access. It does not represent the required human approval; require_approval=never bypasses that interaction."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "server_label identifies the server, but the documented continuation submits approval_request_id=item.id and previous_response_id=response.id to identify the particular request and response."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "allowed_tools restricts tool exposure, require_approval=always requests approval, and the prompt-agent example submits mcp_approval_response with approval_request_id while continuing with previous_response_id."
           }
         ]
@@ -547,33 +476,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Approval gates execution but allowed_tools separately restricts exposure; exposing delete_stock violates the expressly required subset.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "require_approval=never explicitly skips approval. Stored connection authentication cannot stand in for a human decision about that invocation.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "server_label labels a server, whereas McpApprovalResponse requires the approval item ID and the follow-up uses response.id.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "An allowed subset plus require_approval=always covers exposure and consent; approval_request_id=item.id and previous_response_id=response.id bind the decision.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             }
           ],
           "checks": {
@@ -607,9 +528,7 @@
             "claimRepresented": "Expose every server tool but require and correlate approvals.",
             "whyIncorrectInContext": "Approval does not hide delete_stock, so the configuration violates the explicit exposure limit.",
             "couldBeCorrectWhen": "Exposing all tools with per-call approval is appropriate only when all server tools may be offered; allowed_tools omission defaults to all.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "MCP lines 1376-1379 independently define exposure and approval, so an approval gate cannot stand in for an allowlist."
           },
           {
@@ -617,9 +536,7 @@
             "claimRepresented": "Allow only permitted tools but replace human approval with connection authentication.",
             "whyIncorrectInContext": "A successful connection authenticates access, while require_approval=never removes the human decision required here.",
             "couldBeCorrectWhen": "The never setting is documented for calls whose policy requires no approval; stored authentication can still be used, but it is not itself human consent.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "Lines 1377-1383 define never and stored connection details as independent settings."
           },
           {
@@ -627,9 +544,7 @@
             "claimRepresented": "Identify each approval decision using only the server label.",
             "whyIncorrectInContext": "One server can emit multiple requests; its label cannot replace approval_request_id and originating response correlation.",
             "couldBeCorrectWhen": "server_label is correct for identifying which server to configure or inspect. No cited correct approval-response context uses only that label, so the complete literal alternative lacks a counterexample.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "Lines 1374-1384 name the server identifier and request output; the Python return at 336-348 uses item.id and response.id."
           },
           {
@@ -637,9 +552,7 @@
             "claimRepresented": "Combine a two-tool allowlist, approval on every permitted call and exact request/response IDs.",
             "whyIncorrectInContext": "Not incorrect here: each independent stated requirement maps to a documented separate control and continuation field.",
             "couldBeCorrectWhen": "This configuration fits a working authenticated server where only the listed tools may be offered and every requested action needs review.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "The best practices at 241-245 and exact Python approval loop at 320-348 establish the complete conjunctive key."
           }
         ],
@@ -668,30 +581,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "The standard Groundedness evaluator measures alignment of the generated response with grounding context without fabrication; this is the response precision dimension."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Relevance measures whether the response addresses the query. A response can address the question while adding claims that its supplied context does not support."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Retrieval evaluates the relevance of retrieved chunks to a query. It is process evaluation, not evaluation of fabricated claims in the generated answer."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Document Retrieval compares retrieved documents with query relevance ground truth for search-quality metrics. It does not directly judge the final answer against its context."
           }
         ]
@@ -721,33 +626,25 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The base Groundedness row measures generated response alignment with supplied context without fabrication.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Relevance evaluates the answer against the query; being on topic does not establish that every claim is in the grounding material.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Retrieval scores query-to-context chunks as process evaluation before considering the final response.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "Document Retrieval compares retrieved document records with human relevance labels and does not judge fabricated answer assertions.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             }
           ],
           "checks": {
@@ -781,9 +678,7 @@
             "claimRepresented": "Select the standard Groundedness evaluator for unsupported response claims.",
             "whyIncorrectInContext": "Not incorrect here: the dataset supplies response and context and asks precisely whether claims exceed that context.",
             "couldBeCorrectWhen": "It is appropriate for context-consistency system evaluation with a judge deployment, without selecting Groundedness Pro.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "The evaluator table lines 7-12 and precision discussion lines 14-17 explicitly separate this dimension."
           },
           {
@@ -791,9 +686,7 @@
             "claimRepresented": "Use Relevance to test whether facts were supported by supplied context.",
             "whyIncorrectInContext": "An on-topic response may fabricate a detail, so query relevance alone is not the requested precision test.",
             "couldBeCorrectWhen": "Relevance is appropriate when assessing how well a generated response addresses the user query, even without expected answers.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 11 and 51 assign query/response fitness to Relevance rather than response/context consistency."
           },
           {
@@ -801,9 +694,7 @@
             "claimRepresented": "Use Retrieval to judge fabricated statements in the final response.",
             "whyIncorrectInContext": "Retrieval evaluates chunks before or independently of generation; it does not judge the final answer’s claims.",
             "couldBeCorrectWhen": "It is appropriate for assessing query-context relevance without human qrels using an available LLM judge.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 8, 38 and 53 identify process scope and query/context inputs."
           },
           {
@@ -811,9 +702,7 @@
             "claimRepresented": "Use Document Retrieval for generated-answer factual grounding.",
             "whyIncorrectInContext": "The document/qrels comparison measures upstream search quality, not final response fidelity to context.",
             "couldBeCorrectWhen": "It is appropriate for tuning retrieval when human relevance judgments and retrieved document records are available.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 7, 54 and 153-165 specify qrels-based ranking metrics and labeling gaps."
           }
         ],
@@ -842,30 +731,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Groundedness tests response consistency with context, not retrieval coverage. Holes explicitly represents missing judgments, which are not evidence that a document is irrelevant."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "The source recommends Document Retrieval for retrieval parameter comparisons with qrels, defines Holes as missing query-relevance judgments, and distinguishes process evaluation from system evaluation of final responses."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Relevance scores query-response quality with an LLM judge. NDCG is a ranking metric in Document Retrieval; response relevance cannot be relabeled as document ranking quality."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Retrieval can judge query-context relevance without ground truth, but its score is not a labeling-gap count. Holes is the Document Retrieval label-sanity metric."
           }
         ]
@@ -895,33 +776,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Groundedness addresses response precision relative to context, while Holes explicitly counts missing judgments; an absent label is not a negative label.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "Document Retrieval supplies labeled search-quality metrics including Holes, while the system evaluators independently assess the final response.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The article defines Relevance as query-response judgment and NDCG as a document-ranking metric; they are not interchangeable outputs.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "Retrieval gives a query-context LLM judgment; the missing-judgment count is the separate Document Retrieval Holes metric.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             }
           ],
           "checks": {
@@ -955,9 +828,7 @@
             "claimRepresented": "Choose by groundedness and classify unjudged documents as irrelevant.",
             "whyIncorrectInContext": "Groundedness can remain high with missing context, and absence of a judgment is not an irrelevant judgment.",
             "couldBeCorrectWhen": "Groundedness is right for detecting unsupported answer content. No cited context permits treating an unlabeled document as a known irrelevant one merely because its judgment is absent.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 14-17 describe precision versus recall; line 165 calls Holes missing judgments."
           },
           {
@@ -965,9 +836,7 @@
             "claimRepresented": "Compare document retrieval with qrels, inspect Holes and separately evaluate responses.",
             "whyIncorrectInContext": "Not incorrect here: it separates incomplete label coverage from retrieval effectiveness and response consistency.",
             "couldBeCorrectWhen": "The plan fits a qrels-based comparison with newly retrieved unjudged documents and an independently evaluated generator.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 153-166 support parameter comparison and missing-label diagnostics; system evaluation at 19-26 remains separate."
           },
           {
@@ -975,9 +844,7 @@
             "claimRepresented": "Relabel response Relevance scores as retrieved-document NDCG.",
             "whyIncorrectInContext": "The two scores evaluate different objects and the source does not equate their scales or semantics.",
             "couldBeCorrectWhen": "Relevance would be appropriate for whether answers address queries, and NDCG for document ranking. No documented case allows the proposed relabeling.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "The input table separates query/response from qrels/document records; line 162 defines ranking quality."
           },
           {
@@ -985,9 +852,7 @@
             "claimRepresented": "Interpret the judge-based Retrieval score as an unlabeled-document count.",
             "whyIncorrectInContext": "An LLM relevance score is not the number of missing judgments; Holes supplies that specific count.",
             "couldBeCorrectWhen": "Retrieval is appropriate for judging context without qrels. No source supports converting that score into a count of unjudged documents.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 8 and 53 describe Retrieval; line 165 explicitly defines the missing-judgment metric."
           }
         ],
@@ -1016,30 +881,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "A request-wide span supplies total timing, which the stem already has. The source explains nested spans as the way to expose hierarchical operations and their individual timings."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "Attributes add context but the proposed final-answer metadata does not describe the start and end times of the nested service operations."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "Spans represent single operations with start and end times and can nest hierarchically. The tracing overview specifically identifies nested tool/process calls as a reason to inspect execution traces."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "Token consumption is a supported observability signal, but it is not an operation-level timing hierarchy for locating a nested service delay."
           }
         ]
@@ -1069,33 +926,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "A request-wide span supplies only the total already available; without child operations it cannot separate tool and downstream durations.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Attributes describe context; the proposed answer/name metadata lacks per-operation timing and parent-child spans.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "Timed nested spans represent the individual operations and their hierarchy, precisely isolating the downstream latency contribution.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "Token consumption is a separate signal and supplies no nested service-call start/end structure.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             }
           ],
           "checks": {
@@ -1129,9 +978,7 @@
             "claimRepresented": "Measure the whole request with one span and no child operations.",
             "whyIncorrectInContext": "The existing total already supplies that timing, so another enclosing duration cannot locate the nested slow service.",
             "couldBeCorrectWhen": "A single enclosing span is appropriate when only total request latency is needed or no internal breakdown is sought.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "The span definition at 43 distinguishes each operation’s own start/end times and nested relationships."
           },
           {
@@ -1139,9 +986,7 @@
             "claimRepresented": "Add final-answer and agent-name attributes instead of nested timing.",
             "whyIncorrectInContext": "Those attributes enrich context but do not measure the downstream operation’s duration.",
             "couldBeCorrectWhen": "Attributes are appropriate when the diagnostic question concerns which agent or response belongs to a trace rather than elapsed time per operation.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Line 44 defines contextual key/value attributes separately from timing-bearing spans."
           },
           {
@@ -1149,9 +994,7 @@
             "claimRepresented": "Instrument timed tool and downstream-service spans within the request trace.",
             "whyIncorrectInContext": "Not incorrect here: the requested nesting mirrors the observed request, tool and second-service operation hierarchy.",
             "couldBeCorrectWhen": "This structure fits a latency investigation that must distinguish a tool’s own work from its nested service call.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Lines 16, 43 and 79 state nesting and individual timings; lines 50-57 explicitly identify latency diagnosis."
           },
           {
@@ -1159,9 +1002,7 @@
             "claimRepresented": "Use aggregate token consumption to locate the slow nested operation.",
             "whyIncorrectInContext": "Token volume is an independent signal and supplies neither the downstream start/end times nor their hierarchy.",
             "couldBeCorrectWhen": "Token totals are useful for consumption and cost investigation where operation-level timing is not the unknown.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Lines 54-57 list token consumption separately from time signals."
           }
         ],
@@ -1190,30 +1031,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "Retention controls stored telemetry lifetime, but the sensitive data still enters telemetry. The source requires redaction or minimization before that point."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "Access controls protect stored traces and remain important, but they do not satisfy a policy that forbids ingesting these values into telemetry."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "The tracing guidance says to remove or mask personal data, secrets, and credentials before telemetry, and describes timed spans and attributes as the structure supporting diagnostics."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "The privacy guidance explicitly covers prompts, tool arguments, results, and span attributes. Redacting only final output leaves other sensitive inputs exposed in telemetry."
           }
         ]
@@ -1243,33 +1076,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Shorter retention acts after telemetry ingestion and cannot satisfy a policy forbidding these values from entering telemetry.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Reader access controls protect stored records but do not remove customer identifiers or credentials before export.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The privacy section requires removing secrets and redacting/minimizing personal data before telemetry while spans can retain nonsensitive timings and hierarchy.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "The guidance covers prompts, tool arguments/results and span attributes; final-answer-only redaction leaves prohibited inputs exposed.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             }
           ],
           "checks": {
@@ -1303,9 +1128,7 @@
             "claimRepresented": "Permit full payload ingestion and use shorter retention as the protection.",
             "whyIncorrectInContext": "Short retention acts after prohibited data has entered telemetry, violating the stated boundary.",
             "couldBeCorrectWhen": "Retention controls are correct for governing the lifetime of telemetry whose ingestion is permitted; they supplement pre-ingestion minimization.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Tracing lines 103-105 distinguish data avoidance, prior redaction and stored-log retention."
           },
           {
@@ -1313,9 +1136,7 @@
             "claimRepresented": "Permit full payload ingestion but limit who can query stored traces.",
             "whyIncorrectInContext": "Reader restrictions do not prevent ingestion of a tool credential or customer identifier.",
             "couldBeCorrectWhen": "Access control is appropriate for authorized viewing of permitted production telemetry, after minimization requirements are met.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Lines 24-26 require telemetry access and line 105 applies production access controls; neither supersedes lines 97 and 103-104."
           },
           {
@@ -1323,9 +1144,7 @@
             "claimRepresented": "Redact before export while retaining safe timings and operation structure.",
             "whyIncorrectInContext": "Not incorrect here: removing the forbidden fields before telemetry preserves the diagnostic structure without ingesting sensitive payloads.",
             "couldBeCorrectWhen": "This design applies where policy permits non-sensitive durations and nesting but forbids raw identifiers and secrets in the telemetry store.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Lines 43-44 support safe structural metadata; lines 97 and 103-104 explicitly require removal before telemetry."
           },
           {
@@ -1333,9 +1152,7 @@
             "claimRepresented": "Filter only the final answer while retaining unredacted prompts and tool arguments.",
             "whyIncorrectInContext": "The scenario places sensitive values in prompts and tool credentials, so those remaining capture points still breach the boundary.",
             "couldBeCorrectWhen": "Output-only filtering can address an output-only issue after inputs are already safe; the cited guidance does not authorize retaining credentials anywhere.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Lines 101-104 enumerate inputs, outputs, arguments and results rather than just final text."
           }
         ],
@@ -1364,16 +1181,12 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The OpenAI v1 endpoint provides the OpenAI API surface. Listing Foundry project connections is a Foundry-native project-client operation, not an OpenAI-compatible operation."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The SDK overview distinguishes project-native operations such as listing connections from OpenAI-shaped Responses operations, and shows project.get_openai_client() for the latter."
           }
         ]
@@ -1403,17 +1216,13 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The resource OpenAI v1 surface does not implement native project connection management; valid authentication cannot add those APIs.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The project client handles native configuration and get_openai_client supplies the project Responses route used for OpenAI-shaped operations.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             }
           ],
           "checks": {
@@ -1447,9 +1256,7 @@
             "claimRepresented": "Use one resource OpenAI v1 client for project connection management and agent invocation.",
             "whyIncorrectInContext": "Connection management is project-native, not an operation on resource OpenAI v1, so this combined proposal cannot satisfy the first task.",
             "couldBeCorrectWhen": "A resource OpenAI client is correct for the OpenAI API surface such as compatible inference or embeddings; no cited context makes it list Foundry project connections.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "SDK lines 9-13 and 228-232 distinguish the project-native and resource API surfaces."
           },
           {
@@ -1457,9 +1264,7 @@
             "claimRepresented": "Use the project client for connections and its OpenAI-compatible client for project Responses.",
             "whyIncorrectInContext": "Not incorrect here: the first task is native project management and the second uses the project runtime API.",
             "couldBeCorrectWhen": "This is the documented arrangement when one app configures project assets and also calls project Responses agents.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "Lines 229-232 explicitly describe the division; Python lines 244-252 obtain get_openai_client from the project."
           }
         ],
@@ -1488,24 +1293,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-model-selection"
-            ],
+            "sourceIds": ["ai103-model-selection"],
             "summary": "The catalog describes providers and licensing/pricing separately from capabilities. Those commercial attributes do not establish both multimodal input and tool-calling support."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-model-selection"
-            ],
+            "sourceIds": ["ai103-model-selection"],
             "summary": "Inference task, fine-tuning methods, and benchmarks help compare models, but the source lists multimodal processing and tool calling as specific capabilities to check for this request."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-model-selection",
-              "ai103-deployment-planning"
-            ],
+            "sourceIds": ["ai103-model-selection", "ai103-deployment-planning"],
             "summary": "The model card includes capabilities and deployment options, and supported deployment types vary by model and environment. Those fields address the proposed runtime requirements."
           }
         ]
@@ -1543,17 +1341,13 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Provider/licensing/billing characterize distribution, while the catalog separately exposes multimodal and tool-calling capability filters.",
-              "sourceIds": [
-                "ai103-model-selection"
-              ]
+              "sourceIds": ["ai103-model-selection"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Text task and generic benchmarks do not establish both image inputs and custom tool support for the selected model.",
-              "sourceIds": [
-                "ai103-model-selection"
-              ]
+              "sourceIds": ["ai103-model-selection"]
             },
             {
               "choiceId": "c",
@@ -1596,9 +1390,7 @@
             "claimRepresented": "Establish image/tool compatibility from provider, licensing and billing attributes.",
             "whyIncorrectInContext": "Those commercial attributes do not state whether the specific model accepts images and requests tools.",
             "couldBeCorrectWhen": "They are appropriate for a commercial or licensing shortlist once functional suitability is separately known.",
-            "sourceIds": [
-              "ai103-model-selection"
-            ],
+            "sourceIds": ["ai103-model-selection"],
             "evidenceSummary": "Model-catalog lines 19-30 separate commercial categories from capability information on the card."
           },
           {
@@ -1606,9 +1398,7 @@
             "claimRepresented": "Use a general text task, fine-tuning methods and text benchmarks as the capability proof.",
             "whyIncorrectInContext": "Text-generation performance and tuning support do not establish image input plus callable-tool support.",
             "couldBeCorrectWhen": "Those fields are relevant when evaluating text-task quality or a supported fine-tuning approach rather than proving the two requested capabilities.",
-            "sourceIds": [
-              "ai103-model-selection"
-            ],
+            "sourceIds": ["ai103-model-selection"],
             "evidenceSummary": "Lines 34-40 list capabilities, inference tasks and fine-tuning as distinct filter dimensions."
           },
           {
@@ -1616,10 +1406,7 @@
             "claimRepresented": "Check image input and tool-calling support together with suitable deployment options.",
             "whyIncorrectInContext": "Not incorrect here: the two new functional requirements must be established before a deployment is substituted.",
             "couldBeCorrectWhen": "This evidence selection is appropriate before consuming a model whose capabilities and deployment support have not been confirmed.",
-            "sourceIds": [
-              "ai103-model-selection",
-              "ai103-deployment-planning"
-            ],
+            "sourceIds": ["ai103-model-selection", "ai103-deployment-planning"],
             "evidenceSummary": "Catalog lines 30-37 expose the relevant capabilities; deployment lines 35 and 52-53 make support model-specific."
           }
         ],
@@ -1648,25 +1435,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-deployment-planning",
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-deployment-planning", "ai103-sdk"],
             "summary": "The deployment lesson states that the inference model parameter routes by deployment name, and the current SDK overview says to use the deployed name if it differs from its example name."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-deployment-planning",
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-deployment-planning", "ai103-sdk"],
             "summary": "The project name belongs in the project endpoint. The deployment lesson separately identifies the deployment name as the inference model parameter."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The SDK uses the resource name in the endpoint host and the deployed name in model. These configuration roles are not interchangeable."
           }
         ]
@@ -1704,28 +1483,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The deployment lesson expressly says the chosen deployment name goes in model, and the SDK says to use the deployed name if different.",
-              "sourceIds": [
-                "ai103-deployment-planning",
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-deployment-planning", "ai103-sdk"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The project name is part of the project endpoint path, not the inference deployment identifier.",
-              "sourceIds": [
-                "ai103-deployment-planning",
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-deployment-planning", "ai103-sdk"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The resource locates the endpoint host; it is not the chosen model deployment name used for routing.",
-              "sourceIds": [
-                "ai103-deployment-planning",
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-deployment-planning", "ai103-sdk"]
             }
           ],
           "checks": {
@@ -1759,10 +1529,7 @@
             "claimRepresented": "Route inference using the deployed name helpdesk-canary.",
             "whyIncorrectInContext": "Not incorrect here: the application is addressing the wrong identifier while its endpoint and authentication already work.",
             "couldBeCorrectWhen": "A custom deployment name is the correct model value when it names the intended deployed instance.",
-            "sourceIds": [
-              "ai103-deployment-planning",
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-deployment-planning", "ai103-sdk"],
             "evidenceSummary": "Deployment lesson lines 52 and 107 explicitly assign the configured deployment name to model; SDK line 103 says to use a changed deployed name."
           },
           {
@@ -1770,10 +1537,7 @@
             "claimRepresented": "Put the containing project name in the inference model field.",
             "whyIncorrectInContext": "A project groups APIs/assets but does not identify which of its model deployments should serve this request.",
             "couldBeCorrectWhen": "The project name is correct in the project endpoint path, not in this deployment-routing field.",
-            "sourceIds": [
-              "ai103-deployment-planning",
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-deployment-planning", "ai103-sdk"],
             "evidenceSummary": "SDK lines 109-111 show the project path, while deployment lesson 107 separately specifies the model parameter."
           },
           {
@@ -1781,9 +1545,7 @@
             "claimRepresented": "Put the endpoint resource name in the inference model field.",
             "whyIncorrectInContext": "The host selects the resource, not the deployed model instance required by the request.",
             "couldBeCorrectWhen": "The resource name correctly identifies the host portion of an endpoint; no cited rule substitutes it for the deployed model name.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "SDK lines 91 and 103 independently identify endpoint shape and the deployed name used in code."
           }
         ],
@@ -1812,23 +1574,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-rag-design"
-            ],
+            "sourceIds": ["ai103-rag-design"],
             "summary": "Retrieval alone does not augment the prompt. If the application omits all returned content, increasing result count still leaves the model without that grounding data."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-rag-design"
-            ],
+            "sourceIds": ["ai103-rag-design"],
             "summary": "Connecting Foundry to a retrieval service is a setup stage; the documented custom RAG flow must still combine the query and retrieved content in model input."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-rag-design"
-            ],
+            "sourceIds": ["ai103-rag-design"],
             "summary": "The documented augment stage combines the user question and retrieved content into a prompt before generation; prompts guide how the model uses grounding data."
           }
         ]
@@ -1858,25 +1614,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "More retrieved results cannot help when the app sends none of them to the model; the missing operation is augment, not retrieve.",
-              "sourceIds": [
-                "ai103-rag-design"
-              ]
+              "sourceIds": ["ai103-rag-design"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "A connection enables retrieval but the custom app still must combine returned content with the query in model input.",
-              "sourceIds": [
-                "ai103-rag-design"
-              ]
+              "sourceIds": ["ai103-rag-design"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The augmentation stage expressly combines query and retrieved grounding data, with prompts guiding its use.",
-              "sourceIds": [
-                "ai103-rag-design"
-              ]
+              "sourceIds": ["ai103-rag-design"]
             }
           ],
           "checks": {
@@ -1910,9 +1660,7 @@
             "claimRepresented": "Retrieve more passages but continue omitting all of them from generation input.",
             "whyIncorrectInContext": "The successful search is not the missing stage; increasing its count still supplies no current policy to the model.",
             "couldBeCorrectWhen": "Retrieval configuration is relevant when search returns incomplete passages, provided the application then passes them to generation. The literal unchanged omission is not a documented end-to-end repair.",
-            "sourceIds": [
-              "ai103-rag-design"
-            ],
+            "sourceIds": ["ai103-rag-design"],
             "evidenceSummary": "RAG lines 28-30 require augmentation after retrieval; lines 107-116 separately discuss incomplete retrieval and context budgets."
           },
           {
@@ -1920,9 +1668,7 @@
             "claimRepresented": "Register a retrieval connection without changing custom model request construction.",
             "whyIncorrectInContext": "A connection does not insert passages into this separately constructed custom request.",
             "couldBeCorrectWhen": "A project connection is appropriate during retrieval setup when the index has not been connected; it is not sufficient once relevant passages are already returned.",
-            "sourceIds": [
-              "ai103-rag-design"
-            ],
+            "sourceIds": ["ai103-rag-design"],
             "evidenceSummary": "Lines 79-83 list connection and application integration as distinct stages."
           },
           {
@@ -1930,9 +1676,7 @@
             "claimRepresented": "Add retrieved passages to model input and explain their intended use.",
             "whyIncorrectInContext": "Not incorrect here: this supplies the absent augmentation step while leaving the already working retrieval unchanged.",
             "couldBeCorrectWhen": "It is correct in a custom RAG app that currently sends no grounding content to its generator.",
-            "sourceIds": [
-              "ai103-rag-design"
-            ],
+            "sourceIds": ["ai103-rag-design"],
             "evidenceSummary": "Lines 15 and 28-30 explicitly combine retrieved data with the question; line 22 assigns prompts their guidance role."
           }
         ],
@@ -1961,23 +1705,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-file-search"
-            ],
+            "sourceIds": ["ai103-file-search"],
             "summary": "The file_search example prepares the vector store and uploads the document before the model request. Reversing the order cannot make the new manual available to that request."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-file-search"
-            ],
+            "sourceIds": ["ai103-file-search"],
             "summary": "The example invokes vector_stores.files.upload_and_poll before responses.create. Retrieval searches indexed chunks, and changed files may require re-indexing."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-file-search"
-            ],
+            "sourceIds": ["ai103-file-search"],
             "summary": "Including file_search_call.results exposes retrieved results for debugging. It does not perform or replace the upload-and-index preparation step."
           }
         ]
@@ -2007,25 +1745,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The new document is prepared before retrieval; uploading after consuming a response cannot make it part of that earlier request.",
-              "sourceIds": [
-                "ai103-file-search"
-              ]
+              "sourceIds": ["ai103-file-search"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The sample completes vector_stores.files.upload_and_poll before responses.create with the store ID.",
-              "sourceIds": [
-                "ai103-file-search"
-              ]
+              "sourceIds": ["ai103-file-search"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "include requests matched result details; the upload/poll call, not include, performs the preparation step.",
-              "sourceIds": [
-                "ai103-file-search"
-              ]
+              "sourceIds": ["ai103-file-search"]
             }
           ],
           "checks": {
@@ -2059,9 +1791,7 @@
             "claimRepresented": "Send the new-manual query before uploading that manual.",
             "whyIncorrectInContext": "The requested new content is unavailable to a request made before preparation, so the order cannot satisfy this test.",
             "couldBeCorrectWhen": "A request against already indexed files is legitimate before a later unrelated upload. The cited page does not document reversing preparation as a correct test of the new manual itself.",
-            "sourceIds": [
-              "ai103-file-search"
-            ],
+            "sourceIds": ["ai103-file-search"],
             "evidenceSummary": "The complete sample at 54-71 creates/uploads before requesting file search; limitations at 99 require reindexing for updates."
           },
           {
@@ -2069,9 +1799,7 @@
             "claimRepresented": "Finish upload_and_poll before issuing the file_search test.",
             "whyIncorrectInContext": "Not incorrect here: the sample performs that preparation operation before sending the request using the intended vector store.",
             "couldBeCorrectWhen": "This sequence fits testing a newly uploaded file after the documented upload/index preparation, without a fixed-duration guarantee.",
-            "sourceIds": [
-              "ai103-file-search"
-            ],
+            "sourceIds": ["ai103-file-search"],
             "evidenceSummary": "Lines 54-70 demonstrate the operation order and store ID binding."
           },
           {
@@ -2079,9 +1807,7 @@
             "claimRepresented": "Request file_search_call.results instead of waiting for ingestion.",
             "whyIncorrectInContext": "Including results controls response visibility, not preparation or indexing readiness.",
             "couldBeCorrectWhen": "The include field is appropriate for inspecting retrieved results after a valid request against prepared content.",
-            "sourceIds": [
-              "ai103-file-search"
-            ],
+            "sourceIds": ["ai103-file-search"],
             "evidenceSummary": "Line 70 and best practice 92 expose retrieval results; lines 54-59 separately perform upload preparation."
           }
         ],
@@ -2110,30 +1836,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Retrieval requires query and context plus deployment_name. The source specifies context as a plain string, combining multiple chunks with a separator."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "query and response are the inputs for Relevance system evaluation. They do not supply the query-context mapping required by Retrieval process evaluation."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Document Retrieval expects human relevance labels and retrieved document records, not relabeled search scores and a query string. The team lacks that ground truth."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "ground_truth and response belong to Response Completeness, a Preview system evaluator comparing an answer with expected information. They are not Retrieval inputs."
           }
         ]
@@ -2163,33 +1881,25 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "Retrieval requires query and context with deployment_name; multi-chunk context can be concatenated into plain text.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "query/response maps final-answer Relevance, not the stated pre-generation retrieved-context evaluation.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Document Retrieval requires actual human relevance labels and document records; search scores and query text are not that pair.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "ground_truth/response is the separately labeled Preview Response Completeness input pair, not Retrieval.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             }
           ],
           "checks": {
@@ -2223,9 +1933,7 @@
             "claimRepresented": "Map query and concatenated retrieved text to Retrieval query/context.",
             "whyIncorrectInContext": "Not incorrect here: the team has no qrels, has a judge, and evaluates context before any answer is generated.",
             "couldBeCorrectWhen": "This is the exact documented judge-based Retrieval mode for assessing chunk relevance to a query.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "The inputs table at 53, context format at 65-70 and mapping example at 112-116 establish it."
           },
           {
@@ -2233,9 +1941,7 @@
             "claimRepresented": "Use query and a generated response rather than retrieved context.",
             "whyIncorrectInContext": "There is no generated answer yet, and this pair is the documented Relevance input, not Retrieval input.",
             "couldBeCorrectWhen": "The pair is correct for Relevance evaluation after answers have been generated.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 51 and 109 define query/response for Relevance, separate from Retrieval query/context."
           },
           {
@@ -2243,9 +1949,7 @@
             "claimRepresented": "Substitute search scores for human qrels and query text for retrieved document records.",
             "whyIncorrectInContext": "Scores and query strings are not the human-labeled document objects required by Document Retrieval.",
             "couldBeCorrectWhen": "Document Retrieval is correct with actual qrels and retrieved-document records; no cited context makes this literal substitution valid.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 188-203 show different record shapes for human labels and retrieved scores."
           },
           {
@@ -2253,9 +1957,7 @@
             "claimRepresented": "Treat the user query as ground truth and retrieved chunks as a generated response.",
             "whyIncorrectInContext": "The proposed mapping does not represent the expected answer and actual generated answer used by Response Completeness.",
             "couldBeCorrectWhen": "Preview Response Completeness is appropriate for comparing a real response with expected answer information. A contrived query-echo task is not documented evidence for the literal mapping.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Lines 12, 17 and 52 distinguish completeness ground_truth/response from Retrieval inputs."
           }
         ],
@@ -2284,30 +1986,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-orchestration-patterns"
-            ],
+            "sourceIds": ["ai103-orchestration-patterns"],
             "summary": "A sequential direct-edge pipeline is appropriate for dependent stages. It imposes an unnecessary dependency here and does not express combining both independent results."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-orchestration-patterns"
-            ],
+            "sourceIds": ["ai103-orchestration-patterns"],
             "summary": "Switch-case routing chooses a branch based on conditions. The requirement needs both independent analyses, not just the selected branch."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-orchestration-patterns"
-            ],
+            "sourceIds": ["ai103-orchestration-patterns"],
             "summary": "Fan-out sends one message to multiple executors simultaneously; fan-in combines messages from different executors for a final step. These match independent work followed by aggregation."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-orchestration-patterns"
-            ],
+            "sourceIds": ["ai103-orchestration-patterns"],
             "summary": "Handoff supports contextual transfer, escalation, and fallback with one agent at a time. It does not express the required independent parallel work and result aggregation."
           }
         ]
@@ -2337,33 +2031,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Direct sequential edges implement dependent stages and passing only the second result does not represent this required two-result fan-in.",
-              "sourceIds": [
-                "ai103-orchestration-patterns"
-              ]
+              "sourceIds": ["ai103-orchestration-patterns"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "A switch chooses a matching branch; this request requires both independent analyses.",
-              "sourceIds": [
-                "ai103-orchestration-patterns"
-              ]
+              "sourceIds": ["ai103-orchestration-patterns"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "Fan-out sends the same message to both executors and fan-in combines their messages for the summarizer.",
-              "sourceIds": [
-                "ai103-orchestration-patterns"
-              ]
+              "sourceIds": ["ai103-orchestration-patterns"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "Handoff transfers control to one agent based on context; it does not execute and collect both independent tasks.",
-              "sourceIds": [
-                "ai103-orchestration-patterns"
-              ]
+              "sourceIds": ["ai103-orchestration-patterns"]
             }
           ],
           "checks": {
@@ -2397,9 +2083,7 @@
             "claimRepresented": "Serialize inventory into delivery and send only delivery output to the summarizer.",
             "whyIncorrectInContext": "The analysts are independent and both outputs are required; this graph adds an unnecessary dependency and omits one explicit summary input.",
             "couldBeCorrectWhen": "A sequential edge fits a pipeline where each stage transforms the prior output and the final stage’s output is sufficient.",
-            "sourceIds": [
-              "ai103-orchestration-patterns"
-            ],
+            "sourceIds": ["ai103-orchestration-patterns"],
             "evidenceSummary": "Lines 50 and 76 define direct/sequential processing, unlike fan-in combination at 54."
           },
           {
@@ -2407,9 +2091,7 @@
             "claimRepresented": "Choose one analyst with a switch-case branch.",
             "whyIncorrectInContext": "A choice between branches cannot meet the requirement to obtain both analyses from the same input.",
             "couldBeCorrectWhen": "Switch-case is appropriate where the request qualifies for one branch, such as a premium versus ordinary route.",
-            "sourceIds": [
-              "ai103-orchestration-patterns"
-            ],
+            "sourceIds": ["ai103-orchestration-patterns"],
             "evidenceSummary": "Line 52 describes conditional routing rather than simultaneous distribution."
           },
           {
@@ -2417,9 +2099,7 @@
             "claimRepresented": "Fan out the immutable request and fan in both analyst result messages.",
             "whyIncorrectInContext": "Not incorrect here: independent work can proceed together and the summary has a dependency on both outputs.",
             "couldBeCorrectWhen": "This pattern fits parallel independent analysis followed by aggregation without inter-analyst ordering.",
-            "sourceIds": [
-              "ai103-orchestration-patterns"
-            ],
+            "sourceIds": ["ai103-orchestration-patterns"],
             "evidenceSummary": "Lines 53-54 specify simultaneous fan-out and multi-result fan-in; line 75 calls this concurrent orchestration."
           },
           {
@@ -2427,9 +2107,7 @@
             "claimRepresented": "Transfer control to the second analyst only if the first cannot answer.",
             "whyIncorrectInContext": "Fallback handoff may skip one analysis and does not collect both independent results.",
             "couldBeCorrectWhen": "Handoff is appropriate for contextual escalation where one expert acts at a time.",
-            "sourceIds": [
-              "ai103-orchestration-patterns"
-            ],
+            "sourceIds": ["ai103-orchestration-patterns"],
             "evidenceSummary": "Line 77 explicitly names escalation, fallback and one-agent-at-a-time behavior."
           }
         ],
@@ -2458,23 +2136,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-function-runtime"],
             "summary": "The lesson states that the model emits a structured function request while the application runs its business logic and returns the output; it controls how and where functions run."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-function-runtime"],
             "summary": "The model requests a call; a tool definition describes a capability rather than implementing executable pricing logic. The application must run the function."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-function-runtime"],
             "summary": "The source requires developer-controlled function execution in the raw loop. A name allows request selection but does not supply the application’s business logic to the service."
           }
         ]
@@ -2504,25 +2176,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The raw loop receives function_call, runs the matching application function and submits its output.",
-              "sourceIds": [
-                "ai103-function-runtime"
-              ]
+              "sourceIds": ["ai103-function-runtime"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "A parameter schema describes accepted data; the model does not execute it as the application pricing implementation.",
-              "sourceIds": [
-                "ai103-function-runtime"
-              ]
+              "sourceIds": ["ai103-function-runtime"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The named definition enables selection, but the source still requires your app to supply and run its real business logic.",
-              "sourceIds": [
-                "ai103-function-runtime"
-              ]
+              "sourceIds": ["ai103-function-runtime"]
             }
           ],
           "checks": {
@@ -2556,9 +2222,7 @@
             "claimRepresented": "The application dispatches the requested function to its business implementation.",
             "whyIncorrectInContext": "Not incorrect here: the stem explicitly chooses a raw loop rather than framework-managed tool execution.",
             "couldBeCorrectWhen": "This is correct whenever the developer implements the raw Responses request/execute/return integration for an application-defined function.",
-            "sourceIds": [
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-function-runtime"],
             "evidenceSummary": "Function lesson lines 21, 93-107 and 145-150 assign execution to application code."
           },
           {
@@ -2566,9 +2230,7 @@
             "claimRepresented": "The model executes a registered parameter schema as pricing code.",
             "whyIncorrectInContext": "A tool schema is a declaration, not executable business logic, and the cited page explicitly says the model does not run that logic.",
             "couldBeCorrectWhen": "No sourced correct context exists for executing a parameter schema as pricing code. The nearby valid activity is the model emitting a structured function request.",
-            "sourceIds": [
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-function-runtime"],
             "evidenceSummary": "Lines 21 and 145-149 separate definition, model request and application execution."
           },
           {
@@ -2576,9 +2238,7 @@
             "claimRepresented": "Responses derives an application’s pricing implementation from the function name.",
             "whyIncorrectInContext": "A name selects a function request; it does not provide the application’s business implementation to the service.",
             "couldBeCorrectWhen": "No documented context supplies business logic merely from a function name; the application could dispatch by name only after implementing the function.",
-            "sourceIds": [
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-function-runtime"],
             "evidenceSummary": "The sample defines get_time at 49-51 and explicitly calls it at 94-95 before returning its result."
           }
         ],
@@ -2607,25 +2267,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-code-interpreter"
-            ],
+            "sourceIds": ["ai103-code-interpreter"],
             "summary": "The code_interpreter lesson states that its sandbox has no external network access. A URL in a prompt does not provide network access to the internal service."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-code-interpreter",
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-code-interpreter", "ai103-function-runtime"],
             "summary": "Code Interpreter supports uploaded-file analysis in sandboxed Python. Function tools let application code call internal APIs and return live data under developer control."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-code-interpreter",
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-code-interpreter", "ai103-function-runtime"],
             "summary": "Returning an address instead of the service data still leaves the HTTP operation inside the network-isolated code sandbox. The application function should execute the authorized integration."
           }
         ]
@@ -2663,27 +2315,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The sandbox has no external network access; placing the internal service URL in a prompt cannot enable the HTTP operation.",
-              "sourceIds": [
-                "ai103-code-interpreter"
-              ]
+              "sourceIds": ["ai103-code-interpreter"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "Code Interpreter can analyze the uploaded CSV while the application function performs the authorized external service call and returns data.",
-              "sourceIds": [
-                "ai103-code-interpreter",
-                "ai103-function-runtime"
-              ]
+              "sourceIds": ["ai103-code-interpreter", "ai103-function-runtime"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Returning only a URL leaves the HTTP operation inside the network-isolated sandbox; the application must perform that integration.",
-              "sourceIds": [
-                "ai103-code-interpreter",
-                "ai103-function-runtime"
-              ]
+              "sourceIds": ["ai103-code-interpreter", "ai103-function-runtime"]
             }
           ],
           "checks": {
@@ -2717,9 +2361,7 @@
             "claimRepresented": "Let Code Interpreter call the live HTTP service after putting its URL in the prompt.",
             "whyIncorrectInContext": "The sandbox has no external network access; an address in instructions does not add that capability.",
             "couldBeCorrectWhen": "Code Interpreter is correct for calculations over uploaded local data. No cited context makes the proposed live HTTP access work merely by supplying a URL.",
-            "sourceIds": [
-              "ai103-code-interpreter"
-            ],
+            "sourceIds": ["ai103-code-interpreter"],
             "evidenceSummary": "Interpreter lines 25-27 and 100 distinguish local execution from the explicit network prohibition."
           },
           {
@@ -2727,10 +2369,7 @@
             "claimRepresented": "Use the sandbox for CSV computation and the authorized application function for HTTP access.",
             "whyIncorrectInContext": "Not incorrect here: the existing function supplies the live service data while the interpreter performs its documented file-analysis role.",
             "couldBeCorrectWhen": "It fits a mixed workload with sandbox-compatible local data and a separately implemented, authorized service integration.",
-            "sourceIds": [
-              "ai103-code-interpreter",
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-code-interpreter", "ai103-function-runtime"],
             "evidenceSummary": "Interpreter lines 35 and 100 support CSV/network boundaries; function-runtime lines 21-29 place API execution in application code."
           },
           {
@@ -2738,10 +2377,7 @@
             "claimRepresented": "Have a function return only the address and leave the HTTP request in the sandbox.",
             "whyIncorrectInContext": "Returning a URL leaves the forbidden network operation in Code Interpreter rather than executing it through the application function.",
             "couldBeCorrectWhen": "A function can return actual service data for later model analysis; no cited context makes returning only an address remove the sandbox network restriction.",
-            "sourceIds": [
-              "ai103-code-interpreter",
-              "ai103-function-runtime"
-            ],
+            "sourceIds": ["ai103-code-interpreter", "ai103-function-runtime"],
             "evidenceSummary": "Function-runtime 21-23 describes real service integration, while interpreter line 100 still prohibits the eventual network call."
           }
         ],
@@ -2770,30 +2406,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "summary": "Fluency measures linguistic correctness and natural-language quality. The source lists risk and safety metrics separately for harmful or inappropriate content."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "summary": "Coherence measures logical flow and consistent ideas. It does not replace the separate safety criteria described for harmful, biased, or inappropriate output."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "summary": "The source distinguishes generation-quality metrics from risk and safety categories, and recommends comprehensive evaluations with multiple metrics and review of the individual cases."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "summary": "Engagement concerns conversational interest and style in structured review. Safety is a separate criterion concerning harmful, biased, or inappropriate content."
           }
         ]
@@ -2823,33 +2451,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Fluency evaluates linguistic quality; the document separately lists risk and safety measures for harmful or inappropriate content.",
-              "sourceIds": [
-                "ai103-evaluation-planning"
-              ]
+              "sourceIds": ["ai103-evaluation-planning"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Coherence concerns logical consistency, which does not imply that coherent content is safe.",
-              "sourceIds": [
-                "ai103-evaluation-planning"
-              ]
+              "sourceIds": ["ai103-evaluation-planning"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "Risk/safety evaluation must address the relevant unsafe content in addition to language quality.",
-              "sourceIds": [
-                "ai103-evaluation-planning"
-              ]
+              "sourceIds": ["ai103-evaluation-planning"]
             },
             {
               "choiceId": "d",
               "assessment": "contradicted",
               "rationale": "Engagement is a separate structured-review criterion for conversational interest, not an inappropriate-content assessment.",
-              "sourceIds": [
-                "ai103-evaluation-planning"
-              ]
+              "sourceIds": ["ai103-evaluation-planning"]
             }
           ],
           "checks": {
@@ -2883,9 +2503,7 @@
             "claimRepresented": "Use fluency as the safety measure because language is correct.",
             "whyIncorrectInContext": "Grammatical quality does not measure harmful or inappropriate content, which the source treats separately.",
             "couldBeCorrectWhen": "Fluency is appropriate for linguistic correctness; no cited context equates it with a safety assessment.",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "evidenceSummary": "Evaluation lesson lines 61-75 place fluency and risk metrics in separate categories."
           },
           {
@@ -2893,9 +2511,7 @@
             "claimRepresented": "Use coherence alone because logical consistency necessarily means appropriateness.",
             "whyIncorrectInContext": "A logically consistent response can still be inappropriate; the necessary implication is unsupported.",
             "couldBeCorrectWhen": "Coherence is appropriate for logical flow and consistency, not a safety guarantee in any documented context.",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "evidenceSummary": "Lines 65 and 68-75 define different assessment targets rather than a safety implication."
           },
           {
@@ -2903,9 +2519,7 @@
             "claimRepresented": "Add relevant risk and safety evaluation to existing language-quality measurement.",
             "whyIncorrectInContext": "Not incorrect here: the observed inappropriate responses identify a dimension not covered by the good language scores.",
             "couldBeCorrectWhen": "It is correct when release evaluation must assess safety independently of fluency and coherence.",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "evidenceSummary": "Lines 43-47 separate structured-review safety; lines 68-75 identify automated risk categories."
           },
           {
@@ -2913,9 +2527,7 @@
             "claimRepresented": "Replace safety evaluation with engagement ratings because the content attracted attention.",
             "whyIncorrectInContext": "Being noticeable is not the documented definition of engagement and neither interest nor style assesses safety.",
             "couldBeCorrectWhen": "Engagement is appropriate for judging conversational interest/style, but the source does not support its substitution for harmful-content review.",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "evidenceSummary": "Lines 45 and 47 explicitly separate engagement and safety as human review criteria."
           }
         ],
@@ -2944,24 +2556,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-workflow-code-integration"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration"],
             "summary": "The integration lesson identifies output_item.done as an individual item completion, not the final workflow response. Ignoring later events preserves the reported bug."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-workflow-code-integration",
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration", "ai103-workflows"],
             "summary": "The documented streaming handler reports individual WORKFLOW_ACTION item completion separately and processes final output on response.completed. The workflow source confines this to an existing retiring Preview feature."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-workflow-code-integration"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration"],
             "summary": "The source creates the conversation before invoking the workflow. Conversation creation is not evidence that the workflow has executed or returned its final response."
           }
         ]
@@ -2999,25 +2604,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "output_item.done can represent one workflow action, so suppressing later events repeats the bug.",
-              "sourceIds": [
-                "ai103-workflow-code-integration"
-              ]
+              "sourceIds": ["ai103-workflow-code-integration"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The lesson handles action progress at output_item.done and final response output at response.completed.",
-              "sourceIds": [
-                "ai103-workflow-code-integration"
-              ]
+              "sourceIds": ["ai103-workflow-code-integration"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The sample creates the conversation before responses.create invokes the workflow; creation cannot prove its completion.",
-              "sourceIds": [
-                "ai103-workflow-code-integration"
-              ]
+              "sourceIds": ["ai103-workflow-code-integration"]
             }
           ],
           "checks": {
@@ -3051,9 +2650,7 @@
             "claimRepresented": "Treat every item completion as final and ignore the remaining stream.",
             "whyIncorrectInContext": "This repeats the reported early-completion bug and discards later actions/final response.",
             "couldBeCorrectWhen": "An item-done event correctly reports that item’s progress. No cited context permits a generic handler to assume every item is the final response and discard the rest.",
-            "sourceIds": [
-              "ai103-workflow-code-integration"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration"],
             "evidenceSummary": "Integration lines 61-70 explicitly distinguish individual output items from response.completed."
           },
           {
@@ -3061,10 +2658,7 @@
             "claimRepresented": "Report action item completions as progress and use response.completed for final handling.",
             "whyIncorrectInContext": "Not incorrect here: the handler must distinguish intermediate actions from the end of the streamed workflow response.",
             "couldBeCorrectWhen": "This is appropriate for the existing documented visual-workflow stream while the team migrates before retirement.",
-            "sourceIds": [
-              "ai103-workflow-code-integration",
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration", "ai103-workflows"],
             "evidenceSummary": "Integration lines 48-72 define the event semantics; workflow doc lines 9 and 295-297 define the migration boundary."
           },
           {
@@ -3072,9 +2666,7 @@
             "claimRepresented": "Declare execution complete as soon as its conversation is created.",
             "whyIncorrectInContext": "Conversation creation occurs before invocation, so it cannot establish completion of work not yet requested.",
             "couldBeCorrectWhen": "Creating a conversation is a correct setup action before invoking a workflow. No documented execution-completion context follows from that creation alone.",
-            "sourceIds": [
-              "ai103-workflow-code-integration"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration"],
             "evidenceSummary": "Integration lines 29-38 show creation preceding the Responses request."
           }
         ],
@@ -3103,24 +2695,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-workflow-code-integration",
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration", "ai103-workflows"],
             "summary": "The workflow integration lesson says that workflows waiting for human input can resume when additional messages provide the requested input to the conversation. This is scoped to an existing Preview workflow."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-workflow-code-integration"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration"],
             "summary": "The documented resume pattern supplies input to the conversation that is waiting. A new conversation starts a separate context rather than satisfying that pending interaction."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-workflow-code-integration"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration"],
             "summary": "The source separates saved workflow definitions from runtime input messages. Updating the definition is not the documented way to answer a pending human-input request."
           }
         ]
@@ -3158,17 +2743,13 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The lesson states that additional messages to the waiting conversation provide requested input and resume execution.",
-              "sourceIds": [
-                "ai103-workflow-code-integration"
-              ]
+              "sourceIds": ["ai103-workflow-code-integration"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "A newly created conversation is a new invocation context, not input to the one paused for that user answer.",
-              "sourceIds": [
-                "ai103-workflow-code-integration"
-              ]
+              "sourceIds": ["ai103-workflow-code-integration"]
             },
             {
               "choiceId": "c",
@@ -3211,10 +2792,7 @@
             "claimRepresented": "Send the collected answer to the conversation waiting for human input.",
             "whyIncorrectInContext": "Not incorrect here: the pending runtime context is the one requesting the missing address.",
             "couldBeCorrectWhen": "This is the documented resume approach for a workflow paused awaiting user-provided information.",
-            "sourceIds": [
-              "ai103-workflow-code-integration",
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration", "ai103-workflows"],
             "evidenceSummary": "Integration line 72 explicitly sends additional messages to the waiting conversation; workflow lines 25-27 describe human-input steps."
           },
           {
@@ -3222,9 +2800,7 @@
             "claimRepresented": "Start a different workflow conversation containing only the address.",
             "whyIncorrectInContext": "A new runtime context is not the pending interaction and does not answer its waiting step.",
             "couldBeCorrectWhen": "A new conversation is appropriate when deliberately starting a separate workflow run with new input.",
-            "sourceIds": [
-              "ai103-workflow-code-integration"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration"],
             "evidenceSummary": "Integration lines 23-38 show creating a conversation for a new invocation; line 72 separately describes continuing a paused one."
           },
           {
@@ -3232,10 +2808,7 @@
             "claimRepresented": "Save a modified workflow definition containing the collected address.",
             "whyIncorrectInContext": "Editing reusable configuration is different from supplying an input to an already waiting runtime conversation.",
             "couldBeCorrectWhen": "Saving a new definition is appropriate when changing workflow logic/configuration for future execution, not answering this pending question.",
-            "sourceIds": [
-              "ai103-workflow-code-integration",
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration", "ai103-workflows"],
             "evidenceSummary": "Integration lines 17-19 separate definition saving; workflow lines 179-182 identify saved versions."
           }
         ],
@@ -3264,30 +2837,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "summary": "The retirement guidance states that in-portal execution and the visual designer are unsupported after December 1, 2026. Exporting without migrating execution does not meet the requirement."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "summary": "The migration table limits the direct A2A path to lightweight handoffs without a formal multistep workflow. It does not preserve arbitrary branching and human-input orchestration implicitly."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "summary": "Logic Apps is the path for retaining a visual low-code designer. The article explicitly recommends Agent Framework for a code-first runtime with reusable declarative YAML, so the stated reason is false."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "summary": "The guide recommends exporting YAML before retirement and migrating most code-first workflows to Agent Framework. It describes running migrated workflows as hosted agents and validating the migration rather than retaining in-portal execution."
           }
         ]
@@ -3317,33 +2882,25 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "After December 1 the visual designer and in-portal execution are unsupported; a backup alone leaves the runtime dependency.",
-              "sourceIds": [
-                "ai103-workflows"
-              ]
+              "sourceIds": ["ai103-workflows"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The A2A option is explicitly for lightweight handoffs without a formal multistep workflow; branching is not implicitly preserved.",
-              "sourceIds": [
-                "ai103-workflows"
-              ]
+              "sourceIds": ["ai103-workflows"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Logic Apps fits keeping a visual designer, while the same table recommends Agent Framework for reusable YAML/code-first orchestration.",
-              "sourceIds": [
-                "ai103-workflows"
-              ]
+              "sourceIds": ["ai103-workflows"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "The article instructs exporting YAML and describes bringing it to Agent Framework, validating necessary changes and deploying as a hosted agent.",
-              "sourceIds": [
-                "ai103-workflows"
-              ]
+              "sourceIds": ["ai103-workflows"]
             }
           ],
           "checks": {
@@ -3377,9 +2934,7 @@
             "claimRepresented": "Export a backup but keep in-portal execution as the postretirement runtime.",
             "whyIncorrectInContext": "An export alone does not migrate execution; the cited retirement includes in-portal execution after the deadline.",
             "couldBeCorrectWhen": "An export is a correct preparatory backup while existing execution is still supported before retirement, not a postretirement solution.",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "evidenceSummary": "Workflow lines 297 and 307-319 separate export from moving to a supported hosted runtime."
           },
           {
@@ -3387,9 +2942,7 @@
             "claimRepresented": "Replace formal branching and human input with one A2A handoff that implicitly preserves it all.",
             "whyIncorrectInContext": "The article limits that path to lightweight handoffs without a formal workflow; it does not supply implicit branches or pauses.",
             "couldBeCorrectWhen": "A2A is correct when one agent delegates a task to another without a formal multistep workflow. No source validates the literal automatic-preservation claim.",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "evidenceSummary": "Lines 305 and 332-334 explicitly bound A2A’s migration case."
           },
           {
@@ -3397,9 +2950,7 @@
             "claimRepresented": "Require Logic Apps because exported YAML cannot inform any code-first migration.",
             "whyIncorrectInContext": "The claimed impossibility contradicts the documented Agent Framework YAML migration path and the team wants code-first.",
             "couldBeCorrectWhen": "Logic Apps is correct when retaining a visual low-code designer is the priority. Its suitability does not make the authored assertion about YAML true.",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "evidenceSummary": "Lines 303-304 and 317-327 contrast supported code-first YAML with the visual-designer alternative."
           },
           {
@@ -3407,9 +2958,7 @@
             "claimRepresented": "Export, migrate and validate the YAML using Agent Framework, then host the resulting workflow.",
             "whyIncorrectInContext": "Not incorrect here: this preserves formal orchestration on the code-first runtime the team can maintain after retirement.",
             "couldBeCorrectWhen": "It is the recommended path for YAML/code-comfortable teams who want the closest supported equivalent of the current visual workflow.",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "evidenceSummary": "Lines 309-319 identify export, potential changes, code-first/YAML support and deployment as a hosted agent."
           }
         ],
@@ -3438,23 +2987,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The SDK overview assigns the resource OpenAI v1 endpoint to the OpenAI SDK surface. It lacks the project path required for the AIProjectClient project endpoint."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The documented Foundry project endpoint is https://<resource-name>.services.ai.azure.com/api/projects/<project-name>, matching this resource and project."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The SDK endpoint table assigns the anthropic path to the Anthropic SDK for deployed Claude models, not to the Foundry project client."
           }
         ]
@@ -3484,25 +3027,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The resource OpenAI v1 endpoint serves the OpenAI API surface, not AIProjectClient project-native operations.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The table gives services.ai.azure.com/api/projects/<project-name> as the project endpoint; both placeholders are placed correctly.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The /anthropic route is for deployed Claude through the Anthropic SDK and does not identify the project API.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             }
           ],
           "checks": {
@@ -3536,9 +3073,7 @@
             "claimRepresented": "Initialize the project client against the resource OpenAI v1 endpoint.",
             "whyIncorrectInContext": "That endpoint serves an OpenAI API surface rather than the project route required by AIProjectClient.",
             "couldBeCorrectWhen": "It is correct for a resource OpenAI SDK client using compatible model APIs, not this project client.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "SDK endpoint table line 11 and project endpoint lines 109-111 establish the difference."
           },
           {
@@ -3546,9 +3081,7 @@
             "claimRepresented": "Use the services host with api/projects/dispatch for the north-ai project client.",
             "whyIncorrectInContext": "Not incorrect here: the supplied resource and project placeholders occupy their documented endpoint components.",
             "couldBeCorrectWhen": "The shape is correct when dispatch is the actual project in the named Foundry resource and the caller is authorized.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "SDK lines 9, 91 and 240-247 repeatedly show the project endpoint shape."
           },
           {
@@ -3556,9 +3089,7 @@
             "claimRepresented": "Point AIProjectClient at the resource Anthropic path.",
             "whyIncorrectInContext": "The anthropic route belongs to the Anthropic SDK, not the Foundry project API surface.",
             "couldBeCorrectWhen": "That endpoint is appropriate when using an Anthropic client with deployed Claude models.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "The SDK table line 12 assigns the anthropic path its separate purpose."
           }
         ],
@@ -3587,23 +3118,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The current Python example initializes AIProjectClient(endpoint=project_endpoint, credential=DefaultAzureCredential()). Prerequisites separately require the appropriate project role and a working Entra credential."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "An Entra-authenticated OpenAI client can serve the resource OpenAI API surface, but the question asks for the project client. The documented project initialization takes the project endpoint and DefaultAzureCredential."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The SDK explicitly supports API keys on /openai/v1, but that is an inference client and also violates this application’s requirement not to store a key."
           }
         ]
@@ -3633,25 +3158,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The Python sample constructs AIProjectClient(endpoint=project_endpoint, credential=DefaultAzureCredential()); role assignment is a separate prerequisite.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "A resource OpenAI client can authenticate with Entra but is not the requested AIProjectClient against the project endpoint.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "API keys are supported on OpenAI v1, but that is both the wrong client scope and contrary to the stated no-stored-key requirement.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             }
           ],
           "checks": {
@@ -3685,9 +3204,7 @@
             "claimRepresented": "Initialize AIProjectClient using the project endpoint and DefaultAzureCredential.",
             "whyIncorrectInContext": "Not incorrect here: Python 3.10+, SDK 2.x, a current project and required identity role are explicitly supplied.",
             "couldBeCorrectWhen": "This matches the documented keyless project-client initialization when the credential resolves to the authorized development identity.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "SDK lines 69, 127 and 236-247 state runtime/version prerequisites and the initialization."
           },
           {
@@ -3695,9 +3212,7 @@
             "claimRepresented": "Replace the project client with an Entra-authenticated resource OpenAI v1 client.",
             "whyIncorrectInContext": "Keyless authentication alone does not make the resource inference client a project-native AIProjectClient.",
             "couldBeCorrectWhen": "An Entra token provider is valid for compatible resource OpenAI operations, but that is a different requested API surface.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "SDK line 27 documents Entra samples and lines 11, 229-232 separate resource and project operations."
           },
           {
@@ -3705,9 +3220,7 @@
             "claimRepresented": "Use a resource API key at OpenAI v1 despite the project/keyless requirement.",
             "whyIncorrectInContext": "The alternative targets inference rather than the project API and violates the explicit no-stored-key policy.",
             "couldBeCorrectWhen": "API-key OpenAI v1 access is documented when that API surface and key-based authentication are permitted.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "SDK line 27 explicitly allows API keys on openai/v1; the Python project sample instead uses DefaultAzureCredential."
           }
         ],
@@ -3736,23 +3249,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The current Python compatibility table gives the reverse association: 2.x is Foundry new and 1.x is Foundry classic."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The SDK table separates portal compatibility by major version. The presence of deployments does not erase that new-versus-classic distinction."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "The Python table identifies stable azure-ai-projects>=2.0.0 for Foundry new and stable azure-ai-projects==1.0.0 for Foundry classic."
           }
         ]
@@ -3782,25 +3289,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The Python table gives the inverse mapping: 2.x for new and 1.x for classic.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Deployment presence does not override the table separate portal-generation compatibility assignments.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The table explicitly pairs stable azure-ai-projects>=2.0.0 with Foundry new and 1.0.0 with classic.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             }
           ],
           "checks": {
@@ -3834,9 +3335,7 @@
             "claimRepresented": "Map Python 1.x to new Foundry and 2.x to classic.",
             "whyIncorrectInContext": "The current compatibility table explicitly gives the opposite mapping.",
             "couldBeCorrectWhen": "Python 1.x is correct for classic and 2.x for new; there is no cited context where the full reversed mapping is correct.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "SDK table lines 125-128 lists both stable portal/version associations together."
           },
           {
@@ -3844,9 +3343,7 @@
             "claimRepresented": "Use Python 1.x for both portal generations because each has model deployments.",
             "whyIncorrectInContext": "Having deployments does not remove the compatibility distinction between new and classic projects.",
             "couldBeCorrectWhen": "Version 1.x is appropriate for classic projects; no cited support makes it the universal mapping for both stipulated generations.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "Lines 127-128 separate major versions by portal, not by whether a project contains deployments."
           },
           {
@@ -3854,9 +3351,7 @@
             "claimRepresented": "Use stable Python 2.x for new Foundry and stable 1.x for classic.",
             "whyIncorrectInContext": "Not incorrect here: the question is explicitly Python and deliberately includes both maintained portal generations.",
             "couldBeCorrectWhen": "This is the documented compatibility mapping for the two project generations described, not a rule for every language.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "The Python table at 125-128 explicitly names each status, major version and portal generation."
           }
         ],
@@ -3885,23 +3380,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-system-message"
-            ],
+            "sourceIds": ["ai103-system-message"],
             "summary": "The system-message design guidance recommends explicit role and scope boundaries. Delegating the scope entirely to user requests does not establish the intended maintenance-only role."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-system-message"
-            ],
+            "sourceIds": ["ai103-system-message"],
             "summary": "Tone is one supported instruction dimension, but the source separately recommends role boundaries and an explicit fallback for ambiguous requests or missing information."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-system-message"
-            ],
+            "sourceIds": ["ai103-system-message"],
             "summary": "The design checklist covers the assistant’s job, scope boundaries, output format, and a when-unsure policy, including asking clarifying questions and acknowledging missing information."
           }
         ]
@@ -3931,25 +3420,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The role/scope section requires defining the intended boundary; allowing users to choose scope defeats maintenance-only behavior.",
-              "sourceIds": [
-                "ai103-system-message"
-              ]
+              "sourceIds": ["ai103-system-message"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Tone is only one dimension; it omits the explicit role and fallback behavior required by this scenario.",
-              "sourceIds": [
-                "ai103-system-message"
-              ]
+              "sourceIds": ["ai103-system-message"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "Role/scope, output contract and a when-unsure policy are separate items in the design checklist and match all requested behaviors.",
-              "sourceIds": [
-                "ai103-system-message"
-              ]
+              "sourceIds": ["ai103-system-message"]
             }
           ],
           "checks": {
@@ -3983,9 +3466,7 @@
             "claimRepresented": "Make the assistant a broad expert and allow the user to determine its scope.",
             "whyIncorrectInContext": "That leaves no maintenance-only boundary and cannot establish the explicit narrow role the team wants.",
             "couldBeCorrectWhen": "A general-purpose helpful assistant can have broad scope when no domain restriction is required; the source’s simple assistant example illustrates that less constrained use.",
-            "sourceIds": [
-              "ai103-system-message"
-            ],
+            "sourceIds": ["ai103-system-message"],
             "evidenceSummary": "System-message lines 24-30 show a simple general role, while lines 50-52 require explicit scope for domain assistants."
           },
           {
@@ -3993,9 +3474,7 @@
             "claimRepresented": "Specify enthusiastic tone but leave handling of missing information implicit.",
             "whyIncorrectInContext": "Tone alone says neither which requests are in scope nor how to respond when required information is absent.",
             "couldBeCorrectWhen": "Tone instructions are useful when communication style is the intended change and role/fallback behavior is already handled separately.",
-            "sourceIds": [
-              "ai103-system-message"
-            ],
+            "sourceIds": ["ai103-system-message"],
             "evidenceSummary": "Lines 19-22 separate role, tone and format; lines 44-46 explicitly recommend an uncertainty fallback."
           },
           {
@@ -4003,9 +3482,7 @@
             "claimRepresented": "Specify maintenance scope, expected answer format and an explicit clarify-or-unavailable fallback.",
             "whyIncorrectInContext": "Not incorrect here: it supplies the missing role boundary and behavior when the agent lacks information.",
             "couldBeCorrectWhen": "This design fits a domain-specific chat assistant that must guide responses without claiming system-message enforcement is perfect.",
-            "sourceIds": [
-              "ai103-system-message"
-            ],
+            "sourceIds": ["ai103-system-message"],
             "evidenceSummary": "Lines 74-80 demonstrate clarification/unknown behavior; checklist 98-116 covers role, boundaries, format and uncertainty."
           }
         ],

@@ -28,395 +28,395 @@ Report created: 2026-09-14T20:50:08.557Z. This is not a retrieval or verificatio
 
 ## Verification status (effective, schema-valid candidates)
 
-| Category | Questions |
-| --- | ---: |
-| candidate | 0 |
-| verified | 29 |
-| manual-review-required | 96 |
-| rejected | 24 |
-| stale | 0 |
+| Category               | Questions |
+| ---------------------- | --------: |
+| candidate              |         0 |
+| verified               |        29 |
+| manual-review-required |        96 |
+| rejected               |        24 |
+| stale                  |         0 |
 
 ## Playable domain counts
 
-| Category | Questions |
-| --- | ---: |
-| plan-and-manage-an-azure-ai-solution | 0 |
-| implement-generative-ai-and-agentic-solutions | 0 |
-| implement-computer-vision-solutions | 0 |
-| implement-text-analysis-solutions | 0 |
-| implement-information-extraction-solutions | 0 |
+| Category                                      | Questions |
+| --------------------------------------------- | --------: |
+| plan-and-manage-an-azure-ai-solution          |         0 |
+| implement-generative-ai-and-agentic-solutions |         0 |
+| implement-computer-vision-solutions           |         0 |
+| implement-text-analysis-solutions             |         0 |
+| implement-information-extraction-solutions    |         0 |
 
 ## Playable skill counts
 
-| Category | Questions |
-| --- | ---: |
-| choose-the-appropriate-foundry-services-for-generative-ai-and-agents | 0 |
-| set-up-ai-solutions-in-foundry | 0 |
-| manage-monitor-and-secure-ai-systems | 0 |
-| implement-responsible-ai-across-generative-ai-and-agentic-systems | 0 |
-| build-generative-applications-by-using-foundry | 0 |
-| build-agents-by-using-foundry | 0 |
-| optimize-and-operationalize-generative-ai-systems | 0 |
-| design-and-implement-image-and-video-generation-solutions | 0 |
-| design-and-implement-multimodal-understanding-workflows | 0 |
-| implement-responsible-ai-for-multimodal-content | 0 |
-| apply-language-model-text-analysis | 0 |
-| implement-speech-solutions | 0 |
-| build-retrieval-and-grounding-pipelines | 0 |
-| extract-content-from-documents | 0 |
+| Category                                                             | Questions |
+| -------------------------------------------------------------------- | --------: |
+| choose-the-appropriate-foundry-services-for-generative-ai-and-agents |         0 |
+| set-up-ai-solutions-in-foundry                                       |         0 |
+| manage-monitor-and-secure-ai-systems                                 |         0 |
+| implement-responsible-ai-across-generative-ai-and-agentic-systems    |         0 |
+| build-generative-applications-by-using-foundry                       |         0 |
+| build-agents-by-using-foundry                                        |         0 |
+| optimize-and-operationalize-generative-ai-systems                    |         0 |
+| design-and-implement-image-and-video-generation-solutions            |         0 |
+| design-and-implement-multimodal-understanding-workflows              |         0 |
+| implement-responsible-ai-for-multimodal-content                      |         0 |
+| apply-language-model-text-analysis                                   |         0 |
+| implement-speech-solutions                                           |         0 |
+| build-retrieval-and-grounding-pipelines                              |         0 |
+| extract-content-from-documents                                       |         0 |
 
 ## Playable subskill counts
 
-| Category | Questions |
-| --- | ---: |
-| Choose an appropriate model for each task, including large language models (LLMs), small language models, multimodal models, and Foundry Tools | 0 |
-| Choose the appropriate Foundry services for generative tasks, grounding, vector search, agent workflows, or multimodal processing | 0 |
-| Choose an appropriate method for retrieval and indexing | 0 |
-| Choose appropriate memory, tool, and knowledge integration services for agent solutions | 0 |
-| Design Azure infrastructure for AI apps and agent-based solutions | 0 |
-| Choose appropriate deployment options | 0 |
-| Configure model and agent deployments | 0 |
-| Integrate Foundry projects with continuous integration and continuous deployment (CI/CD) pipelines | 0 |
-| Manage quotas, scaling, rate limits, and cost footprints for model and agent workloads | 0 |
-| Monitor model performance, drift, safety events, and grounding quality | 0 |
-| Monitor data ingestion quality, search index health, and relevance performance | 0 |
-| Configure security, including managed identity, private networking, keyless credentials, and role policies | 0 |
-| Configure safety filters, guardrails, risk detection, and content moderation | 0 |
-| Apply responsible AI instrumentation, including evaluators, safety evaluations, and explanation tooling | 0 |
-| Implement auditing through trace logging, provenance metadata, and approval workflows | 0 |
-| Govern agent behavior with oversight modes, constraints, and tool-access controls | 0 |
-| Deploy and consume LLMs, small models, code models, and multimodal models | 0 |
-| Implement retrieval-augmented generation (RAG) in an application | 0 |
-| Design workflows, tool-augmented flows, and multistep reasoning pipelines | 0 |
-| Evaluate models and apps, including detecting fabrications, relevance, quality, and safety | 0 |
-| Integrate generative workflows into applications by using Foundry SDKs and connectors | 0 |
-| Configure an application to connect to a Foundry project | 0 |
-| Define agent roles, goals, conversation-tracking approach, and tool schemas | 0 |
-| Build agents that integrate retrieval, function-calling, and conversation memory | 0 |
-| Integrate agent tools, including APIs, knowledge stores, search, content understanding, and custom functions | 0 |
-| Implement orchestrated multi-agent solutions | 0 |
-| Build autonomous or semiautonomous workflows with safeguards and approval flow controls | 0 |
-| Integrate monitoring into deployed agents, evaluate agent behavior, and perform error analysis | 0 |
-| Tune generation behavior, such as prompt engineering and adjusting model parameters | 0 |
-| Implement model reflection, chain-of-thought evaluations, and self-critique loops | 0 |
-| Set up observability by implementing tracing, token analytics, safety signals, and latency breakdowns | 0 |
-| Orchestrate multiple models, flows, or hybrid LLM and rules engines | 0 |
-| Implement a solution that generates images from text prompts and reference media | 0 |
-| Implement a solution that generates videos from text prompts and reference media | 0 |
-| Configure image-editing workflows, including inpainting, mask‑based edits, and prompt‑driven modifications | 0 |
-| Implement workflows to edit generated videos | 0 |
-| Select and apply appropriate generation and editing controls provided by the platform | 0 |
-| Build a solution that analyzes visual context by using multimodal models | 0 |
-| Configure apps to produce concise or detailed captions for single or multiple images | 0 |
-| Implement a solution that enables question‑answering grounded in visual evidence | 0 |
-| Configure generation of alt‑text and extended image descriptions aligned to accessibility guidelines | 0 |
-| Implement visual understanding by configuring Azure Content Understanding in Foundry Tools to extract visual characteristics | 0 |
-| Implement video analysis workflows to process and interpret video segments | 0 |
-| Configure single‑task and pro‑mode Content Understanding pipelines | 0 |
-| Implement solutions that identify objects, components, or regions within images or video | 0 |
-| Implement filters to classify unsafe or disallowed visual content | 0 |
-| Detect and mitigate indirect prompt injection by using embedded text in images | 0 |
-| Enforce visual policy rules, such as applying watermarks, flagging prohibited symbols, upholding brand usage requirements, and detecting potentially inappropriate content | 0 |
-| Implement solutions to extract entities, topics, summaries, and structured JSON outputs by using generative prompting and Foundry Tools | 0 |
-| Configure detection of sentiment, tone, safety issues, and sensitive content | 0 |
-| Build solutions that translate text by using Azure Translator in Foundry Tools or LLM‑powered translation flows | 0 |
-| Customize language model outputs for domain tasks, such as compliance summarization and domain extraction | 0 |
-| Implement workflows to convert speech to text and text to speech for agentic interactions | 0 |
-| Integrate speech as an agent modality, including custom speech models | 0 |
-| Enable multimodal reasoning from audio inputs | 0 |
-| Translate speech into other languages by using language models and Foundry Tools | 0 |
-| Ingest and index content, such as documents, images, audio, and video | 0 |
-| Configure semantic search, hybrid search, and vector search for grounding | 0 |
-| Implement enrichment by using custom or built-in skills for text, images, and layout | 0 |
-| Configure RAG ingestion flow, including documents and using optical character recognition (OCR) | 0 |
-| Connect retrieval pipelines directly to workflows and agent tools | 0 |
-| Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction | 0 |
-| Produce clean, grounded representations to use with agents and RAG by using Content Understanding | 0 |
-| Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding | 0 |
+| Category                                                                                                                                                                   | Questions |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------: |
+| Choose an appropriate model for each task, including large language models (LLMs), small language models, multimodal models, and Foundry Tools                             |         0 |
+| Choose the appropriate Foundry services for generative tasks, grounding, vector search, agent workflows, or multimodal processing                                          |         0 |
+| Choose an appropriate method for retrieval and indexing                                                                                                                    |         0 |
+| Choose appropriate memory, tool, and knowledge integration services for agent solutions                                                                                    |         0 |
+| Design Azure infrastructure for AI apps and agent-based solutions                                                                                                          |         0 |
+| Choose appropriate deployment options                                                                                                                                      |         0 |
+| Configure model and agent deployments                                                                                                                                      |         0 |
+| Integrate Foundry projects with continuous integration and continuous deployment (CI/CD) pipelines                                                                         |         0 |
+| Manage quotas, scaling, rate limits, and cost footprints for model and agent workloads                                                                                     |         0 |
+| Monitor model performance, drift, safety events, and grounding quality                                                                                                     |         0 |
+| Monitor data ingestion quality, search index health, and relevance performance                                                                                             |         0 |
+| Configure security, including managed identity, private networking, keyless credentials, and role policies                                                                 |         0 |
+| Configure safety filters, guardrails, risk detection, and content moderation                                                                                               |         0 |
+| Apply responsible AI instrumentation, including evaluators, safety evaluations, and explanation tooling                                                                    |         0 |
+| Implement auditing through trace logging, provenance metadata, and approval workflows                                                                                      |         0 |
+| Govern agent behavior with oversight modes, constraints, and tool-access controls                                                                                          |         0 |
+| Deploy and consume LLMs, small models, code models, and multimodal models                                                                                                  |         0 |
+| Implement retrieval-augmented generation (RAG) in an application                                                                                                           |         0 |
+| Design workflows, tool-augmented flows, and multistep reasoning pipelines                                                                                                  |         0 |
+| Evaluate models and apps, including detecting fabrications, relevance, quality, and safety                                                                                 |         0 |
+| Integrate generative workflows into applications by using Foundry SDKs and connectors                                                                                      |         0 |
+| Configure an application to connect to a Foundry project                                                                                                                   |         0 |
+| Define agent roles, goals, conversation-tracking approach, and tool schemas                                                                                                |         0 |
+| Build agents that integrate retrieval, function-calling, and conversation memory                                                                                           |         0 |
+| Integrate agent tools, including APIs, knowledge stores, search, content understanding, and custom functions                                                               |         0 |
+| Implement orchestrated multi-agent solutions                                                                                                                               |         0 |
+| Build autonomous or semiautonomous workflows with safeguards and approval flow controls                                                                                    |         0 |
+| Integrate monitoring into deployed agents, evaluate agent behavior, and perform error analysis                                                                             |         0 |
+| Tune generation behavior, such as prompt engineering and adjusting model parameters                                                                                        |         0 |
+| Implement model reflection, chain-of-thought evaluations, and self-critique loops                                                                                          |         0 |
+| Set up observability by implementing tracing, token analytics, safety signals, and latency breakdowns                                                                      |         0 |
+| Orchestrate multiple models, flows, or hybrid LLM and rules engines                                                                                                        |         0 |
+| Implement a solution that generates images from text prompts and reference media                                                                                           |         0 |
+| Implement a solution that generates videos from text prompts and reference media                                                                                           |         0 |
+| Configure image-editing workflows, including inpainting, mask‑based edits, and prompt‑driven modifications                                                                 |         0 |
+| Implement workflows to edit generated videos                                                                                                                               |         0 |
+| Select and apply appropriate generation and editing controls provided by the platform                                                                                      |         0 |
+| Build a solution that analyzes visual context by using multimodal models                                                                                                   |         0 |
+| Configure apps to produce concise or detailed captions for single or multiple images                                                                                       |         0 |
+| Implement a solution that enables question‑answering grounded in visual evidence                                                                                           |         0 |
+| Configure generation of alt‑text and extended image descriptions aligned to accessibility guidelines                                                                       |         0 |
+| Implement visual understanding by configuring Azure Content Understanding in Foundry Tools to extract visual characteristics                                               |         0 |
+| Implement video analysis workflows to process and interpret video segments                                                                                                 |         0 |
+| Configure single‑task and pro‑mode Content Understanding pipelines                                                                                                         |         0 |
+| Implement solutions that identify objects, components, or regions within images or video                                                                                   |         0 |
+| Implement filters to classify unsafe or disallowed visual content                                                                                                          |         0 |
+| Detect and mitigate indirect prompt injection by using embedded text in images                                                                                             |         0 |
+| Enforce visual policy rules, such as applying watermarks, flagging prohibited symbols, upholding brand usage requirements, and detecting potentially inappropriate content |         0 |
+| Implement solutions to extract entities, topics, summaries, and structured JSON outputs by using generative prompting and Foundry Tools                                    |         0 |
+| Configure detection of sentiment, tone, safety issues, and sensitive content                                                                                               |         0 |
+| Build solutions that translate text by using Azure Translator in Foundry Tools or LLM‑powered translation flows                                                            |         0 |
+| Customize language model outputs for domain tasks, such as compliance summarization and domain extraction                                                                  |         0 |
+| Implement workflows to convert speech to text and text to speech for agentic interactions                                                                                  |         0 |
+| Integrate speech as an agent modality, including custom speech models                                                                                                      |         0 |
+| Enable multimodal reasoning from audio inputs                                                                                                                              |         0 |
+| Translate speech into other languages by using language models and Foundry Tools                                                                                           |         0 |
+| Ingest and index content, such as documents, images, audio, and video                                                                                                      |         0 |
+| Configure semantic search, hybrid search, and vector search for grounding                                                                                                  |         0 |
+| Implement enrichment by using custom or built-in skills for text, images, and layout                                                                                       |         0 |
+| Configure RAG ingestion flow, including documents and using optical character recognition (OCR)                                                                            |         0 |
+| Connect retrieval pipelines directly to workflows and agent tools                                                                                                          |         0 |
+| Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction                                                                  |         0 |
+| Produce clean, grounded representations to use with agents and RAG by using Content Understanding                                                                          |         0 |
+| Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding                                                  |         0 |
 
 ## Playable difficulty counts
 
-| Category | Questions |
-| --- | ---: |
-| beginner | 0 |
-| intermediate | 0 |
-| advanced | 0 |
-| expert | 0 |
+| Category     | Questions |
+| ------------ | --------: |
+| beginner     |         0 |
+| intermediate |         0 |
+| advanced     |         0 |
+| expert       |         0 |
 
 ## Playable complexity counts
 
-| Category | Questions |
-| --- | ---: |
-| concept-recall | 0 |
-| technical-implementation | 0 |
-| scenario-based | 0 |
-| troubleshooting | 0 |
-| architecture-design | 0 |
+| Category                 | Questions |
+| ------------------------ | --------: |
+| concept-recall           |         0 |
+| technical-implementation |         0 |
+| scenario-based           |         0 |
+| troubleshooting          |         0 |
+| architecture-design      |         0 |
 
 ## Playable type counts
 
-| Category | Questions |
-| --- | ---: |
-| single-select | 0 |
-| multi-select | 0 |
-| true-false | 0 |
-| scenario | 0 |
-| code | 0 |
+| Category      | Questions |
+| ------------- | --------: |
+| single-select |         0 |
+| multi-select  |         0 |
+| true-false    |         0 |
+| scenario      |         0 |
+| code          |         0 |
 
 ## Playable source counts
 
-| Category | Questions |
-| --- | ---: |
-| ai103-project-organization | 0 |
-| ai103-model-selection | 0 |
-| ai103-model-benchmarks | 0 |
-| ai103-deployment-planning | 0 |
-| ai103-evaluation-planning | 0 |
-| ai103-harm-baseline | 0 |
-| ai103-responsible-operations | 0 |
-| ai103-agent-risk-boundaries | 0 |
-| ai103-sdk | 0 |
-| ai103-responses-state | 0 |
-| ai103-code-interpreter | 0 |
-| ai103-file-search | 0 |
-| ai103-function-runtime | 0 |
-| ai103-function-calling | 0 |
-| ai103-mcp-tools | 0 |
-| ai103-knowledge-source-selection | 0 |
-| ai103-retrieval-behavior | 0 |
-| ai103-orchestration-patterns | 0 |
-| ai103-maker-checker | 0 |
-| ai103-prompt-engineering | 0 |
-| ai103-system-message | 0 |
-| ai103-rag-design | 0 |
-| ai103-model-deployment-options | 0 |
-| ai103-agent-production | 0 |
-| ai103-workflows | 0 |
-| ai103-workflow-code-integration | 0 |
-| ai103-prompt-shields | 0 |
-| ai103-tracing | 0 |
-| ai103-rag-evaluators | 0 |
-| ai103-image-generation | 0 |
-| ai103-vision-detail | 0 |
-| ai103-vision-request-shapes | 0 |
-| ai103-video-generation | 0 |
-| ai103-content-understanding-overview | 0 |
-| ai103-content-understanding-documents | 0 |
-| ai103-content-understanding-images | 0 |
-| ai103-video | 0 |
-| ai103-content-understanding-audio | 0 |
-| ai103-content-understanding-migration | 0 |
-| ai103-language-agent-tools | 0 |
-| ai103-language-detection | 0 |
-| ai103-pii-basics | 0 |
-| ai103-translator-basics | 0 |
-| ai103-speech-recognition | 0 |
-| ai103-ssml | 0 |
-| ai103-voice-live | 0 |
-| ai103-voice-customization | 0 |
-| ai103-speech-translation | 0 |
-| ai103-indexer-pipeline | 0 |
-| ai103-search-custom-skill | 0 |
-| ai103-search-query-types | 0 |
-| ai103-search-filters | 0 |
-| ai103-document-layout | 0 |
-| ai103-analyzer-definition | 0 |
-| ai103-analyzer-execution | 0 |
-| ai103-optimization-combinations | 0 |
-| ai103-classic-image-filters | 0 |
-| ai103-search-architecture | 0 |
-| ai103-speech-capabilities | 0 |
+| Category                              | Questions |
+| ------------------------------------- | --------: |
+| ai103-project-organization            |         0 |
+| ai103-model-selection                 |         0 |
+| ai103-model-benchmarks                |         0 |
+| ai103-deployment-planning             |         0 |
+| ai103-evaluation-planning             |         0 |
+| ai103-harm-baseline                   |         0 |
+| ai103-responsible-operations          |         0 |
+| ai103-agent-risk-boundaries           |         0 |
+| ai103-sdk                             |         0 |
+| ai103-responses-state                 |         0 |
+| ai103-code-interpreter                |         0 |
+| ai103-file-search                     |         0 |
+| ai103-function-runtime                |         0 |
+| ai103-function-calling                |         0 |
+| ai103-mcp-tools                       |         0 |
+| ai103-knowledge-source-selection      |         0 |
+| ai103-retrieval-behavior              |         0 |
+| ai103-orchestration-patterns          |         0 |
+| ai103-maker-checker                   |         0 |
+| ai103-prompt-engineering              |         0 |
+| ai103-system-message                  |         0 |
+| ai103-rag-design                      |         0 |
+| ai103-model-deployment-options        |         0 |
+| ai103-agent-production                |         0 |
+| ai103-workflows                       |         0 |
+| ai103-workflow-code-integration       |         0 |
+| ai103-prompt-shields                  |         0 |
+| ai103-tracing                         |         0 |
+| ai103-rag-evaluators                  |         0 |
+| ai103-image-generation                |         0 |
+| ai103-vision-detail                   |         0 |
+| ai103-vision-request-shapes           |         0 |
+| ai103-video-generation                |         0 |
+| ai103-content-understanding-overview  |         0 |
+| ai103-content-understanding-documents |         0 |
+| ai103-content-understanding-images    |         0 |
+| ai103-video                           |         0 |
+| ai103-content-understanding-audio     |         0 |
+| ai103-content-understanding-migration |         0 |
+| ai103-language-agent-tools            |         0 |
+| ai103-language-detection              |         0 |
+| ai103-pii-basics                      |         0 |
+| ai103-translator-basics               |         0 |
+| ai103-speech-recognition              |         0 |
+| ai103-ssml                            |         0 |
+| ai103-voice-live                      |         0 |
+| ai103-voice-customization             |         0 |
+| ai103-speech-translation              |         0 |
+| ai103-indexer-pipeline                |         0 |
+| ai103-search-custom-skill             |         0 |
+| ai103-search-query-types              |         0 |
+| ai103-search-filters                  |         0 |
+| ai103-document-layout                 |         0 |
+| ai103-analyzer-definition             |         0 |
+| ai103-analyzer-execution              |         0 |
+| ai103-optimization-combinations       |         0 |
+| ai103-classic-image-filters           |         0 |
+| ai103-search-architecture             |         0 |
+| ai103-speech-capabilities             |         0 |
 
 ## Reviewed domain counts (not a claim of availability)
 
-| Category | Questions |
-| --- | ---: |
-| plan-and-manage-an-azure-ai-solution | 10 |
-| implement-generative-ai-and-agentic-solutions | 7 |
-| implement-computer-vision-solutions | 3 |
-| implement-text-analysis-solutions | 3 |
-| implement-information-extraction-solutions | 6 |
+| Category                                      | Questions |
+| --------------------------------------------- | --------: |
+| plan-and-manage-an-azure-ai-solution          |        10 |
+| implement-generative-ai-and-agentic-solutions |         7 |
+| implement-computer-vision-solutions           |         3 |
+| implement-text-analysis-solutions             |         3 |
+| implement-information-extraction-solutions    |         6 |
 
 ## Reviewed skill counts (not a claim of availability)
 
-| Category | Questions |
-| --- | ---: |
-| choose-the-appropriate-foundry-services-for-generative-ai-and-agents | 6 |
-| set-up-ai-solutions-in-foundry | 2 |
-| manage-monitor-and-secure-ai-systems | 1 |
-| implement-responsible-ai-across-generative-ai-and-agentic-systems | 1 |
-| build-generative-applications-by-using-foundry | 0 |
-| build-agents-by-using-foundry | 5 |
-| optimize-and-operationalize-generative-ai-systems | 2 |
-| design-and-implement-image-and-video-generation-solutions | 3 |
-| design-and-implement-multimodal-understanding-workflows | 0 |
-| implement-responsible-ai-for-multimodal-content | 0 |
-| apply-language-model-text-analysis | 3 |
-| implement-speech-solutions | 0 |
-| build-retrieval-and-grounding-pipelines | 4 |
-| extract-content-from-documents | 2 |
+| Category                                                             | Questions |
+| -------------------------------------------------------------------- | --------: |
+| choose-the-appropriate-foundry-services-for-generative-ai-and-agents |         6 |
+| set-up-ai-solutions-in-foundry                                       |         2 |
+| manage-monitor-and-secure-ai-systems                                 |         1 |
+| implement-responsible-ai-across-generative-ai-and-agentic-systems    |         1 |
+| build-generative-applications-by-using-foundry                       |         0 |
+| build-agents-by-using-foundry                                        |         5 |
+| optimize-and-operationalize-generative-ai-systems                    |         2 |
+| design-and-implement-image-and-video-generation-solutions            |         3 |
+| design-and-implement-multimodal-understanding-workflows              |         0 |
+| implement-responsible-ai-for-multimodal-content                      |         0 |
+| apply-language-model-text-analysis                                   |         3 |
+| implement-speech-solutions                                           |         0 |
+| build-retrieval-and-grounding-pipelines                              |         4 |
+| extract-content-from-documents                                       |         2 |
 
 ## Reviewed subskill counts (not a claim of availability)
 
-| Category | Questions |
-| --- | ---: |
-| Choose an appropriate model for each task, including large language models (LLMs), small language models, multimodal models, and Foundry Tools | 2 |
-| Choose the appropriate Foundry services for generative tasks, grounding, vector search, agent workflows, or multimodal processing | 4 |
-| Choose an appropriate method for retrieval and indexing | 0 |
-| Choose appropriate memory, tool, and knowledge integration services for agent solutions | 0 |
-| Design Azure infrastructure for AI apps and agent-based solutions | 0 |
-| Choose appropriate deployment options | 1 |
-| Configure model and agent deployments | 1 |
-| Integrate Foundry projects with continuous integration and continuous deployment (CI/CD) pipelines | 0 |
-| Manage quotas, scaling, rate limits, and cost footprints for model and agent workloads | 0 |
-| Monitor model performance, drift, safety events, and grounding quality | 1 |
-| Monitor data ingestion quality, search index health, and relevance performance | 0 |
-| Configure security, including managed identity, private networking, keyless credentials, and role policies | 0 |
-| Configure safety filters, guardrails, risk detection, and content moderation | 0 |
-| Apply responsible AI instrumentation, including evaluators, safety evaluations, and explanation tooling | 1 |
-| Implement auditing through trace logging, provenance metadata, and approval workflows | 0 |
-| Govern agent behavior with oversight modes, constraints, and tool-access controls | 0 |
-| Deploy and consume LLMs, small models, code models, and multimodal models | 0 |
-| Implement retrieval-augmented generation (RAG) in an application | 0 |
-| Design workflows, tool-augmented flows, and multistep reasoning pipelines | 0 |
-| Evaluate models and apps, including detecting fabrications, relevance, quality, and safety | 0 |
-| Integrate generative workflows into applications by using Foundry SDKs and connectors | 0 |
-| Configure an application to connect to a Foundry project | 0 |
-| Define agent roles, goals, conversation-tracking approach, and tool schemas | 1 |
-| Build agents that integrate retrieval, function-calling, and conversation memory | 0 |
-| Integrate agent tools, including APIs, knowledge stores, search, content understanding, and custom functions | 0 |
-| Implement orchestrated multi-agent solutions | 3 |
-| Build autonomous or semiautonomous workflows with safeguards and approval flow controls | 0 |
-| Integrate monitoring into deployed agents, evaluate agent behavior, and perform error analysis | 1 |
-| Tune generation behavior, such as prompt engineering and adjusting model parameters | 1 |
-| Implement model reflection, chain-of-thought evaluations, and self-critique loops | 0 |
-| Set up observability by implementing tracing, token analytics, safety signals, and latency breakdowns | 1 |
-| Orchestrate multiple models, flows, or hybrid LLM and rules engines | 0 |
-| Implement a solution that generates images from text prompts and reference media | 0 |
-| Implement a solution that generates videos from text prompts and reference media | 2 |
-| Configure image-editing workflows, including inpainting, mask‑based edits, and prompt‑driven modifications | 0 |
-| Implement workflows to edit generated videos | 1 |
-| Select and apply appropriate generation and editing controls provided by the platform | 0 |
-| Build a solution that analyzes visual context by using multimodal models | 0 |
-| Configure apps to produce concise or detailed captions for single or multiple images | 0 |
-| Implement a solution that enables question‑answering grounded in visual evidence | 0 |
-| Configure generation of alt‑text and extended image descriptions aligned to accessibility guidelines | 0 |
-| Implement visual understanding by configuring Azure Content Understanding in Foundry Tools to extract visual characteristics | 0 |
-| Implement video analysis workflows to process and interpret video segments | 0 |
-| Configure single‑task and pro‑mode Content Understanding pipelines | 0 |
-| Implement solutions that identify objects, components, or regions within images or video | 0 |
-| Implement filters to classify unsafe or disallowed visual content | 0 |
-| Detect and mitigate indirect prompt injection by using embedded text in images | 0 |
-| Enforce visual policy rules, such as applying watermarks, flagging prohibited symbols, upholding brand usage requirements, and detecting potentially inappropriate content | 0 |
-| Implement solutions to extract entities, topics, summaries, and structured JSON outputs by using generative prompting and Foundry Tools | 2 |
-| Configure detection of sentiment, tone, safety issues, and sensitive content | 1 |
-| Build solutions that translate text by using Azure Translator in Foundry Tools or LLM‑powered translation flows | 0 |
-| Customize language model outputs for domain tasks, such as compliance summarization and domain extraction | 0 |
-| Implement workflows to convert speech to text and text to speech for agentic interactions | 0 |
-| Integrate speech as an agent modality, including custom speech models | 0 |
-| Enable multimodal reasoning from audio inputs | 0 |
-| Translate speech into other languages by using language models and Foundry Tools | 0 |
-| Ingest and index content, such as documents, images, audio, and video | 1 |
-| Configure semantic search, hybrid search, and vector search for grounding | 2 |
-| Implement enrichment by using custom or built-in skills for text, images, and layout | 0 |
-| Configure RAG ingestion flow, including documents and using optical character recognition (OCR) | 1 |
-| Connect retrieval pipelines directly to workflows and agent tools | 0 |
-| Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction | 1 |
-| Produce clean, grounded representations to use with agents and RAG by using Content Understanding | 0 |
-| Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding | 1 |
+| Category                                                                                                                                                                   | Questions |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------: |
+| Choose an appropriate model for each task, including large language models (LLMs), small language models, multimodal models, and Foundry Tools                             |         2 |
+| Choose the appropriate Foundry services for generative tasks, grounding, vector search, agent workflows, or multimodal processing                                          |         4 |
+| Choose an appropriate method for retrieval and indexing                                                                                                                    |         0 |
+| Choose appropriate memory, tool, and knowledge integration services for agent solutions                                                                                    |         0 |
+| Design Azure infrastructure for AI apps and agent-based solutions                                                                                                          |         0 |
+| Choose appropriate deployment options                                                                                                                                      |         1 |
+| Configure model and agent deployments                                                                                                                                      |         1 |
+| Integrate Foundry projects with continuous integration and continuous deployment (CI/CD) pipelines                                                                         |         0 |
+| Manage quotas, scaling, rate limits, and cost footprints for model and agent workloads                                                                                     |         0 |
+| Monitor model performance, drift, safety events, and grounding quality                                                                                                     |         1 |
+| Monitor data ingestion quality, search index health, and relevance performance                                                                                             |         0 |
+| Configure security, including managed identity, private networking, keyless credentials, and role policies                                                                 |         0 |
+| Configure safety filters, guardrails, risk detection, and content moderation                                                                                               |         0 |
+| Apply responsible AI instrumentation, including evaluators, safety evaluations, and explanation tooling                                                                    |         1 |
+| Implement auditing through trace logging, provenance metadata, and approval workflows                                                                                      |         0 |
+| Govern agent behavior with oversight modes, constraints, and tool-access controls                                                                                          |         0 |
+| Deploy and consume LLMs, small models, code models, and multimodal models                                                                                                  |         0 |
+| Implement retrieval-augmented generation (RAG) in an application                                                                                                           |         0 |
+| Design workflows, tool-augmented flows, and multistep reasoning pipelines                                                                                                  |         0 |
+| Evaluate models and apps, including detecting fabrications, relevance, quality, and safety                                                                                 |         0 |
+| Integrate generative workflows into applications by using Foundry SDKs and connectors                                                                                      |         0 |
+| Configure an application to connect to a Foundry project                                                                                                                   |         0 |
+| Define agent roles, goals, conversation-tracking approach, and tool schemas                                                                                                |         1 |
+| Build agents that integrate retrieval, function-calling, and conversation memory                                                                                           |         0 |
+| Integrate agent tools, including APIs, knowledge stores, search, content understanding, and custom functions                                                               |         0 |
+| Implement orchestrated multi-agent solutions                                                                                                                               |         3 |
+| Build autonomous or semiautonomous workflows with safeguards and approval flow controls                                                                                    |         0 |
+| Integrate monitoring into deployed agents, evaluate agent behavior, and perform error analysis                                                                             |         1 |
+| Tune generation behavior, such as prompt engineering and adjusting model parameters                                                                                        |         1 |
+| Implement model reflection, chain-of-thought evaluations, and self-critique loops                                                                                          |         0 |
+| Set up observability by implementing tracing, token analytics, safety signals, and latency breakdowns                                                                      |         1 |
+| Orchestrate multiple models, flows, or hybrid LLM and rules engines                                                                                                        |         0 |
+| Implement a solution that generates images from text prompts and reference media                                                                                           |         0 |
+| Implement a solution that generates videos from text prompts and reference media                                                                                           |         2 |
+| Configure image-editing workflows, including inpainting, mask‑based edits, and prompt‑driven modifications                                                                 |         0 |
+| Implement workflows to edit generated videos                                                                                                                               |         1 |
+| Select and apply appropriate generation and editing controls provided by the platform                                                                                      |         0 |
+| Build a solution that analyzes visual context by using multimodal models                                                                                                   |         0 |
+| Configure apps to produce concise or detailed captions for single or multiple images                                                                                       |         0 |
+| Implement a solution that enables question‑answering grounded in visual evidence                                                                                           |         0 |
+| Configure generation of alt‑text and extended image descriptions aligned to accessibility guidelines                                                                       |         0 |
+| Implement visual understanding by configuring Azure Content Understanding in Foundry Tools to extract visual characteristics                                               |         0 |
+| Implement video analysis workflows to process and interpret video segments                                                                                                 |         0 |
+| Configure single‑task and pro‑mode Content Understanding pipelines                                                                                                         |         0 |
+| Implement solutions that identify objects, components, or regions within images or video                                                                                   |         0 |
+| Implement filters to classify unsafe or disallowed visual content                                                                                                          |         0 |
+| Detect and mitigate indirect prompt injection by using embedded text in images                                                                                             |         0 |
+| Enforce visual policy rules, such as applying watermarks, flagging prohibited symbols, upholding brand usage requirements, and detecting potentially inappropriate content |         0 |
+| Implement solutions to extract entities, topics, summaries, and structured JSON outputs by using generative prompting and Foundry Tools                                    |         2 |
+| Configure detection of sentiment, tone, safety issues, and sensitive content                                                                                               |         1 |
+| Build solutions that translate text by using Azure Translator in Foundry Tools or LLM‑powered translation flows                                                            |         0 |
+| Customize language model outputs for domain tasks, such as compliance summarization and domain extraction                                                                  |         0 |
+| Implement workflows to convert speech to text and text to speech for agentic interactions                                                                                  |         0 |
+| Integrate speech as an agent modality, including custom speech models                                                                                                      |         0 |
+| Enable multimodal reasoning from audio inputs                                                                                                                              |         0 |
+| Translate speech into other languages by using language models and Foundry Tools                                                                                           |         0 |
+| Ingest and index content, such as documents, images, audio, and video                                                                                                      |         1 |
+| Configure semantic search, hybrid search, and vector search for grounding                                                                                                  |         2 |
+| Implement enrichment by using custom or built-in skills for text, images, and layout                                                                                       |         0 |
+| Configure RAG ingestion flow, including documents and using optical character recognition (OCR)                                                                            |         1 |
+| Connect retrieval pipelines directly to workflows and agent tools                                                                                                          |         0 |
+| Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction                                                                  |         1 |
+| Produce clean, grounded representations to use with agents and RAG by using Content Understanding                                                                          |         0 |
+| Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding                                                  |         1 |
 
 ## Reviewed difficulty counts (not a claim of availability)
 
-| Category | Questions |
-| --- | ---: |
-| beginner | 12 |
-| intermediate | 16 |
-| advanced | 1 |
-| expert | 0 |
+| Category     | Questions |
+| ------------ | --------: |
+| beginner     |        12 |
+| intermediate |        16 |
+| advanced     |         1 |
+| expert       |         0 |
 
 ## Reviewed complexity counts (not a claim of availability)
 
-| Category | Questions |
-| --- | ---: |
-| concept-recall | 10 |
-| technical-implementation | 6 |
-| scenario-based | 11 |
-| troubleshooting | 2 |
-| architecture-design | 0 |
+| Category                 | Questions |
+| ------------------------ | --------: |
+| concept-recall           |        10 |
+| technical-implementation |         6 |
+| scenario-based           |        11 |
+| troubleshooting          |         2 |
+| architecture-design      |         0 |
 
 ## Reviewed type counts (not a claim of availability)
 
-| Category | Questions |
-| --- | ---: |
-| single-select | 7 |
-| multi-select | 1 |
-| true-false | 0 |
-| scenario | 19 |
-| code | 2 |
+| Category      | Questions |
+| ------------- | --------: |
+| single-select |         7 |
+| multi-select  |         1 |
+| true-false    |         0 |
+| scenario      |        19 |
+| code          |         2 |
 
 ## Reviewed source counts (not a claim of availability)
 
-| Category | Questions |
-| --- | ---: |
-| ai103-project-organization | 0 |
-| ai103-model-selection | 2 |
-| ai103-model-benchmarks | 3 |
-| ai103-deployment-planning | 1 |
-| ai103-evaluation-planning | 1 |
-| ai103-harm-baseline | 0 |
-| ai103-responsible-operations | 0 |
-| ai103-agent-risk-boundaries | 1 |
-| ai103-sdk | 0 |
-| ai103-responses-state | 2 |
-| ai103-code-interpreter | 1 |
-| ai103-file-search | 3 |
-| ai103-function-runtime | 0 |
-| ai103-function-calling | 1 |
-| ai103-mcp-tools | 1 |
-| ai103-knowledge-source-selection | 0 |
-| ai103-retrieval-behavior | 0 |
-| ai103-orchestration-patterns | 3 |
-| ai103-maker-checker | 1 |
-| ai103-prompt-engineering | 0 |
-| ai103-system-message | 1 |
-| ai103-rag-design | 0 |
-| ai103-model-deployment-options | 0 |
-| ai103-agent-production | 1 |
-| ai103-workflows | 0 |
-| ai103-workflow-code-integration | 0 |
-| ai103-prompt-shields | 0 |
-| ai103-tracing | 0 |
-| ai103-rag-evaluators | 0 |
-| ai103-image-generation | 0 |
-| ai103-vision-detail | 0 |
-| ai103-vision-request-shapes | 0 |
-| ai103-video-generation | 3 |
-| ai103-content-understanding-overview | 3 |
-| ai103-content-understanding-documents | 1 |
-| ai103-content-understanding-images | 0 |
-| ai103-video | 0 |
-| ai103-content-understanding-audio | 0 |
-| ai103-content-understanding-migration | 1 |
-| ai103-language-agent-tools | 2 |
-| ai103-language-detection | 1 |
-| ai103-pii-basics | 1 |
-| ai103-translator-basics | 0 |
-| ai103-speech-recognition | 0 |
-| ai103-ssml | 0 |
-| ai103-voice-live | 0 |
-| ai103-voice-customization | 0 |
-| ai103-speech-translation | 0 |
-| ai103-indexer-pipeline | 2 |
-| ai103-search-custom-skill | 0 |
-| ai103-search-query-types | 0 |
-| ai103-search-filters | 2 |
-| ai103-document-layout | 0 |
-| ai103-analyzer-definition | 2 |
-| ai103-analyzer-execution | 1 |
-| ai103-optimization-combinations | 0 |
-| ai103-classic-image-filters | 0 |
-| ai103-search-architecture | 4 |
-| ai103-speech-capabilities | 0 |
+| Category                              | Questions |
+| ------------------------------------- | --------: |
+| ai103-project-organization            |         0 |
+| ai103-model-selection                 |         2 |
+| ai103-model-benchmarks                |         3 |
+| ai103-deployment-planning             |         1 |
+| ai103-evaluation-planning             |         1 |
+| ai103-harm-baseline                   |         0 |
+| ai103-responsible-operations          |         0 |
+| ai103-agent-risk-boundaries           |         1 |
+| ai103-sdk                             |         0 |
+| ai103-responses-state                 |         2 |
+| ai103-code-interpreter                |         1 |
+| ai103-file-search                     |         3 |
+| ai103-function-runtime                |         0 |
+| ai103-function-calling                |         1 |
+| ai103-mcp-tools                       |         1 |
+| ai103-knowledge-source-selection      |         0 |
+| ai103-retrieval-behavior              |         0 |
+| ai103-orchestration-patterns          |         3 |
+| ai103-maker-checker                   |         1 |
+| ai103-prompt-engineering              |         0 |
+| ai103-system-message                  |         1 |
+| ai103-rag-design                      |         0 |
+| ai103-model-deployment-options        |         0 |
+| ai103-agent-production                |         1 |
+| ai103-workflows                       |         0 |
+| ai103-workflow-code-integration       |         0 |
+| ai103-prompt-shields                  |         0 |
+| ai103-tracing                         |         0 |
+| ai103-rag-evaluators                  |         0 |
+| ai103-image-generation                |         0 |
+| ai103-vision-detail                   |         0 |
+| ai103-vision-request-shapes           |         0 |
+| ai103-video-generation                |         3 |
+| ai103-content-understanding-overview  |         3 |
+| ai103-content-understanding-documents |         1 |
+| ai103-content-understanding-images    |         0 |
+| ai103-video                           |         0 |
+| ai103-content-understanding-audio     |         0 |
+| ai103-content-understanding-migration |         1 |
+| ai103-language-agent-tools            |         2 |
+| ai103-language-detection              |         1 |
+| ai103-pii-basics                      |         1 |
+| ai103-translator-basics               |         0 |
+| ai103-speech-recognition              |         0 |
+| ai103-ssml                            |         0 |
+| ai103-voice-live                      |         0 |
+| ai103-voice-customization             |         0 |
+| ai103-speech-translation              |         0 |
+| ai103-indexer-pipeline                |         2 |
+| ai103-search-custom-skill             |         0 |
+| ai103-search-query-types              |         0 |
+| ai103-search-filters                  |         2 |
+| ai103-document-layout                 |         0 |
+| ai103-analyzer-definition             |         2 |
+| ai103-analyzer-execution              |         1 |
+| ai103-optimization-combinations       |         0 |
+| ai103-classic-image-filters           |         0 |
+| ai103-search-architecture             |         4 |
+| ai103-speech-capabilities             |         0 |
 
 ## Published domain weighting
 
@@ -429,7 +429,7 @@ Report created: 2026-09-14T20:50:08.557Z. This is not a retrieval or verificatio
 ## Correct-answer positions (before gameplay shuffling; each multi-select key counted)
 
 | Category | Questions |
-| --- | ---: |
+| -------- | --------: |
 
 ## Uncovered subskills (playable coverage only)
 
@@ -730,6 +730,7 @@ Report created: 2026-09-14T20:50:08.557Z. This is not a retrieval or verificatio
 ## Review queue
 
 Verified entries marked credential-or-mode-gate are reviewed but unavailable, not missing authored content.
+
 - **ai103-001** (verified; credential-or-mode-gate): pronoun-review. Review notes: Accept the foundational definition-ownership decision. Both alternatives are real approaches documented together; two choices limit discrimination but do not create a false rival. The simple scenario label is accurate and the absence of custom runtime code is decisive. Existing ID continuity is retained, not inherited approval..
 - **ai103-002** (rejected; content-review): no content finding. Review notes: The Python 2.x key is technically sound, but strict adversarial quality fails. A raw model key with the project endpoint has no documented valid AIProjectClient context. Moving the key to OpenAI v1 repairs the option rather than supplies a counterexample. SEM-001 retains this stable ID over g-014/g-015; retention does not override this rejection..
 - **ai103-004** (manual-review-required; content-review): pronoun-review. Review notes: The key and every alternative are fully supported, with model/location availability correctly supplied. Withhold for difficulty review: choosing the one row with data-zone geography and reserved PTUs is a routine two-axis deployment lookup, not an advanced architecture problem. The architecture-design complexity describes the decision type but does not justify the frozen advanced difficulty..
@@ -860,432 +861,432 @@ Verified entries marked credential-or-mode-gate are reviewed but unavailable, no
 - **ai103-v-014** (manual-review-required; content-review): pronoun-review. Review notes: 36/48 and a prohibited zero. Preserve the technical manual hold for missing GA evidence and answer leakage. Full reading of audit pair ai103-p-031 confirms a different safe-level configurability fact, not a duplicate of inclusive Medium thresholds. Distinctness cannot repair this item's missing assessment value; any option or label repair restarts all passes. Separate complexity reassessment: Complexity separately assessed: technical-implementation is unsupported because each option discloses its full permitted/blocked severity set and the key copies the stem's set. The learner need not recall or apply a threshold rule at all. This is literal matching rather than implementing a policy, independently of its beginner label. The existing zero, answer-clue failure and missing GA evidence remain; neither the scenario nor parameter language earns applied credit. Maintain manual and explicitly exclude from applied coverage. Even a recall relabel alone would not remove the answer leakage. Final semantic-ledger reconciliation: ai103-p-031 / ai103-v-014: The safe-severity question tests whether an annotation level can be configured for blocking. The image-policy question asks which inclusive harmful-severity threshold allows low while blocking medium/high. These are different facts in the same explicitly Classic scope. However, the latter choices print their entire blocked and permitted sets, so the requested match can be performed without knowing the product; distinction from the safe-level fact does not rescue its reasoning. ai103-v-014 remains manual for lifecycle evidence, answer disclosure and overstated technical-implementation. The zero difficulty-authenticity score and excluded status are preserved..
 - **ai103-v-015** (manual-review-required; content-review): pronoun-review. Review notes: 46/48 for modest advanced depth and the weaker segmentation alternative. The exact deployment association and response contract are directly evidenced, with approval made explicit. Global audit found no duplicate current moderation-integration decision; this is not the threshold-label task in v-014. Separate complexity reassessment: Complexity separately assessed: architecture-design is overstated. Resource, analyzer, model deployment, approval and the application's own-handling policy are already fixed. The keyed answer selects the documented deployment configuration surface and response field; it does not design the application's moderation decision flow, ownership, failure handling or a cross-component alternative. There is modest implementation integration in connecting Guardrails to content_filters, but it is not an architectural design choice as authored. Do not silently downgrade the label while counting it as applied. New manual hold for exact architecture classification. A renewed label correction or an actual architectural scenario requires authoring and both independent reviews again. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling..
 - **ai103-x-001** (verified; credential-or-mode-gate): pronoun-review. Review notes: The key survives the image-versus-OCR challenge. Neighboring x-010 tests merging existing OCR and x-009 tests persistence, not this node identity. Final duplicate clearance still requires the global audit.
-Independent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.
-Final independently scored rubric total: 47/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Ingest and index content, such as documents, images, audio, and video; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: This asks about one indexer enrichment tree, not image storage across resources or query-time generation.
-plan: Image normalization configuration is necessary; no free-tier allowance or all-tier support is claimed. The architecture separately labels Serverless preview.
-role: No authorization repair is asked: identifying a tree node does not grant the indexer source access or call a protected model.
-preconditions: The stem asks what to populate, not what an unconfigured indexer already returns; this respects the lesson requirement to configure image extraction.
-featureStatus: Classic enrichment is the scope. No agentic retrieval or preview Serverless behavior is borrowed from the architecture overview.
-sourceChanges: The frozen lesson explicitly separates normalized_images from content and OCR Text. No newer source-review date is substituted.
-stemSufficiency: Embedded images and a later image-consuming skill distinguish the collection from original text, metadata and language.
-explanationBounds: The explanation correctly says normalization is not OCR output; it promises neither recognition accuracy nor implicit storage.
-reasoningDepth: An appropriate foundational node-identification item; it is not an advanced ingestion troubleshooting question. Authored complexity assessed separately: concept-recall; classification supported: true; applied reasoning demonstrated: false. Identifying normalized_images among field names is direct concept recognition. The introductory pipeline narrative does not require implementing or diagnosing an image extraction configuration. The authored recall classification is accurate; do not count it as applied. Separate difficulty assessment: Beginner is appropriate for this field-identity fact. This difficulty judgment is separate from the absence of applied reasoning.
-answerClues: All choices name fields and their contents with parallel syntax. The image wording makes this straightforward, consistent with beginner.
-Quality warning response: Pronoun warning inspected: each extracted image and this purpose refer unambiguously to the downstream image input.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Independent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.
+  Final independently scored rubric total: 47/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Ingest and index content, such as documents, images, audio, and video; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: This asks about one indexer enrichment tree, not image storage across resources or query-time generation.
+  plan: Image normalization configuration is necessary; no free-tier allowance or all-tier support is claimed. The architecture separately labels Serverless preview.
+  role: No authorization repair is asked: identifying a tree node does not grant the indexer source access or call a protected model.
+  preconditions: The stem asks what to populate, not what an unconfigured indexer already returns; this respects the lesson requirement to configure image extraction.
+  featureStatus: Classic enrichment is the scope. No agentic retrieval or preview Serverless behavior is borrowed from the architecture overview.
+  sourceChanges: The frozen lesson explicitly separates normalized_images from content and OCR Text. No newer source-review date is substituted.
+  stemSufficiency: Embedded images and a later image-consuming skill distinguish the collection from original text, metadata and language.
+  explanationBounds: The explanation correctly says normalization is not OCR output; it promises neither recognition accuracy nor implicit storage.
+  reasoningDepth: An appropriate foundational node-identification item; it is not an advanced ingestion troubleshooting question. Authored complexity assessed separately: concept-recall; classification supported: true; applied reasoning demonstrated: false. Identifying normalized_images among field names is direct concept recognition. The introductory pipeline narrative does not require implementing or diagnosing an image extraction configuration. The authored recall classification is accurate; do not count it as applied. Separate difficulty assessment: Beginner is appropriate for this field-identity fact. This difficulty judgment is separate from the absence of applied reasoning.
+  answerClues: All choices name fields and their contents with parallel syntax. The image wording makes this straightforward, consistent with beginner.
+  Quality warning response: Pronoun warning inspected: each extracted image and this purpose refer unambiguously to the downstream image input.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-002** (rejected; content-review): pronoun-review. Review notes: Push is defensible, but the counterexample for d must remain supported pull serialization, never a fictitious non-JSON push contract. This limits distractor evidence and plausibility scores.
-I read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.
-Independent audit comparison: I read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.
-Final independently scored rubric total: 42/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Ingest and index content, such as documents, images, audio, and video; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: The stem explicitly limits this to classic index-bound ingestion, excluding remote knowledge-source retrieval.
-plan: No tier-dependent connector entitlement is assumed: absence of a supported connector is supplied rather than guessed.
-role: Upload still needs authorized service access; no option claims JSON conversion creates permission. Permission is not the defect under test.
-preconditions: Schema-compatible JSON and application-side conversion make push feasible without adding a serialization or connector requirement.
-featureStatus: Classic-search GA is explicit in the architecture comparison; Serverless preview and agentic status are irrelevant to choosing push.
-sourceChanges: Read the current architecture indexing section and unsupported-source checklist, not the broader marketing description of multi-source access.
-stemSufficiency: Unsupported pull plus prepared JSON identifies a concrete integration boundary. The alternatives cannot satisfy both facts.
-explanationBounds: The explanation correctly distinguishes write ingestion from read querying; it does not claim every non-JSON source is intrinsically unsupported.
-reasoningDepth: Moderate application of two supplied constraints. The unsupported-source sentence largely reveals the branch, so difficulty earns 3 rather than 4. Authored complexity assessed separately: scenario-based; classification supported: true; applied reasoning demonstrated: true. The actual decision allocates ingestion ownership using two established conditions: unsupported pull source and already serialized JSON. Application-owned conversion makes push feasible while a query cannot write. This is modest scenario application, not merely a named pipeline, but SEM-009 independently excludes the repeated decision. Separate difficulty assessment: Intermediate depth is modest and was scored down; genuine application does not remove the independently established duplicate.
-answerClues: The distractor explicitly saying unsupported source is easy to eliminate; non-JSON automatic conversion is plausible only under supported pull. No unique grammar clue.
-Quality warning response: Pronoun warning inspected: those records are the already converted records. The actual blocking problem is the independently confirmed SEM-009 duplicate.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  I read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.
+  Independent audit comparison: I read both full immutable questions, options and explanations. Both use the same unsupported-source plus application-owned JSON conversion facts to select push, and both reject query-based ingestion and unsupported pull. p-007 additionally needs changes delivered as they occur. x-002 adds no independent ingestion decision; different concept IDs do not make it original. Reject x-002 as a current duplicate, without approving p-007 or editing either record.
+  Final independently scored rubric total: 42/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Ingest and index content, such as documents, images, audio, and video; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: The stem explicitly limits this to classic index-bound ingestion, excluding remote knowledge-source retrieval.
+  plan: No tier-dependent connector entitlement is assumed: absence of a supported connector is supplied rather than guessed.
+  role: Upload still needs authorized service access; no option claims JSON conversion creates permission. Permission is not the defect under test.
+  preconditions: Schema-compatible JSON and application-side conversion make push feasible without adding a serialization or connector requirement.
+  featureStatus: Classic-search GA is explicit in the architecture comparison; Serverless preview and agentic status are irrelevant to choosing push.
+  sourceChanges: Read the current architecture indexing section and unsupported-source checklist, not the broader marketing description of multi-source access.
+  stemSufficiency: Unsupported pull plus prepared JSON identifies a concrete integration boundary. The alternatives cannot satisfy both facts.
+  explanationBounds: The explanation correctly distinguishes write ingestion from read querying; it does not claim every non-JSON source is intrinsically unsupported.
+  reasoningDepth: Moderate application of two supplied constraints. The unsupported-source sentence largely reveals the branch, so difficulty earns 3 rather than 4. Authored complexity assessed separately: scenario-based; classification supported: true; applied reasoning demonstrated: true. The actual decision allocates ingestion ownership using two established conditions: unsupported pull source and already serialized JSON. Application-owned conversion makes push feasible while a query cannot write. This is modest scenario application, not merely a named pipeline, but SEM-009 independently excludes the repeated decision. Separate difficulty assessment: Intermediate depth is modest and was scored down; genuine application does not remove the independently established duplicate.
+  answerClues: The distractor explicitly saying unsupported source is easy to eliminate; non-JSON automatic conversion is plausible only under supported pull. No unique grammar clue.
+  Quality warning response: Pronoun warning inspected: those records are the already converted records. The actual blocking problem is the independently confirmed SEM-009 duplicate.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-003** (manual-review-required; content-review): no content finding. Review notes: The question tests only hybrid selection. Broad conceptual overlap with legacy hybrid material warrants an originality deduction and independent global comparison, not inferred ranking support.
-I read the actual archived 028 options and explanation, which distinguish parallel text/vector retrieval, RRF, k=40 and top=8. x-003 only recognizes the combined request type. The author withholding file expressly calls x-003 a separately reserved elementary fact, not renewal of 028; I agree this can be a deliberate split. The global audit nevertheless assigns final fact-identity accounting to the parent/content owner. Keep x-003 manual until that disposition is recorded; this is not a current-bank duplicate exclusion, and no old advanced coverage is restored.
-Independent audit comparison: I read the actual archived 028 options and explanation, which distinguish parallel text/vector retrieval, RRF, k=40 and top=8. x-003 only recognizes the combined request type. The author withholding file expressly calls x-003 a separately reserved elementary fact, not renewal of 028; I agree this can be a deliberate split. The global audit nevertheless assigns final fact-identity accounting to the parent/content owner. Keep x-003 manual until that disposition is recorded; this is not a current-bank duplicate exclusion, and no old advanced coverage is restored.
-Final independently scored rubric total: 47/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: One index and one request are stated; this is not cross-index aggregation or agentic query planning.
-plan: The question assumes populated vector and searchable text fields, not a tier upgrade or semantic-ranker purchase.
-role: Selecting a query form neither changes index access nor introduces a permission bypass; caller authorization remains required.
-preconditions: Both field types are supplied. No vectorizer, embedding dimension or k value is silently prescribed.
-featureStatus: The source labels the separate agentic row preview. This answer uses the nonpreview hybrid row only.
-sourceChanges: Current query forms were reread. The architecture and query article disagree on broad agentic status, but that disagreement cannot change this hybrid definition.
-stemSufficiency: The requirement explicitly includes both text and vector components, eliminating either single-mode alternative.
-explanationBounds: No RRF, parallel execution, k/top relationship or guaranteed relevance is asserted; old ai103-028 cannot be renewed by this citation.
-reasoningDepth: Accurate beginner taxonomy recognition, not a complex ranking problem. Historical compound hybrid facts remain separate. Authored complexity assessed separately: concept-recall; classification supported: true; applied reasoning demonstrated: false. Selecting the query-form name for text plus vector in one request is taxonomy recall. There is no ranking parameter interpretation, code construction or retrieval diagnosis. Correctly authored as recall and never restored advanced or applied coverage from archived 028. Separate difficulty assessment: Beginner fits. The remaining historical-split accounting hold is an identity issue, not a difficulty or complexity upgrade.
-answerClues: Parallel query-form choices are readable. The word hybrid is an intentional foundational concept, not an implausible format clue.
-No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  I read the actual archived 028 options and explanation, which distinguish parallel text/vector retrieval, RRF, k=40 and top=8. x-003 only recognizes the combined request type. The author withholding file expressly calls x-003 a separately reserved elementary fact, not renewal of 028; I agree this can be a deliberate split. The global audit nevertheless assigns final fact-identity accounting to the parent/content owner. Keep x-003 manual until that disposition is recorded; this is not a current-bank duplicate exclusion, and no old advanced coverage is restored.
+  Independent audit comparison: I read the actual archived 028 options and explanation, which distinguish parallel text/vector retrieval, RRF, k=40 and top=8. x-003 only recognizes the combined request type. The author withholding file expressly calls x-003 a separately reserved elementary fact, not renewal of 028; I agree this can be a deliberate split. The global audit nevertheless assigns final fact-identity accounting to the parent/content owner. Keep x-003 manual until that disposition is recorded; this is not a current-bank duplicate exclusion, and no old advanced coverage is restored.
+  Final independently scored rubric total: 47/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: One index and one request are stated; this is not cross-index aggregation or agentic query planning.
+  plan: The question assumes populated vector and searchable text fields, not a tier upgrade or semantic-ranker purchase.
+  role: Selecting a query form neither changes index access nor introduces a permission bypass; caller authorization remains required.
+  preconditions: Both field types are supplied. No vectorizer, embedding dimension or k value is silently prescribed.
+  featureStatus: The source labels the separate agentic row preview. This answer uses the nonpreview hybrid row only.
+  sourceChanges: Current query forms were reread. The architecture and query article disagree on broad agentic status, but that disagreement cannot change this hybrid definition.
+  stemSufficiency: The requirement explicitly includes both text and vector components, eliminating either single-mode alternative.
+  explanationBounds: No RRF, parallel execution, k/top relationship or guaranteed relevance is asserted; old ai103-028 cannot be renewed by this citation.
+  reasoningDepth: Accurate beginner taxonomy recognition, not a complex ranking problem. Historical compound hybrid facts remain separate. Authored complexity assessed separately: concept-recall; classification supported: true; applied reasoning demonstrated: false. Selecting the query-form name for text plus vector in one request is taxonomy recall. There is no ranking parameter interpretation, code construction or retrieval diagnosis. Correctly authored as recall and never restored advanced or applied coverage from archived 028. Separate difficulty assessment: Beginner fits. The remaining historical-split accounting hold is an identity issue, not a difficulty or complexity upgrade.
+  answerClues: Parallel query-form choices are readable. The word hybrid is an intentional foundational concept, not an implausible format clue.
+  No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-004** (verified; credential-or-mode-gate): pronoun-review. Review notes: Fresh adversarial pass: d alone equals the full original-case Category without a normalizer. I checked every OData literal and the valid original JSON; alternative stored strings or a case-normalizer are explicit sourced countercontexts, not the current input. The authorized classification/tag/date repair preserves the factual record. Verified as beginner concept recall only, with zero applied credit and no gameplay admission..
 - **ai103-x-005** (manual-review-required; content-review): no content finding. Review notes: Independent quality hold agrees with technical nonapproval: 42/48 and advanced difficulty unsupported. Re-authoring an applied migration problem requires fresh generation and both independent passes, not a metadata difficulty change.
-Final independently scored rubric total: 42/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: Schema capability is the defect; ranking, analyzers and tenant scope are not involved.
-plan: The team may rebuild or add fields; no zero-downtime alias migration or tier capacity assumption is introduced.
-role: Schema modification and reload require authorized administration, already granted by the scenario rather than a named role guess.
-preconditions: The field currently has filterable false and reload is permitted, supporting both keyed strategies.
-featureStatus: No preview filter override or mutable-attribute feature is asserted. The source explicitly forbids the proposed existing-field change.
-sourceChanges: The direct existing-field prohibition was reread; it remains the current frozen evidence for both choices.
-stemSufficiency: The complete two-answer set is supported, but the problem nearly states the documented alternative pair.
-explanationBounds: Reloading is necessary for useful values. The explanation does not promise a rebuild preserves all service state.
-reasoningDepth: Advanced is not earned: this is one documented schema limitation with two listed alternatives, not a migration trade-off. Authored complexity assessed separately: troubleshooting; classification supported: false; applied reasoning demonstrated: false. The scenario presents a new filter requirement and states the old field attribute; it does not require tracing a failure or discriminating causes. The correct pair repeats the documented add-field/rebuild alternatives to one immutable attribute. Troubleshooting overstates the demonstrated task. It must not count as applied troubleshooting solely because schema changes are mentioned. Separate difficulty assessment: Advanced was independently unsupported and remains a separate quality hold. A simpler implementation-oriented rewrite would still restart generation and both review passes.
-answerClues: The two correct answers are the only two that actually create a filterable representation; the parser distractor is weak.
-Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
-No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 42/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: Schema capability is the defect; ranking, analyzers and tenant scope are not involved.
+  plan: The team may rebuild or add fields; no zero-downtime alias migration or tier capacity assumption is introduced.
+  role: Schema modification and reload require authorized administration, already granted by the scenario rather than a named role guess.
+  preconditions: The field currently has filterable false and reload is permitted, supporting both keyed strategies.
+  featureStatus: No preview filter override or mutable-attribute feature is asserted. The source explicitly forbids the proposed existing-field change.
+  sourceChanges: The direct existing-field prohibition was reread; it remains the current frozen evidence for both choices.
+  stemSufficiency: The complete two-answer set is supported, but the problem nearly states the documented alternative pair.
+  explanationBounds: Reloading is necessary for useful values. The explanation does not promise a rebuild preserves all service state.
+  reasoningDepth: Advanced is not earned: this is one documented schema limitation with two listed alternatives, not a migration trade-off. Authored complexity assessed separately: troubleshooting; classification supported: false; applied reasoning demonstrated: false. The scenario presents a new filter requirement and states the old field attribute; it does not require tracing a failure or discriminating causes. The correct pair repeats the documented add-field/rebuild alternatives to one immutable attribute. Troubleshooting overstates the demonstrated task. It must not count as applied troubleshooting solely because schema changes are mentioned. Separate difficulty assessment: Advanced was independently unsupported and remains a separate quality hold. A simpler implementation-oriented rewrite would still restart generation and both review passes.
+  answerClues: The two correct answers are the only two that actually create a filterable representation; the parser distractor is weak.
+  Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
+  No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-006** (verified; credential-or-mode-gate): no content finding. Review notes: The code and ge/lt boundary were inspected independently. Correctness is not based solely on the English word minimum; the numeric-filter contract and retained search term both matter.
-Final independently scored rubric total: 47/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: Classic keyword retrieval and nonvector numeric filtering occur in one request; vector filter modes are excluded.
-plan: No ranking subscription or special tier is needed for the stated Boolean predicate; the existing field is explicitly filterable.
-role: This narrows eligible search results but is not an access-control policy or permission grant.
-preconditions: The stem supplies searchable text, numeric PageCount and filterability; the code preserves inspection.
-featureStatus: The cited REST example actually uses 2026-04-01. No preview selector is introduced.
-sourceChanges: Read both combined-query and numeric-field sections; snippets containing number tokens are not evidence for numeric search.
-stemSufficiency: The inclusive minimum follows from excluding fewer than twelve, and text matching must remain.
-explanationBounds: The answer adds only the numeric constraint and does not promise exact keyword matching or particular relevance scores.
-reasoningDepth: Combining two independent conditions is a modest intermediate task, not deep troubleshooting; authenticity receives 3. Authored complexity assessed separately: technical-implementation; classification supported: true; applied reasoning demonstrated: true. Unlike the literal-only x-004, this item changes a request while preserving an independent search constraint. The learner must translate excluding reports shorter than twelve into inclusive ge, apply it to a filterable numeric field rather than search tokens, and reject a superficially valid range edit that replaces the text query with *. Those interacting request semantics establish technical application; the mere presence of JSON is not the reason. Separate difficulty assessment: Intermediate with authenticity 3 reflects a small but genuine request-composition task, not advanced diagnosis.
-answerClues: All choices are request edits. Wildcard and opposite-bound alternatives are realistic mistakes without a unique long-key cue.
-No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 47/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure semantic search, hybrid search, and vector search for grounding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: Classic keyword retrieval and nonvector numeric filtering occur in one request; vector filter modes are excluded.
+  plan: No ranking subscription or special tier is needed for the stated Boolean predicate; the existing field is explicitly filterable.
+  role: This narrows eligible search results but is not an access-control policy or permission grant.
+  preconditions: The stem supplies searchable text, numeric PageCount and filterability; the code preserves inspection.
+  featureStatus: The cited REST example actually uses 2026-04-01. No preview selector is introduced.
+  sourceChanges: Read both combined-query and numeric-field sections; snippets containing number tokens are not evidence for numeric search.
+  stemSufficiency: The inclusive minimum follows from excluding fewer than twelve, and text matching must remain.
+  explanationBounds: The answer adds only the numeric constraint and does not promise exact keyword matching or particular relevance scores.
+  reasoningDepth: Combining two independent conditions is a modest intermediate task, not deep troubleshooting; authenticity receives 3. Authored complexity assessed separately: technical-implementation; classification supported: true; applied reasoning demonstrated: true. Unlike the literal-only x-004, this item changes a request while preserving an independent search constraint. The learner must translate excluding reports shorter than twelve into inclusive ge, apply it to a filterable numeric field rather than search tokens, and reject a superficially valid range edit that replaces the text query with *. Those interacting request semantics establish technical application; the mere presence of JSON is not the reason. Separate difficulty assessment: Intermediate with authenticity 3 reflects a small but genuine request-composition task, not advanced diagnosis.
+  answerClues: All choices are request edits. Wildcard and opposite-bound alternatives are realistic mistakes without a unique long-key cue.
+  No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-007** (rejected; content-review): no content finding. Review notes: 41/48. The key is technically strong but positional or identifier-free modes cannot be invented to satisfy a counterexample field. Preserve technical quality hold and require fresh authored repair.
-I independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.
-Independent audit comparison: I independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.
-Final independently scored rubric total: 38/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: Correlation is within a custom-skill batch, not persistent index keys or workflow run identifiers.
-plan: The error is independent of batch size limits, timeout and hosting tier; no retry guarantee is assumed.
-role: Authorization already succeeded because the skill returned values; changing identity permissions cannot repair record correlation.
-preconditions: Two distinct known input IDs and reversed completion eliminate a single-record or stable-order exception.
-featureStatus: The required record envelope is documented without preview scope. No special parallel-execution feature is needed.
-sourceChanges: The actual a1/b5 output reversal was inspected, not merely the technical reviewer summary.
-stemSufficiency: The stem exposes the exact defect, leaving a one-step original-ID repair rather than substantial diagnosis.
-explanationBounds: Correct values are not sufficient without identity. The explanation makes no claim about callback order or transport retry semantics.
-reasoningDepth: Advanced is inflated: one invariant is recalled and applied directly. It needs a genuinely interacting error case to earn that label. Authored complexity assessed separately: troubleshooting; classification supported: true; applied reasoning demonstrated: true. The failure is output/input association despite successful enrichment values, and the repair preserves identity rather than completion order or algorithm output. That is a narrow real fault-boundary repair and supports troubleshooting at a basic level. It is nevertheless the same correlation decision as p-027 and has weak alternatives, so no applied coverage is admitted. Separate difficulty assessment: Troubleshooting is a task category, not a synonym for advanced. The advanced label fails independently, and SEM-010 is additionally blocking.
-answerClues: Three alternatives deliberately violate required identity. Two have no valid alternate mode in this API, weakening sourced distractor plausibility.
-No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed, originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  I independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.
+  Independent audit comparison: I independently compared the full response-monitoring problem with the reordered-result repair. p-027 requires recordId rather than output position and also interprets each record error. x-007 only repeats the original-ID contract while its values already succeed. Its completion-order narrative is not another fact. Reject x-007 as a narrower current duplicate, in addition to its advanced-quality hold; no approval is transferred to p-027.
+  Final independently scored rubric total: 38/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: Correlation is within a custom-skill batch, not persistent index keys or workflow run identifiers.
+  plan: The error is independent of batch size limits, timeout and hosting tier; no retry guarantee is assumed.
+  role: Authorization already succeeded because the skill returned values; changing identity permissions cannot repair record correlation.
+  preconditions: Two distinct known input IDs and reversed completion eliminate a single-record or stable-order exception.
+  featureStatus: The required record envelope is documented without preview scope. No special parallel-execution feature is needed.
+  sourceChanges: The actual a1/b5 output reversal was inspected, not merely the technical reviewer summary.
+  stemSufficiency: The stem exposes the exact defect, leaving a one-step original-ID repair rather than substantial diagnosis.
+  explanationBounds: Correct values are not sufficient without identity. The explanation makes no claim about callback order or transport retry semantics.
+  reasoningDepth: Advanced is inflated: one invariant is recalled and applied directly. It needs a genuinely interacting error case to earn that label. Authored complexity assessed separately: troubleshooting; classification supported: true; applied reasoning demonstrated: true. The failure is output/input association despite successful enrichment values, and the repair preserves identity rather than completion order or algorithm output. That is a narrow real fault-boundary repair and supports troubleshooting at a basic level. It is nevertheless the same correlation decision as p-027 and has weak alternatives, so no applied coverage is admitted. Separate difficulty assessment: Troubleshooting is a task category, not a synonym for advanced. The advanced label fails independently, and SEM-010 is additionally blocking.
+  answerClues: Three alternatives deliberately violate required identity. Two have no valid alternate mode in this API, weakening sourced distractor plausibility.
+  No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed, originalContent, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-008** (manual-review-required; content-review): negative-wording. Review notes: 43/48. Technically b/d survive the security counterexamples, but authored difficulty and obvious endpoint mismatch prevent strict approval; technical nonapproval is independently maintained.
-Final independently scored rubric total: 43/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: The relevant boundary is search-service identity to a particular HTTPS application, not organization membership.
-plan: No hosting-plan or subscription-level entitlement is asserted. HTTPS and the custom-skill contract are the operative constraints.
-role: The stem explicitly supplies managed identity, Entra configuration and necessary authorization; authResourceId alone does not grant access.
-preconditions: Caller and target prerequisites are supplied, so the two remaining checks are audience and endpoint consistency.
-featureStatus: No preview API or user-assigned-identity selector is required by these choices. The article describes the contract directly.
-sourceChanges: Read the current security paragraph requiring matching URI and resource, rather than inferring audience from enabled identity.
-stemSufficiency: The two-answer set is complete for the remaining definition checks, but most of the configuration is handed to the learner.
-explanationBounds: The explanation correctly refuses to name an unsupported role or imply an audience property grants authorization.
-reasoningDepth: Two adjacent documentation bullets are recalled; the advanced label is not earned by a real authorization diagnosis. Authored complexity assessed separately: technical-implementation; classification supported: true; applied reasoning demonstrated: true. The answer binds two actual skill-definition properties after separating caller identity and target authorization prerequisites. Matching the endpoint to the app audience is an implementation constraint, not a generic security slogan. This supports technical application but only modestly; supplied prerequisites and obvious mismatch still cause the difficulty/quality hold. Separate difficulty assessment: The advanced label is not earned by two adjacent configuration checks. Application demonstrated does not waive the 43/48 quality failure.
-answerClues: b and d repeat the application binding, while c explicitly says another application. This makes the pair unusually easy to select.
-Quality warning response: Negative wording not an ambiguity: not an API key defines the authentication requirement. Nevertheless the supplied prerequisites and obvious mismatch make the advanced item too easy.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 43/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: The relevant boundary is search-service identity to a particular HTTPS application, not organization membership.
+  plan: No hosting-plan or subscription-level entitlement is asserted. HTTPS and the custom-skill contract are the operative constraints.
+  role: The stem explicitly supplies managed identity, Entra configuration and necessary authorization; authResourceId alone does not grant access.
+  preconditions: Caller and target prerequisites are supplied, so the two remaining checks are audience and endpoint consistency.
+  featureStatus: No preview API or user-assigned-identity selector is required by these choices. The article describes the contract directly.
+  sourceChanges: Read the current security paragraph requiring matching URI and resource, rather than inferring audience from enabled identity.
+  stemSufficiency: The two-answer set is complete for the remaining definition checks, but most of the configuration is handed to the learner.
+  explanationBounds: The explanation correctly refuses to name an unsupported role or imply an audience property grants authorization.
+  reasoningDepth: Two adjacent documentation bullets are recalled; the advanced label is not earned by a real authorization diagnosis. Authored complexity assessed separately: technical-implementation; classification supported: true; applied reasoning demonstrated: true. The answer binds two actual skill-definition properties after separating caller identity and target authorization prerequisites. Matching the endpoint to the app audience is an implementation constraint, not a generic security slogan. This supports technical application but only modestly; supplied prerequisites and obvious mismatch still cause the difficulty/quality hold. Separate difficulty assessment: The advanced label is not earned by two adjacent configuration checks. Application demonstrated does not waive the 43/48 quality failure.
+  answerClues: b and d repeat the application binding, while c explicitly says another application. This makes the pair unusually easy to select.
+  Quality warning response: Negative wording not an ambiguity: not an API key defines the authentication requirement. Nevertheless the supplied prerequisites and obvious mismatch make the advanced item too easy.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-009** (manual-review-required; content-review): pronoun-review. Review notes: 43/48. Maintain the technical quality hold. x-010 shares the mapping boundary but adds a distinct merge requirement; global comparison remains required.
-Independent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.
-Final independently scored rubric total: 43/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: This is the enrichment-to-index persistence boundary, not a query ranking or schema-name problem.
-plan: No knowledge-store projection, tier change or index capacity condition is implied by mapping one output.
-role: The indexer successfully loads source values; no authorization failure is alleged. Editing mapping still requires normal management access.
-preconditions: Successful skill output, existing target field and absent output mapping are all supplied, leaving no extraction defect to infer.
-featureStatus: The answer uses classic explicit enriched-output mapping, not preview query-time enrichment.
-sourceChanges: Read the lesson final two bullets together; implicit direct mapping cannot be generalized to all enriched outputs.
-stemSufficiency: The defect is practically diagnosed in the question by stating no output mapping exists.
-explanationBounds: The explanation correctly preserves the working producer and does not say a query edit can alter stored fields.
-reasoningDepth: Advanced difficulty is not genuine: a single missing mapping is explicitly disclosed. Authored complexity assessed separately: troubleshooting; classification supported: false; applied reasoning demonstrated: false. The stem explicitly says the skill value exists and its mapping is missing, then the key says add that mapping. There is no remaining cause discrimination or implementation of a mapping path beyond repeating the named absence. The troubleshooting classification is overstated, separately from difficulty; retain exclusion rather than using the pipeline narrative as applied evidence. Separate difficulty assessment: Advanced remains unsupported. Both quality objections apply to this exact unchanged candidate.
-answerClues: The only option that adds the stated missing mapping is also the only option preserving the required producer and output.
-Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
-Quality warning response: Pronoun warning inspected: that field is contractDate; successful producer and missing mapping are clear, but the diagnosis is handed to the learner.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Independent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.
+  Final independently scored rubric total: 43/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Implement enrichment by using custom or built-in skills for text, images, and layout; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: This is the enrichment-to-index persistence boundary, not a query ranking or schema-name problem.
+  plan: No knowledge-store projection, tier change or index capacity condition is implied by mapping one output.
+  role: The indexer successfully loads source values; no authorization failure is alleged. Editing mapping still requires normal management access.
+  preconditions: Successful skill output, existing target field and absent output mapping are all supplied, leaving no extraction defect to infer.
+  featureStatus: The answer uses classic explicit enriched-output mapping, not preview query-time enrichment.
+  sourceChanges: Read the lesson final two bullets together; implicit direct mapping cannot be generalized to all enriched outputs.
+  stemSufficiency: The defect is practically diagnosed in the question by stating no output mapping exists.
+  explanationBounds: The explanation correctly preserves the working producer and does not say a query edit can alter stored fields.
+  reasoningDepth: Advanced difficulty is not genuine: a single missing mapping is explicitly disclosed. Authored complexity assessed separately: troubleshooting; classification supported: false; applied reasoning demonstrated: false. The stem explicitly says the skill value exists and its mapping is missing, then the key says add that mapping. There is no remaining cause discrimination or implementation of a mapping path beyond repeating the named absence. The troubleshooting classification is overstated, separately from difficulty; retain exclusion rather than using the pipeline narrative as applied evidence. Separate difficulty assessment: Advanced remains unsupported. Both quality objections apply to this exact unchanged candidate.
+  answerClues: The only option that adds the stated missing mapping is also the only option preserving the required producer and output.
+  Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
+  Quality warning response: Pronoun warning inspected: that field is contractDate; successful producer and missing mapping are clear, but the diagnosis is handed to the learner.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-010** (verified; credential-or-mode-gate): no content finding. Review notes: The two-stage merge-and-map answer is supported. x-009 overlap must be considered globally, but the required preservation of multiple text inputs supplies a separate reasoning step.
-Independent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.
-Final independently scored rubric total: 47/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure RAG ingestion flow, including documents and using optical character recognition (OCR); actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: The repair is one ingestion dataflow before retrieval, not a generative prompt or image-storage change.
-plan: OCR already succeeded, so OCR billing and model provisioning are not unmentioned conditions for this repair.
-role: Existing OCR and source text establish working access. Mapping does not create new resource permissions.
-preconditions: All source text and relevant OCR children already exist; the missing merge and output mapping are actionable.
-featureStatus: No preview OCR or multimodal generation behavior is used; this is the classic lesson pipeline.
-sourceChanges: The actual tree and merge paragraph were reread. The original-source and OCR-child separation remains explicit.
-stemSufficiency: The retain-both requirement rules out replacing content with one image result; one target field makes combination necessary.
-explanationBounds: No exact ordering offset, perfect OCR or safe HTML execution is claimed; the answer concerns preserving available text.
-reasoningDepth: This intermediate problem combines tree location, merge and persistence. It is distinct from merely naming normalized_images. Authored complexity assessed separately: scenario-based; classification supported: true; applied reasoning demonstrated: true. The learner must reconcile text at different tree locations with a one-field retrieval requirement while preserving both sources. Mapping one existing node is insufficient; a merge followed by persistence is required, and replacing content with one OCR child loses data. These two dataflow decisions establish application independently of the RAG narrative. Separate difficulty assessment: Intermediate is appropriate for the interacting merge-and-map requirement; it does not imply advanced OCR troubleshooting.
-answerClues: The key is somewhat longer because it includes both actions, but all options are dataflow changes and retain/discard semantics carry the distinction.
-No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Independent audit comparison: The three full records share the enrichment tree but require different decisions: image-input location, explicit enriched-output persistence, and retaining original plus per-image OCR through merge then mapping. x-010 needs the merge operation even when a mapping-only fix would leave OCR absent. x-009 remains quality-held; this comparison does not count them as three difficult scenarios or prove global uniqueness.
+  Final independently scored rubric total: 47/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure RAG ingestion flow, including documents and using optical character recognition (OCR); actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: The repair is one ingestion dataflow before retrieval, not a generative prompt or image-storage change.
+  plan: OCR already succeeded, so OCR billing and model provisioning are not unmentioned conditions for this repair.
+  role: Existing OCR and source text establish working access. Mapping does not create new resource permissions.
+  preconditions: All source text and relevant OCR children already exist; the missing merge and output mapping are actionable.
+  featureStatus: No preview OCR or multimodal generation behavior is used; this is the classic lesson pipeline.
+  sourceChanges: The actual tree and merge paragraph were reread. The original-source and OCR-child separation remains explicit.
+  stemSufficiency: The retain-both requirement rules out replacing content with one image result; one target field makes combination necessary.
+  explanationBounds: No exact ordering offset, perfect OCR or safe HTML execution is claimed; the answer concerns preserving available text.
+  reasoningDepth: This intermediate problem combines tree location, merge and persistence. It is distinct from merely naming normalized_images. Authored complexity assessed separately: scenario-based; classification supported: true; applied reasoning demonstrated: true. The learner must reconcile text at different tree locations with a one-field retrieval requirement while preserving both sources. Mapping one existing node is insufficient; a merge followed by persistence is required, and replacing content with one OCR child loses data. These two dataflow decisions establish application independently of the RAG narrative. Separate difficulty assessment: Intermediate is appropriate for the interacting merge-and-map requirement; it does not imply advanced OCR troubleshooting.
+  answerClues: The key is somewhat longer because it includes both actions, but all options are dataflow changes and retain/discard semantics carry the distinction.
+  No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-011** (manual-review-required; content-review): pronoun-review. Review notes: 43/48. Technically defensible despite the stale sample, but advanced difficulty and distractor design remain insufficient. Preserve technical hold, not a version-label-only repair.
-Final independently scored rubric total: 43/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure RAG ingestion flow, including documents and using optical character recognition (OCR); actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: This is a downstream Document Intelligence consumer, not Azure AI Search skill HTML rendering or browser execution.
-plan: Existing successful layout output removes file-size and tier quotas from the repair. The source F0 two-page limit is not silently generalized.
-role: No permission repair is needed for already received output; accepting structure does not authorize executing arbitrary HTML.
-preconditions: The version, Markdown interface and parser behavior are stated. Preserving relationships is required, not merely plain text.
-featureStatus: The actual moniker and note bind 2024-11-30 GA. A remaining pipe-table example does not erase the explicit change note.
-sourceChanges: The article contains both the explicit HTML transition and a leftover pipe example; I weighed the version-specific note rather than accepting the sample as universal.
-stemSufficiency: The stem directly says HTML is discarded and structure is lost, so accepting HTML is nearly given away.
-explanationBounds: It correctly frames parsing as data preprocessing, not unsafe rendering, and does not guarantee all tables are detected.
-reasoningDepth: Version-aware but only one repair step; an advanced label requires more than knowing the representation change. Authored complexity assessed separately: troubleshooting; classification supported: true; applied reasoning demonstrated: true. A version-specific output/consumer mismatch causes loss of table relationships. The repair reconciles HTML structures inside a required Markdown interface rather than switching to OCR-only content. That is genuine but shallow interoperability troubleshooting; the explicitly disclosed discard behavior and weak distractors still prevent an advanced-quality pass. Separate difficulty assessment: The task category is supported, but advanced difficulty remains overstated and 43/48 remains failing. A troubleshooting label alone cannot establish boss-level challenge.
-answerClues: The three wrong choices all discard required structure. The longest key is the only one preserving the stated interface.
-Quality warning response: Pronoun warning inspected: it means the preprocessor and their structure means the report tables. The real issue is difficulty, not pronoun ambiguity.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 43/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Configure RAG ingestion flow, including documents and using optical character recognition (OCR); actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: This is a downstream Document Intelligence consumer, not Azure AI Search skill HTML rendering or browser execution.
+  plan: Existing successful layout output removes file-size and tier quotas from the repair. The source F0 two-page limit is not silently generalized.
+  role: No permission repair is needed for already received output; accepting structure does not authorize executing arbitrary HTML.
+  preconditions: The version, Markdown interface and parser behavior are stated. Preserving relationships is required, not merely plain text.
+  featureStatus: The actual moniker and note bind 2024-11-30 GA. A remaining pipe-table example does not erase the explicit change note.
+  sourceChanges: The article contains both the explicit HTML transition and a leftover pipe example; I weighed the version-specific note rather than accepting the sample as universal.
+  stemSufficiency: The stem directly says HTML is discarded and structure is lost, so accepting HTML is nearly given away.
+  explanationBounds: It correctly frames parsing as data preprocessing, not unsafe rendering, and does not guarantee all tables are detected.
+  reasoningDepth: Version-aware but only one repair step; an advanced label requires more than knowing the representation change. Authored complexity assessed separately: troubleshooting; classification supported: true; applied reasoning demonstrated: true. A version-specific output/consumer mismatch causes loss of table relationships. The repair reconciles HTML structures inside a required Markdown interface rather than switching to OCR-only content. That is genuine but shallow interoperability troubleshooting; the explicitly disclosed discard behavior and weak distractors still prevent an advanced-quality pass. Separate difficulty assessment: The task category is supported, but advanced difficulty remains overstated and 43/48 remains failing. A troubleshooting label alone cannot establish boss-level challenge.
+  answerClues: The three wrong choices all discard required structure. The longest key is the only one preserving the stated interface.
+  Quality warning response: Pronoun warning inspected: it means the preprocessor and their structure means the report tables. The real issue is difficulty, not pronoun ambiguity.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-012** (manual-review-required; content-review): negative-wording, pronoun-review. Review notes: 41/48. Independent review sustains the technical quality hold: repeated absence clauses and an explicitly diagnosed dependency make the question self-answering.
-Final independently scored rubric total: 41/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Connect retrieval pipelines directly to workflows and agent tools; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: One project-to-search integration is missing; this is not model training, cross-tenant authorization or a knowledge-base migration.
-plan: No specific Foundry SDK shape, index-asset entitlement or paid retrieval tier is claimed.
-role: A connection still needs valid authorized access; the wording cannot be read as bypassing search RBAC.
-preconditions: Model and populated index exist. The question isolates the missing connection instead of a retrieval-quality failure.
-featureStatus: Classic index retrieval is stated, so newer agentic retrieval status in the broader articles is not imported.
-sourceChanges: The current source qualifies connection representation by feature and API surface, which the explanation correctly retains.
-stemSufficiency: The stem literally names the absent connection and then asks which configuration supplies it; it is too revealing.
-explanationBounds: Fine-tuning, chunking and prompts remain useful in their own contexts; none is globally dismissed.
-reasoningDepth: A foundational dependency-recognition item wearing an intermediate scenario label, without competing feasible integration choices. Authored complexity assessed separately: scenario-based; classification supported: false; applied reasoning demonstrated: false. The stem names the absent connection and every distractor explicitly leaves that connection absent. Selecting configure the connection is a direct verbal completion, with no workflow inference, configuration decision or diagnosis. Scenario-shaped wording does not justify scenario-based applied classification. Separate difficulty assessment: Intermediate was independently unsupported; both difficulty and complexity require a fresh authored repair.
-answerClues: Every distractor repeats leaving the connection absent. This permits solving from wording alone.
-Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
-Quality warning response: Negative/pronoun warnings inspected: its component is the workflow retriever; repeated leaving the connection absent clauses make alternatives self-disqualifying.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 41/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Connect retrieval pipelines directly to workflows and agent tools; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: One project-to-search integration is missing; this is not model training, cross-tenant authorization or a knowledge-base migration.
+  plan: No specific Foundry SDK shape, index-asset entitlement or paid retrieval tier is claimed.
+  role: A connection still needs valid authorized access; the wording cannot be read as bypassing search RBAC.
+  preconditions: Model and populated index exist. The question isolates the missing connection instead of a retrieval-quality failure.
+  featureStatus: Classic index retrieval is stated, so newer agentic retrieval status in the broader articles is not imported.
+  sourceChanges: The current source qualifies connection representation by feature and API surface, which the explanation correctly retains.
+  stemSufficiency: The stem literally names the absent connection and then asks which configuration supplies it; it is too revealing.
+  explanationBounds: Fine-tuning, chunking and prompts remain useful in their own contexts; none is globally dismissed.
+  reasoningDepth: A foundational dependency-recognition item wearing an intermediate scenario label, without competing feasible integration choices. Authored complexity assessed separately: scenario-based; classification supported: false; applied reasoning demonstrated: false. The stem names the absent connection and every distractor explicitly leaves that connection absent. Selecting configure the connection is a direct verbal completion, with no workflow inference, configuration decision or diagnosis. Scenario-shaped wording does not justify scenario-based applied classification. Separate difficulty assessment: Intermediate was independently unsupported; both difficulty and complexity require a fresh authored repair.
+  answerClues: Every distractor repeats leaving the connection absent. This permits solving from wording alone.
+  Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
+  Quality warning response: Negative/pronoun warnings inspected: its component is the workflow retriever; repeated leaving the connection absent clauses make alternatives self-disqualifying.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-013** (manual-review-required; content-review): negative-wording, pronoun-review. Review notes: 43/48. Technically correct but the intermediate label and distractor challenge do not meet strict realism. Preserve technical hold.
-Final independently scored rubric total: 43/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Connect retrieval pipelines directly to workflows and agent tools; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: The requirement is single-record follow-up retrieval, not a new ranking pipeline or external original-file fetch.
-plan: No semantic-ranker or vector-tier assumption affects a known-ID lookup.
-role: The lookup does not bypass authorization or expose nonretrievable fields; the explanation explicitly bounds available fields.
-preconditions: A selected hit and retained ID are supplied, making lookup feasible without a missing key.
-featureStatus: Document lookup is an ordinary documented operation, not a preview agentic tool.
-sourceChanges: Read the actual document-lookup paragraph and query-form rows, rather than treating semantic similarity as identity.
-stemSufficiency: Exact document and retained ID are repeated; the operation name nearly restates the requirement.
-explanationBounds: The answer requests the indexed record, not all original-file bytes or fields excluded from index exposure.
-reasoningDepth: This is beginner operation recognition, not intermediate multi-step reasoning despite its workflow narrative. Authored complexity assessed separately: technical-implementation; classification supported: false; applied reasoning demonstrated: false. Known ID plus exact selected document directly defines lookup by ID. No concrete invocation, response handling, projection, permission constraint or competing implementation is evaluated. The workflow frame and operation names do not make this technical implementation; it is recall of an operation purpose. Separate difficulty assessment: The intermediate depth is separately inadequate. Do not change complexity to recall in metadata and retain the old review hash.
-answerClues: The only option using the supplied ID is the key, while all others ignore it; discrimination is weak.
-Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
-Quality warning response: Negative/pronoun warnings inspected: that exact document is the selected hit. The need for an ID lookup is stated too directly for intermediate difficulty.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 43/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / build-retrieval-and-grounding-pipelines / Connect retrieval pipelines directly to workflows and agent tools; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: The requirement is single-record follow-up retrieval, not a new ranking pipeline or external original-file fetch.
+  plan: No semantic-ranker or vector-tier assumption affects a known-ID lookup.
+  role: The lookup does not bypass authorization or expose nonretrievable fields; the explanation explicitly bounds available fields.
+  preconditions: A selected hit and retained ID are supplied, making lookup feasible without a missing key.
+  featureStatus: Document lookup is an ordinary documented operation, not a preview agentic tool.
+  sourceChanges: Read the actual document-lookup paragraph and query-form rows, rather than treating semantic similarity as identity.
+  stemSufficiency: Exact document and retained ID are repeated; the operation name nearly restates the requirement.
+  explanationBounds: The answer requests the indexed record, not all original-file bytes or fields excluded from index exposure.
+  reasoningDepth: This is beginner operation recognition, not intermediate multi-step reasoning despite its workflow narrative. Authored complexity assessed separately: technical-implementation; classification supported: false; applied reasoning demonstrated: false. Known ID plus exact selected document directly defines lookup by ID. No concrete invocation, response handling, projection, permission constraint or competing implementation is evaluated. The workflow frame and operation names do not make this technical implementation; it is recall of an operation purpose. Separate difficulty assessment: The intermediate depth is separately inadequate. Do not change complexity to recall in metadata and retain the old review hash.
+  answerClues: The only option using the supplied ID is the key, while all others ignore it; discrimination is weak.
+  Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
+  Quality warning response: Negative/pronoun warnings inspected: that exact document is the selected hit. The need for an ID lookup is stated too directly for intermediate difficulty.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-014** (verified; credential-or-mode-gate): no content finding. Review notes: The key survives the alternate existing-summary context. The broad method distinction is common and may overlap other expansion candidates; originality is provisional pending global comparison.
-Independent audit comparison: The full photograph question excludes document-only Extract and pairs Classify with Generate. x-014 instead requires literal document extraction as a keyed action and classification, with new narrative composition as the distractor distinction. The actual Content Understanding overview independently read in this pass scopes Extract to documents. This is a genuine modality-dependent operation difference, not just changing the image noun; no judgment is made here on v-011 technical approval or advanced difficulty.
-Final independently scored rubric total: 47/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: This is document field-method selection, not choosing an entire service or a video extraction mode.
-plan: No training entitlement or unsupported modality is assumed: extract is document-scoped in the overview.
-role: Selecting a field method does not change resource permissions or authorize content access.
-preconditions: The stem differentiates an existing reference string, a newly composed overview and predefined categories; all necessary semantic conditions are explicit.
-featureStatus: The overview identifies 2025-11-01 GA core extraction and separates preview agentic features. This asks only the established methods.
-sourceChanges: The source allows method omission in some GA scenarios; the question asks correct explicit assignments, not whether every field must specify a method.
-stemSufficiency: The two correct options are complete: a and d. Neither b nor c matches the stated evidence/output relationship.
-explanationBounds: It does not claim generation can never produce a category-looking string; it identifies the appropriate method contract.
-reasoningDepth: A suitable beginner three-way distinction, not a training-limits or confidence problem. Authored complexity assessed separately: concept-recall; classification supported: true; applied reasoning demonstrated: false. The item matches extract, classify and generate to their definitions. Choosing two does not itself create applied reasoning. Its recall classification is accurate even though document-only Extract differentiates it from the photo comparator for originality. Separate difficulty assessment: Beginner is appropriate. Distinctness from v-011 neither increases difficulty nor makes the encounter applied.
-answerClues: All four choices use the same use-method-for construction. Two correct choices are not uniquely long or qualified.
-No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Independent audit comparison: The full photograph question excludes document-only Extract and pairs Classify with Generate. x-014 instead requires literal document extraction as a keyed action and classification, with new narrative composition as the distractor distinction. The actual Content Understanding overview independently read in this pass scopes Extract to documents. This is a genuine modality-dependent operation difference, not just changing the image noun; no judgment is made here on v-011 technical approval or advanced difficulty.
+  Final independently scored rubric total: 47/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: This is document field-method selection, not choosing an entire service or a video extraction mode.
+  plan: No training entitlement or unsupported modality is assumed: extract is document-scoped in the overview.
+  role: Selecting a field method does not change resource permissions or authorize content access.
+  preconditions: The stem differentiates an existing reference string, a newly composed overview and predefined categories; all necessary semantic conditions are explicit.
+  featureStatus: The overview identifies 2025-11-01 GA core extraction and separates preview agentic features. This asks only the established methods.
+  sourceChanges: The source allows method omission in some GA scenarios; the question asks correct explicit assignments, not whether every field must specify a method.
+  stemSufficiency: The two correct options are complete: a and d. Neither b nor c matches the stated evidence/output relationship.
+  explanationBounds: It does not claim generation can never produce a category-looking string; it identifies the appropriate method contract.
+  reasoningDepth: A suitable beginner three-way distinction, not a training-limits or confidence problem. Authored complexity assessed separately: concept-recall; classification supported: true; applied reasoning demonstrated: false. The item matches extract, classify and generate to their definitions. Choosing two does not itself create applied reasoning. Its recall classification is accurate even though document-only Extract differentiates it from the photo comparator for originality. Separate difficulty assessment: Beginner is appropriate. Distinctness from v-011 neither increases difficulty nor makes the encounter applied.
+  answerClues: All four choices use the same use-method-for construction. Two correct choices are not uniquely long or qualified.
+  No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-015** (manual-review-required; content-review): no content finding. Review notes: 41/48. I do not inherit the technical approval: the key is supported, but c has no sourced correct-elsewhere configuration and the intermediate item is shallow. Request fresh authored repair rather than inventing a setting or changing the label.
-Final independently scored rubric total: 41/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: The integration consumes typed field values, not OCR spans, document display layout or an external formatting library.
-plan: No model or paid-tier selection is being tested; the nonconfigurable behavior is stated for supported typed values.
-role: Nothing about read permissions controls normalization mode; setting access cannot make an unsupported property exist.
-preconditions: Supported typed dates/numbers and canonical downstream values are explicit. Locale-specific formatting is intentionally not guessed.
-featureStatus: The cited overview identifies GA core extraction, but the documents article is mixed-version. No preview-only setting is inferred.
-sourceChanges: The exact automatic/nonconfigurable sentence was reread. It supports b but gives no defensible feature context for c.
-stemSufficiency: The integration goal distinguishes typed normalization from display strings; however c is an invented configuration knob.
-explanationBounds: The authored application-display-formatting aside is conceptual, not evidence that the service exposes configurable normalization.
-reasoningDepth: A single automatic-behavior recall fact with weak alternatives; intermediate depth is limited. Authored complexity assessed separately: scenario-based; classification supported: false; applied reasoning demonstrated: false. The decisive fact is one sentence: typed normalization is automatic and nonconfigurable. Downstream canonical values only restate the feature purpose; the item does not require a conversion decision, locale analysis or integration transformation. Scenario-based is overstated in addition to the unsourced configurable-normalization distractor. Separate difficulty assessment: Intermediate is weak independently of the complexity defect. Retain the earlier 41/48 hold without inventing a configuration counterexample.
-answerClues: The key is the uniquely detailed instruction not to configure a mode; c directly invents the opposite knob, encouraging elimination.
-Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
-No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 41/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: The integration consumes typed field values, not OCR spans, document display layout or an external formatting library.
+  plan: No model or paid-tier selection is being tested; the nonconfigurable behavior is stated for supported typed values.
+  role: Nothing about read permissions controls normalization mode; setting access cannot make an unsupported property exist.
+  preconditions: Supported typed dates/numbers and canonical downstream values are explicit. Locale-specific formatting is intentionally not guessed.
+  featureStatus: The cited overview identifies GA core extraction, but the documents article is mixed-version. No preview-only setting is inferred.
+  sourceChanges: The exact automatic/nonconfigurable sentence was reread. It supports b but gives no defensible feature context for c.
+  stemSufficiency: The integration goal distinguishes typed normalization from display strings; however c is an invented configuration knob.
+  explanationBounds: The authored application-display-formatting aside is conceptual, not evidence that the service exposes configurable normalization.
+  reasoningDepth: A single automatic-behavior recall fact with weak alternatives; intermediate depth is limited. Authored complexity assessed separately: scenario-based; classification supported: false; applied reasoning demonstrated: false. The decisive fact is one sentence: typed normalization is automatic and nonconfigurable. Downstream canonical values only restate the feature purpose; the item does not require a conversion decision, locale analysis or integration transformation. Scenario-based is overstated in addition to the unsourced configurable-normalization distractor. Separate difficulty assessment: Intermediate is weak independently of the complexity defect. Retain the earlier 41/48 hold without inventing a configuration counterexample.
+  answerClues: The key is the uniquely detailed instruction not to configure a mode; c directly invents the opposite knob, encouraging elimination.
+  Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
+  No lexical quality warning was emitted; scenario depth and alternatives were still independently challenged.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-016** (manual-review-required; content-review): pronoun-review. Review notes: 43/48. Preserve the technical quality hold: correct output contract, but insufficient intermediate challenge. Source span/geometry distinctions do not rescue the difficulty.
-Final independently scored rubric total: 43/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: The target is logical roles in PDF paragraph output, not bounding coordinates or table reconstruction.
-plan: Layout output already exists, so file size and F0 page limits are not the repair; no all-pages entitlement is asserted.
-role: Permissions do not assign paragraph roles. The caller already has the output and needs to interpret it.
-preconditions: The stem specifies PDF, v4.0 and existing text/geometry. Both named roles are supported for PDF.
-featureStatus: The actual v4.0 2024-11-30 GA moniker and role table were read, not an older version snippet.
-sourceChanges: The source says certain blocks receive predicted roles. I retain this qualification rather than treating every paragraph as labeled.
-stemSufficiency: It directly contrasts geometry already present with logical roles required, making d obvious.
-explanationBounds: The explanation avoids universal assignment and infallibility. Spans point into content; they are not logical-role labels.
-reasoningDepth: This is straightforward output-field recognition rather than intermediate interpretation of conflicting extraction results. Authored complexity assessed separately: scenario-based; classification supported: false; applied reasoning demonstrated: false. The question asks which output labels express paragraph roles, then offers paragraph roles against geometry, words and cell spans. It requires recognition of an output category rather than interpreting an extraction result or reconciling evidence. The pipeline framing does not substantiate applied scenario complexity. Separate difficulty assessment: Intermediate remains overstated. Genuine logical-versus-geometric terminology can be a useful recall fact but is not evidence for this authored nonrecall label.
-answerClues: The key repeats the logical-role terminology while three alternatives name visibly different output types.
-Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
-Quality warning response: Pronoun warning inspected: it means the pipeline. PDF and logical-role requirements are unambiguous; the output-name recognition is shallow.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 43/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / extract-content-from-documents / Extract information by using multimodal pipelines that combine OCR, layout analysis, and field extraction; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: The target is logical roles in PDF paragraph output, not bounding coordinates or table reconstruction.
+  plan: Layout output already exists, so file size and F0 page limits are not the repair; no all-pages entitlement is asserted.
+  role: Permissions do not assign paragraph roles. The caller already has the output and needs to interpret it.
+  preconditions: The stem specifies PDF, v4.0 and existing text/geometry. Both named roles are supported for PDF.
+  featureStatus: The actual v4.0 2024-11-30 GA moniker and role table were read, not an older version snippet.
+  sourceChanges: The source says certain blocks receive predicted roles. I retain this qualification rather than treating every paragraph as labeled.
+  stemSufficiency: It directly contrasts geometry already present with logical roles required, making d obvious.
+  explanationBounds: The explanation avoids universal assignment and infallibility. Spans point into content; they are not logical-role labels.
+  reasoningDepth: This is straightforward output-field recognition rather than intermediate interpretation of conflicting extraction results. Authored complexity assessed separately: scenario-based; classification supported: false; applied reasoning demonstrated: false. The question asks which output labels express paragraph roles, then offers paragraph roles against geometry, words and cell spans. It requires recognition of an output category rather than interpreting an extraction result or reconciling evidence. The pipeline framing does not substantiate applied scenario complexity. Separate difficulty assessment: Intermediate remains overstated. Genuine logical-versus-geometric terminology can be a useful recall fact but is not evidence for this authored nonrecall label.
+  answerClues: The key repeats the logical-role terminology while three alternatives name visibly different output types.
+  Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
+  Quality warning response: Pronoun warning inspected: it means the pipeline. PDF and logical-role requirements are unambiguous; the output-name recognition is shallow.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-017** (manual-review-required; content-review): absolute-wording. Review notes: 43/48. Preserve technical nonapproval for advanced quality. x-017 is not a replacement for the compound legacy ai103-030 training/OCR fact.
-The archived 030 combines estimates, review routing, training eligibility and OCR limits; x-017 isolates missing opt-in estimates. The author explicitly reserved a separate opt-in fact. I agree these are not interchangeable and that neither old training restriction is reverified. Parent must record the deliberate split for final accounting. Independently, x-017 remains manual because its advanced difficulty is not genuine.
-Independent audit comparison: The archived 030 combines estimates, review routing, training eligibility and OCR limits; x-017 isolates missing opt-in estimates. The author explicitly reserved a separate opt-in fact. I agree these are not interchangeable and that neither old training restriction is reverified. Parent must record the deliberate split for final accounting. Independently, x-017 remains manual because its advanced difficulty is not genuine.
-Final independently scored rubric total: 43/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / extract-content-from-documents / Produce clean, grounded representations to use with agents and RAG by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: The issue is document field-result configuration, not OCR repair, analyzer training eligibility or general model certainty.
-plan: Successful field output establishes an operating analyzer; no model redeployment or training entitlement is necessary to identify the opt-in.
-role: Adding the flag does not grant resource access. Missing estimates are not evidence of an RBAC error.
-preconditions: The definition explicitly lacks an opt-in, and values already return, isolating the flag rather than a field-extraction failure.
-featureStatus: The migration explicitly describes GA default changes. Preview agentic mode and new training behavior are excluded.
-sourceChanges: The current migration and document field sections agree on the flag despite illustrative training samples displaying confidence without complete configuration.
-stemSufficiency: Naming the absent opt-in in the stem makes the corrective flag highly apparent.
-explanationBounds: Confidence is not a correctness guarantee and grounding is not independent proof. Nothing here validates archived generated-field training restrictions.
-reasoningDepth: Advanced is not justified by toggling the setting whose absence is disclosed. Authored complexity assessed separately: troubleshooting; classification supported: false; applied reasoning demonstrated: false. The absence of the opt-in is explicitly supplied and the answer merely enables the opt-in property. No alternative cause, API response or field-level configuration interaction remains to diagnose. This is setting-name/default recall in a troubleshooting-shaped stem and must stay excluded. Separate difficulty assessment: Advanced remains unjustified, independently of the historical split hold. Neither provenance spans nor training-limit discussion elsewhere can raise this item complexity.
-answerClues: Only a mentions enabling estimates; the other options either deny the documented default or remove the required output.
-Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
-Quality warning response: Absolute wording inspected: the false GA-default alternative is contradicted by migration. The key does not treat confidence or a span as proof of correctness.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  The archived 030 combines estimates, review routing, training eligibility and OCR limits; x-017 isolates missing opt-in estimates. The author explicitly reserved a separate opt-in fact. I agree these are not interchangeable and that neither old training restriction is reverified. Parent must record the deliberate split for final accounting. Independently, x-017 remains manual because its advanced difficulty is not genuine.
+  Independent audit comparison: The archived 030 combines estimates, review routing, training eligibility and OCR limits; x-017 isolates missing opt-in estimates. The author explicitly reserved a separate opt-in fact. I agree these are not interchangeable and that neither old training restriction is reverified. Parent must record the deliberate split for final accounting. Independently, x-017 remains manual because its advanced difficulty is not genuine.
+  Final independently scored rubric total: 43/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / extract-content-from-documents / Produce clean, grounded representations to use with agents and RAG by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: The issue is document field-result configuration, not OCR repair, analyzer training eligibility or general model certainty.
+  plan: Successful field output establishes an operating analyzer; no model redeployment or training entitlement is necessary to identify the opt-in.
+  role: Adding the flag does not grant resource access. Missing estimates are not evidence of an RBAC error.
+  preconditions: The definition explicitly lacks an opt-in, and values already return, isolating the flag rather than a field-extraction failure.
+  featureStatus: The migration explicitly describes GA default changes. Preview agentic mode and new training behavior are excluded.
+  sourceChanges: The current migration and document field sections agree on the flag despite illustrative training samples displaying confidence without complete configuration.
+  stemSufficiency: Naming the absent opt-in in the stem makes the corrective flag highly apparent.
+  explanationBounds: Confidence is not a correctness guarantee and grounding is not independent proof. Nothing here validates archived generated-field training restrictions.
+  reasoningDepth: Advanced is not justified by toggling the setting whose absence is disclosed. Authored complexity assessed separately: troubleshooting; classification supported: false; applied reasoning demonstrated: false. The absence of the opt-in is explicitly supplied and the answer merely enables the opt-in property. No alternative cause, API response or field-level configuration interaction remains to diagnose. This is setting-name/default recall in a troubleshooting-shaped stem and must stay excluded. Separate difficulty assessment: Advanced remains unjustified, independently of the historical split hold. Neither provenance spans nor training-limit discussion elsewhere can raise this item complexity.
+  answerClues: Only a mentions enabling estimates; the other options either deny the documented default or remove the required output.
+  Repair required: authored complexity is overstated. This exact candidate remains excluded regardless of numeric rubric total. Do not change its label or content hash to reuse these passes; meaningful authored repair restarts all three contexts.
+  Quality warning response: Absolute wording inspected: the false GA-default alternative is contradicted by migration. The key does not treat confidence or a span as proof of correctness.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed, duplicatesReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-018** (manual-review-required; content-review): absolute-wording, pronoun-review. Review notes: 33/48. Preserve technical GA-version hold independently. Do not rewrite featureStatus, API text, difficulty or hashes. Approve/read exact version evidence and re-author before restarting all passes.
-Final independently scored rubric total: 33/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / extract-content-from-documents / Produce clean, grounded representations to use with agents and RAG by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: The question chooses Content Understanding representation for a downstream agent; it is not the preview agentic-mode reasoning API.
-plan: No pricing trade-off can establish an undocumented GA selector. Faster text-only versus structure remains conceptual until the exact version is sourced.
-role: Permissions cannot resolve the missing API availability evidence. Existing resource authorization is not under challenge.
-preconditions: The structural requirement is clear, but availability of the compared modes in 2025-11-01 is an unproven prerequisite.
-featureStatus: Blocking: the current document overview is mixed-version and does not pin extractionMode to GA; generic existing layout in the overview table is insufficient.
-sourceChanges: Both cited current bodies were inspected. The explicit 2026-06-01-preview agentic section and preview additions make version inference especially unsafe.
-stemSufficiency: The conceptual choice is clear but the pinned GA version overstates what its citations establish.
-explanationBounds: The explanation avoids a correctness guarantee, but it still implies the two compared mode choices exist in the stated GA API.
-reasoningDepth: A basic structure-versus-speed trade-off could be intermediate if version support were grounded and alternatives less obvious. Authored complexity assessed separately: scenario-based; classification supported: true; applied reasoning demonstrated: true. The choice weighs downstream table/section comparison and reading order against faster text-only processing. That is a genuine representation trade-off, not merely a product name. The exact GA availability prerequisite is unproven, however, so no applied credit enters reviewed or playable coverage. Separate difficulty assessment: A modest intermediate task could exist with correct version evidence and stronger alternatives. The current version-support and 33/48 holds remain unchanged.
-answerClues: The key echoes tables, sections and reading order verbatim; a says necessarily every relationship and is an overstrong distractor.
-Quality warning response: Absolute and pronoun warnings inspected: necessarily every structure is an unjustified distractor guarantee; those relationships are table/section order. The GA-version evidence gap remains blocking.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: answerDefensible, correctOptionsSupported, explanationsSupported, featureStatus, prerequisitesComplete, qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 33/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / extract-content-from-documents / Produce clean, grounded representations to use with agents and RAG by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: The question chooses Content Understanding representation for a downstream agent; it is not the preview agentic-mode reasoning API.
+  plan: No pricing trade-off can establish an undocumented GA selector. Faster text-only versus structure remains conceptual until the exact version is sourced.
+  role: Permissions cannot resolve the missing API availability evidence. Existing resource authorization is not under challenge.
+  preconditions: The structural requirement is clear, but availability of the compared modes in 2025-11-01 is an unproven prerequisite.
+  featureStatus: Blocking: the current document overview is mixed-version and does not pin extractionMode to GA; generic existing layout in the overview table is insufficient.
+  sourceChanges: Both cited current bodies were inspected. The explicit 2026-06-01-preview agentic section and preview additions make version inference especially unsafe.
+  stemSufficiency: The conceptual choice is clear but the pinned GA version overstates what its citations establish.
+  explanationBounds: The explanation avoids a correctness guarantee, but it still implies the two compared mode choices exist in the stated GA API.
+  reasoningDepth: A basic structure-versus-speed trade-off could be intermediate if version support were grounded and alternatives less obvious. Authored complexity assessed separately: scenario-based; classification supported: true; applied reasoning demonstrated: true. The choice weighs downstream table/section comparison and reading order against faster text-only processing. That is a genuine representation trade-off, not merely a product name. The exact GA availability prerequisite is unproven, however, so no applied credit enters reviewed or playable coverage. Separate difficulty assessment: A modest intermediate task could exist with correct version evidence and stronger alternatives. The current version-support and 33/48 holds remain unchanged.
+  answerClues: The key echoes tables, sections and reading order verbatim; a says necessarily every relationship and is an overstrong distractor.
+  Quality warning response: Absolute and pronoun warnings inspected: necessarily every structure is an unjustified distractor guarantee; those relationships are table/section order. The GA-version evidence gap remains blocking.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: answerDefensible, correctOptionsSupported, explanationsSupported, featureStatus, prerequisitesComplete, qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-019** (manual-review-required; content-review): pronoun-review. Review notes: 42/48. Preserve technical quality hold. Successful completion gating is correct, but invented alternative status mechanisms and elementary control flow undermine the advanced label.
-Independent audit comparison: The complete Sora question resumes a saved queued render ID after worker restart, gates download on completion, and rejects remix/new-job operations. x-019 follows a newly returned analyzer-creation Operation-Location before dependent analysis. The state object, follow-up operation and persisted restart constraint differ. Shared asynchronous control flow alone is not a duplicate, but x-019 still fails its independent advanced-realism assessment. This is not a technical review of the Sora API.
-Final independently scored rubric total: 42/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / extract-content-from-documents / Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: Creation and analysis are separate asynchronous lifecycles for the same analyzer, not one combined result payload.
-plan: No retry interval or timeout policy is inferred. The candidate does not reproduce the sample incomplete nonterminal-state loop.
-role: The valid PUT and returned operation imply accepted authenticated initiation; polling must still use authorized access.
-preconditions: The operation location is supplied and the analyzer is not yet proven ready, making status gating necessary.
-featureStatus: The actual creation REST example pins 2025-11-01; the general overview distinguishes that GA version from preview.
-sourceChanges: I read the sample loop and avoid endorsing its assumption that leaving Running implies success. The answer explicitly requires successful completion.
-stemSufficiency: The stem already identifies premature completion, so polling is an obvious single repair.
-explanationBounds: No exhaustive status list or fixed polling interval is invented; Operation-Location is not treated as an analysis payload.
-reasoningDepth: Basic asynchronous control flow does not become advanced merely by naming a REST header. Authored complexity assessed separately: troubleshooting; classification supported: true; applied reasoning demonstrated: true. The integration misinterprets acceptance as successful completion and schedules dependent analysis prematurely. Correcting the lifecycle dependency with status GET and success gating is an actual control-flow repair, even without a code sample. It is elementary troubleshooting, not sufficient advanced realism. Separate difficulty assessment: Advanced remains overstated and 42/48 still excludes it. A legitimate applied task category cannot compensate for low difficulty authenticity and implausible alternatives.
-answerClues: The key is the only option checking status; two distractors confuse operation types so starkly that they lack advanced plausibility.
-Quality warning response: Pronoun warning inspected: that response is the initial PUT response. Correct success gating does not require adopting the sample incomplete polling-state logic.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Independent audit comparison: The complete Sora question resumes a saved queued render ID after worker restart, gates download on completion, and rejects remix/new-job operations. x-019 follows a newly returned analyzer-creation Operation-Location before dependent analysis. The state object, follow-up operation and persisted restart constraint differ. Shared asynchronous control flow alone is not a duplicate, but x-019 still fails its independent advanced-realism assessment. This is not a technical review of the Sora API.
+  Final independently scored rubric total: 42/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / extract-content-from-documents / Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: Creation and analysis are separate asynchronous lifecycles for the same analyzer, not one combined result payload.
+  plan: No retry interval or timeout policy is inferred. The candidate does not reproduce the sample incomplete nonterminal-state loop.
+  role: The valid PUT and returned operation imply accepted authenticated initiation; polling must still use authorized access.
+  preconditions: The operation location is supplied and the analyzer is not yet proven ready, making status gating necessary.
+  featureStatus: The actual creation REST example pins 2025-11-01; the general overview distinguishes that GA version from preview.
+  sourceChanges: I read the sample loop and avoid endorsing its assumption that leaving Running implies success. The answer explicitly requires successful completion.
+  stemSufficiency: The stem already identifies premature completion, so polling is an obvious single repair.
+  explanationBounds: No exhaustive status list or fixed polling interval is invented; Operation-Location is not treated as an analysis payload.
+  reasoningDepth: Basic asynchronous control flow does not become advanced merely by naming a REST header. Authored complexity assessed separately: troubleshooting; classification supported: true; applied reasoning demonstrated: true. The integration misinterprets acceptance as successful completion and schedules dependent analysis prematurely. Correcting the lifecycle dependency with status GET and success gating is an actual control-flow repair, even without a code sample. It is elementary troubleshooting, not sufficient advanced realism. Separate difficulty assessment: Advanced remains overstated and 42/48 still excludes it. A legitimate applied task category cannot compensate for low difficulty authenticity and implausible alternatives.
+  answerClues: The key is the only option checking status; two distractors confuse operation types so starkly that they lack advanced plausibility.
+  Quality warning response: Pronoun warning inspected: that response is the initial PUT response. Correct success gating does not require adopting the sample incomplete polling-state logic.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: qualityReviewed. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 - **ai103-x-020** (verified; credential-or-mode-gate): pronoun-review. Review notes: 46/48. The operation choice survives the URL-access and old-preview counterexamples. Do not turn the limited operation decision into unsupported wire-format guidance.
-Final independently scored rubric total: 46/48. No score converted from a prior review.
-Current objective: implement-information-extraction-solutions / extract-content-from-documents / Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
-scope: Input transport is selected for an existing analyzer, not analyzer creation, field-schema design or a batch workflow.
-plan: Only one input is specified, consistent with the GA single-item URL-array note; no throughput entitlement is claimed.
-role: The choice does not bypass authentication. Inaccessible input location is distinct from authorization to call the analyzer.
-preconditions: The client holds the file, the analyzer exists, and no accessible URL can be supplied, making direct submission relevant.
-featureStatus: The exact migration explicitly binds the changed analyze/analyzeBinary contract to GA 2025-11-01. Older preview behavior is a distractor, not current guidance.
-sourceChanges: The migration describes base64 while the lesson speaks of binary file data. The candidate wisely selects the operation without claiming a wire encoding or content type.
-stemSufficiency: Transport constraints and the pinned migration version distinguish the correct operation from URL and creation alternatives.
-explanationBounds: No unsupported SDK signature, encoding, file-size limit or complete polling protocol is invented.
-reasoningDepth: A defensible intermediate migration decision: the old contract is plausible, and the inaccessible URL removes a common valid alternative. Authored complexity assessed separately: technical-implementation; classification supported: true; applied reasoning demonstrated: true. The integration chooses a current API operation under three relevant constraints: GA migration changes inline analyze, the analyzer already exists, and the client cannot provide an accessible URL. Selecting analyzeBinary preserves direct submission without reverting to the old preview contract or recreating the schema. This is narrow API migration application, not credit for the narrative or operation name alone; it does not demonstrate wire-format implementation. Separate difficulty assessment: Intermediate authenticity remains 3 because the binary name is suggestive and the task is limited. No higher difficulty or complete client implementation is claimed.
-answerClues: analyzeBinary is suggestive by name, but distinguishing a changed API contract from a schema operation still requires service knowledge; alternatives remain parallel actions.
-Quality warning response: Pronoun warning inspected: its input is the file held by the client. No unsupported wire-format inference is needed for the operation choice.
-Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
-Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
-Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
-Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
+  Final independently scored rubric total: 46/48. No score converted from a prior review.
+  Current objective: implement-information-extraction-solutions / extract-content-from-documents / Implement analyzers for generating structured or markdown outputs for downstream reasoning by using Content Understanding; actual April 16, 2026 guide and unchanged objective fingerprint reviewed.
+  scope: Input transport is selected for an existing analyzer, not analyzer creation, field-schema design or a batch workflow.
+  plan: Only one input is specified, consistent with the GA single-item URL-array note; no throughput entitlement is claimed.
+  role: The choice does not bypass authentication. Inaccessible input location is distinct from authorization to call the analyzer.
+  preconditions: The client holds the file, the analyzer exists, and no accessible URL can be supplied, making direct submission relevant.
+  featureStatus: The exact migration explicitly binds the changed analyze/analyzeBinary contract to GA 2025-11-01. Older preview behavior is a distractor, not current guidance.
+  sourceChanges: The migration describes base64 while the lesson speaks of binary file data. The candidate wisely selects the operation without claiming a wire encoding or content type.
+  stemSufficiency: Transport constraints and the pinned migration version distinguish the correct operation from URL and creation alternatives.
+  explanationBounds: No unsupported SDK signature, encoding, file-size limit or complete polling protocol is invented.
+  reasoningDepth: A defensible intermediate migration decision: the old contract is plausible, and the inaccessible URL removes a common valid alternative. Authored complexity assessed separately: technical-implementation; classification supported: true; applied reasoning demonstrated: true. The integration chooses a current API operation under three relevant constraints: GA migration changes inline analyze, the analyzer already exists, and the client cannot provide an accessible URL. Selecting analyzeBinary preserves direct submission without reverting to the old preview contract or recreating the schema. This is narrow API migration application, not credit for the narrative or operation name alone; it does not demonstrate wire-format implementation. Separate difficulty assessment: Intermediate authenticity remains 3 because the binary name is suggestive and the task is limited. No higher difficulty or complete client implementation is claimed.
+  answerClues: analyzeBinary is suggestive by name, but distinguishing a changed API contract from a schema operation still requires service knowledge; alternatives remain parallel actions.
+  Quality warning response: Pronoun warning inspected: its input is the file held by the client. No unsupported wire-format inference is needed for the operation choice.
+  Global 299-candidate/556-reference audit 2026-09-14T19:28:50.155Z read with exact bindings. No unlisted pair was invented as an explicit keep-distinct decision.
+  Both semantic files reviewed: The detailed cross-review covers all 299 candidates and 556 references. Its 30 current keep-distinct pairs plus 4 historical keep-distinct pairs are not 34 technical approvals. Three historical fact-split questions remain content-owner decisions. The runtime file has only one conceptId per pair, so differently labeled same-bank duplicates are not automatically enforced by its matcher; editorial exclusions must be reflected in final candidate verdicts. No well-evidenced disagreement with these relevant semantic dispositions. Agreement is based on actual compared questions, not inherited auditor confidence.
+  Checks not passed: none. All other checks reflect the actual reviewed narrow claims, not source presence alone.
+  Credential remains unverified and sealed. This staged attestation does not edit the installed bank or any source-review date..
 
 ## Sources and actual evidence dates
 
-| Source | Playable / reviewed / candidates | Retrieved | Reviewed | Supporting summary |
-| --- | ---: | --- | --- | --- |
-| ai103-project-organization: [Microsoft Foundry](https://learn.microsoft.com/en-us/training/modules/prepare-azure-ai-development/4-azure-ai-foundry) | 0 / 0 / 3 | 2026-09-14T17:53:19.416Z | 2026-09-14T18:16:22.126Z | Separates resource and project responsibilities, project assets, model endpoints, agent tools and knowledge, and SDK-driven CI/CD automation. Scope: Approve the project/resource distinction and named SDK automation. Classic hub projects are explicitly different; do not transpose their architecture to current projects. |
-| ai103-model-selection: [Explore the model catalog](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/2-explore-model-catalog) | 0 / 2 / 4 | 2026-09-14T17:53:23.437Z | 2026-09-14T18:16:22.126Z | Explains model-card capabilities and inference-task filtering; distinguishes resource-intensive LLM tasks, efficient SLM tasks, embeddings, and multimodal tasks. Scope: Do not use catalog counts or the claim that reasoning models expose all reasoning. Check actual model capability/version before selecting a concrete deployment. |
-| ai103-model-benchmarks: [Select models using benchmarks](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/3-select-models-benchmarks) | 0 / 3 / 4 | 2026-09-14T17:53:23.401Z | 2026-09-14T18:16:22.126Z | Supports comparing quality, safety, input/output cost, tail latency, TTFT and token throughput instead of ranking models by one aggregate score. Scope: Use benchmark interpretation, not mutable leaderboard rankings or benchmark examples as assessment material. |
-| ai103-deployment-planning: [Deploy models to endpoints](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/4-deploy-models) | 0 / 1 / 5 | 2026-09-14T17:53:26.099Z | 2026-09-14T18:16:22.126Z | Distinguishes deployment naming, residency and billing choices, VM quota for managed compute, deployment testing, and Entra-based production authentication. Scope: Exact global/data-zone/regional guarantees and available model/type combinations must be scoped. Do not turn advertised batch turnaround into a universal SLA. |
-| ai103-evaluation-planning: [Evaluate model performance](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/5-evaluate-performance) | 0 / 1 / 2 | 2026-09-14T17:53:26.149Z | 2026-09-14T18:16:22.126Z | Distinguishes model, agent, and existing-output dataset evaluation; covers human review, model-judged metrics, reference-based NLP metrics, and regression evaluation. Scope: Groundedness Pro and Response Completeness are preview in the current implementation reference; do not inherit an unqualified GA claim from this lesson. |
-| ai103-harm-baseline: [Measure potential harms](https://learn.microsoft.com/en-us/training/modules/responsible-ai-studio/4-measure-harms) | 0 / 0 / 2 | 2026-09-14T17:53:43.337Z | 2026-09-14T18:16:22.126Z | Establishes explicit harm criteria and a baseline, validates a small manual set before scaling automated measurement, and retains periodic human checks. Scope: Only methodology is approved; do not copy harmful example prompts or treat a numerical classifier score as proof of safety. |
-| ai103-responsible-operations: [Manage a responsible generative AI solution](https://learn.microsoft.com/en-us/training/modules/responsible-ai-studio/6-operate-responsibly) | 0 / 0 / 1 | 2026-09-14T17:53:44.714Z | 2026-09-14T18:16:22.126Z | Supports prerelease compliance reviews, phased release, incident and rollback plans, feedback channels, and privacy-aware operational telemetry. Scope: This is lifecycle methodology, not documentation of a specific automatic rollback API. |
-| ai103-agent-risk-boundaries: [Understand AI agents and Microsoft Foundry Agent Service](https://learn.microsoft.com/en-us/training/modules/develop-ai-agents-azure-vs-code/2-understand-ai-agents-foundry) | 0 / 1 / 3 | 2026-09-14T17:53:46.165Z | 2026-09-14T18:16:22.126Z | Maps autonomous-agent risks to least privilege, input validation, action gates, dependency audits and traceability; contrasts configured prompt agents with containerized custom agents. Scope: Exclude blanket automatic-tool-execution claims: local function tools require application execution. The lesson mentions drift but does not provide a drift-monitor implementation. Visual workflow lifecycle is superseded by the retiring-workflow article. |
-| ai103-sdk: [Microsoft Foundry SDKs and endpoints](https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/sdk-overview) | 0 / 0 / 9 | 2026-09-14T17:59:13.537Z | 2026-09-14T18:16:22.126Z | Defines current Foundry/OpenAI/tool endpoints, project SDK responsibilities, stable Python 2.x versus classic 1.x, and least-privilege Foundry roles. Scope: Foundry roles were renamed from Azure AI roles without changing IDs/core permissions. Scope any SDK question by language and API version; do not copy stale lesson AzureOpenAI syntax. |
-| ai103-responses-state: [Generate responses with the Responses API](https://learn.microsoft.com/en-us/training/modules/foundry-sdk/04-responses-api) | 0 / 2 / 6 | 2026-09-14T17:53:28.900Z | 2026-09-14T18:16:22.126Z | Covers response IDs, usage, previous-response chaining versus manual history, context-window costs, streaming delta/completion events, and asynchronous clients. Scope: Do not generalize model examples or parameter support across reasoning models. Published Agent Application endpoints have separate stateless behavior. |
-| ai103-code-interpreter: [Use the code\_interpreter tool](https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/03-code-interpreter) | 0 / 1 / 2 | 2026-09-14T17:53:32.691Z | 2026-09-14T18:16:22.126Z | Explains generated Python execution, sandbox constraints, uploaded-file analysis, returned runtime results, and the distinction from merely describing calculations. Scope: No unverified package availability, memory limit, or timeout number is approved. |
-| ai103-file-search: [Use the file\_search tool](https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/05-file-search) | 0 / 3 / 6 | 2026-09-14T17:53:33.053Z | 2026-09-14T18:16:22.126Z | Supports vector-store preparation, file-search tool attachment, inspection of retrieval results, data-scope choices, and quality/freshness limitations. Scope: Do not imply retrieval guarantees accuracy or instantly updates source changes. Exact service limits require further evidence. |
-| ai103-function-runtime: [Use the function tool](https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/06-function) | 0 / 0 / 4 | 2026-09-14T17:53:36.149Z | 2026-09-14T18:16:22.126Z | Separates model-requested calls from application execution and returning correlated function outputs; requires argument validation and authorization for consequential actions. Scope: Use original functions and reviewed schemas, not the training example or its external OpenAI guide as an approved source. |
-| ai103-function-calling: [Use function calling with Microsoft Foundry agents](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling) | 0 / 1 / 4 | 2026-09-14T17:59:36.530Z | 2026-09-14T18:16:22.126Z | Provides current function schema, client execution, output correlation, conversation continuation, validation, least privilege and safe side-effect controls. Scope: The article contradicts itself on portal function execution; exclude that topic and run-expiration generalizations pending clarification. |
-| ai103-mcp-tools: [Connect agents to Model Context Protocol servers](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol) | 0 / 1 / 9 | 2026-09-14T17:59:38.500Z | 2026-09-14T18:16:22.126Z | Documents project-connection authentication, tool allowlists, explicit approval, untrusted tool results, role aliases, and private MCP endpoint prerequisites. Scope: Python ordinary remote MCP use is the approved GA scope. Long-running MCP tasks/background mode and .NET preview details require Preview labels. |
-| ai103-knowledge-source-selection: [Configure data sources for knowledge bases](https://learn.microsoft.com/en-us/training/modules/introduction-foundry-iq/4-data-requirements) | 0 / 0 / 0 | 2026-09-14T17:54:03.287Z | 2026-09-14T18:16:22.126Z | Contrasts existing search indexes, files, real-time remote sources and indexed sources; supports choosing knowledge access based on freshness, enrichment and governance needs. Scope: Source-option availability is not proven by the lesson alone. Do not repeat its absolute always-current or always-faster claims. Foundry IQ/agentic retrieval questions need explicit Preview scoping where appropriate. |
-| ai103-retrieval-behavior: [Configure retrieval with Foundry IQ](https://learn.microsoft.com/en-us/training/modules/introduction-foundry-iq/5-configure-retrieval) | 0 / 0 / 1 | 2026-09-14T17:54:03.303Z | 2026-09-14T18:16:22.126Z | Defines retrieval instructions, citation/fallback requirements, test categories, and production metrics such as fallback frequency, citation frequency and retrieval accuracy. Scope: Instructions influence rather than guarantee behavior. Do not use the sample policy prose or sample citations as bank content. |
-| ai103-orchestration-patterns: [Understand agent orchestration](https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/3-understand-agent-orchestration) | 0 / 3 / 5 | 2026-09-14T17:54:23.469Z | 2026-09-14T18:16:22.126Z | Distinguishes concurrent, sequential, handoff, group-chat and adaptive-manager patterns; explains executors, conditional edges, fan-out/fan-in, events and checkpointing. Scope: Approve architecture concepts, not SDK symbols copied without version verification. Direct Agent Framework product URLs are outside the current generic Microsoft technical-prefix gate. |
-| ai103-maker-checker: [Use group chat orchestration](https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/6-use-group-chat-orchestration) | 0 / 1 / 3 | 2026-09-14T17:54:25.676Z | 2026-09-14T18:16:22.126Z | Explains iterative maker-checker refinement, a chat manager, human participation and termination constraints rather than independent parallel analysis. Scope: Implementation steps incorrectly describe group chat as all agents running concurrently, contradicting the turn-based explanation. Only the conceptual maker-checker sections are approved. |
-| ai103-prompt-engineering: [Prompt engineering techniques](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/prompt-engineering) | 0 / 0 / 3 | 2026-09-14T17:59:30.127Z | 2026-09-14T18:16:22.126Z | Supports task decomposition, few-shot instructions, output structure, fallback behavior, grounding, and temperature/top-p tradeoffs for compatible models. Scope: The chain-of-thought section explicitly applies only to non-reasoning models and disallows extracting hidden reasoning outside supported reasoning summaries. Exclude blog examples and universal tokenizer claims. |
-| ai103-system-message: [System message design](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering) | 0 / 1 / 6 | 2026-09-14T17:59:29.989Z | 2026-09-14T18:16:22.126Z | Explains role/scope, small output contracts, explicit fallback behavior, domain extraction, realistic testing and layered safety. Scope: An instruction to return JSON is not equivalent to schema-constrained structured outputs. Do not imply prompt text alone enforces security. |
-| ai103-rag-design: [Retrieval augmented generation (RAG) and indexes](https://learn.microsoft.com/en-us/azure/foundry/concepts/retrieval-augmented-generation) | 0 / 0 / 2 | 2026-09-14T17:59:30.007Z | 2026-09-14T18:16:22.126Z | Explains retrieve/augment/generate, metadata for citations, retrieval modes, private-data freshness, RAG versus behavior tuning, and security/cost/latency failure modes. Scope: Agentic-retrieval lifecycle statements conflict between the captured Search overview and query-types article. Do not assert blanket GA or Preview status without resolving the exact capability/API version. |
-| ai103-model-deployment-options: [Overview of Microsoft Foundry Models](https://learn.microsoft.com/en-us/azure/foundry/concepts/foundry-models-overview) | 0 / 0 / 3 | 2026-09-14T17:59:44.618Z | 2026-09-14T18:16:22.126Z | Contrasts managed VM compute with hosted serverless API billing, authentication, model-specific deployment support, and classic-hub network isolation. Scope: Managed compute requires classic hub-based projects. Instant access is Preview. Do not apply hub networking instructions to new resource/project architecture or turn broad catalog counts into facts. |
-| ai103-agent-production: [Test, deploy, and integrate agents](https://learn.microsoft.com/en-us/training/modules/develop-ai-agents-azure-vs-code/8-test-deploy-integrate) | 0 / 1 / 4 | 2026-09-14T17:53:51.633Z | 2026-09-14T18:16:22.126Z | Distinguishes saving a project agent from publishing an Agent Application, dedicated identity permissions, stable endpoints, stateless client history, production monitoring and retry backoff. Scope: Published endpoint sample uses 2025-11-15-preview and hosted tooling is labelled Preview. Use this explicit scope, not a GA assumption. Older Azure AI role names are current Foundry aliases. |
-| ai103-workflows: [Build a workflow in Microsoft Foundry (Preview)](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow) | 0 / 0 / 5 | 2026-09-14T17:59:40.291Z | 2026-09-14T18:16:22.126Z | Documents existing visual-workflow patterns, human pauses, branching, schema outputs, explicit saves and migration by exporting YAML to supported code-first runtimes. Scope: Retiring Preview visual designer: no recommendation for new production adoption. Hosted agents are not supported inside the visual designer. Preserve the exact retirement date. |
-| ai103-workflow-code-integration: [Use workflows in code](https://learn.microsoft.com/en-us/training/modules/build-agent-workflows-microsoft-foundry/8-use-workflows-in-code) | 0 / 0 / 3 | 2026-09-14T17:54:14.900Z | 2026-09-14T18:16:22.126Z | Describes saved workflow invocation, conversation context, streaming progress events and resuming human-input pauses; illustrates automated workflow regression tests. Scope: Only existing Preview visual-workflow scenarios; pair with the December 1, 2026 retirement notice. |
-| ai103-prompt-shields: [Prompt Shields in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-prompt-shields) | 0 / 0 / 2 | 2026-09-14T18:04:04.000Z | 2026-09-14T18:16:22.126Z | Distinguishes user attacks from third-party document attacks, detection from blocking annotations, and additional Spotlighting protection. Scope: Spotlighting is Preview, disabled by default and Chat Completions-only. This article does not establish detection of text embedded in image pixels. |
-| ai103-tracing: [Agent tracing overview](https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept) | 0 / 0 / 7 | 2026-09-14T18:04:04.274Z | 2026-09-14T18:16:22.126Z | Explains request traces, nested timed spans, tool/token/latency attributes, Application Insights storage, evaluation correlation and pre-export sensitive-data redaction. Scope: Workflow/external-agent tracing remains Preview; OpenTelemetry multi-agent conventions have Development status. Do not mistake traces for hidden model reasoning. |
-| ai103-rag-evaluators: [Retrieval-Augmented Generation (RAG) evaluators](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators) | 0 / 0 / 5 | 2026-09-14T18:04:07.368Z | 2026-09-14T18:16:22.126Z | Separates retrieval-process evaluation from final-response groundedness/relevance and distinguishes qrels-based ranking metrics, reference-free LLM judgments and missing relevance labels. Scope: Groundedness Pro and Response Completeness are Preview; base Groundedness, Relevance, Retrieval and Document Retrieval form the GA scope. Inputs must match the exact evaluator mode. |
-| ai103-image-generation: [Azure OpenAI image generation models](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/dall-e) | 0 / 0 / 5 | 2026-09-14T18:04:04.373Z | 2026-09-14T18:16:22.126Z | Documents current GPT-image model availability, image generation versus editing, base64 output and mask transparency/dimension constraints. Scope: GPT-Image-2/2.5 variants are GA in the captured matrix; GPT-image-1 variants are limited-access Preview. DALL-E 3 retired March 4, 2026. Do not recommend it or infer uniform size/quality controls. |
-| ai103-vision-detail: [Use vision-enabled chat models](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/gpt-with-vision) | 0 / 0 / 3 | 2026-09-14T18:04:04.158Z | 2026-09-14T18:16:22.126Z | Documents image-bearing Chat Completions requests, supported media inputs, image URL accessibility, detail-level tradeoffs and diagnosing unreadable images. Scope: Scope detail claims to the documented Chat Completions vision mode/model. Image descriptions alone do not establish accessibility conformance. |
-| ai103-vision-request-shapes: [Develop a vision-based chat app](https://learn.microsoft.com/en-us/training/modules/develop-generative-ai-vision-apps/3-develop-visual-chat-app) | 0 / 0 / 1 | 2026-09-14T17:55:17.650Z | 2026-09-14T18:16:22.126Z | Shows the distinction between Responses input_text/input_image and Chat Completions text/image_url blocks, with URL or base64 image input. Scope: Pin a compatible model and do not conflate the two request shapes. No automatic caption/alt-text compliance guarantee is approved. |
-| ai103-video-generation: [Video generation with Sora 2 (preview)](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/video-generation) | 0 / 3 / 3 | 2026-09-14T18:00:06.894Z | 2026-09-14T18:16:22.126Z | Covers asynchronous video jobs, status/download separation, reference first-frame images, exact-size requirements, remix identifiers and content restrictions. Scope: Sora 2 is Preview. Exclude vague broad claims that it blocks all photorealistic content; use the specific documented restrictions and scoped parameters. |
-| ai103-content-understanding-overview: [What is Azure Content Understanding in Foundry Tools?](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview) | 0 / 3 / 11 | 2026-09-14T18:00:06.663Z | 2026-09-14T18:16:22.126Z | Defines multimodal extraction, analyzer configuration, Markdown versus typed fields, opt-in document confidence/grounding, model deployments and surfaced content-filter results. Scope: 2026-06-01-preview adds agentic mode, signatures and metadata features. Extract-method fields and confidence/grounding have document-specific constraints; do not inherit conflicting image-lesson claims. |
-| ai103-content-understanding-documents: [Azure Content Understanding in Foundry Tools document solutions](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview) | 0 / 1 / 4 | 2026-09-14T18:00:06.729Z | 2026-09-14T18:16:22.126Z | Describes layout-aware versus text-only extraction, typed normalized fields, extract/classify/generate methods and document evidence for review and downstream agents. Scope: Agentic mode is 2026-06-01-preview with one input file initially. The guide says pro-mode but this page does not establish equivalence. Signature/metadata features need preview scoping. |
-| ai103-content-understanding-images: [Azure Content Understanding in Foundry Tools image solutions](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/image/overview) | 0 / 0 / 2 | 2026-09-14T18:00:12.562Z | 2026-09-14T18:16:22.126Z | Supports schema-directed visual details, image search assets, targeted defect/product analysis and choosing document extraction for text-dominant images. Scope: Do not infer image bounding-box APIs, OCR-only suitability or document confidence fields from this short page. |
-| ai103-video: [Azure Content Understanding in Foundry Tools video solutions](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview) | 0 / 0 / 3 | 2026-09-14T18:00:12.797Z | 2026-09-14T18:16:22.126Z | Distinguishes transcripts/keyframes/shots from generative field extraction and semantic segmentation; supports RAG-ready video metadata. Scope: Article scopes 2026-06-01-preview and inconsistently names prebuilt-videoAnalysis versus prebuilt-videoSearch. Exclude exact prebuilt IDs until resolved; no video walkthrough was used. |
-| ai103-content-understanding-audio: [Azure Content Understanding in Foundry Tools audio solutions](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/audio/overview) | 0 / 0 / 2 | 2026-09-14T18:00:12.197Z | 2026-09-14T18:16:22.126Z | Distinguishes transcription, diarization, speaker roles, auto multilingual transcription and dominant-language detection; relates those outputs to schema-based audio summaries and sentiment. Scope: Avoid mixed size/duration boundary examples and exact locale-list quotas without separate checks. Core extraction is GA per the Content Understanding version matrix. |
-| ai103-content-understanding-migration: [Migrate from Azure Content Understanding Preview to GA](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/how-to/migration-preview-to-ga) | 0 / 1 / 2 | 2026-09-14T18:00:17.944Z | 2026-09-14T18:16:22.126Z | Documents GA migration to 2025-11-01: opt-in confidence/grounding, URL analyze versus analyzeBinary, inputs cardinality and knowledgeSources replacing TrainingData. Scope: Do not transpose this GA migration payload to 2026 preview without comparison. |
-| ai103-language-agent-tools: [Azure Language tools and agents](https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/foundry-tools-agents) | 0 / 2 / 3 | 2026-09-14T17:59:42.533Z | 2026-09-14T18:16:22.126Z | Distinguishes Language MCP capabilities, deterministic intent routing, exact curated answer retrieval and configured authenticated project connections. Scope: Do not generalize the outdated network-secured public-only caution; the current MCP reference documents private MCP requirements. |
-| ai103-language-detection: [Detect language](https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/3-detect-language) | 0 / 1 / 3 | 2026-09-14T17:54:32.213Z | 2026-09-14T18:16:22.126Z | Covers per-document detected language/ISO identifiers and confidence interpretation, mixed-language ambiguity and unknown-input handling. Scope: Do not author mutable character/batch limits from this lesson without current API-limit evidence. |
-| ai103-pii-basics: [Extract personally identifiable information (PII)](https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/7-extract-personal-information) | 0 / 1 / 2 | 2026-09-14T17:54:35.550Z | 2026-09-14T18:16:22.126Z | Distinguishes entity recognition outputs from redacted text and demonstrates basic recognize_pii_entities processing. Scope: Do not copy sample personal data, infer every entity category is PII, or claim newer redaction policies from this basic lesson. |
-| ai103-translator-basics: [Translate text](https://learn.microsoft.com/en-us/training/modules/translate-text-speech/3-azure-translator) | 0 / 0 / 2 | 2026-09-14T17:55:09.733Z | 2026-09-14T18:16:22.126Z | Distinguishes source auto-detection, multiple target translations, dynamic supported-language discovery and transliteration between writing systems. Scope: No fixed supported-language count or universal LLM translation availability is approved. |
-| ai103-speech-recognition: [Use the Speech to Text API](https://learn.microsoft.com/en-us/training/modules/create-speech-enabled-apps/3-speech-to-text) | 0 / 0 / 1 | 2026-09-14T17:54:45.880Z | 2026-09-14T18:16:22.126Z | Separates service connection configuration from audio source selection and recognition; supports single-utterance processing and result reason handling. Scope: Use the actual Python recognize_once_async example; do not mix its API casing with .NET prose. |
-| ai103-ssml: [Use Speech Synthesis Markup Language](https://learn.microsoft.com/en-us/training/modules/create-speech-enabled-apps/6-speech-synthesis-markup) | 0 / 0 / 1 | 2026-09-14T17:54:47.494Z | 2026-09-14T18:16:22.126Z | Explains SSML control of pronunciation, pauses, prosody, say-as interpretation and the separate synthesis method for markup. Scope: A selected voice must support the requested style. The example markup is not a guarantee that all voices support all SSML features. |
-| ai103-voice-live: [Voice Live API for real-time voice agents](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/voice-live) | 0 / 0 / 1 | 2026-09-14T17:59:53.180Z | 2026-09-14T18:16:22.126Z | Explains managed speech-to-speech orchestration, WebSocket events, interruption/noise/echo features and native versus bring-your-own model responsibilities. Scope: phi4-mm-realtime is Preview. Named supported-but-not-predeployed models require BYOM; do not say every supported model needs no deployment. |
-| ai103-voice-customization: [How to customize Voice Live input and output](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/voice-live-how-to-customize) | 0 / 0 / 2 | 2026-09-14T17:59:53.183Z | 2026-09-14T18:16:22.126Z | Distinguishes phrase-list input biasing, locale-to-model custom speech, same-resource model requirements and output-pronunciation lexicons. Scope: Phrase lists do not support the enumerated Whisper/GPT transcribe models. Custom speech training/hosting costs are separate; custom voice approval is not implied. |
-| ai103-speech-translation: [Translate speech](https://learn.microsoft.com/en-us/training/modules/translate-text-speech/4-speech-translation) | 0 / 0 / 2 | 2026-09-14T17:55:10.049Z | 2026-09-14T18:16:22.126Z | Explains source locale/target-language configuration, translation result dictionaries, per-language manual synthesis and one-target event-based synthesis. Scope: Use supported voices for each target; review Python AudioConfig import namespace instead of copying lesson typos. |
-| ai103-indexer-pipeline: [Extract data with an indexer](https://learn.microsoft.com/en-us/training/modules/ai-knowldge-mining/3-index) | 0 / 2 / 3 | 2026-09-14T17:55:49.730Z | 2026-09-14T18:16:22.126Z | Explains data-source cracking, hierarchical enriched documents, normalized image contexts, OCR-to-merge steps and source-field versus enriched-output mappings. Scope: An index is not necessarily created/updated only through an indexer; push indexing also exists. Only the documented indexer pipeline is approved. |
-| ai103-search-custom-skill: [Add a custom skill to an Azure AI Search enrichment pipeline](https://learn.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface) | 0 / 0 / 3 | 2026-09-14T18:00:30.996Z | 2026-09-14T18:16:22.126Z | Documents custom Web API skill input/output contracts, correlation, per-record errors/warnings, timeout limits and managed-identity authentication requirements. Scope: This is a legitimate Azure AI Search product article, not a search-results page. Record the result of the strict URL check; do not broaden source gates. |
-| ai103-search-query-types: [Querying in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-query-overview) | 0 / 0 / 3 | 2026-09-14T18:00:34.326Z | 2026-09-14T18:16:22.126Z | Distinguishes full-text, vector, hybrid, document lookup, exact filters and query parser choices in Azure AI Search. Scope: This article calls agentic retrieval Preview, but the captured Search overview says generally available with some Preview capabilities. Exclude blanket availability claims until exact capability/version status is resolved. |
-| ai103-search-filters: [Filters for keyword search in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-filters) | 0 / 2 / 4 | 2026-09-14T18:00:34.906Z | 2026-09-14T18:16:22.126Z | Supports filterable-field requirements, exact nonlinguistic filter behavior, security trimming and filtering separately from relevance ranking. Scope: Check that the strict gate recognizes this bounded Azure AI Search article, without broadening policy. Do not conflate exact filtering with full-text token analysis. The standalone Honolulu sample lacks a closing quote; write original valid code. |
-| ai103-document-layout: [What is the Document Intelligence layout model?](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/prebuilt/layout) | 0 / 0 / 2 | 2026-09-14T18:00:21.311Z | 2026-09-14T18:16:22.126Z | Documents the GA 2024-11-30 layout model, OCR plus geometric/logical structure, Markdown content and the updated HTML-table/Unicode-checkbox representation. Scope: The MCP body includes multiple historical monikers. Use only the v4.0 GA sections read here; never mix older-version responses. |
-| ai103-analyzer-definition: [Create a Content Understanding analyzer](https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/03-create-analyzer) | 0 / 2 / 3 | 2026-09-14T17:55:38.797Z | 2026-09-14T18:16:22.126Z | Shows analyzer base/schema/model configuration, extract-versus-generate intent and asynchronous creation using a poller or Operation-Location. Scope: Example REST strings contain placeholders rather than executable code. Pin GA 2025-11-01 and verify SDK signatures independently. |
-| ai103-analyzer-execution: [Analyze content](https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/04-analyze) | 0 / 1 / 2 | 2026-09-14T17:55:41.381Z | 2026-09-14T18:16:22.126Z | Separates analyzer selection, asynchronous submit/poll completion, URL versus binary inputs and typed fields/Markdown result handling. Scope: Do not copy the tight polling loop without bounded retries/delays or infer that Running is the only nonterminal state. |
-| ai103-optimization-combinations: [Compare and combine optimization strategies](https://learn.microsoft.com/en-us/training/modules/optimize-generative-ai-model-performance/5-compare-combine-strategies) | 0 / 0 / 2 | 2026-09-14T17:53:39.883Z | 2026-09-14T18:16:22.126Z | Distinguishes contextual freshness from behavior consistency and explains when prompting, retrieval and fine-tuning should be combined rather than treated as substitutes. Scope: Comparative cost and consistency are design heuristics, not guarantees; exclude absolute claims that a tuned model always behaves consistently. |
-| ai103-classic-image-filters: [Content filtering for Microsoft Foundry Models (classic)](https://learn.microsoft.com/en-us/azure/foundry-classic/foundry-models/concepts/content-filter) | 0 / 0 / 2 | 2026-09-14T18:00:03.882Z | 2026-09-14T18:16:22.126Z | Documents classic Foundry harmful-content categories, severity thresholds, image input filtering, annotate-versus-block behavior and deployment association. Scope: The page explicitly applies only to Foundry classic. Do not assert new-portal UI equivalence, image-watermark functionality, or that text-only protected-material filters govern image copyright. |
-| ai103-search-architecture: [What is Azure AI Search?](https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search) | 0 / 4 / 8 | 2026-09-14T17:59:39.528Z | 2026-09-14T18:16:22.126Z | Supports push versus pull indexing, searchable enrichment, classic index-targeted queries, replica/partition capacity versus serverless design and knowledge-source architecture. Scope: Serverless Developer is Preview and billing began September 13, 2026. Agentic retrieval status conflicts with the query-types article; approve architecture but exclude blanket availability claims. |
-| ai103-speech-capabilities: [What is Azure Speech?](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/overview) | 0 / 0 / 2 | 2026-09-14T17:59:51.837Z | 2026-09-14T18:16:22.126Z | Separates real-time, fast prerecorded and asynchronous batch transcription; relates custom acoustic/language/pronunciation models to domain audio and distinguishes speech synthesis and translation. Scope: LLM speech is explicitly Preview. Custom voice creation requires its own access/consent evidence; this overview does not authorize voice cloning. |
+| Source                                                                                                                                                                                                     | Playable / reviewed / candidates | Retrieved                | Reviewed                 | Supporting summary                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------: | ------------------------ | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ai103-project-organization: [Microsoft Foundry](https://learn.microsoft.com/en-us/training/modules/prepare-azure-ai-development/4-azure-ai-foundry)                                                        |                        0 / 0 / 3 | 2026-09-14T17:53:19.416Z | 2026-09-14T18:16:22.126Z | Separates resource and project responsibilities, project assets, model endpoints, agent tools and knowledge, and SDK-driven CI/CD automation. Scope: Approve the project/resource distinction and named SDK automation. Classic hub projects are explicitly different; do not transpose their architecture to current projects.                                                                                                                               |
+| ai103-model-selection: [Explore the model catalog](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/2-explore-model-catalog)                                                      |                        0 / 2 / 4 | 2026-09-14T17:53:23.437Z | 2026-09-14T18:16:22.126Z | Explains model-card capabilities and inference-task filtering; distinguishes resource-intensive LLM tasks, efficient SLM tasks, embeddings, and multimodal tasks. Scope: Do not use catalog counts or the claim that reasoning models expose all reasoning. Check actual model capability/version before selecting a concrete deployment.                                                                                                                     |
+| ai103-model-benchmarks: [Select models using benchmarks](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/3-select-models-benchmarks)                                             |                        0 / 3 / 4 | 2026-09-14T17:53:23.401Z | 2026-09-14T18:16:22.126Z | Supports comparing quality, safety, input/output cost, tail latency, TTFT and token throughput instead of ranking models by one aggregate score. Scope: Use benchmark interpretation, not mutable leaderboard rankings or benchmark examples as assessment material.                                                                                                                                                                                          |
+| ai103-deployment-planning: [Deploy models to endpoints](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/4-deploy-models)                                                         |                        0 / 1 / 5 | 2026-09-14T17:53:26.099Z | 2026-09-14T18:16:22.126Z | Distinguishes deployment naming, residency and billing choices, VM quota for managed compute, deployment testing, and Entra-based production authentication. Scope: Exact global/data-zone/regional guarantees and available model/type combinations must be scoped. Do not turn advertised batch turnaround into a universal SLA.                                                                                                                            |
+| ai103-evaluation-planning: [Evaluate model performance](https://learn.microsoft.com/en-us/training/modules/model-catalog-evaluate/5-evaluate-performance)                                                  |                        0 / 1 / 2 | 2026-09-14T17:53:26.149Z | 2026-09-14T18:16:22.126Z | Distinguishes model, agent, and existing-output dataset evaluation; covers human review, model-judged metrics, reference-based NLP metrics, and regression evaluation. Scope: Groundedness Pro and Response Completeness are preview in the current implementation reference; do not inherit an unqualified GA claim from this lesson.                                                                                                                        |
+| ai103-harm-baseline: [Measure potential harms](https://learn.microsoft.com/en-us/training/modules/responsible-ai-studio/4-measure-harms)                                                                   |                        0 / 0 / 2 | 2026-09-14T17:53:43.337Z | 2026-09-14T18:16:22.126Z | Establishes explicit harm criteria and a baseline, validates a small manual set before scaling automated measurement, and retains periodic human checks. Scope: Only methodology is approved; do not copy harmful example prompts or treat a numerical classifier score as proof of safety.                                                                                                                                                                   |
+| ai103-responsible-operations: [Manage a responsible generative AI solution](https://learn.microsoft.com/en-us/training/modules/responsible-ai-studio/6-operate-responsibly)                                |                        0 / 0 / 1 | 2026-09-14T17:53:44.714Z | 2026-09-14T18:16:22.126Z | Supports prerelease compliance reviews, phased release, incident and rollback plans, feedback channels, and privacy-aware operational telemetry. Scope: This is lifecycle methodology, not documentation of a specific automatic rollback API.                                                                                                                                                                                                                |
+| ai103-agent-risk-boundaries: [Understand AI agents and Microsoft Foundry Agent Service](https://learn.microsoft.com/en-us/training/modules/develop-ai-agents-azure-vs-code/2-understand-ai-agents-foundry) |                        0 / 1 / 3 | 2026-09-14T17:53:46.165Z | 2026-09-14T18:16:22.126Z | Maps autonomous-agent risks to least privilege, input validation, action gates, dependency audits and traceability; contrasts configured prompt agents with containerized custom agents. Scope: Exclude blanket automatic-tool-execution claims: local function tools require application execution. The lesson mentions drift but does not provide a drift-monitor implementation. Visual workflow lifecycle is superseded by the retiring-workflow article. |
+| ai103-sdk: [Microsoft Foundry SDKs and endpoints](https://learn.microsoft.com/en-us/azure/foundry/how-to/develop/sdk-overview)                                                                             |                        0 / 0 / 9 | 2026-09-14T17:59:13.537Z | 2026-09-14T18:16:22.126Z | Defines current Foundry/OpenAI/tool endpoints, project SDK responsibilities, stable Python 2.x versus classic 1.x, and least-privilege Foundry roles. Scope: Foundry roles were renamed from Azure AI roles without changing IDs/core permissions. Scope any SDK question by language and API version; do not copy stale lesson AzureOpenAI syntax.                                                                                                           |
+| ai103-responses-state: [Generate responses with the Responses API](https://learn.microsoft.com/en-us/training/modules/foundry-sdk/04-responses-api)                                                        |                        0 / 2 / 6 | 2026-09-14T17:53:28.900Z | 2026-09-14T18:16:22.126Z | Covers response IDs, usage, previous-response chaining versus manual history, context-window costs, streaming delta/completion events, and asynchronous clients. Scope: Do not generalize model examples or parameter support across reasoning models. Published Agent Application endpoints have separate stateless behavior.                                                                                                                                |
+| ai103-code-interpreter: [Use the code\_interpreter tool](https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/03-code-interpreter)                                                   |                        0 / 1 / 2 | 2026-09-14T17:53:32.691Z | 2026-09-14T18:16:22.126Z | Explains generated Python execution, sandbox constraints, uploaded-file analysis, returned runtime results, and the distinction from merely describing calculations. Scope: No unverified package availability, memory limit, or timeout number is approved.                                                                                                                                                                                                  |
+| ai103-file-search: [Use the file\_search tool](https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/05-file-search)                                                                  |                        0 / 3 / 6 | 2026-09-14T17:53:33.053Z | 2026-09-14T18:16:22.126Z | Supports vector-store preparation, file-search tool attachment, inspection of retrieval results, data-scope choices, and quality/freshness limitations. Scope: Do not imply retrieval guarantees accuracy or instantly updates source changes. Exact service limits require further evidence.                                                                                                                                                                 |
+| ai103-function-runtime: [Use the function tool](https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/06-function)                                                                    |                        0 / 0 / 4 | 2026-09-14T17:53:36.149Z | 2026-09-14T18:16:22.126Z | Separates model-requested calls from application execution and returning correlated function outputs; requires argument validation and authorization for consequential actions. Scope: Use original functions and reviewed schemas, not the training example or its external OpenAI guide as an approved source.                                                                                                                                              |
+| ai103-function-calling: [Use function calling with Microsoft Foundry agents](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling)                                         |                        0 / 1 / 4 | 2026-09-14T17:59:36.530Z | 2026-09-14T18:16:22.126Z | Provides current function schema, client execution, output correlation, conversation continuation, validation, least privilege and safe side-effect controls. Scope: The article contradicts itself on portal function execution; exclude that topic and run-expiration generalizations pending clarification.                                                                                                                                                |
+| ai103-mcp-tools: [Connect agents to Model Context Protocol servers](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol)                                            |                        0 / 1 / 9 | 2026-09-14T17:59:38.500Z | 2026-09-14T18:16:22.126Z | Documents project-connection authentication, tool allowlists, explicit approval, untrusted tool results, role aliases, and private MCP endpoint prerequisites. Scope: Python ordinary remote MCP use is the approved GA scope. Long-running MCP tasks/background mode and .NET preview details require Preview labels.                                                                                                                                        |
+| ai103-knowledge-source-selection: [Configure data sources for knowledge bases](https://learn.microsoft.com/en-us/training/modules/introduction-foundry-iq/4-data-requirements)                             |                        0 / 0 / 0 | 2026-09-14T17:54:03.287Z | 2026-09-14T18:16:22.126Z | Contrasts existing search indexes, files, real-time remote sources and indexed sources; supports choosing knowledge access based on freshness, enrichment and governance needs. Scope: Source-option availability is not proven by the lesson alone. Do not repeat its absolute always-current or always-faster claims. Foundry IQ/agentic retrieval questions need explicit Preview scoping where appropriate.                                               |
+| ai103-retrieval-behavior: [Configure retrieval with Foundry IQ](https://learn.microsoft.com/en-us/training/modules/introduction-foundry-iq/5-configure-retrieval)                                          |                        0 / 0 / 1 | 2026-09-14T17:54:03.303Z | 2026-09-14T18:16:22.126Z | Defines retrieval instructions, citation/fallback requirements, test categories, and production metrics such as fallback frequency, citation frequency and retrieval accuracy. Scope: Instructions influence rather than guarantee behavior. Do not use the sample policy prose or sample citations as bank content.                                                                                                                                          |
+| ai103-orchestration-patterns: [Understand agent orchestration](https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/3-understand-agent-orchestration)       |                        0 / 3 / 5 | 2026-09-14T17:54:23.469Z | 2026-09-14T18:16:22.126Z | Distinguishes concurrent, sequential, handoff, group-chat and adaptive-manager patterns; explains executors, conditional edges, fan-out/fan-in, events and checkpointing. Scope: Approve architecture concepts, not SDK symbols copied without version verification. Direct Agent Framework product URLs are outside the current generic Microsoft technical-prefix gate.                                                                                     |
+| ai103-maker-checker: [Use group chat orchestration](https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/6-use-group-chat-orchestration)                    |                        0 / 1 / 3 | 2026-09-14T17:54:25.676Z | 2026-09-14T18:16:22.126Z | Explains iterative maker-checker refinement, a chat manager, human participation and termination constraints rather than independent parallel analysis. Scope: Implementation steps incorrectly describe group chat as all agents running concurrently, contradicting the turn-based explanation. Only the conceptual maker-checker sections are approved.                                                                                                    |
+| ai103-prompt-engineering: [Prompt engineering techniques](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/prompt-engineering)                                                              |                        0 / 0 / 3 | 2026-09-14T17:59:30.127Z | 2026-09-14T18:16:22.126Z | Supports task decomposition, few-shot instructions, output structure, fallback behavior, grounding, and temperature/top-p tradeoffs for compatible models. Scope: The chain-of-thought section explicitly applies only to non-reasoning models and disallows extracting hidden reasoning outside supported reasoning summaries. Exclude blog examples and universal tokenizer claims.                                                                         |
+| ai103-system-message: [System message design](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering)                                                                 |                        0 / 1 / 6 | 2026-09-14T17:59:29.989Z | 2026-09-14T18:16:22.126Z | Explains role/scope, small output contracts, explicit fallback behavior, domain extraction, realistic testing and layered safety. Scope: An instruction to return JSON is not equivalent to schema-constrained structured outputs. Do not imply prompt text alone enforces security.                                                                                                                                                                          |
+| ai103-rag-design: [Retrieval augmented generation (RAG) and indexes](https://learn.microsoft.com/en-us/azure/foundry/concepts/retrieval-augmented-generation)                                              |                        0 / 0 / 2 | 2026-09-14T17:59:30.007Z | 2026-09-14T18:16:22.126Z | Explains retrieve/augment/generate, metadata for citations, retrieval modes, private-data freshness, RAG versus behavior tuning, and security/cost/latency failure modes. Scope: Agentic-retrieval lifecycle statements conflict between the captured Search overview and query-types article. Do not assert blanket GA or Preview status without resolving the exact capability/API version.                                                                 |
+| ai103-model-deployment-options: [Overview of Microsoft Foundry Models](https://learn.microsoft.com/en-us/azure/foundry/concepts/foundry-models-overview)                                                   |                        0 / 0 / 3 | 2026-09-14T17:59:44.618Z | 2026-09-14T18:16:22.126Z | Contrasts managed VM compute with hosted serverless API billing, authentication, model-specific deployment support, and classic-hub network isolation. Scope: Managed compute requires classic hub-based projects. Instant access is Preview. Do not apply hub networking instructions to new resource/project architecture or turn broad catalog counts into facts.                                                                                          |
+| ai103-agent-production: [Test, deploy, and integrate agents](https://learn.microsoft.com/en-us/training/modules/develop-ai-agents-azure-vs-code/8-test-deploy-integrate)                                   |                        0 / 1 / 4 | 2026-09-14T17:53:51.633Z | 2026-09-14T18:16:22.126Z | Distinguishes saving a project agent from publishing an Agent Application, dedicated identity permissions, stable endpoints, stateless client history, production monitoring and retry backoff. Scope: Published endpoint sample uses 2025-11-15-preview and hosted tooling is labelled Preview. Use this explicit scope, not a GA assumption. Older Azure AI role names are current Foundry aliases.                                                         |
+| ai103-workflows: [Build a workflow in Microsoft Foundry (Preview)](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow)                                                               |                        0 / 0 / 5 | 2026-09-14T17:59:40.291Z | 2026-09-14T18:16:22.126Z | Documents existing visual-workflow patterns, human pauses, branching, schema outputs, explicit saves and migration by exporting YAML to supported code-first runtimes. Scope: Retiring Preview visual designer: no recommendation for new production adoption. Hosted agents are not supported inside the visual designer. Preserve the exact retirement date.                                                                                                |
+| ai103-workflow-code-integration: [Use workflows in code](https://learn.microsoft.com/en-us/training/modules/build-agent-workflows-microsoft-foundry/8-use-workflows-in-code)                               |                        0 / 0 / 3 | 2026-09-14T17:54:14.900Z | 2026-09-14T18:16:22.126Z | Describes saved workflow invocation, conversation context, streaming progress events and resuming human-input pauses; illustrates automated workflow regression tests. Scope: Only existing Preview visual-workflow scenarios; pair with the December 1, 2026 retirement notice.                                                                                                                                                                              |
+| ai103-prompt-shields: [Prompt Shields in Microsoft Foundry](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/content-filter-prompt-shields)                                                 |                        0 / 0 / 2 | 2026-09-14T18:04:04.000Z | 2026-09-14T18:16:22.126Z | Distinguishes user attacks from third-party document attacks, detection from blocking annotations, and additional Spotlighting protection. Scope: Spotlighting is Preview, disabled by default and Chat Completions-only. This article does not establish detection of text embedded in image pixels.                                                                                                                                                         |
+| ai103-tracing: [Agent tracing overview](https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept)                                                                        |                        0 / 0 / 7 | 2026-09-14T18:04:04.274Z | 2026-09-14T18:16:22.126Z | Explains request traces, nested timed spans, tool/token/latency attributes, Application Insights storage, evaluation correlation and pre-export sensitive-data redaction. Scope: Workflow/external-agent tracing remains Preview; OpenTelemetry multi-agent conventions have Development status. Do not mistake traces for hidden model reasoning.                                                                                                            |
+| ai103-rag-evaluators: [Retrieval-Augmented Generation (RAG) evaluators](https://learn.microsoft.com/en-us/azure/foundry/concepts/evaluation-evaluators/rag-evaluators)                                     |                        0 / 0 / 5 | 2026-09-14T18:04:07.368Z | 2026-09-14T18:16:22.126Z | Separates retrieval-process evaluation from final-response groundedness/relevance and distinguishes qrels-based ranking metrics, reference-free LLM judgments and missing relevance labels. Scope: Groundedness Pro and Response Completeness are Preview; base Groundedness, Relevance, Retrieval and Document Retrieval form the GA scope. Inputs must match the exact evaluator mode.                                                                      |
+| ai103-image-generation: [Azure OpenAI image generation models](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/dall-e)                                                                       |                        0 / 0 / 5 | 2026-09-14T18:04:04.373Z | 2026-09-14T18:16:22.126Z | Documents current GPT-image model availability, image generation versus editing, base64 output and mask transparency/dimension constraints. Scope: GPT-Image-2/2.5 variants are GA in the captured matrix; GPT-image-1 variants are limited-access Preview. DALL-E 3 retired March 4, 2026. Do not recommend it or infer uniform size/quality controls.                                                                                                       |
+| ai103-vision-detail: [Use vision-enabled chat models](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/gpt-with-vision)                                                                       |                        0 / 0 / 3 | 2026-09-14T18:04:04.158Z | 2026-09-14T18:16:22.126Z | Documents image-bearing Chat Completions requests, supported media inputs, image URL accessibility, detail-level tradeoffs and diagnosing unreadable images. Scope: Scope detail claims to the documented Chat Completions vision mode/model. Image descriptions alone do not establish accessibility conformance.                                                                                                                                            |
+| ai103-vision-request-shapes: [Develop a vision-based chat app](https://learn.microsoft.com/en-us/training/modules/develop-generative-ai-vision-apps/3-develop-visual-chat-app)                             |                        0 / 0 / 1 | 2026-09-14T17:55:17.650Z | 2026-09-14T18:16:22.126Z | Shows the distinction between Responses input_text/input_image and Chat Completions text/image_url blocks, with URL or base64 image input. Scope: Pin a compatible model and do not conflate the two request shapes. No automatic caption/alt-text compliance guarantee is approved.                                                                                                                                                                          |
+| ai103-video-generation: [Video generation with Sora 2 (preview)](https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/video-generation)                                                         |                        0 / 3 / 3 | 2026-09-14T18:00:06.894Z | 2026-09-14T18:16:22.126Z | Covers asynchronous video jobs, status/download separation, reference first-frame images, exact-size requirements, remix identifiers and content restrictions. Scope: Sora 2 is Preview. Exclude vague broad claims that it blocks all photorealistic content; use the specific documented restrictions and scoped parameters.                                                                                                                                |
+| ai103-content-understanding-overview: [What is Azure Content Understanding in Foundry Tools?](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/overview)                          |                       0 / 3 / 11 | 2026-09-14T18:00:06.663Z | 2026-09-14T18:16:22.126Z | Defines multimodal extraction, analyzer configuration, Markdown versus typed fields, opt-in document confidence/grounding, model deployments and surfaced content-filter results. Scope: 2026-06-01-preview adds agentic mode, signatures and metadata features. Extract-method fields and confidence/grounding have document-specific constraints; do not inherit conflicting image-lesson claims.                                                           |
+| ai103-content-understanding-documents: [Azure Content Understanding in Foundry Tools document solutions](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/overview)      |                        0 / 1 / 4 | 2026-09-14T18:00:06.729Z | 2026-09-14T18:16:22.126Z | Describes layout-aware versus text-only extraction, typed normalized fields, extract/classify/generate methods and document evidence for review and downstream agents. Scope: Agentic mode is 2026-06-01-preview with one input file initially. The guide says pro-mode but this page does not establish equivalence. Signature/metadata features need preview scoping.                                                                                       |
+| ai103-content-understanding-images: [Azure Content Understanding in Foundry Tools image solutions](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/image/overview)               |                        0 / 0 / 2 | 2026-09-14T18:00:12.562Z | 2026-09-14T18:16:22.126Z | Supports schema-directed visual details, image search assets, targeted defect/product analysis and choosing document extraction for text-dominant images. Scope: Do not infer image bounding-box APIs, OCR-only suitability or document confidence fields from this short page.                                                                                                                                                                               |
+| ai103-video: [Azure Content Understanding in Foundry Tools video solutions](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/video/overview)                                      |                        0 / 0 / 3 | 2026-09-14T18:00:12.797Z | 2026-09-14T18:16:22.126Z | Distinguishes transcripts/keyframes/shots from generative field extraction and semantic segmentation; supports RAG-ready video metadata. Scope: Article scopes 2026-06-01-preview and inconsistently names prebuilt-videoAnalysis versus prebuilt-videoSearch. Exclude exact prebuilt IDs until resolved; no video walkthrough was used.                                                                                                                      |
+| ai103-content-understanding-audio: [Azure Content Understanding in Foundry Tools audio solutions](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/audio/overview)                |                        0 / 0 / 2 | 2026-09-14T18:00:12.197Z | 2026-09-14T18:16:22.126Z | Distinguishes transcription, diarization, speaker roles, auto multilingual transcription and dominant-language detection; relates those outputs to schema-based audio summaries and sentiment. Scope: Avoid mixed size/duration boundary examples and exact locale-list quotas without separate checks. Core extraction is GA per the Content Understanding version matrix.                                                                                   |
+| ai103-content-understanding-migration: [Migrate from Azure Content Understanding Preview to GA](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/how-to/migration-preview-to-ga)  |                        0 / 1 / 2 | 2026-09-14T18:00:17.944Z | 2026-09-14T18:16:22.126Z | Documents GA migration to 2025-11-01: opt-in confidence/grounding, URL analyze versus analyzeBinary, inputs cardinality and knowledgeSources replacing TrainingData. Scope: Do not transpose this GA migration payload to 2026 preview without comparison.                                                                                                                                                                                                    |
+| ai103-language-agent-tools: [Azure Language tools and agents](https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/foundry-tools-agents)                                          |                        0 / 2 / 3 | 2026-09-14T17:59:42.533Z | 2026-09-14T18:16:22.126Z | Distinguishes Language MCP capabilities, deterministic intent routing, exact curated answer retrieval and configured authenticated project connections. Scope: Do not generalize the outdated network-secured public-only caution; the current MCP reference documents private MCP requirements.                                                                                                                                                              |
+| ai103-language-detection: [Detect language](https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/3-detect-language)                                                                 |                        0 / 1 / 3 | 2026-09-14T17:54:32.213Z | 2026-09-14T18:16:22.126Z | Covers per-document detected language/ISO identifiers and confidence interpretation, mixed-language ambiguity and unknown-input handling. Scope: Do not author mutable character/batch limits from this lesson without current API-limit evidence.                                                                                                                                                                                                            |
+| ai103-pii-basics: [Extract personally identifiable information (PII)](https://learn.microsoft.com/en-us/training/modules/analyze-text-ai-language/7-extract-personal-information)                          |                        0 / 1 / 2 | 2026-09-14T17:54:35.550Z | 2026-09-14T18:16:22.126Z | Distinguishes entity recognition outputs from redacted text and demonstrates basic recognize_pii_entities processing. Scope: Do not copy sample personal data, infer every entity category is PII, or claim newer redaction policies from this basic lesson.                                                                                                                                                                                                  |
+| ai103-translator-basics: [Translate text](https://learn.microsoft.com/en-us/training/modules/translate-text-speech/3-azure-translator)                                                                     |                        0 / 0 / 2 | 2026-09-14T17:55:09.733Z | 2026-09-14T18:16:22.126Z | Distinguishes source auto-detection, multiple target translations, dynamic supported-language discovery and transliteration between writing systems. Scope: No fixed supported-language count or universal LLM translation availability is approved.                                                                                                                                                                                                          |
+| ai103-speech-recognition: [Use the Speech to Text API](https://learn.microsoft.com/en-us/training/modules/create-speech-enabled-apps/3-speech-to-text)                                                     |                        0 / 0 / 1 | 2026-09-14T17:54:45.880Z | 2026-09-14T18:16:22.126Z | Separates service connection configuration from audio source selection and recognition; supports single-utterance processing and result reason handling. Scope: Use the actual Python recognize_once_async example; do not mix its API casing with .NET prose.                                                                                                                                                                                                |
+| ai103-ssml: [Use Speech Synthesis Markup Language](https://learn.microsoft.com/en-us/training/modules/create-speech-enabled-apps/6-speech-synthesis-markup)                                                |                        0 / 0 / 1 | 2026-09-14T17:54:47.494Z | 2026-09-14T18:16:22.126Z | Explains SSML control of pronunciation, pauses, prosody, say-as interpretation and the separate synthesis method for markup. Scope: A selected voice must support the requested style. The example markup is not a guarantee that all voices support all SSML features.                                                                                                                                                                                       |
+| ai103-voice-live: [Voice Live API for real-time voice agents](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/voice-live)                                                               |                        0 / 0 / 1 | 2026-09-14T17:59:53.180Z | 2026-09-14T18:16:22.126Z | Explains managed speech-to-speech orchestration, WebSocket events, interruption/noise/echo features and native versus bring-your-own model responsibilities. Scope: phi4-mm-realtime is Preview. Named supported-but-not-predeployed models require BYOM; do not say every supported model needs no deployment.                                                                                                                                               |
+| ai103-voice-customization: [How to customize Voice Live input and output](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/voice-live-how-to-customize)                                  |                        0 / 0 / 2 | 2026-09-14T17:59:53.183Z | 2026-09-14T18:16:22.126Z | Distinguishes phrase-list input biasing, locale-to-model custom speech, same-resource model requirements and output-pronunciation lexicons. Scope: Phrase lists do not support the enumerated Whisper/GPT transcribe models. Custom speech training/hosting costs are separate; custom voice approval is not implied.                                                                                                                                         |
+| ai103-speech-translation: [Translate speech](https://learn.microsoft.com/en-us/training/modules/translate-text-speech/4-speech-translation)                                                                |                        0 / 0 / 2 | 2026-09-14T17:55:10.049Z | 2026-09-14T18:16:22.126Z | Explains source locale/target-language configuration, translation result dictionaries, per-language manual synthesis and one-target event-based synthesis. Scope: Use supported voices for each target; review Python AudioConfig import namespace instead of copying lesson typos.                                                                                                                                                                           |
+| ai103-indexer-pipeline: [Extract data with an indexer](https://learn.microsoft.com/en-us/training/modules/ai-knowldge-mining/3-index)                                                                      |                        0 / 2 / 3 | 2026-09-14T17:55:49.730Z | 2026-09-14T18:16:22.126Z | Explains data-source cracking, hierarchical enriched documents, normalized image contexts, OCR-to-merge steps and source-field versus enriched-output mappings. Scope: An index is not necessarily created/updated only through an indexer; push indexing also exists. Only the documented indexer pipeline is approved.                                                                                                                                      |
+| ai103-search-custom-skill: [Add a custom skill to an Azure AI Search enrichment pipeline](https://learn.microsoft.com/en-us/azure/search/cognitive-search-custom-skill-interface)                          |                        0 / 0 / 3 | 2026-09-14T18:00:30.996Z | 2026-09-14T18:16:22.126Z | Documents custom Web API skill input/output contracts, correlation, per-record errors/warnings, timeout limits and managed-identity authentication requirements. Scope: This is a legitimate Azure AI Search product article, not a search-results page. Record the result of the strict URL check; do not broaden source gates.                                                                                                                              |
+| ai103-search-query-types: [Querying in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-query-overview)                                                                              |                        0 / 0 / 3 | 2026-09-14T18:00:34.326Z | 2026-09-14T18:16:22.126Z | Distinguishes full-text, vector, hybrid, document lookup, exact filters and query parser choices in Azure AI Search. Scope: This article calls agentic retrieval Preview, but the captured Search overview says generally available with some Preview capabilities. Exclude blanket availability claims until exact capability/version status is resolved.                                                                                                    |
+| ai103-search-filters: [Filters for keyword search in Azure AI Search](https://learn.microsoft.com/en-us/azure/search/search-filters)                                                                       |                        0 / 2 / 4 | 2026-09-14T18:00:34.906Z | 2026-09-14T18:16:22.126Z | Supports filterable-field requirements, exact nonlinguistic filter behavior, security trimming and filtering separately from relevance ranking. Scope: Check that the strict gate recognizes this bounded Azure AI Search article, without broadening policy. Do not conflate exact filtering with full-text token analysis. The standalone Honolulu sample lacks a closing quote; write original valid code.                                                 |
+| ai103-document-layout: [What is the Document Intelligence layout model?](https://learn.microsoft.com/en-us/azure/ai-services/document-intelligence/prebuilt/layout)                                        |                        0 / 0 / 2 | 2026-09-14T18:00:21.311Z | 2026-09-14T18:16:22.126Z | Documents the GA 2024-11-30 layout model, OCR plus geometric/logical structure, Markdown content and the updated HTML-table/Unicode-checkbox representation. Scope: The MCP body includes multiple historical monikers. Use only the v4.0 GA sections read here; never mix older-version responses.                                                                                                                                                           |
+| ai103-analyzer-definition: [Create a Content Understanding analyzer](https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/03-create-analyzer)                                         |                        0 / 2 / 3 | 2026-09-14T17:55:38.797Z | 2026-09-14T18:16:22.126Z | Shows analyzer base/schema/model configuration, extract-versus-generate intent and asynchronous creation using a poller or Operation-Location. Scope: Example REST strings contain placeholders rather than executable code. Pin GA 2025-11-01 and verify SDK signatures independently.                                                                                                                                                                       |
+| ai103-analyzer-execution: [Analyze content](https://learn.microsoft.com/en-us/training/modules/analyze-content-ai-api/04-analyze)                                                                          |                        0 / 1 / 2 | 2026-09-14T17:55:41.381Z | 2026-09-14T18:16:22.126Z | Separates analyzer selection, asynchronous submit/poll completion, URL versus binary inputs and typed fields/Markdown result handling. Scope: Do not copy the tight polling loop without bounded retries/delays or infer that Running is the only nonterminal state.                                                                                                                                                                                          |
+| ai103-optimization-combinations: [Compare and combine optimization strategies](https://learn.microsoft.com/en-us/training/modules/optimize-generative-ai-model-performance/5-compare-combine-strategies)   |                        0 / 0 / 2 | 2026-09-14T17:53:39.883Z | 2026-09-14T18:16:22.126Z | Distinguishes contextual freshness from behavior consistency and explains when prompting, retrieval and fine-tuning should be combined rather than treated as substitutes. Scope: Comparative cost and consistency are design heuristics, not guarantees; exclude absolute claims that a tuned model always behaves consistently.                                                                                                                             |
+| ai103-classic-image-filters: [Content filtering for Microsoft Foundry Models (classic)](https://learn.microsoft.com/en-us/azure/foundry-classic/foundry-models/concepts/content-filter)                    |                        0 / 0 / 2 | 2026-09-14T18:00:03.882Z | 2026-09-14T18:16:22.126Z | Documents classic Foundry harmful-content categories, severity thresholds, image input filtering, annotate-versus-block behavior and deployment association. Scope: The page explicitly applies only to Foundry classic. Do not assert new-portal UI equivalence, image-watermark functionality, or that text-only protected-material filters govern image copyright.                                                                                         |
+| ai103-search-architecture: [What is Azure AI Search?](https://learn.microsoft.com/en-us/azure/search/search-what-is-azure-search)                                                                          |                        0 / 4 / 8 | 2026-09-14T17:59:39.528Z | 2026-09-14T18:16:22.126Z | Supports push versus pull indexing, searchable enrichment, classic index-targeted queries, replica/partition capacity versus serverless design and knowledge-source architecture. Scope: Serverless Developer is Preview and billing began September 13, 2026. Agentic retrieval status conflicts with the query-types article; approve architecture but exclude blanket availability claims.                                                                 |
+| ai103-speech-capabilities: [What is Azure Speech?](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/overview)                                                                            |                        0 / 0 / 2 | 2026-09-14T17:59:51.837Z | 2026-09-14T18:16:22.126Z | Separates real-time, fast prerecorded and asynchronous batch transcription; relates custom acoustic/language/pronunciation models to domain audio and distinguishes speech synthesis and translation. Scope: LLM speech is explicitly Preview. Custom voice creation requires its own access/consent evidence; this overview does not authorize voice cloning.                                                                                                |
 
 ## Freshness and review limitations
 

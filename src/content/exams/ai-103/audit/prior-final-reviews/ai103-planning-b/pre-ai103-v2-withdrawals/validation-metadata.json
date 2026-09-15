@@ -11,24 +11,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-project-organization"
-            ],
+            "sourceIds": ["ai103-project-organization"],
             "summary": "That uses the interactive management path but fails the explicit unattended-automation requirement. Evidence: Portal tasks appear at lines 44–51; line 53 explicitly contrasts them with SDK-driven scripts and automated CI/CD actions."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-sdk",
-              "ai103-project-organization"
-            ],
+            "sourceIds": ["ai103-sdk", "ai103-project-organization"],
             "summary": "A request for model output is not the SDK's native project-configuration and asset-management capability. Evidence: SDK client split at lines 227–232 separates native setup/configuration from model calls; project-organization line 53 identifies programmatic asset management."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-project-organization"
-            ],
+            "sourceIds": ["ai103-project-organization"],
             "summary": "This is the documented programmatic alternative to manual portal management. Evidence: Line 53 explicitly states that the Foundry SDK creates and manages assets through scripts or automated CI/CD actions in DevOps pipelines."
           }
         ]
@@ -66,27 +59,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Interactive portal operations are supported, but requiring an operator for each run violates the stated unattended release-pipeline requirement.",
-              "sourceIds": [
-                "ai103-project-organization"
-              ]
+              "sourceIds": ["ai103-project-organization"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The SDK separates native setup/configuration from inference. A request that only generates model output does not replace asset-management operations.",
-              "sourceIds": [
-                "ai103-project-organization",
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-project-organization", "ai103-sdk"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The lesson explicitly lists scripts and automated CI/CD actions as ways to create and manage assets through the Foundry SDK, supported by the native project-client surface.",
-              "sourceIds": [
-                "ai103-project-organization",
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-project-organization", "ai103-sdk"]
             }
           ],
           "checks": {
@@ -120,9 +105,7 @@
             "claimRepresented": "Interactive portal recreation should implement every unattended release.",
             "whyIncorrectInContext": "An operator-dependent operation fails the explicitly unattended pipeline even though the portal manages these assets.",
             "couldBeCorrectWhen": "For an interactive development or administration task with an available operator, the portal is a documented management interface; that is not this repeated unattended job.",
-            "sourceIds": [
-              "ai103-project-organization"
-            ],
+            "sourceIds": ["ai103-project-organization"],
             "evidenceSummary": "The portal section lists asset management tasks and then separately identifies SDK scripts and automated CI/CD actions."
           },
           {
@@ -130,10 +113,7 @@
             "claimRepresented": "A model inference request can stand in for project asset-management actions.",
             "whyIncorrectInContext": "Generating model output does not perform the selected project asset-management task.",
             "couldBeCorrectWhen": "An inference request is appropriate when the pipeline needs generated model output rather than creation or management of project assets.",
-            "sourceIds": [
-              "ai103-project-organization",
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-project-organization", "ai103-sdk"],
             "evidenceSummary": "The lesson distinguishes models as assets from management of assets; the SDK overview separates inference-oriented and project-specific API surfaces."
           },
           {
@@ -141,10 +121,7 @@
             "claimRepresented": "Use SDK project operations inside automated CI/CD actions.",
             "whyIncorrectInContext": "It is not incorrect: project access is already provisioned and the lesson explicitly documents this automation use of the SDK.",
             "couldBeCorrectWhen": "The pipeline needs programmatic project-asset management and has an authorized project identity, as the stem states.",
-            "sourceIds": [
-              "ai103-project-organization",
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-project-organization", "ai103-sdk"],
             "evidenceSummary": "Project-organization line 53 expressly connects SDK creation/management to CI/CD; the SDK overview supplies the current project API boundary."
           }
         ],
@@ -173,24 +150,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-workflow-code-integration",
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration", "ai103-workflows"],
             "summary": "This exercises the actual workflow using the documented integration without treating testing as a lifecycle extension. Evidence: Workflow integration lines 17–23 describes invoking saved workflows by name; lines 74–84 includes CI/CD testing. The workflow product notice at lines 3–9 marks Preview and retirement on December 1, 2026."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-workflow-code-integration"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration"],
             "summary": "File presence does not run the saved workflow or inspect its outputs and events. Evidence: Lines 19–23 distinguishes storing YAML from invoking a workflow; lines 48–72 describes observable execution events and final results."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "summary": "Passing regression tests does not override the documented preview and retirement notices. Evidence: The Important notices at lines 3–9 explicitly discourage production reliance on preview features, announce workflow retirement, and direct new workflows toward Agent Framework."
           }
         ]
@@ -237,17 +207,13 @@
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The source separates exported YAML from running a saved workflow and inspecting events/results. File existence alone cannot demonstrate unchanged behavior.",
-              "sourceIds": [
-                "ai103-workflow-code-integration"
-              ]
+              "sourceIds": ["ai103-workflow-code-integration"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The Preview and retirement notices do not disappear after a successful regression test. New workflows are directed to Agent Framework rather than the retiring visual designer.",
-              "sourceIds": [
-                "ai103-workflows"
-              ]
+              "sourceIds": ["ai103-workflows"]
             }
           ],
           "checks": {
@@ -281,10 +247,7 @@
             "claimRepresented": "Exercise the saved workflow by name while retaining the scheduled migration.",
             "whyIncorrectInContext": "It is not incorrect: the existing workflow can be invoked by name, and testing it does not negate the retirement notice.",
             "couldBeCorrectWhen": "An authorized project client tests an existing saved visual workflow before retirement while the team maintains its migration plan.",
-            "sourceIds": [
-              "ai103-workflow-code-integration",
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration", "ai103-workflows"],
             "evidenceSummary": "The code-integration unit pairs name-based invocation with CI/CD testing; the current workflow article requires migration and discourages new production adoption."
           },
           {
@@ -292,10 +255,7 @@
             "claimRepresented": "The presence of exported YAML proves unchanged workflow runtime behavior.",
             "whyIncorrectInContext": "An existing file does not execute nodes or inspect responses, which is the requested regression evidence.",
             "couldBeCorrectWhen": "Checking an export can verify that an artifact was saved. No cited context makes mere file existence proof of unchanged execution; that extra clause cannot be rescued.",
-            "sourceIds": [
-              "ai103-workflow-code-integration",
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflow-code-integration", "ai103-workflows"],
             "evidenceSummary": "The unit separately documents YAML download and workflow invocation; the current article verifies node completion, response text and saved variables after running."
           },
           {
@@ -303,9 +263,7 @@
             "claimRepresented": "Successful tests justify new production visual workflows and cancelling retirement migration.",
             "whyIncorrectInContext": "Tests do not change the product retirement date or the Preview production warning.",
             "couldBeCorrectWhen": "New workflow work is directed to Agent Framework, not this retiring visual designer. No cited context supports cancelling migration because tests pass.",
-            "sourceIds": [
-              "ai103-workflows"
-            ],
+            "sourceIds": ["ai103-workflows"],
             "evidenceSummary": "The introductory notices give December 1, 2026 retirement and redirect new work; they contain no testing-based exception."
           }
         ],
@@ -334,23 +292,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-responsible-operations"
-            ],
+            "sourceIds": ["ai103-responsible-operations"],
             "summary": "Audience selection is part of phased delivery, not a method for restoring the previous solution state. Evidence: Release guidance lines 30–34 separately names phased delivery, incident response and rollback steps."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-responsible-operations"
-            ],
+            "sourceIds": ["ai103-responsible-operations"],
             "summary": "Feedback improves detection and reporting but does not supply the missing recovery steps before release. Evidence: Line 37 describes user feedback; line 34 separately requires a plan defining how to revert after an incident."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-responsible-operations"
-            ],
+            "sourceIds": ["ai103-responsible-operations"],
             "summary": "This is the missing rollback preparation identified by the scenario. Evidence: The release-and-operate checklist at line 34 explicitly calls for a rollback plan with steps to revert the solution if an incident occurs."
           }
         ]
@@ -380,25 +332,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The release checklist treats audience phasing and restoration as separate preparations. Expanding a pilot does not define how an earlier version is restored.",
-              "sourceIds": [
-                "ai103-responsible-operations"
-              ]
+              "sourceIds": ["ai103-responsible-operations"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Feedback reporting is a separate practice from the pre-release rollback plan. Deferring that plan leaves the identified recovery gap unresolved.",
-              "sourceIds": [
-                "ai103-responsible-operations"
-              ]
+              "sourceIds": ["ai103-responsible-operations"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "The lesson explicitly calls for documented steps to revert to a previous solution state when an incident occurs.",
-              "sourceIds": [
-                "ai103-responsible-operations"
-              ]
+              "sourceIds": ["ai103-responsible-operations"]
             }
           ],
           "checks": {
@@ -432,9 +378,7 @@
             "claimRepresented": "Expanding the pilot without a recovery procedure fills the restoration gap.",
             "whyIncorrectInContext": "A larger pilot changes exposure, not the ability to restore a working version.",
             "couldBeCorrectWhen": "A phased plan can eventually expand an initially restricted audience after feedback. The cited checklist does not support omitting recovery planning as a substitute.",
-            "sourceIds": [
-              "ai103-responsible-operations"
-            ],
+            "sourceIds": ["ai103-responsible-operations"],
             "evidenceSummary": "Phased delivery and rollback are separate bullets in the prerelease guidance; neither replaces the other."
           },
           {
@@ -442,9 +386,7 @@
             "claimRepresented": "Additional feedback categories with deferred recovery planning supply release recovery.",
             "whyIncorrectInContext": "Feedback may reveal an incident but does not define restoration steps before that incident.",
             "couldBeCorrectWhen": "Feedback categories are useful for issue reporting when that reporting capability is needed. No cited condition justifies deferring a required recovery plan until failure.",
-            "sourceIds": [
-              "ai103-responsible-operations"
-            ],
+            "sourceIds": ["ai103-responsible-operations"],
             "evidenceSummary": "The source lists feedback categories independently of the rollback and incident-response plans."
           },
           {
@@ -452,9 +394,7 @@
             "claimRepresented": "Document a procedure that restores the prior solution state.",
             "whyIncorrectInContext": "It is not incorrect: the missing preparation is exactly the rollback plan described by the source.",
             "couldBeCorrectWhen": "A team is preparing release and needs defined recovery steps before an incident, regardless of whether the platform automates them.",
-            "sourceIds": [
-              "ai103-responsible-operations"
-            ],
+            "sourceIds": ["ai103-responsible-operations"],
             "evidenceSummary": "The source calls for a rollback plan defining how to revert the solution to a previous state."
           }
         ],
@@ -483,23 +423,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-agent-production"
-            ],
+            "sourceIds": ["ai103-agent-production"],
             "summary": "Immediate resubmission provides no backoff and adds retry pressure during the throttled interval. Evidence: Production considerations at lines 144–151 explicitly recommends retry logic with exponential backoff for transient failures and backoff for rate limiting."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-agent-production"
-            ],
+            "sourceIds": ["ai103-agent-production"],
             "summary": "This implements the documented backoff strategy while bounding the application's retry attempts. Evidence: Line 151 identifies exponential backoff and rate-limit backoff; the finite attempt budget is an explicitly chosen application policy, not an asserted service feature."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-agent-production"
-            ],
+            "sourceIds": ["ai103-agent-production"],
             "summary": "This does not implement the documented delay/backoff response to throttling. Evidence: The operational guidance at lines 150–151 favors rate limiting and backoff to control spikes, rather than increasing the volume of immediate retries."
           }
         ]
@@ -529,25 +463,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Immediate repeated attempts do not implement the source's backoff strategy and add requests during the throttled interval.",
-              "sourceIds": [
-                "ai103-agent-production"
-              ]
+              "sourceIds": ["ai103-agent-production"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The production guidance recommends exponential backoff for transient failures and backoff for rate limits. The finite retry budget is explicitly application-defined, not an alleged service default.",
-              "sourceIds": [
-                "ai103-agent-production"
-              ]
+              "sourceIds": ["ai103-agent-production"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Increasing concurrent retries without changing their delay does not space requests as the documented throttling guidance requires.",
-              "sourceIds": [
-                "ai103-agent-production"
-              ]
+              "sourceIds": ["ai103-agent-production"]
             }
           ],
           "checks": {
@@ -581,9 +509,7 @@
             "claimRepresented": "Unbounded immediate retries are the response to simultaneous throttled jobs.",
             "whyIncorrectInContext": "Immediate repeated submissions add pressure during the transient rate-limit interval instead of spacing attempts.",
             "couldBeCorrectWhen": "Retrying transient failures is supported only with the documented backoff discipline here. The source provides no favorable context for the exact immediate-until-success policy.",
-            "sourceIds": [
-              "ai103-agent-production"
-            ],
+            "sourceIds": ["ai103-agent-production"],
             "evidenceSummary": "Production Error handling explicitly pairs transient retry with exponential backoff and rate limits with backoff strategies."
           },
           {
@@ -591,9 +517,7 @@
             "claimRepresented": "Delay retries exponentially and constrain the application's retry budget.",
             "whyIncorrectInContext": "It is not incorrect: delayed exponential retries follow the source and the limit is a stated client policy, not an invented endpoint default.",
             "couldBeCorrectWhen": "A repeat-appropriate client call encounters transient throttling and the desired change is reduced retry pressure without a quota increase.",
-            "sourceIds": [
-              "ai103-agent-production"
-            ],
+            "sourceIds": ["ai103-agent-production"],
             "evidenceSummary": "The source prescribes backoff; the stem supplies application-defined bounded retries without claiming platform-mandated counts."
           },
           {
@@ -601,9 +525,7 @@
             "claimRepresented": "More concurrent retries at unchanged intervals alleviate burst throttling.",
             "whyIncorrectInContext": "Increasing retry concurrency does not implement the requested spacing and can compound the burst.",
             "couldBeCorrectWhen": "The cited lesson documents backoff, not a concurrency-increase exception during throttling. A different throughput experiment would need additional evidence; no favorable as-written context is asserted.",
-            "sourceIds": [
-              "ai103-agent-production"
-            ],
+            "sourceIds": ["ai103-agent-production"],
             "evidenceSummary": "The rate-limiting guidance favors delayed handling and prevention of unexpected spikes, not adding simultaneous attempts."
           }
         ],
@@ -632,23 +554,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-responses-state"
-            ],
+            "sourceIds": ["ai103-responses-state"],
             "summary": "State linking does not remove the token cost of included context. Evidence: Context considerations at lines 265–278 lists the active context and says it is concatenated, tokenized and sent each request; SDK state management does not automatically make token use cheaper."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-responses-state"
-            ],
+            "sourceIds": ["ai103-responses-state"],
             "summary": "This confuses the client's state reference with the model's active context. Evidence: Lines 267–278 explicitly distinguishes linking by previous_response_id from the tokenized conversation history included for a run."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-responses-state"
-            ],
+            "sourceIds": ["ai103-responses-state"],
             "summary": "Tool outputs can remain in the active context on following turns. Evidence: The context list at lines 269–278 explicitly includes tool outputs and previous user/assistant messages."
           }
         ]
@@ -678,25 +594,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The context-window section explicitly includes conversation history and tool outputs among material concatenated and tokenized for each model request despite state references.",
-              "sourceIds": [
-                "ai103-responses-state"
-              ]
+              "sourceIds": ["ai103-responses-state"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "A small client payload is not the model's full active context. previous_response_id preserves earlier context rather than making it token-free.",
-              "sourceIds": [
-                "ai103-responses-state"
-              ]
+              "sourceIds": ["ai103-responses-state"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Tool outputs are explicitly listed as active context on later turns; response completion alone does not exclude them from the conversation.",
-              "sourceIds": [
-                "ai103-responses-state"
-              ]
+              "sourceIds": ["ai103-responses-state"]
             }
           ],
           "checks": {
@@ -730,9 +640,7 @@
             "claimRepresented": "Retained history and tool output still enter subsequent tokenized model context.",
             "whyIncorrectInContext": "It is not incorrect: the conversation retains long outputs, and the source explicitly includes those outputs in the active context.",
             "couldBeCorrectWhen": "A project-level conversation retains prior messages and tool results rather than deliberately omitting or pruning them.",
-            "sourceIds": [
-              "ai103-responses-state"
-            ],
+            "sourceIds": ["ai103-responses-state"],
             "evidenceSummary": "Context window considerations lines 265-278 enumerate history and tool results and say state management does not automatically lower token usage."
           },
           {
@@ -740,9 +648,7 @@
             "claimRepresented": "Representing earlier content by an ID means only the newest input can count.",
             "whyIncorrectInContext": "The reference preserves earlier context for the model; it is not the only content tokenized at inference.",
             "couldBeCorrectWhen": "A fresh or manually pruned input can omit old messages, as the manual-chaining section permits. That is not caused by representing retained history with an ID, so the as-written explanation has no supported exception.",
-            "sourceIds": [
-              "ai103-responses-state"
-            ],
+            "sourceIds": ["ai103-responses-state"],
             "evidenceSummary": "Manual chaining changes selected context; previous_response_id instead links responses and retains context. The source distinguishes these mechanisms."
           },
           {
@@ -750,9 +656,7 @@
             "claimRepresented": "A completed response removes its tool outputs from later token accounting.",
             "whyIncorrectInContext": "Completion status does not remove tool results that remain in the active conversation context.",
             "couldBeCorrectWhen": "Tool output no longer contributes after it is actually excluded from manually selected context. The source does not make response completion itself an exclusion rule.",
-            "sourceIds": [
-              "ai103-responses-state"
-            ],
+            "sourceIds": ["ai103-responses-state"],
             "evidenceSummary": "The response structure lists status separately from usage, while context-window guidance explicitly counts retained tool outputs on future requests."
           }
         ],
@@ -781,23 +685,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-model-benchmarks"
-            ],
+            "sourceIds": ["ai103-model-benchmarks"],
             "summary": "Quality index measures task accuracy rather than first-token delay, and total throughput combines input and output. Evidence: Line 31 defines quality index; lines 81–94 separates TTFT, generated throughput and total input/output throughput."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-model-benchmarks"
-            ],
+            "sourceIds": ["ai103-model-benchmarks"],
             "summary": "Mean latency does not isolate the first streaming token, and token price is not a speed measurement. Evidence: Lines 69–73 defines price metrics; lines 81–88 distinguishes total request latency from TTFT."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-model-benchmarks"
-            ],
+            "sourceIds": ["ai103-model-benchmarks"],
             "summary": "These directly measure the initial blank interval and subsequent output throughput. Evidence: Performance benchmarks at lines 88–96 defines TTFT as first-token delay and GTPS as output tokens per second."
           }
         ]
@@ -827,25 +725,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Quality index addresses task performance, and total token throughput includes both input and output. This pair does not isolate first-token delay and sustained generated output.",
-              "sourceIds": [
-                "ai103-model-benchmarks"
-              ]
+              "sourceIds": ["ai103-model-benchmarks"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Mean request latency is not specifically the time until the first streamed token, and token price is monetary rather than an output-speed measurement.",
-              "sourceIds": [
-                "ai103-model-benchmarks"
-              ]
+              "sourceIds": ["ai103-model-benchmarks"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "TTFT is the interval before the first token and GTPS measures generated output per second, directly separating the reported pause from later rapid generation.",
-              "sourceIds": [
-                "ai103-model-benchmarks"
-              ]
+              "sourceIds": ["ai103-model-benchmarks"]
             }
           ],
           "checks": {
@@ -879,9 +771,7 @@
             "claimRepresented": "Quality index and combined input/output throughput isolate the first-token delay and output speed.",
             "whyIncorrectInContext": "Quality index is not a first-response timer, and total throughput is not restricted to generated output.",
             "couldBeCorrectWhen": "This pair is useful for comparing general task quality with combined processing throughput, rather than separating two phases of streaming responsiveness.",
-            "sourceIds": [
-              "ai103-model-benchmarks"
-            ],
+            "sourceIds": ["ai103-model-benchmarks"],
             "evidenceSummary": "Quality benchmarks define quality index using task accuracy; performance benchmarks define TTPS as input plus output tokens per second."
           },
           {
@@ -889,9 +779,7 @@
             "claimRepresented": "Mean request latency and input-token price separate stream-start delay from generation speed.",
             "whyIncorrectInContext": "Mean latency covers the overall request, while a monetary input price provides no output-speed measurement.",
             "couldBeCorrectWhen": "For a comparison of overall request responsiveness and financial input-processing cost, both quantities are documented and relevant.",
-            "sourceIds": [
-              "ai103-model-benchmarks"
-            ],
+            "sourceIds": ["ai103-model-benchmarks"],
             "evidenceSummary": "The unit defines mean latency as request processing time and cost per input token as a pricing dimension, separate from streaming throughput."
           },
           {
@@ -899,9 +787,7 @@
             "claimRepresented": "Measure first streaming-token arrival separately from generated-output tokens per second.",
             "whyIncorrectInContext": "It is not incorrect: TTFT matches the blank interval and GTPS matches sustained output production.",
             "couldBeCorrectWhen": "A streaming client must distinguish delay before any token from the speed of subsequent generated output, exactly the symptoms described.",
-            "sourceIds": [
-              "ai103-model-benchmarks"
-            ],
+            "sourceIds": ["ai103-model-benchmarks"],
             "evidenceSummary": "Performance benchmarks lines 81-96 define TTFT and GTPS distinctly and use both for interactive performance comparison."
           }
         ],
@@ -930,23 +816,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "summary": "Changing the tested harm scenarios undermines the intended comparison with the original baseline. Evidence: Lines 17–25 requires a baseline for given usage scenarios and pre-defined harm criteria to track improvement through iterative changes."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "summary": "Changing categorization criteria changes what the measurement means rather than isolating the mitigation's effect. Evidence: Line 25 requires strict pre-defined criteria for consistent categorization, while line 17 describes tracking improvements against the baseline."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "summary": "This maintains a comparable baseline while allowing coverage to grow transparently. Evidence: Baseline methodology lines 17–27 defines scenario-specific measurement, strict criteria and documentation; lines 31–33 recommends continued testing of new scenarios."
           }
         ]
@@ -976,25 +856,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The baseline quantifies harms for given usage scenarios. Replacing those with easy cases changes the comparison population rather than isolating the mitigation.",
-              "sourceIds": [
-                "ai103-harm-baseline"
-              ]
+              "sourceIds": ["ai103-harm-baseline"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Predetermined strict criteria define the categorization. Relaxing them changes the measured outcome's meaning and prevents the stated like-for-like comparison.",
-              "sourceIds": [
-                "ai103-harm-baseline"
-              ]
+              "sourceIds": ["ai103-harm-baseline"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "Repeating the defined baseline cases and criteria preserves the comparison the lesson requires; separately identified additional scenarios extend testing without silently redefining it.",
-              "sourceIds": [
-                "ai103-harm-baseline"
-              ]
+              "sourceIds": ["ai103-harm-baseline"]
             }
           ],
           "checks": {
@@ -1028,9 +902,7 @@
             "claimRepresented": "Replace the baseline with easy cases and compare raw rates as an intervention result.",
             "whyIncorrectInContext": "Changing the difficulty and composition of the tested cases confounds the before/after mitigation comparison.",
             "couldBeCorrectWhen": "A newly defined scenario set can provide additional separately reported coverage. The source does not justify using only easier cases as an equivalent replacement for the original baseline.",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "evidenceSummary": "The lesson measures the prioritized harms in given usage scenarios and tracks changes against that documented initial baseline."
           },
           {
@@ -1038,9 +910,7 @@
             "claimRepresented": "Relax harm severity criteria while comparing the percentages as unchanged measurements.",
             "whyIncorrectInContext": "A new classification rule changes the measured outcome, so a lower percentage no longer isolates mitigation effectiveness.",
             "couldBeCorrectWhen": "Teams may define harm categories and criteria for a new measurement exercise. No cited context makes percentages under changed criteria equivalent without qualification.",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "evidenceSummary": "The process requires predefined strict categorization criteria; the baseline comparison depends on those measurements having consistent meaning."
           },
           {
@@ -1048,9 +918,7 @@
             "claimRepresented": "Repeat the established harm cases and severity criteria and identify newly added coverage separately.",
             "whyIncorrectInContext": "It is not incorrect: preserving the measuring conditions allows the changed application to be compared against its baseline.",
             "couldBeCorrectWhen": "An application mitigation is evaluated against an existing documented harm baseline, while new cases remain recognizable as additional coverage.",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "evidenceSummary": "Baseline tracking, strict criteria and continuing testing of new scenarios support an unchanged comparison plus explicitly identified expansion."
           }
         ],
@@ -1079,23 +947,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "This reverses the primary failures: X goes beyond context, while Y fails to answer the user's query. Evidence: Evaluator table lines 9–11 and system evaluation lines 21–26 separates context-aligned groundedness from response relevance to the query."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "The pairing directly matches unsupported response content and a query-answer mismatch. Evidence: Groundedness measures alignment with context without fabrication; Relevance assesses whether the response addresses the query, as defined at lines 9–11 and 23–25."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Retrieval evaluates query-to-context relevance, not these two distinct final-response failures. Evidence: Process evaluation lines 34–39 and input table line 53 describes Retrieval using query and context, separately from the system response evaluators."
           }
         ]
@@ -1125,25 +987,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "This swaps the dimensions: X's added limit is not in grounding context, while Y fails the query despite repeating context accurately.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "Base Groundedness compares the final response with supplied context; Relevance compares it with the user's query. Those precisely match X and Y respectively.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Retrieval evaluates query-to-context relevance. It is a process metric, not the complete final-response fidelity and query-answering judgments requested.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             }
           ],
           "checks": {
@@ -1177,9 +1033,7 @@
             "claimRepresented": "Query relevance detects X's unsupported policy fact while groundedness detects Y's off-topic answer.",
             "whyIncorrectInContext": "X already addresses the query but invents context; Y stays within context but answers the wrong query. This reverses their primary failures.",
             "couldBeCorrectWhen": "The pairing would fit an X that misses the query and a Y that fabricates beyond its context. Those are the opposite failure descriptions from this stem.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "The system-evaluation table explicitly distinguishes generated response alignment with context from relevance to the user's query."
           },
           {
@@ -1187,9 +1041,7 @@
             "claimRepresented": "Use Groundedness for the unsupported addition and Relevance for the off-query response.",
             "whyIncorrectInContext": "It is not incorrect: the two measures target precisely the independent faults described.",
             "couldBeCorrectWhen": "Response X extends beyond its supplied context and response Y is context-faithful but not responsive to the actual query.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Groundedness measures nonfabrication relative to context; Relevance measures accuracy/completeness/direct relevance to the query."
           },
           {
@@ -1197,9 +1049,7 @@
             "claimRepresented": "The Retrieval evaluator targets both final-answer defects.",
             "whyIncorrectInContext": "Retrieval scores query-to-context relevance, not how the generated final answer used that context.",
             "couldBeCorrectWhen": "The team is evaluating the textual relevance of retrieved chunks before generation and lacks qrels, not evaluating final responses.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "The process-evaluation table gives Retrieval query/context inputs; Groundedness and Relevance are system/final-response evaluators."
           }
         ],
@@ -1228,24 +1078,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "This distinguishes the ranking signal from the ground-truth labeling gap. Evidence: Document Retrieval table lines 159–166 defines NDCG by ideal ranking order and Holes by missing query relevance judgments; it supports parameter comparisons using labeled ground truth."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "summary": "Holes measures missing relevance labels, not a count of deleted index documents. Evidence: Metric table at line 165 labels Holes as Search Label Sanity: documents with missing query relevance judgments or ground truth."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-rag-evaluators",
-              "ai103-model-benchmarks"
-            ],
+            "sourceIds": ["ai103-rag-evaluators", "ai103-model-benchmarks"],
             "summary": "NDCG is a retrieval ranking metric, not a model-output timing metric. Evidence: RAG evaluator line 162 defines NDCG as ranking quality; benchmark performance lines 81–96 separately defines streaming latency and throughput."
           }
         ]
@@ -1283,26 +1126,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "NDCG measures ranking against an ideal order; Holes measures documents lacking qrels. Completing judgments and examining ranking precede attributing the observation to missing indexed content.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Holes is explicitly Search Label Sanity, not an index-deletion counter. Missing relevance judgments cannot by themselves prove missing documents in storage.",
-              "sourceIds": [
-                "ai103-rag-evaluators"
-              ]
+              "sourceIds": ["ai103-rag-evaluators"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "NDCG is a retrieval-order metric. The separate benchmark definitions identify TTFT and generated throughput for streaming performance, not NDCG.",
-              "sourceIds": [
-                "ai103-rag-evaluators",
-                "ai103-model-benchmarks"
-              ]
+              "sourceIds": ["ai103-rag-evaluators", "ai103-model-benchmarks"]
             }
           ],
           "checks": {
@@ -1336,9 +1172,7 @@
             "claimRepresented": "Inspect ranking and missing relevance judgments before inferring index incompleteness.",
             "whyIncorrectInContext": "It is not technically incorrect: unjudged retrieved documents are not evidence that those documents were deleted from the index.",
             "couldBeCorrectWhen": "A qrels-based evaluation retrieves unlabeled documents and compares rank quality against judged data, as described.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "Document Retrieval lines 159-166 distinguish NDCG rank quality from Holes label sanity; the claim's recorded ancestry restriction remains a separate admission concern."
           },
           {
@@ -1346,9 +1180,7 @@
             "claimRepresented": "A Holes count proves search-index document deletion.",
             "whyIncorrectInContext": "Holes counts missing relevance judgments, not missing indexed records; a returned document can lack a human judgment.",
             "couldBeCorrectWhen": "Index completeness would need independent index evidence. The cited evaluator has no mode in which Holes itself proves deletion, so this exact alternative has no defensible favorable context.",
-            "sourceIds": [
-              "ai103-rag-evaluators"
-            ],
+            "sourceIds": ["ai103-rag-evaluators"],
             "evidenceSummary": "The metric table expressly calls Holes Search Label Sanity and defines it using missing ground truth."
           },
           {
@@ -1356,10 +1188,7 @@
             "claimRepresented": "Lower NDCG means slower output tokens and calls for streaming tuning.",
             "whyIncorrectInContext": "NDCG ranks retrieved documents; it is neither a time measurement nor a generated-token metric.",
             "couldBeCorrectWhen": "Streaming tuning can be motivated by TTFT or generated-token throughput. Neither cited source gives NDCG an output-latency interpretation in any context.",
-            "sourceIds": [
-              "ai103-rag-evaluators",
-              "ai103-model-benchmarks"
-            ],
+            "sourceIds": ["ai103-rag-evaluators", "ai103-model-benchmarks"],
             "evidenceSummary": "The evaluator table defines ranking quality; the benchmark unit names the distinct metrics for model latency and generated tokens."
           }
         ],
@@ -1388,23 +1217,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-search-custom-skill"
-            ],
+            "sourceIds": ["ai103-search-custom-skill"],
             "summary": "A returned record can contain an empty result and an explicit error. Evidence: Output format lines 88–119 includes records with populated data and another with empty data plus errors and warnings."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-search-custom-skill"
-            ],
+            "sourceIds": ["ai103-search-custom-skill"],
             "summary": "The interface uses recordId, and the example changes record order between input and output. Evidence: Input contract line 51 requires recordId for correlation; input example lines 56–83 and output example lines 92–118 shows reordered record results."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-search-custom-skill"
-            ],
+            "sourceIds": ["ai103-search-custom-skill"],
             "summary": "This preserves individual failures rather than reporting batch presence as complete enrichment. Evidence: Line 51 requires matching results by recordId; output section lines 88–119 recommends per-record error and warning messages."
           }
         ]
@@ -1434,25 +1257,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The output example includes an empty data object with errors and warnings inside a valid values array. Array presence does not establish per-record success.",
-              "sourceIds": [
-                "ai103-search-custom-skill"
-              ]
+              "sourceIds": ["ai103-search-custom-skill"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The input contract requires recordId so outputs can be matched to inputs, and the example reorders them. Position is not the correlation key.",
-              "sourceIds": [
-                "ai103-search-custom-skill"
-              ]
+              "sourceIds": ["ai103-search-custom-skill"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "Tracking each record by recordId and inspecting its data/errors/warnings follows the documented custom-skill input/output contract.",
-              "sourceIds": [
-                "ai103-search-custom-skill"
-              ]
+              "sourceIds": ["ai103-search-custom-skill"]
             }
           ],
           "checks": {
@@ -1486,9 +1303,7 @@
             "claimRepresented": "Every returned record is successful whenever a values array exists.",
             "whyIncorrectInContext": "r9 explicitly reports missing input with empty data, so envelope presence cannot establish successful enrichment.",
             "couldBeCorrectWhen": "Individual error-free outputs with expected data can be recorded as successful after inspection. The source provides no context where values presence alone certifies every record.",
-            "sourceIds": [
-              "ai103-search-custom-skill"
-            ],
+            "sourceIds": ["ai103-search-custom-skill"],
             "evidenceSummary": "The output example puts valid data and an empty data object with errors/warnings inside the same values array."
           },
           {
@@ -1496,9 +1311,7 @@
             "claimRepresented": "Output order identifies inputs, so all errors should be attributed to the first record.",
             "whyIncorrectInContext": "The contract correlates by recordId, and the actual example reorders successful records; r9's errors do not belong to r7.",
             "couldBeCorrectWhen": "An error belongs to the first input only if its returned recordId identifies that input. That coincidence never makes output order the correlation key or assigns all errors there.",
-            "sourceIds": [
-              "ai103-search-custom-skill"
-            ],
+            "sourceIds": ["ai103-search-custom-skill"],
             "evidenceSummary": "Format web API inputs requires the output to preserve recordId for input matching; the output example visibly changes array order."
           },
           {
@@ -1506,9 +1319,7 @@
             "claimRepresented": "Associate each output and its error/warning messages using recordId.",
             "whyIncorrectInContext": "It is not incorrect: this preserves the documented correlation and records the local failure instead of declaring the batch universally successful.",
             "couldBeCorrectWhen": "A custom-skill response contains multiple records with individual data and optional errors/warnings, including mixed success.",
-            "sourceIds": [
-              "ai103-search-custom-skill"
-            ],
+            "sourceIds": ["ai103-search-custom-skill"],
             "evidenceSummary": "The interface specification uses recordId in both directions and recommends per-record errors/warnings for records that cannot be processed."
           }
         ],
@@ -1537,25 +1348,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "summary": "That broad provisioning scope is unnecessary for the stated existing-project tasks. Evidence: Prerequisites lines 32–42 recommends narrow scope, distinguishes project roles from Account Owner, and reserves resource-group assignment for creating a Foundry resource."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-sdk",
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-sdk", "ai103-mcp-tools"],
             "summary": "These match the two tasks at the narrow project scope. Evidence: SDK lines 34–40 defines day-to-day User and connection-managing Project Manager; MCP line 25 repeats Project Manager for authentication connections. Renaming note lines 36–38 preserves IDs and permissions."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-sdk",
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-sdk", "ai103-mcp-tools"],
             "summary": "The rename did not change core permissions, and connection creation has its own Project Manager requirement. Evidence: SDK line 38 says role IDs and core permissions are unchanged; MCP line 25 explicitly requires Project Manager to create an authentication connection."
           }
         ]
@@ -1593,27 +1396,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "Resource-group Account Owner is reserved for resource provisioning, not the narrowest scope for these existing-project tasks. Both users would receive excessive authority.",
-              "sourceIds": [
-                "ai103-sdk"
-              ]
+              "sourceIds": ["ai103-sdk"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The SDK assigns ordinary development to Foundry User and connection management to Foundry Project Manager on the project; the MCP prerequisites specifically repeat the latter for auth connections.",
-              "sourceIds": [
-                "ai103-sdk",
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-sdk", "ai103-mcp-tools"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The rename note explicitly preserves role IDs and core permissions. It did not add connection creation to User or eliminate the separately documented Project Manager requirement.",
-              "sourceIds": [
-                "ai103-sdk",
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-sdk", "ai103-mcp-tools"]
             }
           ],
           "checks": {
@@ -1647,9 +1442,7 @@
             "claimRepresented": "Both existing-project tasks require resource-group Foundry Account Owner.",
             "whyIncorrectInContext": "The tasks exclude resource creation and can use narrower project assignments; resource-group ownership is unnecessarily broad.",
             "couldBeCorrectWhen": "The person must create a Foundry resource in the target resource group, with the just-in-time provisioning assignment described by the SDK guide.",
-            "sourceIds": [
-              "ai103-sdk"
-            ],
+            "sourceIds": ["ai103-sdk"],
             "evidenceSummary": "The prerequisite hierarchy distinguishes project work, resource-level project creation and resource-group resource creation."
           },
           {
@@ -1657,10 +1450,7 @@
             "claimRepresented": "Assign User for ordinary development and Project Manager for MCP connections, both at project scope.",
             "whyIncorrectInContext": "It is not incorrect: these are exactly the stated task boundaries in the SDK and MCP prerequisites.",
             "couldBeCorrectWhen": "One developer works day to day in an existing project and the other manages its authentication connections without provisioning resources.",
-            "sourceIds": [
-              "ai103-sdk",
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-sdk", "ai103-mcp-tools"],
             "evidenceSummary": "SDK prerequisites name both roles/scopes; MCP prerequisites explicitly add Project Manager for project connection authentication."
           },
           {
@@ -1668,10 +1458,7 @@
             "claimRepresented": "Both tasks can use User because the role rename added connection-management permissions.",
             "whyIncorrectInContext": "The rename preserves role IDs/core permissions and does not erase the separate Project Manager connection requirement.",
             "couldBeCorrectWhen": "User fits both people only if both tasks are ordinary project development rather than connection management. The rename itself never supplies the asserted extra privilege in the cited evidence.",
-            "sourceIds": [
-              "ai103-sdk",
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-sdk", "ai103-mcp-tools"],
             "evidenceSummary": "Both sources explicitly state unchanged core permissions after renaming and separately identify connection-management authorization."
           }
         ],
@@ -1700,23 +1487,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "Authentication and labeling do not make a publicly exposed endpoint internal-only. Evidence: Public/private section lines 55–62 distinguishes public accessibility from private networking and internal-only ingress; authentication is separately discussed at lines 201–213."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "This omits the explicitly documented private-MCP network prerequisites. Evidence: Lines 60–62 requires private networking and a dedicated MCP subnet, then specifies delegation to Microsoft.App/environments and internal-only ingress."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "This includes the documented requirements for the selected Container Apps private-server path. Evidence: The private endpoint instructions at lines 60–62 names all three requirements: private networking, dedicated delegated MCP subnet, and Container Apps internal-only ingress."
           }
         ]
@@ -1746,25 +1527,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The source distinguishes publicly reachable and private MCP endpoints. A bearer credential or endpoint label authenticates/describes a connection but does not remove public exposure.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The private-MCP instructions explicitly require private networking and a dedicated subnet. Internal ingress alone omits those stated infrastructure prerequisites.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "The documented Container Apps route specifies private networking, a dedicated MCP subnet delegated to Microsoft.App/environments and internal-only ingress.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             }
           ],
           "checks": {
@@ -1798,9 +1573,7 @@
             "claimRepresented": "A bearer credential and a private label make public ingress a private MCP connection.",
             "whyIncorrectInContext": "Authentication limits callers but does not remove public internet exposure, which the requirement prohibits.",
             "couldBeCorrectWhen": "An authenticated public MCP endpoint is appropriate when public exposure is permitted. The source never treats the word private in a label as network isolation.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "The article separately documents public endpoints, project connection credentials and private networking requirements."
           },
           {
@@ -1808,9 +1581,7 @@
             "claimRepresented": "Internal-only ingress alone suffices without the dedicated subnet/private setup.",
             "whyIncorrectInContext": "The selected tested route explicitly requires the private network setup and dedicated delegated subnet as well as ingress configuration.",
             "couldBeCorrectWhen": "Internal-only ingress is one valid component of the documented design, not a sufficient plan without its network prerequisites. No sourced favorable context exists for the complete omission clause.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "The private endpoint section requires both private networking and the dedicated subnet; Known limitations additionally excludes Basic setup."
           },
           {
@@ -1818,9 +1589,7 @@
             "claimRepresented": "Combine private networking, a dedicated delegated MCP subnet and internal Container Apps ingress.",
             "whyIncorrectInContext": "It is not incorrect for the stipulated Container Apps route, provided private networking means the documented Standard setup rather than Basic.",
             "couldBeCorrectWhen": "The team uses Standard Agent Setup with private networking and the tested Container Apps host on a subnet delegated to Microsoft.App/environments.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "Lines 55-64 specify the route; lines 1621-1622 state Standard setup and the tested dedicated-subnet host."
           }
         ],
@@ -1849,23 +1618,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-search-filters"
-            ],
+            "sourceIds": ["ai103-search-filters"],
             "summary": "It constrains the documents admitted to retrieval using the established access metadata. Evidence: Security-filter descriptions at lines 15 and 24 passes requester/security identifiers as criteria; lines 29–35 applies predicates to filterable fields before downstream retrieval and scoring."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-search-filters"
-            ],
+            "sourceIds": ["ai103-search-filters"],
             "summary": "That sends unauthorized content to the model, contrary to the required pre-context retrieval boundary. Evidence: Lines 15 and 24 describes security filters as showing only permitted documents; lines 29–31 places filtering in document qualification for retrieval rather than relying on response instructions."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-search-filters"
-            ],
+            "sourceIds": ["ai103-search-filters"],
             "summary": "Relevance and access rights are different criteria; ranking alone does not apply the caller's security identifiers. Evidence: Lines 24 and 31 separates security-identifier filtering from subsequent relevance scoring over the filtered recall set."
           }
         ]
@@ -1895,25 +1658,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "Security filtering uses requester identifiers as criteria over filterable metadata. Server-known authorized groups can qualify the results before they are given to the model.",
-              "sourceIds": [
-                "ai103-search-filters"
-              ]
+              "sourceIds": ["ai103-search-filters"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Fetching unauthorized documents first crosses the explicitly stated pre-context access boundary. Model instructions are not the search query's access-rights filter.",
-              "sourceIds": [
-                "ai103-search-filters"
-              ]
+              "sourceIds": ["ai103-search-filters"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "Relevance scoring orders content by query usefulness, not the caller's security identifiers. Removing authorization metadata does not perform security trimming.",
-              "sourceIds": [
-                "ai103-search-filters"
-              ]
+              "sourceIds": ["ai103-search-filters"]
             }
           ],
           "checks": {
@@ -1947,9 +1704,7 @@
             "claimRepresented": "Build the search security filter from the authenticated caller's server-known group IDs.",
             "whyIncorrectInContext": "It is not incorrect: the metadata is filterable and the server already possesses trusted authorization criteria before retrieval.",
             "couldBeCorrectWhen": "Search documents carry access identifiers and the application supplies the authenticated requester's permitted identifiers to the search filter.",
-            "sourceIds": [
-              "ai103-search-filters"
-            ],
+            "sourceIds": ["ai103-search-filters"],
             "evidenceSummary": "When to use a filter identifies security filters whose matching requester IDs act as proxies for document access rights."
           },
           {
@@ -1957,9 +1712,7 @@
             "claimRepresented": "Send all retrieved documents to the model and use instructions as the exclusion boundary.",
             "whyIncorrectInContext": "Unauthorized documents have already entered the model context, violating the specified boundary even if the output later omits them.",
             "couldBeCorrectWhen": "Presentation instructions are not documented by this citation as authorization. A corpus with no access restrictions removes the stated security problem, but does not supply evidence that this exact unauthorized-content strategy is correct.",
-            "sourceIds": [
-              "ai103-search-filters"
-            ],
+            "sourceIds": ["ai103-search-filters"],
             "evidenceSummary": "The source locates document eligibility in the security filter on the search query, not in later answer generation."
           },
           {
@@ -1967,9 +1720,7 @@
             "claimRepresented": "Relevance ranking without group criteria enforces caller-specific document access.",
             "whyIncorrectInContext": "Similarity to the query does not test whether the caller has permission to see a document.",
             "couldBeCorrectWhen": "Relevance-only search is appropriate for a corpus with no caller-dependent eligibility restriction; that is not this mixed-access index.",
-            "sourceIds": [
-              "ai103-search-filters"
-            ],
+            "sourceIds": ["ai103-search-filters"],
             "evidenceSummary": "The article distinguishes full-text scoring/ranking from filters that qualify documents for downstream retrieval and scoring."
           }
         ],
@@ -1998,23 +1749,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "summary": "The source explicitly excludes safe severity from configurable filtering. Evidence: Content filter types line 27 says safe is annotated, not filtered and not configurable; classic input configuration lines 117–126 lists low, medium and high thresholds."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "summary": "This matches the documented special treatment of the safe severity level. Evidence: Content filter types at line 27 explicitly states the safe-level behavior; line 3 scopes the article to Foundry classic."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "summary": "The documentation explicitly allows safe content to be labeled in annotations. Evidence: Line 27 describes safe content as labeled in annotations while excluded from filtering."
           }
         ]
@@ -2044,25 +1789,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The strictest listed harm threshold includes low, medium and high. The safe level is expressly excluded from configurable filtering.",
-              "sourceIds": [
-                "ai103-classic-image-filters"
-              ]
+              "sourceIds": ["ai103-classic-image-filters"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "Both the filter-type explanation and configurability section explicitly state that safe content is annotated but neither filtered nor configurable.",
-              "sourceIds": [
-                "ai103-classic-image-filters"
-              ]
+              "sourceIds": ["ai103-classic-image-filters"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The page specifically says safe content is labeled in annotations, so its presence is not proof of malformed output.",
-              "sourceIds": [
-                "ai103-classic-image-filters"
-              ]
+              "sourceIds": ["ai103-classic-image-filters"]
             }
           ],
           "checks": {
@@ -2096,9 +1835,7 @@
             "claimRepresented": "Safe is the most restrictive configurable harm-blocking level.",
             "whyIncorrectInContext": "Safe is excluded from configurable harm filtering; the listed strictest configuration blocks low, medium and high.",
             "couldBeCorrectWhen": "Low is the lowest listed configurable harm threshold. No documented classic configuration makes the option's actual safe label the strictest threshold.",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "evidenceSummary": "Content filter types line 27 excludes safe from filtering; the configurability table identifies low/medium/high as strictest."
           },
           {
@@ -2106,9 +1843,7 @@
             "claimRepresented": "Safe labels can appear in annotations without being configurable or filtered.",
             "whyIncorrectInContext": "It is not incorrect: the source states precisely this distinction for classic harm categories.",
             "couldBeCorrectWhen": "A classic harm-classification response is annotated at safe severity; that label does not mean harmful content was blocked.",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "evidenceSummary": "Both Content filter types and Configurability explicitly distinguish safe annotation from configurable blocking."
           },
           {
@@ -2116,9 +1851,7 @@
             "claimRepresented": "Safe cannot appear in annotations, so its presence proves a malformed response.",
             "whyIncorrectInContext": "The article expressly permits safe annotations, so their presence alone establishes no malformed response.",
             "couldBeCorrectWhen": "A malformed response would require separate evidence of a contract violation. The cited classic contract supplies no condition where a safe annotation alone proves it.",
-            "sourceIds": [
-              "ai103-classic-image-filters"
-            ],
+            "sourceIds": ["ai103-classic-image-filters"],
             "evidenceSummary": "The exact safe-annotation statement refutes the universal absence assertion; no malformed-response exception is documented."
           }
         ],
@@ -2147,23 +1880,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "summary": "The documented method requires pre-defined categorization criteria and consistent initial manual results. Evidence: Line 25 requires strict pre-defined criteria; lines 29–33 recommends beginning with a small manually evaluated set before automation."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "summary": "The guidance retains periodic manual testing even after automation is implemented. Evidence: Line 33 explicitly calls for periodic manual testing of new scenarios and validation of the automated testing approach."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "summary": "It follows the documented progression while addressing the current disagreement. Evidence: Manual and automatic testing at lines 31–33 states the small-set calibration, subsequent automation and ongoing manual validation sequence."
           }
         ]
@@ -2193,25 +1920,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The measurement process requires strict predefined harm criteria before categorization. Numeric automation output cannot repair undefined or inconsistent criteria by itself.",
-              "sourceIds": [
-                "ai103-harm-baseline"
-              ]
+              "sourceIds": ["ai103-harm-baseline"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "The lesson explicitly retains periodic manual testing after automation for new scenarios and to check the automated evaluator's behavior.",
-              "sourceIds": [
-                "ai103-harm-baseline"
-              ]
+              "sourceIds": ["ai103-harm-baseline"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "Start with a small manually evaluated set to establish consistency, then scale with automation while continuing periodic manual validation.",
-              "sourceIds": [
-                "ai103-harm-baseline"
-              ]
+              "sourceIds": ["ai103-harm-baseline"]
             }
           ],
           "checks": {
@@ -2245,9 +1966,7 @@
             "claimRepresented": "Immediate automation can use resulting numbers to define what harm means.",
             "whyIncorrectInContext": "Testers disagree because the criteria are not yet sufficiently defined; a classifier cannot supply the required prior definition merely by emitting scores.",
             "couldBeCorrectWhen": "Automation is appropriate after clear criteria and consistent manual results are established. The exact proposal reverses that ordering and has no sourced favorable context.",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "evidenceSummary": "The three-step process requires predefined criteria; manual testing first checks their clarity and result consistency."
           },
           {
@@ -2255,9 +1974,7 @@
             "claimRepresented": "One manual pass authorizes automation followed by permanent cessation of human review.",
             "whyIncorrectInContext": "The source retains periodic manual checks for new scenarios and for whether automation performs as expected.",
             "couldBeCorrectWhen": "Scaling to automation after a consistent manual pilot is supported. Permanently stopping human evaluation is not supported even in that favorable pilot context.",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "evidenceSummary": "Manual and automatic testing explicitly says to periodically perform manual testing after an automated approach is implemented."
           },
           {
@@ -2265,9 +1982,7 @@
             "claimRepresented": "Clarify criteria on a small manual sample, automate, and continue periodic manual validation.",
             "whyIncorrectInContext": "It is not incorrect: the initial manual work addresses the disagreement and the later checks preserve oversight as scale grows.",
             "couldBeCorrectWhen": "A team needs reliable harm categorization before applying automated classification to a larger test set.",
-            "sourceIds": [
-              "ai103-harm-baseline"
-            ],
+            "sourceIds": ["ai103-harm-baseline"],
             "evidenceSummary": "The source's manual-first, automate-next, periodically-recheck sequence matches all three stages rather than only the scale-up step."
           }
         ],
@@ -2296,23 +2011,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "summary": "Dataset evaluation is explicitly designed to score pre-generated outputs. Evidence: Evaluation target list at lines 101–105 distinguishes model, agent and dataset; lines 113–115 requires the stored inputs and generated responses with appropriate field mappings."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "summary": "That generates new outputs during evaluation instead of scoring the exact archived responses. Evidence: Line 103 describes model evaluation as generating outputs during evaluation, in contrast with pre-generated dataset evaluation at line 105."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "summary": "That evaluates agent responses to the supplied prompts rather than selecting the stored pilot outputs as the response data. Evidence: Lines 103–105 separates model/agent targets from the dataset target for outputs already in the test dataset."
           }
         ]
@@ -2342,25 +2051,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The dataset target evaluates pre-generated outputs already present in the dataset; the lesson requires both inputs and responses and field mapping.",
-              "sourceIds": [
-                "ai103-evaluation-planning"
-              ]
+              "sourceIds": ["ai103-evaluation-planning"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "A model target supplied prompts generates outputs during the evaluation, rather than necessarily assessing the archived pilot responses.",
-              "sourceIds": [
-                "ai103-evaluation-planning"
-              ]
+              "sourceIds": ["ai103-evaluation-planning"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The live agent target evaluates the agent's generated responses to the prompts. That changes the response data rather than selecting the exact archived outputs.",
-              "sourceIds": [
-                "ai103-evaluation-planning"
-              ]
+              "sourceIds": ["ai103-evaluation-planning"]
             }
           ],
           "checks": {
@@ -2394,9 +2097,7 @@
             "claimRepresented": "Evaluate the dataset containing both archived prompts and their original responses.",
             "whyIncorrectInContext": "It is not incorrect: this supplies the exact existing response population to the scoring process without generating replacements.",
             "couldBeCorrectWhen": "Evaluation must apply criteria to already-generated responses, such as the archived pilot outputs specified here.",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "evidenceSummary": "The target list defines Dataset as pre-generated-output evaluation and instructs users to include both inputs and model-generated responses."
           },
           {
@@ -2404,9 +2105,7 @@
             "claimRepresented": "A live model target with archived prompts scores the original archived answers.",
             "whyIncorrectInContext": "That target generates model outputs during the evaluation rather than selecting the historical response values for scoring.",
             "couldBeCorrectWhen": "The objective is to evaluate newly generated behavior of a deployed model on those prompts, rather than preserve the original answers.",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "evidenceSummary": "The Model target explicitly generates outputs during evaluation; input datasets are also used for that live-generation purpose."
           },
           {
@@ -2414,9 +2113,7 @@
             "claimRepresented": "A live agent target with archived prompts preserves the original pilot responses.",
             "whyIncorrectInContext": "It evaluates responses produced by the agent to the supplied inputs, not the stored response column.",
             "couldBeCorrectWhen": "The goal is to evaluate current agent behavior on a chosen prompt set, including new responses produced during that run.",
-            "sourceIds": [
-              "ai103-evaluation-planning"
-            ],
+            "sourceIds": ["ai103-evaluation-planning"],
             "evidenceSummary": "The target list contrasts Agent responses to user-defined prompts with Dataset evaluation of already present outputs."
           }
         ],
@@ -2445,30 +2142,22 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "This prevents sensitive prompt, tool and attribute values from being exported into trace storage. Evidence: Best practices line 97 and security lines 101–104 requires redaction/minimization before sensitive content reaches telemetry and forbids storing secrets in prompts, tool arguments or span attributes."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "Fewer stored traces can still contain sensitive content; sampling is not the required redaction control. Evidence: Security lines 101–105 explicitly requires minimization/redaction and access/retention controls; line 119 separately identifies sampling as an Application Insights configuration concern."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "Those other trace fields can themselves contain secrets or personal data. Evidence: Lines 97 and 101–104 specifically includes prompts, tool arguments, results and span attributes in the sensitive-data risk."
           },
           {
             "choiceId": "d",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "summary": "The source instructs teams to treat trace data as production telemetry. Evidence: Security guidance line 105 says to apply the same access controls and retention policies used for production logs and metrics."
           }
         ]
@@ -2498,33 +2187,25 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "The security guidance requires redaction/minimization before sensitive content reaches telemetry and excludes secrets from prompts, tool arguments and span attributes.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Sampling affects volume, but retained spans can still contain secrets. It does not replace the page's pre-export redaction/minimization requirement.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The source expressly includes tool arguments, results and attributes among sensitive capture points. Exempting them leaves the stated risk unaddressed.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             },
             {
               "choiceId": "d",
               "assessment": "supported",
               "rationale": "Stored traces must receive the same production access controls and retention policies as logs and metrics, which the source states explicitly.",
-              "sourceIds": [
-                "ai103-tracing"
-              ]
+              "sourceIds": ["ai103-tracing"]
             }
           ],
           "checks": {
@@ -2558,9 +2239,7 @@
             "claimRepresented": "Remove secrets and minimize personal data before telemetry capture/export.",
             "whyIncorrectInContext": "It is not incorrect: customer messages and authenticated tool data are potential sensitive inputs that must not be unnecessarily exported.",
             "couldBeCorrectWhen": "A traced agent may carry secrets or personal information in messages, arguments, results or attributes, as this prompt agent does.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Best practices and Security and privacy require removing or masking sensitive values before telemetry."
           },
           {
@@ -2568,9 +2247,7 @@
             "claimRepresented": "Reducing sampling while retaining unredacted payloads provides the required sensitive-data protection.",
             "whyIncorrectInContext": "Every retained sample can still expose credentials or unnecessary personal information; sampling is not content sanitization.",
             "couldBeCorrectWhen": "Sampling can manage telemetry volume after sensitive fields are already absent or minimized. The unredacted-sensitive-payload clause is not justified by sampling.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "The article ties sampling to Application Insights configuration and separately requires pretelemetry minimization; neither substitutes for the other."
           },
           {
@@ -2578,9 +2255,7 @@
             "claimRepresented": "Final-answer redaction is enough while tool arguments and attributes are categorically exempt.",
             "whyIncorrectInContext": "Tool arguments and attributes can contain the very credentials and customer data that the stem must protect.",
             "couldBeCorrectWhen": "If only the final answer actually contains sensitive content, that is where redaction is needed; this does not justify exempting other fields regardless of their contents.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "The security section explicitly includes prompts, tool arguments and span attributes in the no-secrets rule."
           },
           {
@@ -2588,9 +2263,7 @@
             "claimRepresented": "Apply production-log access restrictions and retention policies to stored traces.",
             "whyIncorrectInContext": "It is not incorrect: traces remain production telemetry even after minimizing their content.",
             "couldBeCorrectWhen": "An organization retains execution traces and must govern who can read them and how long they remain, alongside pre-export controls.",
-            "sourceIds": [
-              "ai103-tracing"
-            ],
+            "sourceIds": ["ai103-tracing"],
             "evidenceSummary": "Security and privacy explicitly says trace data must use the same access controls and retention policies as production logs and metrics."
           }
         ],
@@ -2619,23 +2292,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-retrieval-behavior"
-            ],
+            "sourceIds": ["ai103-retrieval-behavior"],
             "summary": "Plausibility does not establish retrieval grounding or the required fallback behavior. Evidence: Retrieval behavior lines 21–31 distinguishes generic answers and uncited answers from grounded cited ones; lines 107–125 requires different query classes and source references."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-retrieval-behavior"
-            ],
+            "sourceIds": ["ai103-retrieval-behavior"],
             "summary": "This tests the actual behaviors the policy requires rather than only the wording of the instructions. Evidence: Lines 85–116 says instructions alone are insufficient and includes out-of-knowledge-base fallback tests; lines 183–190 calls for citation/fallback and retrieval-accuracy monitoring."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-retrieval-behavior"
-            ],
+            "sourceIds": ["ai103-retrieval-behavior"],
             "summary": "The source explicitly says instructions alone are not enough; actual behavior must be tested. Evidence: Lines 54–58 describes clear retrieval/citation/fallback instructions, but lines 85–87 still requires systematic verification of actual behavior."
           }
         ]
@@ -2665,25 +2332,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The lesson separates generic plausible answers from cited, grounded responses and requires checking fallback on out-of-corpus questions. Plausibility alone fails that policy.",
-              "sourceIds": [
-                "ai103-retrieval-behavior"
-              ]
+              "sourceIds": ["ai103-retrieval-behavior"]
             },
             {
               "choiceId": "b",
               "assessment": "supported",
               "rationale": "The testing section calls for in-corpus and out-of-corpus questions, and the monitoring section tracks citations, fallback and whether retrieved documents contain answers.",
-              "sourceIds": [
-                "ai103-retrieval-behavior"
-              ]
+              "sourceIds": ["ai103-retrieval-behavior"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The source explicitly says instructions alone are insufficient and requires systematic checks of actual behavior.",
-              "sourceIds": [
-                "ai103-retrieval-behavior"
-              ]
+              "sourceIds": ["ai103-retrieval-behavior"]
             }
           ],
           "checks": {
@@ -2717,9 +2378,7 @@
             "claimRepresented": "Plausibility without evidence is enough to approve a corpus-grounded answer.",
             "whyIncorrectInContext": "The required corpus citation and unsupported-question fallback are not satisfied by a plausible uncited response.",
             "couldBeCorrectWhen": "The cited lesson does not authorize plausibility-only approval for its knowledge-grounded agents. A different unconstrained creative task would require a different policy and evidence, not an invented exception here.",
-            "sourceIds": [
-              "ai103-retrieval-behavior"
-            ],
+            "sourceIds": ["ai103-retrieval-behavior"],
             "evidenceSummary": "The retrieval-behavior table distinguishes training-based and uncited answers from retrieved, cited grounding and rejects the former for this use."
           },
           {
@@ -2727,9 +2386,7 @@
             "claimRepresented": "Audit observed retrieval, citations and fallback on both supported and unsupported cases.",
             "whyIncorrectInContext": "It is not incorrect: it tests the actual policy behaviors rather than assuming instructions enforce them.",
             "couldBeCorrectWhen": "A grounded agent must demonstrate evidence use for corpus questions and the prescribed fallback for out-of-corpus questions.",
-            "sourceIds": [
-              "ai103-retrieval-behavior"
-            ],
+            "sourceIds": ["ai103-retrieval-behavior"],
             "evidenceSummary": "Testing retrieval behavior explicitly covers factual, synthesis, outside-knowledge-base and ambiguous queries, followed by production monitoring."
           },
           {
@@ -2737,9 +2394,7 @@
             "claimRepresented": "Stronger instructions eliminate the need for runtime verification.",
             "whyIncorrectInContext": "Instruction clarity can influence behavior, but the source explicitly requires systematic verification of actual outputs.",
             "couldBeCorrectWhen": "Refining vague instructions is a documented improvement step. It is not a sourced condition for skipping subsequent behavior tests.",
-            "sourceIds": [
-              "ai103-retrieval-behavior"
-            ],
+            "sourceIds": ["ai103-retrieval-behavior"],
             "evidenceSummary": "The lesson recommends specific retrieval/citation/fallback instructions and then says instructions alone are not enough before detailing tests."
           }
         ],
@@ -2768,25 +2423,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-mcp-tools",
-              "ai103-agent-risk-boundaries"
-            ],
+            "sourceIds": ["ai103-mcp-tools", "ai103-agent-risk-boundaries"],
             "summary": "A post-action audit cannot supply the required pre-action authorization. Evidence: MCP best practices lines 241–246 requires approval for high-risk operations and review of name/arguments; agent risk mitigation lines 82–85 separately includes human approval and logging."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-mcp-tools",
-              "ai103-agent-risk-boundaries"
-            ],
+            "sourceIds": ["ai103-mcp-tools", "ai103-agent-risk-boundaries"],
             "summary": "That omits the explicit human decision required by the policy and the documented approval flow. Evidence: MCP setup lines 1377–1384 describes required approval, approval-request details and submitting a decision; agent risk mitigation at line 84 gates sensitive operations behind human approval."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "This separates the agent's proposal from the human decision required before execution. Evidence: Best practices lines 243–246 requires high-risk approval and inspection of tool name and arguments; setup lines 1383–1384 supplies the approval request and decision flow."
           }
         ]
@@ -2824,27 +2471,19 @@
               "choiceId": "a",
               "assessment": "contradicted",
               "rationale": "The MCP guidance requires review and authorization before the high-risk call. A later audit record does not supply the human decision mandated before action.",
-              "sourceIds": [
-                "ai103-mcp-tools",
-                "ai103-agent-risk-boundaries"
-              ]
+              "sourceIds": ["ai103-mcp-tools", "ai103-agent-risk-boundaries"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "A behavior instruction is not the explicit human approval gate. The sources treat prompt defenses, approval and logging as separate safeguards.",
-              "sourceIds": [
-                "ai103-mcp-tools",
-                "ai103-agent-risk-boundaries"
-              ]
+              "sourceIds": ["ai103-mcp-tools", "ai103-agent-risk-boundaries"]
             },
             {
               "choiceId": "c",
               "assessment": "supported",
               "rationale": "The documented prompt-agent approval flow exposes the proposed call's name and arguments, then accepts an approval decision before continuing execution.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             }
           ],
           "checks": {
@@ -2878,10 +2517,7 @@
             "claimRepresented": "A later trace review can authorize a high-impact action already executed.",
             "whyIncorrectInContext": "Authorization after the change cannot meet the policy's explicit before-action human decision.",
             "couldBeCorrectWhen": "Trace review is appropriate for auditing completed actions. Neither cited source makes that retrospective activity the prior permission required for a high-risk write.",
-            "sourceIds": [
-              "ai103-mcp-tools",
-              "ai103-agent-risk-boundaries"
-            ],
+            "sourceIds": ["ai103-mcp-tools", "ai103-agent-risk-boundaries"],
             "evidenceSummary": "The risk lesson lists logging and human gating separately; MCP best practices require approval and also logging."
           },
           {
@@ -2889,10 +2525,7 @@
             "claimRepresented": "A responsible-behavior system instruction replaces human authorization.",
             "whyIncorrectInContext": "A prose instruction does not collect the required person's informed decision on the proposed tool call.",
             "couldBeCorrectWhen": "Instructions guide a prompt agent's behavior, but neither source treats them as a substitute for a mandated human approval of a sensitive operation.",
-            "sourceIds": [
-              "ai103-mcp-tools",
-              "ai103-agent-risk-boundaries"
-            ],
+            "sourceIds": ["ai103-mcp-tools", "ai103-agent-risk-boundaries"],
             "evidenceSummary": "The prompt-agent definition contains instructions and a separately configured approval flow; the risk mitigation list explicitly gates sensitive actions."
           },
           {
@@ -2900,10 +2533,7 @@
             "claimRepresented": "Pause for approval, expose the proposed tool/arguments and act only after the authorized decision.",
             "whyIncorrectInContext": "It is not incorrect: the synchronous prompt-agent flow supports preparing a proposed call and reviewing it before continuation.",
             "couldBeCorrectWhen": "A remote MCP write requires human authorization and the application handles the pending approval request instead of automatically approving it.",
-            "sourceIds": [
-              "ai103-mcp-tools",
-              "ai103-agent-risk-boundaries"
-            ],
+            "sourceIds": ["ai103-mcp-tools", "ai103-agent-risk-boundaries"],
             "evidenceSummary": "The prompt-agent sample displays name/arguments, asks the user, records approve with approval_request_id and resumes via previous_response_id."
           }
         ],
@@ -2932,23 +2562,17 @@
         "claims": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "This explicitly limits the tools available to the agent. Evidence: Set up MCP connection, lines 1373–1376, defines allowed_tools as the tools the agent can access and states that omission includes all tools."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "That changes approval behavior but still offers the server's full tool set. Evidence: Lines 1376–1381 separates the all-tools default from require_approval settings."
           },
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "summary": "This does not configure the documented tool allow list; all server tools remain offered by default. Evidence: Best practices line 241 recommends an allow list; setup line 1376 explicitly includes all server tools when allowed_tools is omitted."
           }
         ]
@@ -2978,25 +2602,19 @@
               "choiceId": "a",
               "assessment": "supported",
               "rationale": "allowed_tools is documented as the list of server tools the agent can access. A list containing the lookup tool implements the requested exposed-tool boundary.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             },
             {
               "choiceId": "b",
               "assessment": "contradicted",
               "rationale": "Without allowed_tools the default exposes all server tools. require_approval=always adds a call-decision gate rather than narrowing that set.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             },
             {
               "choiceId": "c",
               "assessment": "contradicted",
               "rationale": "The article recommends an explicit allow list and states omission includes all tools; natural-language instructions do not configure that server-tool selection.",
-              "sourceIds": [
-                "ai103-mcp-tools"
-              ]
+              "sourceIds": ["ai103-mcp-tools"]
             }
           ],
           "checks": {
@@ -3030,9 +2648,7 @@
             "claimRepresented": "Offer only the named lookup tool through allowed_tools.",
             "whyIncorrectInContext": "It is not incorrect: the server has a broader tool set and the agent's exposed subset must be restricted independently of approval handling.",
             "couldBeCorrectWhen": "Only selected server tool names are authorized to be offered to this agent, with the list matching names actually exposed by the server.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "The connection reference defines allowed_tools as the optional list of tools the agent can access/use; omission includes all tools."
           },
           {
@@ -3040,9 +2656,7 @@
             "claimRepresented": "Requiring approval for all tools also restricts the offered set to lookup only.",
             "whyIncorrectInContext": "Approval decisions apply to the still-available tools; omitting the allowlist offers the write tools too.",
             "couldBeCorrectWhen": "Every server tool may be offered but each proposed call needs human approval. That policy differs from forbidding write-tool exposure.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "allowed_tools and require_approval are separate fields with separately documented defaults and purposes."
           },
           {
@@ -3050,9 +2664,7 @@
             "claimRepresented": "Read-only prose with no allowlist limits the server tools offered to the agent.",
             "whyIncorrectInContext": "Instructions may influence tool choice but do not alter the documented all-tools default when allowed_tools is absent.",
             "couldBeCorrectWhen": "The full server set is permitted and instructions merely guide which tools the model should prefer. The troubleshooting section treats instructions as usage guidance, not the availability list.",
-            "sourceIds": [
-              "ai103-mcp-tools"
-            ],
+            "sourceIds": ["ai103-mcp-tools"],
             "evidenceSummary": "The connection reference specifies the omitted-list default, while troubleshooting separately checks agent instructions and allowed_tools values."
           }
         ],

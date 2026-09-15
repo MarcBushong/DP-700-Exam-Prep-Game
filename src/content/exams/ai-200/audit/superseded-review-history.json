@@ -23,9 +23,7 @@
             "text": "Use the same processorName and instance name, but a different lease container for each worker."
           }
         ],
-        "correctAnswer": [
-          "A"
-        ],
+        "correctAnswer": ["A"],
         "explanation": "Share the workload's processor name and lease store, but give each running worker its own identity.",
         "deepExplanation": "The monitored container supplies changes; the lease container stores range ownership and progress. Scaling a deployment unit differs from creating independent consumers for separate business purposes.",
         "whyOtherAnswersAreWrong": {
@@ -37,23 +35,15 @@
         "subskill": "Implement a change feed processor to detect and handle new or updated items",
         "difficulty": "advanced",
         "complexity": "architecture-design",
-        "sourceIds": [
-          "ai200-20260914-doc-cosmos-changefeed"
-        ],
+        "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
         "sourceUrls": [
           "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor"
         ],
-        "documentationTitles": [
-          "Change feed processor in Azure Cosmos DB"
-        ],
+        "documentationTitles": ["Change feed processor in Azure Cosmos DB"],
         "generatedAt": "2026-09-14T18:41:22.179Z",
         "lastValidatedAt": "2026-09-14T18:41:22.188Z",
         "featureStatus": "GA",
-        "tags": [
-          "ai-200",
-          "data-management",
-          "cosmos"
-        ],
+        "tags": ["ai-200", "data-management", "cosmos"],
         "conceptId": "cosmos.processor-lease-owner-checkpoint",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -72,23 +62,17 @@
           "claims": [
             {
               "choiceId": "A",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "summary": "Deployment unit and Dynamic scaling define these exact three requirements. Matching workload identity and lease state coordinates ownership, while unique instance names identify the participating workers."
             },
             {
               "choiceId": "B",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "summary": "The document describes distinct processor names as separate deployment units for different business flows. They receive the feed independently rather than dividing this one intended workload."
             },
             {
               "choiceId": "C",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "summary": "Dynamic scaling requires shared lease-container configuration and different instance names. Separate lease stores cannot coordinate the intended ownership distribution, and reused host names break the stated requirement."
             }
           ]
@@ -118,25 +102,19 @@
                 "choiceId": "A",
                 "assessment": "supported",
                 "rationale": "The .NET Deployment unit and Dynamic scaling sections define one workload by shared processorName and lease configuration with a distinct WithInstanceName for each worker.",
-                "sourceIds": [
-                  "ai200-20260914-doc-cosmos-changefeed"
-                ]
+                "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
               },
               {
                 "choiceId": "B",
                 "assessment": "contradicted",
                 "rationale": "Different processor names create independent deployment units and independent progress, which delivers the business flow separately rather than dividing this workload.",
-                "sourceIds": [
-                  "ai200-20260914-doc-cosmos-changefeed"
-                ]
+                "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
               },
               {
                 "choiceId": "C",
                 "assessment": "contradicted",
                 "rationale": "Different lease stores cannot coordinate ownership, and the repeated instance name violates the documented unique-worker identity requirement.",
-                "sourceIds": [
-                  "ai200-20260914-doc-cosmos-changefeed"
-                ]
+                "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
               }
             ],
             "checks": {
@@ -170,9 +148,7 @@
               "claimRepresented": "Shared processor identity and lease storage plus distinct worker identities create one distributed processor unit.",
               "whyIncorrectInContext": "This is not incorrect here: these are the documented three conditions for sharing lease ownership rather than independently consuming the feed.",
               "couldBeCorrectWhen": "Multiple running .NET workers process the same monitored workload and should divide its leases within a single deployment unit.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "evidenceSummary": "Dynamic scaling explicitly lists same lease configuration, same processorName, and different instance names as the distribution requirements."
             },
             {
@@ -180,9 +156,7 @@
               "claimRepresented": "Different processor names make workers divide one feed workload simply because they use the same lease container.",
               "whyIncorrectInContext": "Distinct processor names establish independent business-flow deployment units, so shared physical storage does not merge their progress.",
               "couldBeCorrectWhen": "Two separate consumers must independently process the same changes for different business purposes while sharing a lease container.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "evidenceSummary": "Deployment unit gives independent external-API and data-movement examples; Share the lease container says different processorName values maintain independent state."
             },
             {
@@ -190,9 +164,7 @@
               "claimRepresented": "Separate lease stores and a reused instance name provide shared ownership coordination.",
               "whyIncorrectInContext": "The workers do not share the state needed to coordinate this workload, and repeated instance names violate the stated configuration for one shared unit.",
               "couldBeCorrectWhen": "Isolated independent processor deployments keep separate lease stores. A name reused across isolated deployments does not itself create shared state, but this is not the requested one-unit distribution.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "evidenceSummary": "Components identifies the lease container as state/coordination storage; Deployment unit and Dynamic scaling distinguish independent configurations from workers sharing one unit."
             }
           ],
@@ -233,25 +205,19 @@
             "choiceId": "A",
             "assessment": "supported",
             "rationale": "Claim: Shared processor identity and lease storage plus distinct worker identities create one distributed processor unit. In this context: This is not incorrect here: these are the documented three conditions for sharing lease ownership rather than independently consuming the feed. Alternative context: Multiple running .NET workers process the same monitored workload and should divide its leases within a single deployment unit. Evidence: Dynamic scaling explicitly lists same lease configuration, same processorName, and different instance names as the distribution requirements.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           },
           {
             "choiceId": "B",
             "assessment": "contradicted",
             "rationale": "Claim: Different processor names make workers divide one feed workload simply because they use the same lease container. In this context: Distinct processor names establish independent business-flow deployment units, so shared physical storage does not merge their progress. Alternative context: Two separate consumers must independently process the same changes for different business purposes while sharing a lease container. Evidence: Deployment unit gives independent external-API and data-movement examples; Share the lease container says different processorName values maintain independent state.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           },
           {
             "choiceId": "C",
             "assessment": "contradicted",
             "rationale": "Claim: Separate lease stores and a reused instance name provide shared ownership coordination. In this context: The workers do not share the state needed to coordinate this workload, and repeated instance names violate the stated configuration for one shared unit. Alternative context: Isolated independent processor deployments keep separate lease stores. A name reused across isolated deployments does not itself create shared state, but this is not the requested one-unit distribution. Evidence: Components identifies the lease container as state/coordination storage; Deployment unit and Dynamic scaling distinguish independent configurations from workers sharing one unit.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           }
         ],
         "checks": {
@@ -275,33 +241,25 @@
         "credentialId": "ai-200",
         "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
         "questionFingerprint": "bf09ef57f3a32326374c978cf8ae1e0f8f7d83819e9e4e0dc7a808269828a36c",
-        "sourceIds": [
-          "ai200-20260914-doc-cosmos-changefeed"
-        ],
+        "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
         "retrievedAt": "2026-09-14T18:04:12.123Z",
         "lastValidatedAt": "2026-09-14T18:41:22.188Z",
         "answerEvidence": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Claim: Shared processor identity and lease storage plus distinct worker identities create one distributed processor unit. In this context: This is not incorrect here: these are the documented three conditions for sharing lease ownership rather than independently consuming the feed. Alternative context: Multiple running .NET workers process the same monitored workload and should divide its leases within a single deployment unit. Evidence: Dynamic scaling explicitly lists same lease configuration, same processorName, and different instance names as the distribution requirements."
           }
         ],
         "distractorEvidence": [
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Claim: Different processor names make workers divide one feed workload simply because they use the same lease container. In this context: Distinct processor names establish independent business-flow deployment units, so shared physical storage does not merge their progress. Alternative context: Two separate consumers must independently process the same changes for different business purposes while sharing a lease container. Evidence: Deployment unit gives independent external-API and data-movement examples; Share the lease container says different processorName values maintain independent state."
           },
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Claim: Separate lease stores and a reused instance name provide shared ownership coordination. In this context: The workers do not share the state needed to coordinate this workload, and repeated instance names violate the stated configuration for one shared unit. Alternative context: Isolated independent processor deployments keep separate lease stores. A name reused across isolated deployments does not itself create shared state, but this is not the requested one-unit distribution. Evidence: Components identifies the lease container as state/coordination storage; Deployment unit and Dynamic scaling distinguish independent configurations from workers sharing one unit."
           }
         ],
@@ -350,9 +308,7 @@
             "text": ".NET and Java"
           }
         ],
-        "correctAnswer": [
-          "C"
-        ],
+        "correctAnswer": ["C"],
         "explanation": "The documented processor library supports .NET and Java.",
         "deepExplanation": "This is a library-availability distinction, not a claim that Python cannot read change-feed data. A pull reader or Functions trigger has a different hosting and checkpoint-management contract.",
         "whyOtherAnswersAreWrong": {
@@ -364,23 +320,15 @@
         "subskill": "Implement a change feed processor to detect and handle new or updated items",
         "difficulty": "beginner",
         "complexity": "scenario-based",
-        "sourceIds": [
-          "ai200-20260914-doc-cosmos-changefeed"
-        ],
+        "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
         "sourceUrls": [
           "https://learn.microsoft.com/en-us/azure/cosmos-db/change-feed-processor"
         ],
-        "documentationTitles": [
-          "Change feed processor in Azure Cosmos DB"
-        ],
+        "documentationTitles": ["Change feed processor in Azure Cosmos DB"],
         "generatedAt": "2026-09-14T18:41:22.179Z",
         "lastValidatedAt": "2026-09-14T18:41:22.188Z",
         "featureStatus": "GA",
-        "tags": [
-          "ai-200",
-          "data-management",
-          "cosmos"
-        ],
+        "tags": ["ai-200", "data-management", "cosmos"],
         "conceptId": "cosmos.processor-versus-python-pull-model",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -399,23 +347,17 @@
           "claims": [
             {
               "choiceId": "A",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "summary": "Supported SDKs explicitly marks Python and Node.js unsupported for the processor library and directs them to the pull model with manual checkpoint management."
             },
             {
               "choiceId": "B",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "summary": "Java is supported, but Python is not part of the processor library's supported pair. A Python pull reader is not equivalent to the requested library-managed processor."
             },
             {
               "choiceId": "C",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "summary": "The actual processor product document names .NET V3 and Java V4 and marks both as supported in its SDK table. This is the supported library choice for the stated worker design."
             }
           ]
@@ -445,25 +387,19 @@
                 "choiceId": "A",
                 "assessment": "contradicted",
                 "rationale": "Both Python and Node.js are marked unsupported in the processor library table; their pull model leaves checkpoint management to the application.",
-                "sourceIds": [
-                  "ai200-20260914-doc-cosmos-changefeed"
-                ]
+                "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
               },
               {
                 "choiceId": "B",
                 "assessment": "contradicted",
                 "rationale": "Java qualifies but Python does not, so this pair does not meet the requirement that both runtimes support the specified library.",
-                "sourceIds": [
-                  "ai200-20260914-doc-cosmos-changefeed"
-                ]
+                "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
               },
               {
                 "choiceId": "C",
                 "assessment": "supported",
                 "rationale": "The Supported SDKs table marks .NET V3 and Java as the processor-library implementations, providing distributed leases and checkpoints.",
-                "sourceIds": [
-                  "ai200-20260914-doc-cosmos-changefeed"
-                ]
+                "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
               }
             ],
             "checks": {
@@ -497,9 +433,7 @@
               "claimRepresented": "Python and Node.js both offer the SDK processor library's managed distributed leases/checkpoints.",
               "whyIncorrectInContext": "Both entries are unsupported for that library in the source's table; a pull reader is not the requested standalone managed processor.",
               "couldBeCorrectWhen": "The team intentionally chooses the change feed pull model and accepts manual checkpoint management in Python or Node.js.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "evidenceSummary": "Supported SDKs explicitly directs these two languages to the pull model, explaining the valid alternative while denying processor-library support."
             },
             {
@@ -507,9 +441,7 @@
               "claimRepresented": "Python and Java form an entirely supported processor-library pair.",
               "whyIncorrectInContext": "Java is supported but Python is not, so the complete pair fails even though one language is correct.",
               "couldBeCorrectWhen": "A system permits different consumption contracts: Java uses the processor library while Python uses the documented pull reader with manual checkpointing.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "evidenceSummary": "The table supports Java and the adjoining paragraph provides Python's pull alternative; it does not say that alternative inherits processor-managed checkpoints."
             },
             {
@@ -517,9 +449,7 @@
               "claimRepresented": ".NET and Java are the documented supported SDK processor runtimes.",
               "whyIncorrectInContext": "This is not incorrect here: the requested library, standalone hosting and managed processing responsibilities match the two supported languages.",
               "couldBeCorrectWhen": "A standalone worker requires the SDK change feed processor rather than a language-specific pull reader or Azure Functions trigger.",
-              "sourceIds": [
-                "ai200-20260914-doc-cosmos-changefeed"
-              ],
+              "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
               "evidenceSummary": "The opening identifies .NET V3 and Java V4 SDKs, and the Supported SDKs table marks .NET and Java as supported."
             }
           ],
@@ -560,25 +490,19 @@
             "choiceId": "A",
             "assessment": "contradicted",
             "rationale": "Claim: Python and Node.js both offer the SDK processor library's managed distributed leases/checkpoints. In this context: Both entries are unsupported for that library in the source's table; a pull reader is not the requested standalone managed processor. Alternative context: The team intentionally chooses the change feed pull model and accepts manual checkpoint management in Python or Node.js. Evidence: Supported SDKs explicitly directs these two languages to the pull model, explaining the valid alternative while denying processor-library support.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           },
           {
             "choiceId": "B",
             "assessment": "contradicted",
             "rationale": "Claim: Python and Java form an entirely supported processor-library pair. In this context: Java is supported but Python is not, so the complete pair fails even though one language is correct. Alternative context: A system permits different consumption contracts: Java uses the processor library while Python uses the documented pull reader with manual checkpointing. Evidence: The table supports Java and the adjoining paragraph provides Python's pull alternative; it does not say that alternative inherits processor-managed checkpoints.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           },
           {
             "choiceId": "C",
             "assessment": "supported",
             "rationale": "Claim: .NET and Java are the documented supported SDK processor runtimes. In this context: This is not incorrect here: the requested library, standalone hosting and managed processing responsibilities match the two supported languages. Alternative context: A standalone worker requires the SDK change feed processor rather than a language-specific pull reader or Azure Functions trigger. Evidence: The opening identifies .NET V3 and Java V4 SDKs, and the Supported SDKs table marks .NET and Java as supported.",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ]
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"]
           }
         ],
         "checks": {
@@ -602,33 +526,25 @@
         "credentialId": "ai-200",
         "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
         "questionFingerprint": "6c71a083e654f1fedc074e591e2a932e64791b230c4d82c82bf23260124c904f",
-        "sourceIds": [
-          "ai200-20260914-doc-cosmos-changefeed"
-        ],
+        "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
         "retrievedAt": "2026-09-14T18:04:12.123Z",
         "lastValidatedAt": "2026-09-14T18:41:22.188Z",
         "answerEvidence": [
           {
             "choiceId": "C",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Claim: .NET and Java are the documented supported SDK processor runtimes. In this context: This is not incorrect here: the requested library, standalone hosting and managed processing responsibilities match the two supported languages. Alternative context: A standalone worker requires the SDK change feed processor rather than a language-specific pull reader or Azure Functions trigger. Evidence: The opening identifies .NET V3 and Java V4 SDKs, and the Supported SDKs table marks .NET and Java as supported."
           }
         ],
         "distractorEvidence": [
           {
             "choiceId": "A",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Claim: Python and Node.js both offer the SDK processor library's managed distributed leases/checkpoints. In this context: Both entries are unsupported for that library in the source's table; a pull reader is not the requested standalone managed processor. Alternative context: The team intentionally chooses the change feed pull model and accepts manual checkpoint management in Python or Node.js. Evidence: Supported SDKs explicitly directs these two languages to the pull model, explaining the valid alternative while denying processor-library support."
           },
           {
             "choiceId": "B",
-            "sourceIds": [
-              "ai200-20260914-doc-cosmos-changefeed"
-            ],
+            "sourceIds": ["ai200-20260914-doc-cosmos-changefeed"],
             "summary": "Claim: Python and Java form an entirely supported processor-library pair. In this context: Java is supported but Python is not, so the complete pair fails even though one language is correct. Alternative context: A system permits different consumption contracts: Java uses the processor library while Python uses the documented pull reader with manual checkpointing. Evidence: The table supports Java and the adjoining paragraph provides Python's pull alternative; it does not say that alternative inherits processor-managed checkpoints."
           }
         ],
@@ -677,9 +593,7 @@
             "text": "The application's managed-identity client identifier instead of its issued token."
           }
         ],
-        "correctAnswer": [
-          "B"
-        ],
+        "correctAnswer": ["B"],
         "explanation": "Use the access token as the connection password.",
         "deepExplanation": "Token acquisition does not replace the database identity or its permissions. Those prerequisites are explicitly established so the question concerns the connection field, not identity provisioning.",
         "whyOtherAnswersAreWrong": {
@@ -697,17 +611,11 @@
         "sourceUrls": [
           "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/3-connect-to-postgresql"
         ],
-        "documentationTitles": [
-          "Connect to PostgreSQL"
-        ],
+        "documentationTitles": ["Connect to PostgreSQL"],
         "generatedAt": "2026-09-14T18:41:22.179Z",
         "lastValidatedAt": "2026-09-14T18:41:22.188Z",
         "featureStatus": "GA",
-        "tags": [
-          "ai-200",
-          "data-management",
-          "postgres"
-        ],
+        "tags": ["ai-200", "data-management", "postgres"],
         "conceptId": "postgres.entra-token-versus-password-connection",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -1004,9 +912,7 @@
             "text": "VARCHAR containing an application-formatted summary."
           }
         ],
-        "correctAnswer": [
-          "B"
-        ],
+        "correctAnswer": ["B"],
         "explanation": "Use JSONB for the varying, nested metadata.",
         "deepExplanation": "Flexibility is needed for the optional attributes, not for every field in the table. Keeping stable required attributes typed and flexible metadata in JSONB avoids conflating those two schema needs.",
         "whyOtherAnswersAreWrong": {
@@ -1024,17 +930,11 @@
         "sourceUrls": [
           "https://learn.microsoft.com/en-us/training/modules/build-query-azure-database-postgresql/4-create-manage-schemas"
         ],
-        "documentationTitles": [
-          "Create and manage schemas"
-        ],
+        "documentationTitles": ["Create and manage schemas"],
         "generatedAt": "2026-09-14T18:41:22.179Z",
         "lastValidatedAt": "2026-09-14T18:41:22.188Z",
         "featureStatus": "GA",
-        "tags": [
-          "ai-200",
-          "data-management",
-          "postgres"
-        ],
+        "tags": ["ai-200", "data-management", "postgres"],
         "conceptId": "postgres.jsonb-versus-typed-metadata",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -1331,9 +1231,7 @@
             "text": "Replace the audit subscription's filter with a FalseFilter."
           }
         ],
-        "correctAnswer": [
-          "b"
-        ],
+        "correctAnswer": ["b"],
         "explanation": "Retain the separate subscriptions. Each service processes its own copy, so the unavailable audit consumer does not stop the notification consumer from receiving its copy.",
         "deepExplanation": "Subscriptions are independent virtual queues. A consumer settling a message from one subscription does not consume another subscription's copy. Combining the consumers on one subscription changes the design to competing consumption; it does not preserve both independent responsibilities. The audit subscription still needs its own backlog and failure management.",
         "whyOtherAnswersAreWrong": {
@@ -1357,10 +1255,7 @@
         "generatedAt": "2026-09-14T18:40:20.020Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "featureStatus": "GA",
-        "tags": [
-          "service-bus",
-          "subscription-isolation"
-        ],
+        "tags": ["service-bus", "subscription-isolation"],
         "conceptId": "servicebus.topic-subscription-fanout",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -1656,9 +1551,7 @@
             "text": "Defer it, store its sequence number, and later retrieve it by that number."
           }
         ],
-        "correctAnswer": [
-          "c"
-        ],
+        "correctAnswer": ["c"],
         "explanation": "Defer the message, retain its sequence number, and use deferred-message retrieval when the prerequisite becomes available.",
         "deepExplanation": "Deferral preserves the message in its entity while removing it from regular delivery. The application must keep enough state to retrieve it by sequence number. Abandon is different because it permits ordinary redelivery immediately. Dead-lettering is for rejected work and would require a separate remediation/resubmission path.",
         "whyOtherAnswersAreWrong": {
@@ -1676,16 +1569,11 @@
         "sourceUrls": [
           "https://learn.microsoft.com/en-us/training/modules/queue-process-operations-service-bus/5-process-messages-reliably"
         ],
-        "documentationTitles": [
-          "Process messages reliably"
-        ],
+        "documentationTitles": ["Process messages reliably"],
         "generatedAt": "2026-09-14T18:40:20.020Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "featureStatus": "GA",
-        "tags": [
-          "service-bus",
-          "message-deferral"
-        ],
+        "tags": ["service-bus", "message-deferral"],
         "conceptId": "servicebus.defer-sequence-number-retrieval",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -1981,9 +1869,7 @@
             "text": "Enable dead-lettering on message expiration while keeping the current TTL."
           }
         ],
-        "correctAnswer": [
-          "c"
-        ],
+        "correctAnswer": ["c"],
         "explanation": "Enable dead-lettering on message expiration for the queue while retaining the intended TTL.",
         "deepExplanation": "Expiry retention is an explicit behavior, not an unconditional result of using Service Bus. The dedicated DLQ documentation also distinguishes deferred messages: they are not automatically purged into the DLQ after expiry. Once messages are in the DLQ, TTL is not observed there and an operator or application must explicitly retrieve and complete them.",
         "whyOtherAnswersAreWrong": {
@@ -2010,11 +1896,7 @@
         "generatedAt": "2026-09-14T18:40:20.020Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "featureStatus": "GA",
-        "tags": [
-          "service-bus",
-          "expiration",
-          "dead-letter"
-        ],
+        "tags": ["service-bus", "expiration", "dead-letter"],
         "conceptId": "servicebus.expiration-dlq-precondition",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -2040,9 +1922,7 @@
             },
             {
               "choiceId": "b",
-              "sourceIds": [
-                "ai200-20260914-doc-servicebus-deadletter"
-              ],
+              "sourceIds": ["ai200-20260914-doc-servicebus-deadletter"],
               "summary": "Maximum delivery count governs failed PeekLock deliveries, not expiry retention. The DLQ article treats MaxDeliveryCountExceeded and TTLExpiredException as distinct reasons."
             },
             {
@@ -2097,9 +1977,7 @@
                 "choiceId": "b",
                 "assessment": "contradicted",
                 "rationale": "MaxDeliveryCount governs abandoned or expired PeekLocks, not messages expiring before processing. The product article treats this reason separately from TTLExpiredException.",
-                "sourceIds": [
-                  "ai200-20260914-doc-servicebus-deadletter"
-                ]
+                "sourceIds": ["ai200-20260914-doc-servicebus-deadletter"]
               },
               {
                 "choiceId": "c",
@@ -2152,9 +2030,7 @@
               "claimRepresented": "Increasing maximum delivery count retains jobs that expire before processing.",
               "whyIncorrectInContext": "The specified loss is due to time expiry before processing, not repeated abandoned or expired PeekLocks. Raising the attempt budget does not enable expiration retention.",
               "couldBeCorrectWhen": "Incomplete jobs repeatedly encounter transient processing failures and need more permitted delivery attempts before quarantine.",
-              "sourceIds": [
-                "ai200-20260914-doc-servicebus-deadletter"
-              ],
+              "sourceIds": ["ai200-20260914-doc-servicebus-deadletter"],
               "evidenceSummary": "Maximum delivery count is incremented by abandoned or expired PeekLock attempts; the distinct Time to live section governs expiry dead-lettering."
             },
             {
@@ -2222,9 +2098,7 @@
             "choiceId": "b",
             "assessment": "contradicted",
             "rationale": "Claim: Increasing maximum delivery count retains jobs that expire before processing. In this context: The specified loss is due to time expiry before processing, not repeated abandoned or expired PeekLocks. Raising the attempt budget does not enable expiration retention. Documented correct context: Incomplete jobs repeatedly encounter transient processing failures and need more permitted delivery attempts before quarantine. Evidence: Maximum delivery count is incremented by abandoned or expired PeekLock attempts; the distinct Time to live section governs expiry dead-lettering.",
-            "sourceIds": [
-              "ai200-20260914-doc-servicebus-deadletter"
-            ]
+            "sourceIds": ["ai200-20260914-doc-servicebus-deadletter"]
           },
           {
             "choiceId": "c",
@@ -2283,9 +2157,7 @@
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-servicebus-deadletter"
-            ],
+            "sourceIds": ["ai200-20260914-doc-servicebus-deadletter"],
             "summary": "Claim: Increasing maximum delivery count retains jobs that expire before processing. In this context: The specified loss is due to time expiry before processing, not repeated abandoned or expired PeekLocks. Raising the attempt budget does not enable expiration retention. Documented correct context: Incomplete jobs repeatedly encounter transient processing failures and need more permitted delivery attempts before quarantine. Evidence: Maximum delivery count is incremented by abandoned or expired PeekLock attempts; the distinct Time to live section governs expiry dead-lettering."
           }
         ],
@@ -2330,9 +2202,7 @@
             "text": "The CloudEvents 1.0 schema."
           }
         ],
-        "correctAnswer": [
-          "b"
-        ],
+        "correctAnswer": ["b"],
         "explanation": "Configure CloudEvents delivery for the subscription.",
         "deepExplanation": "The documented transformation table supports CloudEvents input to CloudEvents output. It does not permit Event Grid output for CloudEvents input because the proprietary Event Grid schema cannot represent CloudEvents extension attributes. Event Grid input can be delivered in either supported format, but that is a different publisher contract.",
         "whyOtherAnswersAreWrong": {
@@ -2343,9 +2213,7 @@
         "subskill": "Implement event-driven workflows by using Azure Event Grid, including filters, custom events, and retries",
         "difficulty": "intermediate",
         "complexity": "technical-implementation",
-        "sourceIds": [
-          "ai200-20260914-doc-eventgrid-schema"
-        ],
+        "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
         "sourceUrls": [
           "https://learn.microsoft.com/en-us/azure/event-grid/cloud-event-schema"
         ],
@@ -2355,11 +2223,7 @@
         "generatedAt": "2026-09-14T18:40:20.020Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "featureStatus": "GA",
-        "tags": [
-          "event-grid",
-          "cloudevents",
-          "schema"
-        ],
+        "tags": ["event-grid", "cloudevents", "schema"],
         "conceptId": "eventgrid.cloudevents-input-output-schema",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -2377,16 +2241,12 @@
           "claims": [
             {
               "choiceId": "a",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-schema"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
               "summary": "The transformation section permits Event Grid input to Event Grid output, but explicitly prohibits Event Grid output when input is CloudEvents because extension attributes are unsupported."
             },
             {
               "choiceId": "b",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-schema"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
               "summary": "The supported-transformation table lists CloudEvents input to CloudEvents output, and the output-schema section sets delivery format on the event subscription."
             }
           ]
@@ -2416,17 +2276,13 @@
                 "choiceId": "a",
                 "assessment": "contradicted",
                 "rationale": "The transformation section explicitly disallows Event Grid output when CloudEvents is input, because Event Grid's nonextensible format cannot retain extension attributes. Event Grid input would be the different context allowing this delivery schema.",
-                "sourceIds": [
-                  "ai200-20260914-doc-eventgrid-schema"
-                ]
+                "sourceIds": ["ai200-20260914-doc-eventgrid-schema"]
               },
               {
                 "choiceId": "b",
                 "assessment": "supported",
                 "rationale": "The actual transformation table lists CloudEvents input with CloudEvents output. The publisher already uses that input contract and the subscriber can consume it, satisfying both compatibility and extension preservation.",
-                "sourceIds": [
-                  "ai200-20260914-doc-eventgrid-schema"
-                ]
+                "sourceIds": ["ai200-20260914-doc-eventgrid-schema"]
               }
             ],
             "checks": {
@@ -2460,9 +2316,7 @@
               "claimRepresented": "Proprietary Event Grid delivery schema is compatible with this CloudEvents input and its extensions.",
               "whyIncorrectInContext": "The source explicitly forbids Event Grid output when the topic input is CloudEvents; its nonextensible schema cannot represent these extension attributes.",
               "couldBeCorrectWhen": "The topic receives Event Grid-formatted input and the subscriber expects that same proprietary format, an allowed row in the transformation table.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-schema"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
               "evidenceSummary": "Configuration for CloudEvents lists Event Grid-to-Event Grid but not CloudEvents-to-Event Grid, with the unsupported extensions as the reason."
             },
             {
@@ -2470,9 +2324,7 @@
               "claimRepresented": "CloudEvents 1.0 output is compatible with the fixed input and extension attributes.",
               "whyIncorrectInContext": "Not incorrect here: the topic already receives CloudEvents 1.0 and the new subscriber supports it; keeping that delivery schema preserves the required representation.",
               "couldBeCorrectWhen": "A CloudEvents-input topic routes to a CloudEvents-compatible subscriber and extension attributes must be retained, exactly the documented same-format transformation used here.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-schema"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
               "evidenceSummary": "The first transformation row is CloudEvents input to CloudEvents output, and the article explains why its extensibility prevents conversion into proprietary Event Grid output."
             }
           ],
@@ -2513,17 +2365,13 @@
             "choiceId": "a",
             "assessment": "contradicted",
             "rationale": "Claim: Proprietary Event Grid delivery schema is compatible with this CloudEvents input and its extensions. In this context: The source explicitly forbids Event Grid output when the topic input is CloudEvents; its nonextensible schema cannot represent these extension attributes. Documented correct context: The topic receives Event Grid-formatted input and the subscriber expects that same proprietary format, an allowed row in the transformation table. Evidence: Configuration for CloudEvents lists Event Grid-to-Event Grid but not CloudEvents-to-Event Grid, with the unsupported extensions as the reason.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-schema"
-            ]
+            "sourceIds": ["ai200-20260914-doc-eventgrid-schema"]
           },
           {
             "choiceId": "b",
             "assessment": "supported",
             "rationale": "Claim: CloudEvents 1.0 output is compatible with the fixed input and extension attributes. In this context: Not incorrect here: the topic already receives CloudEvents 1.0 and the new subscriber supports it; keeping that delivery schema preserves the required representation. Documented correct context: A CloudEvents-input topic routes to a CloudEvents-compatible subscriber and extension attributes must be retained, exactly the documented same-format transformation used here. Evidence: The first transformation row is CloudEvents input to CloudEvents output, and the article explains why its extensibility prevents conversion into proprietary Event Grid output.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-schema"
-            ]
+            "sourceIds": ["ai200-20260914-doc-eventgrid-schema"]
           }
         ],
         "checks": {
@@ -2547,26 +2395,20 @@
         "credentialId": "ai-200",
         "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
         "questionFingerprint": "20ab9d8991753ebfb139e6d341e851dbfc795ae2c0ac05e23bed4ba3849980d7",
-        "sourceIds": [
-          "ai200-20260914-doc-eventgrid-schema"
-        ],
+        "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
         "retrievedAt": "2026-09-14T18:02:29.351Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "answerEvidence": [
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-schema"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
             "summary": "Claim: CloudEvents 1.0 output is compatible with the fixed input and extension attributes. In this context: Not incorrect here: the topic already receives CloudEvents 1.0 and the new subscriber supports it; keeping that delivery schema preserves the required representation. Documented correct context: A CloudEvents-input topic routes to a CloudEvents-compatible subscriber and extension attributes must be retained, exactly the documented same-format transformation used here. Evidence: The first transformation row is CloudEvents input to CloudEvents output, and the article explains why its extensibility prevents conversion into proprietary Event Grid output."
           }
         ],
         "distractorEvidence": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-schema"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-schema"],
             "summary": "Claim: Proprietary Event Grid delivery schema is compatible with this CloudEvents input and its extensions. In this context: The source explicitly forbids Event Grid output when the topic input is CloudEvents; its nonextensible schema cannot represent these extension attributes. Documented correct context: The topic receives Event Grid-formatted input and the subscriber expects that same proprietary format, an allowed row in the transformation table. Evidence: Configuration for CloudEvents lists Event Grid-to-Event Grid but not CloudEvents-to-Event Grid, with the unsupported extensions as the reason."
           }
         ],
@@ -2615,9 +2457,7 @@
             "text": "Set includedEventTypes to Microsoft.Resources.ResourceWriteSuccess."
           }
         ],
-        "correctAnswer": [
-          "c"
-        ],
+        "correctAnswer": ["c"],
         "explanation": "Set includedEventTypes to Microsoft.Resources.ResourceWriteSuccess.",
         "deepExplanation": "Event type identifies the operation kind. Subject filtering selects resource paths or path suffixes and cannot distinguish two operation types that share the same subject. Leaving all event types enabled preserves the events the handler is meant to exclude.",
         "whyOtherAnswersAreWrong": {
@@ -2629,9 +2469,7 @@
         "subskill": "Implement event-driven workflows by using Azure Event Grid, including filters, custom events, and retries",
         "difficulty": "intermediate",
         "complexity": "technical-implementation",
-        "sourceIds": [
-          "ai200-20260914-doc-eventgrid-filtering"
-        ],
+        "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
         "sourceUrls": [
           "https://learn.microsoft.com/en-us/azure/event-grid/event-filtering"
         ],
@@ -2641,10 +2479,7 @@
         "generatedAt": "2026-09-14T18:40:20.020Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "featureStatus": "GA",
-        "tags": [
-          "event-grid",
-          "event-type-filter"
-        ],
+        "tags": ["event-grid", "event-type-filter"],
         "conceptId": "eventgrid.event-type-filter",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -2662,23 +2497,17 @@
           "claims": [
             {
               "choiceId": "a",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-filtering"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
               "summary": "The subject-filter section uses path prefixes to select resource locations. It is suitable for events under a location but does not separate operation types sharing that path."
             },
             {
               "choiceId": "b",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-filtering"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
               "summary": "The event-type section documents All/default selection for receiving all source event types. That is correct for comprehensive event handling, not a write-success-only handler."
             },
             {
               "choiceId": "c",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-filtering"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
               "summary": "The event-type filtering section specifically recommends Microsoft.Resources.ResourceWriteSuccess to select resource updates rather than deletions, and documents includedEventTypes."
             }
           ]
@@ -2708,25 +2537,19 @@
                 "choiceId": "a",
                 "assessment": "contradicted",
                 "rationale": "Subject filtering selects path prefixes, and the stem deliberately lets write and delete events share the same path. Therefore the prefix admits both operations, unlike event-type selection.",
-                "sourceIds": [
-                  "ai200-20260914-doc-eventgrid-filtering"
-                ]
+                "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"]
               },
               {
                 "choiceId": "b",
                 "assessment": "contradicted",
                 "rationale": "The event-type section states that All/default selection sends all event types for the source. It cannot remove deletion notifications for a write-only handler.",
-                "sourceIds": [
-                  "ai200-20260914-doc-eventgrid-filtering"
-                ]
+                "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"]
               },
               {
                 "choiceId": "c",
                 "assessment": "supported",
                 "rationale": "The source names Microsoft.Resources.ResourceWriteSuccess for resource-update rather than deletion notifications and gives includedEventTypes as the filter property. The candidate selects exactly that operation identity.",
-                "sourceIds": [
-                  "ai200-20260914-doc-eventgrid-filtering"
-                ]
+                "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"]
               }
             ],
             "checks": {
@@ -2760,9 +2583,7 @@
               "claimRepresented": "A common subject path prefix selects only successful write operations.",
               "whyIncorrectInContext": "A deletion with the same subject also matches that prefix. The stem explicitly says the path can be shared, so resource selection is not operation selection.",
               "couldBeCorrectWhen": "All operations for a selected resource path or subtree are wanted, independent of their event type.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-filtering"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
               "evidenceSummary": "Subject filtering explains broad and narrow path prefixes; Event type filtering is the separately documented mechanism for updates rather than deletions."
             },
             {
@@ -2770,9 +2591,7 @@
               "claimRepresented": "Including every source event type meets the writes-only routing requirement.",
               "whyIncorrectInContext": "It preserves the resource-deletion events the handler is supposed not to receive.",
               "couldBeCorrectWhen": "A general-purpose handler wants all notifications from the source; the documentation permits All and makes all-types the default.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-filtering"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
               "evidenceSummary": "Event type filtering states that all event types are sent by default and contrasts that behavior with selecting particular operation types."
             },
             {
@@ -2780,9 +2599,7 @@
               "claimRepresented": "includedEventTypes selects the exact ResourceWriteSuccess operation kind.",
               "whyIncorrectInContext": "Not incorrect here: the source emits that named type and the requirement is only successful writes, even when subjects overlap.",
               "couldBeCorrectWhen": "A subscriber wants resource-update success events rather than other operations such as deletions, precisely the product paragraph's example and this stem.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-filtering"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
               "evidenceSummary": "The product explicitly names Microsoft.Resources.ResourceWriteSuccess for this operation selection and shows the includedEventTypes filter array syntax."
             }
           ],
@@ -2823,25 +2640,19 @@
             "choiceId": "a",
             "assessment": "contradicted",
             "rationale": "Claim: A common subject path prefix selects only successful write operations. In this context: A deletion with the same subject also matches that prefix. The stem explicitly says the path can be shared, so resource selection is not operation selection. Documented correct context: All operations for a selected resource path or subtree are wanted, independent of their event type. Evidence: Subject filtering explains broad and narrow path prefixes; Event type filtering is the separately documented mechanism for updates rather than deletions.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-filtering"
-            ]
+            "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"]
           },
           {
             "choiceId": "b",
             "assessment": "contradicted",
             "rationale": "Claim: Including every source event type meets the writes-only routing requirement. In this context: It preserves the resource-deletion events the handler is supposed not to receive. Documented correct context: A general-purpose handler wants all notifications from the source; the documentation permits All and makes all-types the default. Evidence: Event type filtering states that all event types are sent by default and contrasts that behavior with selecting particular operation types.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-filtering"
-            ]
+            "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"]
           },
           {
             "choiceId": "c",
             "assessment": "supported",
             "rationale": "Claim: includedEventTypes selects the exact ResourceWriteSuccess operation kind. In this context: Not incorrect here: the source emits that named type and the requirement is only successful writes, even when subjects overlap. Documented correct context: A subscriber wants resource-update success events rather than other operations such as deletions, precisely the product paragraph's example and this stem. Evidence: The product explicitly names Microsoft.Resources.ResourceWriteSuccess for this operation selection and shows the includedEventTypes filter array syntax.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-filtering"
-            ]
+            "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"]
           }
         ],
         "checks": {
@@ -2865,33 +2676,25 @@
         "credentialId": "ai-200",
         "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
         "questionFingerprint": "90ffa3850def151d58d8f76c8c29450c3e5fa68baef45d108a897c07c316e863",
-        "sourceIds": [
-          "ai200-20260914-doc-eventgrid-filtering"
-        ],
+        "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
         "retrievedAt": "2026-09-14T18:02:32.943Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "answerEvidence": [
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-filtering"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
             "summary": "Claim: includedEventTypes selects the exact ResourceWriteSuccess operation kind. In this context: Not incorrect here: the source emits that named type and the requirement is only successful writes, even when subjects overlap. Documented correct context: A subscriber wants resource-update success events rather than other operations such as deletions, precisely the product paragraph's example and this stem. Evidence: The product explicitly names Microsoft.Resources.ResourceWriteSuccess for this operation selection and shows the includedEventTypes filter array syntax."
           }
         ],
         "distractorEvidence": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-filtering"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
             "summary": "Claim: A common subject path prefix selects only successful write operations. In this context: A deletion with the same subject also matches that prefix. The stem explicitly says the path can be shared, so resource selection is not operation selection. Documented correct context: All operations for a selected resource path or subtree are wanted, independent of their event type. Evidence: Subject filtering explains broad and narrow path prefixes; Event type filtering is the separately documented mechanism for updates rather than deletions."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-filtering"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-filtering"],
             "summary": "Claim: Including every source event type meets the writes-only routing requirement. In this context: It preserves the resource-deletion events the handler is supposed not to receive. Documented correct context: A general-purpose handler wants all notifications from the source; the documentation permits All and makes all-types the default. Evidence: Event type filtering states that all event types are sent by default and contrasts that behavior with selecting particular operation types."
           }
         ],
@@ -2940,9 +2743,7 @@
             "text": "Drop it without retrying this webhook delivery."
           }
         ],
-        "correctAnswer": [
-          "c"
-        ],
+        "correctAnswer": ["c"],
         "explanation": "Event Grid does not retry webhook 401 responses and drops the event when dead-lettering is not configured.",
         "deepExplanation": "The nonretryable-error table is endpoint-specific: webhook 401 is listed along with other configuration-related errors. A larger retry budget does not override that classification. Configuring a valid dead-letter destination can preserve such failed deliveries for remediation, but that destination is absent here.",
         "whyOtherAnswersAreWrong": {
@@ -2954,23 +2755,15 @@
         "subskill": "Implement event-driven workflows by using Azure Event Grid, including filters, custom events, and retries",
         "difficulty": "advanced",
         "complexity": "troubleshooting",
-        "sourceIds": [
-          "ai200-20260914-doc-eventgrid-delivery"
-        ],
+        "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
         "sourceUrls": [
           "https://learn.microsoft.com/en-us/azure/event-grid/delivery-and-retry"
         ],
-        "documentationTitles": [
-          "Event Grid message delivery and retry"
-        ],
+        "documentationTitles": ["Event Grid message delivery and retry"],
         "generatedAt": "2026-09-14T18:40:20.020Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "featureStatus": "GA",
-        "tags": [
-          "event-grid",
-          "webhook",
-          "nonretryable-errors"
-        ],
+        "tags": ["event-grid", "webhook", "nonretryable-errors"],
         "conceptId": "eventgrid.nonretryable-status-handling",
         "verificationStatus": "candidate",
         "verifiedAgainstSourceIds": [],
@@ -2988,23 +2781,17 @@
           "claims": [
             {
               "choiceId": "a",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
               "summary": "The retry-schedule section retries errors outside its nonretryable table. That path fits a retryable failure, but webhook 401 is explicitly listed as nonretryable."
             },
             {
               "choiceId": "b",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
               "summary": "The error table's note permits dead-lettering instead of dropping when a destination is configured. The stated subscription has no such destination, so that recovery path does not exist."
             },
             {
               "choiceId": "c",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
               "summary": "The endpoint-specific table lists webhook 401 among errors not retried, and the immediately following note states that those events are dropped without configured dead-lettering."
             }
           ]
@@ -3034,25 +2821,19 @@
                 "choiceId": "a",
                 "assessment": "contradicted",
                 "rationale": "The retry schedule excludes the Webhook table's 401 response. Extending a retry budget cannot make that specifically nonretryable endpoint/error pair enter the ordinary transient-failure schedule.",
-                "sourceIds": [
-                  "ai200-20260914-doc-eventgrid-delivery"
-                ]
+                "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
               },
               {
                 "choiceId": "b",
                 "assessment": "contradicted",
                 "rationale": "The error-table note permits dead-lettering when a destination exists, but the stem explicitly supplies none. Storage retention is unavailable under that configuration.",
-                "sourceIds": [
-                  "ai200-20260914-doc-eventgrid-delivery"
-                ]
+                "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
               },
               {
                 "choiceId": "c",
                 "assessment": "supported",
                 "rationale": "The table lists webhook 401 among errors not retried, and the adjacent note says those events are dropped without configured dead-lettering. Both the endpoint type and missing destination match the stated Basic custom-topic push case.",
-                "sourceIds": [
-                  "ai200-20260914-doc-eventgrid-delivery"
-                ]
+                "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
               }
             ],
             "checks": {
@@ -3086,9 +2867,7 @@
               "claimRepresented": "A webhook 401 is retried using the normal subscription retry schedule.",
               "whyIncorrectInContext": "Webhook 401 is explicitly in the nonretryable endpoint table. Increasing attempts or waiting through the ordinary retry schedule does not change that classification.",
               "couldBeCorrectWhen": "The endpoint returns a retryable failure outside the webhook's nonretryable list, such as 503, and an applicable retry budget remains; the product then uses its documented best-effort retry policy.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
               "evidenceSummary": "Retry schedule distinguishes nonretryable endpoint errors from other failures; the later failure table gives 503 a retry behavior and limits 401 retries to Azure resource endpoints."
             },
             {
@@ -3096,9 +2875,7 @@
               "claimRepresented": "This failed event is retained in configured dead-letter storage.",
               "whyIncorrectInContext": "The stem explicitly says no dead-letter destination exists. Event Grid has nowhere configured to preserve this nonretryable delivery.",
               "couldBeCorrectWhen": "A valid accessible dead-letter storage container is configured with the necessary access, allowing nonretryable delivery failures to be preserved for remediation rather than dropped.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
               "evidenceSummary": "The nonretryable-error note recommends dead-letter configuration; Dead-letter events requires an existing storage container and notes role assignment for managed-identity access and loss when storage remains unavailable."
             },
             {
@@ -3106,9 +2883,7 @@
               "claimRepresented": "Event Grid drops this nonretryable webhook delivery because no dead-letter destination is configured.",
               "whyIncorrectInContext": "Not incorrect here: the exact endpoint/error pair is webhook/401 and the explicitly absent dead-letter destination selects the documented drop branch.",
               "couldBeCorrectWhen": "A nonretryable configuration-related endpoint error occurs and dead-lettering has not been configured, precisely the product note and this scenario.",
-              "sourceIds": [
-                "ai200-20260914-doc-eventgrid-delivery"
-              ],
+              "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
               "evidenceSummary": "The webhook row lists 401, and the immediately following note says events are dropped when those errors occur without configured dead-lettering."
             }
           ],
@@ -3149,25 +2924,19 @@
             "choiceId": "a",
             "assessment": "contradicted",
             "rationale": "Claim: A webhook 401 is retried using the normal subscription retry schedule. In this context: Webhook 401 is explicitly in the nonretryable endpoint table. Increasing attempts or waiting through the ordinary retry schedule does not change that classification. Documented correct context: The endpoint returns a retryable failure outside the webhook's nonretryable list, such as 503, and an applicable retry budget remains; the product then uses its documented best-effort retry policy. Evidence: Retry schedule distinguishes nonretryable endpoint errors from other failures; the later failure table gives 503 a retry behavior and limits 401 retries to Azure resource endpoints.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ]
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
           },
           {
             "choiceId": "b",
             "assessment": "contradicted",
             "rationale": "Claim: This failed event is retained in configured dead-letter storage. In this context: The stem explicitly says no dead-letter destination exists. Event Grid has nowhere configured to preserve this nonretryable delivery. Documented correct context: A valid accessible dead-letter storage container is configured with the necessary access, allowing nonretryable delivery failures to be preserved for remediation rather than dropped. Evidence: The nonretryable-error note recommends dead-letter configuration; Dead-letter events requires an existing storage container and notes role assignment for managed-identity access and loss when storage remains unavailable.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ]
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
           },
           {
             "choiceId": "c",
             "assessment": "supported",
             "rationale": "Claim: Event Grid drops this nonretryable webhook delivery because no dead-letter destination is configured. In this context: Not incorrect here: the exact endpoint/error pair is webhook/401 and the explicitly absent dead-letter destination selects the documented drop branch. Documented correct context: A nonretryable configuration-related endpoint error occurs and dead-lettering has not been configured, precisely the product note and this scenario. Evidence: The webhook row lists 401, and the immediately following note says events are dropped when those errors occur without configured dead-lettering.",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ]
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"]
           }
         ],
         "checks": {
@@ -3191,33 +2960,25 @@
         "credentialId": "ai-200",
         "objectiveVersion": "Undated published outline; retrieved 2026-09-14T17:46:55.568Z; SHA-256 fd568c11bfe351d28bfb2021e38e21f4a898939c0050235953656d808ef75a44",
         "questionFingerprint": "f0ec0f508cd165730c47264cb494bee0b00e26e8d4a69d5b56210ec48f950d0d",
-        "sourceIds": [
-          "ai200-20260914-doc-eventgrid-delivery"
-        ],
+        "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
         "retrievedAt": "2026-09-14T18:02:36.757Z",
         "lastValidatedAt": "2026-09-14T18:40:20.020Z",
         "answerEvidence": [
           {
             "choiceId": "c",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "Claim: Event Grid drops this nonretryable webhook delivery because no dead-letter destination is configured. In this context: Not incorrect here: the exact endpoint/error pair is webhook/401 and the explicitly absent dead-letter destination selects the documented drop branch. Documented correct context: A nonretryable configuration-related endpoint error occurs and dead-lettering has not been configured, precisely the product note and this scenario. Evidence: The webhook row lists 401, and the immediately following note says events are dropped when those errors occur without configured dead-lettering."
           }
         ],
         "distractorEvidence": [
           {
             "choiceId": "a",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "Claim: A webhook 401 is retried using the normal subscription retry schedule. In this context: Webhook 401 is explicitly in the nonretryable endpoint table. Increasing attempts or waiting through the ordinary retry schedule does not change that classification. Documented correct context: The endpoint returns a retryable failure outside the webhook's nonretryable list, such as 503, and an applicable retry budget remains; the product then uses its documented best-effort retry policy. Evidence: Retry schedule distinguishes nonretryable endpoint errors from other failures; the later failure table gives 503 a retry behavior and limits 401 retries to Azure resource endpoints."
           },
           {
             "choiceId": "b",
-            "sourceIds": [
-              "ai200-20260914-doc-eventgrid-delivery"
-            ],
+            "sourceIds": ["ai200-20260914-doc-eventgrid-delivery"],
             "summary": "Claim: This failed event is retained in configured dead-letter storage. In this context: The stem explicitly says no dead-letter destination exists. Event Grid has nowhere configured to preserve this nonretryable delivery. Documented correct context: A valid accessible dead-letter storage container is configured with the necessary access, allowing nonretryable delivery failures to be preserved for remediation rather than dropped. Evidence: The nonretryable-error note recommends dead-letter configuration; Dead-letter events requires an existing storage container and notes role assignment for managed-identity access and loss when storage remains unavailable."
           }
         ],
