@@ -1,0 +1,1422 @@
+{
+  "schemaVersion": 1,
+  "requestId": "ai103-agents-b-independent-pass3",
+  "reviews": [
+    {
+      "questionId": "ai103-g-018",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "b7d960753e2ca0c80020863220a866515db12754cb7cbe5956f480eab36aa0cb",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-file-search",
+          "url": "https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/05-file-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\use-generative-ai-tools--05-file-search.txt",
+          "retrievedAt": "2026-09-14T17:53:33.053Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The preparation example uploads and polls a file into a vector store, then separately attaches its ID to file_search. The include list exposes matched results. Domain separation and ingestion readiness therefore solve different problems; retrieving a passage does not guarantee an accurate answer. Question-specific evidence: The sample supplies both instructions and a separate vector_store_ids list; best practices recommend focused prompts. The request includes the prepared vector_store.id, and the lesson advises domain-scoped stores. The documented flow requires preparation followed by attaching the relevant store IDs. The sample and best practices distinguish includes for transparency from vector-store scope."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Changing wording can improve relevance within available documents, but it does not make the product collection part of this request.",
+          "sourceIds": ["ai103-file-search"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "The direct repair is to reference the ready product-manual store in the tool configuration.",
+          "sourceIds": ["ai103-file-search"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Preparation is necessary before search, but duplicate preparation without attachment does not fix this supplied defect.",
+          "sourceIds": ["ai103-file-search"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Hiding the observed HR passages cannot make product passages available to the model.",
+          "sourceIds": ["ai103-file-search"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The retrieval key is correct, but Advanced troubleshooting is not earned: the stem explicitly identifies the incorrect field and value and the answer substitutes the named desired store. There is no diagnosis left to perform. The absolute-wording warning reflects conspicuously ineffective alternatives. Require new grounded authoring and all three passes for a genuinely diagnostic encounter; do not relabel this hash.",
+      "confidenceReason": "High confidence in the store-attachment correction and the difficulty hold; the complete file-search example separates preparation, request scope and diagnostic visibility."
+    },
+    {
+      "questionId": "ai103-g-019",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "735f7bf708d60157f7db52341838807dd8a97aeba37f683f10111cd13625838f",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-agent-production",
+          "url": "https://learn.microsoft.com/en-us/training/modules/develop-ai-agents-azure-vs-code/8-test-deploy-integrate",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\develop-ai-agents-azure-vs-code--8-test-deploy-integrate.txt",
+          "retrievedAt": "2026-09-14T17:53:51.633Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "Publishing creates an Agent Application with an application-scoped invocation endpoint and separate identity. The 2025-11-15-preview sample uses Entra authentication; the production section explicitly requires client history because that application endpoint is stateless. Azure AI User is scoped to the application, not inherited project access. Question-specific evidence: Publishing preserves the invocation URL across versions and separately requires client-side conversation management. The project lesson demonstrates response chaining; the published lesson explicitly specifies stateless Responses. Production conversation management requires client history; manual chaining appends model output and follow-up input."
+        },
+        {
+          "sourceId": "ai103-responses-state",
+          "url": "https://learn.microsoft.com/en-us/training/modules/foundry-sdk/04-responses-api",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\foundry-sdk--04-responses-api.txt",
+          "retrievedAt": "2026-09-14T17:53:28.900Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Responses lesson distinguishes generated text, response identity, completion status and returned usage. It separately defines max_output_tokens, sampling controls, previous_response_id and manual history submission. Stateful project examples cannot override the published Agent Application endpoint limitation. Question-specific evidence: The project lesson demonstrates response chaining; the published lesson explicitly specifies stateless Responses. Production conversation management requires client history; manual chaining appends model output and follow-up input."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Application address stability is not session identity; the missing user history remains missing.",
+          "sourceIds": ["ai103-agent-production"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "This is a valid project-state pattern applied to the wrong endpoint, not a contradiction in the key.",
+          "sourceIds": ["ai103-responses-state", "ai103-agent-production"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Persisting and resending the relevant interaction repairs the omitted context without relying on project-only state behavior.",
+          "sourceIds": ["ai103-agent-production", "ai103-responses-state"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The Preview published-endpoint key survives the project-state counterexample. However option a claims that a stable application URL identifies accumulated per-user history. The cited documents support endpoint stability, not any context in which that URL alone is a user-history store. Under the mandatory sourced-counterexample rule this distractor needs repair; no invented state mechanism is supplied.",
+      "confidenceReason": "High confidence in the stateless 2025-11-15-preview endpoint boundary; insufficient evidence for a legitimate literal context of option a prevents final verification."
+    },
+    {
+      "questionId": "ai103-g-020",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "db52ddc12b14fb8b988f195b1dbc272caa4c6e656db96eea7766719627a25d7d",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-mcp-tools",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-020.txt",
+          "retrievedAt": "2026-09-14T17:59:38.500Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Python MCPTool example independently configures server_label, project_connection_id and approval behavior. Authentication uses a stored project connection; creation needs Project Manager privileges beyond agent use. The best-practice section treats remote tool results as untrusted despite authenticated transport and separates allowlists from explicit approvals. Question-specific evidence: Authentication guidance and the Python declaration independently identify project_connection_id. The sample sets server_label and project_connection_id separately and displays the server label during approval. The best-practice list explicitly prescribes allowed_tools independently of connection permissions. The connect/approve route sets approval behavior and the connection reference as independent properties."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "The literal field matches the protected connection reference; rejection is for duplication, not a wrong key.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A server label is useful identification metadata but is not the authentication reference.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Use the allowlist to limit available operations, not to identify authentication details.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Approval policy can be essential while still leaving the authentication field unanswered.",
+          "sourceIds": ["ai103-mcp-tools"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Rejected as the same tested fact as ai103-p-010 after reading both complete stems, choices and explanations plus SEM-004. p-010 already identifies the stored-credential project connection and exact project_connection_id reference. Assuming connection creation is finished narrows the task but supplies no new authentication decision. Preserve the technical rejection; any replacement restarts all three passes.",
+      "confidenceReason": "High confidence in the Python field and in the semantic duplication; exact hash is unchanged and the technical stage also rejects this record."
+    },
+    {
+      "questionId": "ai103-g-021",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "094abd2c1aa08cb81c9df24f9c3f4698b6d12e7a4f3bd39fab66ff2808e7322d",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-function-runtime",
+          "url": "https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/06-function",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\use-generative-ai-tools--06-function.txt",
+          "retrievedAt": "2026-09-14T17:53:36.149Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The raw Responses model emits a function request; application code performs business work and returns function_call_output. Its production guidance requires argument validation and clear, safe errors because malformed input can occur. The lesson does not authorize fabricated business success or schema-only trust. Question-specific evidence: Runtime best practices require input validation; agent security treats tool arguments as untrusted. Both sources recommend validation even while documenting schemas and strict-property troubleshooting. The best-practice section explicitly asks for safe errors the model can reason about. The integration returns real application output and separately advises clear errors on failure."
+        },
+        {
+          "sourceId": "ai103-function-calling",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/function-calling",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-018.txt",
+          "retrievedAt": "2026-09-14T17:59:36.530Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The current agent function article declares required parameters and returns outputs correlated with call_id. Its security section requires validation of untrusted arguments and outputs, least-privilege identity and deliberate side effects. Troubleshooting recommends required properties and strict validation without eliminating application checks. Question-specific evidence: Runtime best practices require input validation; agent security treats tool arguments as untrusted. Both sources recommend validation even while documenting schemas and strict-property troubleshooting."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "The schema describes an expected contract but the observed payload still requires checking before execution.",
+          "sourceIds": ["ai103-function-runtime", "ai103-function-calling"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Schema-only confidence cannot justify dispatching this known malformed payload.",
+          "sourceIds": ["ai103-function-runtime", "ai103-function-calling"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Reporting the invalid-input condition preserves the real business outcome while allowing conversation recovery.",
+          "sourceIds": ["ai103-function-runtime"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "A fabricated status contradicts the grounded tool-result contract; its lack of a defensible countercontext is a quality blocker.",
+          "sourceIds": ["ai103-function-runtime"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Both selected behaviors are correct and complementary, but the two rejected options are assertions that no cited safe production context supports: schema declarations remove validation, and missing input can be reported as invented success. They are not credible contextual alternatives. The Advanced label is also unsupported by a stated missing field and obvious validate/report-error pair. Reauthor rather than rubber-stamp pass 2.",
+      "confidenceReason": "High confidence in the complete a/c key, with a strict distractor-evidence and difficulty failure independent of technical correctness."
+    },
+    {
+      "questionId": "ai103-g-022",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "95ea8a8639372a1cd99ff04854d483467a440a4946a0c029cab9e8a70bdc284e",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-file-search",
+          "url": "https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/05-file-search",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\use-generative-ai-tools--05-file-search.txt",
+          "retrievedAt": "2026-09-14T17:53:33.053Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The preparation example uploads and polls a file into a vector store, then separately attaches its ID to file_search. The include list exposes matched results. Domain separation and ingestion readiness therefore solve different problems; retrieving a passage does not guarantee an accurate answer. Question-specific evidence: The sample places vector_store_ids inside the tool and include separately on the response request. The exact list appears in the request and best practices recommend retrieval results for troubleshooting. Preparation uploads/polls first; the later request includes retrieval results independently."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The store selector is legitimate but cannot request the missing matched-result output.",
+          "sourceIds": ["ai103-file-search"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "This adds the requested evidence to the response while retaining the existing search scope.",
+          "sourceIds": ["ai103-file-search"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The file is already indexed, so repeating preparation does not answer which passages the tool matched.",
+          "sourceIds": ["ai103-file-search"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified within its modest Intermediate API-configuration scope. The supplied symptom requires retrieval-result visibility while explicitly preserving store selection; all three alternatives are documented operations with different purposes. Pronoun references resolve to the same file_search call. Shared file-search evidence with g-018 and earlier preparation items does not repeat their attachment/readiness decisions.",
+      "confidenceReason": "High confidence from the exact include list in the actual sample and independent preparation-versus-scope-versus-diagnostics separation."
+    },
+    {
+      "questionId": "ai103-g-023",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "d7fe0f285e54f686a030f906414c7f2f9c338b42365f11a4ddba4c4518900745",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-orchestration-patterns",
+          "url": "https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/3-understand-agent-orchestration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\orchestrate-semantic-kernel-multi-agent-solution--3-understand-agent-orchestration.txt",
+          "retrievedAt": "2026-09-14T17:54:23.469Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The training overview distinguishes independent concurrent execution, fixed sequential dependencies, context-driven handoff and managed shared discussion. Executors may be custom logic or agents; conditional/switch edges route before execution, whereas fan-out broadcasts and fan-in aggregates completed work. Question-specific evidence: The overview defines concurrent work as broadcast and independent results. Handoff dynamically transfers control based on context or rules. The sequential definition explicitly describes fixed output-to-input order. The overview contrasts shared conversation with fixed sequential refinement."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Broadcast is useful for independent perspectives, not the stated fixed input-output chain.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "There is no context-based specialist choice in the required normalization-analysis-writing order.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The required dependency chain maps directly to sequential orchestration without extra coordination assumptions.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Managed discussion supplies capabilities unnecessary to this ordered data-processing pipeline.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified as Foundational conceptual pattern selection, not complex implementation. A fixed normalization-to-analysis-to-writing data dependency matches sequential orchestration, and each distractor has a documented distinct use. The pronoun its points to the immediately preceding agent output; parallel labels avoid grammatical or length cues.",
+      "confidenceReason": "High confidence from the complete orchestration overview and its independent definitions of concurrency, handoff, sequence and managed discussion."
+    },
+    {
+      "questionId": "ai103-g-024",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "cf0bf5f6b20ca918ae2305cb33bb791ce37beeeff367953326c5b5b518d496e5",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-orchestration-patterns",
+          "url": "https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/3-understand-agent-orchestration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\orchestrate-semantic-kernel-multi-agent-solution--3-understand-agent-orchestration.txt",
+          "retrievedAt": "2026-09-14T17:54:23.469Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The training overview distinguishes independent concurrent execution, fixed sequential dependencies, context-driven handoff and managed shared discussion. Executors may be custom logic or agents; conditional/switch edges route before execution, whereas fan-out broadcasts and fan-in aggregates completed work. Question-specific evidence: The handoff definition names context, rules, escalation and expert routing. Concurrent orchestration broadcasts a task and collects independent results. Sequential work follows a fixed output-to-input pipeline. The group-chat definition describes collaborative shared conversation."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "The required ownership change is precisely the coordination role of handoff.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Parallel participation is documented but does not satisfy the one-selected-specialist requirement.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A fixed dependency pipeline is not a dynamic escalation design.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Discussion can be valuable elsewhere but adds a requirement absent from this routing task.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified as a bounded routing application. The one-specialist-at-a-time and later-escalation constraints favor handoff rather than broadcast, unconditional sequence or mandatory discussion. The Intermediate label is reasonable but not Advanced: the requirement chooses the coordination behavior directly. No privilege transfer accompanies agent control transfer.",
+      "confidenceReason": "High confidence that dynamic control ownership, not simply multiple agents, distinguishes the key from the three cited orchestration alternatives."
+    },
+    {
+      "questionId": "ai103-g-025",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "97086c6570b99b2f5b900e5b332d93fdf68d4ca5855f16a203f159b18a0930db",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-orchestration-patterns",
+          "url": "https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/3-understand-agent-orchestration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\orchestrate-semantic-kernel-multi-agent-solution--3-understand-agent-orchestration.txt",
+          "retrievedAt": "2026-09-14T17:54:23.469Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The training overview distinguishes independent concurrent execution, fixed sequential dependencies, context-driven handoff and managed shared discussion. Executors may be custom logic or agents; conditional/switch edges route before execution, whereas fan-out broadcasts and fan-in aggregates completed work. Question-specific evidence: The overview assigns independent broadcast to concurrent orchestration and shared speaking turns to group chat. The overview defines fixed order for sequence and manager-selected speakers for group chat. The overview chooses the next speaker; the detailed lesson additionally names human-input and termination decisions."
+        },
+        {
+          "sourceId": "ai103-maker-checker",
+          "url": "https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/6-use-group-chat-orchestration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\orchestrate-semantic-kernel-multi-agent-solution--6-use-group-chat-orchestration.txt",
+          "retrievedAt": "2026-09-14T17:54:25.676Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The conceptual sections define a maker proposing work and a checker critiquing it in managed turns. Manager responsibilities include speaker selection, human input and explicit termination, including maximum rounds. A later implementation paragraph says concurrent execution; that contradictory runtime paragraph cannot support turn-based SDK claims. Question-specific evidence: The overview chooses the next speaker; the detailed lesson additionally names human-input and termination decisions."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The concurrent pattern is a real alternative, but it removes the shared conversational requirement.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The stated evolving discussion requires a manager decision rather than a rigid pipeline.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The two requested coordination duties are directly supported without adopting conflicting SDK implementation prose.",
+          "sourceIds": ["ai103-orchestration-patterns", "ai103-maker-checker"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified only for conceptual manager responsibility. I independently read the maker-checker source’s conflicting concurrent implementation paragraph, but both its conceptual opening and the separate orchestration overview expressly assign next-speaker and human-input decisions to a manager. The candidate expressly excludes SDK implementation claims. Curation commentary in the deep explanation is awkward, reducing clarity and explanation scores rather than concealing the inconsistency.",
+      "confidenceReason": "High confidence in the cross-corroborated conceptual key; no confidence is asserted in the contradictory runtime paragraph or its SDK behavior."
+    },
+    {
+      "questionId": "ai103-g-026",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "629c4dc419b0601ec9245f372af404a98cdbfc38fa113dae82d1eae56d407c69",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-workflows",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-022.txt",
+          "retrievedAt": "2026-09-14T17:59:40.291Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Preview visual-workflow article separates asking for input, storing variables, conditional logic, displaying messages and saving versions. It explicitly announces December 1, 2026 retirement and recommends Agent Framework for new work. A stored answer must be evaluated to gate an action; saving is not authorization. Question-specific evidence: The workflow supports both clarifying input and approval use cases; sensitive operations require actual approval. The article defines if/else nodes and saved answers; risk guidance calls for human-gated sensitive actions. The name example sends a message containing a saved answer; separate logic nodes choose execution paths. Each save creates a version, while human input and if/else control are separately documented."
+        },
+        {
+          "sourceId": "ai103-agent-risk-boundaries",
+          "url": "https://learn.microsoft.com/en-us/training/modules/develop-ai-agents-azure-vs-code/2-understand-ai-agents-foundry",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\develop-ai-agents-azure-vs-code--2-understand-ai-agents-foundry.txt",
+          "retrievedAt": "2026-09-14T17:53:46.165Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The agent-risk lesson describes prompt injection, excessive autonomy and missing auditability. Its mitigation section distinguishes least privilege, validation, logging and human approval of sensitive operations. It supplies a safeguard requirement, not a Boolean parser or an authorization role for every application. Question-specific evidence: The workflow supports both clarifying input and approval use cases; sensitive operations require actual approval. The article defines if/else nodes and saved answers; risk guidance calls for human-gated sensitive actions."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Waiting resolves timing, not authorization; the false answer must affect execution.",
+          "sourceIds": ["ai103-workflows", "ai103-agent-risk-boundaries"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "An affirmative condition enforces the required relationship between decision and action.",
+          "sourceIds": ["ai103-workflows", "ai103-agent-risk-boundaries"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A display node communicates the answer but cannot enforce a branch it does not implement.",
+          "sourceIds": ["ai103-workflows"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "A new immutable version cannot replace the user’s explicit affirmative business decision.",
+          "sourceIds": ["ai103-workflows"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The Boolean branch is a valid repair to an existing Preview workflow. The Advanced architecture designation is not authentic: the stem already exposes an unconditional edge after a false answer, leaving a basic if/else substitution. Option d additionally turns saving a configuration into runtime authorization, for which no cited correct context exists. Preserve retirement and Preview labels; repair requires all passes again.",
+      "confidenceReason": "High confidence in affirmative gating and the December 1, 2026 retirement context, but insufficient strict distractor quality and architectural reasoning."
+    },
+    {
+      "questionId": "ai103-g-027",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "1848b5dc5ce27e32453bb1f23c9c1c376b2cee38ec0b0b3caeddef2d2e365fe3",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-mcp-tools",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-020.txt",
+          "retrievedAt": "2026-09-14T17:59:38.500Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Python MCPTool example independently configures server_label, project_connection_id and approval behavior. Authentication uses a stored project connection; creation needs Project Manager privileges beyond agent use. The best-practice section treats remote tool results as untrusted despite authenticated transport and separates allowlists from explicit approvals. Question-specific evidence: Best practices explicitly classify those remote contents as untrusted and separately preserve approvals and allowlists. Authentication is configured through project connections; result trust is explicitly restricted in best practices. The article recommends allowed_tools and reviewing exposure when server behavior changes. The Python sample asks a human and sends approve with approval_request_id rather than interpreting arbitrary results."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "The application must evaluate actions under its existing controls instead of obeying embedded server text.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Server identity verification does not elevate tool-result prose to instructions governing the agent.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A tool result cannot authorize expansion of the tool surface merely because the connection works.",
+          "sourceIds": ["ai103-mcp-tools"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "An approval decision is a separate controlled input, not a property of any post-invocation text.",
+          "sourceIds": ["ai103-mcp-tools"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The authenticated-server trust-boundary key is sound. However b, c and d offer no sourced legitimate context for their literal claims that returned instructions become policy, expand tool permissions or count as human approval. The source explicitly separates all three controls. Advanced reasoning is limited to recognizing one well-signposted injection. Keep the item held for stronger contextual alternatives and genuinely applied scope.",
+      "confidenceReason": "High confidence that authentication never supplies the claimed instruction authority in the cited MCP contract; this certainty also exposes weak distractor design."
+    },
+    {
+      "questionId": "ai103-g-028",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "1cb52f61a4f279d1584e86775dcfa3064678e821d09530576a69826726273787",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-tracing",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\tracing-current.txt",
+          "retrievedAt": "2026-09-14T18:04:04.274Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The tracing overview records request operations as nested spans, including tool outcomes and token/latency signals. It recommends linking evaluation run IDs, redacting sensitive data and checking Application Insights connection, query permissions and instrumentation when traces are absent. Prompt/hosted tracing is GA; workflow/external tracing is Preview. Question-specific evidence: Tracing separates nested operations; the runtime can return an error for the model to reason about. Traces expose which operation introduced an error or unexpected output. Tracing shows ordered nested results; raw function guidance returns clear errors and records failures. Token consumption is a tracing signal, but traces also retain operation-level results for debugging."
+        },
+        {
+          "sourceId": "ai103-function-runtime",
+          "url": "https://learn.microsoft.com/en-us/training/modules/use-generative-ai-tools/06-function",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\use-generative-ai-tools--06-function.txt",
+          "retrievedAt": "2026-09-14T17:53:36.149Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The raw Responses model emits a function request; application code performs business work and returns function_call_output. Its production guidance requires argument validation and clear, safe errors because malformed input can occur. The lesson does not authorize fabricated business success or schema-only trust. Question-specific evidence: Tracing separates nested operations; the runtime can return an error for the model to reason about. Tracing shows ordered nested results; raw function guidance returns clear errors and records failures."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Top-level completion does not erase or reinterpret an intermediate tool failure.",
+          "sourceIds": ["ai103-tracing", "ai103-function-runtime"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The requested investigation concerns execution failure, not merely how the answer is phrased.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Following the failed tool and its returned outcome locates the error-handling path relevant to this fallback.",
+          "sourceIds": ["ai103-tracing", "ai103-function-runtime"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Consumption metrics are useful for a different question and discard the evidence needed here.",
+          "sourceIds": ["ai103-tracing"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Inspecting the failed tool and its returned error is appropriate. The stem already identifies the failed operation, so Advanced troubleshooting is overstated. The literal assertion in option a that response completion proves every underlying tool succeeded has no documented correct context; simply changing the task to checking completion would remove the assertion rather than defend it. Hold for authentic competing diagnostic paths.",
+      "confidenceReason": "High confidence in nested-tool failure investigation, with independent difficulty and sourced-counterexample failures."
+    },
+    {
+      "questionId": "ai103-g-029",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "f15d9de30878da98743e482114f5a57e025a3da64970c5d82c940038cff88ce1",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-tracing",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\tracing-current.txt",
+          "retrievedAt": "2026-09-14T18:04:04.274Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The tracing overview records request operations as nested spans, including tool outcomes and token/latency signals. It recommends linking evaluation run IDs, redacting sensitive data and checking Application Insights connection, query permissions and instrumentation when traces are absent. Prompt/hosted tracing is GA; workflow/external tracing is Preview. Question-specific evidence: The source recommends linking evaluation runs with traces rather than treating deployment grouping as run identity. Best practices explicitly recommend correlation of evaluation run IDs with trace data. The source distinguishes time signals from complete traces and separately discusses data minimization and retention policies."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Grouping can organize telemetry but cannot attribute a quality result to the corresponding execution.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "The stated relationship preserves the granularity needed to inspect the evaluated execution.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Average latency can support trends, not this run-specific quality investigation after traces are removed.",
+          "sourceIds": ["ai103-tracing"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The exact recommendation to correlate evaluation runs and traces is supported. Option a, however, adds an unsupported assumption that all requests sharing a model have the same outcome; no cited context validates that literal assumption. Option c also destroys the per-execution evidence requested. The strict distractor-evidence minimum is not met. I additionally read archived and regenerated ai103-018: the old composite explicitly included evaluation-run correlation, while the current record isolates pre-export redaction. Preserve that history and leave the semantic audit’s fact-splitting/stable-ID disposition question unresolved; this is not a duplicate of the current redaction question.",
+      "confidenceReason": "High confidence in the recommended evaluation-run correlation and insufficient evidence for the complete model-grouping distractor."
+    },
+    {
+      "questionId": "ai103-g-030",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "517851f0afa865dbed909ea7ee22d3b0b09f344f474eeb54a7c03f45a33e28f5",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-prompt-engineering",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/prompt-engineering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-009.txt",
+          "retrievedAt": "2026-09-14T17:59:30.127Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The article limits its techniques to compatible non-reasoning models, describes few-shot examples as current-inference conditioning rather than permanent learning, and recommends changing temperature or top_p separately. Its reasoning warning permits supported summaries, not attempts to extract hidden internal reasoning. Question-specific evidence: The parameter section explicitly recommends altering one of temperature and top_p, not both. The source distinguishes the two randomness controls and recommends changing one at a time."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Changing both cannot provide the isolated comparison the team requests.",
+          "sourceIds": ["ai103-prompt-engineering"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "This follows the documented recommendation without claiming determinism or factual accuracy.",
+          "sourceIds": ["ai103-prompt-engineering"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Changing one supported sampling parameter at a time matches the recommendation. The only distractor combines changing both with attributing the result to one, for which no valid cited experimental context exists. A factorial design is not documented by this citation and would not rescue that attribution. Binary common-sense confounding does not establish meaningful Intermediate implementation depth.",
+      "confidenceReason": "High confidence in the source recommendation but low confidence in this two-choice item as a strict contextual assessment."
+    },
+    {
+      "questionId": "ai103-g-031",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "1831cdad07e7516d0946e9e8c4e30ddc503c96b1fe36c8b0ac8b93f20cf11b47",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-prompt-engineering",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/prompt-engineering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-009.txt",
+          "retrievedAt": "2026-09-14T17:59:30.127Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The article limits its techniques to compatible non-reasoning models, describes few-shot examples as current-inference conditioning rather than permanent learning, and recommends changing temperature or top_p separately. Its reasoning warning permits supported summaries, not attempts to extract hidden internal reasoning. Question-specific evidence: The examples section explicitly distinguishes current conditioning from permanent model change. The only cited evidence describes inference conditioning, not deployment creation."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Prompted examples influence this response without creating a new trained model.",
+          "sourceIds": ["ai103-prompt-engineering"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The distractor conflates examples in a prompt with an unsupported training-and-deployment side effect.",
+          "sourceIds": ["ai103-prompt-engineering"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The few-shot/current-inference key and Beginner concept-recall label are accurate. The sole distractor claims a new fine-tuned deployment is created automatically on every request, which the only cited article never supports in any context. I read full gh300-019 and accept the semantic distinction from example-count selection; duplication is not the hold. Replace the impossible automatic-deployment alternative through new authoring.",
+      "confidenceReason": "High confidence in inference-only conditioning and in the cross-bank distinction; strict sourced-counterexample completeness fails for the sole distractor."
+    },
+    {
+      "questionId": "ai103-g-032",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "eeaf8cc48866b0eae909c9f3480624333bf413acde0e4b831e878a1075df4d3a",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-responses-state",
+          "url": "https://learn.microsoft.com/en-us/training/modules/foundry-sdk/04-responses-api",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\foundry-sdk--04-responses-api.txt",
+          "retrievedAt": "2026-09-14T17:53:28.900Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Responses lesson distinguishes generated text, response identity, completion status and returned usage. It separately defines max_output_tokens, sampling controls, previous_response_id and manual history submission. Stateful project examples cannot override the published Agent Application endpoint limitation. Question-specific evidence: The control list separately assigns randomness to temperature and maximum tokens to max_output_tokens. The lesson lists top_p as an alternative to temperature. The conversation section chains responses by the previous response identifier. The generation-control example and parameter list identify this exact limit field."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A sampling control may influence style but cannot provide the requested hard token budget.",
+          "sourceIds": ["ai103-responses-state"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "This field addresses sampling rather than the requested generated-token limit.",
+          "sourceIds": ["ai103-responses-state"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Conversation identity can retain context but does not answer the output-budget requirement.",
+          "sourceIds": ["ai103-responses-state"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "The requested token ceiling is directly expressed through max_output_tokens.",
+          "sourceIds": ["ai103-responses-state"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified as a narrow Intermediate API parameter choice, with reduced difficulty and clarity scores because the max-token wording strongly resembles the correct identifier. Every alternative is an actual documented control with a different correct context. Read g-032 versus v-010: this is Responses budget selection, not Chat Completions finish_reason=length diagnosis or its max_tokens field. Do not count it as deep architecture reasoning.",
+      "confidenceReason": "High confidence from the exact current Responses parameter list, with explicitly modest scoring rather than treating technical spelling as advanced reasoning."
+    },
+    {
+      "questionId": "ai103-g-033",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "1ded9dc956e7595c82dce1adebb3348f9690abd3faab97813a6bb30872d334c1",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-maker-checker",
+          "url": "https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/6-use-group-chat-orchestration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\orchestrate-semantic-kernel-multi-agent-solution--6-use-group-chat-orchestration.txt",
+          "retrievedAt": "2026-09-14T17:54:25.676Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The conceptual sections define a maker proposing work and a checker critiquing it in managed turns. Manager responsibilities include speaker selection, human input and explicit termination, including maximum rounds. A later implementation paragraph says concurrent execution; that contradictory runtime paragraph cannot support turn-based SDK claims. Question-specific evidence: Maker-checker explicitly requires proposing content followed by critique and revision feedback. The conceptual maker-checker section expressly defines proposal, critique and feedback turns. The lesson describes checker critique and says simple delegation may not need group chat."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Two producers without proposal review do not create the required checker relationship.",
+          "sourceIds": ["ai103-maker-checker"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Distinct creation and review responsibilities implement the requested pattern without promising infallibility.",
+          "sourceIds": ["ai103-maker-checker"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The checker must evaluate the maker’s output; a specialist dispatcher is not that reviewing role.",
+          "sourceIds": ["ai103-maker-checker"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The maker/checker role split is directly supported and does not depend on the source’s contradictory concurrency paragraph. But neither fastest-independent-draft selection nor a checker that only routes to specialists receives a defensible sourced correct context from this sole citation. The article merely says avoid group chat when simple delegation suffices; it does not establish these specific replacement responsibilities. Hold rather than import uncited orchestration evidence.",
+      "confidenceReason": "High confidence in the conceptual feedback-loop answer, with insufficient source-backed contextual analysis for the authored alternatives."
+    },
+    {
+      "questionId": "ai103-g-034",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "4657d2f3346dabae63bbbf527d71a45b439289be3a8b41d10b26c32963f49fb8",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-maker-checker",
+          "url": "https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/6-use-group-chat-orchestration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\orchestrate-semantic-kernel-multi-agent-solution--6-use-group-chat-orchestration.txt",
+          "retrievedAt": "2026-09-14T17:54:25.676Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The conceptual sections define a maker proposing work and a checker critiquing it in managed turns. Manager responsibilities include speaker selection, human input and explicit termination, including maximum rounds. A later implementation paragraph says concurrent execution; that contradictory runtime paragraph cannot support turn-based SDK claims. Question-specific evidence: The avoid guidance warns against unclear completion and excessive participants; manager termination is explicit. The manager checks user input, termination including max rounds, and only then selects another speaker. The manager separately filters/summarizes results and determines termination."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Increasing participants cannot replace the missing stop and escalation decisions.",
+          "sourceIds": ["ai103-maker-checker"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "The proposed controls directly address unbounded repetition and unresolved decisions.",
+          "sourceIds": ["ai103-maker-checker"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Output brevity and conversation termination are different controls; this option lacks the required bound.",
+          "sourceIds": ["ai103-maker-checker"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "An explicit termination boundary and human-input path are documented and correct. Yet the supposedly Advanced architecture decision is a direct restatement of the bounded-loop requirement. Neither adding agents until spontaneous silence nor shortening prose to guarantee agreement has a documented valid countercontext. The negative/absolute wording warnings are material quality failures, not merely stylistic observations.",
+      "confidenceReason": "High confidence in explicit loop control and equally high confidence that the source does not support the two automatic-convergence alternatives."
+    },
+    {
+      "questionId": "ai103-g-035",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "369932d2bb6d102336ec1e06a7d9d8ad426740f62ab287d9e4e323ab1c7ff4ac",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-prompt-engineering",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/prompt-engineering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-009.txt",
+          "retrievedAt": "2026-09-14T17:59:30.127Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The article limits its techniques to compatible non-reasoning models, describes few-shot examples as current-inference conditioning rather than permanent learning, and recommends changing temperature or top_p separately. Its reasoning warning permits supported summaries, not attempts to extract hidden internal reasoning. Question-specific evidence: The prompt warning identifies summaries as the supported route; tracing exposes operations and outcomes. The Chain of thought prompting section states the model-category restriction. The warning says unsupported extraction is not an accepted interface and may trigger enforcement."
+        },
+        {
+          "sourceId": "ai103-tracing",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\tracing-current.txt",
+          "retrievedAt": "2026-09-14T18:04:04.274Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The tracing overview records request operations as nested spans, including tool outcomes and token/latency signals. It recommends linking evaluation run IDs, redacting sensitive data and checking Application Insights connection, query permissions and instrumentation when traces are absent. Prompt/hosted tracing is GA; workflow/external tracing is Preview. Question-specific evidence: The prompt warning identifies summaries as the supported route; tracing exposes operations and outcomes. Trace concepts define request journeys and operation spans, not private reasoning disclosure."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "This uses documented observable material without claiming access to hidden internal reasoning.",
+          "sourceIds": ["ai103-prompt-engineering", "ai103-tracing"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A technique that fits a different model category does not override the reasoning-model premise.",
+          "sourceIds": ["ai103-prompt-engineering"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Prompting for a bypass does not create a supported model capability.",
+          "sourceIds": ["ai103-prompt-engineering"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Observable tool activity can inform evaluation without being equated to the model’s entire internal process.",
+          "sourceIds": ["ai103-tracing"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The supported-summary answer respects the article’s reasoning-model boundary. Option b has a real non-reasoning countercontext, but c asserts an unsupported hidden-reasoning bypass and d equates tool traces with a verbatim internal transcript, neither of which is documented as correct anywhere in the cited evidence. Do not manufacture such conditions to meet the strict rubric; hold for credible alternatives.",
+      "confidenceReason": "High confidence in supported summaries versus observable traces, with a deliberate failure of the mandatory distractor-counterexample threshold."
+    },
+    {
+      "questionId": "ai103-g-036",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "e43d3f0b66d52802ad8281e3f08ba51af2257e57ac375dda661eb19ea0761037",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-system-message",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/advanced-prompt-engineering",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-010.txt",
+          "retrievedAt": "2026-09-14T17:59:29.989Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "System-message instructions influence rather than guarantee behavior. The design checklist warns that messages can overfit examples and prescribes realistic and adversarial testing with iteration. It does not document a statistical causal guarantee or authorize discarding difficult regression cases. Question-specific evidence: The checklist warns of overfitting to examples and prescribes realistic and adversarial testing. The source requires both realistic and adversarial prompts rather than only tailored favorable examples. The actual testing checklist identifies overfitting, edge failures and iteration based on realistic/adversarial results."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A single repaired case can confirm that example’s behavior, not the absence of regressions elsewhere.",
+          "sourceIds": ["ai103-system-message"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The deliberately narrow set omits precisely the failure modes the team wants to expose.",
+          "sourceIds": ["ai103-system-message"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The key preserves broad comparison, though the same decision is already covered by p-024.",
+          "sourceIds": ["ai103-system-message"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Rejected after independently reading SEM-011 and both g-036 and p-024. Both ask to preserve a representative baseline when assessing a changed system rather than selecting only easy/repaired cases. Prompt repair versus mitigation changes narrative, not the tested regression-comparison decision. This overturns pass-2’s keep judgment without changing its record. Advanced difficulty and weak happy-path-only distractors are additional issues. The exact mapped self-critique/reflection subskill is also not directly exercised by a system-message regression test; general optimization relevance does not establish that subskill.",
+      "confidenceReason": "High confidence in the regression key and same-fact overlap; the audited comparator p-024 has the sharper stable-scenario/severity constraint."
+    },
+    {
+      "questionId": "ai103-g-037",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "80e5f7db9db97962601d356d1b7f0ff465ff0ea276ccbc30f2d8e01f6ce3a09c",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-responses-state",
+          "url": "https://learn.microsoft.com/en-us/training/modules/foundry-sdk/04-responses-api",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\foundry-sdk--04-responses-api.txt",
+          "retrievedAt": "2026-09-14T17:53:28.900Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Responses lesson distinguishes generated text, response identity, completion status and returned usage. It separately defines max_output_tokens, sampling controls, previous_response_id and manual history submission. Stateful project examples cannot override the published Agent Application endpoint limitation. Question-specific evidence: The response-structure list defines output_text separately from usage. The lesson lists usage and demonstrates response.usage.total_tokens. The property list gives completed as a status example while usage is separate. The response identity and previous_response_id examples establish tracking and conversation correlation."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The visible answer is not the structured accounting property requested.",
+          "sourceIds": ["ai103-responses-state"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "The usage property supplies the requested counts without estimating from message count.",
+          "sourceIds": ["ai103-responses-state"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Response completion and resource usage are distinct pieces of returned metadata.",
+          "sourceIds": ["ai103-responses-state"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "A response key can locate an object but is not itself the object’s usage accounting.",
+          "sourceIds": ["ai103-responses-state"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Verified as Foundational response-property recall. Each option is a real response field with a documented alternative purpose. The token counts are not equated to billing, and the deep explanation correctly notes that history and tool material can increase input usage. The word usage is an obvious semantic cue, reflected in clarity scoring; no applied-depth claim is made.",
+      "confidenceReason": "High confidence from the complete response-structure section and concrete response.usage.total_tokens example."
+    },
+    {
+      "questionId": "ai103-g-038",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "448e34a93448c353253eba6d7ecd4bfc6abda9b53f09d4e7a60f1532e102af88",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-tracing",
+          "url": "https://learn.microsoft.com/en-us/azure/foundry/observability/concepts/trace-agent-concept",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\tracing-current.txt",
+          "retrievedAt": "2026-09-14T18:04:04.274Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The tracing overview records request operations as nested spans, including tool outcomes and token/latency signals. It recommends linking evaluation run IDs, redacting sensitive data and checking Application Insights connection, query permissions and instrumentation when traces are absent. Prompt/hosted tracing is GA; workflow/external tracing is Preview. Question-specific evidence: The first missing-traces check verifies the project-to-Application Insights connection. Prerequisites require access and Log Analytics reader; troubleshooting explicitly checks query permissions. The troubleshooting section explicitly names necessary agent-code instrumentation. The missing-trace list concerns connection, query permissions and instrumentation, not generation parameters. The status note distinguishes GA prompt/hosted agents from Preview workflow/external agents."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "A working inference request does not establish a working telemetry destination.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Telemetry observation has its own access boundary that model-call success cannot satisfy.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "The code must emit tracing data for the backend to receive it.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "There is no cited basis for treating temperature as either this remedy or a sourced alternate diagnostic control.",
+          "sourceIds": ["ai103-tracing"]
+        },
+        {
+          "choiceId": "e",
+          "assessment": "contradicted",
+          "rationale": "Changing agent type does not correct missing setup and relies on the opposite of the documented status.",
+          "sourceIds": ["ai103-tracing"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "All three selected checks exactly match the troubleshooting list, and prompt-agent tracing is explicitly GA. Yet the only citation supplies no correct context for changing temperature, while the workflow alternative includes the categorically false premise that prompt tracing is unavailable. The required five-option/select-three shape therefore contains two unsourced or impossible countercontexts. Hold despite technical completeness of a/b/c.",
+      "confidenceReason": "High confidence in the exact three-check set and permissions distinction, with insufficient strict distractor evidence."
+    },
+    {
+      "questionId": "ai103-g-039",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "ba80817e494c85b020164f7eca2543f3e85fe3b0c3266327b828e67acf28aee7",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-orchestration-patterns",
+          "url": "https://learn.microsoft.com/en-us/training/modules/orchestrate-semantic-kernel-multi-agent-solution/3-understand-agent-orchestration",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\orchestrate-semantic-kernel-multi-agent-solution--3-understand-agent-orchestration.txt",
+          "retrievedAt": "2026-09-14T17:54:23.469Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The training overview distinguishes independent concurrent execution, fixed sequential dependencies, context-driven handoff and managed shared discussion. Executors may be custom logic or agents; conditional/switch edges route before execution, whereas fan-out broadcasts and fan-in aggregates completed work. Question-specific evidence: The edge list defines fan-out as sending one message to multiple executors simultaneously. Direct edges and sequential orchestration implement fixed output dependencies. Conditional edges trigger on conditions; switch-case edges choose among predefined routes. The source defines fan-in as combining outputs after executors produce messages."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Parallel dispatch is a valid topology but performs work the scenario explicitly forbids for routine inputs.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The required conditional dependency is not equivalent to an unconditional chain.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Selecting the branch from the classifier result meets the bypass requirement without invoking both paths.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Post-execution aggregation cannot retroactively implement the required nonexecution of the specialist.",
+          "sourceIds": ["ai103-orchestration-patterns"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "The conditional/switch-case edge answer correctly routes before specialist execution. However Advanced architecture is inflated: the classifier result and exact two-way rule are already supplied, and the only task is to name the matching edge type. The alternatives are real topologies but obviously violate the stated bypass. Preserve the code-first scope; a rewritten diagnostic or architectural tradeoff must repeat all passes.",
+      "confidenceReason": "High confidence in route-before-execute semantics; insufficient authentic Advanced architecture reasoning for the exact hash."
+    },
+    {
+      "questionId": "ai103-g-040",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "e7dbe340209d83e817e925714a091d2f15ca66df8ce1c03d7bb6844b0c15359d",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-language-agent-tools",
+          "url": "https://learn.microsoft.com/en-us/azure/ai-services/language-service/concepts/foundry-tools-agents",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\doc-025.txt",
+          "retrievedAt": "2026-09-14T17:59:42.533Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The Preview intent-routing integration uses deployed CLU projects for intent identification and CQA for curated answers, with optional approved-source RAG for edge cases. It requires an authenticated custom connection and deployed projects. Generation is a fallback, not a mechanism that turns generated wording into curated CQA content. Question-specific evidence: The key-capabilities section separately documents intent classification, curated response delivery and optional RAG fallback. The source distinguishes curated CQA response delivery from fallback generation using approved knowledge."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "The three mechanisms retain their documented distinct responsibilities without claiming generation is deterministic.",
+          "sourceIds": ["ai103-language-agent-tools"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The option collapses the distinction the integration is designed to preserve and has no legitimate sourced complete countercontext.",
+          "sourceIds": ["ai103-language-agent-tools"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Maintain the technical manual hold. The Preview CLU/CQA/RAG allocation is accurate under the supplied deployed-project and connection prerequisites, but Advanced architecture is merely a three-name mapping against a single obviously noncurated alternative. No cited context makes sending every request to generation turn its output into curated CQA wording. All three passes must restart after any authored repair.",
+      "confidenceReason": "High confidence in the integration’s Preview boundary and supported key; high confidence that both difficulty and distractor evidence fail."
+    },
+    {
+      "questionId": "ai103-g-041",
+      "authorId": "copilot-ai103-agents-pass1-20260914",
+      "reviewerId": "ai103-adversary-agents-b",
+      "questionFingerprint": "e8fbf2d009405807af4578c0e6f48a90fa5303918aa6b2e677b252e8a9147732",
+      "reviewedAt": "2026-09-14T19:50:21.161Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai103-optimization-combinations",
+          "url": "https://learn.microsoft.com/en-us/training/modules/optimize-generative-ai-model-performance/5-compare-combine-strategies",
+          "evidencePath": ".grounding\\ai-expansion\\ai-103\\raw\\optimize-generative-ai-model-performance--5-compare-combine-strategies.txt",
+          "retrievedAt": "2026-09-14T17:53:39.883Z",
+          "lastReviewedAt": "2026-09-14T18:16:22.126Z",
+          "supportingSummary": "The comparison assigns dynamic factual context to query-time retrieval, stable style to evaluated fine-tuning and conversation preferences to prompts. It recommends adding complexity after measured need. The three-layer example is a direct responsibility allocation, not evidence of Expert-level architectural reasoning. Question-specific evidence: The comparison assigns dynamic facts to RAG and per-conversation context to prompt engineering, reserving tuning for behavior. The all-three example and prompt-plus-tuning section assign exactly these distinct concerns. The optimization spectrum separates context accuracy from trained behavior and says not every app needs all three. RAG is recommended for dynamic/frequently changing data while tuning may need retraining as requirements change."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Model training is useful for stable behavior, not a substitute for these two runtime context mechanisms.",
+          "sourceIds": ["ai103-optimization-combinations"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "The combination is technically defensible but repeats t-010’s responsibility allocation and does not justify Expert difficulty.",
+          "sourceIds": ["ai103-optimization-combinations"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Dropping the validated style mechanism and explicit preference loses requirements the stem asks to preserve.",
+          "sourceIds": ["ai103-optimization-combinations"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "The source-backed purpose of the training set does not make its original facts current indefinitely.",
+          "sourceIds": ["ai103-optimization-combinations"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Rejected after independent comparison with ai103-t-010 and SEM-012. Both assign changing facts to retrieval, style to fine-tuning and request guidance to prompts; already-evaluated style versus a measured style defect changes adoption timing, not the tested fact. The Expert label also fails: the source’s all-three list nearly supplies the answer and every distractor discards an explicit requirement. Preserve the technical manual hold and reject this duplicate hash.",
+      "confidenceReason": "High confidence in the factual composition and same-fact duplication; no Expert depth or new semantic decision is established by session-category wording."
+    }
+  ]
+}

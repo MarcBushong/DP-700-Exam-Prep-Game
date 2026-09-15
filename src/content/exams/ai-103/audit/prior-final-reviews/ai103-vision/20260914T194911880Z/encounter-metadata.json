@@ -1,0 +1,1041 @@
+{
+  "schemaVersion": 1,
+  "encounters": {
+    "ai103-019": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "bd023a78550d2871fb269decbaed4773b3f7ccf83fd40cc91201fb11b29bd60a",
+      "sourceIds": ["ai103-image-generation"],
+      "retrievedAt": "2026-09-14T18:04:04.373Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "This is not incorrect here: both dimension equality and the alpha-zero target convention match the photograph and requested patch. Context test: It applies when the supplied image is 1024 by 1024 and precisely those transparent mask pixels identify the intended edit area. Evidence: The same Mask sentence specifies PNG, input-size equality and alpha zero; the edit endpoint expressly supports production use."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "The selection is inverted: alpha-zero pixels are outside the requested patch, so the wrong area is designated. Context test: It would designate the desired region if the task instead changed the surroundings while preserving the opaque center. Evidence: Mask, line 1987, assigns the editable area to full transparency, not to opacity or a black paint convention."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "JPEG does not supply the required PNG transparency-mask contract, regardless of where its black paint lies. Context test: A JPEG can be the main photograph to edit when it is below the documented 50 MB limit; that distinct input role is not a mask. Evidence: Call the image edit API permits JPG main images; the narrower Mask subsection requires PNG and transparent pixels."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "The input is still 1024 by 1024; aspect-ratio preservation cannot replace equality of mask dimensions. Context test: A 512 by 512 PNG mask with this polarity could accompany a 512 by 512 input image instead. Evidence: The Mask contract compares actual dimensions, not ratios; changing the input would change this condition."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "Independent mask counterexamples preserve region, format and dimensions as separate discriminators. All criteria meet the foundational level. Global audit found no current-bank duplicate; same-ID archived ai103-019 is history rather than a second current item. Separate complexity reassessment: Complexity separately assessed: technical-implementation is supported because the learner must construct a mask satisfying three concrete input-dependent conditions: target-region alpha polarity, PNG rather than the main image's JPEG allowance, and equality with this 1024-square input. None of those rules is disclosed in the options as a complete interpretation. Beginner difficulty remains appropriate; application and image nouns alone are not the reason for accepting the classification. No new complexity hold. Concrete data-representation selection preserves a modest but genuine implementation operation. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Beginner remains appropriate; basic does not imply non-applied. Scope/clues: The 1024-square premise uniquely eliminates scaling while the selected-patch premise eliminates inverted alpha. Options have parallel geometry/format phrases; no only-qualified or unusually long correct option. Same-ID history is a preserved predecessor.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-001": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "2484b5b2f3d7633ac76710d4a3fe97cfcde31b73285425ad38dd33c902cc7d4e",
+      "sourceIds": ["ai103-image-generation"],
+      "retrievedAt": "2026-09-14T18:04:04.373Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "This is not incorrect: the successful response contains encoded image data and the consumer contract requires the decoded representation. Context test: The approach is suitable for byte-oriented rendering or saving of each returned GPT-Image-2 image, as expressly required here. Evidence: The example walks response_data['data'], reads b64_json, and applies base64.b64decode before image processing."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "The renderer requires bytes, whereas b64_json contains text encoding those bytes; forwarding that text omits the necessary conversion. Context test: Retaining b64_json is appropriate for an encoded-text consumer or intermediary; calling it decoded bytes is never justified. Evidence: Output identifies base64 data, and decode_and_save_image decodes before constructing the image; encoded and decoded representations are distinct."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "The current model matrix expressly says base64 only and no URL option for this model. Context test: Historical DALL-E SDK responses in the Go Output section expose an image URL; the page now retires DALL-E 3, so this is a historical counterexample, not a current deployment recommendation. Evidence: Matrix line 21 excludes URL output for GPT-Image-2; lines 1530-1541 preserve the model-dependent URL-versus-base64 distinction and line 5 retires DALL-E 3."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "47/48 reflects a relatively easy raw-string distractor, not missing evidence. The URL counterexample is explicitly historical and cannot authorize use of retired DALL-E. No duplicate current decision was found by the global audit or narrowed reference inspection. Separate complexity reassessment: Complexity separately assessed: technical-implementation is overstated. The entire decision is recall that b64_json is base64 and must be decoded for a byte consumer; the successful server/renderer wrapper adds no integration constraint, repair evidence or transformation to derive beyond choosing the named decode operation. The no-URL model fact eliminates one option but does not make this more than a response-contract recall item. Its beginner difficulty can be accurate while its applied complexity is not. New manual hold: do not count this record as applied. Request a fresh concept-recall label or a genuinely applied redesign through new generation and both reviews. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Beginner remains appropriate for response-format and decoding recall. Scope/clues: Successful request and concrete consumer format isolate response processing without hidden filesystem or access assumptions. Three concise verb-led options; the key is not the longest. Audit identified no current counterpart for output decoding.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-002": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "cfcaa648af856fda19df0aa409cbc6d042ab0a50fa570e998e6f8aaf3df363b9",
+      "sourceIds": ["ai103-image-generation"],
+      "retrievedAt": "2026-09-14T18:04:04.373Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "This is not incorrect: the edges are multiples of 16, ratio is 1, long edge is 1024 and area is 1048576. Context test: It is a valid explicit square request for the deployed GPT-Image-2 model, including this one. Evidence: Each calculation lies inside the four simultaneous Size constraints; no auto exception is needed."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "This is not incorrect: edges divide by 16, ratio is 16:9, longest edge is 1536 and area is 1327104. Context test: It is valid when that landscape resolution is requested explicitly under GPT-Image-2, as in the proposed set. Evidence: 1327104 is between the pixel bounds, 1536 is below 3840 and 16:9 is below 3:1."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Its area 1048576 and edges pass, but its 4:1 ratio exceeds 3:1. Context test: Dimensions whose long edge is at most three times the short edge could pass; for example the source's 1536 by 864 example does. Outside explicit-size mode the page warns auto can choose otherwise nonconforming dimensions, without guaranteeing this size. Evidence: The Size section independently limits aspect ratio; satisfying area alone cannot override that limit."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "The square contains only 262144 pixels, below 655360, even though its ratio and edge increments pass. Context test: A 512-square PNG can instead be a below-50-MB main editing image with a same-sized mask; the main-image contract is not the output-size contract. Evidence: Size supplies the minimum area; Call the image edit API and Mask separately specify input file and equal-mask requirements."
+        },
+        {
+          "choiceId": "e",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "4096 exceeds the 3840 edge ceiling and area 8388608 exceeds 8294400; a valid 2:1 ratio does not repair either failure. Context test: A PNG at those dimensions could be a main edit input if it meets the separate below-50-MB input rule; it is not a valid explicit generated-output size. Evidence: The documentation keeps input-image format/file-size rules separate from two violated output ceilings."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "47/48: difficulty authenticity 3 because the task is bounded arithmetic rather than architecture, but it genuinely integrates four constraints and a complete multi-select set. All five computations were rederived. Counterexamples never promise auto will generate a particular invalid explicit size. Separate complexity reassessment: Complexity separately assessed: technical-implementation is supported by independently calculating five areas and aspect ratios, checking both edge increments and ceilings, and deriving the complete two-answer valid set under explicit rather than auto sizing. A size can pass some rules and fail another, so mere model-name or API-term recall is insufficient. Difficulty is separately low-end advanced, not upgraded because it is multi-select. No complexity hold; simultaneous constraint validation supplies actual applied work. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Advanced remains low-end, scoring 3, because the bounded calculations are not architectural analysis. Scope/clues: Five concrete dimensions support a unique full-set calculation; both valid choices are checked independently. Numeric-only options are evenly expressed; the plausible familiar 512-square and nearly bounded 4096 proposal prevent simple length clues.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-003": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "69de464ed6598a39dea00f07b92ed777f5269967150b6a5e26e25cd452820224",
+      "sourceIds": ["ai103-image-generation"],
+      "retrievedAt": "2026-09-14T18:04:04.373Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "This is not incorrect: it repairs both the operation and missing binary upload while retaining the already working deployment and credentials. Context test: It applies to modifying the provided below-50-MB PNG through the documented deployment-scoped endpoint. Evidence: The GA edit contract specifies images/edits, multipart/form-data, image[] and prompt together."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Text describing a filename supplies no local image bytes and remains a text-to-image generation request. Context test: A generation prompt alone is appropriate when synthesizing a new image from a description without modifying an existing local photograph. Evidence: Generation shows a JSON prompt; edits separately supplies image[] as a file together with the instruction."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "The deployment-scoped edit section explicitly rejects JSON and requires an image file in multipart form data. Context test: JSON containing a text prompt is documented for generation, not this edit operation; the literal endpoint-plus-filename combination has no supported edit context. Evidence: Required headers and the Important paragraph at lines 1930-1949 specify multipart and show an uploaded file, not filename resolution by the service."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Changing n changes how many outputs are generated; it does not upload the photograph or select edits. Context test: Increasing n is appropriate to obtain multiple independent outputs from a generation prompt when no existing-photo modification is required. Evidence: Number permits 1-10 outputs while Call the image edit API independently requires existing input images."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "47/48 with a modest plausibility deduction for output-count distraction. The deployment-scoped contract is explicit and the JSON hybrid has no valid unchanged edit interpretation; its documented neighboring context is text-only generation, not an invented alternate edit API. Separate complexity reassessment: Complexity separately assessed: troubleshooting is supported because the stated current request has two independent faults, the wrong operation and no binary upload, while deployment and credentials are already valid. The learner must reject an endpoint-only repair that retains JSON/filename input, not simply name the edits API. Intermediate difficulty is separate from this real two-defect diagnosis. No complexity hold; a concrete defective request and incomplete repair alternatives establish genuine troubleshooting. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Intermediate is appropriate to a bounded request-design repair. Scope/clues: The failing JSON-plus-filename design isolates two fixable defects with one complete answer. The key has similar length to other approaches; c is less competitive than the realistic endpoint-only repair, giving plausibility 3.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-004": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "e404dd428848f0c24b22c25320850425d592ed4a93326486a5498395896ec136",
+      "sourceIds": ["ai103-image-generation"],
+      "retrievedAt": "2026-09-14T18:04:04.373Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "This is not incorrect: n remains one while the separate partial count asks for two intermediate previews. Context test: It fits a streaming-capable GPT-Image-2 request where the UI wants progressive previews of one final image. Evidence: Streaming lines 1818-1842 distinguishes final output from partial events and demonstrates n=1, stream=True, partial_images=2."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Both counts are misassigned: n asks for two outputs while partial_images asks for only one preview. Context test: The setting describes a request for two generated images with a one-partial streaming setting, a different output-cardinality requirement. Evidence: Number and Streaming are separate controls; neither count is interchangeable with the other."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "The documented partial-delivery behavior requires stream=true; a partial count alone does not enable it. Context test: A nonstreaming call is appropriate when only the completed image is required; the source's synchronous generation example supplies that use case, not live previews. Evidence: The synchronous generation example and Streaming subsection separate final-only responses from partial events."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-image-generation"],
+          "summary": "Three is valid but not the specified two; the final image count does not absorb an extra preview. Context test: It would fit a UI asking for three intermediate previews while retaining one generated final image. Evidence: The documented positive partial range includes three, but the task asks exactly two."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "47/48: low-end intermediate control combination, with all alternatives grounded in nearby parameter meanings. Source inconsistency around zero partials is explicitly outside the tested positive values. Global audit found no repeating current preview-count decision. Separate complexity reassessment: Complexity separately assessed: technical-implementation is supported by composing three independently meaningful controls for a specific UI contract: one final artifact, two intermediate artifacts and enabled incremental delivery. The alternatives show why final cardinality, partial cardinality and delivery mode cannot substitute for one another. This concrete configuration synthesis, not its code-like spelling, earns modest applied credit; difficulty remains low-end intermediate. No complexity hold; coordinated delivery and cardinality requirements exceed naming a single parameter. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Low-end intermediate remains 3 rather than being promoted by parameter notation. Scope/clues: The requested streaming behavior excludes the final-only option; no unspecified UI capability determines the key. Parameter lists have identical forms and comparable length; the correct combination cannot be found through prose emphasis.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-005": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "868c27c8abce41ba4907dfd0552d334e9248151f81a3f26df66c5e1a06ce5cec",
+      "sourceIds": ["ai103-video-generation"],
+      "retrievedAt": "2026-09-14T18:00:06.894Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "This is not incorrect: width, height and file submission all match the v1 first-frame contract. Context test: It applies to a PNG reference sized 1280 by 720 and a request for the same landscape output. Evidence: The v1 table accepts PNG and the reference example passes an opened file via input_reference together with size='1280x720'."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "The width and height do not match the requested video, violating the explicit exact-size requirement. Context test: An unchanged reference can be attached when it already has the requested output dimensions; this square file fails that documented condition. Evidence: Input reference in the v1 parameter table must match size exactly; reference-source lines 941-943 repeat that rule."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "A prompt is natural-language input, not the reference file parameter; the local pixels have not been submitted. Context test: Omitting input_reference is documented for text-only creation of a new scene, when no existing image must anchor the first frame. Evidence: The source separates optional reference files from required text prompts and shows both text-only and image-reference creation."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "The ordered width and height are reversed; equal pixel count is not the exact width-by-height match. Context test: The 720 by 1280 reference fits a portrait video request at size='720x1280', a supported alternative orientation. Evidence: Both orientations appear in the v1 table; the source requires the reference to match the particular selected orientation."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "46/48 for modest difficulty and a weaker filename alternative. Every distinction uses the selected v1 contract; no contradictory legacy resolution list was imported. The unchanged-reference counterexample is conditional on actual dimension equality, never an assertion that a square file works here. Separate complexity reassessment: Complexity separately assessed: technical-implementation is supported by deriving a preparation-and-submission plan from the mismatch between the actual square source and ordered landscape output dimensions. Correct orientation, exact dimensions and uploading bytes as input_reference must all be preserved; equal pixel count or merely mentioning a filename fails. The uncomplicated geometry keeps difficulty low-end intermediate, but the task applies a contract to incompatible existing input rather than asking its name. No complexity hold; the supplied incompatible asset and partial repairs establish applied preparation. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Intermediate remains low-end, independently scored 3. Scope/clues: File format and requested orientation together select one answer without assuming automatic service resizing. b mirrors a and d in length; c is a less plausible local-path misconception, giving distractor plausibility 3.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-006": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "9903ae98961ac272cc5d3eff0d2b3eb8f555d9d36edc516d2ce448fced7fbf58",
+      "sourceIds": ["ai103-video-generation"],
+      "retrievedAt": "2026-09-14T18:00:06.894Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "This is not incorrect: it retains the same job and uses its actual lifecycle state rather than restarting it. Context test: It applies when the saved job still exists and can move through queued/in_progress to completed or failed, as the stem provides. Evidence: Get Video Status uses the create ID, lists queued/in_progress/completed/failed, and Download Video fetches the finished MP4."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "Create starts a new job, which violates continuing the saved one; matching prompt text is not a documented idempotency key. Context test: A new videos.create request is appropriate when a separate new render is intended rather than recovery of the existing ID. Evidence: The endpoint list distinguishes starting a render from retrieving its state; it supplies no same-prompt resumption guarantee."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "The source's queued create response already has an ID and no completion time, directly disproving that inference. Context test: Download by ID is appropriate after a current status lookup establishes completed; that missing completion evidence is the required condition. Evidence: Create response line 626 and the finished-MP4 definition distinguish allocated identifiers from completed artifacts."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "Remix is a new generation based on a successfully completed previous video, not a queued-job status operation. Context test: Remix is appropriate after completion when a new edited version of the source video is desired. Evidence: Remix references a successfully completed video and its example returns a new queued video with remixed_from_video_id."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "46/48: c is longer and immediate-download reasoning is an easier distractor. Independently read ai103-x-019: it waits on an analyzer-creation Operation-Location before analysis, whereas this resumes a known render and retrieves MP4 content. The concrete operation and persisted identity differ despite a common asynchronous principle. Separate complexity reassessment: Complexity separately assessed: troubleshooting is supported by recovering from a process restart without duplicating an existing asynchronous render. The saved identifier, nonterminal state, same-generation constraint, failure branch and completed-only download have to be connected. The global audit's analyzer Operation-Location comparison does not remove these Sora-specific state and artifact requirements. Difficulty is intermediate independently of the incident-shaped stem. No complexity hold; persistence and lifecycle recovery determine the sequence rather than a superficial failure narrative. Final semantic-ledger reconciliation: ai103-v-006 / ai103-x-019: Both reject treating an asynchronous acknowledgment as completion, but the analyzer question starts from a creation Operation-Location and gates dependent analysis, while the video question starts from a persisted queued render ID after restart and must resume the same job without create/remix duplication before downloading its finished artifact. The extra persisted identity, operation selection and artifact boundary make the recovery decision concrete, not merely a service-name substitution. ai103-v-006 retains its independently supported intermediate troubleshooting classification and verified verdict. Its approval still rests on the actual Preview video contract and complete prior option/rubric review, not the audit label. Difficulty separately assessed: Intermediate remains appropriate; the longer correct option still costs clarity. Scope/clues: The same-generation requirement makes duplicate creation invalid even if its prompt is identical. The correct sequence is the longest option, a minor cue costing clarity 1; operation-specific distractors remain usable.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai103-v-007": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "8957288cfb52f8c6d08b1f497cb1b757450c02f524b1824ec051a294739ea60e",
+      "sourceIds": ["ai103-video-generation"],
+      "retrievedAt": "2026-09-14T18:00:06.894Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "This is not incorrect: it references the accepted completed structure and confines the new instruction to the sole requested change. Context test: It fits targeted editing of an already completed generated video where existing framing and transitions should be retained as far as the model permits. Evidence: Remix lines 1129-1149 explicitly couples a successful predecessor ID with a narrow updated prompt and describes retained structure."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "It does not reference the existing video and therefore lacks the documented reuse mechanism for its structure. Context test: It is appropriate when inventing a new scene from text and there is no requirement to retain a completed video's framework. Evidence: Choose your input type identifies text-only creation as new scenes; Remix references the successful predecessor."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "Those instructions explicitly expand the change beyond what was accepted and requested. Context test: A broader creative revision could request those changes, but the source still recommends narrow precise edits for greater fidelity rather than promising their preservation. Evidence: The prompt and remix guidance allows described changes while recommending a single clearly articulated adjustment; the extra changes violate this stem."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-video-generation"],
+          "summary": "An image can anchor the first frame but does not supply the completed video's motion and transition structure. Context test: It fits animating a still image as a fresh video when only that first frame must be visually anchored. Evidence: The Input reference row describes a first-frame anchor; Remix_video_id instead reuses structure, motion and framing."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "46/48 reflects modest depth and one obvious scope-expansion distractor. The meaningful contrast is completed-video structural reuse versus first-frame anchoring. Current-bank audit found no duplicate of this operation-specific editing decision. Separate complexity reassessment: Complexity separately assessed: technical-implementation is supported by choosing the kind of existing reference needed to preserve completed-video structure, distinguishing it from a still image that anchors only the first frame, and narrowing the change to the accepted lighting requirement. A correct API name alone is insufficient because one remix option also violates the requested change scope. Difficulty remains low-end intermediate rather than inflated by video terminology. No complexity hold; actual reference identity and allowed-change constraints supply implementation reasoning. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Low-end intermediate remains 3; the exaggerated edit alternative is still weak. Scope/clues: Lighting-only plus accepted structure distinguishes a narrow remix from a broader edit and a first-frame-only reference. No length clue favors the key; the multiple-extra-changes alternative is easier to dismiss, reducing plausibility to 3.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-020": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "32e977856ecf433c904756f835d60a4d88ab95c3beea647bbf06727e9a51f22b",
+      "sourceIds": ["ai103-vision-detail"],
+      "retrievedAt": "2026-09-14T18:04:04.158Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "This is not incorrect on behavior: it selects reduced processing where fine details are unnecessary and high-resolution processing where they matter. Context test: It applies to these compatible vision requests when the coarse and detailed workloads have the stated distinct priorities. Evidence: Lines 1204-1208 provide all three setting meanings and the input-processing/token distinction."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "It reverses the token/detail priorities: the cheaper coarse path belongs to the preview and the detailed path to inspection. Context test: It would fit reversed priorities, where catalog imagery needed fine visual analysis and inspection deliberately accepted coarse processing. Evidence: Low omits high-resolution processing while high adds detailed segments; the source connects this to input-token use."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "It meets the broad-preview goal but does not activate the required high-resolution processing for inspection. Context test: It is suitable when neither workload requires fine detail and both favor lower input-token use. Evidence: The detail subsection defines low as a reduced 512 by 512 version without high-resolution mode."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "Auto delegates the choice based on input size and therefore does not force high for that workload. Context test: Auto is appropriate when allowing the model to choose low or high from image size is acceptable; it can choose high but is not an explicit high setting. Evidence: The auto definition is a conditional selection rule rather than a guaranteed high-resolution switch."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "44/48 still fails the mandated critical scores. Technical behavior is supported, but the authored GA claim is unproven by the cited source, reducing accuracy, documentation strength and specificity to 3. This independently confirms the technical hold; a new reviewed lifecycle citation or authored-label repair requires renewed generation and both reviews, not a metadata-only promotion. Separate complexity reassessment: Complexity separately assessed: scenario-based is overstated. The two workloads merely restate the documented low/high definitions, and their broad/fine and lower/higher cues permit direct matching. No actual image, observed failure, competing resource constraint or conditional exception requires a contextual inference beyond those definitions; auto is another recalled definition. This is not applied merely because two application scenarios appear. Missing GA evidence remains a separate independent blocker. Add complexity overstatement to the existing manual lifecycle hold; request new recall classification or a genuinely discriminating scenario through all passes. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Intermediate was already low-end; the decisive operations are direct low/high definitions. Scope/clues: Explicit settings, not automatic selection, are requested; auto cannot provide the forced high path. The key is parallel to the reversed option; no unique length or grammatical cue. Archived same-ID history is not counted as current duplication.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 3,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 3,
+          "citationSpecificity": 3,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-021": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "478b13839b535ef24668b0ee978014d65b5f9da6489b569757843f3830134bdd",
+      "sourceIds": ["ai103-video"],
+      "retrievedAt": "2026-09-14T18:00:12.797Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-video"],
+          "summary": "This is not incorrect: category instructions establish the needed grouping and fieldSchema supplies the distinct structured output. Context test: It fits a custom video analyzer where semantic boundaries differ from camera cuts and a named field is needed for each segment. Evidence: Custom segmentation describes natural-language contentCategories with enableSegment=true; Custom fields assigns fields for every segment."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-video"],
+          "summary": "enableSegment=false treats the whole file as one segment, so it cannot provide the requested procedure-level boundaries. Context test: It fits a whole-recording equipment summary or whole-video metadata requirement instead of independent procedures. Evidence: Segmentation mode explicitly defines whole-video false and per-segment custom fields are described separately."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-video"],
+          "summary": "The stem says camera angles change within procedures, so shot boundaries fragment the required semantic units. Context test: Shot boundaries are appropriate for cut-based editing, or for procedures that genuinely align one-to-one with shots rather than this recording. Evidence: Shot detection reports cameraShotTimesMs for existing cuts; generative segmentation is a separate stage that groups by meaning."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-video"],
+          "summary": "Spoken text does not define the requested custom structured field; segmentation instructions do not create that omitted field contract. Context test: Transcription can suffice if the downstream requirement is searchable spoken text rather than a named equipment field for each procedure. Evidence: Transcription produces WebVTT speech text, whereas fieldSchema declares names/types/descriptions filled by the generative stage."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "47/48: the scenario combines boundary semantics and structured per-segment output, although advanced depth is modest. Source contradictions around prebuilt names are explicitly excluded. Global audit found no current duplicate; the earlier ai103-021 is a retained historical snapshot. Separate complexity reassessment: Complexity separately assessed: architecture-design is overstated even though modest implementation reasoning is present. The product, analyzer type and indexing goal are fixed, and the only design is selecting enableSegment, contentCategories and fieldSchema settings inside one analyzer. Distinguishing shots from semantic boundaries and fields is useful configuration work, but no deployment topology, component responsibility, cross-service contract or architectural alternative is chosen. Do not silently relabel it technical-implementation or admit it as authored architecture. New manual hold for exact complexity-label mismatch. A technically applied configuration task cannot be approved under an overstated architecture label. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Advanced remains modest at 3; the more specific failure is the architecture-design classification. Scope/clues: Separate boundary and field requirements require a complete two-part configuration, not merely enableSegment. b and c are comparably detailed; the wrong options correspond to real output layers. Same-ID archived wording remains history, not a second current test.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-022": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "9abff42f8ba0a09672e977ecffadb76cf4d27a082117f4cb0626502e7326f593",
+      "sourceIds": ["ai103-video"],
+      "retrievedAt": "2026-09-14T18:00:12.797Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-video"],
+          "summary": "This is not incorrect: either documented information-loss mechanism defeats the universal assurance requirement. Context test: It applies whenever a required conclusion covers every original frame and the method only samples resized frames, as this stem explicitly demands. Evidence: The 1 FPS warning concerns brief events and the 512-square warning concerns small visual details; neither permits inferring absence from a negative field."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-video"],
+          "summary": "A sampled, resized analysis can omit the only frame or pixels showing the marker, so this universal claim exceeds the evidence. Context test: A negative field may support a report about what the analyzer found in its sampled representation; the cited source supplies no circumstance making it exhaustive original-frame proof. Evidence: Technical constraints directly warn that brief events and small details may be missed. The valid neighboring context is a bounded analysis result, not a certified absence claim."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-video"],
+          "summary": "Grouping the file as one segment does not negate the independent temporal sampling and spatial resizing limits. Context test: Whole-video mode fits full-duration summaries or whole-file checks that accept those analysis limits; it is not an exhaustive-inspection mode. Evidence: Segmentation mode false creates one segment, while the later technical limitations still specify sampling and resizing."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-video"],
+          "summary": "They describe detected camera cuts, not per-pixel coverage, and do not remove either documented sampling limit. Context test: cameraShotTimesMs is useful when an editor needs detected cuts in milliseconds and enables returnDetails, without claiming exhaustive pixel inspection. Evidence: Shot detection line 108 defines the timestamp output and returnDetails prerequisite; the technical constraints remain separate."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "42/48. I agree with the technical key but do not adopt pass 2's final suitability: the advertised advanced level is unsupported and three options make manifestly stronger guarantees than their controls. Context counterexamples are bounded uses of fields, grouping and shot timestamps; none is fabricated as proof of every original pixel. Rewrite difficulty/stem/distractors requires a new generation and both independent reviews. Separate complexity reassessment: Complexity separately assessed: scenario-based is substantively supported because the learner applies temporal sampling and spatial resizing limits to the specific requirement for universal original-frame absence proof. That is a context-dependent inference rather than naming an API option. Nevertheless a single possible miss defeats the claim, and three implausible certainty assertions reveal the answer; advanced difficulty and assessment quality still fail. Supported complexity cannot rescue the existing manual verdict. Keep manual for the independently documented difficulty and clue failures; no applied-count credit while excluded. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Advanced remains overstated at 2 and polarity/plausibility defects still block approval. Scope/clues: The correctness question is unambiguous, but its universal-proof requirement plus three unjustified guarantees makes the answer too readily cued. Only c rejects certainty; every alternative claims a gate can pass. This polarity cue and implausible certification claims reduce plausibility to 2 and clarity to 3.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 2,
+          "distractorEvidence": 3,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai103-v-008": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "487d7b34466ce0d52041dad4aeea02226d32a7c336d58444b9ec5c4293461aa9",
+      "sourceIds": ["ai103-vision-request-shapes"],
+      "retrievedAt": "2026-09-14T17:55:17.650Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-vision-request-shapes"],
+          "summary": "This is not incorrect: it matches the lesson's GPT-4.1 Responses image example and the already valid data URL. Context test: It fits a configured Responses client and image-capable compatible deployment, with the data URL provided in the stated variable. Evidence: The example uses type=input_image, image_url=data_url inside a user content array; the input_text instruction remains separate."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-vision-request-shapes"],
+          "summary": "The source's Responses image_url value is the direct data URL string, not this hybrid nested object. Context test: A nested image_url object is documented in Chat Completions together with type=image_url; this unchanged hybrid has no documented valid context. Evidence: Compare Responses line 45 with ChatCompletions line 72: both the discriminator and property value shape differ."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-vision-request-shapes"],
+          "summary": "The surrounding call is responses.create, whose documented image discriminator and URL value differ. Context test: This exact nested shape is appropriate inside the documented ChatCompletions messages array instead. Evidence: The lesson deliberately supplies two separate code examples; the nested url object belongs to ChatCompletions."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-vision-request-shapes"],
+          "summary": "It selects the text item rather than the documented image item, so it does not implement the visual-input contract. Context test: input_text is appropriate for textual instructions or discussion of an encoded string as text, not to submit the encoded image as visual evidence. Evidence: The Responses example separates the natural-language input_text item from the input_image carrying data_url."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "40/48. Preserve the technical manual hold for missing GA evidence and advanced inflation. The hybrid option's documented neighboring context is explicitly a different discriminator, never an invented valid Responses shape. Read v-009 as the audit pair: it concerns managed-fetch network reachability, not envelope syntax, so the two are not duplicates. Separate complexity reassessment: Complexity separately assessed: troubleshooting is overstated. The stem identifies the copied item and API mismatch itself, supplies valid encoding and configuration, and asks only which exact Responses literal matches documentation. There is no failure trace to interpret, interacting condition to diagnose or repair sequence to derive. Recognizing a discriminator plus value shape is schema recall; Python syntax and a broken-line wrapper do not independently make it applied. The lifecycle and advanced-difficulty holds also remain. Add complexity hold without changing the code, labels or fingerprints. Only a renewed authoring/review cycle can correct the classification or deepen the item. Final semantic-ledger reconciliation: ai103-v-008 / ai103-v-009: The Responses question explicitly identifies the copied final item and supplies a valid encoding, model and client; identifying input_image with a direct string is request-schema recall. The private-storage question instead requires routing authorized bytes through the backend because a Microsoft-managed fetcher cannot borrow the caller's private-network reachability and publishing is forbidden. That trust/data-path boundary is independent of the schema mismatch even though both correct answers involve image_url. Both remain manual for unevidenced GA lifecycle labels. Independently, ai103-v-008 also overstates troubleshooting and advanced difficulty; ai103-v-009 genuinely exercises its architecture-design classification. No applied credit is restored by the keep-distinct decision. Difficulty separately assessed: Advanced remains materially overstated at 1. Scope/clues: One malformed content item is isolated with all other prerequisites supplied, making the correct repair unique. Balanced code options avoid length clues, but the hybrid has no legitimate unchanged context and the text-only alternative is easier than the cross-API trap.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 3,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 3,
+          "documentationStrength": 3,
+          "citationSpecificity": 3,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-009": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "cedbb0a97ae9ff6c76c090e19fa9d46a87811147edc07c430ef7a60f49fc3eb3",
+      "sourceIds": ["ai103-vision-detail"],
+      "retrievedAt": "2026-09-14T18:04:04.158Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "This is not incorrect: it removes the unavailable service-side URL fetch while retaining authorization to send the actual image. Context test: It applies when the backend can read the image, transmission to Azure OpenAI is allowed and a correctly typed data URL is supplied. Evidence: The local-image example reads bytes and constructs a MIME-specific data URL; API details permits that alternative to public URL input."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "The source explicitly says the managed fetcher is not inside the caller's VNet and excludes even same/peered-VNet private endpoints. Context test: Backend-side reading can use its authorized network access before inline submission; the cited source does not provide a model-fetch context where peering alone suffices. Evidence: API details line 1093 explicitly rejects this precise private-endpoint inference; Use a local image relocates reading to the client."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "Publicly accessible URLs are supported technically, but this publication violates the explicit prohibition. Context test: It is suitable when the image can legitimately be publicly accessible and policy permits direct URL submission. Evidence: API details permits public HTTP/HTTPS image URLs but supplies no exception to the stem's no-publication constraint."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "Detail changes image interpretation, not network access; the private URL remains unsupported. Context test: High detail is appropriate after the image is accessible, when finer interpretation warrants additional input-token use. Evidence: Configure image detail level describes high-resolution processing while the separate URL requirement governs fetch reachability."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "44/48 still fails critical accuracy and source criteria because the lifecycle claim remains ungrounded, not because the private-fetch conclusion is doubtful. The technical hold is independently maintained. Cross-review's v-008/v-009 distinction survives full comparison: inline bytes could be placed in either API only with that API's separate valid envelope. Separate complexity reassessment: Complexity separately assessed: architecture-design is supported by choosing where image retrieval occurs across a private-storage/backend/service boundary. Backend read permission and authorization to transmit bytes differ from service-side managed fetch reachability; a no-publication policy excludes the public-URL alternative. The solution relocates the read to the authorized backend and changes the data-transfer path rather than changing a model setting. That is a bounded architectural responsibility decision, while difficulty remains only low-end advanced. No new complexity hold; keep manual solely with the already recorded GA-evidence blocker and associated critical-score failures. Final semantic-ledger reconciliation: ai103-v-008 / ai103-v-009: The Responses question explicitly identifies the copied final item and supplies a valid encoding, model and client; identifying input_image with a direct string is request-schema recall. The private-storage question instead requires routing authorized bytes through the backend because a Microsoft-managed fetcher cannot borrow the caller's private-network reachability and publishing is forbidden. That trust/data-path boundary is independent of the schema mismatch even though both correct answers involve image_url. Both remain manual for unevidenced GA lifecycle labels. Independently, ai103-v-008 also overstates troubleshooting and advanced difficulty; ai103-v-009 genuinely exercises its architecture-design classification. No applied credit is restored by the keep-distinct decision. Difficulty separately assessed: Advanced remains low-end at 3, independent of the real architecture boundary. Scope/clues: No publication permission or private-endpoint bypass needs to be assumed for the keyed inline-input design. All options are action-based and similarly sized. Audit pair v-008 is a distinct schema mismatch, not a transport fix.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 3,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 3,
+          "citationSpecificity": 3,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-010": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "30e3f746a8f943c13e5c13d363c9354a5dc9f65a2358de69245e11ed5ebed43e",
+      "sourceIds": ["ai103-vision-detail"],
+      "retrievedAt": "2026-09-14T18:04:04.158Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "This is not incorrect: the supplied small cap explains the truncation after the stem rules out model-capacity and filter causes. Context test: It applies when a desired answer fits the model but max_tokens is too restrictive, exactly the stated scenario. Evidence: The length definition names max_tokens and Troubleshooting says to increase max_tokens or max_completion_tokens for truncated output; GPT-4o is not the o-series exception."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "The already processed image and stated model-capacity sufficiency leave the output cap as the reported problem; lower detail does not raise that cap. Context test: Low detail is useful when faster, cheaper coarse image interpretation is sufficient, not when a successful detailed request needs more output tokens. Evidence: Low changes resolution and input-token consumption; finish_reason=length points separately to an output allowance or model token limit."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "URL and base64 are input alternatives; the image already processes successfully and max_tokens remains 40. Context test: Inline base64 is appropriate when the client needs to provide a local image rather than a reachable URL, a different failure mode. Evidence: Use a local image changes input delivery, while the output-length diagnosis and cap are documented separately."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-vision-detail"],
+          "summary": "Auto chooses image processing based on size; it does not increase the explicitly fixed output allowance. Context test: Auto fits workloads that delegate low/high input processing to the model and already have a sufficient output budget. Evidence: The detail subsection defines auto as a low/high input choice, not the output-generation maximum."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "45/48 still fails the critical accuracy and source criteria due to the unsupported GA label, not an ambiguous repair. Independently read ai103-g-032: it asks for the Responses parameter name, whereas this uses a Chat Completions finish reason to separate output truncation from input controls. Retain as distinct but manual. Separate complexity reassessment: Complexity separately assessed: troubleshooting is supported because an observed finish reason has two documented possible causes and the stem supplies evidence excluding model capacity, filtering and input retrieval. The learner isolates a restrictive output cap from input-image detail and transport, rather than blindly increasing a parameter from its name. The global audit's Responses token-name item is a useful contrast: it lacks this differential diagnosis. Difficulty is independently intermediate, and missing GA proof still prevents promotion. No complexity hold; the existing lifecycle hold remains and contributes zero applied coverage. Final semantic-ledger reconciliation: ai103-g-032 / ai103-v-010: The Responses item directly names a desired token ceiling and asks which parameter supplies it. The caption question presents a successful image read, explicit length termination, a 40-token cap, no filter and sufficient model capacity; it requires choosing the output-budget repair over image-resolution or transport changes in a different API envelope. The changed parameter name alone is not the justification: the observed failure and ruled-out competing causes give the caption item a separate diagnostic operation. ai103-v-010 has defensible intermediate troubleshooting complexity but stays manual because its assigned frozen evidence does not affirm the authored GA lifecycle status. The semantic distinction cannot cure that source gap. Difficulty separately assessed: Intermediate remains appropriate. Scope/clues: Both alternative causes named by the length definition are addressed: the stem excludes model capacity and identifies a tight explicit cap. Options have comparable technical detail and all retain or alter explicit controls. The word length is diagnostic evidence, not an extraneous answer cue.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 3,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 3,
+          "citationSpecificity": 3,
+          "difficultyAuthenticity": 4,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-011": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "6925adfcfdaf0218ceca17e47a5316606189fbf0560c83d2ada6e44f01bccff0",
+      "sourceIds": [
+        "ai103-content-understanding-overview",
+        "ai103-content-understanding-images"
+      ],
+      "retrievedAt": "2026-09-14T18:00:12.562Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai103-content-understanding-overview",
+            "ai103-content-understanding-images"
+          ],
+          "summary": "This is not incorrect: closed categories and a new visual description map to the two appropriate non-document field methods. Context test: It applies to a schema-directed image analyzer with the supplied supported models and GA API, as requested. Evidence: The overview defines the method meanings and GA image support; the image page supports named fields and visual-characteristic extraction."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-content-understanding-overview"],
+          "summary": "Generate fits the summary, but Extract is document-only and is not the image category selector. Context test: An Extract/Generate pairing can fit a document containing a literal state value plus a requested new summary; it is not this photographic category task. Evidence: The Field extraction row reserves Extract for literal document values and distinguishes Classify for categories."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-content-understanding-overview"],
+          "summary": "The assignments invert the documented output semantics: a predefined choice belongs to Classify and unconstrained description to Generate. Context test: This pairing would fit the reverse output contract: a freely composed first field and a second field restricted to a predefined category set. Evidence: Generate composes values freely; Classify selects from a predefined set. The business requirement determines their placement."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-content-understanding-overview"],
+          "summary": "Classify is suitable, but document-only literal extraction cannot supply the requested free-form photographic summary. Context test: Classify plus Extract fits a document schema requiring a category and a literal value already printed in the document. Evidence: The same Field extraction row provides that document-context distinction and identifies Generate for newly composed descriptions."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "44/48 does not override a failed quality check or the pass-2 manual verdict. After reading ai103-t-018, I agree its already-transcribed audio summary repeats this non-document Generate discriminator; the audit withholds t-018, so this is not independently rejected as the duplicate. Reading ai103-x-014 establishes a real document-specific Extract key and a distinct modality contract. Originality 3 acknowledges overlap; advanced inflation remains blocking. Separate complexity reassessment: Complexity separately assessed: technical-implementation is overstated. Fixed-list PackagingState and free-form VisualSummary are direct paraphrases of Classify and Generate, while the only remaining fact is document-only Extract. There is no actual schema to adapt, processing result to interpret or competing implementation constraint. Two definition matches do not become applied by calling them product photographs. SEM-013's overlap with an already-transcribed audio-summary item reinforces that the operative discriminator is the same recalled method definition. Add complexity overstatement to the existing difficulty hold. Originality retention versus the excluded audio counterpart never grants applied status. Final semantic-ledger reconciliation: ai103-v-011 / ai103-t-018: The audio question supplies transcription and diarization as already accomplished and asks only for original prose instead of a category or literal Extract. The vision question asks that same Generate choice plus one fixed-category Classify assignment under the identical 2025-11-01 method contract. An audio noun does not introduce an additional signal-processing or schema decision. Withholding the new audio item is justified; the more encompassing vision item is the appropriate retained comparison identity, not an automatic approval. ai103-v-011 stays manual: its two definition-to-field assignments do not establish its advanced difficulty or technical-implementation classification. Keeping the vision identity does not permit either duplicate to count as playable. ai103-v-011 / ai103-x-014: The document item correctly keys literal reference-string Extract alongside Classify. In the image item Extract is unavailable for that modality and the keyed pair is Classify with Generate. Removing the document-versus-image constraint would change the validity of a method, so this is a genuine contract difference rather than a cosmetic product wrapper. Both are still substantially definitional tasks; pairwise distinctness does not establish applied depth. No new duplicate hold beyond the existing manual quality hold on ai103-v-011. Its authored technical-implementation and advanced labels remain excluded, not silently relabeled to match the document item's recall classification. Difficulty separately assessed: Advanced remains materially overstated at 1. Scope/clues: There is one defensible field-method pairing, but it can be chosen directly from two definitions without operational reasoning. Parallel two-method choices avoid length clues. Global audit SEM-013 identifies a real overlap with audio Generate; retain this richer paired-method item only as a candidate.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 1,
+          "explanationQuality": 4,
+          "originality": 3,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-012": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "9507f4898ffc23b37d53e10f095509131a66295d9340b64ca6f5a2f94d51bc8f",
+      "sourceIds": [
+        "ai103-content-understanding-images",
+        "ai103-content-understanding-overview"
+      ],
+      "retrievedAt": "2026-09-14T18:00:12.562Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "d",
+          "sourceIds": [
+            "ai103-content-understanding-images",
+            "ai103-content-understanding-overview"
+          ],
+          "summary": "This is not incorrect technically: the main requirement is extraction and analysis of text despite photographic file input. Context test: It fits text-dominant images, including printed maintenance logs whose written content is the target. Evidence: The image page expressly recommends this schema for primarily extracted text, and the overview supplies GA extraction context."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-content-understanding-images"],
+          "summary": "The target evidence is text, not damage to the photographed surface, so this documented visual use case is the wrong workload. Context test: It suits quality-control photographs where the required output is scratches, cracks or other visual defects. Evidence: Manufacturing quality control is explicitly a visual defect use case; the final note instead recommends document schemas for text-dominant analysis."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-content-understanding-images"],
+          "summary": "Counting objects changes the task rather than extracting the actual maintenance text. Context test: It fits shelf or inventory imagery whose requirement is product presence, count or visible product details. Evidence: Shelf analysis and inventory management specifically supports product detection/counting, distinct from the text-first guidance."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "ai103-content-understanding-images",
+            "ai103-content-understanding-overview"
+          ],
+          "summary": "A scene description may summarize appearance but does not follow the source's more targeted text-dominant schema recommendation. Context test: Generated visual descriptions fit workflows whose desired result is the scene's appearance rather than extraction of written entries. Evidence: The overview permits freely generated descriptions; the image page's final note prioritizes document field extraction when text is the main evidence."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "41/48. Technical correctness does not earn coverage for the wrong exact subskill: the decisive choice explicitly abandons visual-characteristic extraction in favor of documents. Independently maintain the pass-2 alignment hold, with additional modest depth and clue deductions. Any objective reassignment or stem repair is an authored change requiring all three passes again. Separate complexity reassessment: Complexity separately assessed: scenario-based is overstated. The stem states that the task is written-text extraction and explicitly says it is not visual-defect or appearance analysis; the options simply restate these named tasks. It asks for the documentation's text-first recommendation rather than making the learner weigh mixed evidence or infer the dominant workload. A photograph wrapper does not supply a scenario decision. This also remains misbound to the visual-characteristics objective. Keep manual with additional complexity mismatch, not merely the existing objective and clue failures. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Intermediate remains weak at 2 and the exact objective remains mismatched. Scope/clues: The answer is uniquely the text-oriented design, but this contradicts the exact assigned visual-characteristics subskill rather than assessing it. Three explicitly visual alternatives contrast with a stem that says not visual, making the keyed wording easy to match; clarity/accessibility scores 3.",
+        "version": 2,
+        "scores": {
+          "alignment": 1,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 2,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 3
+        }
+      }
+    },
+    "ai103-v-013": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "b60d31006b61fc29ceb41a70e954b576e559720b90aae11c2dc0ac092ed9c4b3",
+      "sourceIds": ["ai103-video"],
+      "retrievedAt": "2026-09-14T18:00:12.797Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-video"],
+          "summary": "This is not incorrect: the requested output is precisely the shot-detail field conditioned on this switch. Context test: It fits a request for detected camera cuts in milliseconds rather than semantic chapters, as in this editor workflow. Evidence: Shot detection line 108 expressly names cameraShotTimesMs and says output is only returned with returnDetails=true."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-video"],
+          "summary": "enableSegment=false changes grouping, not the documented condition for including shot details. Context test: It fits a whole-video summary or metadata extraction requirement where a single segment is wanted. Evidence: Segmentation mode defines one segment for false, while the separate shot-detection paragraph requires returnDetails."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-video"],
+          "summary": "Topic categories define semantic segments; those are expressly not the camera-cut output requested. Context test: It fits chaptering by meaning, such as separating stories in a broadcast, instead of cut-based editing. Evidence: Custom segmentation describes natural-language contentCategories as the boundary logic, not the detailed shot array."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-video"],
+          "summary": "fieldSchema adds custom generative output and is not the documented switch for the built-in cameraShotTimesMs array. Context test: It is useful when the requirement is a custom scene description or other business field per segment. Evidence: Custom fields uses fieldSchema for names/types/descriptions filled by the model, distinct from foundational shot output."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "47/48 for low-end intermediate depth. Compared internally with ai103-021 (semantic boundaries plus custom field) and ai103-022 (sampling assurance): this asks a different built-in output inclusion contract rather than retesting either key. No current-bank duplicate was identified in the global audit. Separate complexity reassessment: Complexity separately assessed: troubleshooting is overstated. The stem explicitly names the desired missing field and asks which documented switch exposes it, with no actual request configuration, failed response or competing cause to diagnose. Selecting returnDetails from its one conditional documentation sentence is option-to-output recall. Mentioning an omitted field and an editor is not incident analysis, and distinguishing semantic chapters does not require a repair derivation. New manual hold. Request recall classification or actual diagnostic evidence in a newly authored candidate; preserve all current authored fields. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Intermediate remains low-end at 3; complexity is independently rejected. Scope/clues: The question asks which documented option exposes a field, not whether all actual shots will be detected. The key is shorter, but all options are plausible configuration operations and no stem text discloses the returnDetails token.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 4,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    },
+    "ai103-v-014": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "d4dc0946fe5d0786527556aaf64624521b069de0d279b3573ef84f611eced1be",
+      "sourceIds": ["ai103-classic-image-filters"],
+      "retrievedAt": "2026-09-14T18:00:03.882Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-classic-image-filters"],
+          "summary": "This is not incorrect: its inclusive blocking set exactly matches the stated policy. Context test: It applies to the configurable image-input harm category in the explicitly selected classic scope. Evidence: The medium/high row gives exactly this behavior, and the article separately includes image input categories."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-classic-image-filters"],
+          "summary": "This is more restrictive than allowed: it blocks the very low-severity content the policy permits. Context test: The Low threshold fits a policy requiring all non-safe severities to be blocked for that category. Evidence: Configurability labels the low/medium/high row the strictest configuration, distinct from the medium/high row."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-classic-image-filters"],
+          "summary": "Medium remains allowed, violating a directly stated requirement. Context test: The High threshold fits a policy that allows low and medium while blocking only high. Evidence: The High row explicitly states low and medium are not filtered."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "36/48 and a prohibited zero. Preserve the technical manual hold for missing GA evidence and answer leakage. Full reading of audit pair ai103-p-031 confirms a different safe-level configurability fact, not a duplicate of inclusive Medium thresholds. Distinctness cannot repair this item's missing assessment value; any option or label repair restarts all passes. Separate complexity reassessment: Complexity separately assessed: technical-implementation is unsupported because each option discloses its full permitted/blocked severity set and the key copies the stem's set. The learner need not recall or apply a threshold rule at all. This is literal matching rather than implementing a policy, independently of its beginner label. The existing zero, answer-clue failure and missing GA evidence remain; neither the scenario nor parameter language earns applied credit. Maintain manual and explicitly exclude from applied coverage. Even a recall relabel alone would not remove the answer leakage. Final semantic-ledger reconciliation: ai103-p-031 / ai103-v-014: The safe-severity question tests whether an annotation level can be configured for blocking. The image-policy question asks which inclusive harmful-severity threshold allows low while blocking medium/high. These are different facts in the same explicitly Classic scope. However, the latter choices print their entire blocked and permitted sets, so the requested match can be performed without knowing the product; distinction from the safe-level fact does not rescue its reasoning. ai103-v-014 remains manual for lifecycle evidence, answer disclosure and overstated technical-implementation. The zero difficulty-authenticity score and excluded status are preserved. Difficulty separately assessed: The existing zero for difficulty authenticity reflects an answer-revealing item, not a demand for higher beginner difficulty. Scope/clues: The factual answer is unique but the question includes all knowledge needed inside each option, eliminating the intended technical test. Each option reveals its complete answer semantics. Even without knowing filtering, a reader matches c to the stem; plausibility 1 and clarity 2 reflect this answer clue.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 3,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 1,
+          "distractorEvidence": 4,
+          "documentationStrength": 3,
+          "citationSpecificity": 3,
+          "difficultyAuthenticity": 0,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 2
+        }
+      }
+    },
+    "ai103-v-015": {
+      "credentialId": "ai-103",
+      "objectiveVersion": "April 16, 2026",
+      "questionFingerprint": "6369ffede7f474a3f3d0a8976d379045d2e82257abc236f89fa9e2b4208e68f3",
+      "sourceIds": ["ai103-content-understanding-overview"],
+      "retrievedAt": "2026-09-14T18:00:06.663Z",
+      "lastValidatedAt": "2026-09-14T18:57:00.826Z",
+      "answerEvidence": [
+        {
+          "choiceId": "b",
+          "sourceIds": ["ai103-content-understanding-overview"],
+          "summary": "This is not incorrect: it changes the actual moderation surface and reads the surfaced result without altering business fields. Context test: It applies where the analyzer uses that model deployment, modified filtering is approved and the application takes responsibility for handling annotations. Evidence: Lines 89-99 identify deployment-associated Guardrails, content_filters, annotate mode and required modified-filter approval."
+        }
+      ],
+      "distractorEvidence": [
+        {
+          "choiceId": "a",
+          "sourceIds": ["ai103-content-understanding-overview"],
+          "summary": "A schema-generated value is not the deployment Guardrails result and adding it also changes the required unchanged business schema. Context test: Generate can supply a business description or decision-support field when that output is intentionally requested, but not replace the service's content_filters result. Evidence: Key components defines generated field values; Content filtering and Guardrails independently locates moderation at the used model deployment."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": ["ai103-content-understanding-overview"],
+          "summary": "Classify controls business output categories rather than the deployment's Guardrails, and it violates the fixed-schema condition. Context test: Classify is appropriate for a business field whose value must come from a predefined category set when schema changes are intended. Evidence: The Field extraction row describes Classify, while Guardrails configuration and surfaced content_filters are separate."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": ["ai103-content-understanding-overview"],
+          "summary": "enableSegment controls logical sections of documents/videos, not the image workflow's deployment safety decision. Context test: enableSegment=false can request whole-document or whole-video treatment where segmentation is unnecessary; it is not a safety-control switch. Evidence: Key components scopes segmentation to documents/videos and the Responsible AI section separately defines content filtering behavior."
+        }
+      ],
+      "rubric": {
+        "objectiveVersion": "April 16, 2026",
+        "objectiveFingerprint": "6bb247070e1da1d230f0dfaf33bc3995ca1e3edfd5c6a2c66dcf0b71c91aae9c",
+        "reviewerId": "ai103-adversary-vision",
+        "reviewedAt": "2026-09-14T19:49:11.880Z",
+        "notes": "46/48 for modest advanced depth and the weaker segmentation alternative. The exact deployment association and response contract are directly evidenced, with approval made explicit. Global audit found no duplicate current moderation-integration decision; this is not the threshold-label task in v-014. Separate complexity reassessment: Complexity separately assessed: architecture-design is overstated. Resource, analyzer, model deployment, approval and the application's own-handling policy are already fixed. The keyed answer selects the documented deployment configuration surface and response field; it does not design the application's moderation decision flow, ownership, failure handling or a cross-component alternative. There is modest implementation integration in connecting Guardrails to content_filters, but it is not an architectural design choice as authored. Do not silently downgrade the label while counting it as applied. New manual hold for exact architecture classification. A renewed label correction or an actual architectural scenario requires authoring and both independent reviews again. Final semantic-ledger reconciliation: Completed cross-review and semantic-decision ledger checked: no recommended exclusion or additional pair targets this record. That absence is not an originality or quality approval; the independent option and complexity review remains controlling. Difficulty separately assessed: Advanced remains low-end at 3; architecture overstatement is a separate label failure. Scope/clues: Deployment used by the analyzer and content_filters response location are both needed, avoiding a merely generic content-safety recommendation. The correct choice is not uniquely longest. Segmentation is a weaker distractor than business-classification substitution, so plausibility scores 3.",
+        "version": 2,
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "scenarioCompleteness": 4,
+          "answerUniqueness": 4,
+          "distractorPlausibility": 3,
+          "distractorEvidence": 4,
+          "documentationStrength": 4,
+          "citationSpecificity": 4,
+          "difficultyAuthenticity": 3,
+          "explanationQuality": 4,
+          "originality": 4,
+          "clarityAccessibility": 4
+        }
+      }
+    }
+  }
+}

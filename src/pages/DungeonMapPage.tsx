@@ -27,6 +27,7 @@ import {
   LearnLink,
 } from '../components/common';
 import { DungeonArt } from '../components/DungeonArt';
+import { BetaAvailabilityNotice } from '../components/BetaAvailabilityNotice';
 import { useReaction } from '../features/personality/useReaction';
 import { HostReaction } from '../features/personality/HostReaction';
 import { historyForCredential } from '../features/quiz/origins';
@@ -286,7 +287,7 @@ export function DungeonMapPage() {
                   .map((item) => (
                     <option key={item.credentialId} value={item.credentialId}>
                       {item.examCode ?? item.credentialId} · {item.dungeonName}{' '}
-                      ·{' '}
+                      · {item.status === 'beta' ? 'BETA · ' : ''}
                       {getDungeonPackage(item.credentialId)?.readiness.study
                         ? 'Open'
                         : 'Sealed'}
@@ -442,6 +443,7 @@ function DungeonCard({
             ) : (
               <LockKeyhole size={14} aria-hidden="true" />
             )}
+            {credential.status === 'beta' ? 'BETA · ' : ''}
             {ready ? 'Torchlight ready' : 'Sealed dungeon'}
           </span>
           <button
@@ -468,6 +470,7 @@ function DungeonCard({
         <p className="official-name">
           {credential.currentName ?? 'Official identity awaiting verification'}
         </p>
+        <BetaAvailabilityNotice credential={credential} />
         <div className="encounter-count">
           <strong>{dungeon?.questions.length ?? 0}</strong>
           <span>

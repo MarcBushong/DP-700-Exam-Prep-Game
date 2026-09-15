@@ -22,6 +22,7 @@ import {
 import { defaultConfig, labels, type QuizConfig } from '../features/quiz/types';
 import { selectQuestions } from '../features/quiz/engine';
 import { ConfirmDialog, PageHeading } from '../components/common';
+import { BetaAvailabilityNotice } from '../components/BetaAvailabilityNotice';
 import { getDungeonPackage } from '../features/dungeons/packages';
 import { credentials } from '../features/dungeons/catalog';
 import { planDungeonSession } from '../features/quiz/dungeonRuntime';
@@ -77,6 +78,12 @@ export function SetupPage() {
     [config, gauntlet],
   );
   const raidIds = config.raidCredentialIds ?? [];
+  const betaCredentials = credentials.filter(
+    (item) =>
+      item.status === 'beta' &&
+      (item.credentialId === selectedCredentialId ||
+        (raid && raidIds.includes(item.credentialId))),
+  );
   const ready = raid
     ? raidIds.length >= 2 &&
       raidIds.every((id) => getDungeonPackage(id)?.readiness.study)
@@ -196,6 +203,12 @@ export function SetupPage() {
           <RotateCcw size={16} aria-hidden="true" /> Reset filters
         </button>
       </PageHeading>
+      {betaCredentials.map((credential) => (
+        <BetaAvailabilityNotice
+          key={credential.credentialId}
+          credential={credential}
+        />
+      ))}
       <Link className="text-link setup-map-link" to="/">
         Choose a different dungeon
       </Link>
@@ -329,6 +342,7 @@ export function SetupPage() {
                         }
                       />
                       {item.examCode ?? item.credentialId} · {item.dungeonName}
+                      {item.status === 'beta' && ' · BETA'}
                       {!playable && ' · Sealed'}
                     </label>
                   );

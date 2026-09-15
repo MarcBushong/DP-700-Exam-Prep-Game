@@ -4,7 +4,7 @@ const unsafePath =
   /(?:^|\/)(?:assessments?|knowledge-check|practice-test|exam-sandbox)(?:\/|$)/i;
 const searchPath = /(?:^|\/)search(?:\/|$)/i;
 
-function isAzureSearchArticle(url: URL): boolean {
+export function isAzureSearchArticle(url: URL): boolean {
   return (
     url.hostname === 'learn.microsoft.com' &&
     /^\/en-us\/azure\/search\/[a-z0-9-]+\/?$/.test(url.pathname)

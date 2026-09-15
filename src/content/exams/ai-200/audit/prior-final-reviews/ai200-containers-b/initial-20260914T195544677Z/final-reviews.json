@@ -1,0 +1,1258 @@
+{
+  "schemaVersion": 1,
+  "requestId": "ai200-containers-b-pass3-final",
+  "reviews": [
+    {
+      "questionId": "ai200-c-020",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "3ac4e9347a7a60a0d3183a40bb638f1293980afa23b1ac34f629beca5416d7cb",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/4-configure-settings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-4-configure-settings.json",
+          "retrievedAt": "2026-09-14T17:54:54.466Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the actual App settings, Connection strings, Slot settings and Key Vault references sections: process names, typed prefixes, slot persistence and platform-side vault resolution are separate contracts. Vault resolution requires enabled identity, secret-read permission and special syntax. Literal secret storage is not endorsed by this review. Candidate-specific evidence: a: The settings introduction contrasts runtime values with hardcoding and explicitly links app settings to reuse of one image across environments. b: Both the training App settings section and product Configure environment variables section describe injection of app settings into the application process. c: The Connection strings type table supplies the Custom prefix and distinguishes it from ordinary app-setting names."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-appservice-container",
+          "url": "https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-appservice-container.json",
+          "retrievedAt": "2026-09-14T18:01:50.587Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product body including Linux and Windows pivots. Configure environment variables confirms process injection; reserved registry credentials are excluded. Windows prefix spellings, preview Compose restrictions and sidecar guidance are not transferred to conventional Linux application settings. Candidate-specific evidence: b: Both the training App settings section and product Configure environment variables section describe injection of app settings into the application process."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Bind each environment endpoint into a separately built image. The image must be identical across environments and rebuilding is disallowed; embedding divergent endpoints defeats both constraints. Alternate-context analysis: Hardcoded nonsensitive configuration can accompany a deliberately environment-specific image when rebuilding and separate image identity are acceptable; that is the contrast made by the settings unit. Evidence: The settings introduction contrasts runtime values with hardcoding and explicitly links app settings to reuse of one image across environments.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Supply MODEL_ENDPOINT through each web app’s ordinary app settings. Not incorrect here: the platform creates the same unprefixed process variable that the unchanged Python consumer reads. Alternate-context analysis: The consumer must read MODEL_ENDPOINT from its process environment at startup, and each app must receive its own configured value, as stated. Evidence: Both the training App settings section and product Configure environment variables section describe injection of app settings into the application process.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+            "ai200-20260914-doc-appservice-container"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Use a Custom connection string without changing the unprefixed lookup. That configuration creates CUSTOMCONNSTR_MODEL_ENDPOINT, not the variable the application asks for. Alternate-context analysis: It can supply the value to a consumer intentionally reading CUSTOMCONNSTR_MODEL_ENDPOINT; the unchanged unprefixed lookup is the missing condition. Evidence: The Connection strings type table supplies the Custom prefix and distinguishes it from ordinary app-setting names.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Final pass 3 approval of this exact beginner candidate only. Independently compared full ai200-i-029: the same application-setting-to-environment decision repeats there, so SEM-019’s retention of c020 is appropriate and does not approve i029. No authored fields changed. Credential availability remains unverified.",
+      "confidenceReason": "High confidence in process-variable injection from two directly read approved sources, with the Custom prefix checked independently and the cross-bank duplicate’s retained representative explicitly identified."
+    },
+    {
+      "questionId": "ai200-c-021",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "418e59d84b6a0622a9a5b7f5968d3a8f0eeed72cd9c73c5f4c8a9ecf41b6c64e",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/4-configure-settings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-4-configure-settings.json",
+          "retrievedAt": "2026-09-14T17:54:54.466Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the actual App settings, Connection strings, Slot settings and Key Vault references sections: process names, typed prefixes, slot persistence and platform-side vault resolution are separate contracts. Vault resolution requires enabled identity, secret-read permission and special syntax. Literal secret storage is not endorsed by this review. Candidate-specific evidence: a: The connection-string table assigns different exact prefixes to Custom and SQL Azure types. b: App settings are injected name-for-name, whereas the Connection strings section prepends a database-type identifier. c: The SQL Azure table row and SQLAZURECONNSTR_DefaultConnection example establish the name construction. d: The same table distinguishes SQL Server from SQL Azure rather than treating both SQL names as interchangeable."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Read Reporting using the Custom connection-string prefix. The stored type is SQLAzure, not Custom, so this name addresses a different variable. Alternate-context analysis: A connection string named Reporting configured with type Custom would be exposed under CUSTOMCONNSTR_Reporting. Evidence: The connection-string table assigns different exact prefixes to Custom and SQL Azure types.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Keep the unprefixed Reporting environment lookup. The stem expressly says this is a typed connection string, not an ordinary setting; the snippet therefore misses it. Alternate-context analysis: An ordinary app setting named Reporting would retain that unprefixed process name. Evidence: App settings are injected name-for-name, whereas the Connection strings section prepends a database-type identifier.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Read SQLAZURECONNSTR_Reporting for the SQLAzure connection string. Not incorrect here: the exact prefix and case-preserved configured name match the provided type. Alternate-context analysis: This replacement is correct when Reporting is stored as SQLAzure and no separate configuration reader translates the name. Evidence: The SQL Azure table row and SQLAZURECONNSTR_DefaultConnection example establish the name construction.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Read the SQL Server rather than SQL Azure prefix. SQLCONNSTR_ denotes a different stored type from the explicitly configured SQLAzure type. Alternate-context analysis: SQLCONNSTR_Reporting is the documented name for a SQL Server connection string named Reporting. Evidence: The same table distinguishes SQL Server from SQL Azure rather than treating both SQL names as interchangeable.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Final pass 3 approves the unchanged lookup-repair candidate. All four alternatives were evaluated from the actual training table; the Python snippet was inspected without executing a credential lookup. c020 selects configuration location, while this item decodes an already selected connection-string type.",
+      "confidenceReason": "High confidence: the cited table directly distinguishes all three prefixes and ordinary app-setting names, leaving one defensible replacement for the valid Python expression."
+    },
+    {
+      "questionId": "ai200-c-022",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "8781d18cc58b1071658e037b4d93ad72a72c6469570162f8d4abbe15635f4b68",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/4-configure-settings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-4-configure-settings.json",
+          "retrievedAt": "2026-09-14T17:54:54.466Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the actual App settings, Connection strings, Slot settings and Key Vault references sections: process names, typed prefixes, slot persistence and platform-side vault resolution are separate contracts. Vault resolution requires enabled identity, secret-read permission and special syntax. Literal secret storage is not endorsed by this review. Candidate-specific evidence: a: The Slot settings section explicitly names environment identifiers and environment-specific endpoints as values that stay during swaps. b: The unit contrasts settings that swap with application code against deliberately sticky environment values. c: The app-setting introduction explicitly contrasts hardcoded image values with runtime configuration that permits cross-environment image reuse."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Make the two environment-identity settings sticky to their slots. Not incorrect technically: the release must move while backend selection and ENVIRONMENT remain with each destination slot. Alternate-context analysis: Use slot settings when configuration describes the environment rather than the application version being promoted. Evidence: The Slot settings section explicitly names environment identifiers and environment-specific endpoints as values that stay during swaps.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Allow those environment values to move with release configuration. Moving staging’s backend identity into production is the opposite of the two stated persistence requirements. Alternate-context analysis: Swappable settings are suitable when a value belongs to a release and should accompany its application version rather than identify the environment. Evidence: The unit contrasts settings that swap with application code against deliberately sticky environment values.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Carry backend selection inside the promoted container artifact. An embedded backend value follows the image, not its destination slot, so it cannot implement the required independent slot identities. Alternate-context analysis: Embedding nonsensitive configuration can fit an artifact permanently bound to one environment where promotion of a reusable image is not required. Evidence: The app-setting introduction explicitly contrasts hardcoded image values with runtime configuration that permits cross-environment image reuse.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Rejected despite prior technical approval. Independently read full az104-020 and SEM-015: changing connection strings to backend URL/ENVIRONMENT preserves exactly the existing slot-stickiness reasoning and drops its rollback discriminator. Keep existing AZ-104 and c022’s authored history unchanged; exclude this new duplicate. A factual rewrite would require all three fresh passes.",
+      "confidenceReason": "High confidence in both the technical key and blocking duplication after direct comparison of the full AZ-104 stem, options and explanation; a correct answer does not justify a same-fact reskin."
+    },
+    {
+      "questionId": "ai200-c-023",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "1ba3ce9b614b833dfdb9b431302872017c225281b6702660585d9fc64f0534bf",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/4-configure-settings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-4-configure-settings.json",
+          "retrievedAt": "2026-09-14T17:54:54.466Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the actual App settings, Connection strings, Slot settings and Key Vault references sections: process names, typed prefixes, slot persistence and platform-side vault resolution are separate contracts. Vault resolution requires enabled identity, secret-read permission and special syntax. Literal secret storage is not endorsed by this review. Candidate-specific evidence: a: Ordinary settings inject configured values, while the Key Vault section introduces special syntax for platform-side secret-value resolution. b: The Key Vault references section demonstrates API_KEY with @Microsoft.KeyVault(SecretUri=...) and states no application code change is required. c: Bulk editing demonstrates ordinary settings; centralized secrets use Key Vault references. Neither section endorses source-controlling the real secret, so I do not fabricate an acceptable secret-copy counterexample."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Provide an ordinary HTTPS secret URI as the API_KEY value. The unchanged consumer needs secret contents; an ordinary setting injects the URI string rather than asking App Service to resolve it. Alternate-context analysis: A literal URI can configure a consumer that expects a resource location and resolves it itself; that is not the unchanged secret-value consumer here. Evidence: Ordinary settings inject configured values, while the Key Vault section introduces special syntax for platform-side secret-value resolution.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Use the App Service Key Vault reference syntax for API_KEY. Not incorrect here: identity access and network reachability are explicitly supplied, and platform resolution feeds the existing variable. Alternate-context analysis: The web app must have a suitable enabled identity with secret-read authorization and a valid reference to an accessible secret. Evidence: The Key Vault references section demonstrates API_KEY with @Microsoft.KeyVault(SecretUri=...) and states no application code change is required.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Commit the live secret value into a deployment settings file. This directly violates keeping the secret centrally managed rather than copied into deployment files. Alternate-context analysis: No defensible sourced condition makes committing the real secret the recommended answer. The unit’s JSON bulk editing can carry nonsensitive settings, but that is not this authored live-secret claim. Evidence: Bulk editing demonstrates ordinary settings; centralized secrets use Key Vault references. Neither section endorses source-controlling the real secret, so I do not fabricate an acceptable secret-copy counterexample.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review retained: prior technical pass did not approve this exact hash, and adversarial review independently confirms superficial advanced/architecture labeling. Additionally, option c lacks a defensible sourced condition in which the complete live-secret-copy action is acceptable. No source or authored-field repair was made; no final verifiedAt is issued.",
+      "confidenceReason": "High confidence in Key Vault reference behavior; equally high confidence that the item cannot pass the strict difficulty and every-option counterexample requirements unchanged."
+    },
+    {
+      "questionId": "ai200-c-024",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "55ab17c0b50cc8e42bf6e0364c25405ed385d27894f9e60cd34b40f03b17fa5a",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-container-apps-2-container-apps-environments",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-container-apps/2-container-apps-environments",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-container-apps-2-container-apps-environments.json",
+          "retrievedAt": "2026-09-14T17:55:09.768Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the environment unit: an environment groups networking and logging integration, internal ingress is for callers within that environment, and lifecycle separation motivates separate development and production environments. This is not a prohibition on every engineered cross-environment network. Candidate-specific evidence: a: Networking and best-practice sections couple private related services with one environment and separate distinct lifecycles. b: What an environment provides describes shared networking/logging, while naming conventions are a separate organizational practice. c: Best practices explicitly distinguish private-service colocation from separation of development, test and production lifecycles."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Separate the production apps while relying solely on worker internal ingress. Internal ingress serves callers in the worker’s environment; this does not provide the requested shared application boundary to an API placed elsewhere. Alternate-context analysis: Separate environments fit intentionally isolated lifecycles or applications that do not need this internal-only inter-app route; the unit recommends environment separation for such boundaries. Evidence: Networking and best-practice sections couple private related services with one environment and separate distinct lifecycles.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-container-apps-2-container-apps-environments"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Use distinct app names within one production/development environment. Names do not divide the environment lifecycle or logging integration, which the stem explicitly requires. Alternate-context analysis: One environment suits related apps that intentionally share lifecycle, network and logging; names then identify apps rather than provide isolation. Evidence: What an environment provides describes shared networking/logging, while naming conventions are a separate organizational practice.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-container-apps-2-container-apps-environments"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Colocate the production API/worker and separate the development environment. Not incorrect: the production pair shares the internal-ingress boundary, and development has the separate lifecycle requested. Alternate-context analysis: This arrangement fits related private production services coupled to each other but intentionally isolated from development operations. Evidence: Best practices explicitly distinguish private-service colocation from separation of development, test and production lifecycles.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-container-apps-2-container-apps-environments"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review for difficulty authenticity and answer-clue strength, independently escalating pass 2’s borderline warning. The placement key is technically sound, but this immutable advanced architecture item asks only direct grouping/separation recognition. No relabeling or authored repair is allowed in this pass.",
+      "confidenceReason": "High confidence in the environment placement result; insufficient confidence that advanced architecture-design accurately describes the tested decision."
+    },
+    {
+      "questionId": "ai200-c-025",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "112c4f443590533b318fedd5bdd87e07d6818bb35688d2574b5ea1dff27d0fdb",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-revisions",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/revisions",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-revisions.json",
+          "retrievedAt": "2026-09-14T18:01:52.148Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete revisions product article. Template changes create revisions, configuration changes do not; single-mode rollover waits for all startup/readiness conditions. Ordinary label URLs remain independent of application weights. Deployment-label mode and inactive-history-limit control are explicitly preview and are not the tested features. Candidate-specific evidence: a: Revision-scope changes explicitly include container configuration and images under properties.template. b: Application-scope changes list secret values and separately describe restarting revisions so containers recognize them. c: Ingress configuration including traffic splitting is explicitly application-scoped. d: The revision article lists scale rules, and the scale article opening independently states that adding or editing rules creates a revision."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-scale",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-scale.json",
+          "retrievedAt": "2026-09-14T18:01:54.143Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the entire scale product article including all pivots. Limits cap the ceil(metric/target) capacity target, not immediate running replicas; non-HTTP event rules instruct single revision mode. Authentication maps triggerParameter to a destination secretRef. Preview Bicep samples with inverted min/max are not adopted. Candidate-specific evidence: d: The revision article lists scale rules, and the scale article opening independently states that adding or editing rules creates a revision."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Change the container image in the revision template. Not incorrect: an image-reference change alters the immutable revision-scoped template and creates a replacement revision. Alternate-context analysis: A release with a genuinely changed image reference in properties.template is the documented revision-producing operation. Evidence: Revision-scope changes explicitly include container configuration and images under properties.template.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Change only an existing application-level secret value. It updates shared configuration rather than creating a revision; container uptake may require restart but that is a different operation. Alternate-context analysis: This is appropriate for rotating shared secret contents without requesting a new revision; affected containers then need the documented restart behavior. Evidence: Application-scope changes list secret values and separately describe restarting revisions so containers recognize them.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Adjust application-level ingress traffic weights. Weights route requests among existing revisions instead of changing their immutable templates. Alternate-context analysis: Weight changes are appropriate when ready revisions already exist and the operator wants to alter application-URL distribution. Evidence: Ingress configuration including traffic splitting is explicitly application-scoped.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "supported",
+          "rationale": "Modify scale rules under the revision template. Not incorrect: changing the scale rule alters a revision-scoped template and therefore creates a new revision. Alternate-context analysis: Updating an existing app’s scale rule creates the new revision required to carry that scaling configuration. Evidence: The revision article lists scale rules, and the scale article opening independently states that adding or editing rules creates a revision.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-revisions",
+            "ai200-20260914-doc-containerapps-scale"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Final pass 3 approves only the exact a+d set. Both cited product bodies were read, including secret restart semantics and preview exclusions. Revision scope, rollout readiness and label routing require different decisions, so this is not a reskin of c026/c027.",
+      "confidenceReason": "High confidence: two independent sections explicitly identify scale changes, while one article directly contrasts all four property categories."
+    },
+    {
+      "questionId": "ai200-c-026",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "822b2f0eb81f00da09a7f5075ff9a5e2e8db61bf0a6b0bb48f79bb3a14197674",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-revisions",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/revisions",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-revisions.json",
+          "retrievedAt": "2026-09-14T18:01:52.148Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete revisions product article. Template changes create revisions, configuration changes do not; single-mode rollover waits for all startup/readiness conditions. Ordinary label URLs remain independent of application weights. Deployment-label mode and inactive-history-limit control are explicitly preview and are not the tested features. Candidate-specific evidence: a: Zero downtime deployment says the old revision receives 100% until provisioning, scale and every startup/readiness probe condition are met. b: The readiness list is conjunctive; its other scale and probe conditions qualify the timing of full traffic rollover. c: Multiple mode permits chosen traffic weights; single-mode zero-downtime behavior waits for the complete readiness list."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Leave application traffic on the old revision until replacement readiness is complete. Not incorrect: one unready replica leaves the documented all-replicas startup/readiness condition unsatisfied. Alternate-context analysis: The existing revision remains healthy, ingress is enabled, and the application uses single revision mode as stated. Evidence: Zero downtime deployment says the old revision receives 100% until provisioning, scale and every startup/readiness probe condition are met.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Move all traffic once provisioning alone succeeds. Provisioning is only one listed condition and cannot override the explicitly unready replica. Alternate-context analysis: Traffic may switch at that time if provisioning completion coincides with all required replicas and probes also being ready; provisioning alone is never sufficient evidence. Evidence: The readiness list is conjunctive; its other scale and probe conditions qualify the timing of full traffic rollover.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Automatically begin a split after the first new replica becomes ready. Single revision mode does not implement the described partial canary and still requires complete replacement readiness. Alternate-context analysis: A deliberately configured split between ready active revisions is available in multiple mode; the “automatic first replica” rule itself is not documented. Evidence: Multiple mode permits chosen traffic weights; single-mode zero-downtime behavior waits for the complete readiness list.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review: technically supported rollout answer, but advanced troubleshooting is overstated and option c lacks a sourced context for its complete automatic-first-replica claim. A manual configured multiple-mode split is only a related behavior, not validation of that exact alternative. Preserve the distinct c037 probe-remediation item.",
+      "confidenceReason": "High confidence in the single-mode gate; insufficient evidence for a genuine alternate automatic-canary condition or the authored advanced difficulty."
+    },
+    {
+      "questionId": "ai200-c-027",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "dba786dd6cf1b6e5cf803432cfe29ee6f8795a0c37e77f4a4abfe19fb599813b",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-revisions",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/revisions",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-revisions.json",
+          "retrievedAt": "2026-09-14T18:01:52.148Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete revisions product article. Template changes create revisions, configuration changes do not; single-mode rollover waits for all startup/readiness conditions. Ordinary label URLs remain independent of application weights. Deployment-label mode and inactive-history-limit control are explicitly preview and are not the tested features. Candidate-specific evidence: a: Multiple-mode traffic splitting assigns application-URL percentages among ready revisions. b: Labels retain their URL when reassigned and work independently of application-URL traffic weights. c: The revision-mode table and zero-downtime section describe automatic full replacement, not protected multiple-version allocation."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Temporarily send all application-URL traffic to v2. Changing v2 to 100% violates the required continuing 90/10 production distribution. Alternate-context analysis: A full application rollout to a ready v2 can use 100% weight when production distribution is intentionally changing. Evidence: Multiple-mode traffic splitting assigns application-URL percentages among ready revisions.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Use a movable label URL to target v2 independently of the application URL. Not incorrect: label requests select that revision directly without changing the production URL’s weights. Alternate-context analysis: External HTTP ingress, a ready labeled revision and multiple mode satisfy the ordinary label contract in the cited article. Evidence: Labels retain their URL when reassigned and work independently of application-URL traffic weights.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Replace multiple-mode traffic with the latest revision in single mode. Single mode cannot retain the stated simultaneous production allocation and independent test routing. Alternate-context analysis: Single mode suits automatic replacement of the predecessor after readiness when only one serving revision is desired. Evidence: The revision-mode table and zero-downtime section describe automatic full replacement, not protected multiple-version allocation.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-revisions"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review for advanced architecture mismatch and weak alternatives, not a preview-feature error. Independently verified that ordinary revision labels, not preview deployment-label mode, supply the technical key. The correct feature alone cannot confer a passing independent realism review.",
+      "confidenceReason": "High confidence in label routing and preview separation; inadequate evidence of the claimed advanced architecture reasoning."
+    },
+    {
+      "questionId": "ai200-c-028",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "62a161308fa8fc24bfc9675b46a23fafe6e97ca7486d64e297c53aac6a7551cc",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-scale",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-scale.json",
+          "retrievedAt": "2026-09-14T18:01:54.143Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the entire scale product article including all pivots. Limits cap the ceil(metric/target) capacity target, not immediate running replicas; non-HTTP event rules instruct single revision mode. Authentication maps triggerParameter to a destination secretRef. Preview Bicep samples with inverted min/max are not adopted. Candidate-specific evidence: a: The event unit identifies messageCount as the message target; Scale behavior gives ceil(metric/target) and Scale definition supplies the replica limit. b: The actual formula divides message count by the target; the independent maxReplicas property is what supplies the cap. A coincidentally matching number is not a correct counterexample to that distinction. c: Scale behavior gives the rounded-up ratio, its example caps by maxReplicaCount, and Known limitations says replica quantities are targets rather than guarantees."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda",
+          "url": "https://learn.microsoft.com/en-us/training/modules/scale-containers-azure-container-apps/3-event-driven-scaling-keda",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda.json",
+          "retrievedAt": "2026-09-14T17:55:57.282Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete event-scaling unit: Service Bus active-message targets determine desired replicas, connection authentication references a Container Apps secret, and event triggers enable scale-to-zero activation. Product rules supply additional mode and timing limits; unrelated illustrative numerical advice is not imported. Candidate-specific evidence: a: The event unit identifies messageCount as the message target; Scale behavior gives ceil(metric/target) and Scale definition supplies the replica limit. b: The actual formula divides message count by the target; the independent maxReplicas property is what supplies the cap. A coincidentally matching number is not a correct counterexample to that distinction. c: Scale behavior gives the rounded-up ratio, its example caps by maxReplicaCount, and Known limitations says replica quantities are targets rather than guarantees."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Use the uncapped rounded-up 37/5 desired count of eight. Eight is the raw metric ratio, but the configured maximum six constrains the requested capacity ceiling. Alternate-context analysis: Eight would be the metric-derived capacity target with a maximum of at least eight, ignoring immediate scale-up step and provisioning guarantees. Evidence: The event unit identifies messageCount as the message target; Scale behavior gives ceil(metric/target) and Scale definition supplies the replica limit.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-scale",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Treat messageCount=5 as a replica limit and answer five. messageCount is a per-replica message target, not the separate maximum-replica field. Alternate-context analysis: No sourced context makes messageCount itself the replica limit. Five can be a numerical outcome for 25 messages at target five or maxReplicas five, but neither validates the authored rationale. Evidence: The actual formula divides message count by the target; the independent maxReplicas property is what supplies the cap. A coincidentally matching number is not a correct counterexample to that distinction.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-scale",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Cap the desired count of eight at the configured maximum six. Not incorrect: min(ceil(37/5),6) is six for the requested ceiling, without asserting six immediately running replicas. Alternate-context analysis: This bounded target is appropriate for the one working scaler with the given metric, target and maximum; step growth and capacity can delay realization. Evidence: Scale behavior gives the rounded-up ratio, its example caps by maxReplicaCount, and Known limitations says replica quantities are targets rather than guarantees.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-scale",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review: recalculated ceil(37/5)=8 and cap six independently, but the advanced label is superficial and option b has no defensible sourced alternative as written. Do not mistake another backlog yielding five for evidence that messageCount becomes a replica limit. No code, labels or prior passes were changed.",
+      "confidenceReason": "High confidence in the bounded result and target-versus-readiness limitation; strict positive distractor-context and difficulty requirements fail."
+    },
+    {
+      "questionId": "ai200-c-029",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "26a3bc49553ba6131ed26f84c7321fade900485d94be811f4b6c66c994838d34",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-scale",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-scale.json",
+          "retrievedAt": "2026-09-14T18:01:54.143Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the entire scale product article including all pivots. Limits cap the ceil(metric/target) capacity target, not immediate running replicas; non-HTTP event rules instruct single revision mode. Authentication maps triggerParameter to a destination secretRef. Preview Bicep samples with inverted min/max are not adopted. Candidate-specific evidence: a: The custom rule authentication examples map triggerParameter=connection to a Container Apps secretRef independently of application env configuration. b: The registry unit scopes identity to image retrieval; the scale article separately configures authentication to the monitored event source."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda",
+          "url": "https://learn.microsoft.com/en-us/training/modules/scale-containers-azure-container-apps/3-event-driven-scaling-keda",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda.json",
+          "retrievedAt": "2026-09-14T17:55:57.282Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete event-scaling unit: Service Bus active-message targets determine desired replicas, connection authentication references a Container Apps secret, and event triggers enable scale-to-zero activation. Product rules supply additional mode and timing limits; unrelated illustrative numerical advice is not imported. Candidate-specific evidence: a: The custom rule authentication examples map triggerParameter=connection to a Container Apps secretRef independently of application env configuration. c: Runtime settings populate the process from a secret, whereas scale-rule auth maps the scaler’s own parameter to that secret."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-container-apps-5-connect-to-registries",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-container-apps/5-connect-to-registries",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-container-apps-5-connect-to-registries.json",
+          "retrievedAt": "2026-09-14T17:55:31.851Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the registry authentication unit: registry credentials or configured managed identity authorize image retrieval. Registry setup is explicitly separate from application settings; successful image pulls are not evidence that a queue scaler has credentials. Candidate-specific evidence: b: The registry unit scopes identity to image retrieval; the scale article separately configures authentication to the monitored event source."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-container-apps-4-configure-runtime",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-container-apps/4-configure-runtime",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-container-apps-4-configure-runtime.json",
+          "retrievedAt": "2026-09-14T17:55:25.445Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the runtime unit: nonsensitive env values and secretRef-backed process variables configure application consumption; secret creation and image configuration are independent. It does not establish that an application credential reference also configures its scaler. Candidate-specific evidence: c: Runtime settings populate the process from a secret, whereas scale-rule auth maps the scaler’s own parameter to that secret."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Repair scaler secretRef to the existing bus-connection secret. Not incorrect for the stated defect: the scaler’s connection parameter points at a nonexistent secret while the valid destination name is supplied. Alternate-context analysis: A valid event-source credential stored as bus-connection must be bound to the scaler’s documented connection parameter; verify scaler access after applying the repair. Evidence: The custom rule authentication examples map triggerParameter=connection to a Container Apps secretRef independently of application env configuration.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-scale",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Repair registry managed identity instead of scaler authentication. Image pulls already succeed, and registry configuration does not replace the missing Service Bus scaler secretRef. Alternate-context analysis: When a private ACR image pull fails for identity/pull permission reasons, correcting configured registry identity is a relevant repair. Evidence: The registry unit scopes identity to image retrieval; the scale article separately configures authentication to the monitored event source.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-container-apps-5-connect-to-registries",
+            "ai200-20260914-doc-containerapps-scale"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Reapply the already working application secret-backed environment mapping. The worker already reads the queue successfully, so that does not change its scaler’s stale reference. Alternate-context analysis: A missing or wrong secret-backed process variable can be repaired using the documented secretref environment mapping when runtime application configuration is the failure. Evidence: Runtime settings populate the process from a secret, whereas scale-rule auth maps the scaler’s own parameter to that secret.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-container-apps-4-configure-runtime",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review for advanced troubleshooting authenticity despite sound focused repair. Compared c031 directly and read both technical rejection and semantic keep-distinct reasoning: migration wrappers can introduce a schema distinction, but this pair also repeats connection-to-bus-connection. I do not promote either from that cross-item judgment; c031’s prior rejection is preserved.",
+      "confidenceReason": "High confidence in which reference is broken and which configuration planes do not repair it; not enough genuine diagnostic depth for this exact advanced candidate."
+    },
+    {
+      "questionId": "ai200-c-030",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "3b061acd7474f7eaac2cadd81071cb05ffbd7d105261db1158e86507aa64ca74",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-scale",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-scale.json",
+          "retrievedAt": "2026-09-14T18:01:54.143Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the entire scale product article including all pivots. Limits cap the ceil(metric/target) capacity target, not immediate running replicas; non-HTTP event rules instruct single revision mode. Authentication maps triggerParameter to a destination secretRef. Preview Bicep samples with inverted min/max are not adopted. Candidate-specific evidence: a: Limits describe possible capacity, while rules supply activation criteria; the default-rule warning identifies the no-ingress/no-rule dead end. b: The event unit documents queue-triggered activation; the product adds the explicit activeRevisionsMode=single condition missing from this candidate. c: The default-rule warning offers a scale rule or minimum at least one; only the rule approach can satisfy this stem’s additional zero-idle constraint."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda",
+          "url": "https://learn.microsoft.com/en-us/training/modules/scale-containers-azure-container-apps/3-event-driven-scaling-keda",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda.json",
+          "retrievedAt": "2026-09-14T17:55:57.282Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete event-scaling unit: Service Bus active-message targets determine desired replicas, connection authentication references a Container Apps secret, and event triggers enable scale-to-zero activation. Product rules supply additional mode and timing limits; unrelated illustrative numerical advice is not imported. Candidate-specific evidence: b: The event unit documents queue-triggered activation; the product adds the explicit activeRevisionsMode=single condition missing from this candidate."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Raise maximum replicas without adding a wake-up signal. A larger ceiling cannot observe queue arrivals while ingress and event rules remain absent. Alternate-context analysis: Raising maximum replicas is useful when a working trigger already requests more capacity than the existing cap permits. Evidence: Limits describe possible capacity, while rules supply activation criteria; the default-rule warning identifies the no-ingress/no-rule dead end.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-scale"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "ambiguous",
+          "rationale": "Add an authenticated queue event rule but omit revision mode. The intended activation mechanism is sound, but this existing app’s mode is unspecified and the cited product instructs single mode for non-HTTP event rules. Alternate-context analysis: With single revision mode and supported authenticated queue metadata established, a custom event rule supplies the required zero-to-positive activation path. Evidence: The event unit documents queue-triggered activation; the product adds the explicit activeRevisionsMode=single condition missing from this candidate.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-scale",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-3-event-driven-scaling-keda"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Retain one running worker rather than enabling event-driven activation. A one-replica minimum defeats the requirement to permit zero while idle. Alternate-context analysis: A nonzero minimum is a documented alternative when an ingress-disabled app must always retain a running instance and idle scale-to-zero is not required. Evidence: The default-rule warning offers a scale rule or minimum at least one; only the rule approach can satisfy this stem’s additional zero-idle constraint.",
+          "sourceIds": ["ai200-20260914-doc-containerapps-scale"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": false,
+        "correctOptionsSupported": false,
+        "distractorsIncorrect": true,
+        "explanationsSupported": false,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": false,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Rejected after independently reading full az104-019 and SEM-014: this is the same no-ingress/no-rule zero-replica failure, but without the old record’s additional identity, tooling and single-mode discriminators. Preserve pass 2’s manual prerequisite failure unchanged as well. No prior exact-hash approval exists and no final verifiedAt is issued.",
+      "confidenceReason": "High confidence in duplicate exclusion and the missing revision-mode condition from the actual scale document. The intended rule is only conditionally supported."
+    },
+    {
+      "questionId": "ai200-c-031",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "5afc4a7c88dcba69651c2ee22279406bbd1e2a8e2776eb5156ad25ae50351d9f",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-scale",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/scale-app",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-scale.json",
+          "retrievedAt": "2026-09-14T18:01:54.143Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the entire scale product article including all pivots. Limits cap the ceil(metric/target) capacity target, not immediate running replicas; non-HTTP event rules instruct single revision mode. Authentication maps triggerParameter to a destination secretRef. Preview Bicep samples with inverted min/max are not adopted. Candidate-specific evidence: a: The conversion procedure maps parameter to triggerParameter and destination secret to secretRef; it never licenses swapping their meanings for Service Bus. b: Native TriggerAuthentication is translated to references to explicitly created Container Apps secrets, not copied as a native Kubernetes resource. c: The product conversion steps preserve type/metadata and map the source parameter to triggerParameter with a destination secretRef."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-scale-containers-azure-container-apps-4-keda-scalers-custom-workloads",
+          "url": "https://learn.microsoft.com/en-us/training/modules/scale-containers-azure-container-apps/4-keda-scalers-custom-workloads",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-scale-containers-azure-container-apps-4-keda-scalers-custom-workloads.json",
+          "retrievedAt": "2026-09-14T17:55:59.833Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete custom-scaler unit, especially conversion steps: preserve trigger type and metadata, replace native TriggerAuthentication with destination secret authentication, and configure limits separately. It does not document arbitrary Service Bus authentication parameter names. Candidate-specific evidence: a: The conversion procedure maps parameter to triggerParameter and destination secret to secretRef; it never licenses swapping their meanings for Service Bus. b: Native TriggerAuthentication is translated to references to explicitly created Container Apps secrets, not copied as a native Kubernetes resource. c: The product conversion steps preserve type/metadata and map the source parameter to triggerParameter with a destination secretRef."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Invert the Service Bus authentication parameter and destination secret name. The source parameter is connection, not bus-connection, while the destination secret is bus-connection, not connection. Alternate-context analysis: No cited Service Bus evidence supports bus-connection as a trigger parameter. A generic hypothetical scaler with that invented parameter is not a sourced counterexample. Evidence: The conversion procedure maps parameter to triggerParameter and destination secret to secretRef; it never licenses swapping their meanings for Service Bus.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-scale",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-4-keda-scalers-custom-workloads"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Use the original Kubernetes Secret resource name as the destination secretRef. The destination credential has been stored under bus-connection, so source-credentials is not the provided Container Apps secret name. Alternate-context analysis: If an equivalent Container Apps secret were actually created under source-credentials, that name could be used as secretRef; Kubernetes resource names do not create it automatically. Evidence: Native TriggerAuthentication is translated to references to explicitly created Container Apps secrets, not copied as a native Kubernetes resource.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-scale",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-4-keda-scalers-custom-workloads"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Preserve azure-servicebus and bind connection to bus-connection. Not incorrect for this excerpt: the scaler type, expected auth parameter and explicitly created destination secret all align. Alternate-context analysis: The destination rule must retain trigger metadata and reference the already-created valid Container Apps credential, without treating this excerpt as a complete deployment. Evidence: The product conversion steps preserve type/metadata and map the source parameter to triggerParameter with a destination secretRef.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-scale",
+            "ai200-20260914-unit-scale-containers-azure-container-apps-4-keda-scalers-custom-workloads"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": false,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Rejected; preserve exact prior pass-2 rejection. I read semantic keep-distinct reasoning and acknowledge the source-resource versus destination-name distinction, but it cannot override absent technical approval, trivial advanced labeling or unsourced inverted Service Bus parameter. c029 already uses the same credential binding. No relabel/hash repair or fabricated counterexample was made.",
+      "confidenceReason": "High confidence in the mapped fields and rejection. The correct mapping does not supply evidence for the authored reversed-parameter scenario or a passing advanced realism rubric."
+    },
+    {
+      "questionId": "ai200-c-032",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "23bc36f459a9272e8088d79a0dc8013e52f9f4549e771a9a8a147a95caa74e63",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services",
+          "url": "https://learn.microsoft.com/en-us/training/modules/monitor-apps-azure-kubernetes-service/3-troubleshoot-pods-services",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services.json",
+          "retrievedAt": "2026-09-14T17:56:18.843Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Pod states, describe/exec and Service inspection. Events distinguish scheduling and pull failures; label selection, target ports and EndpointSlices are separate checks. Permanent fixes should use manifests rather than ad hoc container edits. Candidate-specific evidence: a: The troubleshooting best practices reject ad hoc fixes; the Deployment template is the reproducible source for future Pods. Inspection is not evidence that editing runtime application code is an approved release method."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-2-create-deployment-manifests",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-apps-azure-kubernetes-service/2-create-deployment-manifests",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-apps-azure-kubernetes-service-2-create-deployment-manifests.json",
+          "retrievedAt": "2026-09-14T17:56:04.197Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read deployment structure, image and replica sections: the Pod template and replicas express desired state. Image access and resources remain prerequisites. This review does not adopt the unit’s unrelated heuristic replica recommendations or broad CPU-limit statements. Candidate-specific evidence: a: The troubleshooting best practices reject ad hoc fixes; the Deployment template is the reproducible source for future Pods. Inspection is not evidence that editing runtime application code is an approved release method. b: Image and replicas belong to the Deployment desired state; kubectl apply updates resources asynchronously and is followed by readiness and functional checks."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-4-deploy-verify-results",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-apps-azure-kubernetes-service/4-deploy-verify-results",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-apps-azure-kubernetes-service-4-deploy-verify-results.json",
+          "retrievedAt": "2026-09-14T17:56:09.017Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete apply/verification unit. Declarative updates reconcile asynchronously and require observation; CrashLoopBackOff diagnostics explicitly include kubectl logs --previous, while describe node serves capacity/scheduling investigation. Candidate-specific evidence: b: Image and replicas belong to the Deployment desired state; kubectl apply updates resources asynchronously and is followed by readiness and functional checks."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-apps-azure-kubernetes-service/3-expose-applications",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-apps-azure-kubernetes-service-3-expose-applications.json",
+          "retrievedAt": "2026-09-14T17:56:06.746Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Service types, manifest, ports and selector sections. port is the client contract, targetPort is the destination listener, and selectors match Pod labels. Neither port numbers nor an internal Service imply TLS. Routing does not change a Deployment image. Candidate-specific evidence: c: The Service-to-Pod connection section assigns selector labels to routing, separate from the deployment template’s image and replicas."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Edit one running Pod’s application without updating desired state. Replacement Pods still come from the unchanged Deployment template, and the manual edit is not the source-controlled release required. Alternate-context analysis: The cited troubleshooting unit supports inspecting an existing container during diagnosis, not a durable in-container application edit. I found no explicit sourced positive condition for this complete edit-only action. Evidence: The troubleshooting best practices reject ad hoc fixes; the Deployment template is the reproducible source for future Pods. Inspection is not evidence that editing runtime application code is an approved release method.",
+          "sourceIds": [
+            "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services",
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-2-create-deployment-manifests"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Apply the changed Deployment manifest and verify the rollout. Not incorrect: the manifest records image and desired replicas durably and verification tests whether reconciliation actually succeeded. Alternate-context analysis: The image must be accessible and the operator authorized, with sufficient capacity; the stem expressly supplies these conditions. Evidence: Image and replicas belong to the Deployment desired state; kubectl apply updates resources asynchronously and is followed by readiness and functional checks.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-2-create-deployment-manifests",
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-4-deploy-verify-results"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Alter Service routing while leaving the Deployment image and replicas unchanged. Selectors choose backing Pods; they do not update the template that creates replacements or change desired replica count. Alternate-context analysis: Changing only a Service selector is appropriate to route to a different existing healthy Pod set when no Deployment image/replica change is requested. Evidence: The Service-to-Pod connection section assigns selector labels to routing, separate from the deployment template’s image and replicas.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review under the strict every-option rule. The Deployment answer is correct, but cited diagnostic shell inspection does not substantiate a scenario in which the complete edit-one-Pod-and-leave-manifest action is the appropriate requested change. I refuse to invent a positive runtime-edit recommendation merely to fill the counterexample field.",
+      "confidenceReason": "High confidence in durable manifest reconciliation and selector scope; insufficient cited positive evidence for the runtime-edit distractor as written."
+    },
+    {
+      "questionId": "ai200-c-033",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "855104de318b6db29bf740a39647559c7098fa45644c22c031dc420f8f6a8a29",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-configure-apps-azure-kubernetes-service-2-define-configmaps",
+          "url": "https://learn.microsoft.com/en-us/training/modules/configure-apps-azure-kubernetes-service/2-define-configmaps",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-configure-apps-azure-kubernetes-service-2-define-configmaps.json",
+          "retrievedAt": "2026-09-14T17:56:12.231Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read ConfigMap consumption examples: valueFrom.configMapKeyRef selects a named ConfigMap and key. Environment values are populated at startup, not automatically refreshed like ordinary projected files. No provider or refresh behavior is needed for the candidate references. Candidate-specific evidence: a: The ConfigMap consumption example uses env.valueFrom.configMapKeyRef with separate name and key fields. c: The two consumption examples explicitly choose different resource kinds through configMapKeyRef and secretKeyRef. d: ConfigMaps are for nonsensitive key-value configuration; Secret references use a different valueFrom selector."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-configure-apps-azure-kubernetes-service-3-implement-secrets",
+          "url": "https://learn.microsoft.com/en-us/training/modules/configure-apps-azure-kubernetes-service/3-implement-secrets",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-configure-apps-azure-kubernetes-service-3-implement-secrets.json",
+          "retrievedAt": "2026-09-14T17:56:14.597Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Secret creation and Deployment references: valueFrom.secretKeyRef selects a Secret key, and access controls remain necessary. A reference is not encryption or an authorization bypass. CSI rotation and external-provider guidance are outside these candidates. Candidate-specific evidence: b: The Secret Deployment example uses valueFrom.secretKeyRef and separately calls for RBAC restrictions. c: The two consumption examples explicitly choose different resource kinds through configMapKeyRef and secretKeyRef. d: ConfigMaps are for nonsensitive key-value configuration; Secret references use a different valueFrom selector."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Read LOG_LEVEL from the named ConfigMap key. Not incorrect: both the resource kind and the app-settings/LOG_LEVEL name-key pair match the existing object. Alternate-context analysis: The ConfigMap must exist in the Pod’s namespace with that key and supply the startup configuration value, as stated. Evidence: The ConfigMap consumption example uses env.valueFrom.configMapKeyRef with separate name and key fields.",
+          "sourceIds": [
+            "ai200-20260914-unit-configure-apps-azure-kubernetes-service-2-define-configmaps"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Read TOKEN through the named Kubernetes Secret key. Not incorrect: secretKeyRef selects the existing api-credentials Secret rather than copying the credential into the Deployment. Alternate-context analysis: An existing same-namespace Secret with TOKEN can provide the startup environment value; appropriate access controls still protect the Secret. Evidence: The Secret Deployment example uses valueFrom.secretKeyRef and separately calls for RBAC restrictions.",
+          "sourceIds": [
+            "ai200-20260914-unit-configure-apps-azure-kubernetes-service-3-implement-secrets"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Address the existing app-settings ConfigMap using secretKeyRef. The reference kind is wrong even though its name and key text match; Secret lookup does not select a ConfigMap. Alternate-context analysis: This would select a Secret actually named app-settings containing LOG_LEVEL; a Secret may contain string configuration, but that resource is not the one supplied here. Evidence: The two consumption examples explicitly choose different resource kinds through configMapKeyRef and secretKeyRef.",
+          "sourceIds": [
+            "ai200-20260914-unit-configure-apps-azure-kubernetes-service-2-define-configmaps",
+            "ai200-20260914-unit-configure-apps-azure-kubernetes-service-3-implement-secrets"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Address the api-credentials Secret using configMapKeyRef. It searches the wrong resource kind and does not retrieve the supplied Secret’s TOKEN. Alternate-context analysis: It can read an actually existing ConfigMap named api-credentials with a nonsensitive TOKEN value. This is not permission to move a live credential into a ConfigMap. Evidence: ConfigMaps are for nonsensitive key-value configuration; Secret references use a different valueFrom selector.",
+          "sourceIds": [
+            "ai200-20260914-unit-configure-apps-azure-kubernetes-service-2-define-configmaps",
+            "ai200-20260914-unit-configure-apps-azure-kubernetes-service-3-implement-secrets"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Final pass 3 approves exact a+b after checking both actual valueFrom examples and all name/key pairs. Alternate kind scenarios are explicitly hypothetical existing resources and never endorse storing a live credential in a ConfigMap. No runtime deployment or secret value was accessed.",
+      "confidenceReason": "High confidence in exact resource-kind discrimination and complete multi-select key, with explicit bounds on namespace, startup behavior and secret access."
+    },
+    {
+      "questionId": "ai200-c-034",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "d7331a9c74d05e01cf85dc94a51ac87d3f173151bf12eca16c91b3c4dfc7ea5d",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-apps-azure-kubernetes-service/3-expose-applications",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-apps-azure-kubernetes-service-3-expose-applications.json",
+          "retrievedAt": "2026-09-14T17:56:06.746Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Service types, manifest, ports and selector sections. port is the client contract, targetPort is the destination listener, and selectors match Pod labels. Neither port numbers nor an internal Service imply TLS. Routing does not change a Deployment image. Candidate-specific evidence: a: The Service port mapping example explicitly separates client-facing port from the application’s targetPort. b: Port and targetPort are independent fields, so a different client/listener contract can legitimately use that numeric combination. c: The port configuration section ties targetPort to the actual container listener, which can but need not equal port."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Keep Service port 8443 but forward to Pod listener 8080. Not incorrect: only targetPort must change to reach the known application listener while preserving the client-facing port. Alternate-context analysis: Selected Pods must be healthy and actually listen on 8080; the client contract must remain 8443, as supplied. Evidence: The Service port mapping example explicitly separates client-facing port from the application’s targetPort.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Change the client Service port to 8080 but keep forwarding to 9000. It violates the required 8443 client contract and leaves forwarding pointed at the wrong destination. Alternate-context analysis: That mapping would fit clients intentionally connecting to 8080 and an application actually listening on 9000; neither condition holds here. Evidence: Port and targetPort are independent fields, so a different client/listener contract can legitimately use that numeric combination.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Forward to 8443 because clients connect at 8443. A matching source/destination port is not required; the known Pod application listens at 8080, not 8443. Alternate-context analysis: targetPort=8443 works if the application itself listens on 8443 while the Service also exposes that port. Evidence: The port configuration section ties targetPort to the actual container listener, which can but need not equal port.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Final pass 3 approves the unchanged Service repair. JSON parsed and core/v1 shape/ports reviewed. Independently compared c018: preserving Service port while changing targetPort is a real Kubernetes-specific contract, not a WEBSITES_PORT reskin. Both wrong numeric mappings have explicit valid alternate client/listener conditions in the same cited evidence.",
+      "confidenceReason": "High confidence from a direct documented port-versus-targetPort distinction and a stem that isolates this repair from selector, health and protocol ambiguity."
+    },
+    {
+      "questionId": "ai200-c-035",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "060d3d1da323acd5216812bb220ba35eaa16da980c5222872e07b51aa4fc56d4",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services",
+          "url": "https://learn.microsoft.com/en-us/training/modules/monitor-apps-azure-kubernetes-service/3-troubleshoot-pods-services",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services.json",
+          "retrievedAt": "2026-09-14T17:56:18.843Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Pod states, describe/exec and Service inspection. Events distinguish scheduling and pull failures; label selection, target ports and EndpointSlices are separate checks. Permanent fixes should use manifests rather than ad hoc container edits. Candidate-specific evidence: a: Service inspection examples check selectors/ports/EndpointSlices; they do not return prior process stdout or stderr. c: The CrashLoopBackOff example explicitly uses kubectl logs --previous; the troubleshooting unit requires correct namespace/resource names and sufficient cluster permissions."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-4-verify-connectivity",
+          "url": "https://learn.microsoft.com/en-us/training/modules/monitor-apps-azure-kubernetes-service/4-verify-connectivity",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-monitor-apps-azure-kubernetes-service-4-verify-connectivity.json",
+          "retrievedAt": "2026-09-14T17:56:20.637Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete connectivity unit: compare selector and Pod labels, inspect EndpointSlices, and test requests after repair. DNS alone does not prove backing endpoints; I do not treat port-forward as proof of the complete Service dataplane. Candidate-specific evidence: a: Service inspection examples check selectors/ports/EndpointSlices; they do not return prior process stdout or stderr."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-4-deploy-verify-results",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-apps-azure-kubernetes-service/4-deploy-verify-results",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-apps-azure-kubernetes-service-4-deploy-verify-results.json",
+          "retrievedAt": "2026-09-14T17:56:09.017Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete apply/verification unit. Declarative updates reconcile asynchronously and require observation; CrashLoopBackOff diagnostics explicitly include kubectl logs --previous, while describe node serves capacity/scheduling investigation. Candidate-specific evidence: b: Pending Pods diagnostics explicitly show kubectl describe node for node resources, separate from CrashLoopBackOff log commands. c: The CrashLoopBackOff example explicitly uses kubectl logs --previous; the troubleshooting unit requires correct namespace/resource names and sufficient cluster permissions."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Describe a Service to obtain a terminated application instance’s output. Service descriptions expose routing configuration and endpoints, not the previous container’s application logs. Alternate-context analysis: It is directly useful when investigating selector, target port or backing-endpoint failures for a Service. Evidence: Service inspection examples check selectors/ports/EndpointSlices; they do not return prior process stdout or stderr.",
+          "sourceIds": [
+            "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services",
+            "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-4-verify-connectivity"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Describe a node to retrieve the prior container’s initialization logs. Scheduling and pulls already succeeded, and node information is not the requested previous application output. Alternate-context analysis: describe node is useful when Pod scheduling is blocked by node capacity or resource conditions. Evidence: Pending Pods diagnostics explicitly show kubectl describe node for node resources, separate from CrashLoopBackOff log commands.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-4-deploy-verify-results"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Use namespaced kubectl logs with --previous for the actual Pod. Not incorrect: --previous targets the terminated instance rather than the current instance’s sparse output. Alternate-context analysis: The Pod has a prior terminated container instance and the investigator can read Pod logs in ai-workloads; single-container scope removes container-selection ambiguity. Evidence: The CrashLoopBackOff example explicitly uses kubectl logs --previous; the troubleshooting unit requires correct namespace/resource names and sufficient cluster permissions.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-4-deploy-verify-results",
+            "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Final pass 3 approves the specific log-evidence request. Inspected kubectl argument order and namespace, and checked previous-container rather than current-container semantics directly. No command against a real cluster was executed; sufficient log access remains a prerequisite.",
+      "confidenceReason": "High confidence from the explicit --previous example and evidence that distinguishes routing, scheduling and terminated application output."
+    },
+    {
+      "questionId": "ai200-c-036",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "92c679cdcfbb10b407d75c318b346213d73f251f40e3e8b18f8aade7518a559b",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-apps-azure-kubernetes-service/3-expose-applications",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-apps-azure-kubernetes-service-3-expose-applications.json",
+          "retrievedAt": "2026-09-14T17:56:06.746Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Service types, manifest, ports and selector sections. port is the client contract, targetPort is the destination listener, and selectors match Pod labels. Neither port numbers nor an internal Service imply TLS. Routing does not change a Deployment image. Candidate-specific evidence: a: The evidence separates label-based Pod selection, port forwarding and name/endpoint checks rather than treating any one as a substitute. b: The connectivity unit explicitly allows updating selectors or Pod labels and then checking EndpointSlices and requests; the stem permits only the selector alternative. c: The connectivity unit lists label updates as an alternative to Service-selector updates; this stem excludes it by its change constraint."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-4-verify-connectivity",
+          "url": "https://learn.microsoft.com/en-us/training/modules/monitor-apps-azure-kubernetes-service/4-verify-connectivity",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-monitor-apps-azure-kubernetes-service-4-verify-connectivity.json",
+          "retrievedAt": "2026-09-14T17:56:20.637Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete connectivity unit: compare selector and Pod labels, inspect EndpointSlices, and test requests after repair. DNS alone does not prove backing endpoints; I do not treat port-forward as proof of the complete Service dataplane. Candidate-specific evidence: a: The evidence separates label-based Pod selection, port forwarding and name/endpoint checks rather than treating any one as a substitute. b: The connectivity unit explicitly allows updating selectors or Pod labels and then checking EndpointSlices and requests; the stem permits only the selector alternative. c: The connectivity unit lists label updates as an alternative to Service-selector updates; this stem excludes it by its change constraint."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services",
+          "url": "https://learn.microsoft.com/en-us/training/modules/monitor-apps-azure-kubernetes-service/3-troubleshoot-pods-services",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services.json",
+          "retrievedAt": "2026-09-14T17:56:18.843Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Pod states, describe/exec and Service inspection. Events distinguish scheduling and pull failures; label selection, target ports and EndpointSlices are separate checks. Permanent fixes should use manifests rather than ad hoc container edits. Candidate-specific evidence: b: The connectivity unit explicitly allows updating selectors or Pod labels and then checking EndpointSlices and requests; the stem permits only the selector alternative."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Change the Service port and retest already working DNS without fixing its unmatched selector. No Pods match app=text-service, so a port change cannot create backing endpoints; DNS has already resolved. Alternate-context analysis: Port correction is relevant when selector-matched healthy Pods exist but forwarding uses the wrong listener; DNS retesting is useful when name resolution is actually uncertain. Evidence: The evidence separates label-based Pod selection, port forwarding and name/endpoint checks rather than treating any one as a substitute.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications",
+            "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-4-verify-connectivity"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Change only the Service selector to the actual Pod label and verify endpoints/requests. Not incorrect: this repairs the known selection mismatch while preserving the immutable-in-this-task Pod and Deployment labels. Alternate-context analysis: Existing Ready Pods in the same namespace must have app=text-api and serve the expected listener, with Service-selector changes permitted. Evidence: The connectivity unit explicitly allows updating selectors or Pod labels and then checking EndpointSlices and requests; the stem permits only the selector alternative.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications",
+            "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-4-verify-connectivity",
+            "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-3-troubleshoot-pods-services"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Change Pod-template labels to match the old Service selector. That violates the explicit requirement to leave Pods and Deployment labels unchanged. Alternate-context analysis: Aligning Pod labels can repair a selector mismatch when Pod-template changes are allowed and the Deployment selector/template relationship is also kept valid. Evidence: The connectivity unit lists label updates as an alternative to Service-selector updates; this stem excludes it by its change constraint.",
+          "sourceIds": [
+            "ai200-20260914-unit-monitor-apps-azure-kubernetes-service-4-verify-connectivity",
+            "ai200-20260914-unit-deploy-apps-azure-kubernetes-service-3-expose-applications"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review for advanced troubleshooting authenticity. The technical repair and source support are sound, but full cause, target labels and forbidden competing mutation are all supplied. No label downgrade, fact rewrite or hash renewal was performed. c034 remains distinct because it preserves client port while repairing targetPort rather than Pod selection.",
+      "confidenceReason": "High confidence in the focused selector repair and endpoint verification; insufficient justification for the exact candidate’s advanced difficulty."
+    },
+    {
+      "questionId": "ai200-c-037",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-b",
+      "questionFingerprint": "1e3fa8d70f09ae2c059463bf32812b67dc804c9b12cec63be42349481a4efe33",
+      "reviewedAt": "2026-09-14T19:55:44.677Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-manage-containers-azure-container-apps-5-health-probes",
+          "url": "https://learn.microsoft.com/en-us/training/modules/manage-containers-azure-container-apps/5-health-probes",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-manage-containers-azure-container-apps-5-health-probes.json",
+          "retrievedAt": "2026-09-14T17:55:49.588Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read readiness versus liveness and the template examples. Request admission and restart decisions differ, model initialization can need a longer liveness delay, and readiness must reflect actual serving ability. The unit explicitly asks readers to check current product probe support. Candidate-specific evidence: a: The unit advises tuning initialDelaySeconds for model loading and identifies early liveness as overly aggressive; product examples expose the configurable delay. b: The product defines TCP success only as connection establishment, while readiness is readiness to receive requests; the application lifecycle determines whether those coincide. c: HTTP probes support custom dependency logic, and the training unit specifically uses readiness to guard model loading and dependency readiness. d: Readiness controls admission, whereas liveness controls restarts. Their independent settings make this a valid alternate when only the admission timing is wrong."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-containerapps-probes",
+          "url": "https://learn.microsoft.com/en-us/azure/container-apps/health-probes",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-containerapps-probes.json",
+          "retrievedAt": "2026-09-14T18:01:56.205Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article: HTTP(S) can express application health, TCP only establishes connectivity, initialDelaySeconds is configurable, and startup/liveness/readiness differ. Exec, gRPC and named ports are unsupported. GPU/sidecar default-probe exceptions are not used to infer model readiness. Candidate-specific evidence: a: The unit advises tuning initialDelaySeconds for model loading and identifies early liveness as overly aggressive; product examples expose the configurable delay. b: The product defines TCP success only as connection establishment, while readiness is readiness to receive requests; the application lifecycle determines whether those coincide. c: HTTP probes support custom dependency logic, and the training unit specifically uses readiness to guard model loading and dependency readiness. d: Readiness controls admission, whereas liveness controls restarts. Their independent settings make this a valid alternate when only the admission timing is wrong."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Delay liveness long enough for the measured normal initialization. Not incorrect: logs show progressing startup, not a stuck process, and early liveness restarts prevent completion. Alternate-context analysis: A known healthy initialization duration exceeds current liveness timing; use a delay appropriate to measured startup rather than masking an unexplained failure. Evidence: The unit advises tuning initialDelaySeconds for model loading and identifies early liveness as overly aggressive; product examples expose the configurable delay.",
+          "sourceIds": [
+            "ai200-20260914-unit-manage-containers-azure-container-apps-5-health-probes",
+            "ai200-20260914-doc-containerapps-probes"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Treat an early successful TCP connection as proof the model is loaded. The stem explicitly says the socket opens before model loading finishes, so TCP success cannot establish inference readiness. Alternate-context analysis: TCP readiness is sufficient when accepting the connection genuinely coincides with complete serving readiness and no additional model initialization remains. Evidence: The product defines TCP success only as connection establishment, while readiness is readiness to receive requests; the application lifecycle determines whether those coincide.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-probes",
+            "ai200-20260914-unit-manage-containers-azure-container-apps-5-health-probes"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Make readiness report success only when inference can be served. Not incorrect: application-aware readiness enforces admission after model initialization instead of trusting an early listener. Alternate-context analysis: A supported HTTP(S) health endpoint can encode model-ready state and return a successful status only after the model can serve. Evidence: HTTP probes support custom dependency logic, and the training unit specifically uses readiness to guard model loading and dependency readiness.",
+          "sourceIds": [
+            "ai200-20260914-doc-containerapps-probes",
+            "ai200-20260914-unit-manage-containers-azure-container-apps-5-health-probes"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Postpone readiness only while preserving the premature liveness restarts. Readiness timing cannot stop the independent liveness decision from killing the still-loading process. Alternate-context analysis: A readiness-only delay is appropriate when liveness already tolerates startup and the remaining defect is premature traffic admission. Evidence: Readiness controls admission, whereas liveness controls restarts. Their independent settings make this a valid alternate when only the admission timing is wrong.",
+          "sourceIds": [
+            "ai200-20260914-unit-manage-containers-azure-container-apps-5-health-probes",
+            "ai200-20260914-doc-containerapps-probes"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Final pass 3 approves a+c. Independently reviewed both product probe restrictions and training model-startup advice. Compared c026 and semantic keep-distinct record: preventing restart and deferring traffic with application-aware readiness is a different tested decision from platform single-mode rollover. No runtime or feature-status changes were made.",
+      "confidenceReason": "High confidence in the two independent probe roles and complete answer set, with valid sourced alternate conditions for both distractors and no unsupported probe type."
+    }
+  ]
+}

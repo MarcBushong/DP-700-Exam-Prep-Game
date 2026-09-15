@@ -1,0 +1,1254 @@
+{
+  "schemaVersion": 1,
+  "requestId": "ai200-containers-a-distinct-pass3",
+  "reviews": [
+    {
+      "questionId": "ai200-c-001",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "bda1abddf462a5c71cbe92eb21929c99735f877ebae71b26482dff3c988dc266",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-2-image-storage.json",
+          "retrievedAt": "2026-09-14T17:54:27.527Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Registry hierarchy, Tags, Layers, Manifests and addressing. A registry encloses repositories; a repository groups same-name versions; a manifest describes layers/configuration; tags move whereas digest identity does not. Shared layers and retained manifests are not independent retention guarantees. Premium-only examples elsewhere do not restrict these basic identities. In ai200-c-001: a: The hierarchy separately defines the top-level registry and the repository collection of same-name differently tagged images. b: The Repository subsection defines this collection and shows several tags entering the same repository. c: The Manifests subsection assigns layers/configuration to a manifest; repository has the collection role."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A registry is the enclosing resource, not the same-name collection within it. Correct-elsewhere/context analysis: Choose registry when the requested boundary hosts several repositories and manages their overall access. Evidence: The hierarchy separately defines the top-level registry and the repository collection of same-name differently tagged images.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Not incorrect: grouping images with one name and different tags is precisely the repository definition. Correct-elsewhere/context analysis: This is correct for a named image family inside a registry, as explicitly requested here. Evidence: The Repository subsection defines this collection and shows several tags entering the same repository.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "An individual manifest describes artifact structure, not the surrounding family of tagged versions. Correct-elsewhere/context analysis: Choose manifest when inspecting the layers and configuration of one artifact. Evidence: The Manifests subsection assigns layers/configuration to a manifest; repository has the collection role.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Repository survives the attempted registry/manifest boundary counterexamples. c-005 separately tests manifest composition and shared layers, not the same collection answer. No executable code is present; the exact authored record is retained.",
+      "confidenceReason": "High confidence in the narrow hierarchy key and every alternative from the actual storage unit; no claim of practical deployment complexity."
+    },
+    {
+      "questionId": "ai200-c-002",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "17d066115220ea4bd3fb793219fad45cafe4dbce169b3de9a3db146d135fc02d",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-2-image-storage.json",
+          "retrievedAt": "2026-09-14T17:54:27.527Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Registry hierarchy, Tags, Layers, Manifests and addressing. A registry encloses repositories; a repository groups same-name versions; a manifest describes layers/configuration; tags move whereas digest identity does not. Shared layers and retained manifests are not independent retention guarantees. Premium-only examples elsewhere do not restrict these basic identities. In ai200-c-002: a: By digest specifies registry/repository@sha256:hash and guarantees specific content independently of tag changes. b: Tags are mutable; stable references receive newer digests and are not a historical artifact identifier. c: Unique deployment tags require a non-reuse policy; the article does not infer uniqueness from a release-looking name."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-acr-tags",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tags.json",
+          "retrievedAt": "2026-09-14T18:01:48.658Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read maintained release-line tags, orphan manifests, commit-only tag limitations, multi-system build identifiers and deployed-tag locking. Build-system prefixes resolve local-number collisions, not cryptographic immutability. A last-tag move retains an untagged manifest and unique layer data absent cleanup; no semantic-version auto-renaming exists in the article. In ai200-c-002: b: Tags are mutable; stable references receive newer digests and are not a historical artifact identifier. c: Unique deployment tags require a non-reuse policy; the article does not infer uniqueness from a release-looking name."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Not incorrect: digest addresses the unchanged manifest, while both offered tag references moved. Correct-elsewhere/context analysis: Digest selection is correct when the intended manifest is retained and exact historical identity is required. Evidence: By digest specifies registry/repository@sha256:hash and guarantees specific content independently of tag changes.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "It now references a newer image, so the desired original artifact is not selected. Correct-elsewhere/context analysis: A maintained production tag can select its current referenced image when following that moving reference is intended. Evidence: Tags are mutable; stable references receive newer digests and are not a historical artifact identifier.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+            "ai200-20260914-doc-acr-tags"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Its release-like name cannot overcome the explicitly observed tag move. Correct-elsewhere/context analysis: An explicitly selected, never-reused release tag can identify its protected build while that tag still refers to it. Evidence: Unique deployment tags require a non-reuse policy; the article does not infer uniqueness from a release-looking name.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+            "ai200-20260914-doc-acr-tags"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Both current tags fail the stated historical selection despite plausible naming. Pronouns have explicit antecedents. Distinct from c-003 servicing policy and c-004 producing-build traceability; no authored field was repaired.",
+      "confidenceReason": "High confidence in exact-image selection; source text explicitly distinguishes mutable human aliases from manifest identity."
+    },
+    {
+      "questionId": "ai200-c-003",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "3e5b68fbc7a6c3359f7b02d69a97dfdccbaa3f933637cbef59d65f88eb419ba9",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-2-image-storage.json",
+          "retrievedAt": "2026-09-14T17:54:27.527Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Registry hierarchy, Tags, Layers, Manifests and addressing. A registry encloses repositories; a repository groups same-name versions; a manifest describes layers/configuration; tags move whereas digest identity does not. Shared layers and retained manifests are not independent retention guarantees. Premium-only examples elsewhere do not restrict these basic identities. In ai200-c-003: a: Storage documents immutable digest addressing; task dependency updates rebuild from the tracked changed base image."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-acr-tags",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tags.json",
+          "retrievedAt": "2026-09-14T18:01:48.658Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read maintained release-line tags, orphan manifests, commit-only tag limitations, multi-system build identifiers and deployed-tag locking. Build-system prefixes resolve local-number collisions, not cryptographic immutability. A last-tag move retains an untagged manifest and unique layer data absent cleanup; no semantic-version auto-renaming exists in the article. In ai200-c-003: b: Unique tags are recommended for deployments; stable base-image tags deliberately receive servicing digests. c: Stable tags are recommended for base images; the task overview describes rebuilding applications when their tracked base changes."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-003: a: Storage documents immutable digest addressing; task dependency updates rebuild from the tracked changed base image. c: Stable tags are recommended for base images; the task overview describes rebuilding applications when their tracked base changes."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A frozen original digest does not move to the patched base version while leaving references unchanged. Correct-elsewhere/context analysis: Digest pinning is correct when reproducibility of a fixed build input is more important than automatically following servicing. Evidence: Storage documents immutable digest addressing; task dependency updates rebuild from the tracked changed base image.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+            "ai200-20260914-doc-acr-tasks"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "That policy keeps the old build selected instead of following security updates in the compatible release line. Correct-elsewhere/context analysis: Never-reused tags are appropriate for deliberate, consistent deployment selection and build traceability. Evidence: Unique tags are recommended for deployments; stable base-image tags deliberately receive servicing digests.",
+          "sourceIds": ["ai200-20260914-doc-acr-tags"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Not incorrect: the base reference can advance compatibly and the tasks already track that same-registry dependency. Correct-elsewhere/context analysis: Correct when a supported tracked base dependency should follow servicing without editing every Dockerfile. Evidence: Stable tags are recommended for base images; the task overview describes rebuilding applications when their tracked base changes.",
+          "sourceIds": [
+            "ai200-20260914-doc-acr-tags",
+            "ai200-20260914-doc-acr-tasks"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Read completed semantic keep-distinct c-003/c-012 and both complete questions. Agree: maintained input-reference policy differs from choosing the dependency event after tracking already exists. This distinction is not approval of c-012 difficulty.",
+      "confidenceReason": "High confidence in the servicing policy under the supplied tracking scope; no implied deployment automation."
+    },
+    {
+      "questionId": "ai200-c-004",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "fb21dec82fab636c06eecc81d319daa564abe754e6e2a0397a42bced42b5dfc8",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-acr-tags",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tags.json",
+          "retrievedAt": "2026-09-14T18:01:48.658Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read maintained release-line tags, orphan manifests, commit-only tag limitations, multi-system build identifiers and deployed-tag locking. Build-system prefixes resolve local-number collisions, not cryptographic immutability. A last-tag move retains an untagged manifest and unique layer data absent cleanup; no semantic-version auto-renaming exists in the article. In ai200-c-004: a: The article specifically calls commit tags semi-stable because base-image changes rebuild the same commit with changed content. b: The Build ID recommendation explicitly describes prefixing tags with build-system names when several build systems coexist. c: Build IDs correlate artifacts and logs; the multi-system prefix recommendation addresses the wider collision domain. d: The Stable tags section recommends this mutable policy for maintained bases, whereas unique tags are not reused."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The same commit is rebuilt against different patched bases, so it cannot separate these producing executions. Correct-elsewhere/context analysis: A commit reference is useful for source-state traceability when distinguishing multiple rebuilds of that state is unnecessary. Evidence: The article specifically calls commit tags semi-stable because base-image changes rebuild the same commit with changed content.",
+          "sourceIds": ["ai200-20260914-doc-acr-tags"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Not incorrect: the system component separates numbering domains and the local build ID identifies the execution within each. Correct-elsewhere/context analysis: Correct when multiple named build systems have locally unique run numbers and the composite tag is never reused. Evidence: The Build ID recommendation explicitly describes prefixing tags with build-system names when several build systems coexist.",
+          "sourceIds": ["ai200-20260914-doc-acr-tags"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Numbers can collide across the two independent producers, losing unique producing-build identity. Correct-elsewhere/context analysis: A build ID alone works for the single producing system whose numbering domain covers all relevant images. Evidence: Build IDs correlate artifacts and logs; the multi-system prefix recommendation addresses the wider collision domain.",
+          "sourceIds": ["ai200-20260914-doc-acr-tags"]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Reuse deliberately destroys a separate persistent tag for each producing execution. Correct-elsewhere/context analysis: Stable release-line tags fit base images receiving compatible security and framework servicing. Evidence: The Stable tags section recommends this mutable policy for maintained bases, whereas unique tags are not reused.",
+          "sourceIds": ["ai200-20260914-doc-acr-tags"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Tried commit uniqueness, local run numbers and stable release tags; each loses an explicit invariant. Unlike c-002 exact incident content, this asks which producing execution a deployment name identifies. No difficulty label was changed.",
+      "confidenceReason": "High confidence in the unique composite within the two stated producer domains; moderate confidence in the lower-end advanced label."
+    },
+    {
+      "questionId": "ai200-c-005",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "43c420facdff97fbb4548f1c235d285fde5eb986ee3ad294cc7caf138b50d0a9",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-2-image-storage.json",
+          "retrievedAt": "2026-09-14T17:54:27.527Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Registry hierarchy, Tags, Layers, Manifests and addressing. A registry encloses repositories; a repository groups same-name versions; a manifest describes layers/configuration; tags move whereas digest identity does not. Shared layers and retained manifests are not independent retention guarantees. Premium-only examples elsewhere do not restrict these basic identities. In ai200-c-005: a: The Manifests subsection expressly assigns the list of layers and configuration to the manifest. b: Registry hierarchy defines repository this way, and separately defines each artifact and its manifest. c: The Layers subsection says ACR shares common layers and keeps one copy of an identical base layer. d: Tags are mutable repository:tag references, whereas layer identity derives from content hashes."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Not incorrect: that is the documented role of an artifact manifest. Correct-elsewhere/context analysis: Correct when inspecting image representation rather than a collection of tagged image versions. Evidence: The Manifests subsection expressly assigns the list of layers and configuration to the manifest.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "That collection is a repository; substituting manifest changes the object level. Correct-elsewhere/context analysis: The collection claim is correct for a repository when examining versions under an image-family name. Evidence: Registry hierarchy defines repository this way, and separately defines each artifact and its manifest.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Not incorrect: shared identical layers are the documented deduplication mechanism. Correct-elsewhere/context analysis: Correct when several stored images contain the same base-layer content, rather than different bytes with similar names. Evidence: The Layers subsection says ACR shares common layers and keeps one copy of an identical base layer.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "Layers are content addressed; the movable human-readable reference is a tag. Correct-elsewhere/context analysis: That description is correct for a tag reused to reference another image after a push. Evidence: Tags are mutable repository:tag references, whereas layer identity derives from content hashes.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The complete two-answer set is a and c. b and d deliberately substitute the documented roles of repository and tag. Checked c-001 overlap: that item asks family organization, not internal image composition.",
+      "confidenceReason": "High confidence in both keyed facts and the object-role counterexamples from one directly relevant training unit."
+    },
+    {
+      "questionId": "ai200-c-006",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "72d9a86710a1259ee4e4fe485292931b9f0f23cce7df4493d06c384a409e69cf",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-2-image-storage.json",
+          "retrievedAt": "2026-09-14T17:54:27.527Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Registry hierarchy, Tags, Layers, Manifests and addressing. A registry encloses repositories; a repository groups same-name versions; a manifest describes layers/configuration; tags move whereas digest identity does not. Shared layers and retained manifests are not independent retention guarantees. Premium-only examples elsewhere do not restrict these basic identities. In ai200-c-006: a: Storage permits several tags per artifact; the tagging article separately requires deployed-tag write-enabled=false for locking. b: Digest addressing fixes artifact identity independently of tags; it is not the deployed-tag write attribute operation."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-acr-tags",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tags.json",
+          "retrievedAt": "2026-09-14T18:01:48.658Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read maintained release-line tags, orphan manifests, commit-only tag limitations, multi-system build identifiers and deployed-tag locking. Build-system prefixes resolve local-number collisions, not cryptographic immutability. A last-tag move retains an untagged manifest and unique layer data absent cleanup; no semantic-version auto-renaming exists in the article. In ai200-c-006: a: Storage permits several tags per artifact; the tagging article separately requires deployed-tag write-enabled=false for locking. c: Lock deployed image tags specifically recommends setting write-enabled to false and including that step in the release pipeline."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Adding an alias does not set the write-enabled safeguard on the specified deployed tag. Correct-elsewhere/context analysis: Additional semantic tags are useful for human-readable version aliases pointing at an existing artifact. Evidence: Storage permits several tags per artifact; the tagging article separately requires deployed-tag write-enabled=false for locking.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+            "ai200-20260914-doc-acr-tags"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A written digest identifies content but performs no registry locking operation. Correct-elsewhere/context analysis: Recording a digest is correct for exact-image traceability or subsequent reproducible retrieval. Evidence: Digest addressing fixes artifact identity independently of tags; it is not the deployed-tag write attribute operation.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Not incorrect: this is the explicitly recommended release-pipeline locking safeguard. Correct-elsewhere/context analysis: Correct when protecting a currently deployed tag rather than merely choosing a unique name or recording identity. Evidence: Lock deployed image tags specifically recommends setting write-enabled to false and including that step in the release pipeline.",
+          "sourceIds": ["ai200-20260914-doc-acr-tags"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The registry attribute survives alias/digest counterexamples. Inspected absolute-wording warning: the explanation negates administrator-proof permanence rather than asserting it. Separate from unique-tag construction in c-004.",
+      "confidenceReason": "High confidence in the narrow documented write-enabled release safeguard, not a claim about every deletion or retention mechanism."
+    },
+    {
+      "questionId": "ai200-c-007",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "fdab640aabfc6ae753ca88944cd5d2b40ea59b169ab014c3a6313002289f1040",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-2-image-storage.json",
+          "retrievedAt": "2026-09-14T17:54:27.527Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Registry hierarchy, Tags, Layers, Manifests and addressing. A registry encloses repositories; a repository groups same-name versions; a manifest describes layers/configuration; tags move whereas digest identity does not. Shared layers and retained manifests are not independent retention guarantees. Premium-only examples elsewhere do not restrict these basic identities. In ai200-c-007: a: Both cited units explicitly state the push/pull omitted-tag default is latest. b: Tag addressing takes a human-supplied tag; omission instead uses latest, not semantic sorting. c: The cited tag address format supports explicit versions, separately from the latest omission convention."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/4-tag-version-images",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-4-tag-version-images.json",
+          "retrievedAt": "2026-09-14T17:54:38.700Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read stable/unique tagging and the explicit omitted-tag default. Only the latest-default material is cited by assigned c-007. Cleanup, retention, broad lock claims and the suggestion that every commit uniquely identifies every rebuild are not adopted as blanket guarantees. In ai200-c-007: a: Both cited units explicitly state the push/pull omitted-tag default is latest. b: Tag addressing takes a human-supplied tag; omission instead uses latest, not semantic sorting. c: The cited tag address format supports explicit versions, separately from the latest omission convention."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Not incorrect: Docker applies this addressing default when neither tag nor digest is supplied. Correct-elsewhere/context analysis: Correct for a tagless repository pull, irrespective of whether latest denotes the newest artifact. Evidence: Both cited units explicitly state the push/pull omitted-tag default is latest.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The default rule does not compare numerically named tags. Correct-elsewhere/context analysis: The 3.1 tag is correctly selected when the pull explicitly requests repository:3.1. Evidence: Tag addressing takes a human-supplied tag; omission instead uses latest, not semantic sorting.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "No omitted-tag rule selects this older named version. Correct-elsewhere/context analysis: An explicit repository:2.8 reference selects that tag and its currently referenced image. Evidence: The cited tag address format supports explicit versions, separately from the latest omission convention.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-4-tag-version-images"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Explicit-version counterexamples make both numerical distractors valid elsewhere but wrong when the tag is omitted. Distinct from the historical digest and stable servicing decisions.",
+      "confidenceReason": "High confidence in the default request; no promise that latest is newest or that a pull is authorized."
+    },
+    {
+      "questionId": "ai200-c-008",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "1a8d4b550077e47156c53eb36283bf33c7e108223521d38250fa814433bb2e3c",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "rejected",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-2-image-storage.json",
+          "retrievedAt": "2026-09-14T17:54:27.527Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Registry hierarchy, Tags, Layers, Manifests and addressing. A registry encloses repositories; a repository groups same-name versions; a manifest describes layers/configuration; tags move whereas digest identity does not. Shared layers and retained manifests are not independent retention guarantees. Premium-only examples elsewhere do not restrict these basic identities. In ai200-c-008: a: The tagging article says the old manifest and unique layer data remain untagged; storage describes tag moves and multiple aliases but no automatic version-selection mechanism. c: Storage documents many tags pointing to one artifact and an existing tag moving to a new artifact, not the reverse one-to-many resolution."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-acr-tags",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-image-tag-version",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tags.json",
+          "retrievedAt": "2026-09-14T18:01:48.658Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read maintained release-line tags, orphan manifests, commit-only tag limitations, multi-system build identifiers and deployed-tag locking. Build-system prefixes resolve local-number collisions, not cryptographic immutability. A last-tag move retains an untagged manifest and unique layer data absent cleanup; no semantic-version auto-renaming exists in the article. In ai200-c-008: a: The tagging article says the old manifest and unique layer data remain untagged; storage describes tag moves and multiple aliases but no automatic version-selection mechanism. b: Delete untagged manifests explicitly says the previous manifest and unique layer data remain after the stable tag advances."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Neither source defines such automatic renaming; the documented previous manifest becomes untagged. Correct-elsewhere/context analysis: No defensible context for this exact automatic-highest-version claim was found in the allowed cited evidence. Explicit tagging would be a different action, not a valid counterexample. Evidence: The tagging article says the old manifest and unique layer data remain untagged; storage describes tag moves and multiple aliases but no automatic version-selection mechanism.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+            "ai200-20260914-doc-acr-tags"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Not incorrect: the single initial tag has moved, and the stem excludes a deletion or cleanup operation. Correct-elsewhere/context analysis: Correct when the moved tag was the last reference and no subsequent deletion removes the old manifest. Evidence: Delete untagged manifests explicitly says the previous manifest and unique layer data remain after the stable tag advances.",
+          "sourceIds": ["ai200-20260914-doc-acr-tags"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A reused tag moves to the new image; multiple tags per artifact do not mean one tag resolves simultaneously to two distinct manifests. Correct-elsewhere/context analysis: No supported context exists for the exact one-tag/two-distinct-manifests claim. Keeping an additional tag on the old image is documented but changes the premise and the option. Evidence: Storage documents many tags pointing to one artifact and an existing tag moving to a new artifact, not the reverse one-to-many resolution.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Rejected despite the supported b key and pass-2 approval: neither automatic highest-version renaming nor a single moved tag identifying both distinct manifests has a defensible sourced correct-elsewhere context. This directly fails strict pass-3 option quality. Any option repair requires three fresh passes; no authored content changed.",
+      "confidenceReason": "High confidence in b and the documented absence of support for the offered distractor mechanisms within the only allowed question sources; cannot attest strict option quality."
+    },
+    {
+      "questionId": "ai200-c-009",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "0f60dbb4b5ca15412ad1c0b5f8d2ebf004957ebb0f421cfb474dd48f7d32593d",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/3-build-run-acr-tasks",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks.json",
+          "retrievedAt": "2026-09-14T17:54:32.479Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read quick tasks, context locations, source/base/scheduled triggers, multi-step YAML and existing-image runs. The printed YAML publishes before testing; its subsequent prose separately supports testing before push, conditional dependencies and independent parallelism. Do not mistake that example for a prepublication gate. Existing-image command execution is distinguished from build and historical logs. In ai200-c-009: a: Run a container image for testing contrasts an existing-image command with the quick-build context submission. c: The product Quick tasks section explicitly describes cloud docker build/push and the default push after completion."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-009: b: Schedule a task supports timer triggers, while Quick tasks defines immediate build-and-default-push behavior. c: The product Quick tasks section explicitly describes cloud docker build/push and the default push after completion."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "That operation uses an existing image and does not build the supplied Dockerfile/source as requested. Correct-elsewhere/context analysis: az acr run is appropriate for a smoke test or tool check inside an image already stored in the registry. Evidence: Run a container image for testing contrasts an existing-image command with the quick-build context submission.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Persistent timer automation does not directly express the one-off operation now requested. Correct-elsewhere/context analysis: Timer tasks are correct for recurring workloads that should run at defined future times. Evidence: Schedule a task supports timer triggers, while Quick tasks defines immediate build-and-default-push behavior.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Not incorrect: quick tasks perform the cloud build and default push without a local Docker engine. Correct-elsewhere/context analysis: Correct for an operational ACR task service and an accessible Dockerfile/source context needing a one-time build. Evidence: The product Quick tasks section explicitly describes cloud docker build/push and the default push after completion.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks",
+            "ai200-20260914-doc-acr-tasks"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review for the unchanged technical-implementation label. The supported quick-build answer is elementary command recognition, not execution/configuration reasoning. Pass 2 approved the technical key; this context does not approve the applied-coverage claim. Relabeling or adding implementation work restarts all three passes.",
+      "confidenceReason": "High technical confidence in c; insufficient authenticity for the separate applied complexity classification."
+    },
+    {
+      "questionId": "ai200-c-010",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "767df4f6837475f702472d887309f81d51eb071cd016679a94a215b5add2cd27",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-010: a: Context locations includes local directories; quick tasks explicitly support catching problems before committing code. b: The context table describes files within the selected repository branch, not changes in a separate local working tree. c: The context table supports compressed remote archives as a source location; their content, not the cloud engine location, controls the build input."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/3-build-run-acr-tasks",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks.json",
+          "retrievedAt": "2026-09-14T17:54:32.479Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read quick tasks, context locations, source/base/scheduled triggers, multi-step YAML and existing-image runs. The printed YAML publishes before testing; its subsequent prose separately supports testing before push, conditional dependencies and independent parallelism. Do not mistake that example for a prepublication gate. Existing-image command execution is distinguished from build and historical logs. In ai200-c-010: a: Context locations includes local directories; quick tasks explicitly support catching problems before committing code."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Not incorrect: only that source snapshot contains the exact edits the test must exercise. Correct-elsewhere/context analysis: Correct for precommit testing where the intended Dockerfile and application changes exist in the submitted local context. Evidence: Context locations includes local directories; quick tasks explicitly support catching problems before committing code.",
+          "sourceIds": [
+            "ai200-20260914-doc-acr-tasks",
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "That branch still contains old content and cannot supply the changed local files. Correct-elsewhere/context analysis: A remote Git branch context is correct when that branch contains the intended version to build. Evidence: The context table describes files within the selected repository branch, not changes in a separate local working tree.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "The archive cannot provide the unpublished edited Dockerfile and module stated in the stem. Correct-elsewhere/context analysis: A remote tarball is correct when it packages the intended source snapshot and is accessible to the service. Evidence: The context table supports compressed remote archives as a source location; their content, not the cloud engine location, controls the build input.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The key remains correct even though remote Git and tarball contexts are valid operations elsewhere. This differs from merely naming az acr build in c-009; it selects which supported source snapshot exercises the two edits.",
+      "confidenceReason": "High confidence in context-content selection; no assertion that local building or local Docker is required."
+    },
+    {
+      "questionId": "ai200-c-011",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "0eb28c44795bba115297fbeb143237a43782d76963b562b4fe56bd58b7e6330c",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-011: a: Automate OS and framework patching describes tracked image dependencies separately from source-code webhooks. b: Source-code update triggers use a created webhook; commit is enabled by default and GitHub Enterprise repositories are specifically excluded. c: Schedule a task defines timer-based execution separately from commit and base-image trigger families."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "A dependency-image update is not the selected branch commit event specified here. Correct-elsewhere/context analysis: A base-image trigger is correct for rebuilding a tracked dependent image after a supported base update. Evidence: Automate OS and framework patching describes tracked image dependencies separately from source-code webhooks.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Not incorrect: the supplied authorization allows the task webhook to respond to the requested source commit. Correct-elsewhere/context analysis: Correct for an authorized supported repository/branch when a commit is the event to observe. Evidence: Source-code update triggers use a created webhook; commit is enabled by default and GitHub Enterprise repositories are specifically excluded.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A schedule is time-driven rather than directly caused by the requested commit. Correct-elsewhere/context analysis: Timer triggers fit validation or maintenance that must run on a defined schedule regardless of source changes. Evidence: Schedule a task defines timer-based execution separately from commit and base-image trigger families.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review for difficulty and complexity authenticity, not an incorrect source-trigger key. The same trigger taxonomy yields a beginner label in c-013; this question adds no implementation or diagnostic decision sufficient to justify intermediate applied coverage. No labels edited.",
+      "confidenceReason": "High confidence in source-trigger support and authorization scope; cannot approve the claimed level and applied classification."
+    },
+    {
+      "questionId": "ai200-c-012",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "2429d6aab50c742887c614fef1373a7f588e84ffb0ea2a4466d260006fb206f0",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-012: a: The source-update section describes webhook-driven repository events, separately from tracking a base image. b: Schedule a task specifies time-based execution; base-image tracking supplies the update-responsive behavior. c: The patching section says tasks track a base dependency when building and can rebuild dependent application images when it changes."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "No source or Dockerfile commit has occurred; a dependency update is the observed event. Correct-elsewhere/context analysis: A source-code trigger is correct when an authorized selected repository receives the configured commit event. Evidence: The source-update section describes webhook-driven repository events, separately from tracking a base image.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A later scheduled rebuild is not causally triggered by the update event requested. Correct-elsewhere/context analysis: A timer is correct when the intended policy rebuilds at defined windows regardless of whether a dependency changed. Evidence: Schedule a task specifies time-based execution; base-image tracking supplies the update-responsive behavior.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Not incorrect: prior dependency recording and same-registry base change supply the documented trigger conditions. Correct-elsewhere/context analysis: Correct when the application build has tracked the supported base dependency whose new version is now pushed. Evidence: The patching section says tasks track a base dependency when building and can rebuild dependent application images when it changes.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Read and agree with completed c-003/c-012 keep-distinct decision: reference mutability is not event selection. Nevertheless, this exact question only recognizes the trigger named by its scenario and does not substantiate intermediate applied coverage. A quality repair needs three new passes.",
+      "confidenceReason": "High confidence in the base-trigger key and its prerequisites; insufficient evidence of the authored intermediate/applied classification."
+    },
+    {
+      "questionId": "ai200-c-013",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "534b4e06d368c1eaf55f407904ccc7bbbb996139f8234223f1794deed7528111",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-013: a: Schedule a task explicitly supports timer triggers for periodic maintenance and image tests. b: The source-code update section ties this family to repository webhook events rather than elapsed time. c: The patching section tracks dependency updates; it does not turn that event into a daily timer."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Not incorrect: a defined schedule operates without requiring source or dependency changes. Correct-elsewhere/context analysis: Correct when a container workload must run at a set time even on otherwise unchanged days. Evidence: Schedule a task explicitly supports timer triggers for periodic maintenance and image tests.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "A day without a source event provides no such trigger and cannot satisfy the unconditional daily schedule. Correct-elsewhere/context analysis: Source triggers are correct when a commit or configured pull request should initiate the workload. Evidence: The source-code update section ties this family to repository webhook events rather than elapsed time.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "A base image may remain unchanged on the required day, so this event does not guarantee the schedule. Correct-elsewhere/context analysis: Base-image triggers fit rebuilding applications after tracked OS/framework dependencies are serviced. Evidence: The patching section tracks dependency updates; it does not turn that event into a daily timer.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The timer is supported; both event-driven alternatives have documented useful contexts but cannot ensure unchanged-day execution. Cross-checked the three trigger items for level consistency; no cosmetic difficulty credit is given here.",
+      "confidenceReason": "High confidence in foundational schedule recognition, with no asserted cron implementation complexity."
+    },
+    {
+      "questionId": "ai200-c-014",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "5b217c2356cd27983c4b254854534388901be0d020bb8e96397ee2291f61c204",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/3-build-run-acr-tasks",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks.json",
+          "retrievedAt": "2026-09-14T17:54:32.479Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read quick tasks, context locations, source/base/scheduled triggers, multi-step YAML and existing-image runs. The printed YAML publishes before testing; its subsequent prose separately supports testing before push, conditional dependencies and independent parallelism. Do not mistake that example for a prepublication gate. Existing-image command execution is distinguished from build and historical logs. In ai200-c-014: a: The training YAML explicitly builds, pushes, then executes tests and describes detecting issues before deployment. b: The training lists parallel execution of independent steps and dependencies; the product article explains composable build/run/test steps. c: The training supports pre-push validation and conditional dependencies; the product article describes step-based execution with dependencies."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-014: b: The training lists parallel execution of independent steps and dependencies; the product article explains composable build/run/test steps. c: The training supports pre-push validation and conditional dependencies; the product article describes step-based execution with dependencies."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "The release image is already published before tests complete, violating the required prepublication gate. Correct-elsewhere/context analysis: Build-push-test can be correct when tests validate an already published artifact before a later deployment rather than gate publication. Evidence: The training YAML explicitly builds, pushes, then executes tests and describes detecting issues before deployment.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "Independent push can finish before tests fail, so success is not a prerequisite to publication. Correct-elsewhere/context analysis: Independent parallel steps are correct when neither action requires the other result, such as a workflow without a test-before-publish condition. Evidence: The training lists parallel execution of independent steps and dependencies; the product article explains composable build/run/test steps.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks",
+            "ai200-20260914-doc-acr-tasks"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Not incorrect: this ordering preserves both same-build test execution and the explicit success gate. Correct-elsewhere/context analysis: Correct when publication must depend on successful tests of the newly built artifact. Evidence: The training supports pre-push validation and conditional dependencies; the product article describes step-based execution with dependencies.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks",
+            "ai200-20260914-doc-acr-tasks"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Preserve pass-2 manual-review-required at its exact hash. Independent challenge also finds a correct key but no advanced architecture reasoning: the stem states the needed order and offers two obvious violations. No pass-3 verification is possible with the prior nonverified verdict. Any redesign/relabel restarts all passes.",
+      "confidenceReason": "High confidence in the sequencing answer and in withholding the inflated advanced/architecture claim; no technical implementation was executed."
+    },
+    {
+      "questionId": "ai200-c-015",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "94280c0550b34277609eb44e453c9129d7432eea9404cbb9bd87855b41af3e32",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-015: a: Quick tasks describes build-and-push from context, while the training separately documents running a built image for tests. c: Task output stores run logs for inspection, whereas the existing-image run operation performs execution."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/3-build-run-acr-tasks",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks.json",
+          "retrievedAt": "2026-09-14T17:54:32.479Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read quick tasks, context locations, source/base/scheduled triggers, multi-step YAML and existing-image runs. The printed YAML publishes before testing; its subsequent prose separately supports testing before push, conditional dependencies and independent parallelism. Do not mistake that example for a prepublication gate. Existing-image command execution is distinguished from build and historical logs. In ai200-c-015: a: Quick tasks describes build-and-push from context, while the training separately documents running a built image for tests. b: Run a container image for testing expressly lists smoke tests, tool verification and command execution in an existing registry image."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "This creates a new artifact and does not directly execute the requested command in the specific existing image. Correct-elsewhere/context analysis: A quick build is correct when source changes need compilation into a new image and a default registry push. Evidence: Quick tasks describes build-and-push from context, while the training separately documents running a built image for tests.",
+          "sourceIds": [
+            "ai200-20260914-doc-acr-tasks",
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Not incorrect: az acr run directly executes a container command without requiring a source rebuild. Correct-elsewhere/context analysis: Correct when the image exists, is pullable by the task environment and contains the tools required by the test. Evidence: Run a container image for testing expressly lists smoke tests, tool verification and command execution in an existing registry image.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-3-build-run-acr-tasks"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Historical logs do not cause the newly requested test command to run. Correct-elsewhere/context analysis: az acr task logs is correct for inspecting what happened in a prior build or test execution. Evidence: Task output stores run logs for inspection, whereas the existing-image run operation performs execution.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review for unchanged difficulty and technical-implementation classification. The b key is directly supported, but merely choosing run instead of build/log retrieval does not constitute intermediate implementation reasoning. Not rejected as a duplicate of c-009: different operation, same foundational depth.",
+      "confidenceReason": "High confidence in the command-purpose contrast; cannot independently attest the authored intermediate applied label."
+    },
+    {
+      "questionId": "ai200-c-016",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "4c0d30ae75f1e83e76c6844955881b408318df2c0f0c2fe5c9a41ce6c0c45dfb",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "manual-review-required",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-acr-tasks",
+          "url": "https://learn.microsoft.com/en-us/azure/container-registry/container-registry-tasks-overview",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-acr-tasks.json",
+          "retrievedAt": "2026-09-14T18:01:46.238Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete product article. az acr build submits a context and normally pushes; three trigger families have different causes; webhook authorization and the GitHub Enterprise exception matter. Dependency discovery occurs while building. Stored task output is separate from image references. Free-credit task suspension and preview pack build are explicit limits, not generally applicable failures. In ai200-c-016: a: Task output says automatically triggered runs store logs, available in the portal or through az acr task logs. c: Source update triggers act on repository changes; Task output separately retains what the actual task execution produced."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage",
+          "url": "https://learn.microsoft.com/en-us/training/modules/store-manage-containers-azure-container-registry/2-image-storage",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-store-manage-containers-azure-container-registry-2-image-storage.json",
+          "retrievedAt": "2026-09-14T17:54:27.527Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read Registry hierarchy, Tags, Layers, Manifests and addressing. A registry encloses repositories; a repository groups same-name versions; a manifest describes layers/configuration; tags move whereas digest identity does not. Shared layers and retained manifests are not independent retention guarantees. Premium-only examples elsewhere do not restrict these basic identities. In ai200-c-016: b: Storage documents references and manifest structure; the task article separately assigns execution results to run logs."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Not incorrect: automatic runs retain logs even when no interactive console is attached. Correct-elsewhere/context analysis: Correct when determining which execution step failed in a particular recorded task run. Evidence: Task output says automatically triggered runs store logs, available in the portal or through az acr task logs.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "These are artifact references, not the run output needed to identify a failing build or test step. Correct-elsewhere/context analysis: Tags and manifest digests are correct evidence for identifying stored images or exact retained artifact content. Evidence: Storage documents references and manifest structure; the task article separately assigns execution results to run logs.",
+          "sourceIds": [
+            "ai200-20260914-unit-store-manage-containers-azure-container-registry-2-image-storage"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Input source changes do not record which build/test step actually failed in this run. Correct-elsewhere/context analysis: The commit is useful when identifying a source change that triggered a build or examining its input context. Evidence: Source update triggers act on repository changes; Task output separately retains what the actual task execution produced.",
+          "sourceIds": ["ai200-20260914-doc-acr-tasks"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": false
+      },
+      "verificationNotes": "Manual review: the key and automatic-run log retention are supported, but selecting logs as execution evidence is not intermediate troubleshooting without interpretation of output or a competing diagnostic condition. Preserve this exact record; do not relabel without restarting authoring and both reviews.",
+      "confidenceReason": "High confidence in the log-retention key; insufficient confidence in authentic intermediate troubleshooting coverage."
+    },
+    {
+      "questionId": "ai200-c-017",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "6001c9cefc99e62d87b2f4d2569bef805b308ba28a0c9b4e4864b3964ceec6da",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-doc-appservice-container",
+          "url": "https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-appservice-container.json",
+          "retrievedAt": "2026-09-14T18:01:50.587Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the full official custom-container article, distinguishing Linux and Windows pivots. The identity section explicitly requires ARM-audience acceptance plus acrUseManagedIdentityCreds and pull authorization. Conventional HTTP forwarding uses WEBSITES_PORT. Linux persistent storage is disabled by default with a logging exception. Docker Compose has a separate Preview section and retirement notice; none of its limitations are imported into conventional single-container questions. In ai200-c-017: a: The managed-identity procedure separately enables identity, grants registry access and sets acrUseManagedIdentityCreds=true. b: The article Important notice states ARM-audience tokens must be allowed or image pulls fail token validation. c: Both sources describe private registry credential authentication, and the deployment unit contrasts it with managed identity. d: Configure port number forwards HTTP to the container listener; the identity section separately governs image pull authentication."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-2-deploy-containers",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/2-deploy-containers",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-2-deploy-containers.json",
+          "retrievedAt": "2026-09-14T17:54:42.042Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete deployment unit, including private registry authentication, identity types, image updates and pull behavior. Managed identity differs from admin-password authentication. Registry credentials cannot repair HTTP routing. A new image reference changes a deployment but does not preserve the existing image contract. In ai200-c-017: c: Both sources describe private registry credential authentication, and the deployment unit contrasts it with managed identity."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Not incorrect: having an identity and pull rights does not set the currently false acrUseManagedIdentityCreds flag. Correct-elsewhere/context analysis: Correct for the stated system-assigned identity when App Service should use it for ACR pulls. Evidence: The managed-identity procedure separately enables identity, grants registry access and sets acrUseManagedIdentityCreds=true.",
+          "sourceIds": ["ai200-20260914-doc-appservice-container"]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "supported",
+          "rationale": "Not incorrect: the observed rejection contradicts the documented requirement for this App Service pull flow. Correct-elsewhere/context analysis: Correct when using App Service managed identity to pull ACR images and registry acceptance is disabled. Evidence: The article Important notice states ARM-audience tokens must be allowed or image pulls fail token validation.",
+          "sourceIds": ["ai200-20260914-doc-appservice-container"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "Although an alternative private-pull method, it violates the explicit no-stored-registry-credentials requirement. Correct-elsewhere/context analysis: Admin username/password authentication can be correct for a private registry deployment where stored credentials are acceptable and the admin user is enabled. Evidence: Both sources describe private registry credential authentication, and the deployment unit contrasts it with managed identity.",
+          "sourceIds": [
+            "ai200-20260914-doc-appservice-container",
+            "ai200-20260914-unit-deploy-containers-azure-app-service-2-deploy-containers"
+          ]
+        },
+        {
+          "choiceId": "d",
+          "assessment": "contradicted",
+          "rationale": "The observed fault concerns image-pull authentication, before a running container port can repair it. Correct-elsewhere/context analysis: WEBSITES_PORT is appropriate when a conventional custom container is running on a nondefault or mismatched HTTP port. Evidence: Configure port number forwards HTTP to the container listener; the identity section separately governs image pull authentication.",
+          "sourceIds": ["ai200-20260914-doc-appservice-container"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "The complete key is a+b. Tested stored-admin credentials and HTTP-port changes as real alternatives; each fails an explicit scenario boundary. Normalized no source fields or roles. Unknown AI-200 availability still prevents gameplay regardless of this content verdict.",
+      "confidenceReason": "High confidence in both remaining image-pull prerequisites from the explicit product procedure and Important notice; no general ARM-token requirement is inferred for unrelated services."
+    },
+    {
+      "questionId": "ai200-c-018",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "74d8e41296ee9be5bf4314c4976f0379909d135e5d9c30f5e230f6e6963daab6",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/4-configure-settings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-4-configure-settings.json",
+          "retrievedAt": "2026-09-14T17:54:54.466Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read app settings, connection-string prefixes, JSON editing, slots and Key Vault references. App settings become environment variables and only affect code that reads them. LOG_LEVEL is an example application variable, not a platform forwarding control. Slot and secret-reference behaviors are outside the assigned port/startup keys. In ai200-c-018: a: Configure application settings shows LOG_LEVEL as a process environment example; Configure port number assigns forwarding to WEBSITES_PORT."
+        },
+        {
+          "sourceId": "ai200-20260914-doc-appservice-container",
+          "url": "https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\doc-appservice-container.json",
+          "retrievedAt": "2026-09-14T18:01:50.587Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the full official custom-container article, distinguishing Linux and Windows pivots. The identity section explicitly requires ARM-audience acceptance plus acrUseManagedIdentityCreds and pull authorization. Conventional HTTP forwarding uses WEBSITES_PORT. Linux persistent storage is disabled by default with a logging exception. Docker Compose has a separate Preview section and retirement notice; none of its limitations are imported into conventional single-container questions. In ai200-c-018: a: Configure application settings shows LOG_LEVEL as a process environment example; Configure port number assigns forwarding to WEBSITES_PORT. b: The article treats private-registry/managed-identity pulls separately from the HTTP port setting. c: Configure port number says to set WEBSITES_PORT when the container uses another listener port and limits HTTP exposure to one port."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "contradicted",
+          "rationale": "Even if the app reads LOG_LEVEL, the platform still forwards to 8000 while the app listens on 7000. Correct-elsewhere/context analysis: A logging app setting is correct when the application consumes it and more diagnostic verbosity is the requirement. Evidence: Configure application settings shows LOG_LEVEL as a process environment example; Configure port number assigns forwarding to WEBSITES_PORT.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+            "ai200-20260914-doc-appservice-container"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "This does not change the known HTTP forwarding mismatch on a running application. Correct-elsewhere/context analysis: Registry authentication settings are correct when private image retrieval fails because its credential or identity configuration is wrong. Evidence: The article treats private-registry/managed-identity pulls separately from the HTTP port setting.",
+          "sourceIds": ["ai200-20260914-doc-appservice-container"]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "supported",
+          "rationale": "Not incorrect: 7000 matches the observed listener, whereas the shown setting selects 8000. Correct-elsewhere/context analysis: Correct for a conventional custom container listening on that explicit HTTP port while preserving the image. Evidence: Configure port number says to set WEBSITES_PORT when the container uses another listener port and limits HTTP exposure to one port.",
+          "sourceIds": ["ai200-20260914-doc-appservice-container"]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Read full c-034 and completed keep-distinct comparison: Kubernetes targetPort preserves a separate Service port, whereas this fixes the App Service conventional setting. Agree they are different contracts, not number-only reskins. JSON was parsed and its explicit values reviewed, not executed as a template.",
+      "confidenceReason": "High confidence in conventional forwarding repair under the specified listener and sidecar boundary; no undocumented default-port assumption."
+    },
+    {
+      "questionId": "ai200-c-019",
+      "authorId": "copilot-ai200-containers-pass1-20260914",
+      "reviewerId": "ai200-adversary-containers-a",
+      "questionFingerprint": "55807c2c888446e4566d30b1901c4ea4ad789547fc0691f001c4cf657b692477",
+      "reviewedAt": "2026-09-14T19:51:57.062Z",
+      "verdict": "verified",
+      "sourceReviews": [
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-3-configure-runtime",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/3-configure-runtime",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-3-configure-runtime.json",
+          "retrievedAt": "2026-09-14T17:54:46.522Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read startup command, ports, persistence, always-on and health sections. For the stipulated dispatcher, the startup command replaces CMD without replacing ENTRYPOINT. Do not generalize this to a dispatcher that ignores arguments. Linux /home persistence is opt-in; always-on has a Basic-or-higher condition, neither of which is required by the assigned startup question. In ai200-c-019: a: Startup commands explicitly replaces CMD while ENTRYPOINT remains unchanged unless directly reconfigured. b: App settings are injected into the process environment; startup-command arguments are a separate configuration mechanism. c: Runtime behavior begins with Dockerfile CMD/ENTRYPOINT; deployment training separately supports switching to a newly tagged image."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/4-configure-settings",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-4-configure-settings.json",
+          "retrievedAt": "2026-09-14T17:54:54.466Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read app settings, connection-string prefixes, JSON editing, slots and Key Vault references. App settings become environment variables and only affect code that reads them. LOG_LEVEL is an example application variable, not a platform forwarding control. Slot and secret-reference behaviors are outside the assigned port/startup keys. In ai200-c-019: b: App settings are injected into the process environment; startup-command arguments are a separate configuration mechanism."
+        },
+        {
+          "sourceId": "ai200-20260914-unit-deploy-containers-azure-app-service-2-deploy-containers",
+          "url": "https://learn.microsoft.com/en-us/training/modules/deploy-containers-azure-app-service/2-deploy-containers",
+          "evidencePath": ".grounding\\ai-expansion\\ai-200\\raw\\unit-deploy-containers-azure-app-service-2-deploy-containers.json",
+          "retrievedAt": "2026-09-14T17:54:42.042Z",
+          "lastReviewedAt": "2026-09-14T18:11:28.429Z",
+          "supportingSummary": "Read the complete deployment unit, including private registry authentication, identity types, image updates and pull behavior. Managed identity differs from admin-password authentication. Registry credentials cannot repair HTTP routing. A new image reference changes a deployment but does not preserve the existing image contract. In ai200-c-019: c: Runtime behavior begins with Dockerfile CMD/ENTRYPOINT; deployment training separately supports switching to a newly tagged image."
+        }
+      ],
+      "choiceReviews": [
+        {
+          "choiceId": "a",
+          "assessment": "supported",
+          "rationale": "Not incorrect: the stated ENTRYPOINT consumes these arguments and startup override replaces the default CMD, not that dispatcher. Correct-elsewhere/context analysis: Correct when the existing dispatcher honors the supplied argument list and the image must be reused unchanged. Evidence: Startup commands explicitly replaces CMD while ENTRYPOINT remains unchanged unless directly reconfigured.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-3-configure-runtime"
+          ]
+        },
+        {
+          "choiceId": "b",
+          "assessment": "contradicted",
+          "rationale": "The specified dispatcher does not read that variable, so environment injection cannot change its mode. Correct-elsewhere/context analysis: An app setting is correct for a mode switch when the application actually reads that environment variable at startup. Evidence: App settings are injected into the process environment; startup-command arguments are a separate configuration mechanism.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-4-configure-settings",
+            "ai200-20260914-unit-deploy-containers-azure-app-service-3-configure-runtime"
+          ]
+        },
+        {
+          "choiceId": "c",
+          "assessment": "contradicted",
+          "rationale": "This changes the artifact, violating the requirement to preserve and reuse the existing image for this web app. Correct-elsewhere/context analysis: Changing CMD in a new image is correct when altering the image default and releasing a new image are allowed. Evidence: Runtime behavior begins with Dockerfile CMD/ENTRYPOINT; deployment training separately supports switching to a newly tagged image.",
+          "sourceIds": [
+            "ai200-20260914-unit-deploy-containers-azure-app-service-3-configure-runtime",
+            "ai200-20260914-unit-deploy-containers-azure-app-service-2-deploy-containers"
+          ]
+        }
+      ],
+      "checks": {
+        "answerDefensible": true,
+        "correctOptionsSupported": true,
+        "distractorsIncorrect": true,
+        "explanationsSupported": true,
+        "directSources": true,
+        "featureStatus": true,
+        "currentTerminology": true,
+        "prerequisitesComplete": true,
+        "codeReviewed": true,
+        "originalContent": true,
+        "duplicatesReviewed": true,
+        "qualityReviewed": true
+      },
+      "verificationNotes": "Startup CMD override remains correct only under the supplied image contract. Environment injection is useful elsewhere but explicitly unconsumed here; rebuilding changes the immutable input requirement. Distinct from c-020 environment consumption because this dispatcher instead reads command arguments.",
+      "confidenceReason": "High confidence in the exact CMD/ENTRYPOINT distinction, with the necessary application behavior supplied rather than assumed."
+    }
+  ]
+}

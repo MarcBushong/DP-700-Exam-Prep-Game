@@ -10,8 +10,11 @@ documentation.
 Canonical package/storage IDs remain `github-copilot` (GH-300) and
 `github-agentic-ai-developer` (GH-600). CLI `--exam gh-300`, `GH-300`, `gh-600`
 and `GH-600` resolve to those existing IDs. No second engine or storage migration.
-Other packages retain the unchanged legacy two-pass and ten-criterion 0–2
-rubric. Missing legacy question metadata defaults to manual review.
+AI-103 and AI-200 opt into this same engine/profile under their existing canonical
+IDs; see [their workflow](ai-three-pass-workflow.md) for Microsoft Learn-only
+source approvals and fresh review of prior AI-103 records. Packages without a
+strict policy retain the unchanged legacy two-pass and ten-criterion 0–2 rubric,
+including DP-700. Missing legacy question metadata defaults to manual review.
 
 Strict packages explicitly declare this in their existing `manifest.json`:
 
@@ -37,8 +40,8 @@ catalog entries. The package declaration must match every field exactly.
 Removing or altering its policy causes a global `review-policy-binding`
 failure; removing validation metadata or provenance still fails strict checks
 because the catalog requirement activates them independently of package flags.
-Reports show required, declared and effective policies separately. Other
-catalog entries omit this field and retain their legacy validation behavior.
+Reports show required, declared and effective policies separately. Catalog entries
+without a strict requirement retain their legacy validation behavior.
 
 ## Ground, author, technically verify, adversarially challenge
 
@@ -65,6 +68,10 @@ catalog entries omit this field and retain their legacy validation behavior.
    `verification-reviews.json` and commit matching entries in the existing
    consolidated `src/data/verification-reviews.json`. Every status requires
    an actual attestation, not an empty placeholder or generated pass.
+
+The three `*gh*` prompt filenames are retained compatibility names for the shared
+strict workflow. They use the request's canonical credential and source policy,
+not an inferred GitHub-only scope or a blanket grant to cite GitHub Docs.
 
 Machine-readable definitions are `schemas/validation-metadata.schema.json`,
 `source-registry.schema.json`, `encounter-metadata.schema.json` and
@@ -146,7 +153,8 @@ distributions, concept reuse, answer positions, applied reasoning, reviewed
 versus playable coverage and the target shortfall. Study still requires >=25
 verified and all major domains; Boss >=75, skill breadth, meaningful reviewed
 Advanced/Expert content and published weighting when available. A Beta card
-remains sealed even with fully reviewed questions; reviewed count is not
+remains sealed even with fully reviewed questions and freshly verified beta
+identity. Pending or unverified status can never open. Reviewed count is not
 playable count. Report creation is never a source retrieval or validation date.
 
 For strict GitHub packages, the 40% applied-reasoning check counts reviewed
@@ -155,12 +163,13 @@ labelled Advanced or Expert. Difficulty balance remains a reported editorial
 target, while the existing requirement for genuine boss-tier encounters still
 applies. Never inflate difficulty labels or lower review thresholds to unlock a mode.
 
-For example, a sealed Beta package may contain 150 fully reviewed questions,
-have `reviewedQuestionShortfall: 0`, and still expose **zero** playable coverage
-with both modes locked. Catalog `verifiedQuestionCount` retains its playable
-convention (zero). Coverage, verification and all-package reports separately
-show total candidate records, reviewed counts/coverage, availability reasons
-and playable counts/coverage. Scheduling an exam does not establish GA.
+A beta package may meet its reviewed target and still expose **zero** playable
+coverage with both modes locked. Catalog `verifiedQuestionCount` retains its
+playable convention (zero when sealed). Coverage, verification and all-package
+reports separately show total candidate records, reviewed counts/coverage,
+availability reasons and playable counts/coverage. Scheduling an exam does not
+establish GA. A freshly verified GH-600 beta identity updates the catalog's status
+and sealed warnings, not runtime permission; unverified or beta status stays sealed.
 `--strict` coverage/verification checks of playable availability intentionally
 fail for a sealed package; default structural review does not mislabel its
 reviewed content as unauthored.

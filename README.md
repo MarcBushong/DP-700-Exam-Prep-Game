@@ -68,29 +68,36 @@ package remain sealed even when their identity and current outline are verified.
 
 ### Playable content in this revision
 
-| Dungeon                         | Playable verified encounters | Modes                           |
-| ------------------------------- | ---------------------------: | ------------------------------- |
-| DP-700: The Fabric Depths       |                          162 | Study and Boss Gauntlet         |
-| AZ-104: The Infrastructure Keep |                           30 | Study                           |
-| SC-200: The Sentinel Watch      |                           30 | Study                           |
-| AI-103: The AI Workshop         |                           30 | Study                           |
-| GH-300: The Copilot Spire       |                          149 | Study and Boss Gauntlet         |
-| GH-600: The Agentic Workshop    |                            0 | Sealed: availability unverified |
+| Dungeon                         | Playable verified encounters | Modes                             |
+| ------------------------------- | ---------------------------: | --------------------------------- |
+| DP-700: The Fabric Depths       |                          162 | Study and Boss Gauntlet           |
+| AZ-104: The Infrastructure Keep |                           30 | Study                             |
+| SC-200: The Sentinel Watch      |                           30 | Study                             |
+| AI-103: The AI Workshop         |                            0 | Sealed: availability unverified   |
+| AI-200: The Application Forge   |                            0 | Sealed: availability and coverage |
+| GH-300: The Copilot Spire       |                          149 | Study and Boss Gauntlet           |
+| GH-600: The Agentic Workshop    |                            0 | Sealed: beta                      |
 
-**401 playable verified encounters**. GH-300 retains three rejected duplicates
+**371 playable verified encounters**. GH-300 retains three rejected duplicates
 and three manual-review records outside gameplay. GH-600 has **136 fully
-three-pass-reviewed questions** and 13 rejected candidates, but none can enter
-gameplay until its availability gate is resolved. All major floors are sampled;
-the smaller AZ-104, SC-200, and AI-103 banks deliberately retain subskill gaps
-and keep their gauntlets locked. GH-600 remains sealed while its current
-availability cannot be verified from the permitted evidence. The other
-unready catalog entries also remain sealed. See the
-[GitHub expansion report](docs/github-expansion-report.md) for the current
-three-pass results, source evidence, exact coverage, and remaining gaps. The
+three-pass-reviewed questions** and 13 rejected candidates, but remains sealed
+with an explicit Beta warning. Beta gameplay was not opened.
+
+The strict AI review produced **29 verified / 96 manual / 24 rejected** AI-103
+records and **30 verified / 85 manual / 35 rejected** AI-200 records. The target
+of 150 verified questions **each was not achieved**; 29 is not a numeric increase
+over AI-103's earlier 30-record legacy bank. Those original records and completed
+local history are preserved. Both AI credentials remain sealed because current
+exam availability is unverified; additional count/breadth gaps remain. Source
+withdrawals and classification repairs are fully audited rather than waived.
+See the [AI expansion outcome](docs/ai-expansion-report.md) and
+[GH-600 beta evidence](docs/gh600-beta-availability.md) for exact current results
+and limitations. The [earlier GitHub expansion report](docs/github-expansion-report.md)
+preserves its original review snapshot. The
 [initial dungeon implementation report](docs/dungeon-implementation-report.md)
 records the earlier platform baseline.
 
-![The Certification Dungeon map with original castle artwork, hero-class selection, and five open dungeons](docs/screenshots/dungeon-map.png)
+![Earlier dungeon-map layout illustrating original castle artwork and hero-class selection; current availability is listed above](docs/screenshots/dungeon-map.png)
 
 ## Features
 

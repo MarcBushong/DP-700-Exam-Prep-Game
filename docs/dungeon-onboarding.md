@@ -13,6 +13,8 @@ current name, code, objective, weighting or question bank from the requested lis
    verificationEvidence. Missing information stays null/unverified with a
    specific `sealedReason`. Record original dungeon presentation separately in
    `themeMetadata`. Add generic hero-class mappings only for discovery.
+   Beta and pending/unverified credentials remain sealed. Freshly verified beta
+   identity may update the visible status/warnings but never authorizes gameplay.
 4. Review the credential's `sourceAllowlist`. Microsoft uses English Learn
    documentation. GitHub documentation may use bounded docs paths; resource,
    skills and competency PDF URLs require exact, genuinely reviewed URLs.
@@ -23,6 +25,10 @@ current name, code, objective, weighting or question bank from the requested lis
    use a **separate** reviewer context. Commit an attestation for every candidate
    status and score the realism rubric independently. There is no bulk
    auto-verification or default passing score.
+   Strict GH-300/GH-600 and AI-103/AI-200 require **three** distinct contexts and
+   the existing version-2 44/48-minimum rubric. Pin the matching complete
+   `three-pass-v1` policy in the catalog and package; follow the
+   [GH](gh-three-pass-workflow.md) or [AI](ai-three-pass-workflow.md) workflow.
 7. Maintain `encounter-metadata.json` keyed by question ID. Its fingerprint,
    sources, retrieval/validation dates and per-option rationales must match the
    genuine ledger and exact factual record. A pending rubric is null.

@@ -14,6 +14,31 @@ import {
   sourceRegistrySchema,
 } from '../src/features/dungeons/provenance';
 
+function isRecordedLayoutView(url: URL, credential?: SourcePolicyContext) {
+  return (
+    credential?.credentialId === 'ai-103' &&
+    url.hostname === 'learn.microsoft.com' &&
+    url.pathname ===
+      '/en-us/azure/ai-services/document-intelligence/prebuilt/layout' &&
+    url.search === '?view=doc-intel-4.0.0'
+  );
+}
+
+export function sameCanonicalDocument(
+  expected: string,
+  actual: string,
+  credential?: SourcePolicyContext,
+): boolean {
+  const expectedUrl = new URL(expected);
+  const actualUrl = new URL(actual);
+  // Fragments select a section in the client, not a different HTTP document.
+  expectedUrl.hash = '';
+  actualUrl.hash = '';
+  if (!expectedUrl.search && isRecordedLayoutView(actualUrl, credential))
+    actualUrl.search = '';
+  return expectedUrl.href === actualUrl.href;
+}
+
 export function safeSourceUrl(
   value: string,
   allowCanonicalView = false,
@@ -30,7 +55,8 @@ export function safeSourceUrl(
     ((url.pathname.startsWith('/en-us/kusto/') &&
       url.search === '?view=microsoft-fabric') ||
       (url.pathname.startsWith('/en-us/sql/t-sql/') &&
-        url.search === '?view=sql-server-ver17'))
+        url.search === '?view=sql-server-ver17') ||
+      isRecordedLayoutView(url, credential))
   ) {
     structuralUrl.search = '';
   }
@@ -219,8 +245,20 @@ if (isMain(import.meta.url)) {
       } else safeSourceUrl(url, false, credential);
     });
     console.log(
-      `Offline structural source checks passed: ${manifest.sources.length} records, ${urls.length} credential-approved official URLs.`,
+      `Offline structural source checks passed: ${manifest.sources.length} records, ${urls.length} allowlisted official URLs.`,
     );
+    if (registry) {
+      const withdrawn = manifest.sources.filter(
+        (source) =>
+          !registry.sources.some(
+            (record) => record.sourceId === source.sourceId,
+          ),
+      );
+      if (withdrawn.length)
+        console.warn(
+          `Quarantined citation snapshots without current supporting approval: ${withdrawn.map((source) => source.sourceId).join(', ')}. URL availability does not restore their approval.`,
+        );
+    }
     if (process.argv.includes('--online')) {
       const failures: string[] = [];
       for (const url of identityContextUrls)
@@ -240,7 +278,12 @@ if (isMain(import.meta.url)) {
                 .filter((parent) => parent.targetUrl === url)
                 .map((parent) => parent.canonicalUrl),
             ]);
-            if (expectedTargets.some((target) => target !== result.finalUrl))
+            if (
+              expectedTargets.some(
+                (target) =>
+                  !sameCanonicalDocument(target, result.finalUrl, credential),
+              )
+            )
               throw new Error(
                 `Resolved target ${result.finalUrl} differs from the recorded canonical redirect receipt; curator review required.`,
               );

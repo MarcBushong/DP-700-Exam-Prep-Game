@@ -2,7 +2,7 @@
 
 Unofficial study aid. Deterministic checks validate structure and recorded attestations, not answer semantics, independent reviewer identity, or current feature behavior.
 
-Report created: 2026-09-14T16:34:58.280Z. This is not a retrieval or verification timestamp.
+Report created: 2026-09-14T21:45:39.841Z. This is not a retrieval or verification timestamp.
 
 - Total candidate records: **149**; malformed: **0**.
 - Playable verified questions: **0**. Playable coverage below counts only these questions.
@@ -10,9 +10,9 @@ Report created: 2026-09-14T16:34:58.280Z. This is not a retrieval or verificatio
 - Three-pass target: 150 verified; shortfall 14. Rubric minimum 44/48; no automatic conversion from legacy scores.
 - Source provenance violations: 0. Source meaning and reviewer independence are not proven by receipts.
 - Playable coverage shortfall: 150; playable Advanced/Expert share: 0.0% (target >=40%). This is not an authored-content count.
-- Recorded credential status: **unverified**; Study Run **locked**; Boss Gauntlet **locked**.
+- Recorded credential status: **beta**; Study Run **locked**; Boss Gauntlet **locked**.
 - Fully reviewed content target: 150; reviewed shortfall: 14; reviewed but unavailable: 136.
-- Availability: Reviewed content is available for maintainers, but current general availability is not established by the permitted official Learn evidence. The prior beta concern is unresolved; both gameplay modes remain sealed.
+- Availability: GH-600 is verified as a beta exam. The official GitHub catalog reports available_to_take=false; Torchlight Run and Boss Gauntlet remain sealed. Reviewed encounters do not establish general availability.
 - Availability: The catalog marks this dungeon unavailable.
 - Taxonomy: 6 domains, 19 skills, 65 subskills.
 - Study guide effective date: **Undated published outline; retrieved 2026-09-11T19:14:33.450Z; SHA-256 e6271beb5921467a0c1037f1add3a5400dbf80be5a58bcb74b7cf0e8e118a9ed**; retrieved: 2026-09-14T13:04:00.402Z.
