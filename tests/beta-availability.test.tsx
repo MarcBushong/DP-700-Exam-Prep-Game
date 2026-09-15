@@ -102,19 +102,24 @@ function Commands() {
   );
 }
 
-describe('grounded GH-600 beta identity without beta gameplay', () => {
-  it('records beta evidence, not GA or a gameplay approval', () => {
+describe('grounded GH-600 beta study access', () => {
+  it('explicitly enables study access without changing beta identity evidence', () => {
     expect(beta).toMatchObject({
       examCode: 'GH-600',
       currentName: 'GitHub Certified: Agentic AI Developer',
       status: 'beta',
       isVerified: true,
-      contentReadiness: 'unavailable',
-      verifiedQuestionCount: 0,
+      allowBetaPlay: true,
+      contentReadiness: 'ready',
+      verifiedQuestionCount: 136,
       minimumPlayableQuestionCount: 25,
     });
-    expect(beta).not.toHaveProperty('allowBetaPlay');
-    expect(beta.sealedReason).toMatch(/available_to_take=false/);
+    expect(beta.sealedReason).toBeUndefined();
+    expect(
+      credentials
+        .filter((entry) => entry.allowBetaPlay)
+        .map((entry) => entry.credentialId),
+    ).toEqual([betaId]);
     const api = beta.verificationEvidence
       .filter(
         (entry) =>
@@ -132,14 +137,16 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
     expect(validateCatalog(credentials, heroClasses)).toEqual([]);
   });
 
-  it('preserves the reviewed bank and normal safeguards while exposing no encounters', () => {
+  it('exposes only the fully reviewed bank without lowering normal safeguards', () => {
     expect(packageSnapshot.reviewedQuestions).toHaveLength(136);
     expect(packageSnapshot.allQuestions).toHaveLength(149);
     expect(packageSnapshot.findings).toEqual([]);
-    expect(packageSnapshot.questions).toEqual([]);
+    expect(packageSnapshot.questions).toEqual(
+      packageSnapshot.reviewedQuestions,
+    );
     expect(packageSnapshot.readiness).toMatchObject({
-      study: false,
-      gauntlet: false,
+      study: true,
+      gauntlet: true,
     });
     expect(packageSnapshot.packageManifest.readinessThresholds).toMatchObject({
       studyMinimum: 25,
@@ -168,24 +175,67 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
     });
     expect(
       getDungeonReadiness({ ...beta, contentReadiness: 'ready' }, stats),
-    ).toMatchObject({ study: false, gauntlet: false });
+    ).toMatchObject({ study: true, gauntlet: true });
+    for (const contentReadiness of [
+      'stale',
+      'unavailable',
+      'validating',
+    ] as const) {
+      expect(
+        getDungeonReadiness({ ...beta, contentReadiness }, stats),
+      ).toMatchObject({ study: false, gauntlet: false });
+    }
+    for (const blockedStats of [
+      { ...stats, verifiedQuestionCount: 24 },
+      { ...stats, coveredFloorCount: 5 },
+      { ...stats, blockingFailures: ['Independent review failed.'] },
+      { ...stats, objectiveVersion: 'Changed objective map' },
+    ]) {
+      expect(getDungeonReadiness(beta, blockedStats)).toMatchObject({
+        study: false,
+        gauntlet: false,
+      });
+    }
+    for (const limitedStats of [
+      { ...stats, verifiedQuestionCount: 74 },
+      { ...stats, coveredSkillCount: 18 },
+      { ...stats, bossQuestionCount: 0 },
+      { ...stats, weightingPublished: true, weightingAvailable: false },
+      { ...stats, majorGaps: ['Insufficient applied reasoning.'] },
+    ]) {
+      expect(getDungeonReadiness(beta, limitedStats)).toMatchObject({
+        study: true,
+        gauntlet: false,
+      });
+    }
   });
 
-  it('rejects direct callers that fabricate ready content for any nonactive identity', () => {
-    for (const status of [
-      'announced',
-      'beta',
-      'retiring',
-      'retired',
-      'replaced',
-      'unverified',
-    ] as const) {
+  it('rejects direct callers without beta authorization or a verified eligible identity', () => {
+    const blockedCredentials = [
+      { ...beta, allowBetaPlay: undefined },
+      { ...beta, allowBetaPlay: false },
+      { ...beta, isVerified: false },
+      ...(
+        ['announced', 'retiring', 'retired', 'replaced', 'unverified'] as const
+      ).map((status) => ({ ...beta, status })),
+    ];
+    for (const credential of blockedCredentials) {
       const claimedReady = {
         ...packageSnapshot,
-        credential: { ...beta, status, contentReadiness: 'ready' as const },
+        credential,
         questions: packageSnapshot.reviewedQuestions,
         readiness: { study: true, gauntlet: true, reasons: [] },
       };
+      expect(
+        getDungeonReadiness(
+          credential,
+          buildContentStats(
+            packageSnapshot.reviewedQuestions,
+            packageSnapshot.taxonomy,
+            packageSnapshot.objectiveVersion,
+          ),
+        ),
+      ).toMatchObject({ study: false, gauntlet: false });
       expect(dungeonAccess(claimedReady).allowed).toBe(false);
       expect(dungeonAccess(claimedReady, true).allowed).toBe(false);
       for (const mode of modes) {
@@ -199,6 +249,7 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
       }
     }
     for (const credential of credentials) {
+      if (credential.credentialId === betaId) continue;
       if (credential.isVerified && credential.status === 'active') continue;
       expect(
         dungeonAccess(getDungeonPackage(credential.credentialId)).allowed,
@@ -207,7 +258,62 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
     expect(dungeonAccess(getDungeonPackage('dp-700')).allowed).toBe(true);
   });
 
-  it('prominently identifies the sealed card without confusing beta with product preview', () => {
+  it.each(modes)(
+    'plans $runMode/$answerMode using only playable reviewed encounters',
+    (mode) => {
+      const session = planDungeonSession(
+        [getDungeonPackage('dp-700'), packageSnapshot],
+        { ...defaultConfig, credentialId: betaId, ...mode },
+      );
+      expect(session.ok).toBe(true);
+      if (!session.ok) throw new Error(session.warnings.join(' '));
+      expect(session.plan.questions).toHaveLength(defaultConfig.questionCount);
+      const betaQuestions = session.plan.questions.filter(
+        (question) =>
+          session.plan.questionOrigins[question.id].credentialId === betaId,
+      );
+      expect(betaQuestions.length).toBeGreaterThan(0);
+      for (const question of betaQuestions) {
+        expect(question.verificationStatus).toBe('verified');
+        expect(
+          packageSnapshot.reviewedQuestions.map((entry) => entry.id),
+        ).toContain(question.id);
+      }
+    },
+  );
+
+  it('requires objective and preparation evidence even for explicitly enabled beta access', () => {
+    for (const officialUrls of [
+      { ...beta.officialUrls, studyGuide: null },
+      { ...beta.officialUrls, training: null },
+    ]) {
+      expect(
+        validateCatalog(
+          credentials.map((entry) =>
+            entry.credentialId === betaId ? { ...entry, officialUrls } : entry,
+          ),
+          heroClasses,
+        ).join(' '),
+      ).toMatch(/current objective version, study guide and preparation URL/);
+    }
+    expect(
+      validateCatalog(
+        credentials.map((entry) =>
+          entry.credentialId === betaId
+            ? {
+                ...entry,
+                verificationEvidence: entry.verificationEvidence.filter(
+                  (evidence) => evidence.url !== entry.officialUrls.studyGuide,
+                ),
+              }
+            : entry,
+        ),
+        heroClasses,
+      ).join(' '),
+    ).toMatch(/actual retrieval evidence/);
+  });
+
+  it('prominently identifies the open beta card without confusing beta with product preview', () => {
     mountPage(`/dungeons/${betaId}`);
     const card = screen.getByRole('article', {
       name: 'GH-600 The Agentic Workshop',
@@ -215,25 +321,49 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
     const notice = within(card).getByRole('complementary', {
       name: 'GH-600 beta availability',
     });
-    expect(notice).toHaveTextContent('BETA · Gameplay unavailable');
+    expect(notice).toHaveTextContent('BETA · Study access open');
     expect(notice).toHaveTextContent('Objectives may change.');
     expect(notice).toHaveTextContent('Unofficial study aid');
     expect(notice).not.toHaveTextContent('Preview feature');
-    expect(within(card).getByRole('button', { name: 'Sealed' })).toBeDisabled();
+    expect(within(card).getByRole('button', { name: 'Descend' })).toBeEnabled();
     expect(
       within(card).getByRole('button', { name: 'Boss Gauntlet' }),
-    ).toBeDisabled();
-    expect(
-      within(card).getByText(
-        /136 fully reviewed encounters remain unavailable/,
-      ),
-    ).toBeVisible();
+    ).toBeEnabled();
+    expect(card.querySelector('.encounter-count')).toHaveTextContent(
+      /136\s*playable verified encounters/,
+    );
+    expect(within(card).getByText('beta', { exact: true })).toBeVisible();
     expect(
       screen.getByRole('option', {
-        name: /GH-600.*BETA.*Sealed/,
+        name: /GH-600.*BETA.*Open/,
       }),
     ).toBeInTheDocument();
   });
+
+  it.each([
+    {
+      study: false,
+      gauntlet: false,
+      message: 'Torchlight Run and Boss Gauntlet remain sealed.',
+    },
+    {
+      study: true,
+      gauntlet: false,
+      message:
+        'Torchlight Run is open for beta study; Boss Gauntlet remains sealed.',
+    },
+  ])(
+    'reports actual beta mode readiness: $message',
+    ({ study, gauntlet, message }) => {
+      render(
+        <BetaAvailabilityNotice
+          credential={beta}
+          readiness={{ study, gauntlet, reasons: [] }}
+        />,
+      );
+      expect(screen.getByRole('complementary')).toHaveTextContent(message);
+    },
+  );
 
   it.each(['active', 'retired', 'unverified'] as const)(
     'does not label a %s credential as beta',
@@ -246,7 +376,7 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
   );
 
   it.each(modes)(
-    'keeps imported $runMode/$answerMode setup sealed and leaves history unchanged',
+    'opens imported $runMode/$answerMode setup and leaves history unchanged',
     (mode) => {
       const data = importSettings(mode);
       mountPage('/setup');
@@ -254,14 +384,16 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
         screen.getByRole('complementary', {
           name: 'GH-600 beta availability',
         }),
-      ).toHaveTextContent('Torchlight Run and Boss Gauntlet remain sealed.');
-      expect(screen.getByRole('button', { name: 'Descend' })).toBeDisabled();
+      ).toHaveTextContent(
+        'Torchlight Run and Boss Gauntlet are open for beta study.',
+      );
+      expect(screen.getByRole('button', { name: 'Descend' })).toBeEnabled();
       expect(loadData(localStorage).data.history).toEqual(data.history);
     },
   );
 
   it.each(modes)(
-    'refuses imported $runMode/$answerMode at the provider boundary',
+    'starts imported $runMode/$answerMode at the provider boundary',
     async (mode) => {
       const data = importSettings(mode);
       const user = userEvent.setup();
@@ -271,17 +403,17 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
         </GameProvider>,
       );
       if (data.selectedCredentialId === betaId)
-        expect(screen.getByText('Bank: 0')).toBeVisible();
+        expect(screen.getByText('Bank: 136')).toBeVisible();
       await user.click(
         screen.getByRole('button', { name: 'Start imported configuration' }),
       );
-      expect(screen.getByText('Active: none')).toBeVisible();
-      expect(screen.getByText(/^Notices:/)).toHaveTextContent(/sealed/i);
+      expect(screen.getByText(/^Active:/)).not.toHaveTextContent('none');
+      expect(screen.getByText(/^Notices:/)).not.toHaveTextContent(/sealed/i);
       expect(loadData(localStorage).data.history).toEqual(data.history);
     },
   );
 
-  it('cannot select the beta dungeon from an otherwise playable credential', async () => {
+  it('can select the beta dungeon from an otherwise playable credential', async () => {
     const user = userEvent.setup();
     render(
       <GameProvider>
@@ -289,7 +421,8 @@ describe('grounded GH-600 beta identity without beta gameplay', () => {
       </GameProvider>,
     );
     await user.click(screen.getByRole('button', { name: 'Select beta' }));
-    expect(screen.getByText('Selected: dp-700')).toBeVisible();
+    expect(screen.getByText(`Selected: ${betaId}`)).toBeVisible();
+    expect(screen.getByText('Bank: 136')).toBeVisible();
     expect(screen.getByText('Active: none')).toBeVisible();
   });
 });

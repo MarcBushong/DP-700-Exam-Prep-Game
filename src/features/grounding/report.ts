@@ -199,7 +199,7 @@ export function buildContentReport(
           ).length,
           reasons: content.readiness?.reasons ?? [],
           disclaimer:
-            'Reviewed question content does not establish credential GA or active status. Only the independently grounded catalog status controls whether an otherwise ready package can open.',
+            'Reviewed question content does not establish credential GA or active status. An otherwise ready package requires verified active identity or explicit catalog authorization for verified beta study access.',
         }
       : null,
     threePass: policy
@@ -415,7 +415,7 @@ export function reportMarkdown(report: ContentReport): string {
     '',
     `- Total candidate records: **${report.totalQuestions}**; malformed: **${report.malformedRecords}**.`,
     `- Playable verified questions: **${report.playableVerifiedQuestions}**. Playable coverage below counts only these questions.`,
-    `- Fully reviewed records before catalog/mode gates: **${report.reviewedVerifiedQuestions}**. A beta/sealed credential still has zero playable encounters.`,
+    `- Fully reviewed records before catalog/mode gates: **${report.reviewedVerifiedQuestions}**. A sealed credential still has zero playable encounters; beta study requires explicit catalog authorization.`,
     ...(report.threePass
       ? [
           `- Three-pass target: ${report.threePass.targetVerified} verified; shortfall ${report.threePass.verifiedShortfall}. Rubric minimum ${report.threePass.minimumRubricScore}/48; no automatic conversion from legacy scores.`,

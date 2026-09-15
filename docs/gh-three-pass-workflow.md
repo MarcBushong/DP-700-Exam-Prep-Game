@@ -153,8 +153,9 @@ distributions, concept reuse, answer positions, applied reasoning, reviewed
 versus playable coverage and the target shortfall. Study still requires >=25
 verified and all major domains; Boss >=75, skill breadth, meaningful reviewed
 Advanced/Expert content and published weighting when available. A Beta card
-remains sealed even with fully reviewed questions and freshly verified beta
-identity. Pending or unverified status can never open. Reviewed count is not
+remains sealed unless its verified identity has explicit `allowBetaPlay: true`
+catalog authorization, currently enabled only for GH-600. Authorization never
+bypasses content review. Pending or unverified status can never open. Reviewed count is not
 playable count. Report creation is never a source retrieval or validation date.
 
 For strict GitHub packages, the 40% applied-reasoning check counts reviewed
@@ -168,8 +169,8 @@ coverage with both modes locked. Catalog `verifiedQuestionCount` retains its
 playable convention (zero when sealed). Coverage, verification and all-package
 reports separately show total candidate records, reviewed counts/coverage,
 availability reasons and playable counts/coverage. Scheduling an exam does not
-establish GA. A freshly verified GH-600 beta identity updates the catalog's status
-and sealed warnings, not runtime permission; unverified or beta status stays sealed.
+establish GA. GH-600 retains its beta identity and warnings during its explicitly
+authorized beta study access; unverified status always stays sealed.
 `--strict` coverage/verification checks of playable availability intentionally
 fail for a sealed package; default structural review does not mislabel its
 reviewed content as unauthored.

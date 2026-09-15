@@ -1,8 +1,9 @@
 # GH-600 beta availability snapshot
 
-**GH-600 is identified as beta, not generally available. Gameplay remains
-sealed.** This is a partial identity and availability clarification; opening
-beta study access was **not implemented**.
+**GH-600 remains beta, not generally available. Its 136 fully reviewed encounters
+are open for beta study in Torchlight Run, Boss Gauntlet, and eligible raids.**
+The explicit application-policy change on **2026-09-15** does not change the
+official identity evidence below or claim that the vendor exam is available to take.
 
 ## Official identity evidence
 
@@ -63,19 +64,28 @@ summaries.
 
 ## Application behavior
 
-The existing `github-agentic-ai-developer` catalog record now has `status: "beta"`
-and a verified identity. It still has `contentReadiness: "unavailable"` and
-**zero playable encounters**. Identity verification does not authorize a run.
+The existing `github-agentic-ai-developer` catalog record retains `status: "beta"`
+and its verified identity. It now has explicit `allowBetaPlay: true`,
+`contentReadiness: "ready"`, and **136 playable encounters**. The shared identity
+gate accepts a verified active credential or a verified beta credential with
+this explicit catalog authorization. An absent or false flag keeps beta sealed;
+unverified, announced, retiring, retired, and replaced identities cannot use it.
+This is checked-in application policy, not an imported local setting or vendor
+status evidence. Only GH-600 has the authorization.
 
-The card and sealed setup prominently say **BETA · Gameplay unavailable**,
+The card and setup prominently say **BETA · Study access open**,
 warn that objectives may change, and identify this as an unofficial study aid.
+The notice reflects actual mode readiness and still reports sealed or
+Study-only states if other safeguards fail. Question metadata also labels
+GH-600 **BETA**, including gauntlet and raid encounters.
 The beta designation concerns the exam, not the existing per-question
 **Preview feature** designation for product behavior.
 
-Torchlight Run, Boss Gauntlet, legacy exam mode and raids still reject beta
-credentials, including direct calls and imported local settings. No beta-play
-flag, approval, beta run, run-origin migration, or new availability exception
-was created. No other credential is opened by this change.
+Torchlight Run, Boss Gauntlet, legacy exam mode and eligible raids use the same
+identity and content gates, including direct calls and imported local settings.
+GH-600 is discoverable through the Wanderer filter and normal card entry points.
+No other credential is opened. There is no storage migration: existing run
+origins, objective snapshots, and completed local history remain intact.
 
 ## Preserved content and safeguards
 
@@ -90,9 +100,11 @@ Read-only package validation on **2026-09-14T17:53:38.293Z** found:
 
 The normal 25-question study and 75-question gauntlet minima, breadth, weighting,
 boss-tier reasoning, strict three-pass review, 44/48 rubric and 40% applied
-reasoning safeguards are unchanged. Passing content safeguards does not
-override the beta credential-status gate.
+reasoning safeguards are unchanged. Beta authorization only relaxes the
+credential-status gate; it never approves a question, supplies missing evidence,
+or overrides freshness, objective binding, review, or mode-readiness failures.
 
+The policy release does not refresh documentation or review dates.
 Questions, answers, explanations, citations, objectives, technical sources,
 review passes, rubrics and both review ledgers are unchanged. The undated
 objective version retains its original content hash and retrieval identity;

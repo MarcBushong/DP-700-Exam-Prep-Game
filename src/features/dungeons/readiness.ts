@@ -1,4 +1,5 @@
 import type { Question, Taxonomy } from '../grounding/schema';
+import { hasPlayableIdentity } from './availability';
 import {
   readinessThresholdsSchema,
   type Credential,
@@ -59,10 +60,10 @@ export function getDungeonReadiness(
 ): DungeonReadiness {
   const threshold = stats.thresholds ?? readinessThresholdsSchema.parse({});
   const common: string[] = [];
-  if (!credential.isVerified || credential.status !== 'active')
+  if (!hasPlayableIdentity(credential))
     common.push(
       credential.sealedReason ??
-        'Sealed dungeon — awaiting a verified active map.',
+        'Sealed dungeon — requires a verified active identity or explicitly enabled beta study access.',
     );
   if (
     ['stale', 'unavailable', 'validating'].includes(credential.contentReadiness)

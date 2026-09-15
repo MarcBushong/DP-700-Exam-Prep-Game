@@ -52,7 +52,10 @@ export function QuestionMetadata({
   return (
     <div className="question-metadata">
       <div className="dungeon-origin" data-dungeon-id={id}>
-        <span>{credential?.examCode ?? id}</span>
+        <span>
+          {credential?.examCode ?? id}
+          {credential?.status === 'beta' ? ' · BETA' : ''}
+        </span>
         {!neutral && (
           <span>· {credential?.dungeonName ?? 'Historical dungeon'}</span>
         )}

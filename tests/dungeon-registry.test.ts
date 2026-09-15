@@ -7,6 +7,7 @@ import {
 } from '../src/features/dungeons/packages';
 import { packageIds } from '../scripts/content-files';
 import { content } from '../src/features/grounding/content';
+import { hasPlayableIdentity } from '../src/features/dungeons/availability';
 import {
   mergeCatalog,
   reactionCatalog,
@@ -42,7 +43,7 @@ describe('eager package registry', () => {
     for (const entry of list) {
       const dungeon = getDungeonPackage(entry.credentialId);
       expect(entry.verifiedQuestionCount).toBe(dungeon?.questions.length ?? 0);
-      if (!entry.isVerified || entry.status !== 'active') {
+      if (!hasPlayableIdentity(entry)) {
         expect(entry.readiness.study).toBe(false);
         expect(entry.readiness.gauntlet).toBe(false);
       }

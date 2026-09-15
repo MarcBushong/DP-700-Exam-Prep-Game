@@ -1,5 +1,9 @@
 # AI bank expansion and beta status: reviewed outcome
 
+**Historical expansion snapshot.** The later
+[GH-600 beta-access release](gh600-beta-availability.md) opens its reviewed bank
+without changing its beta identity. The expansion outcomes below are preserved.
+
 This is original, unofficial study material, not a Microsoft or GitHub practice
 exam, endorsement, or source of real exam questions.
 

@@ -13,8 +13,10 @@ current name, code, objective, weighting or question bank from the requested lis
    verificationEvidence. Missing information stays null/unverified with a
    specific `sealedReason`. Record original dungeon presentation separately in
    `themeMetadata`. Add generic hero-class mappings only for discovery.
-   Beta and pending/unverified credentials remain sealed. Freshly verified beta
-   identity may update the visible status/warnings but never authorizes gameplay.
+   Beta credentials default to sealed; verified beta identity alone is not
+   gameplay authorization. GH-600 explicitly enables `allowBetaPlay` in the
+   catalog while retaining its beta label and all normal content gates.
+   Pending/unverified credentials remain sealed.
 4. Review the credential's `sourceAllowlist`. Microsoft uses English Learn
    documentation. GitHub documentation may use bounded docs paths; resource,
    skills and competency PDF URLs require exact, genuinely reviewed URLs.

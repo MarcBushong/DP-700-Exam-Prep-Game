@@ -470,7 +470,10 @@ function DungeonCard({
         <p className="official-name">
           {credential.currentName ?? 'Official identity awaiting verification'}
         </p>
-        <BetaAvailabilityNotice credential={credential} />
+        <BetaAvailabilityNotice
+          credential={credential}
+          readiness={dungeon?.readiness}
+        />
         <div className="encounter-count">
           <strong>{dungeon?.questions.length ?? 0}</strong>
           <span>
