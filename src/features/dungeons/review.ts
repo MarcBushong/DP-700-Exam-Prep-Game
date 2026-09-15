@@ -7,6 +7,35 @@ import type {
 import { verificationReviewSchema } from '../grounding/workflow';
 import type { ContentFinding } from '../grounding/quality';
 
+const digestCache = new Map<string, string>();
+const maximumCachedCharacters = 2 * 1024 * 1024;
+const maximumCachedEntries = 2048;
+let cachedCharacters = 0;
+
+function contentDigest(payload: string): string {
+  const cached = digestCache.get(payload);
+  if (cached !== undefined) {
+    digestCache.delete(payload);
+    digestCache.set(payload, cached);
+    return cached;
+  }
+  const digest = sha256(payload);
+  if (payload.length <= maximumCachedCharacters) {
+    while (
+      cachedCharacters + payload.length > maximumCachedCharacters ||
+      digestCache.size >= maximumCachedEntries
+    ) {
+      const oldest = digestCache.keys().next().value;
+      if (oldest === undefined) break;
+      digestCache.delete(oldest);
+      cachedCharacters -= oldest.length;
+    }
+    digestCache.set(payload, digest);
+    cachedCharacters += payload.length;
+  }
+  return digest;
+}
+
 function canonical(value: unknown): string {
   if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
   if (value && typeof value === 'object')
@@ -31,12 +60,13 @@ export function questionFingerprint(question: Question): string {
   const authored = Object.fromEntries(
     Object.entries(question).filter(([key]) => !metadata.has(key)),
   );
-  return sha256(canonical(authored));
+  // Cache exact canonical content, never object identity or review eligibility.
+  return contentDigest(canonical(authored));
 }
 
 /** Bind the reviewed objective map, not its independently recorded retrieval time. */
 export function objectiveFingerprint(taxonomy: Taxonomy): string {
-  return sha256(
+  return contentDigest(
     canonical({
       studyGuideEffectiveDate: taxonomy.studyGuideEffectiveDate,
       studyGuideUrl: taxonomy.studyGuideUrl,

@@ -1,6 +1,40 @@
 # DP-800 / DP-420 expansion progress
 
-## DP-800-first closeout: browser acceptance blocked
+## Final local acceptance
+
+**All required local gates now pass for the frozen limited DP-800 Study
+release: 719/719 stock unit/integration tests and 78/78 stock desktop/mobile
+browser tests.** Lint, strict TypeScript, formatting, full coverage,
+credential/content/source/attestation checks and the production build also pass.
+The content scope remains **39 verified playable questions**, two excluded
+manual-review records and 61 deferred candidates; the original approximately
+150 verified target is still short by 111. DP-420 content remains deferred.
+
+The startup correction reuses SHA-256 digests only for **identical canonical
+content strings**, with a bounded LRU of 2,048 entries and 2,097,152 retained
+UTF-16 characters. It does not cache object identity, review verdicts, freshness
+or readiness. Every call still derives the current authored payload, so an
+in-place question or objective edit changes the key. Oversized payloads are not
+retained. Browser profiling found repeated hashing to be the hottest
+non-system function (5,847 ms across 16 captured profiles); avoiding repeated
+identical work reduces startup validation cost without skipping a gate.
+
+Tests first reproduced two redundant-hashing failures; six new regression
+tests cover exact copies, authored mutations, review-only metadata, same-version
+objective edits, eviction and oversized inputs. The complete before/after
+validation report is **identical across all eight packages and 866 records**,
+apart from its generated timestamp. The new code received an independent review
+with no significant issues.
+
+The full coverage run initially had five existing AI-package five-second
+timeouts. The unchanged affected suite passed in isolation, followed by a
+passing stock full-coverage run performed alone. That history is retained;
+neither diagnostic success nor the earlier browser failures are erased or
+relabeled. No timeouts, assertions, axe coverage or runner defaults were changed.
+See [`dp-800-validation-results.json`](dp-800-validation-results.json) for
+actual command results and log hashes.
+
+## Frozen scope and historical acceptance blockers
 
 The prioritized deliverable is a **limited DP-800 Study bank**, not completion
 of the original approximately 150-question target. New authoring stopped at
@@ -113,10 +147,10 @@ timeout increase, skipped assertion, reduced axe coverage or runner-default
 change was used. The actual GH map-to-setup strict-locator races were corrected
 with route waits and setup-form scoping, including the newly merged beta entry.
 
-**Remote delivery is blocked by full-browser acceptance.** A prepared PR
-description is not a claim that the branch passes all gates. No deployment or
-merge to main is authorized. The historical baseline failures and intermediate
-results below remain part of the audit trail, not current success claims.
+At this historical checkpoint, remote delivery was blocked by full-browser
+acceptance. The final local acceptance section above records the later green
+result. No deployment or merge to main is authorized. The baseline failures and
+intermediate results below remain part of the audit trail.
 
 ## Historical verified Study checkpoint, September 15, 2026
 
