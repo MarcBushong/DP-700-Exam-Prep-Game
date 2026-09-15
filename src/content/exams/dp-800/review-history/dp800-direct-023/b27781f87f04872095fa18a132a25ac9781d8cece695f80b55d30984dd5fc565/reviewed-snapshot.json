@@ -1,0 +1,370 @@
+{
+  "question": {
+    "id": "dp800-direct-023",
+    "question": "A SQL Server 2025 query computes VECTOR_DISTANCE for valid vectors. A vector index also exists, and the developer expects the function to switch automatically to approximate evaluation. Which statement describes the documented behavior of this function?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "It switches to approximate distance whenever a vector index exists."
+      },
+      {
+        "id": "b",
+        "text": "It computes exact distance without using the vector index."
+      },
+      {
+        "id": "c",
+        "text": "It becomes approximate automatically above a fixed row-count threshold."
+      },
+      {
+        "id": "d",
+        "text": "It uses the vector index only when the requested metric is cosine."
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "VECTOR_DISTANCE remains an exact distance calculation without using the vector index.",
+    "deepExplanation": "Index existence and metric selection do not turn this function into an approximate-search API. Choosing an approximate operation is a separate decision with its own supported-platform and index prerequisites.",
+    "whyOtherAnswersAreWrong": {
+      "a": "VECTOR_DISTANCE is documented as exact and does not use a vector index, even when one exists.",
+      "c": "The function's documented exact behavior is not switched by a fixed row-count threshold.",
+      "d": "Cosine is a supported distance metric, but choosing it does not override the function's documented no-vector-index behavior."
+    },
+    "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+    "skill": "design-and-implement-intelligent-search",
+    "subskill": "Identify when to use vector-related types and functions for semantic searching, including VECTOR\\_NORMALIZE, VECTOR\\_DISTANCE, VECTORPROPERTY, and VECTOR\\_SEARCH",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d3-vector-distance"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql"
+    ],
+    "documentationTitles": [
+      "VECTOR_DISTANCE (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T00:39:05.156Z",
+    "lastValidatedAt": "2026-09-15T00:39:05.156Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2025",
+      "vector-distance",
+      "exact-search"
+    ],
+    "conceptId": "sql-vector-distance-is-exact-and-does-not-use-vector-index",
+    "verificationStatus": "rejected",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "Rejected in pass 3 on an independently assigned 43/48 rubric, not because the technical answer is false. Raw product evidence directly supports exact/no-vector-index behavior and refutes every proposed exception. However, the intermediate/technical-implementation labels overstate a one-sentence function-contract recall task, and the alternatives are thin variants rather than plausible competing implementations. No executable SQL is present to analyze. Source ancestry, portable snapshot paths, author identity and exact current content/objective hashes were checked. No candidate, source or status was edited. Any authored repair must restart all three passes.",
+    "requiresManualReview": true,
+    "sourceLastReviewedAt": "2026-09-15T00:39:05.140Z",
+    "confidenceReason": "High confidence in both the technical exact-distance answer and the separate design rejection. The reviewed snapshot supplies direct evidence but lacks the reasoning depth and distractor strength required to reach 44/48 under its authored classification."
+  },
+  "review": {
+    "questionId": "dp800-direct-023",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-independent-adversarial-design-01",
+    "questionFingerprint": "b27781f87f04872095fa18a132a25ac9781d8cece695f80b55d30984dd5fc565",
+    "reviewedAt": "2026-09-15T02:54:20.823Z",
+    "verdict": "rejected",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-distance",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\ai\\receipts\\doc-vector-distance.json",
+        "retrievedAt": "2026-09-14T22:23:50.656Z",
+        "lastReviewedAt": "2026-09-15T00:39:05.140Z",
+        "supportingSummary": "VECTOR_DISTANCE explicitly applies to SQL Server 2025, calculates exact distance and does not use a vector index even if one exists. It lists cosine, euclidean and dot metrics and identifies VECTOR_SEARCH as a separate operation for indexed approximate search. This directly supports the technical key, without supplying the implementation depth missing from the question or proving separate index-deployment availability."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The reference explicitly says an available vector index is not used by VECTOR_DISTANCE. Index presence does not automatically convert this scalar calculation into approximate search.",
+        "sourceIds": [
+          "dp800-d3-vector-distance"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "The function's documented contract is exact distance without vector-index use, and SQL Server 2025 is in its applicability statement. The answer is technically correct even though the item fails the independent design rubric.",
+        "sourceIds": [
+          "dp800-d3-vector-distance"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "No row-count threshold changes the function contract stated by the source. Indexed approximate search requires choosing a different operation, not merely reaching a table-size threshold.",
+        "sourceIds": [
+          "dp800-d3-vector-distance"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The source supports cosine as a distance metric but gives it no exception to the no-vector-index behavior. Metric selection cannot supply the index usage asserted by this answer.",
+        "sourceIds": [
+          "dp800-d3-vector-distance"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": false
+    },
+    "verificationNotes": "Rejected in pass 3 on an independently assigned 43/48 rubric, not because the technical answer is false. Raw product evidence directly supports exact/no-vector-index behavior and refutes every proposed exception. However, the intermediate/technical-implementation labels overstate a one-sentence function-contract recall task, and the alternatives are thin variants rather than plausible competing implementations. No executable SQL is present to analyze. Source ancestry, portable snapshot paths, author identity and exact current content/objective hashes were checked. No candidate, source or status was edited. Any authored repair must restart all three passes.",
+    "confidenceReason": "High confidence in both the technical exact-distance answer and the separate design rejection. The reviewed snapshot supplies direct evidence but lacks the reasoning depth and distractor strength required to reach 44/48 under its authored classification."
+  },
+  "envelope": {
+    "credentialId": "dp-800",
+    "objectiveVersion": "March 12, 2026",
+    "questionFingerprint": "b27781f87f04872095fa18a132a25ac9781d8cece695f80b55d30984dd5fc565",
+    "sourceIds": [
+      "dp800-d3-vector-distance"
+    ],
+    "retrievedAt": "2026-09-14T22:23:50.656Z",
+    "lastValidatedAt": "2026-09-15T00:39:05.156Z",
+    "answerEvidence": [
+      {
+        "choiceId": "b",
+        "sourceIds": [
+          "dp800-d3-vector-distance"
+        ],
+        "summary": "The function's documented contract is exact distance without vector-index use, and SQL Server 2025 is in its applicability statement. The answer is technically correct even though the item fails the independent design rubric."
+      }
+    ],
+    "distractorEvidence": [
+      {
+        "choiceId": "a",
+        "sourceIds": [
+          "dp800-d3-vector-distance"
+        ],
+        "summary": "The reference explicitly says an available vector index is not used by VECTOR_DISTANCE. Index presence does not automatically convert this scalar calculation into approximate search."
+      },
+      {
+        "choiceId": "c",
+        "sourceIds": [
+          "dp800-d3-vector-distance"
+        ],
+        "summary": "No row-count threshold changes the function contract stated by the source. Indexed approximate search requires choosing a different operation, not merely reaching a table-size threshold."
+      },
+      {
+        "choiceId": "d",
+        "sourceIds": [
+          "dp800-d3-vector-distance"
+        ],
+        "summary": "The source supports cosine as a distance metric but gives it no exception to the no-vector-index behavior. Metric selection cannot supply the index usage asserted by this answer."
+      }
+    ],
+    "rubric": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-design-01",
+      "reviewedAt": "2026-09-15T02:54:20.823Z",
+      "notes": "43/48, independently assigned and below the required threshold. The objective mapping, SQL Server 2025 scope and direct exact/no-vector-index contract support full technical and documentation scores. The explanation is accurate and clear. Distractor plausibility is 2 for three thin variants of an automatic behavior the function does not have, especially an unspecified fixed threshold. Difficulty authenticity is 2 because the labelled technical implementation contains no implementation and tests one recalled contract. Originality is 3 for a conventional function-versus-index misconception. Technical correctness does not overcome these design deficiencies.",
+      "version": 2,
+      "scores": {
+        "alignment": 4,
+        "accuracy": 4,
+        "scenarioCompleteness": 4,
+        "answerUniqueness": 4,
+        "distractorPlausibility": 2,
+        "distractorEvidence": 4,
+        "documentationStrength": 4,
+        "citationSpecificity": 4,
+        "difficultyAuthenticity": 2,
+        "explanationQuality": 4,
+        "originality": 3,
+        "clarityAccessibility": 4
+      }
+    }
+  },
+  "stages": {
+    "generation": {
+      "authorId": "copilot-dp800-direct-author",
+      "generatedAt": "2026-09-15T00:39:05.156Z",
+      "questionFingerprint": "b27781f87f04872095fa18a132a25ac9781d8cece695f80b55d30984dd5fc565",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "claims": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "dp800-d3-vector-distance"
+          ],
+          "summary": "VECTOR_DISTANCE is documented as exact and does not use a vector index, even when one exists."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "dp800-d3-vector-distance"
+          ],
+          "summary": "The product reference explicitly states that vector distance is exact and does not use any available vector index."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "dp800-d3-vector-distance"
+          ],
+          "summary": "The function's documented exact behavior is not switched by a fixed row-count threshold."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": [
+            "dp800-d3-vector-distance"
+          ],
+          "summary": "Cosine is a supported distance metric, but choosing it does not override the function's documented no-vector-index behavior."
+        }
+      ]
+    },
+    "technical": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "review": {
+        "questionId": "dp800-direct-023",
+        "authorId": "copilot-dp800-direct-author",
+        "reviewerId": "dp800-independent-technical-01",
+        "questionFingerprint": "b27781f87f04872095fa18a132a25ac9781d8cece695f80b55d30984dd5fc565",
+        "reviewedAt": "2026-09-15T02:29:55.240Z",
+        "verdict": "verified",
+        "sourceReviews": [
+          {
+            "sourceId": "dp800-d3-vector-distance",
+            "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql",
+            "evidencePath": ".grounding\\dp-expansion\\authors\\ai\\receipts\\doc-vector-distance.json",
+            "retrievedAt": "2026-09-14T22:23:50.656Z",
+            "lastReviewedAt": "2026-09-15T00:39:05.140Z",
+            "supportingSummary": "The raw Applies to line explicitly includes SQL Server 2025. The opening states VECTOR_DISTANCE is always exact and does not use any vector index even when available; approximate index-based searching is a separate VECTOR_SEARCH operation. The arguments include cosine, euclidean, and dot metrics without changing that rule. Managed Instance update-policy conditions are separately stated and are not generalized to this SQL Server question."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "contradicted",
+            "rationale": "The raw reference explicitly addresses index existence: VECTOR_DISTANCE remains exact and does not use a vector index even if one is available. Merely creating or retaining that index therefore does not switch this function to approximate evaluation.",
+            "sourceIds": [
+              "dp800-d3-vector-distance"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "supported",
+            "rationale": "This states both documented properties of the SQL Server 2025 function: exact distance calculation and no use of the vector index. The valid-vector premise keeps the question focused on evaluation behavior rather than invalid argument errors.",
+            "sourceIds": [
+              "dp800-d3-vector-distance"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "contradicted",
+            "rationale": "An automatic approximation threshold would contradict the reference's always-exact behavior. Table size may motivate the developer to choose a different search operation, but it does not silently change VECTOR_DISTANCE's documented semantics.",
+            "sourceIds": [
+              "dp800-d3-vector-distance"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "Cosine is a supported distance metric, but the no-vector-index statement applies to the function rather than only to some metrics. Selecting cosine therefore cannot establish the index-based exception this option asserts.",
+            "sourceIds": [
+              "dp800-d3-vector-distance"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": true
+        },
+        "verificationNotes": "PASS 2 only. Checked the actual product reference, including SQL Server 2025 applicability and the metric list. This review concerns VECTOR_DISTANCE's behavior, not a claim that every vector-index or approximate-search feature is GA across SQL products. The existing index and valid vectors are premises; no index-creation or VECTOR_SEARCH deployment recipe is supplied. The explanation correctly separates choosing another operation from silently changing this function. No executable SQL snippet needs validation here. Intermediate technical-implementation is a modest but reasonable classification for correcting the developer's index-selection misconception. Similar sentence lengths do not expose the key. The question is original application of the reference and does not duplicate the cohort's RRF or candidate-join facts.",
+        "confidenceReason": "The product article directly answers the exact misconception and explicitly says the rule holds even when an index exists. Neither a cardinality threshold nor a cosine exception can be reconciled with that actual evidence."
+      }
+    },
+    "adversarial": {
+      "questionFingerprint": "b27781f87f04872095fa18a132a25ac9781d8cece695f80b55d30984dd5fc565",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-design-01",
+      "reviewedAt": "2026-09-15T02:54:20.823Z",
+      "verdict": "rejected",
+      "optionChallenges": [
+        {
+          "choiceId": "a",
+          "claimRepresented": "The existence of a vector index automatically changes VECTOR_DISTANCE into approximate evaluation.",
+          "whyIncorrectInContext": "The product article expressly says VECTOR_DISTANCE is exact and does not use a vector index even when one is available. The proposed automatic switch contradicts that statement directly.",
+          "couldBeCorrectWhen": "There is no supported circumstance in the cited evidence where this statement is correct for VECTOR_DISTANCE. An explicitly different VECTOR_SEARCH operation can use a vector index, but changing the operation is not an automatic effect of index existence.",
+          "sourceIds": [
+            "dp800-d3-vector-distance"
+          ],
+          "evidenceSummary": "The introduction defines the exact/no-vector-index behavior and names VECTOR_SEARCH as the separate function required for indexed approximate search."
+        },
+        {
+          "choiceId": "b",
+          "claimRepresented": "VECTOR_DISTANCE computes the exact distance between its vector inputs without consulting an available vector index.",
+          "whyIncorrectInContext": "This is NOT technically incorrect: the statement matches the source's explicit behavior for the function on the SQL Server 2025 platform named in Applies to.",
+          "couldBeCorrectWhen": "It is correct for a valid VECTOR_DISTANCE invocation using the supported vector inputs and distance metric. An index elsewhere in the query does not alter this scalar function's documented distance semantics.",
+          "sourceIds": [
+            "dp800-d3-vector-distance"
+          ],
+          "evidenceSummary": "The article's SQL Server 2025 applicability, function definition, argument list and scalar-return section support the exact computation. Its restriction concerns vector-index use, not every possible index a containing query might use."
+        },
+        {
+          "choiceId": "c",
+          "claimRepresented": "A fixed data-size threshold causes VECTOR_DISTANCE to change automatically from exact to approximate behavior.",
+          "whyIncorrectInContext": "The cited contract has no such conditional switch; it states exact distance without vector-index use. More rows do not change the meaning of the named function.",
+          "couldBeCorrectWhen": "No documented threshold makes this statement correct for VECTOR_DISTANCE. An engineer may explicitly choose a different indexed approximate-search operation, but that is a query-design change rather than the automatic behavior asserted here.",
+          "sourceIds": [
+            "dp800-d3-vector-distance"
+          ],
+          "evidenceSummary": "The exactness statement is unconditional with respect to row count, and the article identifies a separate API for indexed approximate search. It supplies no fixed-row-count conversion rule."
+        },
+        {
+          "choiceId": "d",
+          "claimRepresented": "Cosine is a special metric that permits VECTOR_DISTANCE to use the vector index.",
+          "whyIncorrectInContext": "Cosine is indeed supported, but metric support does not override the same article's no-vector-index rule. The two facts concern different aspects of the function.",
+          "couldBeCorrectWhen": "A cosine distance calculation is supported, but the vector-index part of this option has no supported context for VECTOR_DISTANCE. Any proposed indexed-search alternative would be a different operation with separately reviewed prerequisites.",
+          "sourceIds": [
+            "dp800-d3-vector-distance"
+          ],
+          "evidenceSummary": "The Arguments section lists cosine, euclidean and dot while the introduction independently states that VECTOR_DISTANCE does not use a vector index. No metric-specific exception is documented."
+        }
+      ],
+      "challenges": {
+        "scope": "The statement is about the scalar VECTOR_DISTANCE function on SQL Server 2025. It is not a claim that a surrounding query can use no indexes at all, that exact distance ensures useful semantic results, or that every SQL platform supports the same feature.",
+        "plan": "SQL Server 2025 is named, so the source's Azure SQL Managed Instance update-policy caveat is not an unstated prerequisite of this scenario. This review does not approve a service plan or an ANN deployment.",
+        "role": "No administrator role, permission grant or index-creation action is requested. The query is already described as computing distance; an authorization failure is not a defensible alternative explanation.",
+        "preconditions": "Valid vectors and an existing vector index are premises rather than instructions to create an index. The function contract remains exact regardless of that index. Index enablement, preview status and approximate-search prerequisites are not established by this question.",
+        "featureStatus": "The frozen reference explicitly applies VECTOR_DISTANCE to SQL Server 2025. Its function behavior is the reviewed feature; neither this review nor the candidate's GA field is used as proof that every vector-index or VECTOR_SEARCH deployment capability is GA.",
+        "sourceChanges": "I read the actual product response and verified its link in the saved search-summary receipt. The manifest matches its 2026-09-14T22:23:50.656Z retrieval and frozen review snapshot. No source change caused this rejection; the failure is editorial classification and distractor quality.",
+        "stemSufficiency": "The stem is technically sufficient to identify one answer, but the index-exists premise reproduces the same condition already addressed by a single explicit source sentence. There is no implementation to analyze.",
+        "explanationBounds": "The explanation correctly distinguishes exact function evaluation from a different approximate-search operation and does not invent a row-count or cosine exception. It needs no factual repair.",
+        "reasoningDepth": "The intermediate/technical-implementation classification is not earned. The learner need only recall one function contract; there is no SQL expression, returned value, competing query design, execution evidence or interaction of prerequisites to evaluate.",
+        "answerClues": "Three options invent variants of automatic index/approximation behavior, while the correct option negates that common assumption. The unsupported fixed-threshold option is especially weak, and the alternatives do not offer independently plausible implementations."
+      },
+      "qualityNotes": "Rejected on independent design score 43/48 despite a technically correct key. Difficulty authenticity is 2 because this is single-contract recall labelled technical implementation; distractor plausibility is 2 because automatic index existence, an unspecified fixed threshold and a metric exception repeat the same unsupported premise. Originality is 3 for a near-direct documented-function distinction. No existing SQL vector-distance duplicate was found; ai103-028 instead interprets Azure AI Search candidate limits and RRF merging. Any authored classification or option repair must restart all three passes."
+    }
+  }
+}

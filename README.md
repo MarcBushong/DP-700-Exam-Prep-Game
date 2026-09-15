@@ -61,8 +61,8 @@ skill breadth, boss-tier content, and no blocking failures. Sealed, stale,
 retiring, beta, and insufficiently reviewed content stays out of play.
 
 The map represents all 18 requested identifiers. AZ-800 is explicitly retiring;
-GH-600 is beta; DP-420 is sealed because its captured objective outline is
-future-dated. Undated outlines use clearly labelled retrieved-content versions,
+GH-600 is beta; DP-420 is sealed because a complete currently effective objective
+map was not established from the permitted evidence. Undated outlines use clearly labelled retrieved-content versions,
 not invented effective dates. Other mapped credentials without a reviewed
 package remain sealed even when their identity and current outline are verified.
 
@@ -71,13 +71,14 @@ package remain sealed even when their identity and current outline are verified.
 | Dungeon                         | Playable verified encounters | Modes                           |
 | ------------------------------- | ---------------------------: | ------------------------------- |
 | DP-700: The Fabric Depths       |                          162 | Study and Boss Gauntlet         |
+| DP-800: The Database Deeps      |                           27 | Study                           |
 | AZ-104: The Infrastructure Keep |                           30 | Study                           |
 | SC-200: The Sentinel Watch      |                           30 | Study                           |
 | AI-103: The AI Workshop         |                           30 | Study                           |
 | GH-300: The Copilot Spire       |                          149 | Study and Boss Gauntlet         |
 | GH-600: The Agentic Workshop    |                            0 | Sealed: availability unverified |
 
-**401 playable verified encounters**. GH-300 retains three rejected duplicates
+**428 playable verified encounters**. GH-300 retains three rejected duplicates
 and three manual-review records outside gameplay. GH-600 has **136 fully
 three-pass-reviewed questions** and 13 rejected candidates, but none can enter
 gameplay until its availability gate is resolved. All major floors are sampled;
@@ -92,21 +93,31 @@ records the earlier platform baseline.
 
 ### DP-800 / DP-420 work on this branch
 
-**Authoring resumed; no new DP gameplay is authorized yet.** DP-800 has
-**27 original saved candidates**, of which **8 have completed all three passes
-and the strict rubric**. The reviewed set is still below the 25-item Study
-minimum and lacks verified breadth, so none is playable yet. One rejected and
-one manual-review result remain reportable and excluded. DP-420 retains
-a null current objective version: the
-retrieved October 6, 2026 outline is prospective and stored outside gameplay.
-Both DP modes remain locked. No filler, fabricated reviews or lowered readiness
-thresholds substitute for missing content.
+**DP-800 Study is open with 27 independently verified original encounters.**
+All 27 completed separate generation, technical verification and adversarial
+review, meet the unchanged 44/48 rubric gate, and cover all three major objective
+areas. The effective map is **March 12, 2026**; the source manifest's latest
+retrieval is **September 14, 2026, 23:41:04 UTC**, and the latest independent
+question review is **September 15, 2026, 04:27:57 UTC**. This is a limited,
+build-time-grounded bank, not an always-current assessment.
+
+The **150-question target is still in progress**. Boss remains locked below its
+75-question minimum. The reviewed Advanced pool currently has four distinct
+questions, so a five-question Advanced request is visibly capped at four.
+Earlier rejected and manual-review versions remain archived; their authored
+repairs restarted all three passes rather than inheriting approval.
+
+DP-420 retains a null current objective version. Its retrieved **October 6,
+2026** outline is prospective and stored outside gameplay; both modes remain
+locked. This is an unresolved current-map/content gap, not a claim that the
+credential itself is future-only.
 
 See the [expansion progress and historical blocked report](docs/dp-expansion-report.md) for exact
 counts, executed checks, outstanding acceptance gates and source evidence, and
 [DP content maintenance](docs/dp-content-maintenance.md) for the resume workflow.
-Local RED checkpoints preserve the unfinished work and failing real-content
-acceptance gates. Nothing has been pushed.
+Local checkpoints preserve the original failing gates and subsequent genuine
+Study release. Target expansion and final acceptance are not complete; nothing
+has been pushed.
 
 ![The Certification Dungeon map with original castle artwork, hero-class selection, and five open dungeons](docs/screenshots/dungeon-map.png)
 

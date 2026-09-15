@@ -207,7 +207,11 @@ test('GH-300 three-pass study, sources, isolated progress, GH-600 gating, and DP
     .locator('#dungeon-dp-700')
     .getByRole('button', { name: 'Descend', exact: true })
     .click();
-  await page.getByRole('button', { name: 'Descend', exact: true }).click();
+  await page.waitForURL(/#\/setup$/);
+  await page
+    .locator('form.setup-layout')
+    .getByRole('button', { name: 'Descend', exact: true })
+    .click();
   await expect(page.locator('.question-panel .dungeon-origin')).toHaveAttribute(
     'data-dungeon-id',
     'dp-700',

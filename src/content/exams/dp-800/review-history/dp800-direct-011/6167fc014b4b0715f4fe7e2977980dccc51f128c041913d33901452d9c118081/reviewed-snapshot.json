@@ -1,0 +1,370 @@
+{
+  "question": {
+    "id": "dp800-direct-011",
+    "question": "On SQL Server 2022, an ordinary reporting user has no inherited data permissions and no administrative role. The user must read all columns of dbo.Contact but see unmasked values only for its masked Phone column. Schema changes are not permitted. Which two narrowly scoped permissions satisfy this requirement? Select two.",
+    "questionType": "multi-select",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "SELECT on dbo.Contact"
+      },
+      {
+        "id": "b",
+        "text": "VIEW DEFINITION on dbo.Contact"
+      },
+      {
+        "id": "c",
+        "text": "Column-level UNMASK for dbo.Contact.Phone"
+      },
+      {
+        "id": "d",
+        "text": "ALTER ANY MASK at database scope"
+      }
+    ],
+    "correctAnswer": [
+      "a",
+      "c"
+    ],
+    "explanation": "Grant table SELECT and column-level UNMASK for Phone.",
+    "deepExplanation": "Data access and masking presentation are separate controls. UNMASK alone grants no SELECT access, while broader administrative mask-management permissions are unnecessary and outside the stated authorization scope.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Metadata visibility is not a substitute for SELECT or UNMASK. It does not authorize the required unmasked table-data read.",
+      "d": "ALTER ANY MASK manages mask definitions; it grants neither SELECT nor column-level UNMASK, so it cannot replace either required permission. Changing a mask also requires table ALTER and is outside the stated no-schema-change workflow."
+    },
+    "objectiveDomain": "secure-optimize-and-deploy-database-solutions",
+    "skill": "implement-data-security-and-compliance",
+    "subskill": "Design and implement Dynamic Data Masking",
+    "difficulty": "advanced",
+    "complexity": "scenario-based",
+    "sourceIds": [
+      "dp800-d2-masking"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking"
+    ],
+    "documentationTitles": [
+      "Dynamic data masking"
+    ],
+    "generatedAt": "2026-09-15T01:20:17.007Z",
+    "lastValidatedAt": "2026-09-15T01:20:17.007Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "masking",
+      "least-privilege"
+    ],
+    "conceptId": "sql-ddm-select-and-column-unmask-separate-permissions",
+    "verificationStatus": "manual-review-required",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "Independent third-context PASS 3 of dp800-direct-011 only. Read the repaired candidate, objective map, manifest, registry, index, prior technical attestation and actual saved product/teaching/navigation receipts; re-derived the answer without relying on approval. Independent Python canonical SHA-256 and repository parsed fingerprint functions both reproduce the requested question and objective hashes. Rechecked the frozen inputs before attesting. The primary evidence supports a+c and the d repair, but b lacks named-permission coverage and a verified alternate in the cited snapshot; the literal starting state does not exclude other direct UNMASK grants. All six option pairs were challenged, and the rubric is 36/48, so this is manual-review-required. Checked 556 records across seven existing bank files and 66 direct candidate-snapshot records; different-ID exact stem and concept matches were absent. The repository duplicate heuristic also found no match to this item in existing banks. Read the nearest DP-700 masking, inheritance and mask-administration questions; those test different decisions. Same-ID copies in batch-02 and cohort-01 are prior snapshots, not evidence of a new active duplicate. Originality is bounded to this local corpus and the saved teaching/product wording, not a global uniqueness claim. codeReviewed is an explicit N/A because the candidate contains no executable snippet; no SQL execution is claimed. qualityReviewed means the quality review was completed, not that its rubric passed. This complete object is returned inline for faithful parent persistence; no candidate/source edits, ledger promotion, browser launch, installation, delegation or Study unlock was performed.",
+    "requiresManualReview": true,
+    "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
+    "confidenceReason": "High confidence in the intended SELECT plus Phone-column UNMASK mechanism and the corrected mask-administration explanation. Insufficient evidence for a complete strict attestation of b and insufficiently explicit effective-permission assumptions prevent unconditional approval. The independently assigned rubric also fails promotion thresholds. Confidence is limited to the frozen saved receipts; no fresh-live or database-runtime validation is asserted."
+  },
+  "review": {
+    "questionId": "dp800-direct-011",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-independent-adversarial-011",
+    "questionFingerprint": "6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081",
+    "reviewedAt": "2026-09-15T02:00:28.947Z",
+    "verdict": "manual-review-required",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d2-masking",
+        "url": "https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\secure\\raw\\doc-masking.json",
+        "retrievedAt": "2026-09-14T22:19:05.185Z",
+        "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+        "supportingSummary": "Independently read the actual saved microsoft_docs_fetch content, not the technical approval summary. Decoded Permissions lines 43-55 support separate SELECT and UNMASK, CONTROL overrides, and ALTER ANY MASK plus table ALTER for mask modification. Lines 100-125 bound inference protection and establish SQL Server 2022 granular scope; lines 304-343 show separate read access and column UNMASK. The receipt never names VIEW DEFINITION: its metadata-visibility link is not fetched content in this cited snapshot. URL, retrieval time and source-review time exactly preserve the frozen manifest; this is a review of saved evidence, not a new source retrieval."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "This is the data-access half of the intended solution. Table SELECT authorizes reading all columns while defined masks continue to affect results; Phone requires the separate c grant. The saved article explicitly requires SELECT alongside UNMASK. This supports the permission set, not an assumption that the principal has no other direct grants. dp800-d2-masking, decoded lines 45-55 and 166-187.",
+        "sourceIds": [
+          "dp800-d2-masking"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "ambiguous",
+        "rationale": "Evidence-status ambiguity, not a finding that VIEW DEFINITION is a valid substitute. The intended exclusion is metadata versus table-data access, but the admitted masking receipt does not name this permission or establish its complete behavior. Its linked Metadata Visibility Configuration article was not independently read as admitted frozen evidence for this question. A metadata-inspection alternate therefore cannot receive the required sourced attestation. dp800-d2-masking, decoded lines 43-55.",
+        "sourceIds": [
+          "dp800-d2-masking"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "Column UNMASK is explicitly available starting in SQL Server 2022. It is the correct presentation-control half when paired with a; the source example supplies read access separately before granting UNMASK on one column. Limiting the new grant to Phone does not revoke any pre-existing direct UNMASK elsewhere, so the intended baseline must be stated for an unconditional Phone-only outcome. dp800-d2-masking, decoded lines 45-55, 123-125 and 304-343.",
+        "sourceIds": [
+          "dp800-d2-masking"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Mask-management authority does not supply the required SELECT and UNMASK pair. Actual alteration additionally needs table ALTER and permission to change schema. The repaired rationale correctly distinguishes granting ALTER ANY MASK from carrying out ALTER TABLE; I do not repeat the obsolete claim that the grant itself changes schema. A security officer modifying masks is the documented alternate. dp800-d2-masking, decoded lines 47-51, 90 and 191-205.",
+        "sourceIds": [
+          "dp800-d2-masking"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": false,
+      "explanationsSupported": false,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": false,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent third-context PASS 3 of dp800-direct-011 only. Read the repaired candidate, objective map, manifest, registry, index, prior technical attestation and actual saved product/teaching/navigation receipts; re-derived the answer without relying on approval. Independent Python canonical SHA-256 and repository parsed fingerprint functions both reproduce the requested question and objective hashes. Rechecked the frozen inputs before attesting. The primary evidence supports a+c and the d repair, but b lacks named-permission coverage and a verified alternate in the cited snapshot; the literal starting state does not exclude other direct UNMASK grants. All six option pairs were challenged, and the rubric is 36/48, so this is manual-review-required. Checked 556 records across seven existing bank files and 66 direct candidate-snapshot records; different-ID exact stem and concept matches were absent. The repository duplicate heuristic also found no match to this item in existing banks. Read the nearest DP-700 masking, inheritance and mask-administration questions; those test different decisions. Same-ID copies in batch-02 and cohort-01 are prior snapshots, not evidence of a new active duplicate. Originality is bounded to this local corpus and the saved teaching/product wording, not a global uniqueness claim. codeReviewed is an explicit N/A because the candidate contains no executable snippet; no SQL execution is claimed. qualityReviewed means the quality review was completed, not that its rubric passed. This complete object is returned inline for faithful parent persistence; no candidate/source edits, ledger promotion, browser launch, installation, delegation or Study unlock was performed.",
+    "confidenceReason": "High confidence in the intended SELECT plus Phone-column UNMASK mechanism and the corrected mask-administration explanation. Insufficient evidence for a complete strict attestation of b and insufficiently explicit effective-permission assumptions prevent unconditional approval. The independently assigned rubric also fails promotion thresholds. Confidence is limited to the frozen saved receipts; no fresh-live or database-runtime validation is asserted."
+  },
+  "envelope": {
+    "credentialId": "dp-800",
+    "objectiveVersion": "March 12, 2026",
+    "questionFingerprint": "6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081",
+    "sourceIds": [
+      "dp800-d2-masking"
+    ],
+    "retrievedAt": "2026-09-14T22:19:05.185Z",
+    "lastValidatedAt": "2026-09-15T01:20:17.007Z",
+    "answerEvidence": [
+      {
+        "choiceId": "a",
+        "sourceIds": [
+          "dp800-d2-masking"
+        ],
+        "summary": "This is the data-access half of the intended solution. Table SELECT authorizes reading all columns while defined masks continue to affect results; Phone requires the separate c grant. The saved article explicitly requires SELECT alongside UNMASK. This supports the permission set, not an assumption that the principal has no other direct grants. dp800-d2-masking, decoded lines 45-55 and 166-187."
+      },
+      {
+        "choiceId": "c",
+        "sourceIds": [
+          "dp800-d2-masking"
+        ],
+        "summary": "Column UNMASK is explicitly available starting in SQL Server 2022. It is the correct presentation-control half when paired with a; the source example supplies read access separately before granting UNMASK on one column. Limiting the new grant to Phone does not revoke any pre-existing direct UNMASK elsewhere, so the intended baseline must be stated for an unconditional Phone-only outcome. dp800-d2-masking, decoded lines 45-55, 123-125 and 304-343."
+      }
+    ],
+    "distractorEvidence": [
+      {
+        "choiceId": "b",
+        "sourceIds": [
+          "dp800-d2-masking"
+        ],
+        "summary": "Evidence-status ambiguity, not a finding that VIEW DEFINITION is a valid substitute. The intended exclusion is metadata versus table-data access, but the admitted masking receipt does not name this permission or establish its complete behavior. Its linked Metadata Visibility Configuration article was not independently read as admitted frozen evidence for this question. A metadata-inspection alternate therefore cannot receive the required sourced attestation. dp800-d2-masking, decoded lines 43-55."
+      },
+      {
+        "choiceId": "d",
+        "sourceIds": [
+          "dp800-d2-masking"
+        ],
+        "summary": "Mask-management authority does not supply the required SELECT and UNMASK pair. Actual alteration additionally needs table ALTER and permission to change schema. The repaired rationale correctly distinguishes granting ALTER ANY MASK from carrying out ALTER TABLE; I do not repeat the obsolete claim that the grant itself changes schema. A security officer modifying masks is the documented alternate. dp800-d2-masking, decoded lines 47-51, 90 and 191-205."
+      }
+    ],
+    "rubric": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-011",
+      "reviewedAt": "2026-09-15T02:00:28.947Z",
+      "notes": "Independent criterion judgments, not automated defaults: alignment 4 because the saved guide explicitly names Dynamic Data Masking; accuracy 3 because a/c/d are documented but the exact b claim is not independently established by the admitted receipt; scenarioCompleteness 3 because version and object scope are present but the effective direct-permission baseline is not; answerUniqueness 3 because a+c is the only self-sufficient pair but an incremental-grant reading is not closed; distractorPlausibility 3 because metadata versus data and mask administration versus unmasking are real confusions, although easy to eliminate here; distractorEvidence 2 because d has a documented security-officer alternate and b lacks a verified named-permission alternate; documentationStrength 3 because primary product evidence and ancestry are genuine but incomplete for b; citationSpecificity 3 because exact passages support a/c/d but no cited passage names VIEW DEFINITION; difficultyAuthenticity 2 because this is an intermediate two-control recipe rather than an advanced decision; explanationQuality 3 because repaired d is precise but b support and starting-state qualifications remain weak; originality 4 within the inspected local corpus, with no same-fact or copied-stem item found; clarityAccessibility 3 because the concise wording still leaves direct versus inherited access and Phone-only scope implicit. Total 36/48, no zeros; fails the 44-point minimum, required 4s, and distractorEvidence minimum 3. Construction reviewed at MarcBushong/The-Certification-Dungeon:.grounding/dp-expansion/direct/repair-011-r1/candidates.json:4-37.",
+      "version": 2,
+      "scores": {
+        "alignment": 4,
+        "accuracy": 3,
+        "scenarioCompleteness": 3,
+        "answerUniqueness": 3,
+        "distractorPlausibility": 3,
+        "distractorEvidence": 2,
+        "documentationStrength": 3,
+        "citationSpecificity": 3,
+        "difficultyAuthenticity": 2,
+        "explanationQuality": 3,
+        "originality": 4,
+        "clarityAccessibility": 3
+      }
+    }
+  },
+  "stages": {
+    "generation": {
+      "authorId": "copilot-dp800-direct-author",
+      "generatedAt": "2026-09-15T01:20:17.007Z",
+      "questionFingerprint": "6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "claims": [
+        {
+          "choiceId": "a",
+          "sourceIds": [
+            "dp800-d2-masking"
+          ],
+          "summary": "SELECT authorizes reading the table. It is required in addition to UNMASK and does not itself reveal the masked Phone values."
+        },
+        {
+          "choiceId": "b",
+          "sourceIds": [
+            "dp800-d2-masking"
+          ],
+          "summary": "Metadata visibility is not a substitute for SELECT or UNMASK. It does not authorize the required unmasked table-data read."
+        },
+        {
+          "choiceId": "c",
+          "sourceIds": [
+            "dp800-d2-masking"
+          ],
+          "summary": "SQL Server 2022 supports column-scoped UNMASK. Combined with SELECT, it reveals Phone without requiring broader unmasking permission."
+        },
+        {
+          "choiceId": "d",
+          "sourceIds": [
+            "dp800-d2-masking"
+          ],
+          "summary": "ALTER ANY MASK manages mask definitions; it grants neither SELECT nor column-level UNMASK, so it cannot replace either required permission. Changing a mask also requires table ALTER and is outside the stated no-schema-change workflow."
+        }
+      ]
+    },
+    "technical": {
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "review": {
+        "questionId": "dp800-direct-011",
+        "authorId": "copilot-dp800-direct-author",
+        "reviewerId": "dp800-independent-technical-011",
+        "questionFingerprint": "6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081",
+        "reviewedAt": "2026-09-15T01:28:05.564Z",
+        "verdict": "verified",
+        "sourceReviews": [
+          {
+            "sourceId": "dp800-d2-masking",
+            "url": "https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking",
+            "evidencePath": ".grounding\\dp-expansion\\authors\\secure\\raw\\doc-masking.json",
+            "retrievedAt": "2026-09-14T22:19:05.185Z",
+            "lastReviewedAt": "2026-09-14T23:49:44.580Z",
+            "supportingSummary": "Freshly reread the frozen dp800-d2-masking receipt: Permissions, decoded lines 43-55, separates table SELECT, UNMASK and mask-management authority; changing a mask requires ALTER ANY MASK plus table ALTER. SQL Server 2022 granular permissions, lines 123-125, and the column-scoped GRANT example, lines 318-319, support Phone-only unmasking. The repaired explanation now correctly distinguishes a permission grant from a schema-changing operation. Dates remain the actual frozen source dates; no live retrieval is claimed."
+          }
+        ],
+        "choiceReviews": [
+          {
+            "choiceId": "a",
+            "assessment": "supported",
+            "rationale": "Table SELECT supplies access to all dbo.Contact columns while existing masks still apply. Because this user has no inherited data access, SELECT is required alongside c; UNMASK alone is insufficient. dp800-d2-masking, decoded lines 45-55; https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking#permissions.",
+            "sourceIds": [
+              "dp800-d2-masking"
+            ]
+          },
+          {
+            "choiceId": "b",
+            "assessment": "contradicted",
+            "rationale": "VIEW DEFINITION concerns metadata, not the required table-data read and unmasking permissions. Neither pairing it with a nor pairing it with c supplies both SELECT and UNMASK. The source expressly requires SELECT for UNMASK to have an effect and distinguishes metadata visibility. dp800-d2-masking, decoded lines 45-55; https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking#permissions.",
+            "sourceIds": [
+              "dp800-d2-masking"
+            ]
+          },
+          {
+            "choiceId": "c",
+            "assessment": "supported",
+            "rationale": "SQL Server 2022 supports column-level UNMASK. Granting it only for dbo.Contact.Phone, together with table SELECT, reveals Phone without granting UNMASK on other masked columns. The documented column-scoped GRANT example corroborates that scope. dp800-d2-masking, decoded lines 55, 123-125 and 318-319; https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking#granular-permissions-introduced-in-sql-server-2022.",
+            "sourceIds": [
+              "dp800-d2-masking"
+            ]
+          },
+          {
+            "choiceId": "d",
+            "assessment": "contradicted",
+            "rationale": "ALTER ANY MASK manages mask definitions; it grants neither SELECT nor UNMASK and cannot replace either required permission. Changing a mask additionally requires table ALTER and would leave the permitted no-schema-change workflow. The repaired rationale no longer claims that merely granting this permission changes the schema. dp800-d2-masking, decoded lines 45-55 and 90; https://learn.microsoft.com/en-us/sql/relational-databases/security/dynamic-data-masking#permissions.",
+            "sourceIds": [
+              "dp800-d2-masking"
+            ]
+          }
+        ],
+        "checks": {
+          "answerDefensible": true,
+          "correctOptionsSupported": true,
+          "distractorsIncorrect": true,
+          "explanationsSupported": true,
+          "directSources": true,
+          "featureStatus": true,
+          "currentTerminology": true,
+          "prerequisitesComplete": true,
+          "codeReviewed": true,
+          "originalContent": true,
+          "duplicatesReviewed": true,
+          "qualityReviewed": true
+        },
+        "verificationNotes": "Fresh PASS 2 of repair-011-r1, generated 2026-09-15T01:20:17.007Z. Reread the repaired item, generation metadata and frozen documentation; independently recomputed both parsed fingerprints. Only rationale d and the generation/validation timestamps differ from the retained original. Re-derived a+c and evaluated all four options; the previous explanation defect is resolved. Reconfirmed captured credential preparation links and the saved redirect through dp800-training-secure, dp800-d2-module-security and dp800-d2-masking-unit to dp800-d2-masking; source/taxonomy/registry snapshots are unchanged. Phone-only refers to permission-based masking presentation, not protection against inference. Originality and duplicate checks are bounded to the supplied teaching/product text and nine other batch candidates; the retained original is a superseded version, not an additional active question. No peer exact-stem or concept duplicate was found. codeReviewed is an explicit N/A pass because no executable snippet is present. This verified verdict attests technical PASS 2 only: no candidate promotion, rubric scoring or adversarial approval; a separate third-context challenge remains required.",
+        "confidenceReason": "High confidence: the frozen Permissions section explicitly requires SELECT with UNMASK, the SQL Server 2022 section confirms column scope, and the repaired d rationale accurately states both mask-modification prerequisites. All options and explanations now align with dp800-d2-masking; no live-browser or SQL-execution claim is made."
+      }
+    },
+    "adversarial": {
+      "questionFingerprint": "6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081",
+      "objectiveVersion": "March 12, 2026",
+      "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+      "reviewerId": "dp800-independent-adversarial-011",
+      "reviewedAt": "2026-09-15T02:00:28.947Z",
+      "verdict": "manual-review-required",
+      "optionChallenges": [
+        {
+          "choiceId": "a",
+          "claimRepresented": "Table-level SELECT authorizes this reporting user to read every column of dbo.Contact; it does not itself remove dynamic masks.",
+          "whyIncorrectInContext": "NOT incorrect in the intended permission set: a supplies the read access that c cannot provide. SELECT alone still returns masked Phone values. Sufficiency assumes no conflicting permissions and no separate effective unmasking rights on other masked columns.",
+          "couldBeCorrectWhen": "It is required together with c for the intended ordinary reporting principal. SELECT alone is also appropriate when a reader should receive masked values for every masked column; the saved example demonstrates that separate scenario.",
+          "sourceIds": [
+            "dp800-d2-masking"
+          ],
+          "evidenceSummary": "dp800-d2-masking, Permissions, decoded lines 43-55, explicitly separates table SELECT from UNMASK. The SELECT-only demonstration at lines 166-187 returns masked values. Neither passage requires broad db_datareader membership for a table-scoped grant."
+        },
+        {
+          "choiceId": "b",
+          "claimRepresented": "VIEW DEFINITION on dbo.Contact is offered as a competing permission for the required table-data read and Phone-only unmasking.",
+          "whyIncorrectInContext": "It is not a replacement for the SELECT and UNMASK requirements under the intended reading. However, the sole admitted receipt never names VIEW DEFINITION. Its exact semantics and the asserted metadata-only exclusion are not independently established merely by the linked article title.",
+          "couldBeCorrectWhen": "A task limited to inspecting the definition or metadata of dbo.Contact, rather than reading its rows, is the meaningful proposed alternate. The saved source separates metadata visibility from UNMASK and links Metadata Visibility Configuration, but does not document this named grant. That alternate remains unverified in this frozen citation set; I will not fabricate a sourced counterexample.",
+          "sourceIds": [
+            "dp800-d2-masking"
+          ],
+          "evidenceSummary": "dp800-d2-masking, decoded lines 45-55, supports SELECT plus UNMASK and distinguishes metadata visibility. It contains no VIEW DEFINITION occurrence. https://learn.microsoft.com/en-us/sql/relational-databases/security/metadata-visibility-configuration is only a reference in the receipt, not independently fetched content admitted for this item. This is an evidence gap, not a claim that b is the correct answer."
+        },
+        {
+          "choiceId": "c",
+          "claimRepresented": "SQL Server 2022 column-level UNMASK for dbo.Contact.Phone reveals that masked column without granting UNMASK on every masked column.",
+          "whyIncorrectInContext": "NOT incorrect under the intended effective-permission baseline: SQL Server 2022 supports column scope, and a provides the separate SELECT permission. A new narrow grant does not establish Phone-only effective rights if another direct UNMASK grant already exists; the stem does not explicitly close that starting-state possibility.",
+          "couldBeCorrectWhen": "It is valid for a SQL Server 2022 principal whose effective read access is supplied by a and whose other masked columns lack UNMASK or overriding authority. The documentation first supplies reading permission before demonstrating column UNMASK; selecting c alone would not supply data access.",
+          "sourceIds": [
+            "dp800-d2-masking"
+          ],
+          "evidenceSummary": "dp800-d2-masking, decoded lines 123-125, explicitly introduces column-level UNMASK in SQL Server 2022. Lines 304-319 separately supply db_datareader access and then grant UNMASK on one named column; a is the narrower table-read substitute in this question. Lines 45-55 establish the independent SELECT prerequisite."
+        },
+        {
+          "choiceId": "d",
+          "claimRepresented": "Database-scoped ALTER ANY MASK grants authority relevant to administering mask definitions, rather than the requested read and selective-unmask permissions.",
+          "whyIncorrectInContext": "It supplies neither of the two required read-path permissions and is broader than the named table and column need. Granting d is not itself a schema change. Using it to add, replace or remove a mask additionally requires table ALTER and would violate the no-schema-change workflow; that is distinct from merely granting the permission.",
+          "couldBeCorrectWhen": "A security officer authorized to add, replace or remove masks on an existing table can appropriately receive ALTER ANY MASK together with ALTER on that table. Schema modification must be permitted in that alternate administration scenario. The permission is useful there without making it a SELECT or UNMASK substitute here.",
+          "sourceIds": [
+            "dp800-d2-masking"
+          ],
+          "evidenceSummary": "dp800-d2-masking, decoded lines 47-51, distinguishes CONTROL, UNMASK and ALTER ANY MASK and explicitly names both mask-modification prerequisites and the security-officer use case. Lines 90 and 191-205 corroborate actual schema-changing mask operations. The repaired d explanation no longer confuses permission with operation."
+        }
+      ],
+      "challenges": {
+        "scope": "On the intended effective-permission reading, table SELECT plus Phone-column UNMASK is appropriately scoped. Other already-masked columns remain masked only absent other effective UNMASK or overriding authority. This concerns ordinary query-result presentation, not cryptographic secrecy or prevention of inference. dp800-d2-masking, decoded lines 16-23, 45-55, 100-125.",
+        "plan": "Enumerated all six proposed self-sufficient pairs: a+c supplies both controls; a+b lacks Phone UNMASK; a+d lacks UNMASK and cannot lawfully remove a mask; b+c lacks SELECT; b+d lacks both read controls; c+d lacks SELECT. No second self-sufficient pair is supported. Different incremental-grant answers become possible only by importing unspecified pre-existing direct rights, which is why the starting-state wording matters.",
+        "role": "The stem excludes inherited data permissions and administrative roles, not all existing direct permissions. A reporting principal could already hold direct SELECT or direct UNMASK on another masked column without an administrative role. Direct overriding authority also is not equivalent to role membership. The source makes effective CONTROL and UNMASK decisive, not job title alone; the unconditional Phone-only outcome is under-specified. dp800-d2-masking, decoded lines 45-55 and 77.",
+        "preconditions": "SQL Server 2022 and an existing masked Phone column are explicit. The proposal additionally assumes an ordinary permitted grantor, no effective denial defeating the read, and no existing direct UNMASK on other masked columns. Grantor creation or execution is not the task, so I do not demand login-creation options; the unresolved effective-permission baseline is the material gap. The article requires SELECT alongside UNMASK and distinguishes overriding CONTROL at decoded lines 45-55.",
+        "featureStatus": "The frozen product receipt expressly supports SQL Server 2022 column UNMASK at decoded lines 123-125 and demonstrates it at lines 318-319. The recorded GA status is consistent with the documented released-version feature. I make no fresh-live availability claim and do not import Azure service tiers, Fabric workspace roles or Fabric EXECUTE AS restrictions into this SQL Server question.",
+        "sourceChanges": "Both independently recomputed hashes match the requested frozen question and March 12, 2026 objectives. The masking receipt URL and retrieval time match the manifest, and its bytes remained unchanged on the final check. Saved credential links, the secure-path redirect, path, module and masking unit establish ancestry. Where the unit simplifies mask counts or ALTER prerequisites, the product receipt controls; no browser, live retrieval or replacement source was used.",
+        "stemSufficiency": "The stem is sufficient to infer the intended a+c permission set but not to attest every possible starting state it literally permits. No inherited permissions is narrower than no existing direct or inherited effective permissions. Phone-only should also be read as only among already-masked columns, not as automatically masking otherwise unmasked columns. These qualifications must not be silently supplied to obtain an unconditional pass.",
+        "explanationBounds": "The repair to d is sound: a permission grant alone does not change schema, and mask modification requires ALTER ANY MASK plus table ALTER. The explanation correctly separates SELECT and UNMASK. The b rationale still lacks named-permission evidence in the admitted receipt. Do not expand the item into a guarantee against inference; the product security note expressly disclaims that protection at decoded lines 100-119.",
+        "reasoningDepth": "The item combines data access with column-level presentation control, but the answer is a short two-permission recipe. It presents no effective-grant inventory, conflicting permission, result set, code diagnosis or implementation trade-off to resolve. SQL Server 2022 scope is useful, yet the advanced label is not convincingly earned by this construction.",
+        "answerClues": "The correct permission names closely echo read and unmasked in the stem. VIEW DEFINITION looks like metadata, while database-scope ALTER ANY MASK contrasts with narrowly scoped and the no-schema-change constraint. Declaring Select two is appropriate, not itself a defect; the weakness is that semantic elimination substantially substitutes for advanced reasoning."
+      },
+      "qualityNotes": "Manual review required, not an endorsement of a competing key. The intended a+c answer and repaired d distinction are strong; the frozen named-permission evidence for b, the direct-permission baseline and the advanced difficulty claim are not sufficient for strict promotion. Independent rubric: 36/48. Corpus checking found no different-item exact stem or concept match; same-ID originals are retained snapshots, not new items. Question-specific findings are returned inline for parent persistence. No candidate, source, ledger or Study readiness state was changed."
+    }
+  }
+}

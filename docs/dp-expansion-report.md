@@ -1,61 +1,140 @@
-# DP-800 / DP-420: blocked partial contribution
+# DP-800 / DP-420 expansion progress
 
-## Resumed direct authoring
+## Verified Study checkpoint, September 15, 2026
 
-**First successful full-review cohort result:** items 001-005 and 007-009
-completed genuine technical and adversarial review with rubric totals
-46, 47, 46, 45, 44, 46, 46 and 45. Their unchanged author hashes, source snapshots,
-objective bindings and separate reviewer identities pass the repository gates.
-Item 010 is rejected at 43/48 for construction/difficulty; item 011r1 is
-manual-review-required at 36/48. Those failed results are not waived.
+**DP-800 Study is genuinely open with 27 verified original questions. Target
+expansion and final delivery are still in progress; nothing has been pushed.**
+The current records all completed distinct generation, technical and adversarial
+contexts, including independent option countercontexts and a twelve-dimension
+rubric of at least 44/48 with unchanged critical gates. The effective objective
+map remains **March 12, 2026**, not the retrieval or review date.
 
-The installed package now has **8 eligible reviewed questions, 1 rejected and
-1 manual-review record; 0 playable questions** because the 25-item Study minimum
-and verified domain breadth are not yet met. The consolidated ledger contains
-566 actual independently authored records. All 556 baseline records compare
-unchanged; the ten additions exactly match their respective final attestations.
+| Exam   | Current records | Verified/playable | Candidate/rejected/manual/stale | Study  | Boss                  | Target shortfall |
+| ------ | --------------: | ----------------: | ------------------------------- | ------ | --------------------- | ---------------: |
+| DP-800 |              27 |                27 | 0 / 0 / 0 / 0                   | Open   | Locked: fewer than 75 |              123 |
+| DP-420 |               0 |                 0 | 0 / 0 / 0 / 0                   | Locked | Locked                |              150 |
 
-The user subsequently instructed autonomous continuation. The original stopped
-handoff below is retained as historical evidence, not a current claim that no
-authoring occurred. Local unfinished/RED checkpoints are
-`54cf3b8684a7fe2786b4478cbfaaec61e656a087` and
-`f7791529cc031301e230e4750bf74dde5b25fa79`; neither is a tested delivery.
+DP-420's complete currently effective objective map is still unestablished from
+the allowed official evidence. Its current identity remains Azure Cosmos DB
+Developer Specialty. The October 6, 2026 outline remains prospective, outside
+gameplay; sealed-state tests are not a delivered DP-420 bank.
 
-The initial resumed cohort now contains **27 original candidate records**:
-10 database-design, 10 security/deployment, and 7 AI/RAG items. Their actual
-generation snapshots are `batch-01r1`, `batch-02`, and `batch-03` under ignored
-`.grounding/dp-expansion/direct`, combined without alteration in `cohort-01`.
-The initial batch-01 snapshot had a source-skill mapping defect; its replacement
-is a new immutable generation with new hashes, not an edited approval.
+The reviewed DP-800 cohort covers **3/3 domains, 11/11 skills and 25/73
+subskills**, with domain counts **10 / 10 / 7**. Published domain weight ranges
+remain 35-40%, 35-40%, 25-30%. Difficulty is **8 beginner, 15 intermediate,
+4 advanced, 0 expert**. Complexity is **8 recall, 11 implementation, 7 scenario,
+1 troubleshooting**: 19/27, or **70.37%**, are non-recall; no Expert labels were
+invented. There are 14 scenario, 7 single-select, 4 code, 1 true/false and
+1 multi-select items. Stored correct-choice ID occurrences are **a: 8, b: 7,
+c: 7, d: 6** (28 occurrences because one item has two correct choices).
+Gameplay shuffling preserves choice IDs and answer mappings.
 
-Candidate coverage is 3 domains, 11 skills and 25 subskills; difficulty is
-4 beginner, 14 intermediate and 9 advanced. There are 23 applied items, 3 code
-items and 1 multi-select. These counts are **not reviewed or playable coverage**.
-No Expert labels were manufactured to meet the desired mix.
+Only four distinct Advanced questions currently qualify. The existing selector
+honestly caps a five-question Advanced request to four and displays that cap.
+The real browser journey verifies the actual planned, answered, completed and
+objective-scored count, not a fixture bank or a weakened 25-item Study threshold.
 
-All 56 curated canonical source URLs plus 3 recorded locale-neutral training
-targets passed online availability checks at **2026-09-15T00:57:01.961Z**.
-This required a tests-first correction for actual SQL documentation moniker
-redirects; 115 focused source/legacy tests passed with unchanged permissions and
-quality thresholds. Availability is not factual question verification.
+The package currently contains **57 canonical sources** with finite
+guide/training provenance and actual MCP retrieval receipts. The latest source
+retrieval is **2026-09-14T23:41:04.566Z**. Current independent final reviews span
+**2026-09-15T02:12:36.732Z to 2026-09-15T04:27:57.227Z**. The most recent full
+online check covered all **57 canonical sources plus 3 recorded training
+targets** at **2026-09-15T05:28:02.294Z**. Availability alone is not factual
+verification, and new candidate-only sources do not inherit this result.
 
-The first actual technical attestation withheld approval for item
-`dp800-direct-011` because one explanation confused granting a permission with
-performing a schema change. That original review is preserved. A newly authored
-repair, not an edited old approval, received a fresh technical pass at
-**2026-09-15T01:28:05.564Z**, bound to
-`6167fc014b4b0715f4fe7e2977980dccc51f128c041913d33901452d9c118081`.
-The separate adversarial/rubric context must still complete; this is not a fully
-verified or playable question. A ten-item technical review remains assigned to the revised first
-batch. A separate ten-item researcher stopped on a missing system-Chrome
-dependency in its browser tool and produced no attestation; the sync tool then
-refused a follow-up. A narrower one-item review uses the saved actual official
-source/DOM/redirect evidence without that browser dependency. These tooling
-failures are not question rejections. Further authoring expansion is paused until
-a real technical/adversarial verification cycle succeeds. The seven genuine
-production-content acceptance failures remain visible, and no push is authorized.
+### New candidate-only expansion
 
-## Historical stopped handoff
+There are now **52 unique originally authored question IDs**, with **25 new
+candidates outside gameplay**: 11 JSON questions in immutable `batch-04r1`
+(generated **2026-09-15T06:30:44.841Z**) and 14 model, vector and chunking
+questions in `batch-05` (generated **2026-09-15T06:57:02.666Z**). Their actual
+MCP receipts are preserved locally. Both snapshots pass the unchanged source
+graph/schema check; neither has a claimed independent approval yet.
+
+The first `batch-04` snapshot failed the strict prohibition on immediate
+doc-to-doc ancestry and remains excluded. The replacement records actual direct
+named-function references in training, including the separate JSON-column unit's
+explicit use of JSON_MODIFY. It does not invent URL links in the training or
+weaken the validator. New generation and source fingerprints require fresh
+technical and adversarial passes.
+
+The vector-search candidates explicitly distinguish Preview, region and index
+version. Current product documentation qualifies or contradicts some training
+generalizations about post-filtering, read-only tables and legacy TOP_N syntax;
+those generalizations are not adopted as universal facts. An inconsistent
+embedding-function return-type paragraph is also excluded as a tested claim.
+The additional 25 candidates do not reduce the **123 verified-question
+shortfall** until genuine independent reviews succeed.
+
+Seven superseded reviewed versions remain under `review-history`: **2 rejected
+and 5 manual-review-required**. Their exact verdicts, source evidence, stage
+bindings and scores remain unchanged. Reasons include missing named-distractor
+support, incomplete permission baselines, invalid literal countercontexts,
+answer disclosure and inflated difficulty. Each current replacement has a new
+authored fingerprint and fresh technical/adversarial passes. Earlier
+technical-only failures and immutable candidate snapshots remain in the local
+grounding workspace. The queue reports distinguish current records from old
+versions instead of making historical failures disappear.
+
+The consolidated ledger has **583 actual attestations**: all **556 baseline
+records compared unchanged** at **2026-09-15T05:21:08.024Z**, plus 27 matching
+DP-800 records. Existing DP-700 and other credential banks, storage identifiers
+and completed history are preserved. No second engine or migration was added.
+
+### Actual checkpoint commands
+
+| Command                                                 | Actual intermediate result                                                                                         |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `npm run questions:verify -- --exam dp-800`             | Passed exact current review bindings                                                                               |
+| `npm run test -- tests\dp-exams.test.ts --maxWorkers=2` | 13 passed, including real production-content gates                                                                 |
+| `npm run test:e2e -- dp-exams.spec.ts`                  | 6 passed, desktop/mobile; actual Study, exact tome, explanations, scores, isolation, DP-700 and sealed DP-420/Boss |
+| `npm run test`                                          | Stock suite: 625 passed in 31 files, 24.01 seconds                                                                 |
+| `npm run lint`                                          | Passed                                                                                                             |
+| `npm run typecheck`                                     | Passed                                                                                                             |
+| `npm run test:e2e`                                      | Stock suite: 65 passed, 1 failed, 5.2 minutes                                                                      |
+| `npm run test:e2e -- github-exams.spec.ts`              | After test-only synchronization repair: 2 passed, desktop/mobile, 56.6 seconds                                     |
+
+The next complete stock browser run finished **62 passed / 4 failed**. The GH
+repair held. The new DP journey's final DP-700 transition also needed its button
+scoped to the setup form: the hash can change before React replaces the map.
+The other three failures showed the existing startup status instead of the
+expected content within the five-second assertion deadline.
+
+The subsequent affected-journey run used:
+
+```powershell
+npm run test:e2e -- --grep 'DP-800 Advanced|GH-300 three-pass|accessible local-only /setup page|accessible local-only /forge page|configure, answer'
+```
+
+It finished **9 passed / 1 failed**. Both synchronized DP and GH journeys
+passed, but mobile setup still failed during startup. Its preserved trace records
+the App module request as pending with no response at the deadline. An isolated
+production CPU diagnostic loaded the app in **1,945 ms**; that sample does not
+prove the stock suite meets its deadline or establish the delay's cause.
+No further shared-code performance change, longer timeout, removed assertion or
+reduced accessibility coverage was used. **62/66 remains the latest full-suite
+result; required browser acceptance is not complete.**
+
+The full-browser failure was the existing GH journey's final DP-700 navigation:
+its global Descend locator ran while six map buttons were still mounted. The
+trace and error context were preserved. The test now waits for `#/setup` and
+scopes Descend to `form.setup-layout`. No `.first()`, forced click, arbitrary
+sleep, longer timeout, dropped assertion or GH production change was used.
+The exact journey passes on both browser projects. These checkpoint outcomes
+are **not final acceptance after further content expansion**.
+
+Initial local RED checkpoints `54cf3b8` and `f779152`, the source-fix checkpoint
+`eab1c07`, and the first eight-item review checkpoint `1c8ba03` preserve the
+actual progression. Final checks, upstream comparison, commit/push and remote
+verification still have to run on the eventual deliverable.
+
+## Historical stopped handoff, September 14, 2026
+
+The following subsections preserve the earlier blocked state and direct baseline
+results. Their empty-bank and no-review statements apply **only to that stopped
+handoff**, not to the current Study checkpoint above. Subsequent recovered raw
+MCP receipts and direct original authoring superseded the stalled bulk-author
+workflow; the user explicitly requested continued autonomous completion.
 
 **The requested question banks and end-to-end delivery are not complete.**
 This local branch contains integration and source-grounding work, not a new
@@ -67,7 +146,7 @@ exam, practice assessment, endorsement, or source of real exam questions.
 Encounters are original study questions grounded in publicly available official
 documentation.
 
-## Exact delivery state
+### Historical delivery state
 
 | Exam   |                   Planned candidates | Received candidates | Pass 2 | Pass 3 | Verified | Rejected | Manual review | Stale | Playable |
 | ------ | -----------------------------------: | ------------------: | -----: | -----: | -------: | -------: | ------------: | ----: | -------: |
@@ -102,7 +181,7 @@ review work had stopped. This scoped code review produced no candidates or
 independent question reviews. A final review covering the later online-transport
 and DP browser-test changes is not claimed.
 
-## Current and prospective objectives
+### Objective evidence captured before the stopped handoff
 
 | Exam   | Established current identity                             | Current objective version | Current-map result                                         |
 | ------ | -------------------------------------------------------- | ------------------------- | ---------------------------------------------------------- |
@@ -131,7 +210,7 @@ save its additional raw responses; its disclosed summary is retained without
 reconstructing those responses. Parent-fetched guide, credential and course
 receipts are preserved locally.
 
-## Approved curriculum roots and actual evidence
+### Initial approved curriculum roots and actual evidence
 
 DP-800 has four curated canonical curriculum sources, **not four independently
 verified question-evidence packets**:
@@ -168,7 +247,7 @@ summaries, exact URLs, objective mappings and provenance are in the package
 and catalog. No assessment, dump, community quiz, internal source or other
 question bank supplied new questions; no new questions were produced.
 
-## Baseline and preservation
+### Baseline and original preservation check
 
 Initial and latest fetched `origin/main`, and this branch's unchanged HEAD:
 **`d9a1e39dbc755448f38584ecca692b9e20e35eb6`**.
@@ -198,7 +277,7 @@ context. Secondary baseline-helper summaries are retained locally, but their
 incorrect DP-420 current-map/readiness statements and inconsistent timing
 labels are not used as source or acceptance evidence.
 
-## Implemented surfaces
+### Original scaffold surfaces
 
 - DP-only catalog metadata, exact source allowlists, pinned three-pass policies,
   generic discovery mappings, and truthful sealed reasons.
@@ -236,7 +315,7 @@ the combined **556-record** corpus. The combined single-run comparison was
 about 885 ms versus 121 ms. These are bounded measurements, not general
 performance guarantees or independent semantic duplicate review.
 
-## Actual checks and outstanding acceptance
+### Baseline and stopped-handoff command results
 
 | Command/check                                                                                                                                            | Actual result                                                                                                                                     |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -317,7 +396,7 @@ remain in the session logs. Workflow schemas were regenerated with
 JSON-schema diff because the relevant cross-field URL restrictions execute in
 TypeScript.
 
-## Coverage and resumption blocker
+### Historical zero-coverage resumption blocker
 
 DP-800 playable and reviewed coverage is **0/3 domains, 0/11 skills, 0/73
 subskills**. Every difficulty/complexity count is zero; applied-reasoning share,

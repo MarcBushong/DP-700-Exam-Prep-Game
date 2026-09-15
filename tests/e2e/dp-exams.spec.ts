@@ -48,6 +48,15 @@ test('DP-800 Advanced Study uses reviewed facts, exact tomes, objective scores a
 }) => {
   const dungeon = loadDp800();
   expect(dungeon.readiness.study).toBe(true);
+  expect(dungeon.questions.length).toBeGreaterThanOrEqual(25);
+  const requestedCount = 5;
+  const advancedConcepts = new Set(
+    dungeon.questions
+      .filter((question) => question.difficulty === 'advanced')
+      .map((question) => question.conceptId.trim().toLowerCase()),
+  ).size;
+  const runCount = Math.min(requestedCount, advancedConcepts);
+  expect(runCount).toBeGreaterThan(0);
   const stages = validationMetadataSchema.parse(dungeon.validationMetadata);
   await page.goto('./');
   await page
@@ -57,8 +66,17 @@ test('DP-800 Advanced Study uses reviewed facts, exact tomes, objective scores a
   await page.waitForURL(/#\/setup$/);
   await page.getByLabel('Difficulty', { exact: true }).selectOption('advanced');
   await page.getByRole('radio', { name: '5', exact: true }).check();
+  await expect(
+    page.locator('.summary-list').getByText(`${runCount} unique questions`, {
+      exact: true,
+    }),
+  ).toBeVisible();
   await page.getByRole('button', { name: 'Descend', exact: true }).click();
-  for (let index = 0; index < 5; index++) {
+  if (runCount < requestedCount)
+    await expect(
+      page.getByRole('status', { name: 'Study notices' }),
+    ).toContainText(`${runCount} unique questions, not ${requestedCount}`);
+  for (let index = 0; index < runCount; index++) {
     await expect(
       page.locator('.question-panel .dungeon-origin'),
     ).toHaveAttribute('data-dungeon-id', 'dp-800');
@@ -138,7 +156,7 @@ test('DP-800 Advanced Study uses reviewed facts, exact tomes, objective scores a
     }
     await page
       .getByRole('button', {
-        name: index === 4 ? 'View results' : 'Next question',
+        name: index === runCount - 1 ? 'View results' : 'Next question',
         exact: true,
       })
       .click();
@@ -146,10 +164,13 @@ test('DP-800 Advanced Study uses reviewed facts, exact tomes, objective scores a
   await page.waitForURL(/\/results\//);
   const before = await saved(page);
   const result = before.history[0];
+  expect(result.questions).toHaveLength(runCount);
   const scores = scoreSession(result);
   expect(scores.percentage).toBe(100);
   expect(scores.byDungeon.map((row) => row.id)).toEqual(['dp-800']);
-  expect(scores.byDomain.reduce((sum, row) => sum + row.total, 0)).toBe(5);
+  expect(scores.byDomain.reduce((sum, row) => sum + row.total, 0)).toBe(
+    runCount,
+  );
   expect(result.objectiveSnapshots?.['dp-800'].studyGuideEffectiveDate).toBe(
     'March 12, 2026',
   );
@@ -176,7 +197,10 @@ test('DP-800 Advanced Study uses reviewed facts, exact tomes, objective scores a
     .getByRole('button', { name: 'Descend', exact: true })
     .click();
   await page.waitForURL(/#\/setup$/);
-  await page.getByRole('button', { name: 'Descend', exact: true }).click();
+  await page
+    .locator('form.setup-layout')
+    .getByRole('button', { name: 'Descend', exact: true })
+    .click();
   await expect(page.locator('.question-panel .dungeon-origin')).toHaveAttribute(
     'data-dungeon-id',
     'dp-700',
