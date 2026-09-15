@@ -151,8 +151,13 @@ use its official `text/markdown` representation at the same approved URL; a
 document heading is required, error pages are rejected, and the existing 2 MB
 cap still applies. This avoids treating a large HTML navigation shell as missing
 evidence without increasing or disabling the bound. Every redirect remains
-inside that credential's allowlist. Only the existing canonical Learn Kusto and
-T-SQL view redirects are accepted; stored citations remain unchanged/query-free.
+inside that credential's allowlist. The existing canonical Learn Kusto and
+T-SQL view redirects remain supported. Strict Microsoft DP-800 additionally
+recognizes the actually observed `view=sql-server-ver17` redirect for its
+explicitly approved `/en-us/sql/relational-databases/` articles. Same-document
+receipt comparison removes only that validated moniker; different articles,
+unknown views and additional parameters remain rejected. Stored citations stay
+query-free, and the legacy DP-700 relational-document policy is unchanged.
 URL availability is not a semantic review and does not update source review
 dates or promote encounters.
 

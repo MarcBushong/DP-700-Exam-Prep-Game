@@ -126,13 +126,11 @@ describe('official SQL documentation view redirects', () => {
     });
 
     it('rejects a target that stops redirecting instead of relabelling its response as canonical', async () => {
-      const fetcher = vi
-        .fn<typeof fetch>()
-        .mockResolvedValueOnce(
-          new Response('<title>Training without redirect</title>', {
-            headers: { 'content-type': 'text/html' },
-          }),
-        );
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(
+        new Response('<title>Training without redirect</title>', {
+          headers: { 'content-type': 'text/html' },
+        }),
+      );
       await expect(
         checkOnlineSource(target, fetcher, credential, canonical),
       ).rejects.toThrow(/did not redirect/i);

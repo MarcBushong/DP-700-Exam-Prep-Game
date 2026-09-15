@@ -15,6 +15,28 @@ import {
   sourceRegistrySchema,
 } from '../src/features/dungeons/provenance';
 
+function documentIdentityUrl(
+  url: URL,
+  allowCanonicalView: boolean,
+  credential?: SourcePolicyContext,
+): URL {
+  const identity = new URL(url);
+  const approvedSqlFamily =
+    url.pathname.startsWith('/en-us/sql/t-sql/') ||
+    (credential?.credentialId === 'dp-800' &&
+      credential.provider === 'Microsoft' &&
+      credential.strictGuideLinked &&
+      url.pathname.startsWith('/en-us/sql/relational-databases/'));
+  if (
+    allowCanonicalView &&
+    ((url.pathname.startsWith('/en-us/kusto/') &&
+      url.search === '?view=microsoft-fabric') ||
+      (approvedSqlFamily && url.search === '?view=sql-server-ver17'))
+  )
+    identity.search = '';
+  return identity;
+}
+
 export function safeSourceUrl(
   value: string,
   allowCanonicalView = false,
@@ -25,16 +47,11 @@ export function safeSourceUrl(
       'Source URLs must not contain encoded paths, whitespace, or unsafe delimiters.',
     );
   const url = new URL(value);
-  const structuralUrl = new URL(url);
-  if (
-    allowCanonicalView &&
-    ((url.pathname.startsWith('/en-us/kusto/') &&
-      url.search === '?view=microsoft-fabric') ||
-      (url.pathname.startsWith('/en-us/sql/t-sql/') &&
-        url.search === '?view=sql-server-ver17'))
-  ) {
-    structuralUrl.search = '';
-  }
+  const structuralUrl = documentIdentityUrl(
+    url,
+    allowCanonicalView,
+    credential,
+  );
   if (credential) assertAllowedSourceUrl(structuralUrl.href, credential);
   else learnUrlSchema.parse(structuralUrl.href);
   if (credential?.strictGuideLinked)
@@ -50,6 +67,16 @@ export function safeSourceUrl(
     );
   }
   return url;
+}
+
+export function matchesRecordedSourceTarget(
+  actual: string,
+  expected: string,
+  credential?: SourcePolicyContext,
+): boolean {
+  const resolved = safeSourceUrl(actual, true, credential);
+  const recorded = safeSourceUrl(expected, false, credential);
+  return documentIdentityUrl(resolved, true, credential).href === recorded.href;
 }
 
 function safeTrainingLinkTarget(
@@ -297,7 +324,16 @@ if (isMain(import.meta.url)) {
                 .filter((parent) => parent.targetUrl === url)
                 .map((parent) => parent.canonicalUrl),
             ]);
-            if (expectedTargets.some((target) => target !== result.finalUrl))
+            if (
+              expectedTargets.some(
+                (target) =>
+                  !matchesRecordedSourceTarget(
+                    result.finalUrl,
+                    target,
+                    credential,
+                  ),
+              )
+            )
               throw new Error(
                 `Resolved target ${result.finalUrl} differs from the recorded canonical redirect receipt; curator review required.`,
               );
