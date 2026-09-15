@@ -1,0 +1,80 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-051",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-chunks-recovery",
+    "questionFingerprint": "35d519aad28ed7b17a675ec1bfd6a697d6540e454e49438d302074111dc23f71",
+    "reviewedAt": "2026-09-15T15:07:17.369Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-generate-chunks",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-chunks-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\ai-generate-chunks.json",
+        "retrievedAt": "2026-09-15T06:42:29.174Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual AI_GENERATE_CHUNKS (Transact-SQL) MCP body, including the level-170 prerequisite, grammar, each argument, result schema and overlap example. FIXED requires a positive, non-NULL integer CHUNK_SIZE measured in characters. OVERLAP is a whole-number percentage from 0 through 50 inclusive, applied to CHUNK_SIZE to obtain a character count, with default 0. Thus CHUNK_SIZE=200 and OVERLAP=25 request 200*25/100=50 characters of preceding text, not 25 characters or 25 tokens. The named-argument call in FROM follows the documented table-valued-function grammar. This source alone supplies the unit, range, default, syntax and numerical distinctions for all four choices; no output-order or universal token-count guarantee is derived."
+      },
+      {
+        "sourceId": "dp800-d3-input-design",
+        "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/04-design-embeddings-sql-database-workloads",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\ai\\receipts\\models-design.json",
+        "retrievedAt": "2026-09-14T22:12:36.116Z",
+        "lastReviewedAt": "2026-09-15T00:39:05.140Z",
+        "supportingSummary": "Independently read Design embeddings for SQL database workloads from its actual MCP receipt. The unit explicitly names and demonstrates AI_GENERATE_CHUNKS, establishing the immediate training-to-named-API reference. Its Control input size and structure section explains qualitatively that embedding models process tokenized input and impose per-request input limits, supporting the explanation's separate model-limit caution. It supplies no OVERLAP contract. I preserve the frozen record's narrow curation and Not applicable status: its illustrative 500-character outputs, numerical character/token sizing and broad identifier advice do not attest this query's syntax or arithmetic. All numerical and native-API claims are instead grounded in the independently admitted exact product reference; no character-to-token conversion or model-fit promise is approved."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "The exact argument contract applies the whole-number percentage to the character-count chunk size: 200*25/100=50. The configured integers are valid, and the stem asks what adjacent full-sized chunks request rather than how a first/short final chunk behaves. Literal confirming context: the displayed SOURCE=@body, CHUNK_TYPE=FIXED, CHUNK_SIZE=200, OVERLAP=25 call with sufficiently long ASCII character text requests 50 preceding characters. A second valid configuration, CHUNK_SIZE=100 and OVERLAP=50, would also request the literal 50-character answer, but is not needed to derive the key. This is documentary arithmetic, not observed SQL output or a token-count assertion.",
+        "sourceIds": [
+          "dp800-d3-generate-chunks"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "OVERLAP=25 is a percentage, not an absolute character count. Applied to the stated 200 characters, it requests 50 rather than 25. A valid literal positive countercontext is SOURCE=@body, CHUNK_TYPE=FIXED, CHUNK_SIZE=100, OVERLAP=25 with sufficiently long character text: 100*25/100=25, so the unchanged answer '25 characters from the preceding text' is correct there. Both numeric arguments are documented valid integers, and 25 is inside the permitted percentage range. That different chunk size is excluded by the frozen code.",
+        "sourceIds": [
+          "dp800-d3-generate-chunks"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "One hundred preceding characters would be half of a 200-character chunk, not the configured quarter. A valid literal positive countercontext keeps SOURCE=@body, CHUNK_TYPE=FIXED and CHUNK_SIZE=200 but sets OVERLAP=50: 200*50/100=100. Fifty is explicitly the inclusive maximum allowed percentage, so this alternative does not require an invalid OVERLAP=100 or a token interpretation. It validates the exact 100-character choice only for the different configuration, not the candidate's OVERLAP=25.",
+        "sourceIds": [
+          "dp800-d3-generate-chunks"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The code explicitly requests a positive overlap, so the documented zero-overlap default does not apply to the adjacent full-sized chunks asked about. A valid literal positive countercontext uses SOURCE=@body, CHUNK_TYPE=FIXED, CHUNK_SIZE=200 and OVERLAP=0, or omits OVERLAP entirely. The documented default and the inclusive lower bound then request no preceding characters. The first chunk's lack of preceding text is not an alternate answer to the stated adjacent-chunk configuration question, and no NULL or negative argument is proposed as a valid substitute.",
+        "sourceIds": [
+          "dp800-d3-generate-chunks"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent recovery PASS 2 only for dp800-direct-051 in immutable .grounding\\dp-expansion\\direct\\batch-05. I re-read the full candidate and code, the generation-output.json entry, author-only contextual evidence, source manifest, registry, retrieval index, current objectives and catalog/package policy. The recorded generation belongs to request dp800-direct-05-models-vectors by copilot-dp800-direct-author at 2026-09-15T06:57:02.666Z. Repository helpers recomputed this exact question fingerprint and the objective fingerprint, matched both generation files, and confirmed the frozen map equals the installed current map. The actual guide receipt .grounding\\dp-expansion\\dp-800-guide.json was retrieved at 2026-09-14T18:19:19.493Z and explicitly measures March 12, 2026. The question maps to Design and implement chunks for embeddings, within Design and implement models and embeddings in the 25-30% AI domain. It does not substitute the training module's level for an independently considered question difficulty.\n\nBoth sourceReviews preserve the exact frozen URL/retrievedAt/lastReviewedAt values and index-relative paths. The actual raw receipts contain the matching Learn MCP endpoint, microsoft_docs_fetch operation, input URLs, timestamps and full source bodies. validateSourceProvenance produced no findings and validatedSupportingSourceIds admitted both cited IDs under the current credential allowlist. The product reference's immediate parent is dp800-d3-input-design, a training record with an explicit named AI_GENERATE_CHUNKS reference, not another documentation article. I read that actual models-design.json body, the model-module index at .grounding\\dp-expansion\\authors\\ai\\receipts\\models-module.json (2026-09-14T22:06:21.049Z), and .grounding\\dp-expansion\\dp-800-training-ai.json (2026-09-14T18:31:14.994Z). They respectively contain the named API, the direct unit link and the direct module link. The credential's actual rendered preparation link and same-path English redirect are preserved in .grounding\\dp-expansion\\dp-800-rendered-training-links.json (2026-09-14T18:31:24.010Z) and .grounding\\dp-expansion\\ai-training-redirect.json (2026-09-14T18:57:14.033Z). The credential/course roots were also read. No doc-to-doc shortcut, new source curation, live fetch or renewed evidence date is claimed.\n\nI derived the key from the product argument definitions, not the generator's arithmetic or the training unit's illustrative outputs. SOURCE requires a character expression; the stem supplies long ASCII text. SQL Server 2025 at compatibility 170 satisfies the documented recognition prerequisite. CHUNK_TYPE=FIXED is written as the actual syntax block and SQL examples show it, CHUNK_SIZE=200 is a valid required positive integer, and OVERLAP=25 is a valid integer percentage in [0,50]. SELECT * FROM the table-valued function is the documented use shape. The exact calculation is 200*25/100=50, with no fractional-character rounding issue. The alternate contexts use 100/25, 200/50 and 200/0 or omission, all valid documented parameters. None substitutes an unsupported fractional percentage or an invalid 100-percent overlap.\n\nThe wording 'request' and 'adjacent full-sized chunks' deliberately avoids claiming that every returned row, the first chunk or a short terminal chunk has an identical observed overlap. ASCII and the direct character-unit contract prevent an accidental byte/token interpretation. The separate caution that model token limits still need attention is qualitative: no embedding model, tokenizer, specific token limit, token-to-character ratio or guaranteed model fit is supplied. The training source is not used as authority for the numeric OVERLAP claims, and its frozen Not applicable status is unchanged. The core chunking receipt supports the stated SQL Server 2025 feature without a Preview gate; no Preview float16, vector-index or local ONNX capability is imported. No SQL runtime or model endpoint was invoked, and the numeric countercontexts are source-derived predictions rather than invented execution results.\n\nDuplicate comparison included all 583 installed records across seven banks (ai-103 30, az-104 30, dp-700 162, dp-800 27, github-agentic-ai-developer 149, github-copilot 155, sc-200 30), including rejected/manual records. It also included 114 rows in all 18 local candidate snapshots: 87 distinct ID/fingerprint variants and 643 combined installed/snapshot variants after identical copies were removed. Pairwise duplicateFindings and scenarioDuplicateFindings returned no findings involving this target. I additionally read related stems, concepts and nearest full questions. Candidate 050 is an engine-compatibility diagnosis, and 052 identifies optional grouping versus ordinal/offset/length columns; neither tests percentage-to-character sizing. Candidate 046 also involves arithmetic but normalizes vector components by a norm, not chunk overlap; 031 disambiguates a literal dotted JSON key, and 028 changes a scalar extraction API for an overlength value. The installed nonoverlapping-window/schedule/time-validity items concern temporal intervals rather than character chunking. No same-fact cosmetic variant was found.\n\nqualityFindings flagged pronoun-review: 'this configuration' clearly refers to the adjacent code block, not an unspecified setting. The four answers are parallel character quantities and contain no code-length or grammar key cue. The 14-item batch's 13 single-select keys are a=3, b=3, c=3, d=4; one additional item is multi-select a,c. Intermediate technical-implementation is defensible as a short code-interpretation task that distinguishes a percentage argument from an absolute character or token count; it is not classified as advanced design or proof of production robustness. The scenario and alternate values are original applications of the named API contract. All four literal choices have a sourced confirming or positive alternate context. This verified verdict means only PASS 2 approval; no adversarial review, realism score, final ledger record or promotion has been created.",
+    "confidenceReason": "The exact saved argument contract and valid literal parameters yield 50 characters uniquely, and every distractor has a valid sourced configuration in which its unchanged numeric answer would apply. The code and compatibility prerequisite match the product grammar; model token limits are kept separate from character arithmetic. Exact generation/objective/source bindings, real raw training ancestry and target-specific installed-plus-pending duplicate checks passed. This is technical documentary approval only, not SQL execution or final three-pass verification."
+  }
+}

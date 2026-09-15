@@ -1,0 +1,1152 @@
+[
+  {
+    "id": "dp800-direct-067",
+    "question": "A SQL Server 2022 rowstore table already has a narrow nonclustered search key. A frequent query also returns two columns that are not search keys. The team wants those values available in that index without making them additional index-key columns. Which design directly supports that requirement?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Add both columns to the nonclustered index key."
+      },
+      {
+        "id": "b",
+        "text": "Keep the narrow index and obtain the extra columns from the base table."
+      },
+      {
+        "id": "c",
+        "text": "Add both columns as nonkey included columns at the leaf level."
+      },
+      {
+        "id": "d",
+        "text": "Remove the nonclustered index and use a table scan."
+      }
+    ],
+    "correctAnswer": [
+      "c"
+    ],
+    "explanation": "Use included nonkey columns at the nonclustered leaf level.",
+    "deepExplanation": "This provides a possible covered access path, not a guarantee that the optimizer will always select it.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This changes the key, contrary to the stated requirement.",
+      "b": "The extra values would not be available within this index alone.",
+      "d": "This does not make the values available in the stated narrow index."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement tables, including data types, size, columns, indexes, and column store indexes",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-rowstore-indexes"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described"
+    ],
+    "documentationTitles": [
+      "Clustered and nonclustered indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "included-columns",
+      "covering-index"
+    ],
+    "conceptId": "sql-nonclustered-included-leaf-columns-cover-without-key-expansion",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-068",
+    "question": "A SQL Server 2022 table is changed from a heap to a clustered table on a unique RecordId key. Its nonclustered index on Category must still locate base rows. What is the documented row locator for that nonclustered index once the base table is clustered?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The base table's clustered RecordId key."
+      },
+      {
+        "id": "b",
+        "text": "A pointer to a row in an unordered heap."
+      },
+      {
+        "id": "c",
+        "text": "The Category key value."
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "The locator uses the base table's clustered key.",
+    "deepExplanation": "Nonclustered index keys and row locators play different roles. This question concerns rowstore indexes, not memory-optimized or columnstore structures.",
+    "whyOtherAnswersAreWrong": {
+      "b": "That describes the locator for a heap, not the newly clustered base table.",
+      "c": "Category is not the base table's clustered key in this design, so it is not the specified locator."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement tables, including data types, size, columns, indexes, and column store indexes",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-rowstore-indexes"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described"
+    ],
+    "documentationTitles": [
+      "Clustered and nonclustered indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "row-locator",
+      "clustered-key"
+    ],
+    "conceptId": "sql-nonclustered-row-locator-heap-pointer-versus-clustered-key",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-069",
+    "question": "A SQL Server 2022 rowstore table has its required clustered index on EventId. Many rows legitimately share the same Region value. The team needs a separate Region lookup index without enforcing Region uniqueness or changing the clustered layout. Which index kind matches those constraints?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A unique nonclustered index on Region."
+      },
+      {
+        "id": "b",
+        "text": "A clustered index on Region replacing the current clustered index."
+      },
+      {
+        "id": "c",
+        "text": "No Region index; retain only the existing clustered index."
+      },
+      {
+        "id": "d",
+        "text": "A nonunique nonclustered index on Region."
+      }
+    ],
+    "correctAnswer": [
+      "d"
+    ],
+    "explanation": "Use a nonunique nonclustered index.",
+    "deepExplanation": "Index structure and uniqueness are separate design decisions. The choice supplies an access path; it is not a universal performance guarantee.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It would reject duplicate Region key values that the scenario explicitly permits.",
+      "b": "It changes the clustered layout that must be preserved.",
+      "c": "It preserves current behavior but does not supply the requested separate Region access structure."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement tables, including data types, size, columns, indexes, and column store indexes",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": [
+      "dp800-d1-rowstore-indexes"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described"
+    ],
+    "documentationTitles": [
+      "Clustered and nonclustered indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "nonunique-index",
+      "secondary-access"
+    ],
+    "conceptId": "sql-nonunique-secondary-index-preserves-duplicate-business-values",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-070",
+    "question": "A SQL Server 2022 table already has a clustered index on CreatedAt. Id is nonnull and unique, and the team adds a PRIMARY KEY constraint on Id without explicitly specifying CLUSTERED or NONCLUSTERED. Which supporting index type is the documented default in this existing-clustered-index case?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "A clustered index on Id."
+      },
+      {
+        "id": "b",
+        "text": "A nonclustered index enforcing the Id primary key."
+      },
+      {
+        "id": "c",
+        "text": "A nonunique nonclustered index on Id."
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "The primary key is supported by a nonclustered index.",
+    "deepExplanation": "The scenario establishes valid Id data and the existing clustered index so the question is about this documented default, not a data-validation failure.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The documented existing-clustered-index case uses a nonclustered supporting index instead of replacing the layout.",
+      "c": "A primary key must enforce uniqueness, not allow duplicate Ids."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement database constraints, including PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK, and DEFAULT",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-rowstore-indexes"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described"
+    ],
+    "documentationTitles": [
+      "Clustered and nonclustered indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "primary-key",
+      "index-default"
+    ],
+    "conceptId": "sql-primary-key-default-nonclustered-when-clustered-index-exists",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-071",
+    "question": "A SQL Server 2022 transaction begins at 10:00 UTC, updates one system-versioned temporal row at 10:03 and another at 10:07, then commits at 10:09. No other transactions affect those rows. What time is recorded as the new versions' period start?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "10:03 for the first row and 10:07 for the second."
+      },
+      {
+        "id": "b",
+        "text": "10:09 for both rows."
+      },
+      {
+        "id": "c",
+        "text": "10:00 for both rows."
+      },
+      {
+        "id": "d",
+        "text": "The maximum datetime2 value for both rows."
+      }
+    ],
+    "correctAnswer": [
+      "c"
+    ],
+    "explanation": "Both period starts are 10:00 UTC.",
+    "deepExplanation": "Temporal transaction time does not identify each statement's wall-clock execution time or the eventual commit time.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Temporal periods use transaction begin time, not each statement's execution time.",
+      "b": "The commit timestamp is not the documented temporal period start.",
+      "d": "The maximum marks the open period end of a current row, not its start."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "intermediate",
+    "complexity": "scenario-based",
+    "sourceIds": [
+      "dp800-d1-temporal"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables"
+    ],
+    "documentationTitles": [
+      "Temporal tables"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "temporal",
+      "transaction-time"
+    ],
+    "conceptId": "sql-temporal-period-uses-utc-transaction-begin-time",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-072",
+    "question": "A temporal row version is valid from 09:00 UTC up to 10:00 UTC. Its replacement starts at exactly 10:00 UTC and remains current. Which version does FOR SYSTEM_TIME AS OF '10:00' select for this key, assuming that instant is expressed as the correct full datetime2 value?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The replacement beginning at 10:00."
+      },
+      {
+        "id": "b",
+        "text": "The old version ending at 10:00."
+      },
+      {
+        "id": "c",
+        "text": "Both versions for the key."
+      },
+      {
+        "id": "d",
+        "text": "Neither version."
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "AS OF selects the replacement that begins at 10:00.",
+    "deepExplanation": "The temporal validity interval is start-inclusive and end-exclusive for an AS OF query.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Its ValidTo equals the instant and fails the strictly-greater end test.",
+      "c": "The half-open boundary does not overlap these two adjacent periods.",
+      "d": "The replacement is valid at its start, so one version qualifies."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-temporal"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables"
+    ],
+    "documentationTitles": [
+      "Temporal tables"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "temporal",
+      "as-of-boundary"
+    ],
+    "conceptId": "sql-temporal-as-of-half-open-validity-boundaries",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-073",
+    "question": "A temporal analysis needs versions active during [09:00,10:00), excluding versions that start exactly at 10:00. A version spanning 08:00 to 11:00 must be included. Which FOR SYSTEM_TIME clause expresses this interval, with @start = 09:00 and @end = 10:00 on the same date?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "BETWEEN @start AND @end"
+      },
+      {
+        "id": "b",
+        "text": "CONTAINED IN (@start, @end)"
+      },
+      {
+        "id": "c",
+        "text": "AS OF @end"
+      },
+      {
+        "id": "d",
+        "text": "FROM @start TO @end"
+      }
+    ],
+    "correctAnswer": [
+      "d"
+    ],
+    "explanation": "Use FOR SYSTEM_TIME FROM @start TO @end.",
+    "deepExplanation": "The spanning version qualifies because it was active within the interval even though its own endpoints lie outside it. Containment and overlap are different conditions.",
+    "whyOtherAnswersAreWrong": {
+      "a": "BETWEEN also admits versions beginning exactly at the upper boundary, which must be excluded here.",
+      "b": "It requires both period endpoints inside the bounds and would exclude the spanning 08:00-11:00 version.",
+      "c": "A point-in-time query at 10:00 includes versions beginning then and does not represent the earlier interval."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-temporal"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables"
+    ],
+    "documentationTitles": [
+      "Temporal tables"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "temporal-range",
+      "interval"
+    ],
+    "conceptId": "sql-temporal-from-to-excludes-starts-on-upper-boundary",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-074",
+    "question": "A SQL Server temporal audit needs only versions that both opened and closed within a reporting interval. Versions beginning exactly at the lower boundary or ending exactly at the upper boundary should qualify, but versions spanning beyond either end should not. Which temporal clause matches?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "FOR SYSTEM_TIME ALL"
+      },
+      {
+        "id": "b",
+        "text": "FOR SYSTEM_TIME CONTAINED IN (@start, @end)"
+      },
+      {
+        "id": "c",
+        "text": "FOR SYSTEM_TIME AS OF @start"
+      },
+      {
+        "id": "d",
+        "text": "FOR SYSTEM_TIME FROM @start TO @end"
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "Use CONTAINED IN for both-endpoint containment.",
+    "deepExplanation": "This is not a synonym for temporal overlap. The input requirement explicitly chooses containment and inclusive endpoint equality.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It includes current and historical versions without the required interval containment filter.",
+      "c": "It describes one instant rather than versions opened and closed across an interval.",
+      "d": "Overlap can admit a version extending outside the interval, contrary to the requirement."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-temporal"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables"
+    ],
+    "documentationTitles": [
+      "Temporal tables"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "temporal",
+      "contained-period"
+    ],
+    "conceptId": "sql-temporal-contained-in-requires-both-period-endpoints-in-range",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-075",
+    "question": "One transaction updates the same temporal-table key more than once. A diagnostic knows that intermediate history rows have ValidFrom = ValidTo, but a FOR SYSTEM_TIME query omits them. The diagnostic specifically needs those zero-duration versions. Which data access addresses this documented behavior?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Query only the current table without FOR SYSTEM_TIME."
+      },
+      {
+        "id": "b",
+        "text": "Use AS OF at the transaction begin time."
+      },
+      {
+        "id": "c",
+        "text": "Query the history table directly."
+      },
+      {
+        "id": "d",
+        "text": "Use CONTAINED IN around the transaction time."
+      }
+    ],
+    "correctAnswer": [
+      "c"
+    ],
+    "explanation": "Read the history table directly for zero-duration versions.",
+    "deepExplanation": "The rows can exist while being deliberately filtered out of FOR SYSTEM_TIME results. Their absence from a temporal query is not proof that no intermediate update occurred.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The current table does not contain those intermediate historical versions.",
+      "b": "Temporal clauses filter out zero-duration periods, so selecting that instant does not expose them.",
+      "d": "Changing the temporal subclause does not remove the documented zero-duration exclusion."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": [
+      "dp800-d1-temporal"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables"
+    ],
+    "documentationTitles": [
+      "Temporal tables"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "temporal",
+      "zero-duration"
+    ],
+    "conceptId": "sql-temporal-zero-duration-versions-require-direct-history-query",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-076",
+    "question": "A SQL Server temporal table has period columns marked HIDDEN so an existing SELECT * client keeps its expected column list. A new diagnostic needs the period values without changing the table definition. How should it retrieve them?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Name the hidden period columns explicitly in SELECT."
+      },
+      {
+        "id": "b",
+        "text": "Continue using SELECT * and expect the period columns to appear."
+      },
+      {
+        "id": "c",
+        "text": "Read only business columns from the current table."
+      },
+      {
+        "id": "d",
+        "text": "Remove the period columns from the diagnostic's explicit projection."
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "Explicitly select the period columns by name.",
+    "deepExplanation": "HIDDEN is a projection-compatibility feature here, not a claim that the columns no longer exist or cannot be named.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The HIDDEN setting specifically excludes them from that wildcard result.",
+      "c": "That projection does not supply the period values required by the diagnostic.",
+      "d": "Omitting them does not retrieve the requested values."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": [
+      "dp800-d1-temporal"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables"
+    ],
+    "documentationTitles": [
+      "Temporal tables"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "temporal",
+      "hidden-columns"
+    ],
+    "conceptId": "sql-temporal-hidden-period-columns-remain-explicitly-readable",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-077",
+    "question": "A SQL Server 2022 event journal requires ledger tamper evidence and an insert-only API contract: existing rows must not be updated or deleted through normal table operations. Which table form directly supports both requirements?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "An updatable ledger table."
+      },
+      {
+        "id": "b",
+        "text": "A regular system-versioned temporal table."
+      },
+      {
+        "id": "c",
+        "text": "A nondurable memory-optimized table."
+      },
+      {
+        "id": "d",
+        "text": "An append-only ledger table."
+      }
+    ],
+    "correctAnswer": [
+      "d"
+    ],
+    "explanation": "Use an append-only ledger table.",
+    "deepExplanation": "API-level restrictions are not a claim that a host administrator is physically unable to alter storage. Ledger verification detects tampering against protected evidence.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It provides ledger history but permits updates and deletions through its supported interface.",
+      "b": "It maintains previous row versions but is not the specified ledger insert-only contract.",
+      "c": "Its data can be lost on restart and it does not supply the required ledger form."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "intermediate",
+    "complexity": "architecture-design",
+    "sourceIds": [
+      "dp800-d1-ledger",
+      "dp800-d1-temporal",
+      "dp800-d1-memory-tables"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/ledger/ledger-overview",
+      "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables",
+      "https://learn.microsoft.com/en-us/sql/relational-databases/in-memory-oltp/introduction-to-memory-optimized-tables"
+    ],
+    "documentationTitles": [
+      "Ledger overview",
+      "Temporal tables",
+      "Introduction to Memory-Optimized Tables"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "ledger",
+      "append-only"
+    ],
+    "conceptId": "sql-ledger-append-only-versus-updatable-operation-contract",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-078",
+    "question": "A SQL Server ledger verifier will compare database hashes with previously generated digests. The threat includes an administrator who can modify database files and regenerate local hashes. Which placement of the comparison digests preserves the independent evidence described by the ledger documentation?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Keep only freshly recomputed hashes derived from the database being checked."
+      },
+      {
+        "id": "b",
+        "text": "Store prior digests outside the database in tamper-protected storage."
+      },
+      {
+        "id": "c",
+        "text": "Query the ledger view without retaining external digest evidence."
+      },
+      {
+        "id": "d",
+        "text": "Use an updatable ledger table but omit digest verification."
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "Keep prior digests outside the database in storage protected from tampering.",
+    "deepExplanation": "The reference values are part of the trust boundary. Recomputing both sides from attacker-controlled state would not supply the documented evidence.",
+    "whyOtherAnswersAreWrong": {
+      "a": "An attacker could regenerate those after tampering; they are not independent prior evidence.",
+      "c": "A relational history query is not the documented comparison against protected prior digests.",
+      "d": "Changing the ledger form does not establish the required independent verification reference."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": [
+      "dp800-d1-ledger"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/ledger/ledger-overview"
+    ],
+    "documentationTitles": [
+      "Ledger overview"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "ledger",
+      "digest-trust"
+    ],
+    "conceptId": "sql-ledger-verification-depends-on-independently-protected-digests",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-079",
+    "question": "A new SQL Server 2022 database must contain both ordinary non-ledger tables and selected ledger-protected tables. The team is considering the database-wide ledger option. Which design preserves the requirement for ordinary tables?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Use an ordinary database with only non-ledger tables."
+      },
+      {
+        "id": "b",
+        "text": "Create a ledger database and use append-only rather than updatable tables everywhere."
+      },
+      {
+        "id": "c",
+        "text": "Use an ordinary database and choose ledger behavior at the selected-table scope."
+      },
+      {
+        "id": "d",
+        "text": "Create a ledger database and accept its default updatable ledger tables."
+      }
+    ],
+    "correctAnswer": [
+      "c"
+    ],
+    "explanation": "Do not choose a ledger-only database when ordinary tables are required.",
+    "deepExplanation": "The database-level choice is more restrictive than applying ledger features to selected tables, and it is not reversible after creation.",
+    "whyOtherAnswersAreWrong": {
+      "a": "It preserves ordinary tables but omits the selected ledger protection that is also required.",
+      "b": "Both forms are ledger tables, so this still excludes ordinary tables.",
+      "d": "Its table defaults still do not permit non-ledger tables."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "intermediate",
+    "complexity": "architecture-design",
+    "sourceIds": [
+      "dp800-d1-ledger"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/security/ledger/ledger-overview"
+    ],
+    "documentationTitles": [
+      "Ledger overview"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "ledger-database",
+      "scope"
+    ],
+    "conceptId": "sql-ledger-database-only-ledger-tables-irreversible-creation-choice",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-080",
+    "question": "A supported SQL Server 2022 workload will use memory-optimized tables, but acknowledged committed data must survive a server restart. Delayed durability and loss of committed rows are not acceptable. Which durability choice matches that requirement?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The default fully durable memory-optimized table and fully durable transactions."
+      },
+      {
+        "id": "b",
+        "text": "A nondurable memory-optimized table."
+      },
+      {
+        "id": "c",
+        "text": "A durable table with delayed-durable transactions."
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "Use full durability, not the nondurable or delayed-durable options.",
+    "deepExplanation": "Memory-optimized does not mean nondurable by definition. The persistence choice and its transaction guarantees must match the business requirement.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The table's data is not persisted and can be lost on crash or failover.",
+      "c": "Control may return before logging reaches disk, so acknowledged commits can be lost on crash."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement specialized tables, including in-memory, temporal, external, ledger, and graph",
+    "difficulty": "intermediate",
+    "complexity": "architecture-design",
+    "sourceIds": [
+      "dp800-d1-memory-tables"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/in-memory-oltp/introduction-to-memory-optimized-tables"
+    ],
+    "documentationTitles": [
+      "Introduction to Memory-Optimized Tables"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "in-memory",
+      "durability"
+    ],
+    "conceptId": "sql-memory-optimized-default-full-durability-not-volatile-data",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-082",
+    "question": "On SQL Server 2022, which interval contains the value 200 under this partition function?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "100 <= value < 200"
+      },
+      {
+        "id": "b",
+        "text": "200 <= value < 300"
+      },
+      {
+        "id": "c",
+        "text": "value < 100"
+      },
+      {
+        "id": "d",
+        "text": "value >= 300"
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "The value belongs to the interval beginning at 200.",
+    "deepExplanation": "RANGE RIGHT determines ownership of exact boundary values; it does not mean that every value is placed in the last partition.",
+    "whyOtherAnswersAreWrong": {
+      "a": "RANGE RIGHT places boundary 200 on its right, not in the preceding interval.",
+      "c": "200 is not below the first boundary.",
+      "d": "200 is below the final boundary."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement partitioning for tables and indexes",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-partitions"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/partitions/partitioned-tables-and-indexes"
+    ],
+    "documentationTitles": [
+      "Partitioned tables and indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "partition-function",
+      "range-right"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "CREATE PARTITION FUNCTION pfBand(int)\nAS RANGE RIGHT FOR VALUES (100, 200, 300);",
+    "conceptId": "sql-range-right-partition-boundary-belongs-to-higher-interval",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-083",
+    "question": "A SQL Server 2022 table's monthly row boundaries are correct, but the team wants to map its existing partitions to storage filegroups. Which partitioning component defines that filegroup mapping rather than the row-boundary calculation?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The partition function's RANGE boundary values."
+      },
+      {
+        "id": "b",
+        "text": "The table's partitioning-column values."
+      },
+      {
+        "id": "c",
+        "text": "The partition scheme."
+      },
+      {
+        "id": "d",
+        "text": "The query predicate used for partition elimination."
+      }
+    ],
+    "correctAnswer": [
+      "c"
+    ],
+    "explanation": "The partition scheme maps partitions to filegroups.",
+    "deepExplanation": "Row assignment, storage placement and query elimination are related but distinct parts of partitioning.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The function determines row-to-partition boundaries, not partition-to-filegroup placement.",
+      "b": "Values are inputs to the function; they do not define filegroup mapping.",
+      "d": "A predicate can allow partitions to be skipped but does not define their storage placement."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement partitioning for tables and indexes",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-partitions"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/partitions/partitioned-tables-and-indexes"
+    ],
+    "documentationTitles": [
+      "Partitioned tables and indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "partition-scheme",
+      "filegroups"
+    ],
+    "conceptId": "sql-partition-function-versus-scheme-placement-responsibilities",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-084",
+    "question": "A SQL Server 2022 table is partitioned by EventDate. EventId must remain globally unique across dates. A proposed unique aligned index on (EventId, EventDate) would allow the same EventId on different dates, which is unacceptable. Partition-switch convenience is secondary. Which documented design direction preserves the original unique-key requirement?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Keep uniqueness on EventId using an appropriate nonaligned index design."
+      },
+      {
+        "id": "b",
+        "text": "Use the unique aligned composite key (EventId, EventDate)."
+      },
+      {
+        "id": "c",
+        "text": "Replace the unique index with a nonunique aligned index."
+      },
+      {
+        "id": "d",
+        "text": "Use no uniqueness constraint or unique index."
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "Preserve EventId uniqueness with a suitable nonaligned design.",
+    "deepExplanation": "Adding a partitioning column to a unique key can change what is unique. Alignment convenience must not silently redefine the business invariant.",
+    "whyOtherAnswersAreWrong": {
+      "b": "That enforces uniqueness of the pair rather than EventId alone, changing the business rule.",
+      "c": "It removes enforcement of global uniqueness.",
+      "d": "It does not enforce the required business rule."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement partitioning for tables and indexes",
+    "difficulty": "advanced",
+    "complexity": "architecture-design",
+    "sourceIds": [
+      "dp800-d1-partitions",
+      "dp800-d1-rowstore-indexes"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/partitions/partitioned-tables-and-indexes",
+      "https://learn.microsoft.com/en-us/sql/relational-databases/indexes/clustered-and-nonclustered-indexes-described"
+    ],
+    "documentationTitles": [
+      "Partitioned tables and indexes",
+      "Clustered and nonclustered indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "partitioned-unique-index",
+      "global-uniqueness"
+    ],
+    "conceptId": "sql-global-unique-key-versus-aligned-partitioned-unique-index",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-085",
+    "question": "A SQL Server 2022 team compares the partition functions used by a table and an index. Which difference can be present while their partition definitions still satisfy the documented equivalence requirements for alignment?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Different partition boundary values."
+      },
+      {
+        "id": "b",
+        "text": "Different partition counts."
+      },
+      {
+        "id": "c",
+        "text": "Different partition-function argument data types."
+      },
+      {
+        "id": "d",
+        "text": "Different function names with matching types, counts and boundaries."
+      }
+    ],
+    "correctAnswer": [
+      "d"
+    ],
+    "explanation": "Different names do not prevent the required definition equivalence.",
+    "deepExplanation": "The documentation requires matching argument types, partition counts and boundary values, rather than identity of the function object.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Equivalent definitions must have the same boundary values.",
+      "b": "The reference requires the same number of partitions.",
+      "c": "The documented equivalence test requires matching argument types."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement partitioning for tables and indexes",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-partitions"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/partitions/partitioned-tables-and-indexes"
+    ],
+    "documentationTitles": [
+      "Partitioned tables and indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "index-alignment",
+      "equivalent-functions"
+    ],
+    "conceptId": "sql-index-alignment-can-use-distinct-equivalent-partition-functions",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  },
+  {
+    "id": "dp800-direct-086",
+    "question": "A team moves a partitioned-table design from SQL Server to Azure SQL Database. The design still needs separate monthly partitions, but it cannot rely on multiple user filegroups in the target service. Which placement follows the documented Azure SQL Database restriction?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Assign each month to a new user-created filegroup."
+      },
+      {
+        "id": "b",
+        "text": "Place all monthly partitions on PRIMARY."
+      },
+      {
+        "id": "c",
+        "text": "Replace the partitions with one unpartitioned table."
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "Keep the monthly partitions and map them to PRIMARY.",
+    "deepExplanation": "Multiple filegroups are not a prerequisite for partitioning's other manageability benefits.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Azure SQL Database provides only PRIMARY for this partition placement.",
+      "c": "It abandons the required monthly partition structure even though single-filegroup partitioning is supported."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "design-and-implement-database-objects",
+    "subskill": "Design and implement partitioning for tables and indexes",
+    "difficulty": "intermediate",
+    "complexity": "architecture-design",
+    "sourceIds": [
+      "dp800-d1-partitions"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/relational-databases/partitions/partitioned-tables-and-indexes"
+    ],
+    "documentationTitles": [
+      "Partitioned tables and indexes"
+    ],
+    "generatedAt": "2026-09-15T15:42:47.151Z",
+    "lastValidatedAt": "2026-09-15T15:42:47.151Z",
+    "featureStatus": "GA",
+    "tags": [
+      "azure-sql-database",
+      "partitions",
+      "primary-filegroup"
+    ],
+    "conceptId": "azure-sql-partition-scheme-primary-filegroup-only",
+    "verificationStatus": "candidate",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "",
+    "requiresManualReview": true,
+    "confidenceReason": ""
+  }
+]

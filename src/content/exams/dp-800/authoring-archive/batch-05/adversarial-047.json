@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "0d0562375cae019deafd05de2cf6c4566a3294a2b22f9293ed44e46a2755af17",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "The earlier index selects its candidate pool before applying WHERE.",
+        "whyIncorrectInContext": "Not incorrect: all five selected candidates fail Approved = 1, so post-filtering removes the entire pool without replacement.",
+        "couldBeCorrectWhen": "An earlier-version index first returns a fixed TOP_N pool whose rows all fail a subsequently applied predicate, as here.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Version-specific behavior > Earlier vector index versions explicitly documents empty results despite qualifying rows outside the initial neighbor pool."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "Metric incompatibility triggers a warning and kNN fallback.",
+        "whyIncorrectInContext": "The stem supplies an already matching index used by the query. Its observed empty pool therefore does not establish metric incompatibility.",
+        "couldBeCorrectWhen": "A Euclidean query has only a cosine index on its searched column, and no compatible Euclidean index is available.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Arguments > METRIC requires the same metric and column; absence of a compatible ANN index produces the stated warning and fallback."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "An ambiguous distance reference prevents execution.",
+        "whyIncorrectInContext": "Successful completion returning zero rows is not the documented ambiguity error. The supplied observation directly excludes this diagnosis.",
+        "couldBeCorrectWhen": "The base table also contains distance, and an unqualified reference cannot distinguish that column from VECTOR_SEARCH's generated distance.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Return result set explicitly requires aliases for this shared-column-name situation and states that failure to disambiguate raises an error."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "The call supplies a view instead of the required base table.",
+        "whyIncorrectInContext": "A view target violates the valid-call premise. It cannot explain this successfully completed, matching-index query's empty filtered candidate pool.",
+        "couldBeCorrectWhen": "Inspection of a different invalid call shows TABLE naming a view rather than the base table required by the function.",
+        "sourceIds": ["dp800-d3-vector-search"],
+        "evidenceSummary": "Arguments > TABLE explicitly excludes views and temporary tables; the restriction concerns target validity, not successful post-filter result cardinality."
+      }
+    ],
+    "challenges": {
+      "scope": "Azure SQL Database and an earlier-version vector index are explicit. The finding is not transplanted to latest-index iterative filtering or another vector-search service.",
+      "plan": "The observed matching index and selected candidate pool are premises, not a prediction of optimizer behavior. No speed, recall, or forced-plan claim is needed.",
+      "role": "The query already completed successfully. A missing permission or endpoint identity would not explain the stated successful empty result; no privilege grant is proposed.",
+      "preconditions": "TOP_N is positive, the index matches, the query is valid, and diagnostics identify every selected row's predicate value. Approved rows outside that pool cannot rescue earlier post-filtering.",
+      "featureStatus": "VECTOR_SEARCH remains Preview. Earlier index syntax is retained for compatibility; neither a functioning query nor the credential's active status establishes feature GA.",
+      "sourceChanges": "The training query-patterns unit generalizes post-filtering, and preparation material describes older write restrictions. The current product limits those generalizations: latest indexes support iterative filtering, DML maintenance, and optimizer choice.",
+      "stemSufficiency": "The valid-call and successful-completion premises remove target and alias errors. 'Its' refers to the query's observed five-candidate pool; the filter values determine the empty result.",
+      "explanationBounds": "The explanation is explicitly version-specific. It does not infer that the base table lacks approved rows, that a permission filter ran, or that latest indexes share this fixed-pool limitation.",
+      "reasoningDepth": "This is a small diagnostic distinction between empty success, incompatibility fallback, and invalid-query errors. The supplied observations substantially reduce the troubleshooting burden.",
+      "answerClues": "The alternatives are grammatically comparable, but two propose execution errors already excluded by the stem. Their genuine diagnostic contexts do not eliminate that plausibility weakness."
+    },
+    "qualityNotes": "The 584 installed records and 73 distinct noninstalled variants yielded no target exact or near-duplicate finding. Full ai103-028 and ai103-029 comparisons distinguish hybrid RRF stage counts and filterOverride security semantics from SQL earlier-index post-filtering. Pending 048 changes index compatibility; 049 changes latest syntax. Pronouns are resolved, but successful execution makes the alias and view distractors easy eliminations. That weakness is scored rather than concealed."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-047",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "questionFingerprint": "0d0562375cae019deafd05de2cf6c4566a3294a2b22f9293ed44e46a2755af17",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-search",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-search.json",
+        "retrievedAt": "2026-09-15T06:34:21.531Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "VECTOR_SEARCH (Transact-SQL) (Preview), Earlier vector index versions, explicitly describes selecting neighbors before filtering and returning nothing when that pool fails the predicate. Arguments separately documents matching-column/metric fallback and the base-table restriction; Return result set documents distance ambiguity. The current receipt contrasts latest iterative filtering and qualifies regional rollout. The credential-linked search summary directly links this reference; its frozen dates remain unchanged."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "Earlier vector index versions applies the predicate only after retrieving the fixed neighbor pool. Five selected rows all having Approved=0 therefore leave zero survivors under Approved=1, regardless of approved rows elsewhere. This is the literal documented positive context for the option. Latest iterative filtering is not a counterexample because the stem explicitly excludes that version; successful execution and a matching index leave this explanation uniquely supported.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The warning-and-fallback mechanism is real, but its compatibility failure is absent from this stem: the query is stated to use a matching index. A positive context would be a Euclidean search whose only same-column index uses cosine, leaving no compatible ANN index. Arguments > METRIC documents that case. Replacing the stated matching-index premise with that different situation would change the problem, not explain these observations.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Return result set documents an error when a base-table distance column and the generated distance column are referenced ambiguously. That diagnosis is literally correct for an unqualified distance reference in such a schema. Here, however, the query finishes without error and diagnostics expose five predicate-failing candidates. An execution-preventing ambiguity cannot simultaneously explain a successfully returned empty set, so this alternative is technically grounded but easily eliminated.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Arguments > TABLE requires a base table and explicitly excludes views. The literal diagnosis is valid when a failed call's TABLE argument names a view; that is its sourced positive context. This question instead establishes a valid, completed query using its matching index. The absence of qualifying rows in its selected candidate pool is sufficient to explain empty output and does not suggest an unsupported target.",
+        "sourceIds": ["dp800-d3-vector-search"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Read .grounding\\dp-expansion\\direct\\batch-05\\technical-047.json alongside the unchanged candidate, exact generation record, claims, current objective map, frozen source metadata/index, and actual MCP evidence. Independently checked every failure alternative and the complete credential-to-training-to-reference provenance. The current product's explicit earlier/latest distinction resolves outdated training generalizations. Duplicate diagnostics and nearby full-item comparisons found no same-fact replacement. This documentation-only review scores 44/48; no SQL execution, candidate promotion, or ledger change occurred.",
+    "confidenceReason": "The source contains the precise empty-result mechanism, while the stem fixes the observations needed to distinguish it from all three alternatives. Neither unspecified permissions nor latest-version behavior supplies a second answer under those premises. Confidence in the key is strong; confidence in distractor difficulty is lower and is represented by the independent rubric, not inherited from the technical approval."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-vectors-recovery",
+    "reviewedAt": "2026-09-15T15:38:13.797Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 2,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "Score: 44/48, at the unchanged threshold. The current version-specific reference fully supports the key and all literal countercontexts, preserving every critical four. Distractor plausibility is two because successful execution immediately excludes two error diagnoses. Difficulty is three for a tightly constrained intermediate diagnosis, not deeper troubleshooting. Originality is three because the setup closely follows the documented empty-pool illustration, despite being distinct from existing bank items."
+  }
+}

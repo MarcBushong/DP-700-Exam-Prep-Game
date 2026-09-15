@@ -1,0 +1,155 @@
+{
+  "adversarial": {
+    "questionFingerprint": "3014c582f8fe6aa432380a10c15e8b04e52d8a1754cc309fb40331bb3ba30378",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-recovery",
+    "reviewedAt": "2026-09-15T13:50:27.675Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "Changing the existing JSON_VALUE call to strict path mode makes it return the complete 5,100-character message string.",
+        "whyIncorrectInContext": "Strict mode is an error-handling choice, not an increased-capacity return type. The overlength scalar that produces NULL in lax mode produces an error in strict mode. SQL Server 2022 does not have the newer RETURNING clause, and this unchanged SELECT has no such clause anyway. It cannot deliver the required text.",
+        "couldBeCorrectWhen": "With @document = N'{\"message\":\"ready\"}', the exact option SELECT JSON_VALUE(@document, 'strict $.message'); returns the scalar text N'ready'. It is appropriate when a present short scalar is required and a missing or nonscalar path should be reported as an error rather than tolerated as NULL. This is a different input-length contract, not a remedy for the current overlength value.",
+        "sourceIds": ["dp800-d1-json-value"],
+        "evidenceSummary": "The saved JSON_VALUE article's non-RETURNING contract specifies nvarchar(4000), overlength NULL in lax mode and an error in strict mode. Its Lax mode and strict mode table supplies successful strict extraction of existing short scalars, including the town string, alongside missing-path and nonscalar failures. The literal ready example is an independent application of that contract, not a claimed SQL execution."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "An explicit OPENJSON schema maps the root message string to an nvarchar(max) SQL column and returns its complete scalar text.",
+        "whyIncorrectInContext": "This is NOT incorrect. The supplied root object has the exact message property, and WITH (message nvarchar(max) '$.message') requests its scalar value without AS JSON. The explicit max-length output accommodates the 5,100-character string. Compatibility 160 satisfies the documented OPENJSON minimum of 130. The article's comparison of scalar projection with JSON_VALUE does not impose JSON_VALUE's return-size limit: OPENJSON returns the declared schema, and JSON_VALUE's own article recommends OPENJSON for longer scalars.",
+        "couldBeCorrectWhen": "It is correct for the stated long-string input and also, with the SELECT unchanged, for @document = N'{\"message\":\"retained text\"}': the result has one message column containing N'retained text'. The requested result must be scalar text from the stated property. Replacing that property with an object, changing its case or using an incompatible database would change the premises; none is a counterexample to this stem.",
+        "sourceIds": ["dp800-d1-json-value", "dp800-d1-openjson"],
+        "evidenceSummary": "JSON_VALUE explicitly directs over-4,000-character scalar extraction to OPENJSON. OPENJSON's introduction permits use in FROM; its WITH grammar supplies colName, type and column_path; its AS JSON section distinguishes scalar projection from fragment projection; and its Return value section preserves the explicit schema. Example 5 demonstrates typed extraction from one root object, rather than requiring an input array. These contracts support the unchanged statement without relying on the author's or technical reviewer's key."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "JSON_QUERY at the message path returns the long scalar because JSON_QUERY has an nvarchar(max) return type.",
+        "whyIncorrectInContext": "The return type does not change the function's eligible JSON value kinds. The selected property is a string, not an object or array, so ordinary JSON_QUERY returns SQL NULL in default lax mode. Even text that happens to contain JSON-looking characters remains a scalar at this path. No additional parse, unquoting operation or SQL Server 2025 extension appears in the option.",
+        "couldBeCorrectWhen": "With @document = N'{\"message\":{\"severity\":\"notice\"}}', the exact option SELECT JSON_QUERY(@document, '$.message'); returns the object fragment {\"severity\":\"notice\"}. That is correct if the application wants to retain the message object as JSON. It changes both the property kind and the required output kind, which the present stem explicitly fixes as scalar text.",
+        "sourceIds": ["dp800-d1-json-query"],
+        "evidenceSummary": "JSON_QUERY's opening definition and Return value section restrict ordinary extraction to objects and arrays and specify NULL when a scalar is selected in lax mode. The Lax mode and strict mode table shows town/type scalar paths returning NULL and object/array paths succeeding. Those documented value-kind rules, not the nvarchar(max) label alone, determine both this distractor's failure and its literal positive countercontext."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "Returning the entire input through pathless JSON_QUERY is equivalent to returning only the message's complete scalar text.",
+        "whyIncorrectInContext": "Omitting the path selects $, so this returns the enclosing JSON object. The full message may be inside that result, but the property name and JSON structure remain. The application explicitly wants the scalar value, not the surrounding document; no extraction step after this SELECT is offered.",
+        "couldBeCorrectWhen": "With @document = N'{\"message\":\"ready\",\"revision\":3}', the exact option SELECT JSON_QUERY(@document); returns the root fragment {\"message\":\"ready\",\"revision\":3}. It is correct when the application requests that complete object, including revision. It would also serve that different whole-object requirement for the current long-message input, but cannot satisfy the actual scalar-only requirement.",
+        "sourceIds": ["dp800-d1-json-query"],
+        "evidenceSummary": "The saved JSON_QUERY path argument explicitly defaults to $ and says an omitted path returns the input expression. The comparison table's $ row returns the entire JSON text in both modes. These are direct positive and negative bounds for this option; returning all enclosing text is not undocumented scalar unwrapping."
+      }
+    ],
+    "challenges": {
+      "scope": "The question concerns SQL Server 2022 extraction from an already populated nvarchar(max) variable, not ingestion, model-response envelope discovery, JSON serialization or client display limits. The root contains the stated message string. An answer must return that scalar value, not merely a larger JSON value that contains it.",
+      "plan": "The stated compatibility level is 160, above OPENJSON's minimum 130. No Azure pricing tier, Synapse serverless extension or additional compatibility override is needed for the shown statements. Platform/version support is taken from the product contracts, not inferred from a training module's general practice-environment prerequisites.",
+      "role": "The initial extraction has already been attempted against the supplied variable. The alternatives do not read protected tables, change database configuration or request an administrative operation. No unstated data-object permission or cloud identity assignment is needed to decide between these local-expression queries.",
+      "preconditions": "The input is valid JSON, not SQL NULL; message is the exact existing top-level property and has a string value rather than an object, array or JSON null. Its decoded string length is 5,100 characters, not merely a 5,100-character serialized document. nvarchar(max) storage and the stated intact input remove a smaller input-variable declaration as the cause. The fixed literal path needs neither a case correction nor a version-dependent variable path.",
+      "featureStatus": "The tested ordinary JSON_VALUE, JSON_QUERY and OPENJSON functionality is established SQL Server 2016-and-later functionality, including SQL Server 2022. The JSON_VALUE article explicitly excludes RETURNING from 2022 syntax; its newer data_type extension requires native json input. JSON_QUERY WITH ARRAY WRAPPER is expressly SQL Server 2025 Preview and requires json input. Neither extension is used, so the candidate's GA label is appropriate for its actual feature scope.",
+      "sourceChanges": "I read the three raw microsoft_docs_fetch bodies identified by the frozen index and checked their endpoint, input URLs and retrieval stamps against sources.json and source-registry.json. The JSON_VALUE Return value section has a SQL Server 2025 heading; I distinguished its optional RETURNING extension from the legacy non-RETURNING nvarchar(4000) contract, also explicitly taught by the directly named training unit. The article's 2022 syntax and the training evidence support the unchanged legacy case, not a backport of RETURNING. This review does not change the frozen 2026-09-15T06:30:44.832Z source-review snapshots or claim a new retrieval, live availability check or perpetual freshness.",
+      "stemSufficiency": "Valid input, a present string property, its length, the input SQL type, SQL Server version, compatibility level and scalar-only output are all stated. These eliminate malformed JSON, an absent key, a fragment-versus-scalar dispute and unsupported OPENJSON as competing diagnoses. The whole 5,100-character literal is unnecessary to distinguish these statements. Strict mode, a different property kind or a different output requirement rescues a distractor only by changing a stated premise.",
+      "explanationBounds": "The main explanation identifies the required explicit max-length scalar projection. The deeper explanation correctly separates a NULL symptom from an absent key and an error-mode change from a capacity change. The three distractor explanations respectively describe an error, NULL for a scalar, and the root object. They do not promise performance improvement, repair truncated input, claim arbitrary document-size support or generalize newer native-json syntax to 2022. All four statements were reviewed statically against documentation; no SQL execution is claimed.",
+      "reasoningDepth": "This is bounded troubleshooting at the lower end of intermediate: the learner must distinguish output capacity from lax/strict behavior and scalar extraction from fragment extraction. Most alternative causes have already been eliminated by the stem, and remembering the documented length remedy does much of the work. Difficulty authenticity is therefore 3, not a perfect score for a broad diagnostic exercise or advanced implementation.",
+      "answerClues": "All choices are syntactically plausible SELECT statements, but b is conspicuously longer: 81 characters versus 49, 42 and 29 for a, c and d. Its length is partly inherent to the table-valued function and explicit schema. The stem's scalar-only requirement makes the root-object distractor comparatively easy. I score distractor plausibility 3. The negative-wording warning refers to an output constraint, not an EXCEPT-style task; the pronoun it refers clearly to the complete scalar text."
+    },
+    "qualityNotes": "Independent 45/48. Deductions are for distractor plausibility, difficulty authenticity and originality, each 3; the other nine criteria are 4. The question applies a familiar documented remedy rather than an unusually original diagnostic setup. It shares a scalar-versus-fragment distinction with dp800-direct-027 and neighboring JSON candidates, but its necessary fact is the overlength JSON_VALUE failure and the OPENJSON max-length remedy. That is not the envelope-path selection in 027, the case-sensitive mapping in 029, AS JSON fragment preservation in 030, FOR JSON embedding in 033 or JSON-null mutation in 034. Target-specific deterministic comparisons across all 583 installed records and 114 candidate-array records found no distinct-ID findings. I separately inspected the 98 broad JSON/length/scalar matches by stem/concept and the closest full authored records. The older batch-04 record has the same question ID and concept and is a prior frozen snapshot, not an additional playable item; this attestation covers only batch-04r1. No duplicate decision or approval is being issued for any other question."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-028",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-recovery",
+    "questionFingerprint": "3014c582f8fe6aa432380a10c15e8b04e52d8a1754cc309fb40331bb3ba30378",
+    "reviewedAt": "2026-09-15T13:50:27.675Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-value",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-value-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-value.json",
+        "retrievedAt": "2026-09-15T05:42:02.233Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "JSON_VALUE (Transact-SQL), independently read from its raw Learn MCP response: Syntax explicitly separates SQL Server 2022's expression/path form from the later RETURNING extension. The non-RETURNING return contract is nvarchar(4000); overlength scalars yield NULL in lax mode and an error in strict mode, and OPENJSON is the documented alternative for longer scalar values. The Lax mode and strict mode table also establishes successful strict extraction of existing short scalars. The current Return value section's 2025 heading was not used to import RETURNING into 2022: the directly named training unit corroborates the ordinary NVARCHAR(4000) result, and the versioned Syntax note explicitly excludes RETURNING from the target platform."
+      },
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "OPENJSON (Transact-SQL), independently read through its examples: the table-valued function can appear in FROM and requires compatibility 130 or higher for the ordinary documented setup. WITH declares output names, SQL types and optional property paths; without AS JSON the selected value is scalar, and the explicit result schema uses the declared types. The root-object import example establishes typed object extraction without requiring an array. Together with JSON_VALUE's explicit long-scalar recommendation, this supports the exact nvarchar(max) message projection. The similarity to JSON_VALUE concerns scalar-versus-fragment handling, not an inherited 4,000-character return type. New compatibility overrides and Synapse-only identity generation are outside this candidate."
+      },
+      {
+        "sourceId": "dp800-d1-json-query",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-query-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-query.json",
+        "retrievedAt": "2026-09-15T05:45:14.018Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "JSON_QUERY (Transact-SQL), independently read from the raw response: ordinary extraction returns an object or array as an nvarchar(max) JSON fragment. A scalar at the selected path returns NULL in default lax mode, while omitted path defaults to $ and returns the input root fragment. The lax/strict table directly contrasts scalar failures with successful object, array and whole-document results, supporting both distractors' literal positive alternative contexts. WITH ARRAY WRAPPER is explicitly SQL Server 2025 Preview and limited to json input; its behavior is not attributed to either unmodified SQL Server 2022 statement."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Strict JSON_VALUE still has the non-RETURNING 4,000-character limit and errors for this 5,100-character string. The exact SELECT would correctly extract N'ready' from N'{\"message\":\"ready\"}', but that legitimate strict short-scalar use changes the stipulated input length and does not fix the current failure.",
+        "sourceIds": ["dp800-d1-json-value"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "OPENJSON in FROM with message nvarchar(max) '$.message' produces the explicitly typed scalar column from the supplied root object. It does not request AS JSON, and compatibility 160 satisfies the minimum 130. This is the documented remedy for a scalar longer than JSON_VALUE can return. A short confirming context, N'{\"message\":\"retained text\"}', would return N'retained text' through the same SELECT; the explicit max-length projection also accommodates the actual 5,100-character value.",
+        "sourceIds": ["dp800-d1-json-value", "dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "The message property is a scalar, so ordinary JSON_QUERY at that path returns NULL in default lax mode despite its nvarchar(max) return type. With the query unchanged, N'{\"message\":{\"severity\":\"notice\"}}' would instead return the object fragment {\"severity\":\"notice\"}; that is a valid different task, not this scalar-only task.",
+        "sourceIds": ["dp800-d1-json-query"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Pathless JSON_QUERY selects $ and returns the enclosing root object, not its message scalar. For example, the unchanged SELECT on N'{\"message\":\"ready\",\"revision\":3}' returns that whole object. It meets a whole-document requirement but leaves exactly the surrounding JSON structure that the current application does not want.",
+        "sourceIds": ["dp800-d1-json-query"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Actual independent PASS 3 of ONLY immutable dp800-direct-028 in .grounding\\dp-expansion\\direct\\batch-04r1. I read candidates.json, the matching generation-output entry, its validation-metadata generation claims, the explicitly author-only candidate-evidence analysis, the objective map, frozen source manifest and registry, source-retrieval-index, and the actual technical-028.json. I independently re-derived the four outcomes from the raw source bodies: a errors, b returns the complete scalar, c returns SQL NULL, and d returns the root object. The author's claim mappings and PASS 2 approval were inputs to challenge, not correctness evidence. Literal positive contexts are provided for all four unchanged options. JSON parsing confirmed those illustrative inputs are valid, and a separately constructed JSON value had a 5,100-character string; neither check executes or simulates SQL Server. No SQL engine test was performed or claimed.\n\nThe repository questionFingerprint helper independently produced 3014c582f8fe6aa432380a10c15e8b04e52d8a1754cc309fb40331bb3ba30378. It matches the exact candidate, generation-output entry and generation binding authored by copilot-dp800-direct-author at 2026-09-15T06:30:44.841Z. The actual technical file identifies dp800-technical-json-recovery at 2026-09-15T13:21:38.157Z on that same hash; its schema and source/option/time bindings also pass the existing attestation validator. This third context is neither that reviewer nor the author. objectiveFingerprint independently produced 8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191 for both the frozen and installed DP-800 maps. The raw dp-800-guide.json receipt was retrieved 2026-09-14T18:19:19.493Z and explicitly gives the March 12, 2026 outline. I read its current domains, weights and skills; the candidate maps to Design and develop database solutions (35-40%), Write advanced T-SQL code, and the named JSON-functions subskill. No outer version label was substituted for a map review.\n\nEach cited technical source has a direct training parent by named-API explicit-reference, not a documentation-to-documentation admission. The actual .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json MCP body at 2026-09-15T05:45:14.019Z explicitly teaches JSON_VALUE, JSON_QUERY and OPENJSON. This is a reference to each exact API, not a claim that all three canonical article URLs appear as hyperlinks. The raw module-advanced.json receipt at 2026-09-14T22:04:32.840Z links 4-json-functions; the raw dp-800-training-design.json receipt at 2026-09-14T18:31:14.910Z links ../../modules/write-advanced-sql-code/. The saved credential preparation links at 2026-09-14T18:31:24.010Z and design-training-redirect.json at 2026-09-14T18:57:14.063Z connect the locale-neutral training path to its exact English canonical path. I inspected those receipts, checked raw MCP endpoint/tool/input/time and nonempty bodies, and obtained no validateSourceProvenance findings. validatedSupportingSourceIds admits all three cited articles under the catalog's unchanged guide-linked-official, three-pass-v1 policy. The training unit's unrelated aggregate availability and performance claims were not adopted. Source URLs, evidence paths, retrievedAt and lastReviewedAt are preserved exactly from the frozen manifest/index, not replaced by this review's time. No fresh retrieval or online availability test is implied.\n\nDuplicate screening included all 583 installed question records without status filtering: AI-103 30, AZ-104 30, DP-700 162, DP-800 27, GH-600 149, GH-300 155 and SC-200 30. It also included 114 records in all 18 local candidate-array files. All 17 generation outputs were checked for matching authored records in those screened arrays; there were no additional generation-only candidates. Across these stores there were 643 distinct content fingerprints. Target-specific duplicateFindings and scenarioDuplicateFindings returned no findings against distinct IDs. Broad JSON, scalar, text-length, truncation and parse terms selected 98 distinct snapshots for stem/concept inspection; I then read the complete relevant authored fields of the nearest comparisons. dp800-direct-027 requires choosing the correct envelope path for a deliberately short scalar, while this item needs the different API and max-length projection after an overlength failure. dp800-direct-029 repairs path casing, 030 requires AS JSON for a fragment, 033 preserves JSON structure during FOR JSON serialization, and 034 mutates an existing key to JSON null. Knowing those facts alone does not establish the overlength remedy. dp700-ingest-038 reparses a dynamic string into an inner object; fabric-029 reduces a pipeline response to a 4-MB transport boundary; dp700-monitor-029 concerns remote result-stream limits and request-property precedence; dp700-monitor-044 narrows a bounded identifier type while preserving formatting. These are not the same tested transformation or limit. Other screened JSON mentions concern serialization, hooks, templates, files, unrelated scalar variables or different APIs. The batch-04 same-ID predecessor has fingerprint 1eb1f628c8c9f269b34834b36ac016861e0040b87848d4f9917b85f90c2fe563; it is explicitly outside this attestation and is not treated as a second independent bank encounter.\n\nqualityFindings reported negative-wording and pronoun-review warnings. The output constraint and pronoun are understandable, but the longer correct option, easy whole-object distractor, narrow diagnosis and shared scalar/fragment teaching pattern warrant the three one-point deductions recorded in the independent rubric. Score 45/48 meets the unchanged 44/48 threshold with all four mandated critical criteria at 4, distractor evidence at 4 and no zero. This is a question-specific final attestation, not an attestation for any other item, a source refresh, ledger synchronization or promotion. The on-disk candidate and all prior snapshots remain untouched.",
+    "confidenceReason": "High documentary confidence in the single correct answer under the explicit SQL Server 2022, compatibility 160, valid-input and scalar-length premises. Exact function contracts and literal alternative contexts support every option judgment, and independently recomputed bindings and observed direct training ancestry match the frozen evidence. Confidence in broader diagnostic depth and instructional originality is more modest and is reflected in the 45/48 score. Static and structural validation are not represented as SQL execution or proof that an entire bank is duplicate-free."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-recovery",
+    "reviewedAt": "2026-09-15T13:50:27.675Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 3,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "45/48, independently scored rather than converted from PASS 2 or a previous review. Alignment 4: the exact current JSON-query subskill directly covers this decision. Accuracy 4: the documented legacy scalar limit, strict error, typed OPENJSON remedy and JSON_QUERY value-kind/root behaviors support every authored claim under SQL Server 2022. Scenario completeness 4: input validity, property presence/kind/length, SQL type, version, compatibility and output shape are supplied. Answer uniqueness 4: only b produces complete scalar text without changing those premises. Distractor plausibility 3: strict mode and JSON_QUERY's max-length return are credible confusions, but pathless JSON_QUERY is readily excluded and b is longest. Distractor evidence 4: dedicated API contracts and positive short-scalar/object/root examples support both failure and literal alternative contexts for every option. Documentation strength 4: precise official product contracts have inspected direct named-API training ancestry; newer extensions and unrelated training claims are excluded. Citation specificity 4: the three direct API references and the identified Syntax, Arguments, Return value, mode-table and WITH sections address the exact operations, rather than broad overview pages. Difficulty authenticity 3: lower-end intermediate troubleshooting is defensible, but the stem pre-eliminates most diagnosis and the documented limit remedy dominates. Explanation quality 4: the explanation and all distractor notes correctly separate capacity, failure mode and output kind without adding unsupported promises. Originality 3: the new fact-level limit/remedy is distinct, but the familiar documented recipe and scalar-versus-fragment contrast overlap the surrounding bank's teaching pattern. Clarity/accessibility 4: short code choices and a precise positive output goal make the negative constraint and pronoun unambiguous. No critical criterion was relaxed to reach the threshold."
+  }
+}

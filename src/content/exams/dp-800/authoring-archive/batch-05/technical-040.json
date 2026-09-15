@@ -1,0 +1,82 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-040",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-models-recovery",
+    "questionFingerprint": "974194b8c8659530e861a8a81a93d48f1e4f676810ca97d14ef4ca87b375a52d",
+    "reviewedAt": "2026-09-15T15:06:17.563Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-create-external-model",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\create-external-model.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual CREATE EXTERNAL MODEL (Transact-SQL) receipt, especially owner_name and both Permissions subsections. The creation/altering subsection documents database-level CREATE EXTERNAL MODEL or ALTER ANY EXTERNAL MODEL permissions and shows GRANT statements. The separate External model grants subsection says a principal using a model in an AI function must be granted EXECUTE, and shows GRANT EXECUTE ON EXTERNAL MODEL::MODEL_NAME TO [<PRINCIPAL>]. owner_name also explains why existing ownership can affect explicit access requirements. These are permission grants, not execution of CREATE, ALTER or inference. The candidate excludes owner/administrator bypasses and prohibits model-management authority, leaving the exact named-model EXECUTE grant. The reference applies to Azure SQL Database; the local ONNX Preview example does not change this remote object-permission distinction."
+      },
+      {
+        "sourceId": "dp800-d3-external-models-unit",
+        "url": "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/03-create-manage-external-model-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\external-models-unit.json",
+        "retrievedAt": "2026-09-15T06:07:09.387Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read Create and manage external models in SQL. The Important paragraph in Use external models with AI functions expressly instructs GRANT EXECUTE ANY EXTERNAL ENDPOINT TO [user_or_role] for endpoint callers. Other sections distinguish stored model metadata, inference and database-object management. This supports a separate outbound-endpoint permission; it does not claim that endpoint authorization grants EXECUTE on every external model. The stem states that endpoint permission, authentication, model configuration and input access already exist. Its missing authorization is therefore derived from the product reference's named-model grant rather than the training sample's abbreviated provisioning sequence."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Read literally as an additional permission grant, CREATE EXTERNAL MODEL gives database model-creation authority. That violates the explicit invocation-only requirement even before considering any subsequent DDL; it is not the narrow EXECUTE grant on SupportEmbedding. Literal positive countercontext: a deployment principal is responsible for registering external model definitions and needs the documented database CREATE EXTERNAL MODEL permission. Granting this exact permission is then appropriate; the reference shows that GRANT in its creation/altering subsection. I do not claim that the grant itself creates a model, that it is syntactically invalid, or that a recipient could never invoke any model it separately owns or is authorized to use.",
+        "sourceIds": [
+          "dp800-d3-create-external-model"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "The product reference explicitly requires EXECUTE on an external model to use it in an AI function and supplies the EXTERNAL MODEL::object grant grammar. Substituting the existing identifier SupportEmbedding yields the named permission in this option. Literal confirming context is the given non-owner application principal: input reads, external-endpoint invocation and configured authentication are already available, and it needs usage of this one model without management authority. GRANT EXECUTE ON EXTERNAL MODEL::SupportEmbedding TO [the_application_principal] supplies that documented object capability. This is an authorization statement, not an inference call, and the endpoint permission remains a separate prerequisite.",
+        "sourceIds": [
+          "dp800-d3-create-external-model",
+          "dp800-d3-external-models-unit"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "ALTER ANY EXTERNAL MODEL is a database-wide model-management permission, directly documented in the creation/altering subsection. It exceeds the stem's prohibition on creating or altering definitions and is not the requested object-limited invocation grant. Literal positive countercontext: a deployment-maintenance role is authorized to manage external model definitions across the database and needs the ALTER ANY EXTERNAL MODEL grant shown in the reference. Granting that permission, as written, is suitable for that role; actually altering a model would be a later operation. Rejection here is based on excessive management authority, not an unsupported assertion about every permission implication or ownership case.",
+        "sourceIds": [
+          "dp800-d3-create-external-model"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The application already has EXECUTE ANY EXTERNAL ENDPOINT. Reissuing that same grant does not supply the distinct model EXECUTE permission required by the product reference. Literal positive countercontext preserving 'again': an application's previously provisioned endpoint permission is no longer present after reprovisioning, while its named-model EXECUTE permission is already in place. Granting EXECUTE ANY EXTERNAL ENDPOINT at database scope again restores the missing endpoint authorization described by the training unit's explicit GRANT instruction. That hypothetical changes which entitlement is missing, not what the grant does. It is not the stated situation, in which the endpoint entitlement is already present and the model entitlement is absent.",
+        "sourceIds": [
+          "dp800-d3-external-models-unit",
+          "dp800-d3-create-external-model"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Fresh independent technical PASS 2 for immutable dp800-direct-040 from request dp800-direct-05-models-vectors, generated by copilot-dp800-direct-author at 2026-09-15T06:57:02.666Z. I re-read the exact candidate and generation-output copy, generation-stage claims, author-only candidate evidence, frozen objectives, source snapshots, registry branches and retrieval index. Fresh repository-helper hashes matched the raw and parsed candidate, generation output and recorded generation fingerprint; the objective fingerprint matched the installed DP-800 map as well. The actual guide MCP receipt at .grounding\\dp-expansion\\dp-800-guide.json, retrieved 2026-09-14T18:19:19.493Z, establishes the March 12, 2026 current map and the Create and manage external models subskill in the 25-30% AI domain. The captured credential and course were also re-read. No prior technical review's verdict or rationale was reused.\n\nBoth sourceReviews retain the exact frozen URLs, retrieval timestamps, relative raw paths and 2026-09-15T06:57:02.652Z source-review dates. Their actual raw MCP envelopes match microsoft_docs_fetch at https://learn.microsoft.com/api/mcp and contain the reviewed bodies. The technical article's immediate parent is the training models-summary.json receipt, retrieved 2026-09-15T06:07:09.176Z, with an actual direct CREATE EXTERNAL MODEL link. The external-models unit and summary are explicitly linked by .grounding\\dp-expansion\\authors\\ai\\receipts\\models-module.json at 2026-09-14T22:06:21.049Z. Its parent .grounding\\dp-expansion\\dp-800-training-ai.json at 2026-09-14T18:31:14.994Z contains the actual module link. The saved rendered credential preparation links at 2026-09-14T18:31:24.010Z and ai-training-redirect.json at 2026-09-14T18:57:14.033Z preserve the exact training target/canonical ancestry. Catalog-scoped validateSourceProvenance returned no findings and both cited sources were admitted by validatedSupportingSourceIds. No documentation-to-documentation chain, mere hostname match, new retrieval or live URL check is claimed.\n\nThe independently derived key is b. The product reference's model EXECUTE requirement is distinct from the training unit's EXECUTE ANY EXTERNAL ENDPOINT prerequisite. The latter is not shorthand for permission to use all model objects. I treated a and c as grants of management authority, not as operations that immediately create or alter models; their excessive authority alone conflicts with the role constraint. I did not make an unsupported categorical claim that a management principal can never also invoke a model. Option d's literal repeated grant has a valid reinstatement context but does not repair the missing object permission here. Ownership, administrative authority, endpoint/credential setup and input reads are fixed by the stem, so no guessed owner bypass, external-service RBAC role or unrelated credential-creation privilege determines the answer. The grammar of the named object grant is directly illustrated by the source. No GRANT or SQL operation was executed.\n\nThe duplicate comparison included the full 583 installed records across seven banks plus all 18 .grounding\\dp-expansion candidate files (114 occurrences; 643 distinct questionId/authored-hash records after retaining differing revisions and consolidating identical snapshots). Both duplicateFindings and scenarioDuplicateFindings returned no target findings. Full comparison with installed 010 and its pending read-only-authorization construction showed that 010 selects database permissions rather than model instructions/network/review controls; 040 instead resolves two distinct SQL invocation permissions while excluding DDL authority. Pending 043 supplies a server REST configuration switch, not a principal's named-object grant. Pending 039 tests inference versus registration, and 041 tests credential URL enclosure. Shared model vocabulary does not make those facts interchangeable. Pending 050 includes model EXECUTE as a distractor for chunk-function resolution, a different prerequisite boundary.\n\nqualityFindings reported negative-wording and pronoun-review warnings. 'Not the model owner or an administrator' supplies necessary authorization constraints rather than reversing the task; 'It' refers unambiguously to the application principal. 'Again' makes d an easier distractor, but it tests an actual repeated-prerequisite misconception and does not establish the correct grant by grammar alone. Intermediate/scenario-based is defensible for separating endpoint, object and DDL permissions. Keyed positions across the seven reviewed items are balanced at a=2, b=2, c=2, d=2 when the multi-select keys are counted individually; there is no target answer-length finding. This is a technical verdict only, not a rubric score, adversarial approval, final attestation or promotion. All authored artifacts and source dates remain unchanged.",
+    "confidenceReason": "The exact product Permissions sections and the training unit's separate endpoint GRANT independently establish b under the stated non-owner, invocation-only constraints. Every permission alternative was interpreted literally as a grant and given a sourced positive entitlement context, including repeating the endpoint grant after it is missing. Generation, objective, source and provenance checks matched, and current-bank/pending-cohort comparison found no target duplicate. No SQL execution or final three-pass approval is asserted."
+  }
+}

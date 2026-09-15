@@ -1791,5 +1791,948 @@
     "requiresManualReview": false,
     "sourceLastReviewedAt": "2026-09-14T23:49:44.580Z",
     "confidenceReason": "High confidence in POST as the documented effective-omission default and in every current alternate configuration. Approval is for this exact new beginner fact and its source binding, not for the earlier multi-result-set item or any untested live endpoint."
+  },
+  {
+    "id": "dp800-direct-028",
+    "question": "A SQL Server 2022 database uses compatibility level 160. The nvarchar(max) variable @document contains valid JSON with one top-level message property whose string value has 5,100 characters. JSON_VALUE(@document, '$.message') returns SQL NULL. The application needs the complete scalar text, not the surrounding JSON document. Which replacement returns it?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "SELECT JSON_VALUE(@document, 'strict $.message');"
+      },
+      {
+        "id": "b",
+        "text": "SELECT message FROM OPENJSON(@document) WITH (message nvarchar(max) '$.message');"
+      },
+      {
+        "id": "c",
+        "text": "SELECT JSON_QUERY(@document, '$.message');"
+      },
+      {
+        "id": "d",
+        "text": "SELECT JSON_QUERY(@document);"
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "Use an explicit nvarchar(max) column in OPENJSON to extract the entire message.",
+    "deepExplanation": "The NULL does not imply that the key is absent. JSON_VALUE without RETURNING has a 4,000-character result limit; strict mode changes the failure behavior, not that limit. The SQL Server 2022 scope excludes newer native-json RETURNING syntax.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Strict JSON_VALUE raises an error for a scalar over 4,000 characters instead of returning the required complete text.",
+      "c": "JSON_QUERY extracts an object or array, not this scalar string; in lax mode it returns NULL for that scalar.",
+      "d": "Omitting the path returns the whole JSON object, not the required scalar message text."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": [
+      "dp800-d1-json-value",
+      "dp800-d1-openjson",
+      "dp800-d1-json-query"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-value-transact-sql",
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-query-transact-sql"
+    ],
+    "documentationTitles": [
+      "JSON_VALUE (Transact-SQL)",
+      "OPENJSON (Transact-SQL)",
+      "JSON_QUERY (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "json",
+      "scalar-length"
+    ],
+    "conceptId": "sql-json-value-overlength-scalar-openjson-max-projection",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T13:50:27.675Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-json-value",
+      "dp800-d1-openjson",
+      "dp800-d1-json-query"
+    ],
+    "verificationNotes": "Actual independent PASS 3 of ONLY immutable dp800-direct-028 in .grounding\\dp-expansion\\direct\\batch-04r1. I read candidates.json, the matching generation-output entry, its validation-metadata generation claims, the explicitly author-only candidate-evidence analysis, the objective map, frozen source manifest and registry, source-retrieval-index, and the actual technical-028.json. I independently re-derived the four outcomes from the raw source bodies: a errors, b returns the complete scalar, c returns SQL NULL, and d returns the root object. The author's claim mappings and PASS 2 approval were inputs to challenge, not correctness evidence. Literal positive contexts are provided for all four unchanged options. JSON parsing confirmed those illustrative inputs are valid, and a separately constructed JSON value had a 5,100-character string; neither check executes or simulates SQL Server. No SQL engine test was performed or claimed.\n\nThe repository questionFingerprint helper independently produced 3014c582f8fe6aa432380a10c15e8b04e52d8a1754cc309fb40331bb3ba30378. It matches the exact candidate, generation-output entry and generation binding authored by copilot-dp800-direct-author at 2026-09-15T06:30:44.841Z. The actual technical file identifies dp800-technical-json-recovery at 2026-09-15T13:21:38.157Z on that same hash; its schema and source/option/time bindings also pass the existing attestation validator. This third context is neither that reviewer nor the author. objectiveFingerprint independently produced 8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191 for both the frozen and installed DP-800 maps. The raw dp-800-guide.json receipt was retrieved 2026-09-14T18:19:19.493Z and explicitly gives the March 12, 2026 outline. I read its current domains, weights and skills; the candidate maps to Design and develop database solutions (35-40%), Write advanced T-SQL code, and the named JSON-functions subskill. No outer version label was substituted for a map review.\n\nEach cited technical source has a direct training parent by named-API explicit-reference, not a documentation-to-documentation admission. The actual .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json MCP body at 2026-09-15T05:45:14.019Z explicitly teaches JSON_VALUE, JSON_QUERY and OPENJSON. This is a reference to each exact API, not a claim that all three canonical article URLs appear as hyperlinks. The raw module-advanced.json receipt at 2026-09-14T22:04:32.840Z links 4-json-functions; the raw dp-800-training-design.json receipt at 2026-09-14T18:31:14.910Z links ../../modules/write-advanced-sql-code/. The saved credential preparation links at 2026-09-14T18:31:24.010Z and design-training-redirect.json at 2026-09-14T18:57:14.063Z connect the locale-neutral training path to its exact English canonical path. I inspected those receipts, checked raw MCP endpoint/tool/input/time and nonempty bodies, and obtained no validateSourceProvenance findings. validatedSupportingSourceIds admits all three cited articles under the catalog's unchanged guide-linked-official, three-pass-v1 policy. The training unit's unrelated aggregate availability and performance claims were not adopted. Source URLs, evidence paths, retrievedAt and lastReviewedAt are preserved exactly from the frozen manifest/index, not replaced by this review's time. No fresh retrieval or online availability test is implied.\n\nDuplicate screening included all 583 installed question records without status filtering: AI-103 30, AZ-104 30, DP-700 162, DP-800 27, GH-600 149, GH-300 155 and SC-200 30. It also included 114 records in all 18 local candidate-array files. All 17 generation outputs were checked for matching authored records in those screened arrays; there were no additional generation-only candidates. Across these stores there were 643 distinct content fingerprints. Target-specific duplicateFindings and scenarioDuplicateFindings returned no findings against distinct IDs. Broad JSON, scalar, text-length, truncation and parse terms selected 98 distinct snapshots for stem/concept inspection; I then read the complete relevant authored fields of the nearest comparisons. dp800-direct-027 requires choosing the correct envelope path for a deliberately short scalar, while this item needs the different API and max-length projection after an overlength failure. dp800-direct-029 repairs path casing, 030 requires AS JSON for a fragment, 033 preserves JSON structure during FOR JSON serialization, and 034 mutates an existing key to JSON null. Knowing those facts alone does not establish the overlength remedy. dp700-ingest-038 reparses a dynamic string into an inner object; fabric-029 reduces a pipeline response to a 4-MB transport boundary; dp700-monitor-029 concerns remote result-stream limits and request-property precedence; dp700-monitor-044 narrows a bounded identifier type while preserving formatting. These are not the same tested transformation or limit. Other screened JSON mentions concern serialization, hooks, templates, files, unrelated scalar variables or different APIs. The batch-04 same-ID predecessor has fingerprint 1eb1f628c8c9f269b34834b36ac016861e0040b87848d4f9917b85f90c2fe563; it is explicitly outside this attestation and is not treated as a second independent bank encounter.\n\nqualityFindings reported negative-wording and pronoun-review warnings. The output constraint and pronoun are understandable, but the longer correct option, easy whole-object distractor, narrow diagnosis and shared scalar/fragment teaching pattern warrant the three one-point deductions recorded in the independent rubric. Score 45/48 meets the unchanged 44/48 threshold with all four mandated critical criteria at 4, distractor evidence at 4 and no zero. This is a question-specific final attestation, not an attestation for any other item, a source refresh, ledger synchronization or promotion. The on-disk candidate and all prior snapshots remain untouched.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "High documentary confidence in the single correct answer under the explicit SQL Server 2022, compatibility 160, valid-input and scalar-length premises. Exact function contracts and literal alternative contexts support every option judgment, and independently recomputed bindings and observed direct training ancestry match the frozen evidence. Confidence in broader diagnostic depth and instructional originality is more modest and is reflected in the 45/48 score. Static and structural validation are not represented as SQL execution or proof that an entire bank is duplicate-free."
+  },
+  {
+    "id": "dp800-direct-029",
+    "question": "On SQL Server 2022 at compatibility level 160, the database and @payload use a case-insensitive collation. The shown query returns SQL NULL for its sku column. Keep that output column name and the input unchanged. Which replacement WITH clause reads the product identifier?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "WITH (sku nvarchar(20))"
+      },
+      {
+        "id": "b",
+        "text": "WITH (sku nvarchar(20) '$.SKU[0]')"
+      },
+      {
+        "id": "c",
+        "text": "WITH (sku nvarchar(20) '$.SKU')"
+      },
+      {
+        "id": "d",
+        "text": "WITH (sku nvarchar(20) '$.category')"
+      }
+    ],
+    "correctAnswer": [
+      "c"
+    ],
+    "explanation": "Map the SQL output column explicitly to '$.SKU'.",
+    "deepExplanation": "OPENJSON's matching of JSON path steps and default WITH column names is case-sensitive and collation-unaware. Output alias spelling and property-path spelling are separate choices.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Default mapping selects lowercase sku, which is absent; case-insensitive database collation does not change the BIN2 property comparison.",
+      "b": "This requests an array element, but the actual uppercase SKU property contains a scalar string rather than an array.",
+      "d": "This returns the existing category text spare, not the product identifier."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-openjson"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
+    ],
+    "documentationTitles": [
+      "OPENJSON (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "openjson",
+      "case-sensitive-path"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"SKU\":\"R-84\",\"category\":\"spare\"}';\nSELECT sku FROM OPENJSON(@payload) WITH (sku nvarchar(20));",
+    "conceptId": "sql-openjson-case-sensitive-property-mapping-independent-collation",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:35:08.185Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-openjson"
+    ],
+    "verificationNotes": "Independent PASS3 of immutable 029 only. Read the exact candidate, matching generation output/claims, current objective map, package policy, frozen manifest, registry/index and raw MCP evidence through the credential-linked design path and JSON unit. Independently recomputed both hashes and re-derived every option before checking technical-029.json's separate reviewer/time binding. Countercontexts preserve each option literally and state changed premises. Static review only; no SQL execution, candidate/source edits, ledger writes or promotion.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "The exact-case property path is the only offered clause selecting R-84 while preserving sku and the given input. Direct OPENJSON rules defeat the collation, array and wrong-field alternatives; remaining deductions are editorial, not technical ambiguity."
+  },
+  {
+    "id": "dp800-direct-030",
+    "question": "An ingestion procedure on SQL Server 2022, compatibility level 160, must return the entire detail object in one nvarchar(max) column for later processing. It must not flatten the object's fields. Which column definition should replace the placeholder?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "detail nvarchar(max) '$.detail' AS JSON"
+      },
+      {
+        "id": "b",
+        "text": "detail nvarchar(max) '$.detail'"
+      },
+      {
+        "id": "c",
+        "text": "detail int '$.detail.items'"
+      },
+      {
+        "id": "d",
+        "text": "detail nvarchar(max) '$.detail.memo'"
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "Use nvarchar(max) with AS JSON for the nested object.",
+    "deepExplanation": "The explicit schema distinguishes scalar extraction from fragment extraction. Increasing the text column length alone does not make a scalar projection return an object.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Without AS JSON the projection expects a scalar; this object yields NULL in the default lax mode.",
+      "c": "This extracts only the numeric items field and returns an integer, losing the required object.",
+      "d": "This extracts only the scalar memo text, not the complete object."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-openjson"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
+    ],
+    "documentationTitles": [
+      "OPENJSON (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "openjson",
+      "nested-json"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"detail\":{\"items\":2,\"memo\":\"ship\"}}';\nSELECT detail FROM OPENJSON(@payload)\nWITH (/* column definition */);",
+    "conceptId": "sql-openjson-as-json-nested-fragment-typed-projection",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:35:08.185Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-openjson"
+    ],
+    "verificationNotes": "Independent PASS3 of immutable 030 only. Exact candidate/generation, March 12 objectives, package policy, manifest, provenance registry/index and raw MCP source were inspected; the credential-linked JSON unit establishes the source's named-API ancestry. Both hashes were independently recomputed. technical-030.json was checked for binding, chronology and separate identity, not inherited reasoning. Re-derived fragment, NULL, integer and memo outcomes with explicit positive countercontexts. No SQL execution, candidate/source edits, ledger writes or promotion.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "Only the AS JSON definition both selects the complete object and satisfies the documented nvarchar(max) prerequisite. Every distractor is valid for a different scalar requirement but fails this explicit output contract; the deductions concern instructional depth and construction."
+  },
+  {
+    "id": "dp800-direct-031",
+    "question": "A SQL Server 2022 database uses compatibility level 160. An incoming JSON object contains both a literal dotted key and a nested object. What does this query return for the selected column?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "B2"
+      },
+      {
+        "id": "b",
+        "text": "SQL NULL"
+      },
+      {
+        "id": "c",
+        "text": "{\"code\":\"B2\"}"
+      },
+      {
+        "id": "d",
+        "text": "A7"
+      }
+    ],
+    "correctAnswer": [
+      "d"
+    ],
+    "explanation": "The result is A7 from the literal top-level key billing.code.",
+    "deepExplanation": "Brackets delimit the SQL column name; they do not turn its dot into a JSON path separator. An explicit '$.billing.code' column path would select the different nested value.",
+    "whyOtherAnswersAreWrong": {
+      "a": "A dotted SQL column name is matched literally; it does not imply the nested path $.billing.code.",
+      "b": "The exact literal billing.code key exists and contains a scalar, so the default mapping finds A7.",
+      "c": "The column has neither a path to billing nor AS JSON, so it does not return that nested object."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-openjson"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
+    ],
+    "documentationTitles": [
+      "OPENJSON (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "openjson",
+      "literal-json-key"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"billing.code\":\"A7\",\"billing\":{\"code\":\"B2\"}}';\nSELECT [billing.code]\nFROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10));",
+    "conceptId": "sql-openjson-dotted-column-name-literal-key-versus-nested-path",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:35:08.185Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-openjson"
+    ],
+    "verificationNotes": "Independent PASS3 of immutable 031 only. Read candidate/generation, exact current objectives, policy, frozen source manifest/registry/index and the raw MCP article, including the dotted-name Remarks and AS JSON requirements. Verified credential-linked training ancestry and independently computed both hashes. technical-031.json supplied only separately checked stage bindings, not inherited conclusions. Countercontexts identify input changes versus the different fragment query explicitly. No SQL execution, authored repair, source/ledger edits or promotion.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "The product article directly documents this literal-name versus nested-path distinction. The fixed scalar key makes A7 unique; the NULL and object alternatives require different conditions or code. The weaker object distractor reduces plausibility without creating ambiguity."
+  },
+  {
+    "id": "dp800-direct-032",
+    "question": "On SQL Server 2022 at compatibility level 160, a validator must select only JSON numeric tokens from this default-schema OPENJSON result. Quoted numeric strings must not qualify. Which filter should replace the placeholder?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "WHERE [type] = 1"
+      },
+      {
+        "id": "b",
+        "text": "WHERE [type] = 2"
+      },
+      {
+        "id": "c",
+        "text": "WHERE [type] = 3"
+      },
+      {
+        "id": "d",
+        "text": "WHERE [type] = 0"
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "Filter the default-schema type column for 2.",
+    "deepExplanation": "The value column is nvarchar(max), so its SQL type alone does not establish the original JSON token type. OPENJSON exposes the discriminator only with the default schema, not with a WITH projection.",
+    "whyOtherAnswersAreWrong": {
+      "a": "Default-schema type 1 identifies JSON strings, including the quoted value in label.",
+      "c": "Type 3 identifies JSON true/false tokens, not numbers.",
+      "d": "Type 0 identifies JSON null values, not numbers."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": [
+      "dp800-d1-openjson"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql"
+    ],
+    "documentationTitles": [
+      "OPENJSON (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "openjson",
+      "json-token-types"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "SELECT [key], [value]\nFROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}')\n/* filter */;",
+    "conceptId": "sql-openjson-default-type-discriminator-number-versus-numeric-string",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:35:08.185Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-openjson"
+    ],
+    "verificationNotes": "Independent PASS3 of immutable 032 only. Read exact candidate/generation, current objectives, strict policy, frozen manifest/registry/index and raw MCP evidence with its credential-linked training ancestry. Recomputed both hashes and independently re-derived token codes and the four selected properties before checking technical-032.json's separate stage binding. Explicit countercontexts keep each filter literal and change only the requested token class. No SQL execution, authored/source edits, ledger writes or promotion.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "The exact discriminator table and default-schema examples support one number-only filter, with no implicit string or boolean conversion in the query. Every alternative has a valid different-token audit context; originality, not accuracy or sufficiency, is the sole deduction."
+  },
+  {
+    "id": "dp800-direct-034",
+    "question": "On SQL Server 2022, a patch operation must retain the existing contact property but replace its value with JSON null. The unrelated revision property must remain unchanged. Which expression returns the required patched document?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "JSON_MODIFY(@payload, 'strict $.contact', NULL)"
+      },
+      {
+        "id": "b",
+        "text": "JSON_MODIFY(@payload, 'lax $.contact', NULL)"
+      },
+      {
+        "id": "c",
+        "text": "JSON_MODIFY(@payload, '$.contact', N'null')"
+      },
+      {
+        "id": "d",
+        "text": "JSON_MODIFY(@payload, '$.contact', N'')"
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "Use strict mode with SQL NULL on the existing contact path.",
+    "deepExplanation": "Deletion, JSON null, the string \"null\", and an empty string are different document states. The path's known existence removes the separate strict-mode missing-property error case.",
+    "whyOtherAnswersAreWrong": {
+      "b": "For an existing key, lax mode with SQL NULL deletes the property rather than retaining it.",
+      "c": "The nvarchar new value is text, so this stores the JSON string \"null\", not the JSON null token.",
+      "d": "This stores an empty JSON string, not a null value."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-json-modify"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
+    ],
+    "documentationTitles": [
+      "JSON_MODIFY (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "json-modify",
+      "null-versus-absence"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"contact\":\"ops\",\"revision\":6}';",
+    "conceptId": "sql-json-modify-strict-null-keeps-existing-key",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:36:40.486Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-json-modify"
+    ],
+    "verificationNotes": "Independently re-derived all four document states from the raw MCP reference, including literal positive countercontexts. The computed question/objective hashes match the unchanged generation and technical bindings; this review follows the distinct technical reviewer. The guide, named-API training ancestry, and frozen source dates were checked. Score 45/48. This is static review only: no SQL execution, source refresh, candidate edit, ledger write, or promotion.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "High documentary confidence in key a for this complete, existing-path input. Source rules directly distinguish every competing state. Confidence in instructional depth and novelty is lower than technical confidence and is reflected in the rubric."
+  },
+  {
+    "id": "dp800-direct-035",
+    "question": "A SQL Server 2022 application passes an updated attempt value as an nvarchar parameter. Ignoring insignificant whitespace, which JSON document does this expression return?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "An attempt property with the JSON number 3"
+      },
+      {
+        "id": "b",
+        "text": "An attempt property with the JSON number 2"
+      },
+      {
+        "id": "c",
+        "text": "No attempt property, leaving an empty object"
+      },
+      {
+        "id": "d",
+        "text": "An attempt property with the JSON string \"3\""
+      }
+    ],
+    "correctAnswer": [
+      "d"
+    ],
+    "explanation": "The new property value is the JSON string \"3\".",
+    "deepExplanation": "A numeric-looking string is still a text-typed SQL argument. If the contract requires a JSON number, validate and convert the value to the intended numeric SQL type before passing it.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The supplied new value is nvarchar, so it is stored as text rather than automatically treated as a JSON number.",
+      "b": "The existing path is updated with a nonnull new value; the old numeric value is not retained.",
+      "c": "The new value is nonnull text; lax-mode deletion applies to a SQL NULL new value instead."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": [
+      "dp800-d1-json-modify"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
+    ],
+    "documentationTitles": [
+      "JSON_MODIFY (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "json-modify",
+      "sql-value-type"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "DECLARE @next nvarchar(10) = N'3';\nSELECT JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', @next);",
+    "conceptId": "sql-json-modify-sql-input-type-determines-json-number-or-string",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:36:40.486Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-json-modify"
+    ],
+    "verificationNotes": "Independently derived string-valued attempt from the SQL declaration, not the existing JSON number or technical verdict. Numeric replacements and lax SQL NULL supply concrete positive alternatives for every distractor. Exact generation/objective/source bindings and review chronology were checked. Nearest type-discrimination content tests a different operation. Score 45/48 with weak fillers explicitly penalized. Static documentary review only; no SQL execution or candidate/source/ledger changes.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "High confidence in key d because the declared SQL replacement type and the reference's numeric-cast distinction directly settle the result. The beginner label is honest; distractor credibility and textbook-style originality are the material limitations."
+  },
+  {
+    "id": "dp800-direct-036",
+    "question": "A SQL Server 2022 service maintains a JSON array of processing stages. For the input shown, it must keep the two existing elements in their order and add the string \"verify\" as the final element. Which expression makes that change without replacing the array?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "JSON_MODIFY(@payload, '$.stages', N'verify')"
+      },
+      {
+        "id": "b",
+        "text": "JSON_MODIFY(@payload, 'append $.stages', N'verify')"
+      },
+      {
+        "id": "c",
+        "text": "JSON_MODIFY(@payload, 'strict $.stages', NULL)"
+      },
+      {
+        "id": "d",
+        "text": "JSON_MODIFY(@payload, 'lax $.stages', NULL)"
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "Use the append modifier on the existing stages array.",
+    "deepExplanation": "The input explicitly supplies an array. A normal property update replaces its value; append is the documented operation for extending that array.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This replaces the entire stages value with one string rather than appending to its array.",
+      "c": "Strict mode with SQL NULL replaces the existing array value with JSON null.",
+      "d": "Lax mode with SQL NULL removes the existing stages property."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "beginner",
+    "complexity": "concept-recall",
+    "sourceIds": [
+      "dp800-d1-json-modify"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql"
+    ],
+    "documentationTitles": [
+      "JSON_MODIFY (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2022",
+      "json-array",
+      "append"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "DECLARE @payload nvarchar(max) = N'{\"stages\":[\"receive\",\"validate\"]}';",
+    "conceptId": "sql-json-modify-append-preserves-existing-array-elements",
+    "verificationStatus": "manual-review-required",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "Independent static derivation supports b and contradicts all three alternatives with literal positive countercontexts. Actual quality review nevertheless scores 43/48: weak NULL fillers, append-word cueing, and limited explanation prevent approval. The true review-check flags record completed checks, not a passing rubric. Bindings and frozen source dates match. No candidate was repaired or promoted; any authored repair requires all three passes again. No SQL execution was claimed.",
+    "requiresManualReview": true,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "High confidence in the technical key and equally clear evidence of inadequate constructed-option quality. The nonverified verdict is caused by the independently scored rubric, not uncertainty about append semantics or an inherited technical-review conclusion."
+  },
+  {
+    "id": "dp800-direct-037",
+    "question": "An Azure SQL Database API distinguishes an omitted optional key from a key whose value is JSON null or an empty string. It must include the code and numeric zero but omit the SQL NULL comment value. Which constructor satisfies that contract?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "JSON_OBJECT('code':@code, 'retry':@retry, 'comment':@comment NULL ON NULL)"
+      },
+      {
+        "id": "b",
+        "text": "JSON_OBJECT('code':@code, 'retry':@retry, 'comment':@comment)"
+      },
+      {
+        "id": "c",
+        "text": "JSON_OBJECT('code':@code, 'retry':@retry, 'comment':@comment ABSENT ON NULL)"
+      },
+      {
+        "id": "d",
+        "text": "JSON_OBJECT('code':@code, 'retry':@retry, 'comment':N'' ABSENT ON NULL)"
+      }
+    ],
+    "correctAnswer": [
+      "c"
+    ],
+    "explanation": "Specify ABSENT ON NULL.",
+    "deepExplanation": "The null policy concerns SQL NULL values, not numeric zero or empty strings. JSON_OBJECT's default is explicit null inclusion; ABSENT ON NULL must be specified when omission is the intended contract.",
+    "whyOtherAnswersAreWrong": {
+      "a": "This retains comment with a JSON null value, which differs from the required omission.",
+      "b": "JSON_OBJECT defaults to NULL ON NULL, so omitting the clause still retains comment as JSON null.",
+      "d": "The supplied empty string is nonnull, so this retains comment as an empty JSON string instead of omitting the key."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-json-object"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-object-transact-sql"
+    ],
+    "documentationTitles": [
+      "JSON_OBJECT (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "azure-sql-database",
+      "json-object",
+      "optional-properties"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "DECLARE @code nvarchar(10) = N'R9', @retry int = 0, @comment nvarchar(100) = NULL;\nSELECT /* constructor */;",
+    "conceptId": "sql-json-object-absent-on-null-omits-only-null-valued-keys",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:36:40.486Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-json-object"
+    ],
+    "verificationNotes": "Independently derived the omitted-key object and each explicit-null/empty-string alternative from the raw constructor contract. The duplicate behavior of a and b is an editorial weakness, not ambiguity in key c. Exact hashes, named-API ancestry, and unchanged source dates bind this review. Score 44/48 after actual deductions for redundancy and limited depth. Static source reasoning only; no SQL execution, authored repairs, ledger edits, or promotion.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "High documentary confidence that only c omits comment while retaining code and numeric zero. Confidence in distractor diversity and intermediate realism is limited; those weaknesses remain visible in the threshold-level score rather than being hidden by technical correctness."
+  },
+  {
+    "id": "dp800-direct-038",
+    "question": "In Azure SQL Database, an export must produce [\"z\",null,\"a\"] from the shown rows: array positions follow Position and a missing Label occupies a JSON null slot. Which aggregate expression satisfies both requirements?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "JSON_ARRAYAGG(Label ORDER BY Position NULL ON NULL)"
+      },
+      {
+        "id": "b",
+        "text": "JSON_ARRAYAGG(Label ORDER BY Position ABSENT ON NULL)"
+      },
+      {
+        "id": "c",
+        "text": "JSON_ARRAYAGG(Label ORDER BY Position DESC NULL ON NULL)"
+      },
+      {
+        "id": "d",
+        "text": "JSON_ARRAYAGG(Label ORDER BY Position DESC ABSENT ON NULL)"
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "Order inside JSON_ARRAYAGG by Position and specify NULL ON NULL.",
+    "deepExplanation": "The two clauses control different parts of the contract. ABSENT ON NULL is the aggregate's default, so preserving positional gaps must be explicit. The documented feature is GA for the stated Azure SQL Database scope; SQL Server 2025 availability is separately labeled Preview.",
+    "whyOtherAnswersAreWrong": {
+      "b": "Ordering is correct but ABSENT ON NULL removes the middle element, producing only the two strings.",
+      "c": "The null slot remains, but descending Position reverses the two labels and does not produce the requested array.",
+      "d": "This both reverses the positional order and removes the null element."
+    },
+    "objectiveDomain": "design-and-develop-database-solutions",
+    "skill": "write-advanced-t-sql-code",
+    "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d1-json-arrayagg"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-arrayagg-transact-sql"
+    ],
+    "documentationTitles": [
+      "JSON_ARRAYAGG (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:30:44.841Z",
+    "lastValidatedAt": "2026-09-15T06:30:44.841Z",
+    "featureStatus": "GA",
+    "tags": [
+      "azure-sql-database",
+      "json-arrayagg",
+      "ordered-export"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "SELECT /* aggregate expression */\nFROM (VALUES (10, N'z'), (20, NULL), (30, N'a')) AS Input(Position, Label);",
+    "conceptId": "azure-sql-json-arrayagg-aggregate-order-and-null-position-preservation",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:36:40.486Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d1-json-arrayagg"
+    ],
+    "verificationNotes": "Independently derived all four ordered arrays, distinguishing a present SQL NULL row from absence, strings, and empty text. Product evidence establishes Azure SQL Database GA despite the immediate training unit's inaccurate SQL Server 2022 aggregate claim; SQL Server 2025 remains Preview. Exact hashes, ancestry, and frozen source dates were checked. Score 46/48. Static review only, without SQL execution, source refresh, candidate edits, ledger writes, or promotion.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:30:44.832Z",
+    "confidenceReason": "High confidence in key a because unique positions, explicit input values, and both documented aggregate clauses determine the requested output. The product-specific availability statement resolves the training conflict; the finding does not extend GA to SQL Server 2025."
+  },
+  {
+    "id": "dp800-direct-046",
+    "question": "On SQL Server 2025, what vector does this expression produce, ignoring insignificant floating-point rounding?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Approximately [-0.428571, 0.571429]"
+      },
+      {
+        "id": "b",
+        "text": "Approximately [-0.75, 1.0]"
+      },
+      {
+        "id": "c",
+        "text": "Approximately [-0.6, 0.8]"
+      },
+      {
+        "id": "d",
+        "text": "Approximately [-3.0, 4.0]"
+      }
+    ],
+    "correctAnswer": [
+      "c"
+    ],
+    "explanation": "The norm2 length is 5, so the result is approximately [-0.6, 0.8].",
+    "deepExplanation": "The three supported norms use different denominators. Normalization changes scale, not direction; the norm2 calculation preserves the ratio and signs of these two components.",
+    "whyOtherAnswersAreWrong": {
+      "a": "These components divide the input by the sum of absolute values, 7, which is norm1 rather than the requested norm2.",
+      "b": "These components divide by the maximum absolute component, 4, which is norminf.",
+      "d": "That is the unnormalized input, whose Euclidean length is 5 rather than 1."
+    },
+    "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+    "skill": "design-and-implement-intelligent-search",
+    "subskill": "Identify when to use vector-related types and functions for semantic searching, including VECTOR\\_NORMALIZE, VECTOR\\_DISTANCE, VECTORPROPERTY, and VECTOR\\_SEARCH",
+    "difficulty": "intermediate",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d3-vector-normalize"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-normalize-transact-sql"
+    ],
+    "documentationTitles": [
+      "VECTOR_NORMALIZE (Transact-SQL)"
+    ],
+    "generatedAt": "2026-09-15T06:57:02.666Z",
+    "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+    "featureStatus": "GA",
+    "tags": [
+      "sql-server-2025",
+      "vector-normalize",
+      "euclidean-norm"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "DECLARE @v VECTOR(2) = '[-3,4]';\nSELECT VECTOR_NORMALIZE(@v, 'norm2');",
+    "conceptId": "sql-vector-normalize-euclidean-norm-calculation",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:38:13.797Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d3-vector-normalize"
+    ],
+    "verificationNotes": "Independently reviewed the frozen batch-05 candidate, matching generation output, generation claims, objective map, source index, and .grounding\\dp-expansion\\direct\\batch-05\\technical-046.json. Recomputed both fingerprints; read raw guide, credential, course, training ancestry, and normalization evidence. Local arithmetic confirmed denominators 7, 5, and 4, not SQL execution. Literal countercontexts and full nearby authored items were checked separately from technical conclusions. The 46/48 rubric supports this review disposition without editing or promoting the candidate.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:57:02.652Z",
+    "confidenceReason": "The supported result follows from a documented mathematical definition and the explicit, nonzero input. Both alternate normalization outputs have genuine documented contexts, while the unchanged pair belongs to variable inspection. Source identity, exact retrieval/review snapshots, objective binding, and generation chronology agree. Confidence is bounded to this expression and preserved evidence, not SQL runtime testing or unrelated vector features."
+  },
+  {
+    "id": "dp800-direct-047",
+    "question": "An Azure SQL Database environment has the Preview vector-search feature and an earlier-version vector index. A valid VECTOR_SEARCH query uses that matching index with TOP_N = 5 and WHERE Approved = 1. Diagnostics show that its five nearest candidate rows all have Approved = 0, although other rows in the base table are approved. The query completes without an error but returns no rows. Which documented version-specific behavior explains this?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "The WHERE predicate is applied after the earlier-version top-candidate pool is selected."
+      },
+      {
+        "id": "b",
+        "text": "A metric mismatch causes a warning and kNN fallback."
+      },
+      {
+        "id": "c",
+        "text": "An ambiguous distance column reference prevents the query from executing."
+      },
+      {
+        "id": "d",
+        "text": "A view was supplied where VECTOR_SEARCH requires a base table."
+      }
+    ],
+    "correctAnswer": [
+      "a"
+    ],
+    "explanation": "With an earlier index version, filtering happens after the TOP_N candidate selection.",
+    "deepExplanation": "This is not a universal statement about current vector indexes. The latest version supports iterative filtering and a different query syntax, with regional rollout and Preview qualifications.",
+    "whyOtherAnswersAreWrong": {
+      "b": "The scenario fixes a compatible matching index; the documented fallback is a different condition and does not explain this version's post-filter loss.",
+      "c": "The query successfully returns an empty set rather than the documented alias-ambiguity error.",
+      "d": "The stated input is a base table and the query completes; the unsupported-view restriction is not the explanation."
+    },
+    "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+    "skill": "design-and-implement-intelligent-search",
+    "subskill": "Implement vector search",
+    "difficulty": "intermediate",
+    "complexity": "troubleshooting",
+    "sourceIds": [
+      "dp800-d3-vector-search"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql"
+    ],
+    "documentationTitles": [
+      "VECTOR_SEARCH (Transact-SQL) (Preview)"
+    ],
+    "generatedAt": "2026-09-15T06:57:02.666Z",
+    "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+    "featureStatus": "Preview",
+    "tags": [
+      "azure-sql-database",
+      "preview",
+      "earlier-vector-index",
+      "post-filter"
+    ],
+    "conceptId": "sql-earlier-vector-index-top-n-pool-post-filter-empty-result",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:38:13.797Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d3-vector-search"
+    ],
+    "verificationNotes": "Read .grounding\\dp-expansion\\direct\\batch-05\\technical-047.json alongside the unchanged candidate, exact generation record, claims, current objective map, frozen source metadata/index, and actual MCP evidence. Independently checked every failure alternative and the complete credential-to-training-to-reference provenance. The current product's explicit earlier/latest distinction resolves outdated training generalizations. Duplicate diagnostics and nearby full-item comparisons found no same-fact replacement. This documentation-only review scores 44/48; no SQL execution, candidate promotion, or ledger change occurred.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:57:02.652Z",
+    "confidenceReason": "The source contains the precise empty-result mechanism, while the stem fixes the observations needed to distinguish it from all three alternatives. Neither unspecified permissions nor latest-version behavior supplies a second answer under those premises. Confidence in the key is strong; confidence in distractor difficulty is lower and is represented by the independent rubric, not inherited from the technical approval."
+  },
+  {
+    "id": "dp800-direct-048",
+    "question": "A Preview vector-search workload in an enabled Azure SQL Database environment must continue measuring Euclidean distance on its Embedding column. The only existing ANN index for that column uses cosine, so the query reports a compatibility warning and runs with kNN fallback. Which change supplies the missing ANN compatibility prerequisite without changing the required metric?",
+    "questionType": "scenario",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "Change the query's metric to cosine and retain the existing index."
+      },
+      {
+        "id": "b",
+        "text": "Keep the Euclidean query and deliberately use kNN without a compatible ANN index."
+      },
+      {
+        "id": "c",
+        "text": "Create a Euclidean ANN index on a different vector column."
+      },
+      {
+        "id": "d",
+        "text": "Create the applicable vector index for Embedding using Euclidean distance."
+      }
+    ],
+    "correctAnswer": [
+      "d"
+    ],
+    "explanation": "Match the vector index to both Embedding and the Euclidean metric.",
+    "deepExplanation": "A compatible index is a prerequisite, not a promise that every latest-version query plan will choose ANN. The current optimizer may choose an exact strategy based on query characteristics.",
+    "whyOtherAnswersAreWrong": {
+      "a": "That can match the existing index but changes the explicitly required Euclidean metric.",
+      "b": "The documented fallback can execute the query, but it does not supply ANN compatibility.",
+      "c": "The reference requires the same column as well as the same metric; an index on another column does not meet that condition."
+    },
+    "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+    "skill": "design-and-implement-intelligent-search",
+    "subskill": "Evaluate vector index types and metrics",
+    "difficulty": "intermediate",
+    "complexity": "architecture-design",
+    "sourceIds": [
+      "dp800-d3-vector-search"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql"
+    ],
+    "documentationTitles": [
+      "VECTOR_SEARCH (Transact-SQL) (Preview)"
+    ],
+    "generatedAt": "2026-09-15T06:57:02.666Z",
+    "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+    "featureStatus": "Preview",
+    "tags": [
+      "azure-sql-database",
+      "preview",
+      "ann-index",
+      "metric-compatibility"
+    ],
+    "conceptId": "sql-ann-index-compatibility-requires-query-metric-and-column-match",
+    "verificationStatus": "verified",
+    "verifiedAt": "2026-09-15T15:38:13.797Z",
+    "verifiedAgainstSourceIds": [
+      "dp800-d3-vector-search"
+    ],
+    "verificationNotes": "Re-derived d from the frozen candidate and actual METRIC contract after reading .grounding\\dp-expansion\\direct\\batch-05\\technical-048.json, generation output/claims, exact map, source index, raw MCP receipts, and provenance ancestors. Independently recomputed content/objective hashes and checked literal alternative contexts. The approval is limited to compatibility, not DDL coexistence or optimizer selection. Full neighboring items and duplicate diagnostics remain distinct. Score: 45/48; no SQL execution, source renewal, ledger write, or promotion is asserted.",
+    "requiresManualReview": false,
+    "sourceLastReviewedAt": "2026-09-15T06:57:02.652Z",
+    "confidenceReason": "The documented necessary condition is explicit and matches both immutable requirements. Each other option either changes a required property or leaves compatible indexing absent. The current product reference resolves the training material's overly categorical index-use wording. Remaining operational details concern provisioning, not the asked compatibility property, and are acknowledged in scenario scoring instead of invented as successful DDL behavior."
+  },
+  {
+    "id": "dp800-direct-049",
+    "question": "An Azure SQL Database environment has the Preview feature available and dbo.Documents uses the latest vector index version. @q is a valid nonnull VECTOR(1536), Embedding has matching dimensions, and the table contains more than 25 searchable rows. The application must request approximate results capped at five rows using the supported latest-index syntax. Which statement matches that contract?",
+    "questionType": "code",
+    "answerChoices": [
+      {
+        "id": "a",
+        "text": "SELECT TOP (5) d.Id, r.distance FROM VECTOR_SEARCH(TABLE = dbo.Documents AS d, COLUMN = Embedding, SIMILAR_TO = @q, METRIC = 'cosine', TOP_N = 5) AS r ORDER BY r.distance;"
+      },
+      {
+        "id": "b",
+        "text": "SELECT TOP (5) WITH APPROXIMATE d.Id, r.distance FROM VECTOR_SEARCH(TABLE = dbo.Documents AS d, COLUMN = Embedding, SIMILAR_TO = @q, METRIC = 'cosine') AS r ORDER BY r.distance;"
+      },
+      {
+        "id": "c",
+        "text": "SELECT TOP (5) d.Id, VECTOR_DISTANCE('cosine', @q, d.Embedding) AS distance FROM dbo.Documents AS d ORDER BY distance;"
+      },
+      {
+        "id": "d",
+        "text": "SELECT TOP (25) WITH APPROXIMATE d.Id, r.distance FROM VECTOR_SEARCH(TABLE = dbo.Documents AS d, COLUMN = Embedding, SIMILAR_TO = @q, METRIC = 'cosine') AS r ORDER BY r.distance;"
+      }
+    ],
+    "correctAnswer": [
+      "b"
+    ],
+    "explanation": "Use SELECT TOP (5) WITH APPROXIMATE and omit the legacy TOP_N parameter.",
+    "deepExplanation": "Index version is an answer-determining prerequisite. This does not assume latest-index support on SQL Server 2025 or in an Azure region where the feature has not rolled out, and it does not guarantee that approximate search returns exactly five rows.",
+    "whyOtherAnswersAreWrong": {
+      "a": "The TOP_N parameter is deprecated legacy syntax and is not supported with the latest index version.",
+      "c": "This is a valid exact-distance query rather than the requested approximate VECTOR_SEARCH syntax.",
+      "d": "The syntax is current but its cap is 25, not the required maximum of five."
+    },
+    "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+    "skill": "design-and-implement-intelligent-search",
+    "subskill": "Implement vector search",
+    "difficulty": "advanced",
+    "complexity": "technical-implementation",
+    "sourceIds": [
+      "dp800-d3-vector-search",
+      "dp800-d3-vector-distance",
+      "dp800-d3-vector-type"
+    ],
+    "sourceUrls": [
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql",
+      "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql",
+      "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type"
+    ],
+    "documentationTitles": [
+      "VECTOR_SEARCH (Transact-SQL) (Preview)",
+      "VECTOR_DISTANCE (Transact-SQL)",
+      "Vector data type"
+    ],
+    "generatedAt": "2026-09-15T06:57:02.666Z",
+    "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+    "featureStatus": "Preview",
+    "tags": [
+      "azure-sql-database",
+      "preview",
+      "latest-vector-index",
+      "query-migration"
+    ],
+    "codeLanguage": "sql",
+    "codeSnippet": "-- Relevant existing table definition:\nCREATE TABLE dbo.Documents (\n    Id int PRIMARY KEY,\n    Embedding VECTOR(1536) NOT NULL\n);",
+    "conceptId": "azure-sql-latest-vector-index-approximate-top-syntax-migration",
+    "verificationStatus": "manual-review-required",
+    "verifiedAgainstSourceIds": [],
+    "verificationNotes": "Read .grounding\\dp-expansion\\direct\\batch-05\\technical-049.json, the exact candidate/generation/claims, objective map, source index, all three raw product receipts, and credential-linked provenance. Independently recomputed hashes and checked complete SQL alternatives against current grammar, aliases, ascending distance, and legacy behavior. No second answer or unsupported GA claim was found. Static documentation review is not SQL execution. The independently scored 43/48 quality failure supersedes technical approval; candidate, source files, and ledgers remain untouched.",
+    "requiresManualReview": true,
+    "sourceLastReviewedAt": "2026-09-15T06:57:02.652Z",
+    "confidenceReason": "The key b is strongly supported by explicit current syntax and each distractor has a valid literal alternate context. That factual confidence does not establish Advanced difficulty or excellent presentation. Shared alias correctness is not additional answer discrimination, and the cap mismatch is elementary. Manual review preserves those independently observed quality limits rather than converting a technically correct candidate into an approval."
   }
 ]

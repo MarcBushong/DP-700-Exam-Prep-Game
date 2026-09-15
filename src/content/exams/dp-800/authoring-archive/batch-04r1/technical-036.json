@@ -1,0 +1,72 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-036",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-construction",
+    "questionFingerprint": "59b6cb614ed0e0bd27cb59118d18059bf35e7e39faf886f3e942c06028f78bbf",
+    "reviewedAt": "2026-09-15T13:49:52.244Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-modify",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-modify.json",
+        "retrievedAt": "2026-09-15T05:45:14.141Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently read the full raw MCP JSON_MODIFY (Transact-SQL) receipt. The documented path grammar places optional append before the path mode, and the append argument adds a new value to the array referenced by the path. Examples A and B demonstrate the original elements retained in order with a new final string element. The existing-path update table and newValue text handling distinguish replacing the array with a string, setting its member value to JSON null in strict mode, and deleting the member in lax mode. Applicability includes SQL Server 2022 through the SQL Server 2016-and-later text-function contract; the review does not rely on a native-json method or its Preview status."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Without append, this is an ordinary replacement of the existing $.stages property with a nonnull nvarchar value. The documented result state is {\"stages\":\"verify\"}, so receive and validate no longer form an array. Positive countercontext: keep this exact expression if stages is being migrated from a list to a single current-stage string and the required document is {\"stages\":\"verify\"}. The normal existing-path update rule supports that replacement contract, but not preserving and extending the existing list.",
+        "sourceIds": [
+          "dp800-d1-json-modify"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "The append modifier targets the known existing stages array and appends the supplied text as one new string element. The earlier receive and validate elements retain their order, giving the documentation-derived document {\"stages\":[\"receive\",\"validate\",\"verify\"]}. The product's path grammar and append examples support this exact operation. The supplied array precondition matters; this review does not generalize successful append behavior to missing, scalar, or otherwise incompatible paths.",
+        "sourceIds": [
+          "dp800-d1-json-modify"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Because stages exists, strict mode accepts the path; SQL NULL then sets the existing member's value to JSON null. The result is {\"stages\":null}, not an extended array. Positive countercontext: this exact expression is correct if a reset operation must retain the stages member but clear its entire value to JSON null, with {\"stages\":null} as the requested state. The documented strict/NULL/existing-path row supports that literal countercontext and does not append an element.",
+        "sourceIds": [
+          "dp800-d1-json-modify"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The lax-mode SQL NULL rule deletes the existing stages property. Since it is the input's only member, the documentation-derived result is {}. Positive countercontext: the exact call is appropriate for an operation that intentionally removes all stages metadata and requires the empty object {} from this input. The source's lax/NULL/existing-path row establishes that useful deletion behavior, which is incompatible with preserving the two existing elements and appending verify.",
+        "sourceIds": [
+          "dp800-d1-json-modify"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Recovered independent technical PASS2 approves B only for the unchanged supplied array. I re-derived all four distinct document states from the raw function contract: array extension, scalar replacement, retained JSON-null member, and deleted member. The valid nvarchar(max) input already contains an array, and the new value is a string, closing the relevant path and value-type conditions. 'Without replacing the array' is understood as preserving its logical elements, not as a claim about in-place storage writes, persistence, or mutation of the local variable. Beginner/concept-recall is appropriate for recognizing a single documented modifier; no inflated difficulty or rubric was introduced. The exact candidate, generation claims, complete objective map, source manifest, registry, and raw-retrieval index were inspected, and scripts\\review-helpers.ts computed the bound hashes. technical-028.json was consulted only for the expected object shape. The independently read .grounding\\dp-expansion\\dp-800-guide.json establishes the March 12, 2026 map with three published domain ranges, 11 skills, and 73 subskills; this operation belongs to the JSON-functions subskill of Write advanced T-SQL code. Credential/course MCP receipts provide identity/preparation context, not function semantics. Full relevant ancestry was read from .grounding\\dp-expansion\\dp-800-rendered-training-links.json, .grounding\\dp-expansion\\design-training-redirect.json, .grounding\\dp-expansion\\dp-800-training-design.json, .grounding\\dp-expansion\\authors\\design\\raw\\module-objects.json, and .grounding\\dp-expansion\\direct\\expansion-docs\\json-columns-unit.json. The actual unit explicitly calls JSON_MODIFY in its UPDATE example and discusses text-column use; this supplies the exact named-API reference to the product page. The advanced JSON unit, which does not name JSON_MODIFY, is not its immediate parent. The provenance does not invent a product hyperlink inside the unit or take a doc-to-doc shortcut. The current 66-source manifest and registry passed the existing provenance validator with no findings, and the function's recorded MCP input, endpoint/tool, nonerror body, heading, retrieval timestamp, and local relative evidence path were independently checked. Old source snapshot dates are unchanged. The selected SQL Server 2022 function does not use the JSON-columns unit's separately Preview native-json .modify() example. Duplicate comparisons included 583 installed records and all located new cohorts/repairs/generation copies: 784 records, 643 distinct helper-hashed snapshots, 608 stable IDs. Repeated copies of the same stable ID were excluded as self-history. No target-related deterministic duplicate or cosmetic-scenario finding was found. Independent comparison distinguishes the append decision from 034's strict-null retention and 035's input-type-dependent serialization. C and D reuse null operations as plausible alternative actions, but the correct fact here is preserving array membership/order while adding a final element; neither other item asks that question. Item 038 constructs an array from ordered rows with null slots, rather than modifying a preexisting array; 037 constructs an object's optional keys. Existing JSON extraction, KQL reparsing, PATH nesting, and new vector transport items also differ in operation and preconditions. The pronoun warning refers clearly to the service and displayed input. The 'final element' requirement is explicit, and all four choices are useful valid operations in the recorded literal positive contexts. No target-related corpus answer-length, grammar, or repeated-opening warning was emitted; regular batch key rotation is retained as a later editorial consideration. The short original example and task are not copied assessment material. No quiz, assessment, dump, or question bank was consulted. SQL snippets and expected outputs were reviewed from documentation only; no engine execution, new browser, or fresh network retrieval occurred. This artifact does not create a rubric, PASS3, final attestation ledger entry, source/candidate edit, or gameplay promotion.",
+    "confidenceReason": "The exact append grammar, its documented existing-element-preserving examples, and the independent replacement/null/deletion table rows support a unique B. The stem supplies the array precondition instead of assuming it. Every distractor has a concrete sourced positive contract. This is a documentation-grounded technical approval only, with no claim of SQL runtime execution."
+  }
+}

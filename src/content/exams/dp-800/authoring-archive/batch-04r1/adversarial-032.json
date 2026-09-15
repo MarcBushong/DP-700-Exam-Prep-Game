@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "7848d67e57e4e0be963ee1f66eee9b494e084a6fc852f3d723e2862c91009139",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "Default-schema type code 1 selects the JSON numeric token while excluding the quoted numeric string.",
+        "whyIncorrectInContext": "Type 1 identifies strings, so this chooses label, whose value is the JSON string \"8\", not count's numeric token. The textual value column cannot by itself distinguish those two source types.",
+        "couldBeCorrectWhen": "With the original literal and WHERE [type] = 1, SELECT [key], [value] returns label with text 8. The exact filter is correct for a string-token audit, including numeric-looking strings, rather than the requested number-only audit.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The Return value section defines value as nvarchar(max) and the default-schema type discriminator as int. Its table assigns 1 to JSON strings and 2 to numbers. The sample rowset independently demonstrates strings and numbers retaining different type codes."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "Default-schema type code 2 selects actual JSON numbers independently of how their values are represented as SQL text.",
+        "whyIncorrectInContext": "This is supported, not incorrect. Only count has a JSON number token in the supplied object. label is a string, enabled is boolean and missing is explicit null, so their distinct discriminator codes do not qualify.",
+        "couldBeCorrectWhen": "The unchanged query with WHERE [type] = 2 returns count with value text 8 for the supplied input. It also selects n, but not s, from OPENJSON(N'{\"n\":-2.5,\"s\":\"-2.5\"}') under the same number-only requirement.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The documented discriminator table assigns 2 to numbers. The introductory default-schema example includes integer and fractional numeric values with that same code. The SQL value column remains text, so the filter tests original JSON token kind rather than textual numeric appearance."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "Default-schema type code 3 identifies the required JSON numeric values.",
+        "whyIncorrectInContext": "Type 3 identifies true/false tokens. This filter selects enabled with value text true, not the numeric count. Potential conversion of a boolean to some SQL type is irrelevant because no conversion is present.",
+        "couldBeCorrectWhen": "Using the original literal, the unchanged SELECT [key], [value] with WHERE [type] = 3 returns enabled and true. It is the correct filter when the validator's task is to enumerate JSON boolean properties instead of number properties.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The Return value type table assigns 3 to true/false, distinct from numeric code 2. The example rowset shows both boolean values with code 3, supporting a literal boolean-audit countercontext without an assumed numeric conversion."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "Default-schema type code 0 selects numeric values rather than string representations.",
+        "whyIncorrectInContext": "Type 0 identifies JSON null, not numbers. The filter selects the present property named missing with SQL NULL as its value. The property name does not mean that the key is absent or that its value is numeric zero.",
+        "couldBeCorrectWhen": "On the original literal, the identical query with WHERE [type] = 0 returns the missing key and SQL NULL. It is valid for an audit of explicitly null-valued properties; absent properties would not supply a row to this filter.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The type table assigns 0 to JSON null, and the example rowset shows a null-valued property with SQL NULL and discriminator 0. OPENJSON returns present first-level properties, distinguishing an explicit null entry from an absent key."
+      }
+    ],
+    "challenges": {
+      "scope": "The task classifies JSON token kinds exposed by default-schema OPENJSON. It does not test whether value text can be converted to a SQL number, whether a string looks numeric or whether a boolean has a numeric SQL representation.",
+      "plan": "SQL Server 2022 at compatibility 160 supports default-schema OPENJSON directly. No cloud plan, model feature, Synapse-only extension or newer compatibility override is required.",
+      "role": "The SELECT operates on an inline JSON literal. It requires no external connection, table access, object creation or administrative setting that could provide a hidden prerequisite.",
+      "preconditions": "There is no WITH clause, so key, value and type are available. Filtering type is valid even though SELECT projects only key and value. The literal separately contains a number, numeric-looking string, boolean and explicit null; it is valid JSON.",
+      "featureStatus": "The default schema and its discriminator table are established OPENJSON behavior supported by the stated SQL Server version. No Preview JSON function, native json column or later-version syntax is involved.",
+      "sourceChanges": "The raw MCP receipt, indexed path and frozen dates match. Both the product article's Return value table and its example rowset supply the discriminator meanings; the credential-linked training corroborates that table without expanding the frozen source set.",
+      "stemSufficiency": "Number-only selection and exclusion of quoted numeric strings are explicit, and all competing token kinds appear in the literal. Changing the audit to strings, booleans or explicit nulls makes a distractor useful but does not create another answer here.",
+      "explanationBounds": "The explanation correctly distinguishes SQL text representation from JSON token type and confines the discriminator to the default schema. It does not imply type 0 means numeric zero or an absent key. The outcomes are documented deductions, not SQL runtime results.",
+      "reasoningDepth": "This is openly labelled beginner concept-recall: it asks for one documented type code with a useful number-versus-string distinction. That is an authentic label, not an inflated implementation difficulty, so difficulty authenticity is 4.",
+      "answerClues": "All four choices have the same WHERE/type/equality construction and length. The label value makes the string misconception plausible; boolean and null codes are real alternatives. Negative wording precisely excludes quoted strings, and this refers to the shown rowset, so no unresolved wording clue remains."
+    },
+    "qualityNotes": "47/48, with originality 3 because this is a conventional discriminator lookup. Metadata comparison covered 584 installed questions and 48 pending snapshots/37 new IDs; target-specific deterministic checks found no distinct-ID findings. Closest full authored comparisons included 028, 030, 031 and pending 035. JSON_MODIFY's SQL-input typing in 035 is related but tests construction of a new token, not OPENJSON's reported original token kind. The beginner classification is retained honestly."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-032",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "questionFingerprint": "7848d67e57e4e0be963ee1f66eee9b494e084a6fc852f3d723e2862c91009139",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "OPENJSON (Transact-SQL): independently read the default-schema sample and Return value table. key, value and type are available without WITH; value is nvarchar(max), while the integer discriminator records original JSON kind: null 0, string 1, number 2, boolean 3. The examples show numeric and fractional values as type 2 and true/false as type 3. These direct contracts support all four filters and their distinct audit countercontexts."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Type code 1 denotes a JSON string, so the filter selects label with textual value 8 rather than count's numeric token. OPENJSON also returns numeric values through its SQL text value column, which does not erase their different discriminator codes. The exact filter correctly serves a string-token audit on this same input, but that changed task expressly includes the numeric-looking strings that the current requirement excludes.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "The documented default-schema discriminator is 2 for JSON numbers. Applying this filter to the supplied literal therefore returns count with value text 8 and excludes label, enabled and missing. The discriminator remains available to WHERE even though the SELECT list omits it. As another valid case, the unchanged filter selects n but not s from N'{\"n\":-2.5,\"s\":\"-2.5\"}', preserving the distinction between numeric tokens and quoted numeric text.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Type code 3 identifies JSON true/false values, so the unchanged filter returns enabled with text true on this input. It does not select count, and no SQL conversion exists here to turn the boolean into a competing numeric token. This same literal filter is appropriate for a boolean-property audit. The present task instead requests JSON numbers, whose separately documented discriminator is 2.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Type code 0 denotes JSON null, so this selects the present key named missing with SQL NULL as its value. It does not mean the numeric value zero, and the property's name does not make it absent. On the unchanged input, the literal filter correctly audits explicitly null-valued properties. That is a valid separate requirement, but count's numeric token carries type 2 and is excluded by this choice.",
+        "sourceIds": ["dp800-d1-openjson"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent PASS3 of immutable 032 only. Read exact candidate/generation, current objectives, strict policy, frozen manifest/registry/index and raw MCP evidence with its credential-linked training ancestry. Recomputed both hashes and independently re-derived token codes and the four selected properties before checking technical-032.json's separate stage binding. Explicit countercontexts keep each filter literal and change only the requested token class. No SQL execution, authored/source edits, ledger writes or promotion.",
+    "confidenceReason": "The exact discriminator table and default-schema examples support one number-only filter, with no implicit string or boolean conversion in the query. Every alternative has a valid different-token audit context; originality, not accuracy or sufficiency, is the sole deduction."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 4,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 4,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "47/48. Originality is 3 for a familiar type-code lookup. The beginner/recall label is accurate; no advanced reasoning credit is claimed. The complete literal and default-schema constraint make the key unique, with direct table-level evidence for all four options. Equal-form distractors represent real token classes and have literal positive contexts. Explanations correctly separate SQL representation and JSON kind, and the number-only requirement is clear and objective-aligned."
+  }
+}

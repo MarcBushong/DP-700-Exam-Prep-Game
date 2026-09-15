@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "f1f3c4d091e04b9713e44c7a52edb1282476e00caea37d8af8d0015a969a3cd2",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "The nvarchar replacement could automatically become JSON number 3.",
+        "whyIncorrectInContext": "The SQL replacement type is text, deriving {\"attempt\":\"3\"} rather than the numeric-valued object {\"attempt\":3}.",
+        "couldBeCorrectWhen": "For the same input document, JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', CAST(@next AS int)) supplies a SQL number and derives {\"attempt\":3}.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "Arguments/newValue and Example C's numeric-cast explanation distinguish numeric replacements from text replacements surrounded by double quotes."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "The returned attempt member could retain its old numeric value 2.",
+        "whyIncorrectInContext": "An existing path receives the nonnull replacement; neither its old value nor its old numeric token type prevents the update.",
+        "couldBeCorrectWhen": "JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', CAST(2 AS int)) would return {\"attempt\":2}, matching this alternative with an actual numeric replacement of 2.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "The existing-path/non-NULL matrix row updates the value; the supported int newValue type supplies a number rather than the actual nvarchar parameter."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "The nonnull text replacement could remove attempt and return an empty object.",
+        "whyIncorrectInContext": "The value N'3' is not SQL NULL. The documented deletion condition is absent, so the existing member is updated, not deleted.",
+        "couldBeCorrectWhen": "JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', NULL) uses default lax mode and removes the only member, yielding {}.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "Path mode defaults to lax. The Remarks matrix limits existing-key deletion to SQL NULL in lax mode, supporting the literal deletion countercontext."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "The returned attempt member contains JSON string \"3\" because newValue is nvarchar.",
+        "whyIncorrectInContext": "Not incorrect: the exact parameter and update derive {\"attempt\":\"3\"}; numeric-looking text does not determine a numeric JSON token.",
+        "couldBeCorrectWhen": "The unchanged statement fits a consumer explicitly expecting {\"attempt\":\"3\"}, with attempt represented as a string.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "The newValue string contract and numeric-cast example establish quoting of text-typed replacements independently of the old property's numeric value."
+      }
+    ],
+    "challenges": {
+      "scope": "This is SQL Server 2022 JSON_MODIFY over a JSON text literal, with a declared nvarchar(10) replacement. It is not implicit JSON parsing by a client serializer.",
+      "plan": "The choices depend on SQL argument typing, not a service tier, pricing plan, deployment edition, or enabled AI capability.",
+      "role": "The statement reads only a literal and local variable; no database-object permission or external role affects the proposed returned value.",
+      "preconditions": "The document is valid, attempt exists once, and @next is the nonnull text N'3'. No cast, SQL NULL, missing-path case, or JSON-producing wrapper is present.",
+      "featureStatus": "The source's SQL Server 2016-and-later applicability covers this SQL Server 2022 text operation. No native-json datatype or RETURNING syntax is assumed.",
+      "sourceChanges": "The indexed JSON_MODIFY product body and the immediate json-columns-unit named call were read. The current and frozen objective hashes agree; source-review dates were not renewed.",
+      "stemSufficiency": "The old numeric value, replacement declaration, path, and complete SELECT are visible. Whitespace is excluded; the alternatives identify the sole member's resulting type/value.",
+      "explanationBounds": "The explanation correctly recommends validation and numeric conversion only for a numeric contract. It does not promise that arbitrary text converts successfully or inherits the old JSON token type.",
+      "reasoningDepth": "Beginner concept-recall is authentic: distinguish SQL text typing from JSON numeric appearance. This is not evidence of advanced implementation breadth.",
+      "answerClues": "The number-3 and string-3 alternatives form a meaningful contrast. Old-value retention and deletion are weak fillers. The pronoun warning resolves to the visible SELECT expression."
+    },
+    "qualityNotes": "The 584-bank and pending-metadata comparison found no target duplicate. Pending 032 inspects OPENJSON's original-token discriminator, whereas 035 tests the SQL type used to write a new token; shared number/string vocabulary is not identical reasoning. Current 027/028 extract scalars, and dp700-ingest-038 reparses encoded text. The unchanged-value and deletion alternatives are much less credible than number 3, warranting a two-point plausibility deduction."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-035",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "questionFingerprint": "f1f3c4d091e04b9713e44c7a52edb1282476e00caea37d8af8d0015a969a3cd2",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-modify",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-modify.json",
+        "retrievedAt": "2026-09-15T05:45:14.141Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "JSON_MODIFY (Transact-SQL), Arguments/newValue and Example C, explicitly distinguishes text-typed values enclosed in quotes from numeric SQL replacements. The existing-path matrix establishes replacement by a nonnull value and deletion only for lax SQL NULL. Those contracts support the actual string result and the three literal numeric/deletion countercontexts."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: the replacement is declared nvarchar(10), so its numeric-looking characters do not become a JSON number automatically. The article's numeric-cast example explicitly distinguishes text replacement from numeric replacement. With the same starting document, using CAST(@next AS int) as newValue would produce {\"attempt\":3}, a positive context for this answer. The expression actually supplied omits that conversion and therefore cannot yield this numeric result.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: JSON_MODIFY returns an updated document for an existing path and nonnull replacement; it does not simply return the old numeric member because the input was text typed. The proposed {\"attempt\":2} would be correct if newValue were the SQL integer 2, for example CAST(2 AS int). That concrete alternative follows the same documented update rule but is not the supplied @next value.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: the parameter contains nonnull text, so the existing member is updated rather than removed. Deletion in the default lax mode requires SQL NULL as newValue. For this one-property input, JSON_MODIFY(N'{\"attempt\":2}', '$.attempt', NULL) would instead return {}, making the option correct in that concrete deletion context. Changing only the nonnull parameter's SQL type does not supply the SQL NULL needed for deletion.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "Supported: the nvarchar parameter supplies the text 3, and the newValue contract plus the numeric-cast example establish JSON string output for text-typed replacements. The derived result is {\"attempt\":\"3\"}. The old property's numeric type does not impose coercion on the new value. The unchanged expression therefore fits a consumer requiring a string-valued attempt field; a numeric contract would require validated numeric conversion instead.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independently derived string-valued attempt from the SQL declaration, not the existing JSON number or technical verdict. Numeric replacements and lax SQL NULL supply concrete positive alternatives for every distractor. Exact generation/objective/source bindings and review chronology were checked. Nearest type-discrimination content tests a different operation. Score 45/48 with weak fillers explicitly penalized. Static documentary review only; no SQL execution or candidate/source/ledger changes.",
+    "confidenceReason": "High confidence in key d because the declared SQL replacement type and the reference's numeric-cast distinction directly settle the result. The beginner label is honest; distractor credibility and textbook-style originality are the material limitations."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 2,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 4,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "45/48. The complete typed input, explicit product contract, unique result, sourced alternatives, useful conversion explanation, and honest beginner classification merit 4 in their respective dimensions. Distractor plausibility is 2: retaining 2 and deleting the member are weak alternatives to the meaningful number/string contrast. Originality is 3 for a conventional type-demonstration setup, distinct from pending token inspection. Critical scores and distractor evidence are independently 4."
+  }
+}

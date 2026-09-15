@@ -1,0 +1,72 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-038",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-construction",
+    "questionFingerprint": "24632f0d55a7276b84168565ef4b482eb309f982e58b738d63f0691359a99b4a",
+    "reviewedAt": "2026-09-15T13:49:52.244Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-arrayagg",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-arrayagg-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-arrayagg.json",
+        "retrievedAt": "2026-09-15T05:51:09.222Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently read the actual raw MCP JSON_ARRAYAGG (Transact-SQL) receipt, including its availability note, syntax, null-clause and order-clause arguments, return value, and examples 1 through 4. The note explicitly says this aggregate is generally available for Azure SQL Database while separately in Preview for SQL Server 2025. Its local ORDER BY controls aggregate element order; examples demonstrate ordering by a value and by a separate column identifier. NULL ON NULL emits a JSON null element for SQL NULL, whereas ABSENT ON NULL omits that element and is the default. The standard text-returning call yields an nvarchar(max) JSON array. No RETURNING json, Managed Instance policy, SQL Server 2022 aggregate availability, or table-input arrival-order guarantee is inferred."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "Ordering within JSON_ARRAYAGG by the distinct Position values gives the row sequence 10, 20, 30. NULL ON NULL keeps the middle SQL NULL Label as a JSON null element instead of discarding its position. The documentation-derived output is exactly [\"z\",null,\"a\"]. Both clauses are needed for the stated contract; this conclusion does not rely on the VALUES constructor's textual row order or an outer SELECT ordering. A is the only offered combination meeting the required order and three-slot shape.",
+        "sourceIds": [
+          "dp800-d1-json-arrayagg"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The local ascending Position order is suitable, but ABSENT ON NULL omits the middle null-valued element. B therefore has [\"z\",\"a\"] as its documented result, losing the required null slot. Positive countercontext: this exact aggregate over the same rows is correct for an export that requires only nonnull labels in increasing Position order, with [\"z\",\"a\"] as its expected array. The source explicitly supports null-element omission and aggregate-local ordering for that alternative contract.",
+        "sourceIds": [
+          "dp800-d1-json-arrayagg"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "NULL ON NULL retains the middle slot, but descending Position orders the rows 30, 20, 10 and gives [\"a\",null,\"z\"], not the requested ascending-position array. Positive countercontext: retain this exact expression when the same export must run from highest Position to lowest while preserving null gaps, explicitly requiring [\"a\",null,\"z\"]. The documented local order clause controls the row sequence independently of the null policy, supporting that reversed-order contract.",
+        "sourceIds": [
+          "dp800-d1-json-arrayagg"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "This combination reverses Position order and drops the SQL NULL Label. The documentation-derived array is [\"a\",\"z\"], so it satisfies neither the required ascending label order nor the retained null position. Positive countercontext: the exact aggregate is appropriate for a compact, nonnull-only list in descending Position order, with [\"a\",\"z\"] as the requested output from the same rows. Both the descending order and omission policy then serve the changed contract; neither is correct for the actual target array.",
+        "sourceIds": [
+          "dp800-d1-json-arrayagg"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Recovered independent technical PASS2 approves A for the unchanged Azure SQL Database candidate. The literal target array, three supplied rows, distinct Position values, text labels, and SQL NULL middle label eliminate ordering ties and unspecified-envelope assumptions. I independently evaluated the four order/null-policy combinations, obtaining four distinct documented result shapes; each distractor has a literal positive alternative contract rather than a vague 'could be correct elsewhere' statement. The syntax places aggregate-local ORDER BY before the null clause as the product grammar shows. The omitted RETURNING clause keeps this a text-returning aggregate. Intermediate technical-implementation is appropriate for satisfying two independent output requirements; no expert difficulty or rubric was inferred. The actual product receipt explicitly establishes Azure SQL Database GA and SQL Server 2025 Preview separately. The candidate's explanation preserves that distinction. The advanced JSON training unit's broad claim that JSON_ARRAYAGG is available in SQL Server 2022 is inconsistent with the specific product reference and was deliberately not adopted. Named-function teaching supplies ancestry, not permission to inherit an inaccurate platform sentence. The exact candidate and generation record, full objective map, frozen source/registry records, and retrieval index were read. scripts\\review-helpers.ts independently recomputed the question and objective bindings; technical-028.json was used for format only. The raw .grounding\\dp-expansion\\dp-800-guide.json confirms the March 12, 2026 objective map, its three published domain ranges, 11 skills, and 73 subskills. JSON_ARRAYAGG is explicitly in the JSON-functions subskill under Write advanced T-SQL code in Design and develop database solutions. The credential/course MCP receipts were read for identity/preparation context and not used to infer feature GA from scheduling. The full relevant training ancestry was independently checked through .grounding\\dp-expansion\\dp-800-rendered-training-links.json, .grounding\\dp-expansion\\design-training-redirect.json, .grounding\\dp-expansion\\dp-800-training-design.json, .grounding\\dp-expansion\\authors\\design\\raw\\module-advanced.json, and .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json. Actual path/module/unit links lead to the unit's explicit JSON_ARRAYAGG aggregation section. That exact named API reference admits the direct product article without inventing an article hyperlink or using an overview-document-to-document hop. The current frozen 66-source manifest and registry passed validateSourceProvenance with zero findings; receipt MCP endpoint/tool, input URL, nonerror body, title, retrieval time, and existing relative path match the recorded source. Frozen retrieval and last-review dates were not updated. Duplicate comparison covered the 583 installed records and every located new cohort, repair, and generation snapshot: 784 located records, 643 distinct helper-hashed snapshots, and 608 stable IDs. Self-history for the same stable ID was excluded; no target-related deterministic duplicate or cosmetic-scenario finding was reported. Independent semantic comparison distinguishes 038's ordered row aggregation and null-slot cardinality from 036's append to an existing array and 037's omission of object members during construction. Their default/null policies and required output structures differ materially, not merely in names or option order. Existing PATH output and scalar-extraction items do not test aggregate-local ordering. The batch-05 vector dimension/driver cases mention JSON array representations but require native-type or client-capability decisions, not aggregate null positions. The four-option two-by-two construction is transparent and balanced, with equally valid positive uses; no automatic target quality warning or corpus answer-length, grammar, or repeated-opening finding was emitted. The authored batch has a regular answer-position cycle, noted for later editorial review rather than mistaken for evidence quality. The position values and target order make the task original rather than copying the documentation's simple alphabetic example or any assessment. No quiz, assessment, dump, or borrowed question bank was consulted. Expected SQL results are documentation-derived reasoning only; no SQL engine execution, browser setup, or fresh network retrieval is claimed. This file supplies no rubric, PASS3, current-ledger approval, candidate/source edit, or promotion.",
+    "confidenceReason": "Direct product evidence explicitly supplies all decisive contracts: Azure SQL Database GA versus SQL Server 2025 Preview, aggregate-local ordering, retained JSON null elements, and ABSENT ON NULL as default. The concrete rows make each option's different output determinable without missing preconditions. Approval is limited to the exact technical snapshot and does not claim SQL execution or completion of adversarial/final review."
+  }
+}

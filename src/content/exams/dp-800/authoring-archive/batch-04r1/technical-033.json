@@ -1,0 +1,80 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-033",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-construction",
+    "questionFingerprint": "2842a63c8b5ce85132a4128280d5fbffbb4d1c909f8e1674586146ad2f9711dd",
+    "reviewedAt": "2026-09-15T13:49:52.244Z",
+    "verdict": "manual-review-required",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-query",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-query-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-query.json",
+        "retrievedAt": "2026-09-15T05:45:14.018Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently read the actual Microsoft Learn MCP receipt for JSON_QUERY (Transact-SQL), including path, return value, Use JSON_QUERY with FOR JSON, and example B. An omitted path selects the root; an object or array is returned as an nvarchar(max) JSON fragment. FOR JSON recognizes that fragment and does not treat it as ordinary text requiring special-character escaping. The article specifically recommends wrapping already formatted JSON with a pathless JSON_QUERY call. This supports C and distinguishes A, but it does not establish the stem's additional literal claim about escaped braces. The article applies to SQL Server 2016 and later; the separately labeled SQL Server 2025 Preview WITH ARRAY WRAPPER extension is not used here."
+      },
+      {
+        "sourceId": "dp800-d1-json-value",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-value-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-value.json",
+        "retrievedAt": "2026-09-15T05:42:02.233Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently read the actual MCP receipt for JSON_VALUE (Transact-SQL). The SQL Server 2022 syntax is expression plus path, without RETURNING. The scalar-extraction contract and the lax/strict comparison, including a numeric property returned as text, establish that the two candidate paths select N8 and the text 3 rather than the complete object. These short, present scalar properties do not encounter the documented scalar-length limit. The training unit separately corroborates the nvarchar(4000) scalar return and names this API directly. No native-json RETURNING behavior is imported into the SQL Server 2022 scenario."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The declaration makes @detail an nvarchar(max) variable. Merely knowing that its characters form a valid object does not give the plain expression the JSON_QUERY fragment treatment documented for FOR JSON. Projecting @detail therefore fails the requirement for a nested detail object. Positive countercontext: retain this exact expression and input if the API deliberately requires detail to be a JSON string whose string contents are {\"code\":\"N8\",\"units\":3}, rather than an object with independently addressable code and units properties. The raw JSON_QUERY guidance distinguishes preformatted text from a recognized fragment. This assessment does not endorse the stem's unsupported wording that braces themselves are escaped.",
+        "sourceIds": [
+          "dp800-d1-json-query"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "JSON_VALUE follows $.code and returns the scalar text N8. It cannot preserve the units member or the surrounding object, so it does not satisfy this response contract. Positive countercontext: with the same @detail and SELECT placeholder, this exact expression is appropriate if the intended response is [{\"detail\":\"N8\"}], containing only the code as a string. The JSON_VALUE scalar contract and scalar-path examples support that narrower projection; it is a different requested result, not a second answer to the current question.",
+        "sourceIds": [
+          "dp800-d1-json-value"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "The omitted path defaults to $, so JSON_QUERY(@detail) selects the entire known-valid root object. Its recognized JSON-fragment return is then embedded by FOR JSON PATH under the detail alias. The documentation-derived shape is [{\"detail\":{\"code\":\"N8\",\"units\":3}}]. Both the object members and their JSON value types remain within that fragment. This is the unique supported expression for the stated structural requirement. The option's correctness does not resolve the separate unsupported brace-escaping phrase in the authored stem.",
+        "sourceIds": [
+          "dp800-d1-json-query"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "JSON_VALUE at $.units extracts only the numeric property's scalar text representation, N'3', under SQL Server 2022's non-RETURNING contract. It does not return the complete detail object or preserve code. Positive countercontext: the exact expression is appropriate when the same SELECT must return only the units scalar as text under the detail alias, with the shape [{\"detail\":\"3\"}]. A contract requiring an actual JSON numeric scalar would require an additional numeric conversion, which is not present in this option. The source's scalar return contract supports the text-only countercontext.",
+        "sourceIds": [
+          "dp800-d1-json-value"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": false,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Recovered independent technical PASS2 only. C is independently supported, but this frozen candidate remains manual-review-required: the stem describes a quoted string with 'escaped braces and quotes'. The admitted JSON_QUERY receipt supports fragment marking and special-character escaping, not that additional literal brace-escaping claim. The currentTerminology check is false for this unsupported serialization terminology/premise; the key, distractor distinctions, and the actual explanation text pass their separate checks. No wording was repaired, and a repaired authored stem would require fresh generation and both independent later passes. The exact candidate and generation record were compared; scripts\\review-helpers.ts computed the recorded question and objective fingerprints, rather than copying a prior review's bindings. technical-028.json was inspected for field structure only, not used as technical evidence or a verdict template. The full frozen objective map and .grounding\\dp-expansion\\dp-800-guide.json were independently read: March 12, 2026, three domains with 35-40%, 35-40%, and 25-30% ranges, 11 skills, and 73 subskills. This item belongs to Write advanced T-SQL code / JSON functions within Design and develop database solutions, not merely to generic JSON or an inferred future outline. The credential and course MCP receipts were read for identity/preparation context only. Complete relevant ancestry was checked through .grounding\\dp-expansion\\dp-800-rendered-training-links.json, .grounding\\dp-expansion\\design-training-redirect.json, .grounding\\dp-expansion\\dp-800-training-design.json, .grounding\\dp-expansion\\authors\\design\\raw\\module-advanced.json, and .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json. The rendered receipt records the locale-neutral training target, the redirect receipt records its English canonical path, the path links the module, and the module links 4-json-functions. That teaching unit explicitly names JSON_QUERY and JSON_VALUE; those named API references admit the exact product articles without pretending the unit contains their URLs or using a doc-to-doc hop. The current frozen 66-source manifest and registry passed the existing provenance validator with zero findings. Product receipt inputs, MCP endpoint/tool, retrieval timestamps, content headers, and relative evidence paths were checked; frozen source dates were not renewed. Duplicate inspection covered all 583 installed records plus every located new cohort/repair/generation snapshot: 784 located records, 643 distinct helper-hashed snapshots, and 608 stable IDs. Same-ID historical copies were excluded as self-comparisons, not treated as new content. Existing duplicateFindings and scenarioDuplicateFindings reported no target-related findings. Independent reading distinguishes this output-serialization marker decision from dp800-direct-026's PATH dotted aliases/default array, 027's response-envelope scalar path, and 030's OPENJSON AS JSON extraction boundary. dp700-ingest-038 concerns a second KQL parse of dynamic string content, not T-SQL output-fragment recognition. Other JSON-related records and batch-05 vector transport/type candidates do not test this fact. The negative-wording/pronoun warnings were inspected: the object requirement is positive and explicit, and the referents are clear, but the brace phrase remains unresolved. Intermediate implementation scope is reasonable; answer lengths do not reveal C. The cohort's regular key-position pattern is an editorial observation, not proof of independence or a reason to approve content. No quiz, assessment, dump, or borrowed question bank was consulted. All outputs and positive countercontexts are documentation-derived reasoning; no SQL runtime execution, fresh browser setup, or new network retrieval is claimed. No rubric, adversarial review, final ledger, promotion, candidate edit, or source edit is part of this artifact.",
+    "confidenceReason": "The raw admitted product contracts strongly establish C and refute A, B, and D in context, with concrete positive alternatives recorded for each distractor. Evidence is insufficient for the frozen stem's literal brace-escaping wording, so a clean technical approval would overstate the review. The manual verdict preserves that limitation without modifying the candidate or claiming SQL execution."
+  }
+}

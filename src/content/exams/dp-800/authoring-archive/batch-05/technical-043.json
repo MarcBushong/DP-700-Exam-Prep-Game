@@ -1,0 +1,81 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-043",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-models-recovery",
+    "questionFingerprint": "1f7a1e6add04605a98aadd358c53d7a0b71f666e71b652e01d186b0b693de984",
+    "reviewedAt": "2026-09-15T15:11:13.672Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-generate-embeddings",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\ai-generate-embeddings.json",
+        "retrievedAt": "2026-09-15T06:34:21.572Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual AI_GENERATE_EMBEDDINGS (Transact-SQL) receipt, including Applies to, Prerequisites, and both authentication variants of the end-to-end example. The prerequisite code enables sp_configure 'external rest endpoint enabled', 1 and reconfigures. The accompanying note explicitly says that option is enabled by default on Azure SQL Database and Fabric SQL database. The API-key example enables REST invocation without the managed-identity option; the managed-identity example separately enables host credentials and REST invocation. These establish the server control and platform/authentication distinctions in the question. The prerequisite prose abbreviates the endpoint procedure's name, but the tested server option is stated consistently in the actual commands. The unrelated conflicting embedding return-type paragraph does not determine a configuration-option answer."
+      },
+      {
+        "sourceId": "dp800-d3-create-external-model",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\create-external-model.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read CREATE EXTERNAL MODEL (Transact-SQL), especially Managed identity, remote API-key examples, and the complete Example with ONNX Runtime running locally section. The managed-identity section associates 'allow server scoped db credentials' with using the SQL Server 2025 Arc/VM host's managed identity as a database credential. The local ONNX workflow applies to SQL Server 2025 on Windows, requires Machine Learning Services, enables PREVIEW_FEATURES, then enables 'external AI runtimes enabled', and separately configures runtime/model files and permissions. These are real positive uses for the two distractor settings, not alternative names for remote REST enablement. The local path is explicitly Preview; the candidate's remote HTTPS/API-key scope neither requires nor denies that separate capability."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "Enable external rest endpoint enabled is the exact server option in the embedding function's prerequisite and remote API-key example. The stem states that remote REST invocation has not been enabled on this SQL Server 2025 instance while model/caller configuration is ready, so this is the missing control. Literal confirming context: an authorized server configurator prepares this same Windows SQL Server instance for its configured remote HTTPS embedding endpoint using the documented sp_configure option and reconfiguration sequence. This identifies the setting; it does not assert that model EXECUTE permission by itself authorizes server administration or that merely granting a permission changes configuration.",
+        "sourceIds": [
+          "dp800-d3-generate-embeddings"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Enabling external AI runtimes enabled belongs to the local AI Runtime Host/ONNX workflow, not the stipulated remote HTTPS invocation route. Literal positive countercontext: a SQL Server 2025 Windows deployment intentionally prepares the documented Preview local ONNX runtime, with Machine Learning Services installed and PREVIEW_FEATURES enabled; enabling this exact server option is then the local-runtime configuration step described in Step 2. Runtime/model libraries, directory access and other documented setup remain separate prerequisites, so the option alone is not claimed to complete the installation. This real Preview use is excluded by the remote endpoint scenario.",
+        "sourceIds": [
+          "dp800-d3-create-external-model"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Enable allow server scoped db credentials addresses use of the Arc/VM host's managed identity as a database-level credential, not the missing external REST invocation switch. The current scenario already uses a configured API-key credential. Literal positive countercontext: SQL Server 2025 on an appropriately configured Arc/VM host must use that host's managed identity as its database credential, and an authorized administrator enables this exact option as instructed by the product reference's Managed identity section. REST invocation is still a separate setting, as the embedding reference's managed-identity example also shows. I do not claim that either setting performs a grant or that enabling host credentials alone enables HTTP calls.",
+        "sourceIds": [
+          "dp800-d3-create-external-model",
+          "dp800-d3-generate-embeddings"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Relying on Azure SQL Database's enabled-by-default setting cannot enable the explicitly not-enabled Windows SQL Server instance that will make these calls. Literal positive countercontext preserving the action and leaving this instance unchanged: the workload's outbound calls execute in the team's already configured Azure SQL Database environment instead of the Windows instance. The documented Azure SQL Database default can then be relied on for those Azure calls, while the unused Windows instance need not be changed. That does not make the Windows instance enabled. The reference's default note names Azure SQL Database and Fabric SQL database; it does not transfer either cloud default to the stipulated SQL Server deployment.",
+        "sourceIds": [
+          "dp800-d3-generate-embeddings"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Fresh independent technical PASS 2 of immutable dp800-direct-043. Reviewer dp800-technical-models-recovery independently read the candidate, generation output and generation-stage claims, author-only contextual evidence, exact objective map, frozen source/registry records and retrieval index rather than relying on copilot-dp800-direct-author's key. Fresh questionFingerprint computation matched the raw and parsed candidate, generation output and generation binding at 1f7a1e6add04605a98aadd358c53d7a0b71f666e71b652e01d186b0b693de984. The objective hash matched the frozen and installed DP-800 maps. The actual dp-800-guide.json MCP receipt at 2026-09-14T18:19:19.493Z explicitly supplies the March 12, 2026 current outline, including Create and manage external models in the AI domain weighted 25-30%. The captured credential and course were also re-read. No current-objective or credential-status inference was substituted for this evidence.\n\nThe sourceReviews preserve the exact source-index paths, URLs, retrieval times and frozen 2026-09-15T06:57:02.652Z review dates. Both actual raw receipts contain successful microsoft_docs_fetch text from https://learn.microsoft.com/api/mcp with matching input URLs and timestamps. The embedding function is explicitly named in the actual external-models-unit.json training receipt at 2026-09-15T06:07:09.387Z; CREATE EXTERNAL MODEL is directly linked by models-summary.json at 2026-09-15T06:07:09.176Z. Those training units are linked by .grounding\\dp-expansion\\authors\\ai\\receipts\\models-module.json at 2026-09-14T22:06:21.049Z, itself linked by dp-800-training-ai.json at 2026-09-14T18:31:14.994Z. The saved rendered credential training links at 2026-09-14T18:31:24.010Z and ai-training-redirect.json at 2026-09-14T18:57:14.033Z preserve the exact training root and canonical path. The current credential's exact allowlist and full registry validation returned no provenance findings, and both citations have validated supporting roles. No source was approved through a documentation parent, a matching hostname, a related topic or an unrecorded redirect.\n\nThe key is independently a. The actual remote API-key example uses external rest endpoint enabled; the managed-identity example separately adds allow server scoped db credentials, so the latter is not required merely because an API key is stored in a database-scoped credential. The other reference explicitly places external AI runtimes enabled inside the Windows local ONNX setup after enabling Preview features. I checked the full local workflow, not just the setting name, and preserved its Machine Learning Services/runtime prerequisites in the positive countercontext. The source's local ONNX capability does not contradict a remote-only question, and the choice explicitly labels Preview rather than borrowing the candidate's GA label for it. The stated absence of REST enablement on this instance is the decisive premise; I do not need to invent a universal SQL Server default. Azure SQL Database's documented default remains scoped to the environment that actually executes the call.\n\nThis item asks which configuration option applies, not whether an application principal can execute sp_configure. Model/caller permissions are not asserted to confer server-administration rights. The prerequisite's abbreviated procedure name is not the literal tested option, whose command spelling is consistent. The AI_GENERATE_EMBEDDINGS return-type/scalar-example discrepancy was observed but does not affect any server-option claim. No SQL configuration, inference, browser, runtime installation or library download was performed. The choice analyses are documentary positive contexts, not execution results.\n\nDuplicate/construction comparison covered all 583 installed bank records and 114 occurrences in all 18 .grounding\\dp-expansion candidate files; grouping identical questionId/fingerprint snapshots while retaining differing revisions yielded 643 records. duplicateFindings and scenarioDuplicateFindings returned no target findings. Full comparison with pending 040 distinguishes a server-wide REST switch from object-specific model EXECUTE granted to a principal. Pending 050 concerns local chunk-function compatibility resolution and includes this remote setting as an inapplicable alternative; its correct mechanism is not this option. Pending 039 concerns explicit inference/persistence after registration, and installed ai103-002 configures a Foundry project SDK/Entra connection rather than SQL Server outbound invocation. These are substantive layer/operation differences, not renamed copies.\n\nqualityFindings reported negative-wording and pronoun-review warnings. 'Has not been enabled' is the given diagnostic state, not a negative-selection puzzle; 'this instance' consistently identifies SQL Server 2025 Windows. The wrong options are actual documented controls or a true platform-specific default, with positive contexts retaining their literal actions. The default distractor is easier because its platform mismatch is explicit, consistent with Beginner/concept-recall rather than inflated troubleshooting difficulty. This verified verdict is PASS 2 only. No rubric, adversarial result, ledger approval, source/candidate change or promotion was authored.",
+    "confidenceReason": "The actual remote embedding prerequisite explicitly names a, while the product reference assigns the other settings to different, precisely qualified local-runtime and host-identity workflows. The default is documented only for the relevant cloud environments and cannot enable the fixed Windows instance. Every literal alternative has a sourced positive context, source/objective/generation bindings matched, and installed/pending duplicate comparison found no target blocker. No SQL execution, installation or final review approval is claimed."
+  }
+}

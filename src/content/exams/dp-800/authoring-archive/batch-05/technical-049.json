@@ -1,0 +1,90 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-049",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-vector-recovery",
+    "questionFingerprint": "1a3749851fcb9224406b09d4f89c8f9f36c5bf0bbd6f566f2538e22160457f72",
+    "reviewedAt": "2026-09-15T15:01:29.553Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-search",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-search.json",
+        "retrievedAt": "2026-09-15T06:34:21.531Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Read the full actual indexed MCP receipt for VECTOR_SEARCH (Transact-SQL) (Preview). Latest-index Syntax and Error using legacy syntax require SELECT TOP (N) WITH APPROXIMATE and forbid TOP_N, with documented error 42274 for that parameter on latest indexes. Return result set requires the TABLE alias for base columns and the result alias for generated distance. ORDER BY requirements allow only ascending result distance, and valid examples use ORDER BY r.distance without an explicit ASC. Regional availability and the SQL Server note limit latest-index support to enabled Azure SQL Database/Fabric environments, not SQL Server 2025. Matching indexes do not force the optimizer's physical strategy. The candidate's single distance ordering agrees with explicit requirements even though the article's broader complete-workflow sample inconsistently includes a second ordering column."
+      },
+      {
+        "sourceId": "dp800-d3-vector-distance",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\authors\\ai\\receipts\\doc-vector-distance.json",
+        "retrievedAt": "2026-09-14T22:23:50.656Z",
+        "lastReviewedAt": "2026-09-15T00:39:05.140Z",
+        "supportingSummary": "Read the actual indexed MCP receipt for VECTOR_DISTANCE (Transact-SQL). Its opening contract states that distance computation is exact and does not use a vector index even when one exists. Syntax accepts a metric and two vector expressions; cosine is supported and the result is scalar float. Example B uses SELECT TOP with VECTOR_DISTANCE(... ) AS distance and ORDER BY distance over a base table. This establishes the literal exact-ranking countercontext for option c, not an approximate latest-index query. Azure SQL Database is within the article's Applies to scope."
+      },
+      {
+        "sourceId": "dp800-d3-vector-type",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-type.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Read the actual indexed MCP receipt for Vector data type, including sample syntax, dimensions, column/variable examples, availability and constraints. VECTOR(1536) is within the documented maximum of 1998 and defaults to float32; NOT NULL is supported on the vector column. The source demonstrates an integer primary key separate from a vector column. The candidate's @q and Embedding therefore use the required vector shape, without placing a forbidden primary key on a vector. The separate float16 Preview setting is irrelevant to this declaration and does not change the search feature's own Preview label."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The literal statement supplies TOP_N=5 to VECTOR_SEARCH and omits WITH APPROXIMATE. Latest-index Syntax expressly forbids TOP_N, and Expected behaviors documents error 42274 for that legacy parameter. An outer TOP(5) does not remove the incompatible inner argument. Sourced countercontext: this exact statement is the documented earlier-index pattern with a five-row TOP_N candidate pool and outer cap, using the correct base/result aliases and ascending distance. The immutable question instead fixes a latest index, so the legacy countercontext cannot validate a here.",
+        "sourceIds": [
+          "dp800-d3-vector-search"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "The literal statement satisfies every documented latest-index syntax distinction: SELECT TOP(5) WITH APPROXIMATE; no TOP_N; a base TABLE argument with d as its alias; d.Id for the base column; r.distance for the search-generated column; and sole ordering by r.distance, ascending by default as in the source's valid examples. The vector variable and matching column dimensions are supplied. Context boundary: it explicitly requests approximate results with a five-row cap; it does not force an ANN physical plan, promise exactly five returned rows, or apply latest-index syntax to SQL Server 2025 or an unavailable Azure rollout.",
+        "sourceIds": [
+          "dp800-d3-vector-search",
+          "dp800-d3-vector-type"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "This is a documented valid exact-distance shape: VECTOR_DISTANCE('cosine', @q, d.Embedding) yields scalar exact distances, and TOP(5) ordered by its alias selects nearest results. The VECTOR_DISTANCE reference explicitly says it does not use a vector index, even when one exists. Sourced countercontext: the literal statement is appropriate when the application wants exact nearest-neighbor ranking capped at five rather than the latest approximate VECTOR_SEARCH request. Its validity as an exact query does not satisfy the stated approximate-syntax contract.",
+        "sourceIds": [
+          "dp800-d3-vector-distance",
+          "dp800-d3-vector-type"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The function arguments, aliases, WITH APPROXIMATE and distance-only ordering follow the latest syntax, but the literal outer TOP(25) requests a different cap from the required TOP(5). The documented SELECT TOP(N) WITH APPROXIMATE pattern places the requested result bound in that outer N. Sourced countercontext: this exact statement fits a caller requesting up to 25 approximate results from a supported latest-index environment. Even if a particular approximate execution returned fewer rows, the SQL does not express or enforce the required five-row cap.",
+        "sourceIds": [
+          "dp800-d3-vector-search"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent technical PASS2 only; independently re-derived answer b by checking each complete SQL option, not by assuming the generator's syntax. Read the immutable candidate, generation-output.json author/time/candidate, validation-metadata.json generation mappings, candidate-evidence.json, exact objectives, source manifest, registry and retrieval index. Recomputed exact content/objective hashes, checked the March 12, 2026 map against the actual raw guide and installed map, and verified generation at 2026-09-15T06:57:02.666Z follows the bound retrievals. Each cited source's URL/title/retrieval timestamp matches its actual MCP input/receipt, and review dates remain the frozen manifest values. Read the raw credential and course plus actual rendered preparation-link/redirect receipts, AI training path, both modules and their summaries. The search summary directly links VECTOR_SEARCH and VECTOR_DISTANCE; the models summary directly links Vector data type. These are finite credential-scoped provenance paths, not host-only approval. Read the query-patterns and preparation units as well: their legacy TOP_N, broad post-filtering, read-only and categorical index-use descriptions are not substituted for current version-specific product requirements. The latest product explicitly adds iterative filtering, DML maintenance and optimizer choice. Its regional rollout and latest-index Azure-only note make the question's already-available Azure/latest-index premises material. The existing table declaration is context, not a claimed complete index-creation script; more than 25 rows is not a claim that a latest index was created with fewer than its documented 100-row creation minimum. All four statements use source/result aliases correctly where applicable; the selected statement orders only by r.distance, whose implicit ascending form is shown in valid product examples. The full-workflow source sample's extra ORDER BY column conflicts with its later explicit restriction, but is not used by any selected syntax claim. The bounded-cap wording avoids asserting exactly five results or forcing ANN. Review was documentation-based static SQL inspection only: no parser, SQL instance, execution plan, runtime result or tenant test is claimed. Deterministic duplicate and normalized-scenario checks compared all 583 installed records with 60 additional noninstalled authored variants, derived from 201 entries across 35 candidate/generation snapshots; identical copies were excluded and no target diagnostic was emitted. Separately compared installed dp800-direct-023 and its original draft: knowing VECTOR_DISTANCE is exact excludes only c and cannot resolve latest versus legacy syntax or the cap. Pending dp800-direct-047 concerns earlier post-filtering; dp800-direct-048 concerns metric/column compatibility; pending dp800-direct-044 supplies a vector-width fact already fixed in this stem. Installed ai103-028 tests Azure AI Search hybrid k/top/RRF stages rather than this SQL index-version contract. These are reasoned distinctions, not semantic conclusions manufactured by lexical checks. The absolute-wording warning is a scoped non-guarantee, and pronouns have explicit table/index referents. The advanced implementation label is defensible for combining version-bound query grammar, exact/approximate API distinction, aliases and the requested cap; no difficulty inflation is used to satisfy coverage. Similar-length b and d and valid alternative-context queries avoid a grammar or answer-length giveaway. This record contains neither adversarial review nor rubric scores and cannot promote content or replace final independent attestations.",
+    "confidenceReason": "Direct current product syntax, documented legacy error behavior, alias/ascending-order rules, exact-distance examples and vector declarations jointly support only b. Each incorrect literal query has a documented alternate context. Regional/index-version and optimizer qualifications are preserved, conflicting broader training/sample language is not generalized, and no SQL runtime success is asserted."
+  }
+}

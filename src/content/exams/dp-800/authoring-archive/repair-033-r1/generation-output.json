@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "requestId": "dp800-direct-repair-033-r1",
+  "authorId": "copilot-dp800-direct-author",
+  "generatedAt": "2026-09-15T15:12:45.092Z",
+  "candidates": [
+    {
+      "id": "dp800-direct-033",
+      "question": "A SQL Server 2022 service has validated that @detail contains the JSON object shown below. Its response must contain a nested detail object, not a JSON string containing the document text. Which replacement expression preserves that structure?",
+      "questionType": "code",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "@detail"
+        },
+        {
+          "id": "b",
+          "text": "JSON_VALUE(@detail, '$.code')"
+        },
+        {
+          "id": "c",
+          "text": "JSON_QUERY(@detail)"
+        },
+        {
+          "id": "d",
+          "text": "JSON_VALUE(@detail, '$.units')"
+        }
+      ],
+      "correctAnswer": [
+        "c"
+      ],
+      "explanation": "Project JSON_QUERY(@detail) so FOR JSON embeds the existing object.",
+      "deepExplanation": "The object is already valid JSON. The remaining issue is preserving its structural meaning across serialization, not removing escaping from arbitrary unvalidated text.",
+      "whyOtherAnswersAreWrong": {
+        "a": "A plain text expression is not marked as a JSON fragment; the cited JSON_QUERY guidance requires wrapping preformatted JSON for FOR JSON output.",
+        "b": "This extracts only the scalar code, losing the required object and units field.",
+        "d": "This extracts only the scalar units value as text, not the full structured detail object."
+      },
+      "objectiveDomain": "design-and-develop-database-solutions",
+      "skill": "write-advanced-t-sql-code",
+      "subskill": "Write queries that include JSON functions, such as JSON\\_OBJECT, JSON\\_ARRAY, JSON\\_ARRAYAGG, JSON\\_CONTAINS, OPENJSON, and JSON\\_VALUE",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": [
+        "dp800-d1-json-query",
+        "dp800-d1-json-value"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-query-transact-sql",
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-value-transact-sql"
+      ],
+      "documentationTitles": [
+        "JSON_QUERY (Transact-SQL)",
+        "JSON_VALUE (Transact-SQL)"
+      ],
+      "generatedAt": "2026-09-15T15:12:45.092Z",
+      "lastValidatedAt": "2026-09-15T15:12:45.092Z",
+      "featureStatus": "GA",
+      "tags": [
+        "sql-server-2022",
+        "json-fragment",
+        "serialization"
+      ],
+      "codeLanguage": "sql",
+      "codeSnippet": "DECLARE @detail nvarchar(max) = N'{\"code\":\"N8\",\"units\":3}';\nSELECT /* expression */ AS detail FOR JSON PATH;",
+      "conceptId": "sql-json-query-marks-existing-fragment-for-for-json-output",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    }
+  ]
+}

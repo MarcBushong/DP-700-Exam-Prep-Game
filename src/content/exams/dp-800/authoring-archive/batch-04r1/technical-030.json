@@ -1,0 +1,72 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-030",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-extraction",
+    "questionFingerprint": "db67fe5022c12ff47b46e06089ed40bb5059a1b395b65bbbf792f9b0be3020f5",
+    "reviewedAt": "2026-09-15T13:44:28.967Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently read the actual OPENJSON (Transact-SQL) MCP receipt, concentrating on WITH syntax, colName/type/column_path, AS JSON, its worked nested Order example and Remarks. AS JSON selects an inner object or array as a JSON fragment and specifically requires nvarchar(MAX). Without the flag an explicit-schema column performs scalar extraction; increasing its text capacity does not change the scalar-versus-fragment contract, and default lax mode gives NULL for the unavailable scalar at an object-valued path. The example demonstrates both typed nested scalar columns, including an INT at $.Item.Quantity, and an nvarchar(max) AS JSON column preserving the full Order object. These contracts directly distinguish all four proposed definitions. The article applies to SQL Server 2016 and later and gives the ordinary compatibility threshold of 130, satisfied by the stated SQL Server 2022/160 scope. Neither the newer compatibility override nor the Synapse-only identity feature is part of this item."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "Inserted literally, detail nvarchar(max) '$.detail' AS JSON follows the documented order colName, type, column_path, AS JSON. The existing $.detail value is an object, so SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail' AS JSON); yields one detail column containing the object {\"items\":2,\"memo\":\"ship\"}, rather than separate child fields. nvarchar(max) is also the required type when AS JSON is specified. Literal positive alternative: with @payload = N'{\"detail\":[{\"items\":2},{\"items\":1}]}', the identical SELECT preserves the array [{\"items\":2},{\"items\":1}] as the fragment. The AS JSON argument contract explicitly permits both object and array fragments, and its worked Order projection corroborates object preservation.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "detail nvarchar(max) '$.detail' omits AS JSON, so it requests a scalar at an object-valued path. Default lax projection returns SQL NULL, not the serialized object; nvarchar(max) specifies text capacity, not fragment eligibility. The primary AS JSON section distinguishes these cases and requires the flag for a nested fragment. Literal positive countercontext: with @payload = N'{\"detail\":\"ship\"}', SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail'); returns the scalar text ship. In that alternative the exact proposed column definition is the appropriate scalar projection because detail is a JSON string, not an object.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "detail int '$.detail.items' follows the existing nested scalar path and yields the integer 2. It discards memo and the enclosing object and also violates the required nvarchar(max) output type. This is a wrong result contract, not invalid T-SQL. Literal positive countercontext with the original JSON unchanged: if a downstream step needs only the item count, SELECT detail FROM OPENJSON(@payload) WITH (detail int '$.detail.items'); returns the desired count 2 as int. The article's typed-column definition and its Quantity INT '$.Item.Quantity' example support precisely this scalar numeric projection.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "detail nvarchar(max) '$.detail.memo' extracts the string ship, not the complete detail object. Its SQL text type meets the requested type but its selected JSON value does not meet the required structure; items and the object boundary are lost. Literal positive countercontext with the original input: when the consumer requires the memo text alone, SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail.memo'); returns ship and is correct for that task. The column_path and scalar-projection contracts, illustrated by nested text columns in the article, support both this valid use and its insufficiency for the original whole-object requirement.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "This is an independently derived technical PASS 2 for immutable dp800-direct-030, not an approval copied from the author or another reviewer. I read the complete question, candidate-evidence analysis, generation-output and per-encounter generation binding. Repository questionFingerprint recomputation matches the exact candidate, its schema-parsed form, generation-output and validation-metadata. The bound author is copilot-dp800-direct-author, request dp800-direct-04-json-r1, generated/lastValidated 2026-09-15T06:30:44.841Z. No repair or automatic review renewal occurred.\n\nThe actual guide receipt .grounding\\dp-expansion\\dp-800-guide.json, retrieved 2026-09-14T18:19:19.493Z, explicitly states the current March 12, 2026 skills. I checked its published domains and weights against objectives.json, including the 35-40% database-design domain, Write advanced T-SQL code and the JSON-functions subskill naming OPENJSON. The repository objectiveFingerprint helper gives the recorded hash for both this frozen map and the installed DP-800 map. Actual credential and course MCP bodies at .grounding\\dp-expansion\\dp-800-credential.json and dp-800-course.json were also read; their retrievals are 2026-09-14T18:19:19.510Z and 2026-09-14T18:19:19.466Z. They establish context, not object-extraction semantics.\n\nI independently followed the finite source ancestry. The credential's locale-neutral training target is recorded in .grounding\\dp-expansion\\dp-800-rendered-training-links.json at 2026-09-14T18:31:24.010Z, with its exact English redirect in .grounding\\dp-expansion\\design-training-redirect.json at 2026-09-14T18:57:14.063Z. The actual training-path MCP body .grounding\\dp-expansion\\dp-800-training-design.json at 2026-09-14T18:31:14.910Z links ../../modules/write-advanced-sql-code/. The module body .grounding\\dp-expansion\\authors\\design\\raw\\module-advanced.json at 2026-09-14T22:04:32.840Z links 4-json-functions. The raw child .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json at 2026-09-15T05:45:14.019Z expressly teaches OPENJSON as a table-valued function, with default and explicit schemas. The registry's immediate training-to-document relation is therefore an actual named-API explicit-reference to the exact OPENJSON primary function article. It is not an invented hyperlink, a documentation-parent hop or approval inferred from the hostname. Broad version/performance claims elsewhere in the training are not technical support for this item.\n\nI read the full actual OPENJSON source body, including the material beyond the raw JSON viewer's initial truncation. The receipt's Microsoft Learn MCP endpoint, microsoft_docs_fetch tool, exact input URL, timestamp and successful text content match the source-retrieval-index path, sources.json and source-registry.json. The source retrieval remains 2026-09-15T05:45:14.081Z and its frozen review remains 2026-09-15T06:30:44.832Z. validateSourceProvenance returned no findings; validatedSupportingSourceIds admits the cited function article under the catalog's unchanged exact allowlist. I did not equate those structural checks with factual inspection or perform a live freshness check.\n\nEach proposed definition was substituted mentally into the supplied SELECT/WITH grammar and evaluated against the documented contract. The results are a = the complete detail object as nvarchar(max), b = SQL NULL, c = integer 2, d = scalar ship. The supplied JSON is valid, the detail object and both scalar children are present, and the case of every path step matches. The AS JSON order and mandatory max-length text type are documented, not assumed. There is no missing alias, invalid type/path combination or undeclared input variable after substitution. The unchanged query selects from a variable rather than a protected table and introduces no special role, DDL or external endpoint prerequisite. SQL Server 2022 with compatibility 160 supports the ordinary API without a Preview extension. No tenant or SQL execution occurred; displayed results and positive contexts are source-derived predictions.\n\nDuplicate checks covered all 583 installed records of every status, 11 current JSON candidates and 14 new AI candidates, for 608 distinct IDs. duplicateFindings and scenarioDuplicateFindings produced no target finding. Manual comparison included the other JSON cohort's code/choices, the AI cohort, 20 related installed stems and the closest full items. dp800-direct-028 concerns a long scalar and max-length projection without AS JSON; its result-shape decision is the opposite of preserving this existing object, and its review was not repeated. dp800-direct-033 concerns marking an already extracted fragment for FOR JSON serialization rather than OPENJSON input projection. dp800-direct-027 extracts a short response scalar; dp700-ingest-038 reparses JSON-encoded dynamic text in KQL, whereas this input already contains a real object. The shared JSON vocabulary is genuine but these tested transformations differ. The new AI cohort has no matching AS JSON projection decision. This is a bounded same-fact comparison, not a global claim of semantic uniqueness across every stored question.\n\nqualityFindings raised negative-wording and pronoun-review. 'It must not flatten' constrains the requested object-preserving output rather than asking for an incorrect answer, and 'It' clearly refers to the procedure's output requirement. The longest answer includes necessary AS JSON syntax, but b and d share nvarchar(max), preventing length/type matching alone from identifying the key; c is a legitimate count extraction rather than nonsense syntax. All four choices have explicitly documented alternate uses. The concise ingestion requirement and two distinct child fields support an intermediate implementation task, without claiming advanced architecture reasoning. The original detail/items/memo example differs from the source's Order example and no assessment content was used in this review. Only this technical record is approved: no adversarial artifact, realism score, ledger change, source change or candidate promotion is supplied.",
+    "confidenceReason": "The actual primary AS JSON definition and nested-order example settle both the required nvarchar(max) type and fragment behavior. They independently support option a and explain why each other valid projection loses the required object or returns NULL. Exact bindings and all frozen evidence snapshots match; local diagnostics found no blocker and the closest extraction/serialization overlaps were inspected explicitly. This is documentary PASS 2 confidence, not runtime proof or final approval."
+  }
+}

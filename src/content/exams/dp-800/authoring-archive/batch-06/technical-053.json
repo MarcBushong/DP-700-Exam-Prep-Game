@@ -1,0 +1,64 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-053",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-integration-06",
+    "questionFingerprint": "79772a7cca3de820beda6a8a4fc5b1e845e750fdcf359ba116dead6be8af23b3",
+    "reviewedAt": "2026-09-15T15:55:49.263Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d2-dab-reference",
+        "url": "https://learn.microsoft.com/en-us/azure/data-api-builder/reference-configuration",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\dab-reference.json",
+        "retrievedAt": "2026-09-15T06:15:24.172Z",
+        "lastReviewedAt": "2026-09-15T15:19:19.284Z",
+        "supportingSummary": "The configuration schema reference explicitly accepts runtime in child files but ignores it, requires a top-level runtime and per-file data-source, and requires globally unique entity names. Its separate Autoentities section establishes explicit-definition precedence for MSSQL name collisions. The training summary's actual reference and credential-linked module ancestry support this exact admitted article, not arbitrary DAB documentation."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The Autoentities section says an explicit entity wins when an MSSQL autoentities pattern produces the same entity name. That rule selects an entity definition, not the authoritative runtime. Here both definitions are valid and no discovery collision is reported, so it cannot explain REST availability. It would correctly resolve an explicit-versus-discovered Products collision in an MSSQL configuration, with runtime already settled.",
+        "sourceIds": ["dp800-d2-dab-reference"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "Under Data source files, the reference designates one top-level file to manage runtime and explicitly ignores runtime supplied by children. Therefore the child's false flag does not override the parent's enabled REST runtime; the separately enabled entity and permission premises preserve access. The same rule correctly explains a parent/child disagreement about another runtime setting, rather than granting children independent service runtimes.",
+        "sourceIds": ["dp800-d2-dab-reference"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Entity-name uniqueness is a genuine rule across all loaded files, including files using different database connections. It constrains names rather than choosing which runtime flag is effective. The stem already establishes valid entity definitions, so this rule cannot cause the described enabled endpoint. It would correctly diagnose a different deployment in which two referenced files both declare the entity Order.",
+        "sourceIds": ["dp800-d2-dab-reference"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The multiple-configuration rules do require each file to contain data-source. That requirement addresses database connectivity and is already satisfied for both files here. It does not give the child authority over global REST configuration. The literal rule would be the relevant correction when a referenced file declares entities but omits its own data-source, even though the parent supplies a connection.",
+        "sourceIds": ["dp800-d2-dab-reference"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Re-derived runtime ownership from the raw configuration reference, including its independent entity-name and relationship rules. The stated valid sources, enabled entity endpoint and caller permission remove competing causes; b alone explains the ignored child flag. Autoentities is only an MSSQL collision alternative, not an unstated requirement here. The credential-linked training summary explicitly references this canonical article, and the exact catalog/source gate passed. Across 584 bank records plus direct cohort metadata, full dp800-direct-019 and dp800-direct-020 comparisons test section ownership and stored-procedure methods instead. Batch siblings 054 and 055 test different restrictions. Intermediate troubleshooting is proportionate; pronoun and answer-position checks expose no blocking clue.",
+    "confidenceReason": "High confidence in the contextual b key from the explicit multiple-configuration rule. Field-path notation was checked against the reference without claiming a running DAB deployment. This is technical approval only, bound to the unchanged generation and objective map."
+  }
+}

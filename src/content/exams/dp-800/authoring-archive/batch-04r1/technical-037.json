@@ -1,0 +1,72 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-037",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-construction",
+    "questionFingerprint": "87a1bb42d35f6f73d2751be7c9d8fa71675bc5fd098ab601cb1c066e86f11204",
+    "reviewedAt": "2026-09-15T13:49:52.244Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-object",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-object-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-object.json",
+        "retrievedAt": "2026-09-15T05:51:09.231Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently read the actual MCP JSON_OBJECT (Transact-SQL) receipt, including the key/value syntax, null-clause argument, return contract, and examples 2, 3, and 6. NULL ON NULL is explicitly the default and maps a SQL NULL value to a retained JSON null member; ABSENT ON NULL instead omits that entire member. The condition is specifically SQL NULL, not zero or an empty string. The examples independently show numeric SQL values represented as JSON numbers and character values represented as strings. Azure SQL Database is an applicable platform. The candidate uses the established text-returning constructor and no RETURNING json extension. Linked conversion/escaping articles were not silently admitted as doc-to-doc sources."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "The explicitly selected NULL ON NULL policy retains comment with a JSON null value. With the declarations shown, A yields the documentation-derived state {\"code\":\"R9\",\"retry\":0,\"comment\":null}, which violates omission of the optional key. Positive countercontext: the exact constructor is appropriate if the API requires explicit presence of comment to signal a known-null value, and that three-member object is the requested payload. The source explicitly supports that SQL NULL-to-JSON-null behavior.",
+        "sourceIds": [
+          "dp800-d1-json-object"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "Removing the null clause does not request omission: JSON_OBJECT defaults to NULL ON NULL. Thus B also retains comment and has {\"code\":\"R9\",\"retry\":0,\"comment\":null} as its result state. Positive countercontext: use this exact no-clause constructor when the contract intentionally includes a JSON null member and the documented default behavior is desired. It is a valid default-based way to implement that literal three-member payload, but not the two-member payload required here.",
+        "sourceIds": [
+          "dp800-d1-json-object"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "supported",
+        "rationale": "ABSENT ON NULL omits the key whose value expression is the SQL NULL @comment. The other expressions are nonnull: @code is N'R9' and @retry is the int value 0. The result is therefore {\"code\":\"R9\",\"retry\":0}. Numeric zero is not a null, and the source's numeric construction examples support a JSON number rather than the string \"0\". C alone preserves the supplied code/zero while omitting comment instead of retaining a JSON null or empty-string value.",
+        "sourceIds": [
+          "dp800-d1-json-object"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "This choice changes the comment value expression from SQL NULL to the nonnull empty string N''. ABSENT ON NULL cannot omit that value, so the documented result state is {\"code\":\"R9\",\"retry\":0,\"comment\":\"\"}. Positive countercontext: the exact constructor is appropriate when the payload must retain an explicitly empty comment string and preserve code plus the numeric zero. The null-only omission rule and character-value construction contract support that literal payload; they do not make empty strings equivalent to SQL NULL.",
+        "sourceIds": [
+          "dp800-d1-json-object"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Recovered independent technical PASS2 approves only the exact C constructor and current content hash. Each variable's SQL type/value was read from the declaration; the original comment is NULL, not an empty string, while code and zero are nonnull. The product's explicit default and conditional omission rule determine the unique answer without relying on generic assumptions about JSON serializers or truthy/falsy values. The SQL constructor syntax, colon-separated key/value pairs, final null-clause position, short scalar inputs, and Azure SQL Database scope are sufficient. This is a SELECT expression with no table or privileged resource prerequisite. Intermediate technical-implementation classification is reasonable for implementing an omission contract while preserving value types. The candidate, full generation claims, objective map, manifest, registry, and retrieval index were read. Exact hashes were recomputed using scripts\\review-helpers.ts; technical-028.json provided format only. The actual .grounding\\dp-expansion\\dp-800-guide.json receipt confirms March 12, 2026 and the complete three-domain, 11-skill, 73-subskill objective map. JSON_OBJECT is expressly named in the Write advanced T-SQL code JSON-functions subskill; the domain remains the published 35-40% database-design range. Identity/course receipts were read separately and not used to establish technical claims. Provenance was independently followed through .grounding\\dp-expansion\\dp-800-rendered-training-links.json, .grounding\\dp-expansion\\design-training-redirect.json, .grounding\\dp-expansion\\dp-800-training-design.json, .grounding\\dp-expansion\\authors\\design\\raw\\module-advanced.json, and .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json. The unit explicitly names and demonstrates JSON_OBJECT in its construction section, supplying a direct named-API reference to the exact product documentation. The reference is not misrepresented as an observed URL hyperlink, and no JSON-functions overview-to-product doc chain was substituted. The broad training availability sentence that also incorrectly groups JSON_ARRAYAGG with SQL Server 2022 is not adopted; the selected constructor and Azure SQL scope were reviewed from its specific product reference and the dedicated construction teaching. RETURNING json and unrelated Preview features are outside this question. The frozen 66-source registry/manifest passed validateSourceProvenance with zero findings; actual receipt endpoint/tool, input URL, timestamps, heading, nonerror body, and existing relative evidence path were checked. Source retrieval/review dates remain unchanged. All 583 installed records and all located cohort/repair/generation snapshots were compared: 784 located records, 643 distinct helper-hashed snapshots, 608 stable IDs. Same-ID archived versions were treated as history rather than extra new questions. No target-related duplicateFindings or scenarioDuplicateFindings result was emitted. Independent semantic review distinguishes this constructor's default/omission policy from 034's existing-member JSON_MODIFY strict/lax null behavior and 035's type-sensitive replacement. Item 038 has the opposite aggregate default and preserves positional array gaps while ordering rows; that is not the same object-key decision. The superficially related gh300-c-015 fixture includes zero and empty text, but its decision is how to request a missing test-data edge case while preserving row count/repeated labels, not SQL constructor null semantics. Existing PATH/extraction/KQL records and batch-05 native vector questions are also distinct. The pronoun warning is resolved by the explicit API contract and variables. A and B intentionally have the same wrong output through explicit versus default NULL ON NULL; this reduces outcome diversity but tests a documented default, does not create a second correct answer, and is retained as an editorial consideration for independent PASS3. All wrong options have literal useful positive contexts. No answer-length, grammar, or target-related corpus repeated-opening finding appeared. Batch key rotation is noted rather than used as quality evidence. The question and small data example were not copied from quizzes, assessments, dumps, or question banks, none of which were consulted. Expected results are documentation-derived, not observed SQL execution. This is not a rubric, adversarial approval, final ledger entry, candidate/source edit, or gameplay promotion.",
+    "confidenceReason": "The exact JSON_OBJECT null-clause documentation states both the default and the omit-only-SQL-NULL condition, while numeric/string examples establish the retained value representations. Those rules independently resolve all four choices, including the default-equivalent distractor pair and the nonnull empty string. The technical approval is bounded to the stated Azure SQL Database constructor and the frozen evidence; no runtime execution is claimed."
+  }
+}

@@ -2,34 +2,34 @@
 
 Unofficial study aid. Deterministic checks validate structure and recorded attestations, not answer semantics, independent reviewer identity, or current feature behavior.
 
-Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verification timestamp.
+Report created: 2026-09-15T16:15:49.854Z. This is not a retrieval or verification timestamp.
 
-- Total candidate records: **27**; malformed: **0**.
-- Playable verified questions: **27**. Playable coverage below counts only these questions.
-- Fully reviewed records before catalog/mode gates: **27**. A beta/sealed credential still has zero playable encounters.
-- Three-pass target: 150 verified; shortfall 123. Rubric minimum 44/48; no automatic conversion from legacy scores.
+- Total candidate records: **41**; malformed: **0**.
+- Playable verified questions: **39**. Playable coverage below counts only these questions.
+- Fully reviewed records before catalog/mode gates: **39**. A beta/sealed credential still has zero playable encounters.
+- Three-pass target: 150 verified; shortfall 111. Rubric minimum 44/48; no automatic conversion from legacy scores.
 - Source provenance violations: 0. Source meaning and reviewer independence are not proven by receipts.
-- Playable coverage shortfall: 123; playable Advanced/Expert share: 14.8% (target >=40%). This is not an authored-content count.
+- Playable coverage shortfall: 111; playable Advanced/Expert share: 10.3% (target >=40%). This is not an authored-content count.
 - Recorded credential status: **active**; Study Run **enabled**; Boss Gauntlet **locked**.
-- Fully reviewed content target: 150; reviewed shortfall: 123; reviewed but unavailable: 0.
-- Availability: Boss Gauntlet needs 75 verified encounters; 27 available.
+- Fully reviewed content target: 150; reviewed shortfall: 111; reviewed but unavailable: 0.
+- Availability: Boss Gauntlet needs 75 verified encounters; 39 available.
 - Taxonomy: 3 domains, 11 skills, 73 subskills.
 - Study guide effective date: **March 12, 2026**; retrieved: 2026-09-14T18:19:19.493Z.
-- Last grounded through Microsoft Learn MCP: 2026-09-14T23:41:04.566Z.
-- Last recorded verification: 2026-09-15T04:27:57.227Z; last playable verification: 2026-09-15T04:27:57.227Z.
-- Source retrieval range: 2026-09-14T18:19:19.493Z to 2026-09-14T23:41:04.566Z.
-- Source review range: 2026-09-14T18:47:06.310Z to 2026-09-15T02:57:51.174Z.
-- Source records: 57 valid / 57 total; malformed: 0.
-- Multiple citations: 9 playable / 9 candidates.
-- Citation errors: 0; duplicate findings: 0; quality warnings: 23.
+- Last grounded through Microsoft Learn MCP: 2026-09-15T06:42:29.174Z.
+- Last recorded verification: 2026-09-15T15:38:13.797Z; last playable verification: 2026-09-15T15:38:13.797Z.
+- Source retrieval range: 2026-09-14T18:19:19.493Z to 2026-09-15T06:42:29.174Z.
+- Source review range: 2026-09-14T18:47:06.310Z to 2026-09-15T06:57:02.652Z.
+- Source records: 76 valid / 76 total; malformed: 0.
+- Multiple citations: 10 playable / 11 candidates.
+- Citation errors: 0; duplicate findings: 0; quality warnings: 40.
 
 ## Verification status (effective, schema-valid candidates)
 
 | Category | Questions |
 | --- | ---: |
 | candidate | 0 |
-| verified | 27 |
-| manual-review-required | 0 |
+| verified | 39 |
+| manual-review-required | 2 |
 | rejected | 0 |
 | stale | 0 |
 
@@ -37,9 +37,9 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| design-and-develop-database-solutions | 10 |
+| design-and-develop-database-solutions | 19 |
 | secure-optimize-and-deploy-database-solutions | 10 |
-| implement-ai-capabilities-in-database-solutions | 7 |
+| implement-ai-capabilities-in-database-solutions | 10 |
 
 ## Playable skill counts
 
@@ -47,14 +47,14 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | --- | ---: |
 | design-and-implement-database-objects | 3 |
 | implement-programmability-objects | 2 |
-| write-advanced-t-sql-code | 3 |
+| write-advanced-t-sql-code | 12 |
 | design-and-implement-sql-solutions-by-using-ai-assisted-tools | 2 |
 | implement-data-security-and-compliance | 3 |
 | optimize-database-performance | 3 |
 | implement-ci-cd-by-using-sql-database-projects | 2 |
 | integrate-sql-solutions-with-azure-services | 2 |
 | design-and-implement-models-and-embeddings | 2 |
-| design-and-implement-intelligent-search | 3 |
+| design-and-implement-intelligent-search | 6 |
 | design-and-implement-retrieval-augmented-generation-rag | 2 |
 
 ## Playable subskill counts
@@ -74,7 +74,7 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | Create triggers | 1 |
 | Write common table expressions (CTEs) | 1 |
 | Write queries that include window functions | 2 |
-| Write queries that include JSON functions, such as JSON\_OBJECT, JSON\_ARRAY, JSON\_ARRAYAGG, JSON\_CONTAINS, OPENJSON, and JSON\_VALUE | 0 |
+| Write queries that include JSON functions, such as JSON\_OBJECT, JSON\_ARRAY, JSON\_ARRAYAGG, JSON\_CONTAINS, OPENJSON, and JSON\_VALUE | 9 |
 | Write queries that include regular expressions, such as REGEXP\_LIKE, REGEXP\_REPLACE, REGEXP\_SUBSTR, REGEXP\_INSTR, REGEXP\_COUNT, REGEXP\_MATCHES, and REGEXP\_SPLIT\_TO\_TABLE | 0 |
 | Write queries that include fuzzy string matching functions, such as EDIT\_DISTANCE, EDIT\_DISTANCE\_SIMILARITY, and JARO\_WINKLER\_DISTANCE | 0 |
 | Write graph queries that use the MATCH operator | 0 |
@@ -122,10 +122,10 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | Choose from full-text, semantic vector, and hybrid search | 0 |
 | Implement full-text search | 0 |
 | Design for vector data, including vector data type, vector indexes, and size | 0 |
-| Identify when to use vector-related types and functions for semantic searching, including VECTOR\_NORMALIZE, VECTOR\_DISTANCE, VECTORPROPERTY, and VECTOR\_SEARCH | 1 |
+| Identify when to use vector-related types and functions for semantic searching, including VECTOR\_NORMALIZE, VECTOR\_DISTANCE, VECTORPROPERTY, and VECTOR\_SEARCH | 2 |
 | Choose between using ANN and ENN for vector search | 0 |
-| Evaluate vector index types and metrics | 0 |
-| Implement vector search | 0 |
+| Evaluate vector index types and metrics | 1 |
+| Implement vector search | 1 |
 | Implement hybrid search | 1 |
 | Implement reciprocal rank fusion (RRF) | 1 |
 | Evaluate performance of vector and hybrid search | 0 |
@@ -139,8 +139,8 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| beginner | 8 |
-| intermediate | 15 |
+| beginner | 10 |
+| intermediate | 25 |
 | advanced | 4 |
 | expert | 0 |
 
@@ -148,11 +148,11 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| concept-recall | 8 |
-| technical-implementation | 11 |
+| concept-recall | 10 |
+| technical-implementation | 18 |
 | scenario-based | 7 |
-| troubleshooting | 1 |
-| architecture-design | 0 |
+| troubleshooting | 3 |
+| architecture-design | 1 |
 
 ## Playable type counts
 
@@ -161,8 +161,8 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | single-select | 7 |
 | multi-select | 1 |
 | true-false | 1 |
-| scenario | 14 |
-| code | 4 |
+| scenario | 17 |
+| code | 13 |
 
 ## Playable source counts
 
@@ -225,14 +225,33 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | dp800-d3-rag-summary | 0 |
 | dp800-d3-for-json | 1 |
 | dp800-d2-project-build | 1 |
+| dp800-d1-json-unit | 0 |
+| dp800-d1-json-columns-unit | 0 |
+| dp800-d1-json-functions | 0 |
+| dp800-d1-json-value | 1 |
+| dp800-d1-openjson | 5 |
+| dp800-d1-json-query | 1 |
+| dp800-d1-json-modify | 2 |
+| dp800-d1-json-object | 1 |
+| dp800-d1-json-arrayagg | 1 |
+| dp800-d3-external-models-unit | 0 |
+| dp800-d3-models-summary | 0 |
+| dp800-d3-create-external-model | 0 |
+| dp800-d3-vector-type | 0 |
+| dp800-d3-generate-embeddings | 0 |
+| dp800-d3-prepare-vectors-unit | 0 |
+| dp800-d3-vector-patterns-unit | 0 |
+| dp800-d3-vector-normalize | 1 |
+| dp800-d3-vector-search | 2 |
+| dp800-d3-generate-chunks | 0 |
 
 ## Reviewed domain counts (not a claim of availability)
 
 | Category | Questions |
 | --- | ---: |
-| design-and-develop-database-solutions | 10 |
+| design-and-develop-database-solutions | 19 |
 | secure-optimize-and-deploy-database-solutions | 10 |
-| implement-ai-capabilities-in-database-solutions | 7 |
+| implement-ai-capabilities-in-database-solutions | 10 |
 
 ## Reviewed skill counts (not a claim of availability)
 
@@ -240,14 +259,14 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | --- | ---: |
 | design-and-implement-database-objects | 3 |
 | implement-programmability-objects | 2 |
-| write-advanced-t-sql-code | 3 |
+| write-advanced-t-sql-code | 12 |
 | design-and-implement-sql-solutions-by-using-ai-assisted-tools | 2 |
 | implement-data-security-and-compliance | 3 |
 | optimize-database-performance | 3 |
 | implement-ci-cd-by-using-sql-database-projects | 2 |
 | integrate-sql-solutions-with-azure-services | 2 |
 | design-and-implement-models-and-embeddings | 2 |
-| design-and-implement-intelligent-search | 3 |
+| design-and-implement-intelligent-search | 6 |
 | design-and-implement-retrieval-augmented-generation-rag | 2 |
 
 ## Reviewed subskill counts (not a claim of availability)
@@ -267,7 +286,7 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | Create triggers | 1 |
 | Write common table expressions (CTEs) | 1 |
 | Write queries that include window functions | 2 |
-| Write queries that include JSON functions, such as JSON\_OBJECT, JSON\_ARRAY, JSON\_ARRAYAGG, JSON\_CONTAINS, OPENJSON, and JSON\_VALUE | 0 |
+| Write queries that include JSON functions, such as JSON\_OBJECT, JSON\_ARRAY, JSON\_ARRAYAGG, JSON\_CONTAINS, OPENJSON, and JSON\_VALUE | 9 |
 | Write queries that include regular expressions, such as REGEXP\_LIKE, REGEXP\_REPLACE, REGEXP\_SUBSTR, REGEXP\_INSTR, REGEXP\_COUNT, REGEXP\_MATCHES, and REGEXP\_SPLIT\_TO\_TABLE | 0 |
 | Write queries that include fuzzy string matching functions, such as EDIT\_DISTANCE, EDIT\_DISTANCE\_SIMILARITY, and JARO\_WINKLER\_DISTANCE | 0 |
 | Write graph queries that use the MATCH operator | 0 |
@@ -315,10 +334,10 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | Choose from full-text, semantic vector, and hybrid search | 0 |
 | Implement full-text search | 0 |
 | Design for vector data, including vector data type, vector indexes, and size | 0 |
-| Identify when to use vector-related types and functions for semantic searching, including VECTOR\_NORMALIZE, VECTOR\_DISTANCE, VECTORPROPERTY, and VECTOR\_SEARCH | 1 |
+| Identify when to use vector-related types and functions for semantic searching, including VECTOR\_NORMALIZE, VECTOR\_DISTANCE, VECTORPROPERTY, and VECTOR\_SEARCH | 2 |
 | Choose between using ANN and ENN for vector search | 0 |
-| Evaluate vector index types and metrics | 0 |
-| Implement vector search | 0 |
+| Evaluate vector index types and metrics | 1 |
+| Implement vector search | 1 |
 | Implement hybrid search | 1 |
 | Implement reciprocal rank fusion (RRF) | 1 |
 | Evaluate performance of vector and hybrid search | 0 |
@@ -332,8 +351,8 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| beginner | 8 |
-| intermediate | 15 |
+| beginner | 10 |
+| intermediate | 25 |
 | advanced | 4 |
 | expert | 0 |
 
@@ -341,11 +360,11 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 
 | Category | Questions |
 | --- | ---: |
-| concept-recall | 8 |
-| technical-implementation | 11 |
+| concept-recall | 10 |
+| technical-implementation | 18 |
 | scenario-based | 7 |
-| troubleshooting | 1 |
-| architecture-design | 0 |
+| troubleshooting | 3 |
+| architecture-design | 1 |
 
 ## Reviewed type counts (not a claim of availability)
 
@@ -354,8 +373,8 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | single-select | 7 |
 | multi-select | 1 |
 | true-false | 1 |
-| scenario | 14 |
-| code | 4 |
+| scenario | 17 |
+| code | 13 |
 
 ## Reviewed source counts (not a claim of availability)
 
@@ -418,21 +437,40 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 | dp800-d3-rag-summary | 0 |
 | dp800-d3-for-json | 1 |
 | dp800-d2-project-build | 1 |
+| dp800-d1-json-unit | 0 |
+| dp800-d1-json-columns-unit | 0 |
+| dp800-d1-json-functions | 0 |
+| dp800-d1-json-value | 1 |
+| dp800-d1-openjson | 5 |
+| dp800-d1-json-query | 1 |
+| dp800-d1-json-modify | 2 |
+| dp800-d1-json-object | 1 |
+| dp800-d1-json-arrayagg | 1 |
+| dp800-d3-external-models-unit | 0 |
+| dp800-d3-models-summary | 0 |
+| dp800-d3-create-external-model | 0 |
+| dp800-d3-vector-type | 0 |
+| dp800-d3-generate-embeddings | 0 |
+| dp800-d3-prepare-vectors-unit | 0 |
+| dp800-d3-vector-patterns-unit | 0 |
+| dp800-d3-vector-normalize | 1 |
+| dp800-d3-vector-search | 2 |
+| dp800-d3-generate-chunks | 0 |
 
 ## Published domain weighting
 
-- Design and develop database solutions: guide 35–40%; available bank 37.0% (10 playable; 10 fully reviewed).
-- Secure, optimize, and deploy database solutions: guide 35–40%; available bank 37.0% (10 playable; 10 fully reviewed).
-- Implement AI capabilities in database solutions: guide 25–30%; available bank 25.9% (7 playable; 7 fully reviewed).
+- Design and develop database solutions: guide 35–40%; available bank 48.7% (19 playable; 19 fully reviewed).
+- Secure, optimize, and deploy database solutions: guide 35–40%; available bank 25.6% (10 playable; 10 fully reviewed).
+- Implement AI capabilities in database solutions: guide 25–30%; available bank 25.6% (10 playable; 10 fully reviewed).
 
 ## Correct-answer positions (before gameplay shuffling; each multi-select key counted)
 
 | Category | Questions |
 | --- | ---: |
-| 1 | 8 |
-| 2 | 7 |
-| 3 | 7 |
-| 4 | 6 |
+| 1 | 12 |
+| 2 | 9 |
+| 3 | 10 |
+| 4 | 9 |
 
 ## Uncovered subskills (playable coverage only)
 
@@ -443,7 +481,6 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 - **Design and develop database solutions / Implement programmability objects** — Create scalar functions
 - **Design and develop database solutions / Implement programmability objects** — Create table-valued functions
 - **Design and develop database solutions / Implement programmability objects** — Create stored procedures
-- **Design and develop database solutions / Write advanced T-SQL code** — Write queries that include JSON functions, such as JSON\_OBJECT, JSON\_ARRAY, JSON\_ARRAYAGG, JSON\_CONTAINS, OPENJSON, and JSON\_VALUE
 - **Design and develop database solutions / Write advanced T-SQL code** — Write queries that include regular expressions, such as REGEXP\_LIKE, REGEXP\_REPLACE, REGEXP\_SUBSTR, REGEXP\_INSTR, REGEXP\_COUNT, REGEXP\_MATCHES, and REGEXP\_SPLIT\_TO\_TABLE
 - **Design and develop database solutions / Write advanced T-SQL code** — Write queries that include fuzzy string matching functions, such as EDIT\_DISTANCE, EDIT\_DISTANCE\_SIMILARITY, and JARO\_WINKLER\_DISTANCE
 - **Design and develop database solutions / Write advanced T-SQL code** — Write graph queries that use the MATCH operator
@@ -478,8 +515,6 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 - **Implement AI capabilities in database solutions / Design and implement intelligent search** — Implement full-text search
 - **Implement AI capabilities in database solutions / Design and implement intelligent search** — Design for vector data, including vector data type, vector indexes, and size
 - **Implement AI capabilities in database solutions / Design and implement intelligent search** — Choose between using ANN and ENN for vector search
-- **Implement AI capabilities in database solutions / Design and implement intelligent search** — Evaluate vector index types and metrics
-- **Implement AI capabilities in database solutions / Design and implement intelligent search** — Implement vector search
 - **Implement AI capabilities in database solutions / Design and implement intelligent search** — Evaluate performance of vector and hybrid search
 - **Implement AI capabilities in database solutions / Design and implement retrieval-augmented generation (RAG)** — Identify use cases for RAG
 - **Implement AI capabilities in database solutions / Design and implement retrieval-augmented generation (RAG)** — Create a prompt by using the sp\_invoke\_external\_rest\_endpoint stored procedure
@@ -494,7 +529,6 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 - **Design and develop database solutions / Implement programmability objects** — Create scalar functions
 - **Design and develop database solutions / Implement programmability objects** — Create table-valued functions
 - **Design and develop database solutions / Implement programmability objects** — Create stored procedures
-- **Design and develop database solutions / Write advanced T-SQL code** — Write queries that include JSON functions, such as JSON\_OBJECT, JSON\_ARRAY, JSON\_ARRAYAGG, JSON\_CONTAINS, OPENJSON, and JSON\_VALUE
 - **Design and develop database solutions / Write advanced T-SQL code** — Write queries that include regular expressions, such as REGEXP\_LIKE, REGEXP\_REPLACE, REGEXP\_SUBSTR, REGEXP\_INSTR, REGEXP\_COUNT, REGEXP\_MATCHES, and REGEXP\_SPLIT\_TO\_TABLE
 - **Design and develop database solutions / Write advanced T-SQL code** — Write queries that include fuzzy string matching functions, such as EDIT\_DISTANCE, EDIT\_DISTANCE\_SIMILARITY, and JARO\_WINKLER\_DISTANCE
 - **Design and develop database solutions / Write advanced T-SQL code** — Write graph queries that use the MATCH operator
@@ -529,8 +563,6 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 - **Implement AI capabilities in database solutions / Design and implement intelligent search** — Implement full-text search
 - **Implement AI capabilities in database solutions / Design and implement intelligent search** — Design for vector data, including vector data type, vector indexes, and size
 - **Implement AI capabilities in database solutions / Design and implement intelligent search** — Choose between using ANN and ENN for vector search
-- **Implement AI capabilities in database solutions / Design and implement intelligent search** — Evaluate vector index types and metrics
-- **Implement AI capabilities in database solutions / Design and implement intelligent search** — Implement vector search
 - **Implement AI capabilities in database solutions / Design and implement intelligent search** — Evaluate performance of vector and hybrid search
 - **Implement AI capabilities in database solutions / Design and implement retrieval-augmented generation (RAG)** — Identify use cases for RAG
 - **Implement AI capabilities in database solutions / Design and implement retrieval-augmented generation (RAG)** — Create a prompt by using the sp\_invoke\_external\_rest\_endpoint stored procedure
@@ -561,6 +593,23 @@ Report created: 2026-09-15T04:51:38.484Z. This is not a retrieval or verificatio
 - **warning / pronoun-review** [dp800-direct-023]: Check pronoun references; this heuristic does not establish ambiguity.
 - **warning / pronoun-review** [dp800-direct-017]: Check pronoun references; this heuristic does not establish ambiguity.
 - **warning / pronoun-review** [dp800-direct-020]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / negative-wording** [dp800-direct-028]: Review negative wording; prefer a positive, unambiguous task.
+- **warning / pronoun-review** [dp800-direct-028]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / pronoun-review** [dp800-direct-029]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / negative-wording** [dp800-direct-030]: Review negative wording; prefer a positive, unambiguous task.
+- **warning / pronoun-review** [dp800-direct-030]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / pronoun-review** [dp800-direct-031]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / negative-wording** [dp800-direct-032]: Review negative wording; prefer a positive, unambiguous task.
+- **warning / pronoun-review** [dp800-direct-032]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / pronoun-review** [dp800-direct-035]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / pronoun-review** [dp800-direct-036]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / pronoun-review** [dp800-direct-037]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / pronoun-review** [dp800-direct-046]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / scenario-constraints** [dp800-direct-046]: Short applied scenario: independently check prerequisites and constraints.
+- **warning / pronoun-review** [dp800-direct-047]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / pronoun-review** [dp800-direct-048]: Check pronoun references; this heuristic does not establish ambiguity.
+- **warning / absolute-wording** [dp800-direct-049]: Check absolute claims against documented limitations, including distractors.
+- **warning / pronoun-review** [dp800-direct-049]: Check pronoun references; this heuristic does not establish ambiguity.
 
 ## Review queue
 
@@ -581,6 +630,26 @@ Verified entries marked credential-or-mode-gate are reviewed but unavailable, no
 - **dp800-direct-023** (verified; not-excluded): pronoun-review. Review notes: Fresh third-pass review of repair-023-r1 after rereading the original MCP evidence. Challenged index presence, supported metrics, invalid-argument errors, float precision and the distinction between function behavior and a complete retrieval pipeline. The new explicit beginner True/False form is appropriate for the reasoning actually required; no speculative row-count or metric-switch alternatives remain. The saved search-summary, module and credential-preparation chain provides source ancestry. Current corpus neighbors are semantically distinct, and the pronoun warning is benign. Recomputed hash ec133e12d56d031cd4118d91111a6d8337bc86245502212f2e900e00e4bd0c54 matches generation at 2026-09-15T03:13:13.437Z and the actual technical pass at 2026-09-15T03:19:49.425Z. Score 46/48. No SQL execution, new retrieval, candidate edit or promotion is claimed; the older failed attestation was not changed..
 - **dp800-direct-017** (verified; not-excluded): pronoun-review. Review notes: Fresh independent PASS 3 of repair-016-017-r1 item 017. Independently reproduced the new question and objective fingerprints with canonical SHA-256 and repository parsed functions. Read both actual raw receipts, the newly bound Publish example and the saved module-to-lesson link. Re-derived b and tested artifact format, execution effects, comparison direction, no-difference Publish cases and target drift. Source dates exactly preserve the frozen manifest, including the project-build lastReviewedAt of 2026-09-15T02:57:51.174Z. The bounded duplicate comparison covered 577 bank records and the frozen 27-item cohort, excluding same-ID lineage; no different-item duplicate finding involved this item. No old review hash or score was reused. codeReviewed is N/A because the candidate supplies no executable CLI snippet; no SqlPackage invocation, deployment or live-source retrieval was performed. Rubric 47/48 passes. Complete record returned inline without file writes, candidate/source edits, ledger promotion, browser use, nesting or readiness manipulation..
 - **dp800-direct-020** (verified; not-excluded): pronoun-review. Review notes: Fresh independent PASS 3 of repair-016-018-020-r2 item 020. Independently reproduced the new question and objective hashes and checked conceptId dab-rest-stored-procedure-default-post-method against the actual endpoint-configuration objective. Freshly read the full raw reference and saved direct parent link. Re-derived b by separating the default from explicit GET, explicit both-method selection and disabled REST. No old first-result-set reasoning or scores were reused. Current comparison covered 583 bank records plus the frozen 27-item cohort, excluding same-ID lineage; no different-item duplicate finding involved this item. Item 019 concerns configuration-section ownership, not this method default. The installed older same-ID record was still manual-review-required and retained its old conceptId; it was not edited. The new rubric is 47/48 and passes every mandatory gate. codeReviewed is N/A because no executable configuration snippet or endpoint test was supplied. Complete result returned inline without file writes, source/candidate changes, ledger promotion, browser use, nesting or readiness manipulation..
+- **dp800-direct-028** (verified; not-excluded): negative-wording, pronoun-review. Review notes: Actual independent PASS 3 of ONLY immutable dp800-direct-028 in .grounding\dp-expansion\direct\batch-04r1. I read candidates.json, the matching generation-output entry, its validation-metadata generation claims, the explicitly author-only candidate-evidence analysis, the objective map, frozen source manifest and registry, source-retrieval-index, and the actual technical-028.json. I independently re-derived the four outcomes from the raw source bodies: a errors, b returns the complete scalar, c returns SQL NULL, and d returns the root object. The author's claim mappings and PASS 2 approval were inputs to challenge, not correctness evidence. Literal positive contexts are provided for all four unchanged options. JSON parsing confirmed those illustrative inputs are valid, and a separately constructed JSON value had a 5,100-character string; neither check executes or simulates SQL Server. No SQL engine test was performed or claimed.
+
+The repository questionFingerprint helper independently produced 3014c582f8fe6aa432380a10c15e8b04e52d8a1754cc309fb40331bb3ba30378. It matches the exact candidate, generation-output entry and generation binding authored by copilot-dp800-direct-author at 2026-09-15T06:30:44.841Z. The actual technical file identifies dp800-technical-json-recovery at 2026-09-15T13:21:38.157Z on that same hash; its schema and source/option/time bindings also pass the existing attestation validator. This third context is neither that reviewer nor the author. objectiveFingerprint independently produced 8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191 for both the frozen and installed DP-800 maps. The raw dp-800-guide.json receipt was retrieved 2026-09-14T18:19:19.493Z and explicitly gives the March 12, 2026 outline. I read its current domains, weights and skills; the candidate maps to Design and develop database solutions (35-40%), Write advanced T-SQL code, and the named JSON-functions subskill. No outer version label was substituted for a map review.
+
+Each cited technical source has a direct training parent by named-API explicit-reference, not a documentation-to-documentation admission. The actual .grounding\dp-expansion\direct\expansion-docs\json-unit.json MCP body at 2026-09-15T05:45:14.019Z explicitly teaches JSON_VALUE, JSON_QUERY and OPENJSON. This is a reference to each exact API, not a claim that all three canonical article URLs appear as hyperlinks. The raw module-advanced.json receipt at 2026-09-14T22:04:32.840Z links 4-json-functions; the raw dp-800-training-design.json receipt at 2026-09-14T18:31:14.910Z links ../../modules/write-advanced-sql-code/. The saved credential preparation links at 2026-09-14T18:31:24.010Z and design-training-redirect.json at 2026-09-14T18:57:14.063Z connect the locale-neutral training path to its exact English canonical path. I inspected those receipts, checked raw MCP endpoint/tool/input/time and nonempty bodies, and obtained no validateSourceProvenance findings. validatedSupportingSourceIds admits all three cited articles under the catalog's unchanged guide-linked-official, three-pass-v1 policy. The training unit's unrelated aggregate availability and performance claims were not adopted. Source URLs, evidence paths, retrievedAt and lastReviewedAt are preserved exactly from the frozen manifest/index, not replaced by this review's time. No fresh retrieval or online availability test is implied.
+
+Duplicate screening included all 583 installed question records without status filtering: AI-103 30, AZ-104 30, DP-700 162, DP-800 27, GH-600 149, GH-300 155 and SC-200 30. It also included 114 records in all 18 local candidate-array files. All 17 generation outputs were checked for matching authored records in those screened arrays; there were no additional generation-only candidates. Across these stores there were 643 distinct content fingerprints. Target-specific duplicateFindings and scenarioDuplicateFindings returned no findings against distinct IDs. Broad JSON, scalar, text-length, truncation and parse terms selected 98 distinct snapshots for stem/concept inspection; I then read the complete relevant authored fields of the nearest comparisons. dp800-direct-027 requires choosing the correct envelope path for a deliberately short scalar, while this item needs the different API and max-length projection after an overlength failure. dp800-direct-029 repairs path casing, 030 requires AS JSON for a fragment, 033 preserves JSON structure during FOR JSON serialization, and 034 mutates an existing key to JSON null. Knowing those facts alone does not establish the overlength remedy. dp700-ingest-038 reparses a dynamic string into an inner object; fabric-029 reduces a pipeline response to a 4-MB transport boundary; dp700-monitor-029 concerns remote result-stream limits and request-property precedence; dp700-monitor-044 narrows a bounded identifier type while preserving formatting. These are not the same tested transformation or limit. Other screened JSON mentions concern serialization, hooks, templates, files, unrelated scalar variables or different APIs. The batch-04 same-ID predecessor has fingerprint 1eb1f628c8c9f269b34834b36ac016861e0040b87848d4f9917b85f90c2fe563; it is explicitly outside this attestation and is not treated as a second independent bank encounter.
+
+qualityFindings reported negative-wording and pronoun-review warnings. The output constraint and pronoun are understandable, but the longer correct option, easy whole-object distractor, narrow diagnosis and shared scalar/fragment teaching pattern warrant the three one-point deductions recorded in the independent rubric. Score 45/48 meets the unchanged 44/48 threshold with all four mandated critical criteria at 4, distractor evidence at 4 and no zero. This is a question-specific final attestation, not an attestation for any other item, a source refresh, ledger synchronization or promotion. The on-disk candidate and all prior snapshots remain untouched..
+- **dp800-direct-029** (verified; not-excluded): pronoun-review. Review notes: Independent PASS3 of immutable 029 only. Read the exact candidate, matching generation output/claims, current objective map, package policy, frozen manifest, registry/index and raw MCP evidence through the credential-linked design path and JSON unit. Independently recomputed both hashes and re-derived every option before checking technical-029.json's separate reviewer/time binding. Countercontexts preserve each option literally and state changed premises. Static review only; no SQL execution, candidate/source edits, ledger writes or promotion..
+- **dp800-direct-030** (verified; not-excluded): negative-wording, pronoun-review. Review notes: Independent PASS3 of immutable 030 only. Exact candidate/generation, March 12 objectives, package policy, manifest, provenance registry/index and raw MCP source were inspected; the credential-linked JSON unit establishes the source's named-API ancestry. Both hashes were independently recomputed. technical-030.json was checked for binding, chronology and separate identity, not inherited reasoning. Re-derived fragment, NULL, integer and memo outcomes with explicit positive countercontexts. No SQL execution, candidate/source edits, ledger writes or promotion..
+- **dp800-direct-031** (verified; not-excluded): pronoun-review. Review notes: Independent PASS3 of immutable 031 only. Read candidate/generation, exact current objectives, policy, frozen source manifest/registry/index and the raw MCP article, including the dotted-name Remarks and AS JSON requirements. Verified credential-linked training ancestry and independently computed both hashes. technical-031.json supplied only separately checked stage bindings, not inherited conclusions. Countercontexts identify input changes versus the different fragment query explicitly. No SQL execution, authored repair, source/ledger edits or promotion..
+- **dp800-direct-032** (verified; not-excluded): negative-wording, pronoun-review. Review notes: Independent PASS3 of immutable 032 only. Read exact candidate/generation, current objectives, strict policy, frozen manifest/registry/index and raw MCP evidence with its credential-linked training ancestry. Recomputed both hashes and independently re-derived token codes and the four selected properties before checking technical-032.json's separate stage binding. Explicit countercontexts keep each filter literal and change only the requested token class. No SQL execution, authored/source edits, ledger writes or promotion..
+- **dp800-direct-035** (verified; not-excluded): pronoun-review. Review notes: Independently derived string-valued attempt from the SQL declaration, not the existing JSON number or technical verdict. Numeric replacements and lax SQL NULL supply concrete positive alternatives for every distractor. Exact generation/objective/source bindings and review chronology were checked. Nearest type-discrimination content tests a different operation. Score 45/48 with weak fillers explicitly penalized. Static documentary review only; no SQL execution or candidate/source/ledger changes..
+- **dp800-direct-036** (manual-review-required; content-review): pronoun-review. Review notes: Independent static derivation supports b and contradicts all three alternatives with literal positive countercontexts. Actual quality review nevertheless scores 43/48: weak NULL fillers, append-word cueing, and limited explanation prevent approval. The true review-check flags record completed checks, not a passing rubric. Bindings and frozen source dates match. No candidate was repaired or promoted; any authored repair requires all three passes again. No SQL execution was claimed..
+- **dp800-direct-037** (verified; not-excluded): pronoun-review. Review notes: Independently derived the omitted-key object and each explicit-null/empty-string alternative from the raw constructor contract. The duplicate behavior of a and b is an editorial weakness, not ambiguity in key c. Exact hashes, named-API ancestry, and unchanged source dates bind this review. Score 44/48 after actual deductions for redundancy and limited depth. Static source reasoning only; no SQL execution, authored repairs, ledger edits, or promotion..
+- **dp800-direct-046** (verified; not-excluded): pronoun-review, scenario-constraints. Review notes: Independently reviewed the frozen batch-05 candidate, matching generation output, generation claims, objective map, source index, and .grounding\dp-expansion\direct\batch-05\technical-046.json. Recomputed both fingerprints; read raw guide, credential, course, training ancestry, and normalization evidence. Local arithmetic confirmed denominators 7, 5, and 4, not SQL execution. Literal countercontexts and full nearby authored items were checked separately from technical conclusions. The 46/48 rubric supports this review disposition without editing or promoting the candidate..
+- **dp800-direct-047** (verified; not-excluded): pronoun-review. Review notes: Read .grounding\dp-expansion\direct\batch-05\technical-047.json alongside the unchanged candidate, exact generation record, claims, current objective map, frozen source metadata/index, and actual MCP evidence. Independently checked every failure alternative and the complete credential-to-training-to-reference provenance. The current product's explicit earlier/latest distinction resolves outdated training generalizations. Duplicate diagnostics and nearby full-item comparisons found no same-fact replacement. This documentation-only review scores 44/48; no SQL execution, candidate promotion, or ledger change occurred..
+- **dp800-direct-048** (verified; not-excluded): pronoun-review. Review notes: Re-derived d from the frozen candidate and actual METRIC contract after reading .grounding\dp-expansion\direct\batch-05\technical-048.json, generation output/claims, exact map, source index, raw MCP receipts, and provenance ancestors. Independently recomputed content/objective hashes and checked literal alternative contexts. The approval is limited to compatibility, not DDL coexistence or optimizer selection. Full neighboring items and duplicate diagnostics remain distinct. Score: 45/48; no SQL execution, source renewal, ledger write, or promotion is asserted..
+- **dp800-direct-049** (manual-review-required; content-review): absolute-wording, pronoun-review. Review notes: Read .grounding\dp-expansion\direct\batch-05\technical-049.json, the exact candidate/generation/claims, objective map, source index, all three raw product receipts, and credential-linked provenance. Independently recomputed hashes and checked complete SQL alternatives against current grammar, aliases, ascending distance, and legacy behavior. No second answer or unsupported GA claim was found. Static documentation review is not SQL execution. The independently scored 43/48 quality failure supersedes technical approval; candidate, source files, and ledgers remain untouched..
 
 ## Sources and actual evidence dates
 
@@ -637,12 +706,31 @@ Verified entries marked credential-or-mode-gate are reviewed but unavailable, no
 | dp800-d3-maintenance: [Generate and maintain embeddings for SQL database workloads](https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/05-generate-maintain-embeddings-sql-database-workloads) | 1 / 1 / 1 | 2026-09-14T22:12:36.209Z | 2026-09-15T00:39:05.140Z | Change Tracking signals changed rows for background refresh; CDC captures detailed row changes; triggers add write-path work; Foundry model management is not database change detection. Native embedding syntax and CES availability are excluded. |
 | dp800-d3-hybrid: [Implement hybrid search and ranking](https://learn.microsoft.com/en-us/training/modules/design-implement-intelligent-search-with-sql/06-implement-hybrid-search-ranking) | 2 / 2 / 2 | 2026-09-14T22:12:36.423Z | 2026-09-15T00:39:05.140Z | Admitted: RRF sums reciprocal rank contributions and a full outer join can preserve either ranked list with missing contributions set to zero. Claims that SQL full-text ranking is BM25, un-ordered TOP examples, fixed optimal candidate counts and unconditional relevance improvements are excluded. |
 | dp800-d3-search-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/design-implement-intelligent-search-with-sql/09-summary) | 0 / 0 / 0 | 2026-09-14T22:12:36.796Z | 2026-09-15T00:39:05.140Z | The Additional reading list explicitly links the VECTOR_DISTANCE product reference. Index links establish provenance, not question verification. |
-| dp800-d3-vector-distance: [VECTOR_DISTANCE (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql) | 1 / 1 / 1 | 2026-09-14T22:23:50.656Z | 2026-09-15T00:39:05.140Z | For SQL Server 2025, VECTOR_DISTANCE computes exact distance and does not use a vector index. Cosine distance is ordered smaller-first for nearest results. Managed Instance update-policy and approximate-search prerequisites are not generalized. |
+| dp800-d3-vector-distance: [VECTOR_DISTANCE (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql) | 1 / 1 / 2 | 2026-09-14T22:23:50.656Z | 2026-09-15T00:39:05.140Z | For SQL Server 2025, VECTOR_DISTANCE computes exact distance and does not use a vector index. Cosine distance is ordered smaller-first for nearest results. Managed Instance update-policy and approximate-search prerequisites are not generalized. |
 | dp800-d3-rag-context: [Prepare retrieval context for augmentation](https://learn.microsoft.com/en-us/training/modules/design-implement-rag-with-sql/3-prepare-retrieval-context-augmentation) | 1 / 1 / 1 | 2026-09-14T22:12:36.482Z | 2026-09-15T00:39:05.140Z | FOR JSON PATH uses aliases to control nesting, with separate array-wrapper and root options. The unit's suggestion that JSON guarantees grounded model output is explicitly excluded. |
 | dp800-d3-rag-responses: [Generate and process RAG responses](https://learn.microsoft.com/en-us/training/modules/design-implement-rag-with-sql/5-generate-process-rag-responses) | 1 / 1 / 1 | 2026-09-14T22:12:36.371Z | 2026-09-15T00:39:05.140Z | For the explicitly supplied response shape, result.choices[0].message.content is a scalar extracted with JSON_VALUE, while JSON_QUERY handles objects/arrays. Model/version payload examples, retry-count guarantees and unspecified long-string behavior are excluded. |
 | dp800-d3-rag-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/design-implement-rag-with-sql/8-summary) | 0 / 0 / 0 | 2026-09-14T22:12:36.115Z | 2026-09-15T00:39:05.140Z | The summary directly references the official FOR JSON formatting article; that link is preserved as source ancestry. |
 | dp800-d3-for-json: [Format query results as JSON with FOR JSON](https://learn.microsoft.com/en-us/sql/relational-databases/json/format-query-results-as-json-with-for-json-sql-server) | 1 / 1 / 1 | 2026-09-14T22:23:50.609Z | 2026-09-15T00:39:05.140Z | FOR JSON PATH controls nested object structure; default array output differs from WITHOUT_ARRAY_WRAPPER and named ROOT options. This is formatting evidence, not a guarantee of language-model behavior. |
 | dp800-d2-project-build: [Create, build, and validate SQL database projects](https://learn.microsoft.com/en-us/training/modules/implement-cicd-sql-database-projects/02-create-build-validate-sql-database-projects) | 1 / 1 / 1 | 2026-09-14T22:34:58.083Z | 2026-09-15T02:57:51.174Z | Admitted as exact evidence that SqlPackage Publish applies a dacpac deployment, while Script and DeployReport preview artifacts. Unconditional idempotency, statements about generating only ALTER, and broad post-deployment behavior claims are excluded. |
+| dp800-d1-json-unit: [Process JSON data with built-in functions](https://learn.microsoft.com/en-us/training/modules/write-advanced-sql-code/4-json-functions) | 0 / 0 / 0 | 2026-09-15T05:45:14.019Z | 2026-09-15T06:30:44.832Z | Admitted as ancestry to the named JSON function overview. Questions rely on precise product contracts, not the unit's performance estimates or broad claims about new-feature availability. |
+| dp800-d1-json-columns-unit: [Manage JSON columns and indexes](https://learn.microsoft.com/en-us/training/modules/design-implement-database-objects/7-design-implement-json) | 0 / 0 / 0 | 2026-09-15T06:27:30.267Z | 2026-09-15T06:30:44.832Z | Direct training ancestry for the explicitly used JSON_MODIFY function. Its named nvarchar(max) update technique is relevant to advanced JSON queries; native-json status, performance comparisons and indexing guarantees are not adopted. |
+| dp800-d1-json-functions: [JSON functions (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/json-functions-transact-sql) | 0 / 0 / 0 | 2026-09-15T05:51:09.232Z | 2026-09-15T06:30:44.832Z | Finite reference index for the named JSON extraction, modification and construction functions. Each function article supplies exact syntax, limits and platform qualifications. |
+| dp800-d1-json-value: [JSON_VALUE (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/json-value-transact-sql) | 1 / 1 / 1 | 2026-09-15T05:42:02.233Z | 2026-09-15T06:30:44.832Z | Scalar extraction without RETURNING has an nvarchar(4000) limit: overlength values yield NULL in lax mode and an error in strict mode. OPENJSON supports larger scalar extraction. New native-json RETURNING syntax is excluded from SQL Server 2022 examples. |
+| dp800-d1-openjson: [OPENJSON (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql) | 5 / 5 / 5 | 2026-09-15T05:45:14.081Z | 2026-09-15T06:30:44.832Z | Documents explicit typed projections, case-sensitive BIN2 property matching, AS JSON with nvarchar(max), literal dotted column names and default-schema type codes. SQL Server examples explicitly select compatibility 160; the new compatibility override and Synapse-only identity extension are not generalized. |
+| dp800-d1-json-query: [JSON_QUERY (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/json-query-transact-sql) | 1 / 1 / 1 | 2026-09-15T05:45:14.018Z | 2026-09-15T06:30:44.832Z | Returns object/array fragments rather than scalar strings and marks valid JSON fragments so FOR JSON does not escape them as plain text. The SQL Server 2025 Preview ARRAY WRAPPER extension is excluded from these SQL Server 2022 questions. |
+| dp800-d1-json-modify: [JSON_MODIFY (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql) | 2 / 2 / 3 | 2026-09-15T05:45:14.141Z | 2026-09-15T06:30:44.832Z | For an existing key, SQL NULL deletes in lax mode and stores JSON null in strict mode. The new SQL value type determines string versus numeric output; append preserves an existing array and adds an element. Missing-parent insertion is not assumed to succeed. |
+| dp800-d1-json-object: [JSON_OBJECT (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/json-object-transact-sql) | 1 / 1 / 1 | 2026-09-15T05:51:09.231Z | 2026-09-15T06:30:44.832Z | NULL ON NULL is the object-construction default; ABSENT ON NULL omits keys whose SQL value is NULL without removing nonnull values. Examples demonstrate numeric JSON values. The new RETURNING json option is not used. |
+| dp800-d1-json-arrayagg: [JSON_ARRAYAGG (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/json-arrayagg-transact-sql) | 1 / 1 / 1 | 2026-09-15T05:51:09.222Z | 2026-09-15T06:30:44.832Z | The selected Azure SQL Database behavior is generally available: aggregate-local ORDER BY controls element order, NULL ON NULL retains null elements, and ABSENT ON NULL is the default. SQL Server 2025 availability is Preview and is not described as GA. |
+| dp800-d3-external-models-unit: [Create and manage external models in SQL](https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/03-create-manage-external-model-sql) | 0 / 0 / 0 | 2026-09-15T06:07:09.387Z | 2026-09-15T06:57:02.652Z | Establishes remote endpoint definitions versus actual inference, the named AI_GENERATE_EMBEDDINGS function and endpoint permission prerequisite. The broad claim that all external models run remotely is restricted to the authored remote-endpoint scenarios; local ONNX is not denied. |
+| dp800-d3-models-summary: [Summary](https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/08-summary) | 0 / 0 / 0 | 2026-09-15T06:07:09.176Z | 2026-09-15T06:57:02.652Z | Direct reference ancestry to CREATE EXTERNAL MODEL and the vector data type; summary text alone does not establish version-specific behavior. |
+| dp800-d3-create-external-model: [CREATE EXTERNAL MODEL (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql) | 0 / 0 / 0 | 2026-09-15T06:15:23.984Z | 2026-09-15T06:57:02.652Z | Selected remote-model facts cover model-specific EXECUTE versus management permissions, database ownership, HTTPS credential scope, and API parameters. Inconsistent sample hostnames, the overly broad schema-binding sentence and local ONNX execution are excluded; ONNX's separate Preview setting is labeled wherever used as an alternate context. |
+| dp800-d3-vector-type: [Vector data type](https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type) | 0 / 0 / 1 | 2026-09-15T06:15:23.984Z | 2026-09-15T06:57:02.652Z | Selected float32 facts: fixed declared dimensions, maximum 1998, binary storage with JSON interoperability, availability at all compatibility levels and native SqlClient 6.1/TDS 7.4 support. Preview float16 behavior is not treated as GA or used as a native-binary transport claim. |
+| dp800-d3-generate-embeddings: [AI_GENERATE_EMBEDDINGS (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql) | 0 / 0 / 0 | 2026-09-15T06:34:21.572Z | 2026-09-15T06:57:02.652Z | Use only documented model identifiers, per-call parameter precedence and external REST configuration prerequisites. The return-type paragraph conflicts with scalar-looking examples, so these questions make no scalar-versus-table return-type claim and do not depend on that discrepancy. |
+| dp800-d3-prepare-vectors-unit: [Prepare SQL for vector search](https://learn.microsoft.com/en-us/training/modules/design-implement-intelligent-search-with-sql/04-prepare-sql-vector-search) | 0 / 0 / 0 | 2026-09-15T06:15:23.833Z | 2026-09-15T06:57:02.652Z | The declared vector dimension must match the configured embedding output. Its fixed dataset-size performance guideline and historical read-only/post-filtering statements are not treated as universal current behavior; the current product reference controls index-version distinctions. |
+| dp800-d3-vector-patterns-unit: [Implement vector search query patterns](https://learn.microsoft.com/en-us/training/modules/design-implement-intelligent-search-with-sql/05-implement-vector-search-query-patterns) | 0 / 0 / 0 | 2026-09-15T06:34:21.472Z | 2026-09-15T06:57:02.652Z | Direct named-function ancestry for VECTOR_NORMALIZE and VECTORPROPERTY. Do not adopt its suggestion that normalizing unrelated model spaces makes them comparable, or its blanket post-filtering statement; current product qualifications apply. |
+| dp800-d3-vector-normalize: [VECTOR_NORMALIZE (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-normalize-transact-sql) | 1 / 1 / 1 | 2026-09-15T06:34:21.491Z | 2026-09-15T06:57:02.652Z | Defines norm1 as sum of absolute components, norm2 as Euclidean length, and norminf as maximum absolute component. Normalization preserves direction under the chosen norm; no claim is made that it aligns incompatible embedding spaces. |
+| dp800-d3-vector-search: [VECTOR_SEARCH (Transact-SQL) (Preview)](https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql) | 2 / 2 / 3 | 2026-09-15T06:34:21.531Z | 2026-09-15T06:57:02.652Z | Preview and region/index-version qualified. Earlier indexes use deprecated TOP_N and post-filter; latest indexes use SELECT TOP WITH APPROXIMATE, iterative filtering and real-time DML maintenance. Compatible metric/column is necessary for ANN; no compatible index yields warning and kNN fallback. Latest index support is not generalized to SQL Server 2025. |
+| dp800-d3-generate-chunks: [AI_GENERATE_CHUNKS (Transact-SQL)](https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-chunks-transact-sql) | 0 / 0 / 0 | 2026-09-15T06:42:29.174Z | 2026-09-15T06:57:02.652Z | Requires compatibility at least 170. FIXED size is in characters; overlap is an integer percentage from 0 through 50. Optional chunk_set_id groups returned source chunks, while chunk_order is the one-based ordinal and chunk_offset is a character position. No global persistent identity or token-count guarantee is inferred. |
 
 ## Freshness and review limitations
 

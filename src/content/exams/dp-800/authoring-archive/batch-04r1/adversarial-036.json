@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "59b6cb614ed0e0bd27cb59118d18059bf35e7e39faf886f3e942c06028f78bbf",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "manual-review-required",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "Assigning the scalar string at stages could extend its existing array.",
+        "whyIncorrectInContext": "The ordinary property update derives {\"stages\":\"verify\"}, replacing the array rather than retaining either original element.",
+        "couldBeCorrectWhen": "The unchanged expression fits a replacement contract requiring {\"stages\":\"verify\"}, representing one current stage instead of a collection.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "The existing-path/non-NULL matrix row updates the addressed value; nvarchar newValue becomes a string. Appending requires the separately documented append modifier."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "The append modifier adds verify after the two existing stages.",
+        "whyIncorrectInContext": "Not incorrect: this derives {\"stages\":[\"receive\",\"validate\",\"verify\"]}, preserving the requested array sequence.",
+        "couldBeCorrectWhen": "The unchanged expression is correct when the known array must become {\"stages\":[\"receive\",\"validate\",\"verify\"]} by adding the final string.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "Arguments/path defines append as adding the new value to the referenced array; Example A demonstrates preservation of existing array elements followed by the added string."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "Strict SQL NULL could preserve the existing array while extending it.",
+        "whyIncorrectInContext": "The existing stages member becomes JSON null, deriving {\"stages\":null}; the array and the requested new string are not retained.",
+        "couldBeCorrectWhen": "The unchanged expression fits a clearing contract requiring {\"stages\":null}, retaining the member name but not its former collection.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "The Remarks NULL/existing-path/strict row sets the property's value to null. That is a different operation from appending an element."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "Lax SQL NULL could preserve the stages array while adding a stage.",
+        "whyIncorrectInContext": "The existing stages member is deleted, deriving {}; neither the array nor a final verify element survives.",
+        "couldBeCorrectWhen": "The unchanged expression fits a removal request whose complete required document is {}, because stages is the only original member.",
+        "sourceIds": ["dp800-d1-json-modify"],
+        "evidenceSummary": "The Remarks NULL/existing-path/lax row deletes the property. It does not append a null element or perform strict-mode null assignment."
+      }
+    ],
+    "challenges": {
+      "scope": "The function returns a JSON text document on SQL Server 2022. Array preservation is a document-shape requirement, not a claim about storage-engine in-place updates.",
+      "plan": "No service plan, capacity, edition-specific optimization, or resource tier distinguishes these local-value operations.",
+      "role": "Only a declared variable is referenced. No table authorization, external identity, or ownership decision is required to derive the returned document.",
+      "preconditions": "The supplied JSON is valid and stages is an existing two-element array. The review does not infer behavior for an absent path, scalar container, or malformed document.",
+      "featureStatus": "The established JSON_MODIFY append syntax is covered by the SQL Server 2016-and-later source. No native-json modify method or preview feature is used.",
+      "sourceChanges": "Read the indexed raw append contract, its example, the strict/lax matrix, and the immediate training unit's named JSON_MODIFY call. Frozen source dates and exact bindings remain unchanged.",
+      "stemSufficiency": "The entire array, both existing element values, their order, the final string, and the preservation requirement are explicit. Key b is technically unique.",
+      "explanationBounds": "The explanation correctly limits itself to an existing array and distinguishes normal assignment from append, but provides little worked comparison beyond restating the selected modifier.",
+      "reasoningDepth": "Although labeled beginner, much of the item can be answered by matching add-as-final-element to the word append. Two NULL alternatives add little authentic difficulty.",
+      "answerClues": "Only two options supply verify at all. After discarding both NULL choices, the modifier spelling strongly cues b; c and d repeat the strict-null/deletion distinction already tested by 034."
+    },
+    "qualityNotes": "Key b survives the adversarial technical challenge, but the 43/48 rubric fails the unchanged threshold. Two NULL alternatives are visibly unsuitable for adding verify, and the remaining distinction is strongly cued by append. The null distractors recycle 034's principal contrast. Current/pending screening found no blocking same-key duplicate; that does not erase weak construction, minimal explanatory depth, or the need for editorial repair."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-036",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "questionFingerprint": "59b6cb614ed0e0bd27cb59118d18059bf35e7e39faf886f3e942c06028f78bbf",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "verdict": "manual-review-required",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-json-modify",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/json-modify-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\json-modify.json",
+        "retrievedAt": "2026-09-15T05:45:14.141Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "JSON_MODIFY (Transact-SQL), Arguments/path and Example A, documents appending a string to an existing array while retaining prior elements. Arguments/newValue and the Remarks matrix distinguish ordinary string replacement, strict SQL NULL assignment, and lax SQL NULL deletion. All four proposed operations have supported outcomes; technical evidence does not establish adequate distractor quality."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: an ordinary update of the existing stages property replaces its value with the supplied nvarchar text. The derived document is {\"stages\":\"verify\"}, so neither original array element remains in that property. This exact option is valid for a different contract that replaces the collection with a single current-stage string. The existing-path/non-NULL matrix row supports that alternative, but it cannot satisfy array preservation.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "Supported: append addresses the existing stages array and adds the new string after its current elements, deriving {\"stages\":[\"receive\",\"validate\",\"verify\"]}. The path argument description and the documented append example establish this behavior. The literal input already supplies an array, so the question does not depend on creating a missing container. This is the correct operation for extending that exact sequence without substituting a scalar or null.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: the stages path exists, and strict mode with SQL NULL sets its value to JSON null. The derived document is {\"stages\":null}, not an extended array. This unchanged expression is useful when the contract requires retaining the stages member while explicitly clearing its value. The source's NULL/existing-path matrix supports that countercontext; neither the retained member name nor strictness preserves the former array contents.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Contradicted: lax mode with SQL NULL deletes the existing stages member, giving {} for the shown one-property document. The same expression is correct for a removal request whose target is an empty object. It does not append a null element or retain the array under a null value. Those distinctions follow the documented lax deletion rule and the separate strict-null and append behaviors.",
+        "sourceIds": ["dp800-d1-json-modify"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent static derivation supports b and contradicts all three alternatives with literal positive countercontexts. Actual quality review nevertheless scores 43/48: weak NULL fillers, append-word cueing, and limited explanation prevent approval. The true review-check flags record completed checks, not a passing rubric. Bindings and frozen source dates match. No candidate was repaired or promoted; any authored repair requires all three passes again. No SQL execution was claimed.",
+    "confidenceReason": "High confidence in the technical key and equally clear evidence of inadequate constructed-option quality. The nonverified verdict is caused by the independently scored rubric, not uncertainty about append semantics or an inherited technical-review conclusion."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mutation",
+    "reviewedAt": "2026-09-15T15:36:40.486Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 2,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 3,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "43/48, below 44. Distractor plausibility is 2 because both NULL choices are weak competitors to adding verify. Difficulty authenticity is 3 for strong keyword cueing even at beginner level; explanation quality is 3 for little worked transformation; originality is 3 for a textbook append setup recycling 034's null contrast. Other criteria merit 4 from complete input and direct evidence. Technical correctness does not justify inflating these scores."
+  }
+}

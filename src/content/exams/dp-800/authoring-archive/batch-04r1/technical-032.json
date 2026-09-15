@@ -1,0 +1,72 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-032",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-extraction",
+    "questionFingerprint": "7848d67e57e4e0be963ee1f66eee9b494e084a6fc852f3d723e2862c91009139",
+    "reviewedAt": "2026-09-15T13:44:28.967Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently inspected the actual OPENJSON (Transact-SQL) MCP body. Return value defines the default schema as key nvarchar(4000), value nvarchar(max) and type int, with type codes 0=null, 1=string, 2=number, 3=true/false, 4=array and 5=object. The worked jsonExpression table independently demonstrates string, number, Boolean and explicit-null rows with those codes. Only first-level properties are returned in this default object scan. The article expressly states that the automatic key/value/type columns are not available when an explicit WITH schema replaces the default schema. Therefore a textual value such as 8 does not by itself identify the original JSON token kind; the type discriminator is the relevant column. The ordinary function is applicable to SQL Server 2016 and later and compatibility 130 or higher, which includes the supplied SQL Server 2022/160 scope without any Preview feature."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "WHERE [type] = 1 selects the label property, whose JSON value is the quoted string \"8\". That row's returned value is text 8, but its original token is a string, explicitly excluded by the stem. The primary default-schema type table assigns 1 to string, not number. Literal positive countercontext using the same input: when a validator needs string-valued properties, SELECT [key], [value] FROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}') WHERE [type] = 1; returns the desired label/8 row. The proposed filter is valid and useful for that different classification requirement.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "The default-schema type column is an integer discriminator, and documented code 2 denotes a JSON number. WHERE [type] = 2 therefore selects only count, whose token is the unquoted number 8, while excluding label even though its returned value text also looks like 8. Literal confirming alternative: SELECT [key], [value] FROM OPENJSON(N'{\"count\":9,\"label\":\"9\"}') WHERE [type] = 2; selects count/9 and not label/9. The primary type table and numeric rows in its jsonExpression example support this distinction independently of the value column's nvarchar(max) SQL type.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "WHERE [type] = 3 selects enabled, which contains JSON true, rather than the numeric count property. The source assigns 3 to true/false; it does not classify JSON Boolean tokens as numbers just because another language might convert booleans to 0 or 1. Literal positive countercontext: for a Boolean-token validator, SELECT [key], [value] FROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}') WHERE [type] = 3; returns the intended enabled/true row. The primary article's type table and separate BooleanTrue/BooleanFalse result rows directly support that legitimate alternative.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "WHERE [type] = 0 selects the existing property named missing, whose JSON value is explicitly null, not the count number. The returned value for that row is SQL NULL, but the row exists and its discriminator is 0. Literal positive countercontext: when the goal is to enumerate explicitly null-valued properties, SELECT [key], [value] FROM OPENJSON(N'{\"count\":8,\"label\":\"8\",\"enabled\":true,\"missing\":null}') WHERE [type] = 0; returns missing/SQL NULL. The documented type table and Null_value example support this use. It is not a test for absent properties, which have no corresponding first-level row.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent technical PASS 2 of immutable dp800-direct-032. I inspected the complete candidate, the author-only candidate-evidence alternatives, generation-output and the generation binding before independently deriving the discriminator results from the actual source table. Repository questionFingerprint recomputation agrees for the raw and schema-parsed candidate and both generation representations. The author is copilot-dp800-direct-author, request dp800-direct-04-json-r1, with generatedAt/lastValidatedAt 2026-09-15T06:30:44.841Z. The author's metadata is not treated as proof, and no candidate field was changed.\n\nI read .grounding\\dp-expansion\\dp-800-guide.json's actual MCP body, retrieved 2026-09-14T18:19:19.493Z, and compared its current March 12, 2026 outline with objectives.json. The exact mapping is Design and develop database solutions (35-40%) / Write advanced T-SQL code / the JSON-functions subskill naming OPENJSON. The other published objective domains, weights and skills were also checked. The repository objectiveFingerprint helper produces the same recorded hash for the frozen and installed DP-800 maps. Actual credential and course bodies in dp-800-credential.json and dp-800-course.json were read as context, with retrievals 2026-09-14T18:19:19.510Z and 2026-09-14T18:19:19.466Z; neither is used as a substitute for the token-type contract.\n\nThe source's training ancestry was checked at every step. The credential's actual rendered locale-neutral path link is in .grounding\\dp-expansion\\dp-800-rendered-training-links.json at 2026-09-14T18:31:24.010Z, with the same path's canonical English redirect in .grounding\\dp-expansion\\design-training-redirect.json at 2026-09-14T18:57:14.063Z. The raw .grounding\\dp-expansion\\dp-800-training-design.json MCP body at 2026-09-14T18:31:14.910Z links ../../modules/write-advanced-sql-code/. The raw module .grounding\\dp-expansion\\authors\\design\\raw\\module-advanced.json at 2026-09-14T22:04:32.840Z links 4-json-functions. The raw child .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json at 2026-09-15T05:45:14.019Z explicitly names OPENJSON and explains default key/value/type output, including the same six type codes. Thus the registry's immediate explicit-reference is the actual named API in training followed by the exact primary function article. It is not a fabricated URL link or a doc-to-doc provenance hop. The unit's unrelated claims about newer functions and performance are excluded from this review's evidence.\n\nThe cited receipt was checked for its real Microsoft Learn MCP endpoint, microsoft_docs_fetch tool, input URL, retrieval timestamp and nonempty text. I read the actual Return value and jsonExpression sections, not a generated source summary. The source ID, canonical URL, frozen retrieval/review dates and relative raw evidence path agree across source-registry.json, sources.json and source-retrieval-index.json. The source review stays 2026-09-15T06:30:44.832Z and retrieval stays 2026-09-15T05:45:14.081Z. validateSourceProvenance returned no findings and validatedSupportingSourceIds admitted the exact OPENJSON source under the current catalog. No live network availability test or new retrieval is claimed.\n\nDocumentary evaluation of the shown object gives four first-level rows: count has type 2 and value text 8; label has type 1 and value text 8; enabled has type 3 and value text true; missing has type 0 and SQL NULL. Every candidate WHERE predicate is an ordinary comparison with the available int [type] column. It may be used to filter the FROM rowset even though SELECT returns only [key] and [value]; there is no explicit WITH schema hiding it. Bracketed column names, the Unicode JSON literal, the Boolean/null tokens and numeric constants are consistent with the primary example and rowset contract. The explanation's distinction between SQL return type and JSON token type is correct, and it does not confuse explicit null with an absent path. Compatibility 160 exceeds the ordinary 130 requirement; no table privileges, native-json data type, SQL Server 2025 extension or Preview capability is needed. No tenant or SQL execution was performed. All alternate queries are literal documentary examples, not invented execution receipts.\n\nAll 583 installed records, all 11 current JSON candidates and all 14 new AI candidates were included in duplicateFindings and scenarioDuplicateFindings: 608 distinct IDs and no finding involving these four targets. Bounded manual review additionally screened 20 installed JSON/collation-related stems, the nearest full code/choice sets and both new cohorts. dp800-direct-035 is the closest type-related question: it predicts JSON_MODIFY serialization from a SQL nvarchar argument, whereas 032 classifies an already supplied JSON token through OPENJSON's default-schema discriminator. The shared number/string distinction is disclosed, but the API contract and required operation are different. gh300-c-015 preserves numeric counts while requesting a missing fixture edge case; it does not test token-code semantics. dp700-ingest-038 reparses encoded JSON text, and fabric-035 combines a KQL prefilter with an exact property predicate. Other OPENJSON candidates test casing, literal dots or scalar/fragment projection. New AI rows concern vectors, model parameters and chunk metadata rather than JSON token codes. These comparisons support keep-distinct on the inspected dimensions, not an unbounded semantic originality guarantee.\n\nqualityFindings reported negative-wording and pronoun-review. 'Quoted numeric strings must not qualify' is a necessary positive numeric-token selection boundary, not a reversed-answer trick; 'this default-schema OPENJSON result' clearly denotes the shown query. The four WHERE options differ only in the documented discriminator value, so there is no grammar, length or implausible-syntax clue. The supplied numeric/string pair gives the discriminator a concrete purpose, but the cognitive demand remains simple lookup/application of a type code. The existing beginner/concept-recall labels are honest rather than inflated to applied or advanced difficulty. The count/label/enabled/missing fixture is an original compact application, not an assessment excerpt. This verified disposition applies only to the technical pass. Candidates, source evidence, 028's completed review and all ledgers remain untouched; no adversarial record, rubric or gameplay authorization is added.",
+    "confidenceReason": "The actual primary default-schema contract and worked result table directly assign all four relevant token codes, making b uniquely correct for an unquoted number while each other filter has a documented, literal positive use. Exact content/objective bindings, source snapshots and named-API training ancestry all match. Duplicate and construction checks were performed with related number/string questions explicitly distinguished, and the beginner label accurately reflects the demand. This is documentary technical confidence only, not runtime execution or final three-pass approval."
+  }
+}

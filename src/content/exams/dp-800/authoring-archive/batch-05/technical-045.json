@@ -1,0 +1,72 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-045",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-models-recovery",
+    "questionFingerprint": "00b884f479cd63068e06663c4d926d4d6ced64ee9ea0b21b77f3eb11f09501ea",
+    "reviewedAt": "2026-09-15T15:11:13.672Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d3-vector-type",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\vector-type.json",
+        "retrievedAt": "2026-09-15T06:15:23.984Z",
+        "lastReviewedAt": "2026-09-15T06:57:02.652Z",
+        "supportingSummary": "Independently read the actual Vector data type receipt, including introduction, Compatibility, Native Driver Support, the full .NET examples and limitations. Native vectors are stored in optimized binary form; unsupported clients receive a backward-compatible varchar(max) JSON-array representation. Native support requires TDS 7.4 or higher plus an updated driver. The article names Microsoft.Data.SqlClient 6.1.0 as introducing SqlVector, explicitly requires 6.1.0 or later in the .NET section, and shows SqlVector<float> and reader.GetSqlVector<float>. A separate note/example documents JsonSerializer-based array handling with older .NET drivers. Conversion to/from nvarchar is documented, but it remains text output/storage. float16 is separately Preview and currently transported as varchar(max) JSON rather than native binary; the stem explicitly excludes it. The sp_describe_first_result_set metadata limitation is not a guarantee that every ORM or generic getter becomes native after an upgrade."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "Casting the selected vector to nvarchar(max) explicitly asks SQL to return its text representation. It cannot supply the requested native driver SqlVector value, regardless of whether the client can parse the text. Literal positive countercontext: an export or consumer intentionally wants the JSON-array string for an existing native vector without changing its stored type. Casting the selected value to nvarchar(max) before returning it is then a documented conversion. The source's introduction expressly allows vector-to-nvarchar conversion; this is a representation choice, not a driver-capability upgrade. No CAST was executed in this review.",
+        "sourceIds": [
+          "dp800-d3-vector-type"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "supported",
+        "rationale": "Microsoft.Data.SqlClient 6.1.0 introduces the native SqlVector support documented for .NET, and the .NET section requires that version or later. The stem already supplies SQL Server 2025, TDS 7.4 and float32 vectors, so an updated supporting driver addresses the missing client capability. Literal confirming context: use that driver with the stated supported connection and its native read API, as the source demonstrates with reader.GetSqlVector<float> and SqlVector<float>. This does not promise that every old getter, ORM metadata path or manually serialized projection becomes native automatically; it identifies the documented driver capability the team wants.",
+        "sourceIds": [
+          "dp800-d3-vector-type"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "Keeping the older client and parsing its returned JSON array uses the backward-compatible text path rather than obtaining a native SqlVector value through the driver. Literal positive countercontext: a legacy .NET application must keep its older client and is content to receive JSON-array strings and deserialize them into ordinary application float arrays. The actual source explicitly recommends this compatibility approach and demonstrates JsonSerializer.Deserialize<float[]> on a returned string. That is valid interoperability, but it does not meet the current requirement for the newer native vector driver API.",
+        "sourceIds": [
+          "dp800-d3-vector-type"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "Replacing the VECTOR column with an nvarchar(max) JSON-text column changes the database representation to text; it does not add native vector support to the old driver and removes the native storage contract. Literal positive countercontext: a deliberate schema/interoperability migration requires persisted serialized JSON arrays and no longer requires native vector storage. Replacing the vector column with a text column containing the converted arrays can satisfy that different representation contract. The source explicitly documents optimized binary native storage, JSON-array representation and conversion to nvarchar, which substantiate that distinction. This is not a claim that one particular ALTER COLUMN statement is supported, that native vector capabilities survive the replacement, or that such a migration was executed.",
+        "sourceIds": [
+          "dp800-d3-vector-type"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Fresh independent technical PASS 2 of immutable dp800-direct-045 by dp800-technical-models-recovery, distinct from copilot-dp800-direct-author. I re-read the exact candidate and generation-output copy, generation-stage claims and author-only option evidence, frozen objectives, source manifest, source-registry branch and source-retrieval-index.json. The freshly calculated questionFingerprint matched raw/parsed candidates, generation output and generation metadata at 00b884f479cd63068e06663c4d926d4d6ced64ee9ea0b21b77f3eb11f09501ea. The current objective hash matched both frozen and installed DP-800 maps. The actual dp-800-guide.json MCP receipt retrieved 2026-09-14T18:19:19.493Z explicitly establishes the March 12, 2026 outline and the native-vector design subskill in Design and implement intelligent search, within the 25-30% AI domain. The captured credential and course were also re-read. No outer version label or source-review timestamp was renewed.\n\nThe sole sourceReview exactly preserves the frozen URL, retrieval timestamp, 2026-09-15T06:57:02.652Z source-review snapshot and relative raw receipt path. The actual decoded vector-type.json has the matching microsoft_docs_fetch input URL, endpoint https://learn.microsoft.com/api/mcp, retrieval time and successful nonempty body. Its immediate parent is .grounding\\dp-expansion\\direct\\expansion-docs\\models-summary.json, whose actual 2026-09-15T06:07:09.176Z training body directly links Vector data type. The actual models-module.json index at 2026-09-14T22:06:21.049Z links that summary, and dp-800-training-ai.json at 2026-09-14T18:31:14.994Z links the module. The saved rendered credential preparation links at 2026-09-14T18:31:24.010Z and ai-training-redirect.json at 2026-09-14T18:57:14.033Z bind the precise training-root target and English canonical URL. validateSourceProvenance returned no findings under the current catalog allowlist, and validatedSupportingSourceIds admitted this source. This is direct training-to-document ancestry, not documentation-to-documentation traversal or official-host approval.\n\nIndependent derivation gives b. The compatibility section requires both an updated driver and TDS 7.4 or higher; the .NET section specifically states Microsoft.Data.SqlClient 6.1.0 or later and illustrates the native SqlVector<float> read path. The stem fixes the server and TDS versions and excludes float16, so the Preview float16 JSON-transport limitation is not imported into the float32 answer. Older-client JSON exposure is a transport compatibility representation, not evidence that a native VECTOR column is physically stored as text. The explanation and each alternative maintain that distinction. A return-value CAST, manual JSON deserialization and a text-column replacement each have a literal documented representation/interoperability purpose, but none adds native vector capability to the older driver.\n\nThe native driver example was inspected, including GetSqlVector<float>; no C# build, SqlClient installation, SQL query or data migration was performed. The upgrade answer is about the available native API, not a promise that all application access code needs no adaptation. The source's metadata-discovery limitation involving sp_describe_first_result_set remains a limitation rather than being erased by the answer. No such metadata-based client path is specified by the stem. The question contains no executable code snippet and makes no SQL embedding-function return-type claim; the unrelated AI_GENERATE_EMBEDDINGS documentation inconsistency therefore does not affect it.\n\nDuplicate/construction comparison included all 583 installed records across seven banks plus all 18 candidate files under .grounding\\dp-expansion (114 occurrences, 643 distinct questionId/authored-hash comparison records after grouping exact copies and retaining revisions). duplicateFindings and scenarioDuplicateFindings returned no target finding. Full comparison with pending 050 identified a deliberately different troubleshooting layer: 050 diagnoses AI_GENERATE_CHUNKS name resolution through database compatibility, with a client upgrade as an inapplicable alternative, whereas 045 diagnoses native value transport on an already supported connection. Pending 044 fixes column dimensions, 046 normalizes a mathematical vector and 049 selects latest-index query syntax; none tests the .NET capability boundary. Installed 013's Always Encrypted-enabled driver is a different equality/encryption contract, and installed 027 extracts a scalar from a JSON response rather than selecting native transport. These are meaningful fact differences, not identifier-based waivers.\n\nqualityFindings emitted no target warning. The four actions are plausible choices for a team observing JSON values: preserve native storage and upgrade capability, explicitly request text, parse compatibility text, or migrate stored representation. Only one targets the requested native driver capability. Intermediate/troubleshooting is defensible because the learner must separate server storage, transport negotiation, client API version and Preview precision limitations. The 6.1.0 threshold is a documented current-source fact, not a claimed universal version rule for every SQL driver. This verified verdict records PASS 2 only; no candidate/source edits, rubric, adversarial review, ledger attestation or gameplay promotion were made.",
+    "confidenceReason": "The actual Native Driver Support and .NET sections jointly establish the SqlClient 6.1.0-or-later and TDS 7.4 prerequisites, and the source explicitly distinguishes native float32 values from older-client JSON and Preview float16 transport. Every literal alternative has a supported text/interoperability context but misses the stated capability goal. Exact source/objective/generation bindings and current-bank/pending-cohort comparisons passed. No SQL/.NET execution, installation or final three-pass approval is claimed."
+  }
+}

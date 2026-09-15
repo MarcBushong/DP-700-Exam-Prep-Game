@@ -1,0 +1,139 @@
+{
+  "adversarial": {
+    "questionFingerprint": "db67fe5022c12ff47b46e06089ed40bb5059a1b395b65bbbf792f9b0be3020f5",
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "verdict": "verified",
+    "optionChallenges": [
+      {
+        "choiceId": "a",
+        "claimRepresented": "AS JSON with an nvarchar(max) column returns the complete nested detail object rather than a scalar field.",
+        "whyIncorrectInContext": "This is supported, not incorrect. The path selects an existing object, the AS JSON flag requests a fragment, and nvarchar(max) satisfies that flag's required SQL type. Both items and memo remain within the returned object.",
+        "couldBeCorrectWhen": "For the supplied input, SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail' AS JSON); returns the detail fragment {\"items\":2,\"memo\":\"ship\"}. With N'{\"detail\":{\"items\":0,\"memo\":\"hold\"}}', the same projection preserves that different complete object.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "The type and AS JSON sections require nvarchar(max) for fragment projection and distinguish object/array extraction from scalar extraction. The order-object example returns a complete nested object alongside separately projected scalar fields."
+      },
+      {
+        "choiceId": "b",
+        "claimRepresented": "An nvarchar(max) output declaration alone makes ordinary OPENJSON projection return the selected object.",
+        "whyIncorrectInContext": "Without AS JSON, this remains scalar extraction even though the SQL text type has maximum capacity. The selected detail is an object, so default lax mode returns NULL rather than its serialized fragment.",
+        "couldBeCorrectWhen": "For @payload = N'{\"detail\":\"ready\"}', SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail'); returns the scalar text ready. The option is unchanged; only a string-valued detail and a scalar-text requirement make it appropriate.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "AS JSON explicitly changes fragment-versus-scalar handling. Its absence selects scalar values, while selecting an object without the flag yields NULL in lax mode. The declared SQL text length does not replace that documented value-kind distinction."
+      },
+      {
+        "choiceId": "c",
+        "claimRepresented": "Projecting the items member as an integer preserves the entire detail object required for later processing.",
+        "whyIncorrectInContext": "The exact path reaches only the number 2. Its SQL output type is int, not the required nvarchar(max), and memo is omitted. Keeping the alias detail does not retain the enclosing object's structure.",
+        "couldBeCorrectWhen": "On the original @payload, SELECT detail FROM OPENJSON(@payload) WITH (detail int '$.detail.items'); returns integer 2. This unchanged option is correct for a consumer needing only the typed item count, not the complete detail document.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "column_path identifies the value supplying a column, while type specifies its SQL result type. The typed-schema example separately extracts a nested quantity as INT and a whole order as AS JSON, demonstrating precisely this scalar-versus-fragment boundary."
+      },
+      {
+        "choiceId": "d",
+        "claimRepresented": "Returning the memo text as nvarchar(max) is equivalent to retaining the complete detail object.",
+        "whyIncorrectInContext": "This selects the scalar ship, not the object containing both memo and items. Correct SQL text capacity and the output alias do not restore fields excluded by the narrower JSON path.",
+        "couldBeCorrectWhen": "Using the supplied @payload, SELECT detail FROM OPENJSON(@payload) WITH (detail nvarchar(max) '$.detail.memo'); returns ship. It is valid when the downstream contract requests only memo text. That changes the whole-object requirement, not the literal option.",
+        "sourceIds": ["dp800-d1-openjson"],
+        "evidenceSummary": "Explicit column paths override property selection, and projection without AS JSON extracts scalars. The article's mixed scalar/fragment example confirms that a nested scalar path returns that member rather than its enclosing object."
+      }
+    ],
+    "challenges": {
+      "scope": "The operation projects an existing nested JSON object into one SQL column. It neither serializes a relational result with FOR JSON nor flattens the object's members into separate output columns.",
+      "plan": "Compatibility 160 on SQL Server 2022 meets the documented OPENJSON baseline. No service plan, database-scoped compatibility override or platform-specific extension is necessary for this explicit schema.",
+      "role": "The snippet reads a declared variable and creates no persistent objects. Calling it an ingestion procedure does not introduce an unstated ownership, table permission or external-identity dependency into the shown SELECT.",
+      "preconditions": "The literal is valid JSON; detail is an object with integer items and string memo. Its casing exactly matches the paths. AS JSON's nvarchar(max) prerequisite is present only in the fragment-capable answer, and no strict path mode is specified.",
+      "featureStatus": "The applied OPENJSON typed-schema and AS JSON contracts are established SQL Server 2016-and-later functionality. No Preview JSON constructor, native json storage requirement or SQL Server 2025 syntax is assumed.",
+      "sourceChanges": "The raw indexed MCP receipt and frozen source dates match. I used its type, AS JSON and return-schema sections directly. The training unit supplies provenance; its broader statements about newer functions are not evidence of their availability in SQL Server 2022.",
+      "stemSufficiency": "The complete object, required output SQL type, nonflattening constraint, platform and compatibility are explicit. Treating detail as an encoded string, requesting only a child field or accepting NULL would change these premises.",
+      "explanationBounds": "The explanation correctly requires both a suitable SQL type and fragment extraction. It does not claim byte-for-byte formatting, performance improvement or automatic recursive flattening. Input and countercontext outcomes were reviewed statically, not executed on SQL Server.",
+      "reasoningDepth": "The learner must distinguish SQL text capacity from JSON value kind, but choosing one flag resolves the task. This is a bounded lower-intermediate implementation decision, meriting difficulty authenticity 3 rather than a broad implementation claim.",
+      "answerClues": "The integer and memo-only choices are readily eliminated by the explicit whole-object contract, so distractor plausibility is 3. The longer correct definition reflects real syntax rather than explanatory padding. Negative wording states an output constraint; the pronoun refers clearly to the procedure."
+    },
+    "qualityNotes": "45/48 with 3s for plausibility, difficulty and originality. Across 584 installed questions and 48 pending snapshots/37 new IDs, no target-specific deterministic duplicate finding appeared. Full nearest comparisons included 027/028, dp700-ingest-038 and pending 033. Scalar-versus-fragment reasoning overlaps, but AS JSON in an OPENJSON schema is not long-scalar recovery, reparsing encoded KQL text or marking a fragment for FOR JSON serialization. This distinction supports retaining the item without perfect originality credit."
+  },
+  "finalReview": {
+    "questionId": "dp800-direct-030",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "questionFingerprint": "db67fe5022c12ff47b46e06089ed40bb5059a1b395b65bbbf792f9b0be3020f5",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "OPENJSON (Transact-SQL): the independently read type and AS JSON sections require nvarchar(max) for object/array fragments and distinguish that operation from ordinary scalar projection. The mixed order example projects an entire object separately from typed nested fields. Default lax handling and the explicit return-schema contract establish NULL, integer 2 and memo text as the respective wrong outputs. Compatibility 160 satisfies the documented baseline."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "supported",
+        "rationale": "The path selects the existing detail object, and AS JSON requests its fragment rather than a scalar member. The declared nvarchar(max) also meets the flag's explicit type requirement. Thus the result retains both items and memo in one column. The unchanged definition likewise preserves {\"items\":0,\"memo\":\"hold\"} from N'{\"detail\":{\"items\":0,\"memo\":\"hold\"}}'. Neither a larger scalar type alone nor selecting a child field provides this documented fragment behavior.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "The larger SQL text type does not change ordinary projection into fragment extraction. Because detail is an object and AS JSON is absent, default lax handling returns NULL instead of the object. The exact definition would correctly return ready from N'{\"detail\":\"ready\"}' when scalar text is required. That positive countercontext changes the property's JSON kind and the output contract, so it is not an alternative answer here.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "This definition selects only $.detail.items and projects its value as integer 2. It cannot retain memo or the enclosing object, and its SQL output type also conflicts with the required nvarchar(max) column. On the same supplied document, the unchanged option is entirely valid for an item-count consumer. That narrower numeric requirement is a concrete correct countercontext, but it is explicitly not the complete-object task.",
+        "sourceIds": ["dp800-d1-openjson"]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "contradicted",
+        "rationale": "The path reaches the memo scalar ship and excludes items. Although its SQL output is nvarchar(max), that capacity does not recover the enclosing structure omitted by the path. Using the original document, the unchanged definition correctly serves a memo-only text consumer, returning ship under the alias detail. The candidate instead requires the whole object for later processing, so this otherwise valid scalar projection is insufficient.",
+        "sourceIds": ["dp800-d1-openjson"]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent PASS3 of immutable 030 only. Exact candidate/generation, March 12 objectives, package policy, manifest, provenance registry/index and raw MCP source were inspected; the credential-linked JSON unit establishes the source's named-API ancestry. Both hashes were independently recomputed. technical-030.json was checked for binding, chronology and separate identity, not inherited reasoning. Re-derived fragment, NULL, integer and memo outcomes with explicit positive countercontexts. No SQL execution, candidate/source edits, ledger writes or promotion.",
+    "confidenceReason": "Only the AS JSON definition both selects the complete object and satisfies the documented nvarchar(max) prerequisite. Every distractor is valid for a different scalar requirement but fails this explicit output contract; the deductions concern instructional depth and construction."
+  },
+  "rubric": {
+    "version": 2,
+    "objectiveVersion": "March 12, 2026",
+    "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+    "reviewerId": "dp800-adversarial-json-mapping",
+    "reviewedAt": "2026-09-15T15:35:08.185Z",
+    "scores": {
+      "alignment": 4,
+      "accuracy": 4,
+      "scenarioCompleteness": 4,
+      "answerUniqueness": 4,
+      "distractorPlausibility": 3,
+      "distractorEvidence": 4,
+      "documentationStrength": 4,
+      "citationSpecificity": 4,
+      "difficultyAuthenticity": 3,
+      "explanationQuality": 4,
+      "originality": 3,
+      "clarityAccessibility": 4
+    },
+    "notes": "45/48. Complete input/type/version constraints, precise AS JSON documentation and one defensible key earn the critical 4s. All options have documented value-kind boundaries and concrete valid uses elsewhere. Obvious partial-field distractors reduce plausibility; a single-flag decision limits difficulty; familiar fragment reasoning limits originality. The explanations correctly separate capacity and JSON kind, and the short code remains clear. The distinct OPENJSON schema decision is not a duplicate serialization task."
+  }
+}

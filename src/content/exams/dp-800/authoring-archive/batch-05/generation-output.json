@@ -1,0 +1,909 @@
+{
+  "schemaVersion": 1,
+  "requestId": "dp800-direct-05-models-vectors",
+  "authorId": "copilot-dp800-direct-author",
+  "generatedAt": "2026-09-15T06:57:02.666Z",
+  "candidates": [
+    {
+      "id": "dp800-direct-039",
+      "question": "An Azure SQL Database deployment creates an external model definition for a remote embedding endpoint and an ordinary nullable embedding column. The endpoint and authentication are valid; the column has no computed expression or generation trigger. Existing document rows still have NULL embeddings. Which additional workflow step populates them without replacing the valid endpoint definition?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Register a replacement model definition with another explicit owner."
+        },
+        {
+          "id": "b",
+          "text": "Register an additional endpoint definition under a different model name."
+        },
+        {
+          "id": "c",
+          "text": "Alter the existing model's endpoint connection metadata."
+        },
+        {
+          "id": "d",
+          "text": "Invoke the embedding model for the document text and persist the results."
+        }
+      ],
+      "correctAnswer": [
+        "d"
+      ],
+      "explanation": "The external model stores connection metadata; it does not automatically backfill table rows.",
+      "deepExplanation": "After registration, the workflow must explicitly perform inference and persist the desired values. The question concerns a remote endpoint and does not deny the separate local ONNX runtime capability.",
+      "whyOtherAnswersAreWrong": {
+        "a": "Successful model creation is already established, and selecting another owner does not itself generate or persist embeddings.",
+        "b": "The existing definition is reusable; adding another definition is not the operation that populates the document rows.",
+        "c": "Metadata changes affect how subsequent calls connect; the given endpoint is already valid and changing it is not row generation."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-models-and-embeddings",
+      "subskill": "Create and manage external models",
+      "difficulty": "beginner",
+      "complexity": "concept-recall",
+      "sourceIds": [
+        "dp800-d3-external-models-unit",
+        "dp800-d3-create-external-model",
+        "dp800-d3-generate-embeddings"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/03-create-manage-external-model-sql",
+        "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql",
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql"
+      ],
+      "documentationTitles": [
+        "Create and manage external models in SQL",
+        "CREATE EXTERNAL MODEL (Transact-SQL)",
+        "AI_GENERATE_EMBEDDINGS (Transact-SQL)"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "azure-sql-database",
+        "external-model",
+        "explicit-generation"
+      ],
+      "conceptId": "sql-external-model-registration-does-not-materialize-embeddings",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-040",
+      "question": "An Azure SQL Database application principal can read its input data and already has EXECUTE ANY EXTERNAL ENDPOINT. The remote endpoint, database-scoped credential and external model SupportEmbedding are configured. The principal is not the model owner or an administrator and has no model-specific grants. It should invoke this model without receiving authority to create or alter model definitions. Which additional grant is the narrow match?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "CREATE EXTERNAL MODEL at database scope"
+        },
+        {
+          "id": "b",
+          "text": "EXECUTE ON EXTERNAL MODEL::SupportEmbedding"
+        },
+        {
+          "id": "c",
+          "text": "ALTER ANY EXTERNAL MODEL at database scope"
+        },
+        {
+          "id": "d",
+          "text": "EXECUTE ANY EXTERNAL ENDPOINT at database scope again"
+        }
+      ],
+      "correctAnswer": [
+        "b"
+      ],
+      "explanation": "Grant EXECUTE on the named external model.",
+      "deepExplanation": "Endpoint invocation, model usage and model-management authority are separate concerns. The stem fixes the other prerequisites and ownership so the choice is about the narrow object grant, not an assumed administrator bypass.",
+      "whyOtherAnswersAreWrong": {
+        "a": "This is model-creation authority, not the requested limited invocation authority on an existing object, and exceeds the stated role.",
+        "c": "This grants broad model-management authority beyond the stated invocation-only requirement.",
+        "d": "That prerequisite is already satisfied; granting it again does not add the missing model-specific invocation grant."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-models-and-embeddings",
+      "subskill": "Create and manage external models",
+      "difficulty": "intermediate",
+      "complexity": "scenario-based",
+      "sourceIds": [
+        "dp800-d3-create-external-model",
+        "dp800-d3-external-models-unit"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql",
+        "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/03-create-manage-external-model-sql"
+      ],
+      "documentationTitles": [
+        "CREATE EXTERNAL MODEL (Transact-SQL)",
+        "Create and manage external models in SQL"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "azure-sql-database",
+        "external-model",
+        "least-privilege"
+      ],
+      "conceptId": "sql-existing-external-model-object-execute-least-privilege",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-041",
+      "question": "An Azure SQL Database external model calls https://sample-a.cognitiveservices.azure.com/openai/deployments/embed-a/embeddings?api-version=2024-02-01. The shown credential URLs have no query strings; their hosts are allowed, paths use the displayed lowercase spelling, and authentication is otherwise configured. Which two credential names have the required matching host and enclosing path for this call? Select two.",
+      "questionType": "multi-select",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "https://sample-a.cognitiveservices.azure.com/"
+        },
+        {
+          "id": "b",
+          "text": "https://sample-a.cognitiveservices.azure.com/openai/deployments/embed-b"
+        },
+        {
+          "id": "c",
+          "text": "https://sample-a.cognitiveservices.azure.com/openai/deployments/embed-a"
+        },
+        {
+          "id": "d",
+          "text": "https://sample-b.cognitiveservices.azure.com/openai/deployments/embed-a"
+        }
+      ],
+      "correctAnswer": [
+        "a",
+        "c"
+      ],
+      "explanation": "The resource root and the matching embed-a deployment parent both enclose the called endpoint.",
+      "deepExplanation": "Credential matching requires the scheme/host and every supplied path segment to match. A sibling deployment or a different resource host is not an interchangeable scope. These are illustrative resource names, not live credentials.",
+      "whyOtherAnswersAreWrong": {
+        "b": "The deployment path segment embed-b does not match embed-a in the called URL.",
+        "d": "The host differs from the called resource, so a matching path alone is insufficient."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-models-and-embeddings",
+      "subskill": "Create and manage external models",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": [
+        "dp800-d3-create-external-model"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql"
+      ],
+      "documentationTitles": [
+        "CREATE EXTERNAL MODEL (Transact-SQL)"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "azure-sql-database",
+        "credential-scope",
+        "url-path"
+      ],
+      "conceptId": "sql-external-model-credential-url-prefix-host-and-path-boundaries",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-042",
+      "question": "An external embedding model in Azure SQL Database has a default dimensions parameter of 1536. The endpoint supports both requested sizes. A first valid AI_GENERATE_EMBEDDINGS invocation supplies PARAMETERS with {\"dimensions\":768}; a later independent invocation uses the same model but omits PARAMETERS. No one alters the model between calls. Which dimension parameter is sent by each invocation?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "First 1536; later 1536"
+        },
+        {
+          "id": "b",
+          "text": "First 768; later 768"
+        },
+        {
+          "id": "c",
+          "text": "First 768; later 1536"
+        },
+        {
+          "id": "d",
+          "text": "First 1536; later 768"
+        }
+      ],
+      "correctAnswer": [
+        "c"
+      ],
+      "explanation": "The first request sends 768; the later request sends the unchanged model default of 1536.",
+      "deepExplanation": "This is request-parameter precedence, not a claim about the SQL return-type shape. Applications must still align downstream vector storage and comparison requirements with the selected endpoint output.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The first invocation's explicit parameter overrides the model's default at runtime, so it does not send the unchanged 1536 value.",
+        "b": "A per-call parameter is not an ALTER of the stored model; the later invocation without an override uses the original default.",
+        "d": "This reverses which invocation contains the override."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-models-and-embeddings",
+      "subskill": "Generate embeddings",
+      "difficulty": "intermediate",
+      "complexity": "scenario-based",
+      "sourceIds": [
+        "dp800-d3-generate-embeddings",
+        "dp800-d3-external-models-unit"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql",
+        "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/03-create-manage-external-model-sql"
+      ],
+      "documentationTitles": [
+        "AI_GENERATE_EMBEDDINGS (Transact-SQL)",
+        "Create and manage external models in SQL"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "azure-sql-database",
+        "embedding-parameters",
+        "runtime-override"
+      ],
+      "conceptId": "sql-embedding-call-parameters-override-without-changing-model-defaults",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-043",
+      "question": "A SQL Server 2025 Windows instance will invoke a remote HTTPS embedding endpoint using an already configured API-key database-scoped credential. Model and caller permissions are ready. Unlike the team's Azure SQL Database environment, outbound external REST invocation has not been enabled on this instance. Which documented server option enables that invocation?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Enable external rest endpoint enabled."
+        },
+        {
+          "id": "b",
+          "text": "Enable external AI runtimes enabled for the Preview local ONNX runtime."
+        },
+        {
+          "id": "c",
+          "text": "Enable allow server scoped db credentials."
+        },
+        {
+          "id": "d",
+          "text": "Rely on the Azure SQL Database enabled-by-default setting without changing this instance."
+        }
+      ],
+      "correctAnswer": [
+        "a"
+      ],
+      "explanation": "Enable the external rest endpoint enabled server option.",
+      "deepExplanation": "Remote REST invocation, host-identity credentials and a local Preview AI runtime are different controls. This question does not require enabling the local runtime or changing its Preview configuration.",
+      "whyOtherAnswersAreWrong": {
+        "b": "That setting starts the separate local-runtime workflow, not the stated remote HTTPS invocation path.",
+        "c": "The reference ties this setting to using the Arc/VM host's managed identity as a database credential; the scenario instead uses a configured API-key credential.",
+        "d": "The documented default is for Azure SQL Database and Fabric SQL database, not evidence that this SQL Server instance has the option enabled."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-models-and-embeddings",
+      "subskill": "Create and manage external models",
+      "difficulty": "beginner",
+      "complexity": "concept-recall",
+      "sourceIds": [
+        "dp800-d3-generate-embeddings",
+        "dp800-d3-create-external-model"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql",
+        "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql"
+      ],
+      "documentationTitles": [
+        "AI_GENERATE_EMBEDDINGS (Transact-SQL)",
+        "CREATE EXTERNAL MODEL (Transact-SQL)"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "sql-server-2025",
+        "remote-embeddings",
+        "server-configuration"
+      ],
+      "conceptId": "sql-server-remote-embedding-external-rest-server-option",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-044",
+      "question": "An Azure SQL Database pipeline is configured to produce exactly 1536 float32 components for every embedding. The target column must use the native vector type, without reducing, padding or changing that output. Which declaration matches this contract?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "embedding VECTOR(768)"
+        },
+        {
+          "id": "b",
+          "text": "embedding VECTOR(1998)"
+        },
+        {
+          "id": "c",
+          "text": "embedding nvarchar(max)"
+        },
+        {
+          "id": "d",
+          "text": "embedding VECTOR(1536)"
+        }
+      ],
+      "correctAnswer": [
+        "d"
+      ],
+      "explanation": "Declare VECTOR(1536).",
+      "deepExplanation": "The native type's maximum dimension count is not an automatic sizing policy. The model configuration and the column declaration must agree; the default vector base type is float32.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The declaration specifies 768 dimensions rather than the configured 1536; a lower dimensionality would require a different compatible embedding output.",
+        "b": "1998 is the supported maximum, not a request to infer or resize the actual 1536-component output.",
+        "c": "Text can carry a JSON representation, but it does not meet the explicit native-vector-column requirement."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-intelligent-search",
+      "subskill": "Design for vector data, including vector data type, vector indexes, and size",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": [
+        "dp800-d3-vector-type",
+        "dp800-d3-prepare-vectors-unit"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type",
+        "https://learn.microsoft.com/en-us/training/modules/design-implement-intelligent-search-with-sql/04-prepare-sql-vector-search"
+      ],
+      "documentationTitles": [
+        "Vector data type",
+        "Prepare SQL for vector search"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "azure-sql-database",
+        "vector-dimensions",
+        "native-storage"
+      ],
+      "conceptId": "sql-vector-column-dimensions-match-configured-embedding-output",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-045",
+      "question": "A .NET application reads float32 VECTOR columns from SQL Server 2025 over TDS 7.4. Its older Microsoft.Data.SqlClient library receives JSON text, while the team now wants native SqlVector values through the driver's documented vector support. No float16 vectors are involved. Which change addresses the client capability rather than converting the data to text?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Cast the selected vector to nvarchar(max) before returning it."
+        },
+        {
+          "id": "b",
+          "text": "Use Microsoft.Data.SqlClient 6.1.0 or later with the supported TDS connection."
+        },
+        {
+          "id": "c",
+          "text": "Keep the older client and parse the returned JSON array in application code."
+        },
+        {
+          "id": "d",
+          "text": "Replace the VECTOR column with an nvarchar(max) JSON-text column."
+        }
+      ],
+      "correctAnswer": [
+        "b"
+      ],
+      "explanation": "Upgrade to a SqlClient version with native vector support.",
+      "deepExplanation": "The JSON representation supplied to older clients does not mean that the native column is stored as JSON text. The stated float32 scope avoids the separately documented Preview float16 transport limitation.",
+      "whyOtherAnswersAreWrong": {
+        "a": "That explicitly requests text output, which does not supply native SqlVector values.",
+        "c": "This uses the documented backward-compatible text representation, not the requested native driver value.",
+        "d": "Changing the database column to text removes the native-vector storage contract instead of upgrading client support."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-intelligent-search",
+      "subskill": "Design for vector data, including vector data type, vector indexes, and size",
+      "difficulty": "intermediate",
+      "complexity": "troubleshooting",
+      "sourceIds": [
+        "dp800-d3-vector-type"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type"
+      ],
+      "documentationTitles": [
+        "Vector data type"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "sql-server-2025",
+        "sqlclient",
+        "vector-transport"
+      ],
+      "conceptId": "sql-float32-native-vector-client-support-versus-json-compatibility",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-046",
+      "question": "On SQL Server 2025, what vector does this expression produce, ignoring insignificant floating-point rounding?",
+      "questionType": "code",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Approximately [-0.428571, 0.571429]"
+        },
+        {
+          "id": "b",
+          "text": "Approximately [-0.75, 1.0]"
+        },
+        {
+          "id": "c",
+          "text": "Approximately [-0.6, 0.8]"
+        },
+        {
+          "id": "d",
+          "text": "Approximately [-3.0, 4.0]"
+        }
+      ],
+      "correctAnswer": [
+        "c"
+      ],
+      "explanation": "The norm2 length is 5, so the result is approximately [-0.6, 0.8].",
+      "deepExplanation": "The three supported norms use different denominators. Normalization changes scale, not direction; the norm2 calculation preserves the ratio and signs of these two components.",
+      "whyOtherAnswersAreWrong": {
+        "a": "These components divide the input by the sum of absolute values, 7, which is norm1 rather than the requested norm2.",
+        "b": "These components divide by the maximum absolute component, 4, which is norminf.",
+        "d": "That is the unnormalized input, whose Euclidean length is 5 rather than 1."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-intelligent-search",
+      "subskill": "Identify when to use vector-related types and functions for semantic searching, including VECTOR\\_NORMALIZE, VECTOR\\_DISTANCE, VECTORPROPERTY, and VECTOR\\_SEARCH",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": [
+        "dp800-d3-vector-normalize"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-normalize-transact-sql"
+      ],
+      "documentationTitles": [
+        "VECTOR_NORMALIZE (Transact-SQL)"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "sql-server-2025",
+        "vector-normalize",
+        "euclidean-norm"
+      ],
+      "codeLanguage": "sql",
+      "codeSnippet": "DECLARE @v VECTOR(2) = '[-3,4]';\nSELECT VECTOR_NORMALIZE(@v, 'norm2');",
+      "conceptId": "sql-vector-normalize-euclidean-norm-calculation",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-047",
+      "question": "An Azure SQL Database environment has the Preview vector-search feature and an earlier-version vector index. A valid VECTOR_SEARCH query uses that matching index with TOP_N = 5 and WHERE Approved = 1. Diagnostics show that its five nearest candidate rows all have Approved = 0, although other rows in the base table are approved. The query completes without an error but returns no rows. Which documented version-specific behavior explains this?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "The WHERE predicate is applied after the earlier-version top-candidate pool is selected."
+        },
+        {
+          "id": "b",
+          "text": "A metric mismatch causes a warning and kNN fallback."
+        },
+        {
+          "id": "c",
+          "text": "An ambiguous distance column reference prevents the query from executing."
+        },
+        {
+          "id": "d",
+          "text": "A view was supplied where VECTOR_SEARCH requires a base table."
+        }
+      ],
+      "correctAnswer": [
+        "a"
+      ],
+      "explanation": "With an earlier index version, filtering happens after the TOP_N candidate selection.",
+      "deepExplanation": "This is not a universal statement about current vector indexes. The latest version supports iterative filtering and a different query syntax, with regional rollout and Preview qualifications.",
+      "whyOtherAnswersAreWrong": {
+        "b": "The scenario fixes a compatible matching index; the documented fallback is a different condition and does not explain this version's post-filter loss.",
+        "c": "The query successfully returns an empty set rather than the documented alias-ambiguity error.",
+        "d": "The stated input is a base table and the query completes; the unsupported-view restriction is not the explanation."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-intelligent-search",
+      "subskill": "Implement vector search",
+      "difficulty": "intermediate",
+      "complexity": "troubleshooting",
+      "sourceIds": [
+        "dp800-d3-vector-search"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql"
+      ],
+      "documentationTitles": [
+        "VECTOR_SEARCH (Transact-SQL) (Preview)"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "Preview",
+      "tags": [
+        "azure-sql-database",
+        "preview",
+        "earlier-vector-index",
+        "post-filter"
+      ],
+      "conceptId": "sql-earlier-vector-index-top-n-pool-post-filter-empty-result",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-048",
+      "question": "A Preview vector-search workload in an enabled Azure SQL Database environment must continue measuring Euclidean distance on its Embedding column. The only existing ANN index for that column uses cosine, so the query reports a compatibility warning and runs with kNN fallback. Which change supplies the missing ANN compatibility prerequisite without changing the required metric?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "Change the query's metric to cosine and retain the existing index."
+        },
+        {
+          "id": "b",
+          "text": "Keep the Euclidean query and deliberately use kNN without a compatible ANN index."
+        },
+        {
+          "id": "c",
+          "text": "Create a Euclidean ANN index on a different vector column."
+        },
+        {
+          "id": "d",
+          "text": "Create the applicable vector index for Embedding using Euclidean distance."
+        }
+      ],
+      "correctAnswer": [
+        "d"
+      ],
+      "explanation": "Match the vector index to both Embedding and the Euclidean metric.",
+      "deepExplanation": "A compatible index is a prerequisite, not a promise that every latest-version query plan will choose ANN. The current optimizer may choose an exact strategy based on query characteristics.",
+      "whyOtherAnswersAreWrong": {
+        "a": "That can match the existing index but changes the explicitly required Euclidean metric.",
+        "b": "The documented fallback can execute the query, but it does not supply ANN compatibility.",
+        "c": "The reference requires the same column as well as the same metric; an index on another column does not meet that condition."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-intelligent-search",
+      "subskill": "Evaluate vector index types and metrics",
+      "difficulty": "intermediate",
+      "complexity": "architecture-design",
+      "sourceIds": [
+        "dp800-d3-vector-search"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql"
+      ],
+      "documentationTitles": [
+        "VECTOR_SEARCH (Transact-SQL) (Preview)"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "Preview",
+      "tags": [
+        "azure-sql-database",
+        "preview",
+        "ann-index",
+        "metric-compatibility"
+      ],
+      "conceptId": "sql-ann-index-compatibility-requires-query-metric-and-column-match",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-049",
+      "question": "An Azure SQL Database environment has the Preview feature available and dbo.Documents uses the latest vector index version. @q is a valid nonnull VECTOR(1536), Embedding has matching dimensions, and the table contains more than 25 searchable rows. The application must request approximate results capped at five rows using the supported latest-index syntax. Which statement matches that contract?",
+      "questionType": "code",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "SELECT TOP (5) d.Id, r.distance FROM VECTOR_SEARCH(TABLE = dbo.Documents AS d, COLUMN = Embedding, SIMILAR_TO = @q, METRIC = 'cosine', TOP_N = 5) AS r ORDER BY r.distance;"
+        },
+        {
+          "id": "b",
+          "text": "SELECT TOP (5) WITH APPROXIMATE d.Id, r.distance FROM VECTOR_SEARCH(TABLE = dbo.Documents AS d, COLUMN = Embedding, SIMILAR_TO = @q, METRIC = 'cosine') AS r ORDER BY r.distance;"
+        },
+        {
+          "id": "c",
+          "text": "SELECT TOP (5) d.Id, VECTOR_DISTANCE('cosine', @q, d.Embedding) AS distance FROM dbo.Documents AS d ORDER BY distance;"
+        },
+        {
+          "id": "d",
+          "text": "SELECT TOP (25) WITH APPROXIMATE d.Id, r.distance FROM VECTOR_SEARCH(TABLE = dbo.Documents AS d, COLUMN = Embedding, SIMILAR_TO = @q, METRIC = 'cosine') AS r ORDER BY r.distance;"
+        }
+      ],
+      "correctAnswer": [
+        "b"
+      ],
+      "explanation": "Use SELECT TOP (5) WITH APPROXIMATE and omit the legacy TOP_N parameter.",
+      "deepExplanation": "Index version is an answer-determining prerequisite. This does not assume latest-index support on SQL Server 2025 or in an Azure region where the feature has not rolled out, and it does not guarantee that approximate search returns exactly five rows.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The TOP_N parameter is deprecated legacy syntax and is not supported with the latest index version.",
+        "c": "This is a valid exact-distance query rather than the requested approximate VECTOR_SEARCH syntax.",
+        "d": "The syntax is current but its cap is 25, not the required maximum of five."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-intelligent-search",
+      "subskill": "Implement vector search",
+      "difficulty": "advanced",
+      "complexity": "technical-implementation",
+      "sourceIds": [
+        "dp800-d3-vector-search",
+        "dp800-d3-vector-distance",
+        "dp800-d3-vector-type"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-search-transact-sql",
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/vector-distance-transact-sql",
+        "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type"
+      ],
+      "documentationTitles": [
+        "VECTOR_SEARCH (Transact-SQL) (Preview)",
+        "VECTOR_DISTANCE (Transact-SQL)",
+        "Vector data type"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "Preview",
+      "tags": [
+        "azure-sql-database",
+        "preview",
+        "latest-vector-index",
+        "query-migration"
+      ],
+      "codeLanguage": "sql",
+      "codeSnippet": "-- Relevant existing table definition:\nCREATE TABLE dbo.Documents (\n    Id int PRIMARY KEY,\n    Embedding VECTOR(1536) NOT NULL\n);",
+      "conceptId": "azure-sql-latest-vector-index-approximate-top-syntax-migration",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-050",
+      "question": "On SQL Server 2025, native float32 VECTOR declarations work in a database at compatibility level 160, but a correctly spelled AI_GENERATE_CHUNKS call cannot be resolved. The current product reference is being followed, and the actor has permission to make the required database change. Which documented prerequisite explains the difference?",
+      "questionType": "scenario",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "The client must be upgraded to Microsoft.Data.SqlClient 6.1.0 for SQL function resolution."
+        },
+        {
+          "id": "b",
+          "text": "External REST invocation must be enabled before local chunk generation can be found."
+        },
+        {
+          "id": "c",
+          "text": "AI_GENERATE_CHUNKS requires database compatibility level 170 or higher."
+        },
+        {
+          "id": "d",
+          "text": "The user needs EXECUTE on an external model before the chunking function name is recognized."
+        }
+      ],
+      "correctAnswer": [
+        "c"
+      ],
+      "explanation": "Raise the database compatibility level to at least 170 through the team's normal change process.",
+      "deepExplanation": "Support for the vector data type does not imply that every AI-related function shares its compatibility requirements. This diagnosis does not prescribe an unreviewed production compatibility change.",
+      "whyOtherAnswersAreWrong": {
+        "a": "That version adds native vector client transport; it is not the database compatibility prerequisite for resolving the chunking function.",
+        "b": "The external REST setting is the prerequisite for remote embedding invocation, while the chunking reference explicitly identifies compatibility level 170.",
+        "d": "Model-specific EXECUTE controls AI model use; AI_GENERATE_CHUNKS accepts source text and chunk parameters rather than a model identifier."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-models-and-embeddings",
+      "subskill": "Design and implement chunks for embeddings",
+      "difficulty": "intermediate",
+      "complexity": "troubleshooting",
+      "sourceIds": [
+        "dp800-d3-generate-chunks",
+        "dp800-d3-vector-type",
+        "dp800-d3-generate-embeddings",
+        "dp800-d3-create-external-model"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-chunks-transact-sql",
+        "https://learn.microsoft.com/en-us/sql/t-sql/data-types/vector-data-type",
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-embeddings-transact-sql",
+        "https://learn.microsoft.com/en-us/sql/t-sql/statements/create-external-model-transact-sql"
+      ],
+      "documentationTitles": [
+        "AI_GENERATE_CHUNKS (Transact-SQL)",
+        "Vector data type",
+        "AI_GENERATE_EMBEDDINGS (Transact-SQL)",
+        "CREATE EXTERNAL MODEL (Transact-SQL)"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "sql-server-2025",
+        "chunking",
+        "compatibility-level"
+      ],
+      "conceptId": "sql-ai-generate-chunks-requires-compatibility-170-despite-vector-availability",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-051",
+      "question": "In a SQL Server 2025 database at compatibility level 170, @body contains sufficiently long ASCII text. For adjacent full-sized chunks, what overlap size does this configuration request?",
+      "questionType": "code",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "50 characters from the preceding text"
+        },
+        {
+          "id": "b",
+          "text": "25 characters from the preceding text"
+        },
+        {
+          "id": "c",
+          "text": "100 characters from the preceding text"
+        },
+        {
+          "id": "d",
+          "text": "No preceding characters"
+        }
+      ],
+      "correctAnswer": [
+        "a"
+      ],
+      "explanation": "The requested overlap is 50 characters.",
+      "deepExplanation": "CHUNK_SIZE is measured in characters and OVERLAP is a whole-number percentage, not a token count. The embedding workflow must separately respect the model's token limits.",
+      "whyOtherAnswersAreWrong": {
+        "b": "The value 25 is a percentage, not directly a character count for a 200-character chunk.",
+        "c": "That is 50 percent of 200, not the configured 25 percent.",
+        "d": "Zero overlap is the default only when no positive overlap is requested; the code explicitly requests 25 percent."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-models-and-embeddings",
+      "subskill": "Design and implement chunks for embeddings",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": [
+        "dp800-d3-generate-chunks",
+        "dp800-d3-input-design"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-chunks-transact-sql",
+        "https://learn.microsoft.com/en-us/training/modules/design-implement-models-embeddings-with-sql/04-design-embeddings-sql-database-workloads"
+      ],
+      "documentationTitles": [
+        "AI_GENERATE_CHUNKS (Transact-SQL)",
+        "Design embeddings for SQL database workloads"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "sql-server-2025",
+        "chunking",
+        "overlap"
+      ],
+      "codeLanguage": "sql",
+      "codeSnippet": "SELECT * FROM AI_GENERATE_CHUNKS(\n    SOURCE = @body, CHUNK_TYPE = FIXED,\n    CHUNK_SIZE = 200, OVERLAP = 25\n);",
+      "conceptId": "sql-fixed-chunk-overlap-percentage-translates-to-characters",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    },
+    {
+      "id": "dp800-direct-052",
+      "question": "A SQL Server 2025 database at compatibility level 170 chunks multiple document rows in one operation. A diagnostic result needs the function's source-group label and its one-based chunk ordinal within each source, not the character offset or chunk length. Which pair of returned columns provides those two values?",
+      "questionType": "code",
+      "answerChoices": [
+        {
+          "id": "a",
+          "text": "chunk_set_id and chunk_offset"
+        },
+        {
+          "id": "b",
+          "text": "chunk_set_id and chunk_length"
+        },
+        {
+          "id": "c",
+          "text": "chunk_order and chunk_offset"
+        },
+        {
+          "id": "d",
+          "text": "chunk_set_id and chunk_order"
+        }
+      ],
+      "correctAnswer": [
+        "d"
+      ],
+      "explanation": "Use chunk_set_id and chunk_order.",
+      "deepExplanation": "The enable flag makes the optional grouping column available. This answer concerns the returned grouping metadata; it does not treat that generated number as a globally durable document identifier.",
+      "whyOtherAnswersAreWrong": {
+        "a": "The grouping label is present, but chunk_offset is a character position rather than the ordinal increasing by one per chunk.",
+        "b": "The second value is the returned text length, not the chunk ordinal.",
+        "c": "These describe ordinal and position but omit the requested source-group label when multiple documents are chunked."
+      },
+      "objectiveDomain": "implement-ai-capabilities-in-database-solutions",
+      "skill": "design-and-implement-models-and-embeddings",
+      "subskill": "Design and implement chunks for embeddings",
+      "difficulty": "intermediate",
+      "complexity": "technical-implementation",
+      "sourceIds": [
+        "dp800-d3-generate-chunks"
+      ],
+      "sourceUrls": [
+        "https://learn.microsoft.com/en-us/sql/t-sql/functions/ai-generate-chunks-transact-sql"
+      ],
+      "documentationTitles": [
+        "AI_GENERATE_CHUNKS (Transact-SQL)"
+      ],
+      "generatedAt": "2026-09-15T06:57:02.666Z",
+      "lastValidatedAt": "2026-09-15T06:57:02.666Z",
+      "featureStatus": "GA",
+      "tags": [
+        "sql-server-2025",
+        "chunk-metadata",
+        "source-grouping"
+      ],
+      "codeLanguage": "sql",
+      "codeSnippet": "SELECT c.*\nFROM dbo.Documents AS d\nCROSS APPLY AI_GENERATE_CHUNKS(\n    SOURCE = d.Body, CHUNK_TYPE = FIXED,\n    CHUNK_SIZE = 200, ENABLE_CHUNK_SET_ID = 1\n) AS c;",
+      "conceptId": "sql-chunk-result-group-id-versus-ordinal-offset-and-length",
+      "verificationStatus": "candidate",
+      "verifiedAgainstSourceIds": [],
+      "verificationNotes": "",
+      "requiresManualReview": true,
+      "confidenceReason": ""
+    }
+  ]
+}

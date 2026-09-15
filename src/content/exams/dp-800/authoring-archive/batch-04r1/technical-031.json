@@ -1,0 +1,72 @@
+{
+  "objectiveVersion": "March 12, 2026",
+  "objectiveFingerprint": "8d3bf9feb9d1fc5d0ad345e11957d92f5e7e7ac2ca89c4ab7a513ecc81958191",
+  "review": {
+    "questionId": "dp800-direct-031",
+    "authorId": "copilot-dp800-direct-author",
+    "reviewerId": "dp800-technical-json-extraction",
+    "questionFingerprint": "5afbac32c64d4527b03969fdf27e977e1b4e27c84f90dc660d971cf9b1858597",
+    "reviewedAt": "2026-09-15T13:44:28.967Z",
+    "verdict": "verified",
+    "sourceReviews": [
+      {
+        "sourceId": "dp800-d1-openjson",
+        "url": "https://learn.microsoft.com/en-us/sql/t-sql/functions/openjson-transact-sql",
+        "evidencePath": ".grounding\\dp-expansion\\direct\\expansion-docs\\openjson.json",
+        "retrievedAt": "2026-09-15T05:45:14.081Z",
+        "lastReviewedAt": "2026-09-15T06:30:44.832Z",
+        "supportingSummary": "Independently inspected the actual saved OPENJSON (Transact-SQL) body. Its Remarks expressly distinguishes a WITH column named [Address.Country], which matches the literal JSON key Address.Country, from an explicit $.Address.Country column path, which navigates the nested Address object. The general colName and column_path definitions corroborate that the SQL output identifier and JSON navigation expression are separate. The default-lax and scalar-projection rules establish NULL when the literal key is absent and scalar text when it is present. AS JSON is required to project an actual object fragment and requires nvarchar(max), not the candidate's nvarchar(10). The documented WITH grammar and bracketed-name example support the candidate's exact syntactic form. Applicability to SQL Server 2016 and later and the ordinary compatibility minimum of 130 cover the specified SQL Server 2022/160 setting without invoking newer or Preview functionality."
+      }
+    ],
+    "choiceReviews": [
+      {
+        "choiceId": "a",
+        "assessment": "contradicted",
+        "rationale": "B2 is the scalar inside the nested billing object, but the query never supplies the navigating column path '$.billing.code'. Its bracketed WITH name is the literal identifier billing.code and matches the existing top-level key whose value is A7. The primary Remarks gives the exact analogous [Address.Country] distinction. Literal positive countercontext using the original input: SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10) '$.billing.code'); returns B2. This adds the actual documented path override; it is not claimed to be the behavior of the unchanged candidate query.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "b",
+        "assessment": "contradicted",
+        "rationale": "SQL NULL is not the result for the supplied object because the exact literal billing.code key exists, matches the WITH name and holds the short scalar A7. There is no missing-key or nonscalar condition at that default mapping. Literal positive countercontext: set @payload = N'{\"billing\":{\"code\":\"B2\"}}' and run the unchanged SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10));. The root still is an object, but the literal dotted key is absent, so the explicit-schema column is SQL NULL in default lax mode. The article's literal-name and missing-path contracts support this result without inventing recursive name matching.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "c",
+        "assessment": "contradicted",
+        "rationale": "The nested object {\"code\":\"B2\"} is located at $.billing, not at the matched literal billing.code key. The candidate also lacks AS JSON and declares nvarchar(10), so it is not a valid fragment projection of that object. Literal positive countercontext with the original input: SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(max) '$.billing' AS JSON); returns {\"code\":\"B2\"}. Both the path and the fragment projection are explicitly changed, and the column is widened to the documented mandatory nvarchar(max). Merely appending AS JSON to nvarchar(10) is not offered as a valid example. The primary AS JSON, type and column_path definitions support this complete alternative.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      },
+      {
+        "choiceId": "d",
+        "assessment": "supported",
+        "rationale": "A7 is the scalar on the exact top-level billing.code key. With no column_path override, [billing.code] is a single SQL output identifier, not a request to traverse two JSON properties. The primary article explicitly documents this literal-dot matching rule; A7 also fits nvarchar(10), and no AS JSON flag is needed for a scalar string. Literal confirming alternative: with @payload = N'{\"billing.code\":\"A7\"}', the unchanged SELECT [billing.code] FROM OPENJSON(@payload) WITH ([billing.code] nvarchar(10)); still returns A7 even though no nested billing object exists. That shows why the competing nested value in the original input does not control the result.",
+        "sourceIds": [
+          "dp800-d1-openjson"
+        ]
+      }
+    ],
+    "checks": {
+      "answerDefensible": true,
+      "correctOptionsSupported": true,
+      "distractorsIncorrect": true,
+      "explanationsSupported": true,
+      "directSources": true,
+      "featureStatus": true,
+      "currentTerminology": true,
+      "prerequisitesComplete": true,
+      "codeReviewed": true,
+      "originalContent": true,
+      "duplicatesReviewed": true,
+      "qualityReviewed": true
+    },
+    "verificationNotes": "Independent technical review of frozen dp800-direct-031. I read its full candidate and generation-output, the author-only candidate-evidence entry and the objective-bound generation record in validation-metadata.json. I derived the output from the actual OPENJSON Remarks instead of accepting the generator's key. The repository questionFingerprint helper matches the exact raw and questionSchema-parsed candidate, generation-output and generation record. The recorded author is copilot-dp800-direct-author, request dp800-direct-04-json-r1, with generation/validation time 2026-09-15T06:30:44.841Z. The review uses a separate reviewer identity/context and contains no candidate repair.\n\nThe actual .grounding\\dp-expansion\\dp-800-guide.json MCP text, retrieved 2026-09-14T18:19:19.493Z, explicitly states Skills measured as of March 12, 2026. I compared the published domains, weights and skills with the frozen objective map; this question maps to Design and develop database solutions (35-40%), Write advanced T-SQL code, and the exact JSON-functions subskill including OPENJSON. objectiveFingerprint independently recomputed the same hash for the frozen and installed DP-800 maps. I also inspected the raw dp-800-credential.json and dp-800-course.json bodies, retrieved 2026-09-14T18:19:19.510Z and 2026-09-14T18:19:19.466Z respectively; their identity/course context does not stand in for implementation evidence.\n\nThe whole admitted training ancestry was inspected. .grounding\\dp-expansion\\dp-800-rendered-training-links.json at 2026-09-14T18:31:24.010Z records the credential's design/development learning-path target. .grounding\\dp-expansion\\design-training-redirect.json at 2026-09-14T18:57:14.063Z records the same locale-neutral path's English canonical URL. The actual .grounding\\dp-expansion\\dp-800-training-design.json MCP body at 2026-09-14T18:31:14.910Z links ../../modules/write-advanced-sql-code/. .grounding\\dp-expansion\\authors\\design\\raw\\module-advanced.json at 2026-09-14T22:04:32.840Z links 4-json-functions. .grounding\\dp-expansion\\direct\\expansion-docs\\json-unit.json at 2026-09-15T05:45:14.019Z explicitly teaches OPENJSON and its typed-schema form. The function article is admitted immediately from that training record as an explicit named-API reference to the exact primary OPENJSON article. I neither invent an article hyperlink in the training nor follow a doc-to-doc parent to establish approval. The unit's FOR JSON discussion is not mistakenly applied to OPENJSON's opposite treatment of dotted WITH names.\n\nThe source-retrieval-index path leads to the actual successful Microsoft Learn MCP receipt. I checked its endpoint, microsoft_docs_fetch tool, exact input URL, retrievedAt and text body, including the full relevant Remarks and type/AS JSON sections. These match source-registry.json and sources.json; the preserved retrieval is 2026-09-15T05:45:14.081Z and frozen source review is 2026-09-15T06:30:44.832Z. The current catalog's validateSourceProvenance check returned no findings and validatedSupportingSourceIds admitted dp800-d1-openjson. This does not claim a new fetch, live availability test or automatic factual approval.\n\nThe declared Unicode string is well-formed JSON with two distinct keys: billing.code and billing. They are not duplicate JSON property names. The bracketed identifier is used consistently in SELECT and WITH, has a documented counterpart in the primary article, and the default matching scalar is A7. Its length is within nvarchar(10). Every answer is a proposed output, not a candidate SQL expression. I supplied complete, syntactically valid alternate queries/inputs for each wrong output. In particular, the object-output alternative explicitly uses nvarchar(max) with AS JSON; keeping nvarchar(10) would violate the documented type prerequisite and is not passed off as executable. The explanation correctly distinguishes SQL identifier delimiting from JSON navigation. No special table permissions, DDL, tenant access, native-json type or Preview extension is involved; SQL Server 2022 and compatibility 160 satisfy the documented ordinary function prerequisites. No SQL execution was performed.\n\nTarget duplicate diagnostics ran against all 583 installed records, all 11 current JSON candidates and all 14 new AI candidates, including every status, for 608 distinct IDs. duplicateFindings and scenarioDuplicateFindings produced no target findings. I also manually compared the JSON cohort, AI code/choices, 20 related installed stems and the closest full examples. Installed dp800-direct-026 is importantly related: FOR JSON PATH uses dotted aliases to create nested output, whereas this item tests OPENJSON WITH's literal input-key matching. The result cannot be obtained by carrying 026's rule over unchanged; the API-specific distinction is itself the learning point. dp800-direct-029 focuses on BIN2 matching despite SQL collation, not whether a dot means traversal. dp800-direct-030 focuses on preserving a fragment, and dp800-direct-027 uses an explicit response-envelope path. The shared names, version boilerplate and JSON topic do not alone establish a same-fact duplicate. New AI numeric-output questions concern vectors/chunks, not literal JSON key matching. This is a disclosed, bounded distinction, not blanket certification that the whole bank is original.\n\nqualityFindings raised only pronoun-review; 'this query' points directly to the displayed SQL. The visible input deliberately supplies both plausible values, so the learner must choose the correct name-resolution rule rather than guess from an omitted path. Options A7 and B2 are equally short; SQL NULL and the object output represent specific documented alternatives. There is no grammatical cue, and a fragment alternative's different shape reflects a genuine output-contract mistake. Intermediate/technical-implementation is defensible for evaluating two coexisting structures and the default WITH rule; it is not labeled Advanced or Expert. The example uses original billing/A7/B2 data rather than copying a practice assessment. The disposition is technical verified only. No adversarial pass, rubric, ledger update, source edit or gameplay promotion is included, and the already completed 028 review was not repeated.",
+    "confidenceReason": "The primary source explicitly documents the exact literal-dotted-name versus nested-path distinction used here, producing A7 uniquely for the unchanged query. All distractors have complete documented positive countercontexts, including the required type change for an AS JSON object projection. Objective/generation/source bindings and admitted training ancestry match. The closely related FOR JSON item was inspected and differs in API semantics, while deterministic target checks found no blocker. This is independent documentary PASS 2, not executed SQL or final bank approval."
+  }
+}
