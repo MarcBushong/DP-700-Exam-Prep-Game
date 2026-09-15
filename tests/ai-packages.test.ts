@@ -110,9 +110,10 @@ describe.each(['ai-103', 'ai-200'])('%s installed strict package', (id) => {
           (entry) => entry.credentialId === id,
         ),
       ).toBe(false);
+      const dp700 = await loadDungeonPackage('dp-700');
       for (const runMode of ['study', 'gauntlet', 'raid'] as const)
         expect(
-          planDungeonSession([dungeon, await loadDungeonPackage('dp-700')], {
+          planDungeonSession([dungeon, dp700], {
             ...defaultConfig,
             credentialId: id,
             runMode,
